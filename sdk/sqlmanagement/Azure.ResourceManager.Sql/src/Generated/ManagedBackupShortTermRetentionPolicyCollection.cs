@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -175,37 +174,9 @@ namespace Azure.ResourceManager.Sql
         /// <returns> An async collection of <see cref="ManagedBackupShortTermRetentionPolicyResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ManagedBackupShortTermRetentionPolicyResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<ManagedBackupShortTermRetentionPolicyResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _managedBackupShortTermRetentionPolicyClientDiagnostics.CreateScope("ManagedBackupShortTermRetentionPolicyCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _managedBackupShortTermRetentionPolicyRestClient.ListByDatabaseAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ManagedBackupShortTermRetentionPolicyResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<ManagedBackupShortTermRetentionPolicyResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _managedBackupShortTermRetentionPolicyClientDiagnostics.CreateScope("ManagedBackupShortTermRetentionPolicyCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _managedBackupShortTermRetentionPolicyRestClient.ListByDatabaseNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ManagedBackupShortTermRetentionPolicyResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _managedBackupShortTermRetentionPolicyRestClient.CreateListByDatabaseRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _managedBackupShortTermRetentionPolicyRestClient.CreateListByDatabaseNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ManagedBackupShortTermRetentionPolicyResource(Client, ManagedBackupShortTermRetentionPolicyData.DeserializeManagedBackupShortTermRetentionPolicyData(e)), _managedBackupShortTermRetentionPolicyClientDiagnostics, Pipeline, "ManagedBackupShortTermRetentionPolicyCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -217,37 +188,9 @@ namespace Azure.ResourceManager.Sql
         /// <returns> A collection of <see cref="ManagedBackupShortTermRetentionPolicyResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ManagedBackupShortTermRetentionPolicyResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<ManagedBackupShortTermRetentionPolicyResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _managedBackupShortTermRetentionPolicyClientDiagnostics.CreateScope("ManagedBackupShortTermRetentionPolicyCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _managedBackupShortTermRetentionPolicyRestClient.ListByDatabase(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ManagedBackupShortTermRetentionPolicyResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<ManagedBackupShortTermRetentionPolicyResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _managedBackupShortTermRetentionPolicyClientDiagnostics.CreateScope("ManagedBackupShortTermRetentionPolicyCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _managedBackupShortTermRetentionPolicyRestClient.ListByDatabaseNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ManagedBackupShortTermRetentionPolicyResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _managedBackupShortTermRetentionPolicyRestClient.CreateListByDatabaseRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _managedBackupShortTermRetentionPolicyRestClient.CreateListByDatabaseNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ManagedBackupShortTermRetentionPolicyResource(Client, ManagedBackupShortTermRetentionPolicyData.DeserializeManagedBackupShortTermRetentionPolicyData(e)), _managedBackupShortTermRetentionPolicyClientDiagnostics, Pipeline, "ManagedBackupShortTermRetentionPolicyCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

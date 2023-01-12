@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -304,37 +303,9 @@ namespace Azure.ResourceManager.SecurityDevOps
         /// <returns> An async collection of <see cref="AzureDevOpsRepoResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<AzureDevOpsRepoResource> GetAzureDevOpsReposByConnectorAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<AzureDevOpsRepoResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _azureDevOpsRepoClientDiagnostics.CreateScope("AzureDevOpsConnectorResource.GetAzureDevOpsReposByConnector");
-                scope.Start();
-                try
-                {
-                    var response = await _azureDevOpsRepoRestClient.ListByConnectorAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new AzureDevOpsRepoResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<AzureDevOpsRepoResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _azureDevOpsRepoClientDiagnostics.CreateScope("AzureDevOpsConnectorResource.GetAzureDevOpsReposByConnector");
-                scope.Start();
-                try
-                {
-                    var response = await _azureDevOpsRepoRestClient.ListByConnectorNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new AzureDevOpsRepoResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _azureDevOpsRepoRestClient.CreateListByConnectorRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _azureDevOpsRepoRestClient.CreateListByConnectorNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new AzureDevOpsRepoResource(Client, AzureDevOpsRepoData.DeserializeAzureDevOpsRepoData(e)), _azureDevOpsRepoClientDiagnostics, Pipeline, "AzureDevOpsConnectorResource.GetAzureDevOpsReposByConnector", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -345,37 +316,9 @@ namespace Azure.ResourceManager.SecurityDevOps
         /// <returns> A collection of <see cref="AzureDevOpsRepoResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<AzureDevOpsRepoResource> GetAzureDevOpsReposByConnector(CancellationToken cancellationToken = default)
         {
-            Page<AzureDevOpsRepoResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _azureDevOpsRepoClientDiagnostics.CreateScope("AzureDevOpsConnectorResource.GetAzureDevOpsReposByConnector");
-                scope.Start();
-                try
-                {
-                    var response = _azureDevOpsRepoRestClient.ListByConnector(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new AzureDevOpsRepoResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<AzureDevOpsRepoResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _azureDevOpsRepoClientDiagnostics.CreateScope("AzureDevOpsConnectorResource.GetAzureDevOpsReposByConnector");
-                scope.Start();
-                try
-                {
-                    var response = _azureDevOpsRepoRestClient.ListByConnectorNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new AzureDevOpsRepoResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _azureDevOpsRepoRestClient.CreateListByConnectorRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _azureDevOpsRepoRestClient.CreateListByConnectorNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new AzureDevOpsRepoResource(Client, AzureDevOpsRepoData.DeserializeAzureDevOpsRepoData(e)), _azureDevOpsRepoClientDiagnostics, Pipeline, "AzureDevOpsConnectorResource.GetAzureDevOpsReposByConnector", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -387,22 +330,8 @@ namespace Azure.ResourceManager.SecurityDevOps
         /// <returns> An async collection of <see cref="AzureDevOpsConnectorStats" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<AzureDevOpsConnectorStats> GetAzureDevOpsConnectorStatsAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<AzureDevOpsConnectorStats>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _azureDevOpsConnectorStatsClientDiagnostics.CreateScope("AzureDevOpsConnectorResource.GetAzureDevOpsConnectorStats");
-                scope.Start();
-                try
-                {
-                    var response = await _azureDevOpsConnectorStatsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _azureDevOpsConnectorStatsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, AzureDevOpsConnectorStats.DeserializeAzureDevOpsConnectorStats, _azureDevOpsConnectorStatsClientDiagnostics, Pipeline, "AzureDevOpsConnectorResource.GetAzureDevOpsConnectorStats", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -414,22 +343,8 @@ namespace Azure.ResourceManager.SecurityDevOps
         /// <returns> A collection of <see cref="AzureDevOpsConnectorStats" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<AzureDevOpsConnectorStats> GetAzureDevOpsConnectorStats(CancellationToken cancellationToken = default)
         {
-            Page<AzureDevOpsConnectorStats> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _azureDevOpsConnectorStatsClientDiagnostics.CreateScope("AzureDevOpsConnectorResource.GetAzureDevOpsConnectorStats");
-                scope.Start();
-                try
-                {
-                    var response = _azureDevOpsConnectorStatsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _azureDevOpsConnectorStatsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, AzureDevOpsConnectorStats.DeserializeAzureDevOpsConnectorStats, _azureDevOpsConnectorStatsClientDiagnostics, Pipeline, "AzureDevOpsConnectorResource.GetAzureDevOpsConnectorStats", "value", null, cancellationToken);
         }
 
         /// <summary>

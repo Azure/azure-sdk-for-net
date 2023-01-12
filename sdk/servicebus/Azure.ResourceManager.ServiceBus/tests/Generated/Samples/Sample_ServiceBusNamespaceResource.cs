@@ -12,9 +12,10 @@ using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.ServiceBus;
 using Azure.ResourceManager.ServiceBus.Models;
 
-namespace Azure.ResourceManager.ServiceBus
+namespace Azure.ResourceManager.ServiceBus.Samples
 {
     public partial class Sample_ServiceBusNamespaceResource
     {
@@ -23,11 +24,13 @@ namespace Azure.ResourceManager.ServiceBus
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetServiceBusNamespaces_NameSpaceList()
         {
-            // Generated from example definition: specification/servicebus/resource-manager/Microsoft.ServiceBus/stable/2021-11-01/examples/NameSpaces/SBNameSpaceList.json
+            // Generated from example definition: specification/servicebus/resource-manager/Microsoft.ServiceBus/preview/2022-10-01-preview/examples/NameSpaces/SBNameSpaceList.json
             // this example is just showing the usage of "Namespaces_List" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this SubscriptionResource created on azure
             // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
@@ -53,15 +56,17 @@ namespace Azure.ResourceManager.ServiceBus
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Delete_NameSpaceDelete()
         {
-            // Generated from example definition: specification/servicebus/resource-manager/Microsoft.ServiceBus/stable/2021-11-01/examples/NameSpaces/SBNameSpaceDelete.json
+            // Generated from example definition: specification/servicebus/resource-manager/Microsoft.ServiceBus/preview/2022-10-01-preview/examples/NameSpaces/SBNameSpaceDelete.json
             // this example is just showing the usage of "Namespaces_Delete" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this ServiceBusNamespaceResource created on azure
             // for more information of creating ServiceBusNamespaceResource, please refer to the document of ServiceBusNamespaceResource
-            string subscriptionId = "5f750a97-50d9-4e36-8081-c9ee4c0210d4";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "ArunMonocle";
             string namespaceName = "sdk-Namespace-3285";
             ResourceIdentifier serviceBusNamespaceResourceId = ServiceBusNamespaceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, namespaceName);
@@ -78,11 +83,13 @@ namespace Azure.ResourceManager.ServiceBus
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_NameSpaceGet()
         {
-            // Generated from example definition: specification/servicebus/resource-manager/Microsoft.ServiceBus/stable/2021-11-01/examples/NameSpaces/SBNameSpaceGet.json
+            // Generated from example definition: specification/servicebus/resource-manager/Microsoft.ServiceBus/preview/2022-10-01-preview/examples/NameSpaces/SBNameSpaceGet.json
             // this example is just showing the usage of "Namespaces_Get" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this ServiceBusNamespaceResource created on azure
             // for more information of creating ServiceBusNamespaceResource, please refer to the document of ServiceBusNamespaceResource
@@ -107,11 +114,13 @@ namespace Azure.ResourceManager.ServiceBus
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Update_NameSpaceUpdate()
         {
-            // Generated from example definition: specification/servicebus/resource-manager/Microsoft.ServiceBus/stable/2021-11-01/examples/NameSpaces/SBNameSpaceUpdate.json
+            // Generated from example definition: specification/servicebus/resource-manager/Microsoft.ServiceBus/preview/2022-10-01-preview/examples/NameSpaces/SBNameSpaceUpdate.json
             // this example is just showing the usage of "Namespaces_Update" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this ServiceBusNamespaceResource created on azure
             // for more information of creating ServiceBusNamespaceResource, please refer to the document of ServiceBusNamespaceResource
@@ -144,11 +153,13 @@ namespace Azure.ResourceManager.ServiceBus
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task CheckServiceBusNamespaceNameAvailability_NameSpaceCheckNameAvailability()
         {
-            // Generated from example definition: specification/servicebus/resource-manager/Microsoft.ServiceBus/stable/2021-11-01/examples/NameSpaces/SBNameSpaceCheckNameAvailability.json
+            // Generated from example definition: specification/servicebus/resource-manager/Microsoft.ServiceBus/preview/2022-10-01-preview/examples/NameSpaces/SBNameSpaceCheckNameAvailability.json
             // this example is just showing the usage of "Namespaces_CheckNameAvailability" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this SubscriptionResource created on azure
             // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
@@ -168,11 +179,13 @@ namespace Azure.ResourceManager.ServiceBus
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetPrivateLinkResources_NameSpacePrivateLinkResourcesGet()
         {
-            // Generated from example definition: specification/servicebus/resource-manager/Microsoft.ServiceBus/stable/2021-11-01/examples/NameSpaces/PrivateLinkResourcesGet.json
+            // Generated from example definition: specification/servicebus/resource-manager/Microsoft.ServiceBus/preview/2022-10-01-preview/examples/NameSpaces/PrivateLinkResourcesGet.json
             // this example is just showing the usage of "PrivateLinkResources_Get" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this ServiceBusNamespaceResource created on azure
             // for more information of creating ServiceBusNamespaceResource, please refer to the document of ServiceBusNamespaceResource
@@ -196,11 +209,13 @@ namespace Azure.ResourceManager.ServiceBus
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task CheckServiceBusDisasterRecoveryNameAvailability_AliasNameAvailability()
         {
-            // Generated from example definition: specification/servicebus/resource-manager/Microsoft.ServiceBus/stable/2021-11-01/examples/disasterRecoveryConfigs/SBAliasCheckNameAvailability.json
+            // Generated from example definition: specification/servicebus/resource-manager/Microsoft.ServiceBus/preview/2022-10-01-preview/examples/disasterRecoveryConfigs/SBAliasCheckNameAvailability.json
             // this example is just showing the usage of "DisasterRecoveryConfigs_CheckNameAvailability" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this ServiceBusNamespaceResource created on azure
             // for more information of creating ServiceBusNamespaceResource, please refer to the document of ServiceBusNamespaceResource

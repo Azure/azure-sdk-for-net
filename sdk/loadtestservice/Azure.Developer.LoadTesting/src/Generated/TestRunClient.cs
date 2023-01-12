@@ -13,7 +13,7 @@ using Azure.Core.Pipeline;
 
 namespace Azure.Developer.LoadTesting
 {
-    // Data plane generated client. The TestRun service client.
+    // Data plane generated client.
     /// <summary> The TestRun service client. </summary>
     public partial class TestRunClient
     {

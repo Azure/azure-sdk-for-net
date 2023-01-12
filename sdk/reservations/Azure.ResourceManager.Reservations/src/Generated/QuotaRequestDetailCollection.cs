@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -128,37 +127,9 @@ namespace Azure.ResourceManager.Reservations
         /// <returns> An async collection of <see cref="QuotaRequestDetailResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<QuotaRequestDetailResource> GetAllAsync(string filter = null, int? top = null, string skiptoken = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<QuotaRequestDetailResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _quotaRequestDetailQuotaRequestStatusClientDiagnostics.CreateScope("QuotaRequestDetailCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _quotaRequestDetailQuotaRequestStatusRestClient.ListAsync(Id.SubscriptionId, _providerId, new AzureLocation(_location), filter, top, skiptoken, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new QuotaRequestDetailResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<QuotaRequestDetailResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _quotaRequestDetailQuotaRequestStatusClientDiagnostics.CreateScope("QuotaRequestDetailCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _quotaRequestDetailQuotaRequestStatusRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, _providerId, new AzureLocation(_location), filter, top, skiptoken, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new QuotaRequestDetailResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _quotaRequestDetailQuotaRequestStatusRestClient.CreateListRequest(Id.SubscriptionId, _providerId, new AzureLocation(_location), filter, top, skiptoken);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _quotaRequestDetailQuotaRequestStatusRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, _providerId, new AzureLocation(_location), filter, top, skiptoken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new QuotaRequestDetailResource(Client, QuotaRequestDetailData.DeserializeQuotaRequestDetailData(e)), _quotaRequestDetailQuotaRequestStatusClientDiagnostics, Pipeline, "QuotaRequestDetailCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -177,37 +148,9 @@ namespace Azure.ResourceManager.Reservations
         /// <returns> A collection of <see cref="QuotaRequestDetailResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<QuotaRequestDetailResource> GetAll(string filter = null, int? top = null, string skiptoken = null, CancellationToken cancellationToken = default)
         {
-            Page<QuotaRequestDetailResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _quotaRequestDetailQuotaRequestStatusClientDiagnostics.CreateScope("QuotaRequestDetailCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _quotaRequestDetailQuotaRequestStatusRestClient.List(Id.SubscriptionId, _providerId, new AzureLocation(_location), filter, top, skiptoken, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new QuotaRequestDetailResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<QuotaRequestDetailResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _quotaRequestDetailQuotaRequestStatusClientDiagnostics.CreateScope("QuotaRequestDetailCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _quotaRequestDetailQuotaRequestStatusRestClient.ListNextPage(nextLink, Id.SubscriptionId, _providerId, new AzureLocation(_location), filter, top, skiptoken, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new QuotaRequestDetailResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _quotaRequestDetailQuotaRequestStatusRestClient.CreateListRequest(Id.SubscriptionId, _providerId, new AzureLocation(_location), filter, top, skiptoken);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _quotaRequestDetailQuotaRequestStatusRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, _providerId, new AzureLocation(_location), filter, top, skiptoken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new QuotaRequestDetailResource(Client, QuotaRequestDetailData.DeserializeQuotaRequestDetailData(e)), _quotaRequestDetailQuotaRequestStatusClientDiagnostics, Pipeline, "QuotaRequestDetailCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

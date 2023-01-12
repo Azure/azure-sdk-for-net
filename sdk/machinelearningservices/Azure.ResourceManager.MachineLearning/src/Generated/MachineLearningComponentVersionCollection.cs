@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -191,37 +190,9 @@ namespace Azure.ResourceManager.MachineLearning
         /// <returns> An async collection of <see cref="MachineLearningComponentVersionResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<MachineLearningComponentVersionResource> GetAllAsync(string orderBy = null, int? top = null, string skip = null, MachineLearningListViewType? listViewType = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<MachineLearningComponentVersionResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _machineLearningComponentVersionComponentVersionsClientDiagnostics.CreateScope("MachineLearningComponentVersionCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _machineLearningComponentVersionComponentVersionsRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, orderBy, top, skip, listViewType, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new MachineLearningComponentVersionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<MachineLearningComponentVersionResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _machineLearningComponentVersionComponentVersionsClientDiagnostics.CreateScope("MachineLearningComponentVersionCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _machineLearningComponentVersionComponentVersionsRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, orderBy, top, skip, listViewType, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new MachineLearningComponentVersionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _machineLearningComponentVersionComponentVersionsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, orderBy, top, skip, listViewType);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _machineLearningComponentVersionComponentVersionsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, orderBy, top, skip, listViewType);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new MachineLearningComponentVersionResource(Client, MachineLearningComponentVersionData.DeserializeMachineLearningComponentVersionData(e)), _machineLearningComponentVersionComponentVersionsClientDiagnostics, Pipeline, "MachineLearningComponentVersionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -237,37 +208,9 @@ namespace Azure.ResourceManager.MachineLearning
         /// <returns> A collection of <see cref="MachineLearningComponentVersionResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<MachineLearningComponentVersionResource> GetAll(string orderBy = null, int? top = null, string skip = null, MachineLearningListViewType? listViewType = null, CancellationToken cancellationToken = default)
         {
-            Page<MachineLearningComponentVersionResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _machineLearningComponentVersionComponentVersionsClientDiagnostics.CreateScope("MachineLearningComponentVersionCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _machineLearningComponentVersionComponentVersionsRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, orderBy, top, skip, listViewType, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new MachineLearningComponentVersionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<MachineLearningComponentVersionResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _machineLearningComponentVersionComponentVersionsClientDiagnostics.CreateScope("MachineLearningComponentVersionCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _machineLearningComponentVersionComponentVersionsRestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, orderBy, top, skip, listViewType, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new MachineLearningComponentVersionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _machineLearningComponentVersionComponentVersionsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, orderBy, top, skip, listViewType);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _machineLearningComponentVersionComponentVersionsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, orderBy, top, skip, listViewType);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new MachineLearningComponentVersionResource(Client, MachineLearningComponentVersionData.DeserializeMachineLearningComponentVersionData(e)), _machineLearningComponentVersionComponentVersionsClientDiagnostics, Pipeline, "MachineLearningComponentVersionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

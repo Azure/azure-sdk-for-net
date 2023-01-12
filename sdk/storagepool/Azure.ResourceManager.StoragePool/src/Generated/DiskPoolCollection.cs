@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -188,37 +187,9 @@ namespace Azure.ResourceManager.StoragePool
         /// <returns> An async collection of <see cref="DiskPoolResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DiskPoolResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<DiskPoolResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _diskPoolClientDiagnostics.CreateScope("DiskPoolCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _diskPoolRestClient.ListByResourceGroupAsync(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new DiskPoolResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<DiskPoolResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _diskPoolClientDiagnostics.CreateScope("DiskPoolCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _diskPoolRestClient.ListByResourceGroupNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new DiskPoolResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _diskPoolRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _diskPoolRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DiskPoolResource(Client, DiskPoolData.DeserializeDiskPoolData(e)), _diskPoolClientDiagnostics, Pipeline, "DiskPoolCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -230,37 +201,9 @@ namespace Azure.ResourceManager.StoragePool
         /// <returns> A collection of <see cref="DiskPoolResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DiskPoolResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<DiskPoolResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _diskPoolClientDiagnostics.CreateScope("DiskPoolCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _diskPoolRestClient.ListByResourceGroup(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new DiskPoolResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<DiskPoolResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _diskPoolClientDiagnostics.CreateScope("DiskPoolCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _diskPoolRestClient.ListByResourceGroupNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new DiskPoolResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _diskPoolRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _diskPoolRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DiskPoolResource(Client, DiskPoolData.DeserializeDiskPoolData(e)), _diskPoolClientDiagnostics, Pipeline, "DiskPoolCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

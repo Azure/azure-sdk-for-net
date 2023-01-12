@@ -263,7 +263,7 @@ var data = new {
 
 var operation = await client.CreateAsync(WaitUntil.Completed, "<sentShareName>", "<assetName>", RequestContent.Create(data));
 
-BinaryData data = await operation.WaitForCompletionAsync();
+BinaryData data = operation.Value;
 JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
 Console.WriteLine(result.GetProperty("kind").ToString());
 Console.WriteLine(result.GetProperty("id").ToString());
@@ -400,7 +400,7 @@ var data = new {
 
 var operation = client.Create(WaitUntil.Completed, "<sentShareName>", "<assetName>", RequestContent.Create(data));
 
-BinaryData data = operation.WaitForCompletion();
+BinaryData data = operation.Value;
 JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
 Console.WriteLine(result.GetProperty("kind").ToString());
 Console.WriteLine(result.GetProperty("id").ToString());
@@ -522,8 +522,7 @@ var client = new AssetsClient("<https://my-service.azure.com>", credential);
 
 var operation = await client.DeleteAsync(WaitUntil.Completed, "<sentShareName>", "<assetName>");
 
-var response = await operation.WaitForCompletionResponseAsync();
-Console.WriteLine(response.Status)
+Console.WriteLine(operation.GetRawResponse().Status)
 ]]></code>
 </example>
 <remarks>
@@ -539,8 +538,7 @@ var client = new AssetsClient("<https://my-service.azure.com>", credential);
 
 var operation = client.Delete(WaitUntil.Completed, "<sentShareName>", "<assetName>");
 
-var response = operation.WaitForCompletionResponse();
-Console.WriteLine(response.Status)
+Console.WriteLine(operation.GetRawResponse().Status)
 ]]></code>
 </example>
 <remarks>

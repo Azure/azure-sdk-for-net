@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -126,37 +125,9 @@ namespace Azure.ResourceManager.AppService
         /// <returns> An async collection of <see cref="SiteSlotDetectorResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SiteSlotDetectorResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<SiteSlotDetectorResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _siteSlotDetectorDiagnosticsClientDiagnostics.CreateScope("SiteSlotDetectorCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _siteSlotDetectorDiagnosticsRestClient.ListSiteDetectorResponsesSlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new SiteSlotDetectorResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<SiteSlotDetectorResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _siteSlotDetectorDiagnosticsClientDiagnostics.CreateScope("SiteSlotDetectorCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _siteSlotDetectorDiagnosticsRestClient.ListSiteDetectorResponsesSlotNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new SiteSlotDetectorResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _siteSlotDetectorDiagnosticsRestClient.CreateListSiteDetectorResponsesSlotRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _siteSlotDetectorDiagnosticsRestClient.CreateListSiteDetectorResponsesSlotNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SiteSlotDetectorResource(Client, AppServiceDetectorData.DeserializeAppServiceDetectorData(e)), _siteSlotDetectorDiagnosticsClientDiagnostics, Pipeline, "SiteSlotDetectorCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -168,37 +139,9 @@ namespace Azure.ResourceManager.AppService
         /// <returns> A collection of <see cref="SiteSlotDetectorResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SiteSlotDetectorResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<SiteSlotDetectorResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _siteSlotDetectorDiagnosticsClientDiagnostics.CreateScope("SiteSlotDetectorCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _siteSlotDetectorDiagnosticsRestClient.ListSiteDetectorResponsesSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new SiteSlotDetectorResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<SiteSlotDetectorResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _siteSlotDetectorDiagnosticsClientDiagnostics.CreateScope("SiteSlotDetectorCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _siteSlotDetectorDiagnosticsRestClient.ListSiteDetectorResponsesSlotNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new SiteSlotDetectorResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _siteSlotDetectorDiagnosticsRestClient.CreateListSiteDetectorResponsesSlotRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _siteSlotDetectorDiagnosticsRestClient.CreateListSiteDetectorResponsesSlotNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SiteSlotDetectorResource(Client, AppServiceDetectorData.DeserializeAppServiceDetectorData(e)), _siteSlotDetectorDiagnosticsClientDiagnostics, Pipeline, "SiteSlotDetectorCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

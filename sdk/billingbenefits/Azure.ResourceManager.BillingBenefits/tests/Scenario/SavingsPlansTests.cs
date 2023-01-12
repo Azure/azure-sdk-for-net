@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.BillingBenefits.Models;
 using Azure.ResourceManager.Resources;
@@ -13,7 +14,7 @@ namespace Azure.ResourceManager.BillingBenefits.Tests
 {
     public class SavingsPlansTests : BillingBenefitsManagementTestBase
     {
-        private TenantResource _tenant { get; set; }
+        private TenantResource _tenant;
 
         public SavingsPlansTests(bool isAsync) : base(isAsync)
         {
@@ -36,8 +37,8 @@ namespace Azure.ResourceManager.BillingBenefits.Tests
         [RecordedTest]
         public async Task TestListSavingsPlans()
         {
-            var response = _tenant.GetSavingsPlanModelsAsync();
-            List<SavingsPlanModelResource> savingsPlanModelResources = await response.ToEnumerableAsync();
+            var response = _tenant.GetBillingBenefitsSavingsPlansAsync();
+            List<BillingBenefitsSavingsPlanResource> savingsPlanModelResources = await response.ToEnumerableAsync();
 
             Assert.Greater(savingsPlanModelResources.Count, 0);
             savingsPlanModelResources.ForEach(model =>
@@ -50,14 +51,14 @@ namespace Azure.ResourceManager.BillingBenefits.Tests
         [RecordedTest]
         public async Task TestListSavingsPlansWithSelectedState()
         {
-            var response = _tenant.GetSavingsPlanModelsAsync(selectedState: "Succeeded");
-            List<SavingsPlanModelResource> savingsPlanModelResources = await response.ToEnumerableAsync();
+            var response = _tenant.GetBillingBenefitsSavingsPlansAsync(selectedState: "Succeeded");
+            List<BillingBenefitsSavingsPlanResource> savingsPlanModelResources = await response.ToEnumerableAsync();
 
             Assert.Greater(savingsPlanModelResources.Count, 0);
             savingsPlanModelResources.ForEach(model =>
             {
                 Assert.IsTrue(model.HasData);
-                Assert.AreEqual(ProvisioningState.Succeeded, model.Data.ProvisioningState);
+                Assert.AreEqual(BillingBenefitsProvisioningState.Succeeded, model.Data.ProvisioningState);
                 ValidateResponseProperties(model);
             });
         }
@@ -66,13 +67,13 @@ namespace Azure.ResourceManager.BillingBenefits.Tests
         [RecordedTest]
         public async Task TestListSavingsPlansInSavingsPlanOrder()
         {
-            var response = await _tenant.GetSavingsPlanOrderModelAsync("b538c0a7-b852-4ff8-aa3a-1d91dad90d2a");
+            var response = await _tenant.GetBillingBenefitsSavingsPlanOrderAsync("b538c0a7-b852-4ff8-aa3a-1d91dad90d2a");
 
             Assert.AreEqual(200, response.GetRawResponse().Status);
             Assert.NotNull(response.Value);
 
-            var resources = response.Value.GetSavingsPlanModels().GetAllAsync();
-            List<SavingsPlanModelResource> models = await resources.ToEnumerableAsync();
+            var resources = response.Value.GetBillingBenefitsSavingsPlans().GetAllAsync();
+            List<BillingBenefitsSavingsPlanResource> models = await resources.ToEnumerableAsync();
 
             Assert.Greater(models.Count, 0);
             models.ForEach(model =>
@@ -85,12 +86,12 @@ namespace Azure.ResourceManager.BillingBenefits.Tests
         [RecordedTest]
         public async Task TestGetSavingsPlan()
         {
-            var response = await _tenant.GetSavingsPlanOrderModelAsync("b538c0a7-b852-4ff8-aa3a-1d91dad90d2a");
+            var response = await _tenant.GetBillingBenefitsSavingsPlanOrderAsync("b538c0a7-b852-4ff8-aa3a-1d91dad90d2a");
 
             Assert.AreEqual(200, response.GetRawResponse().Status);
             Assert.NotNull(response.Value);
 
-            var modelResponse = await response.Value.GetSavingsPlanModelAsync("2035abf9-4697-4220-b158-dbff2a0dc073");
+            var modelResponse = await response.Value.GetBillingBenefitsSavingsPlanAsync("2035abf9-4697-4220-b158-dbff2a0dc073");
 
             Assert.AreEqual(200, modelResponse.GetRawResponse().Status);
             Assert.NotNull(modelResponse.Value);
@@ -102,21 +103,21 @@ namespace Azure.ResourceManager.BillingBenefits.Tests
         [RecordedTest]
         public async Task TestUpdateSavingsPlan()
         {
-            var response = await _tenant.GetSavingsPlanOrderModelAsync("b538c0a7-b852-4ff8-aa3a-1d91dad90d2a");
+            var response = await _tenant.GetBillingBenefitsSavingsPlanOrderAsync("b538c0a7-b852-4ff8-aa3a-1d91dad90d2a");
 
             Assert.AreEqual(200, response.GetRawResponse().Status);
             Assert.NotNull(response.Value);
 
-            var modelResponse = await response.Value.GetSavingsPlanModelAsync("2035abf9-4697-4220-b158-dbff2a0dc073");
+            var modelResponse = await response.Value.GetBillingBenefitsSavingsPlanAsync("2035abf9-4697-4220-b158-dbff2a0dc073");
 
             Assert.AreEqual(200, modelResponse.GetRawResponse().Status);
             Assert.NotNull(modelResponse.Value);
 
             var modelResource = modelResponse.Value;
             var originalName = modelResource.Data.DisplayName;
-            var updateProperties = new SavingsPlanModelPatch
+            var updateProperties = new BillingBenefitsSavingsPlanPatch
             {
-                Properties = new SavingsPlanUpdateRequestProperties
+                Properties = new BillingBenefitsSavingsPlanPatchProperties
                 {
                     DisplayName = originalName + "New"
                 }
@@ -126,7 +127,7 @@ namespace Azure.ResourceManager.BillingBenefits.Tests
             Assert.AreEqual(200, updateReponse.GetRawResponse().Status);
             Assert.NotNull(updateReponse.Value);
 
-            var newModelResponse = await response.Value.GetSavingsPlanModelAsync("2035abf9-4697-4220-b158-dbff2a0dc073");
+            var newModelResponse = await response.Value.GetBillingBenefitsSavingsPlanAsync("2035abf9-4697-4220-b158-dbff2a0dc073");
             Assert.AreEqual(200, newModelResponse.GetRawResponse().Status);
             Assert.NotNull(newModelResponse.Value);
             Assert.IsNotEmpty(newModelResponse.Value.Data.DisplayName);
@@ -138,42 +139,42 @@ namespace Azure.ResourceManager.BillingBenefits.Tests
         [RecordedTest]
         public async Task TestUpdateSavingsPlanWithRenewSetting()
         {
-            var response = await _tenant.GetSavingsPlanOrderModelAsync("b538c0a7-b852-4ff8-aa3a-1d91dad90d2a");
+            var response = await _tenant.GetBillingBenefitsSavingsPlanOrderAsync("b538c0a7-b852-4ff8-aa3a-1d91dad90d2a");
 
             Assert.AreEqual(200, response.GetRawResponse().Status);
             Assert.NotNull(response.Value);
 
-            var modelResponse = await response.Value.GetSavingsPlanModelAsync("2035abf9-4697-4220-b158-dbff2a0dc073");
+            var modelResponse = await response.Value.GetBillingBenefitsSavingsPlanAsync("2035abf9-4697-4220-b158-dbff2a0dc073");
 
             Assert.AreEqual(200, modelResponse.GetRawResponse().Status);
             Assert.NotNull(modelResponse.Value);
 
             var modelResource = modelResponse.Value;
-            var updateProperties = new SavingsPlanModelPatch
+            var updateProperties = new BillingBenefitsSavingsPlanPatch
             {
-                Properties = new SavingsPlanUpdateRequestProperties
+                Properties = new BillingBenefitsSavingsPlanPatchProperties
                 {
-                    Renew = true,
+                    IsRenewed = true,
                     RenewProperties = new RenewProperties
                     {
-                        PurchaseProperties = new PurchaseRequest
+                        PurchaseProperties = new BillingBenefitsPurchaseContent
                         {
                             Sku = new BillingBenefitsSku("Compute_Savings_Plan"),
                             DisplayName = "TestRenewSP",
-                            BillingScopeId = "/subscriptions/eef82110-c91b-4395-9420-fcfcbefc5a47",
-                            Term = new Term("P1Y"),
-                            BillingPlan = new BillingPlan("P1M"),
-                            AppliedScopeType = AppliedScopeType.Single,
-                            Commitment = new Commitment
+                            BillingScopeId = new ResourceIdentifier("/subscriptions/eef82110-c91b-4395-9420-fcfcbefc5a47"),
+                            Term = new BillingBenefitsTerm("P1Y"),
+                            BillingPlan = new BillingBenefitsBillingPlan("P1M"),
+                            AppliedScopeType = BillingBenefitsAppliedScopeType.Single,
+                            Commitment = new BillingBenefitsCommitment
                             {
                                 Grain = "Hourly",
                                 CurrencyCode = "USD",
                                 Amount = 0.001
                             },
-                            Renew = true,
-                            AppliedScopeProperties = new AppliedScopeProperties
+                            IsRenewed = true,
+                            AppliedScopeProperties = new BillingBenefitsAppliedScopeProperties
                             {
-                                ResourceGroupId = "/subscriptions/eef82110-c91b-4395-9420-fcfcbefc5a47/resourcegroups/TestRG"
+                                ResourceGroupId = new ResourceIdentifier("/subscriptions/eef82110-c91b-4395-9420-fcfcbefc5a47/resourcegroups/TestRG")
                             }
                         }
                     }
@@ -185,7 +186,7 @@ namespace Azure.ResourceManager.BillingBenefits.Tests
             Assert.NotNull(updateReponse.Value);
 
             // Get renew properties
-            var newModelResponse = await response.Value.GetSavingsPlanModelAsync("2035abf9-4697-4220-b158-dbff2a0dc073", "renewProperties");
+            var newModelResponse = await response.Value.GetBillingBenefitsSavingsPlanAsync("2035abf9-4697-4220-b158-dbff2a0dc073", "renewProperties");
             Assert.AreEqual(200, newModelResponse.GetRawResponse().Status);
             Assert.NotNull(newModelResponse.Value);
             Assert.IsNotEmpty(newModelResponse.Value.Data.DisplayName);
@@ -198,45 +199,43 @@ namespace Azure.ResourceManager.BillingBenefits.Tests
         [RecordedTest]
         public async Task TestValidateSavingsPlanUpdate()
         {
-            var response = await _tenant.GetSavingsPlanOrderModelAsync("b538c0a7-b852-4ff8-aa3a-1d91dad90d2a");
+            var response = await _tenant.GetBillingBenefitsSavingsPlanOrderAsync("b538c0a7-b852-4ff8-aa3a-1d91dad90d2a");
 
             Assert.AreEqual(200, response.GetRawResponse().Status);
             Assert.NotNull(response.Value);
 
-            var modelResponse = await response.Value.GetSavingsPlanModelAsync("2035abf9-4697-4220-b158-dbff2a0dc073");
+            var modelResponse = await response.Value.GetBillingBenefitsSavingsPlanAsync("2035abf9-4697-4220-b158-dbff2a0dc073");
 
             Assert.AreEqual(200, modelResponse.GetRawResponse().Status);
             Assert.NotNull(modelResponse.Value);
             var model = modelResponse.Value;
             var validateContent = new SavingsPlanUpdateValidateContent();
-            validateContent.Benefits.Add(new SavingsPlanUpdateRequestProperties
+            validateContent.Benefits.Add(new BillingBenefitsSavingsPlanPatchProperties
             {
-                AppliedScopeType = AppliedScopeType.Single,
-                AppliedScopeProperties = new AppliedScopeProperties
+                AppliedScopeType = BillingBenefitsAppliedScopeType.Single,
+                AppliedScopeProperties = new BillingBenefitsAppliedScopeProperties
                 {
-                    SubscriptionId = "/subscriptions/eef82110-c91b-4395-9420-fcfcbefc5a47"
+                    SubscriptionId = new ResourceIdentifier("/subscriptions/eef82110-c91b-4395-9420-fcfcbefc5a47")
                 }
             });
 
-            var validateResponse = await model.ValidateUpdateAsync(validateContent);
+            var validateResponse = await model.ValidateUpdateAsync(validateContent).ToEnumerableAsync();
 
-            Assert.AreEqual(200, validateResponse.GetRawResponse().Status);
-            Assert.NotNull(validateResponse.Value);
-            Assert.NotNull(validateResponse.Value.Benefits);
-            Assert.AreEqual(1, validateResponse.Value.Benefits.Count);
-            Assert.IsTrue(validateResponse.Value.Benefits[0].Valid);
+            Assert.NotNull(validateResponse);
+            Assert.AreEqual(1, validateResponse.Count);
+            Assert.IsTrue(validateResponse[0].IsValid);
         }
 
-        private void ValidateResponseProperties(SavingsPlanModelResource model)
+        private void ValidateResponseProperties(BillingBenefitsSavingsPlanResource model)
         {
             Assert.IsTrue(model.HasData);
-            Assert.AreEqual("/subscriptions/eef82110-c91b-4395-9420-fcfcbefc5a47", model.Data.BillingScopeId);
+            Assert.AreEqual("/subscriptions/eef82110-c91b-4395-9420-fcfcbefc5a47", model.Data.BillingScopeId.ToString());
             Assert.NotNull(model.Data.Commitment);
             Assert.IsNotEmpty(model.Data.Commitment.CurrencyCode);
-            Assert.AreEqual(CommitmentGrain.Hourly, model.Data.Commitment.Grain);
+            Assert.AreEqual(BillingBenefitsCommitmentGrain.Hourly, model.Data.Commitment.Grain);
             Assert.Greater(model.Data.Commitment.Amount, 0);
             Assert.NotNull(model.Data.Id);
-            Assert.NotNull(model.Data.Renew);
+            Assert.NotNull(model.Data.IsRenewed);
             Assert.IsNotEmpty(model.Data.Name);
             Assert.IsNotEmpty(model.Data.DisplayName);
             Assert.NotNull(model.Data.ResourceType);
@@ -253,8 +252,8 @@ namespace Azure.ResourceManager.BillingBenefits.Tests
             Assert.NotNull(model.Data.ProvisioningState);
             Assert.NotNull(model.Data.PurchaseOn);
             Assert.NotNull(model.Data.BenefitStartOn);
-            Assert.NotNull(model.Data.EffectiveOn);
-            Assert.NotNull(model.Data.ExpiryOn);
+            Assert.NotNull(model.Data.EffectOn);
+            Assert.NotNull(model.Data.ExpireOn);
         }
     }
 }

@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -120,22 +119,8 @@ namespace Azure.ResourceManager.AgFoodPlatform
         /// <returns> An async collection of <see cref="AgFoodPlatformPrivateLinkResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<AgFoodPlatformPrivateLinkResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<AgFoodPlatformPrivateLinkResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _agFoodPlatformPrivateLinkResourcePrivateLinkResourcesClientDiagnostics.CreateScope("AgFoodPlatformPrivateLinkResourceCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _agFoodPlatformPrivateLinkResourcePrivateLinkResourcesRestClient.ListByResourceAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new AgFoodPlatformPrivateLinkResource(Client, value)), null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _agFoodPlatformPrivateLinkResourcePrivateLinkResourcesRestClient.CreateListByResourceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new AgFoodPlatformPrivateLinkResource(Client, AgFoodPlatformPrivateLinkResourceData.DeserializeAgFoodPlatformPrivateLinkResourceData(e)), _agFoodPlatformPrivateLinkResourcePrivateLinkResourcesClientDiagnostics, Pipeline, "AgFoodPlatformPrivateLinkResourceCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -147,22 +132,8 @@ namespace Azure.ResourceManager.AgFoodPlatform
         /// <returns> A collection of <see cref="AgFoodPlatformPrivateLinkResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<AgFoodPlatformPrivateLinkResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<AgFoodPlatformPrivateLinkResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _agFoodPlatformPrivateLinkResourcePrivateLinkResourcesClientDiagnostics.CreateScope("AgFoodPlatformPrivateLinkResourceCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _agFoodPlatformPrivateLinkResourcePrivateLinkResourcesRestClient.ListByResource(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new AgFoodPlatformPrivateLinkResource(Client, value)), null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _agFoodPlatformPrivateLinkResourcePrivateLinkResourcesRestClient.CreateListByResourceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new AgFoodPlatformPrivateLinkResource(Client, AgFoodPlatformPrivateLinkResourceData.DeserializeAgFoodPlatformPrivateLinkResourceData(e)), _agFoodPlatformPrivateLinkResourcePrivateLinkResourcesClientDiagnostics, Pipeline, "AgFoodPlatformPrivateLinkResourceCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>

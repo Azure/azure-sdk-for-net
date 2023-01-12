@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -190,37 +189,9 @@ namespace Azure.ResourceManager.Sql
         /// <returns> An async collection of <see cref="ManagedInstanceResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ManagedInstanceResource> GetAllAsync(string expand = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<ManagedInstanceResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _managedInstanceClientDiagnostics.CreateScope("ManagedInstanceCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _managedInstanceRestClient.ListByResourceGroupAsync(Id.SubscriptionId, Id.ResourceGroupName, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ManagedInstanceResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<ManagedInstanceResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _managedInstanceClientDiagnostics.CreateScope("ManagedInstanceCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _managedInstanceRestClient.ListByResourceGroupNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ManagedInstanceResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _managedInstanceRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, expand);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _managedInstanceRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, expand);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ManagedInstanceResource(Client, ManagedInstanceData.DeserializeManagedInstanceData(e)), _managedInstanceClientDiagnostics, Pipeline, "ManagedInstanceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -233,37 +204,9 @@ namespace Azure.ResourceManager.Sql
         /// <returns> A collection of <see cref="ManagedInstanceResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ManagedInstanceResource> GetAll(string expand = null, CancellationToken cancellationToken = default)
         {
-            Page<ManagedInstanceResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _managedInstanceClientDiagnostics.CreateScope("ManagedInstanceCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _managedInstanceRestClient.ListByResourceGroup(Id.SubscriptionId, Id.ResourceGroupName, expand, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ManagedInstanceResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<ManagedInstanceResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _managedInstanceClientDiagnostics.CreateScope("ManagedInstanceCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _managedInstanceRestClient.ListByResourceGroupNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, expand, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ManagedInstanceResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _managedInstanceRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, expand);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _managedInstanceRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, expand);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ManagedInstanceResource(Client, ManagedInstanceData.DeserializeManagedInstanceData(e)), _managedInstanceClientDiagnostics, Pipeline, "ManagedInstanceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

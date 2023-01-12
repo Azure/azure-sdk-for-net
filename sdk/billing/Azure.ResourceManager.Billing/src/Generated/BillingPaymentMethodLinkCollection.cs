@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -129,37 +128,9 @@ namespace Azure.ResourceManager.Billing
         /// <returns> An async collection of <see cref="BillingPaymentMethodLinkResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<BillingPaymentMethodLinkResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<BillingPaymentMethodLinkResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _billingPaymentMethodLinkPaymentMethodsClientDiagnostics.CreateScope("BillingPaymentMethodLinkCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _billingPaymentMethodLinkPaymentMethodsRestClient.ListByBillingProfileAsync(_billingAccountName, _billingProfileName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new BillingPaymentMethodLinkResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<BillingPaymentMethodLinkResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _billingPaymentMethodLinkPaymentMethodsClientDiagnostics.CreateScope("BillingPaymentMethodLinkCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _billingPaymentMethodLinkPaymentMethodsRestClient.ListByBillingProfileNextPageAsync(nextLink, _billingAccountName, _billingProfileName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new BillingPaymentMethodLinkResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _billingPaymentMethodLinkPaymentMethodsRestClient.CreateListByBillingProfileRequest(_billingAccountName, _billingProfileName);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _billingPaymentMethodLinkPaymentMethodsRestClient.CreateListByBillingProfileNextPageRequest(nextLink, _billingAccountName, _billingProfileName);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new BillingPaymentMethodLinkResource(Client, BillingPaymentMethodLinkData.DeserializeBillingPaymentMethodLinkData(e)), _billingPaymentMethodLinkPaymentMethodsClientDiagnostics, Pipeline, "BillingPaymentMethodLinkCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -171,37 +142,9 @@ namespace Azure.ResourceManager.Billing
         /// <returns> A collection of <see cref="BillingPaymentMethodLinkResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<BillingPaymentMethodLinkResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<BillingPaymentMethodLinkResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _billingPaymentMethodLinkPaymentMethodsClientDiagnostics.CreateScope("BillingPaymentMethodLinkCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _billingPaymentMethodLinkPaymentMethodsRestClient.ListByBillingProfile(_billingAccountName, _billingProfileName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new BillingPaymentMethodLinkResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<BillingPaymentMethodLinkResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _billingPaymentMethodLinkPaymentMethodsClientDiagnostics.CreateScope("BillingPaymentMethodLinkCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _billingPaymentMethodLinkPaymentMethodsRestClient.ListByBillingProfileNextPage(nextLink, _billingAccountName, _billingProfileName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new BillingPaymentMethodLinkResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _billingPaymentMethodLinkPaymentMethodsRestClient.CreateListByBillingProfileRequest(_billingAccountName, _billingProfileName);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _billingPaymentMethodLinkPaymentMethodsRestClient.CreateListByBillingProfileNextPageRequest(nextLink, _billingAccountName, _billingProfileName);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new BillingPaymentMethodLinkResource(Client, BillingPaymentMethodLinkData.DeserializeBillingPaymentMethodLinkData(e)), _billingPaymentMethodLinkPaymentMethodsClientDiagnostics, Pipeline, "BillingPaymentMethodLinkCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

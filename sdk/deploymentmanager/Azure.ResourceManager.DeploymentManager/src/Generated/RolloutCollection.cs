@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -190,22 +189,8 @@ namespace Azure.ResourceManager.DeploymentManager
         /// <returns> An async collection of <see cref="RolloutResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<RolloutResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<RolloutResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _rolloutClientDiagnostics.CreateScope("RolloutCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _rolloutRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Select(value => new RolloutResource(Client, value)), null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _rolloutRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new RolloutResource(Client, RolloutData.DeserializeRolloutData(e)), _rolloutClientDiagnostics, Pipeline, "RolloutCollection.GetAll", "", null, cancellationToken);
         }
 
         /// <summary>
@@ -217,22 +202,8 @@ namespace Azure.ResourceManager.DeploymentManager
         /// <returns> A collection of <see cref="RolloutResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<RolloutResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<RolloutResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _rolloutClientDiagnostics.CreateScope("RolloutCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _rolloutRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Select(value => new RolloutResource(Client, value)), null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _rolloutRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new RolloutResource(Client, RolloutData.DeserializeRolloutData(e)), _rolloutClientDiagnostics, Pipeline, "RolloutCollection.GetAll", "", null, cancellationToken);
         }
 
         /// <summary>

@@ -192,22 +192,8 @@ namespace Azure.ResourceManager.Automation
         /// <returns> An async collection of <see cref="SoftwareUpdateConfigurationCollectionItem" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SoftwareUpdateConfigurationCollectionItem> GetAllAsync(string clientRequestId = null, string filter = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<SoftwareUpdateConfigurationCollectionItem>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _softwareUpdateConfigurationClientDiagnostics.CreateScope("SoftwareUpdateConfigurationCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _softwareUpdateConfigurationRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, clientRequestId, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _softwareUpdateConfigurationRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, clientRequestId, filter);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, SoftwareUpdateConfigurationCollectionItem.DeserializeSoftwareUpdateConfigurationCollectionItem, _softwareUpdateConfigurationClientDiagnostics, Pipeline, "SoftwareUpdateConfigurationCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -221,22 +207,8 @@ namespace Azure.ResourceManager.Automation
         /// <returns> A collection of <see cref="SoftwareUpdateConfigurationCollectionItem" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SoftwareUpdateConfigurationCollectionItem> GetAll(string clientRequestId = null, string filter = null, CancellationToken cancellationToken = default)
         {
-            Page<SoftwareUpdateConfigurationCollectionItem> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _softwareUpdateConfigurationClientDiagnostics.CreateScope("SoftwareUpdateConfigurationCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _softwareUpdateConfigurationRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, clientRequestId, filter, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _softwareUpdateConfigurationRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, clientRequestId, filter);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, SoftwareUpdateConfigurationCollectionItem.DeserializeSoftwareUpdateConfigurationCollectionItem, _softwareUpdateConfigurationClientDiagnostics, Pipeline, "SoftwareUpdateConfigurationCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>

@@ -5,9 +5,9 @@ To get started, you'll need a URI to an Azure Managed HSM. See the [README](http
 
 ## Checking status of a full key backup operation
 
-Using the `KeyVaultBackupClient` and a `BackupOperation`, you can check the status and retrieve the result of a previously started `BackupOperation`.
+Using the `KeyVaultBackupClient` and a `KeyVaultBackupOperation`, you can check the status and retrieve the result of a previously started `KeyVaultBackupOperation`.
 For example the `Id` from a started operation on one client can be saved to persistent storage instead of waiting for completion immediately.
-At some later time, another client can retrieve the persisted operation Id and construct a `BackupOperation` using a `KeyVaultBackupClient` and the Id
+At some later time, another client can retrieve the persisted operation Id and construct a `KeyVaultBackupOperation` using a `KeyVaultBackupClient` and the Id
 and check for status or wait for completion.
 
 ```C# Snippet:ResumeBackupAsync
@@ -26,9 +26,9 @@ Uri folderUri = backupResult.Value.FolderUri;
 
 ## Checking status of a full key restore operation
 
-Using the `KeyVaultBackupClient` and a `RestoreOperation`, you can check the status and retrieve the result of a previously started `RestoreOperation`.
+Using the `KeyVaultBackupClient` and a `KeyVaultRestoreOperation`, you can check the status and retrieve the result of a previously started `KeyVaultRestoreOperation`.
 For example the `Id` from a started operation on one client can be saved to persistent storage instead of waiting for completion immediately.
-At some later time, another client can retrieve the persisted operation Id and construct a `RestoreOperation` using a `KeyVaultBackupClient` and the Id
+At some later time, another client can retrieve the persisted operation Id and construct a `KeyVaultRestoreOperation` using a `KeyVaultBackupClient` and the Id
 and check for status or wait for completion.
 
 ```C# Snippet:ResumeRestoreAsync

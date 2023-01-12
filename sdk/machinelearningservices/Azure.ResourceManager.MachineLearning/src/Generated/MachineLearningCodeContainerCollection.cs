@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -187,37 +186,9 @@ namespace Azure.ResourceManager.MachineLearning
         /// <returns> An async collection of <see cref="MachineLearningCodeContainerResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<MachineLearningCodeContainerResource> GetAllAsync(string skip = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<MachineLearningCodeContainerResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _machineLearningCodeContainerCodeContainersClientDiagnostics.CreateScope("MachineLearningCodeContainerCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _machineLearningCodeContainerCodeContainersRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, skip, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new MachineLearningCodeContainerResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<MachineLearningCodeContainerResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _machineLearningCodeContainerCodeContainersClientDiagnostics.CreateScope("MachineLearningCodeContainerCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _machineLearningCodeContainerCodeContainersRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, skip, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new MachineLearningCodeContainerResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _machineLearningCodeContainerCodeContainersRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, skip);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _machineLearningCodeContainerCodeContainersRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, skip);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new MachineLearningCodeContainerResource(Client, MachineLearningCodeContainerData.DeserializeMachineLearningCodeContainerData(e)), _machineLearningCodeContainerCodeContainersClientDiagnostics, Pipeline, "MachineLearningCodeContainerCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -230,37 +201,9 @@ namespace Azure.ResourceManager.MachineLearning
         /// <returns> A collection of <see cref="MachineLearningCodeContainerResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<MachineLearningCodeContainerResource> GetAll(string skip = null, CancellationToken cancellationToken = default)
         {
-            Page<MachineLearningCodeContainerResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _machineLearningCodeContainerCodeContainersClientDiagnostics.CreateScope("MachineLearningCodeContainerCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _machineLearningCodeContainerCodeContainersRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, skip, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new MachineLearningCodeContainerResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<MachineLearningCodeContainerResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _machineLearningCodeContainerCodeContainersClientDiagnostics.CreateScope("MachineLearningCodeContainerCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _machineLearningCodeContainerCodeContainersRestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, skip, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new MachineLearningCodeContainerResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _machineLearningCodeContainerCodeContainersRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, skip);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _machineLearningCodeContainerCodeContainersRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, skip);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new MachineLearningCodeContainerResource(Client, MachineLearningCodeContainerData.DeserializeMachineLearningCodeContainerData(e)), _machineLearningCodeContainerCodeContainersClientDiagnostics, Pipeline, "MachineLearningCodeContainerCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

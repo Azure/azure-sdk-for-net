@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -136,37 +135,9 @@ namespace Azure.ResourceManager.WorkloadMonitor
         /// <returns> An async collection of <see cref="HealthMonitorResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<HealthMonitorResource> GetAllAsync(string filter = null, string expand = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<HealthMonitorResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _healthMonitorClientDiagnostics.CreateScope("HealthMonitorCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _healthMonitorRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, _providerName, _resourceCollectionName, _resourceName, filter, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new HealthMonitorResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<HealthMonitorResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _healthMonitorClientDiagnostics.CreateScope("HealthMonitorCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _healthMonitorRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, _providerName, _resourceCollectionName, _resourceName, filter, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new HealthMonitorResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _healthMonitorRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, _providerName, _resourceCollectionName, _resourceName, filter, expand);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _healthMonitorRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, _providerName, _resourceCollectionName, _resourceName, filter, expand);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new HealthMonitorResource(Client, HealthMonitorData.DeserializeHealthMonitorData(e)), _healthMonitorClientDiagnostics, Pipeline, "HealthMonitorCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -180,37 +151,9 @@ namespace Azure.ResourceManager.WorkloadMonitor
         /// <returns> A collection of <see cref="HealthMonitorResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<HealthMonitorResource> GetAll(string filter = null, string expand = null, CancellationToken cancellationToken = default)
         {
-            Page<HealthMonitorResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _healthMonitorClientDiagnostics.CreateScope("HealthMonitorCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _healthMonitorRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, _providerName, _resourceCollectionName, _resourceName, filter, expand, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new HealthMonitorResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<HealthMonitorResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _healthMonitorClientDiagnostics.CreateScope("HealthMonitorCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _healthMonitorRestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, _providerName, _resourceCollectionName, _resourceName, filter, expand, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new HealthMonitorResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _healthMonitorRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, _providerName, _resourceCollectionName, _resourceName, filter, expand);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _healthMonitorRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, _providerName, _resourceCollectionName, _resourceName, filter, expand);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new HealthMonitorResource(Client, HealthMonitorData.DeserializeHealthMonitorData(e)), _healthMonitorClientDiagnostics, Pipeline, "HealthMonitorCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -187,37 +186,9 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         /// <returns> An async collection of <see cref="DeviceProvisioningServiceResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DeviceProvisioningServiceResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<DeviceProvisioningServiceResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _deviceProvisioningServiceIotDpsResourceClientDiagnostics.CreateScope("DeviceProvisioningServiceCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _deviceProvisioningServiceIotDpsResourceRestClient.ListByResourceGroupAsync(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new DeviceProvisioningServiceResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<DeviceProvisioningServiceResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _deviceProvisioningServiceIotDpsResourceClientDiagnostics.CreateScope("DeviceProvisioningServiceCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _deviceProvisioningServiceIotDpsResourceRestClient.ListByResourceGroupNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new DeviceProvisioningServiceResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _deviceProvisioningServiceIotDpsResourceRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _deviceProvisioningServiceIotDpsResourceRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DeviceProvisioningServiceResource(Client, DeviceProvisioningServiceData.DeserializeDeviceProvisioningServiceData(e)), _deviceProvisioningServiceIotDpsResourceClientDiagnostics, Pipeline, "DeviceProvisioningServiceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -229,37 +200,9 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         /// <returns> A collection of <see cref="DeviceProvisioningServiceResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DeviceProvisioningServiceResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<DeviceProvisioningServiceResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _deviceProvisioningServiceIotDpsResourceClientDiagnostics.CreateScope("DeviceProvisioningServiceCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _deviceProvisioningServiceIotDpsResourceRestClient.ListByResourceGroup(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new DeviceProvisioningServiceResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<DeviceProvisioningServiceResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _deviceProvisioningServiceIotDpsResourceClientDiagnostics.CreateScope("DeviceProvisioningServiceCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _deviceProvisioningServiceIotDpsResourceRestClient.ListByResourceGroupNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new DeviceProvisioningServiceResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _deviceProvisioningServiceIotDpsResourceRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _deviceProvisioningServiceIotDpsResourceRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DeviceProvisioningServiceResource(Client, DeviceProvisioningServiceData.DeserializeDeviceProvisioningServiceData(e)), _deviceProvisioningServiceIotDpsResourceClientDiagnostics, Pipeline, "DeviceProvisioningServiceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

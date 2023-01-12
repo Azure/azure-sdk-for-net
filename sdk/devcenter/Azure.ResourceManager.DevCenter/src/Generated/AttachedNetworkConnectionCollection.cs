@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -187,37 +186,9 @@ namespace Azure.ResourceManager.DevCenter
         /// <returns> An async collection of <see cref="AttachedNetworkConnectionResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<AttachedNetworkConnectionResource> GetAllAsync(int? top = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<AttachedNetworkConnectionResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _attachedNetworkConnectionAttachedNetworksClientDiagnostics.CreateScope("AttachedNetworkConnectionCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _attachedNetworkConnectionAttachedNetworksRestClient.ListByDevCenterAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new AttachedNetworkConnectionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<AttachedNetworkConnectionResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _attachedNetworkConnectionAttachedNetworksClientDiagnostics.CreateScope("AttachedNetworkConnectionCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _attachedNetworkConnectionAttachedNetworksRestClient.ListByDevCenterNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new AttachedNetworkConnectionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _attachedNetworkConnectionAttachedNetworksRestClient.CreateListByDevCenterRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _attachedNetworkConnectionAttachedNetworksRestClient.CreateListByDevCenterNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new AttachedNetworkConnectionResource(Client, AttachedNetworkConnectionData.DeserializeAttachedNetworkConnectionData(e)), _attachedNetworkConnectionAttachedNetworksClientDiagnostics, Pipeline, "AttachedNetworkConnectionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -230,37 +201,9 @@ namespace Azure.ResourceManager.DevCenter
         /// <returns> A collection of <see cref="AttachedNetworkConnectionResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<AttachedNetworkConnectionResource> GetAll(int? top = null, CancellationToken cancellationToken = default)
         {
-            Page<AttachedNetworkConnectionResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _attachedNetworkConnectionAttachedNetworksClientDiagnostics.CreateScope("AttachedNetworkConnectionCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _attachedNetworkConnectionAttachedNetworksRestClient.ListByDevCenter(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new AttachedNetworkConnectionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<AttachedNetworkConnectionResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _attachedNetworkConnectionAttachedNetworksClientDiagnostics.CreateScope("AttachedNetworkConnectionCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _attachedNetworkConnectionAttachedNetworksRestClient.ListByDevCenterNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new AttachedNetworkConnectionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _attachedNetworkConnectionAttachedNetworksRestClient.CreateListByDevCenterRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _attachedNetworkConnectionAttachedNetworksRestClient.CreateListByDevCenterNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new AttachedNetworkConnectionResource(Client, AttachedNetworkConnectionData.DeserializeAttachedNetworkConnectionData(e)), _attachedNetworkConnectionAttachedNetworksClientDiagnostics, Pipeline, "AttachedNetworkConnectionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

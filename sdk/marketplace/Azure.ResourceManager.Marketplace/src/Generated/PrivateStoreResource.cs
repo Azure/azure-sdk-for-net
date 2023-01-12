@@ -410,22 +410,8 @@ namespace Azure.ResourceManager.Marketplace
         /// <returns> An async collection of <see cref="PrivateStoreOfferResult" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<PrivateStoreOfferResult> QueryOffersAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<PrivateStoreOfferResult>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _privateStoreClientDiagnostics.CreateScope("PrivateStoreResource.QueryOffers");
-                scope.Start();
-                try
-                {
-                    var response = await _privateStoreRestClient.QueryOffersAsync(Guid.Parse(Id.Name), cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _privateStoreRestClient.CreateQueryOffersRequest(Guid.Parse(Id.Name));
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, PrivateStoreOfferResult.DeserializePrivateStoreOfferResult, _privateStoreClientDiagnostics, Pipeline, "PrivateStoreResource.QueryOffers", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -437,22 +423,8 @@ namespace Azure.ResourceManager.Marketplace
         /// <returns> A collection of <see cref="PrivateStoreOfferResult" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<PrivateStoreOfferResult> QueryOffers(CancellationToken cancellationToken = default)
         {
-            Page<PrivateStoreOfferResult> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _privateStoreClientDiagnostics.CreateScope("PrivateStoreResource.QueryOffers");
-                scope.Start();
-                try
-                {
-                    var response = _privateStoreRestClient.QueryOffers(Guid.Parse(Id.Name), cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _privateStoreRestClient.CreateQueryOffersRequest(Guid.Parse(Id.Name));
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, PrivateStoreOfferResult.DeserializePrivateStoreOfferResult, _privateStoreClientDiagnostics, Pipeline, "PrivateStoreResource.QueryOffers", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -465,22 +437,8 @@ namespace Azure.ResourceManager.Marketplace
         /// <returns> An async collection of <see cref="PrivateStoreOfferResult" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<PrivateStoreOfferResult> QueryUserOffersAsync(QueryUserOffersContent content = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<PrivateStoreOfferResult>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _privateStoreClientDiagnostics.CreateScope("PrivateStoreResource.QueryUserOffers");
-                scope.Start();
-                try
-                {
-                    var response = await _privateStoreRestClient.QueryUserOffersAsync(Guid.Parse(Id.Name), content, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _privateStoreRestClient.CreateQueryUserOffersRequest(Guid.Parse(Id.Name), content);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, PrivateStoreOfferResult.DeserializePrivateStoreOfferResult, _privateStoreClientDiagnostics, Pipeline, "PrivateStoreResource.QueryUserOffers", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -493,22 +451,8 @@ namespace Azure.ResourceManager.Marketplace
         /// <returns> A collection of <see cref="PrivateStoreOfferResult" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<PrivateStoreOfferResult> QueryUserOffers(QueryUserOffersContent content = null, CancellationToken cancellationToken = default)
         {
-            Page<PrivateStoreOfferResult> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _privateStoreClientDiagnostics.CreateScope("PrivateStoreResource.QueryUserOffers");
-                scope.Start();
-                try
-                {
-                    var response = _privateStoreRestClient.QueryUserOffers(Guid.Parse(Id.Name), content, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _privateStoreRestClient.CreateQueryUserOffersRequest(Guid.Parse(Id.Name), content);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, PrivateStoreOfferResult.DeserializePrivateStoreOfferResult, _privateStoreClientDiagnostics, Pipeline, "PrivateStoreResource.QueryUserOffers", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -803,22 +747,8 @@ namespace Azure.ResourceManager.Marketplace
         /// <returns> An async collection of <see cref="MarketplaceSubscription" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<MarketplaceSubscription> FetchAllMarketplaceSubscriptionsAsync(string nextPageToken = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<MarketplaceSubscription>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _privateStoreClientDiagnostics.CreateScope("PrivateStoreResource.FetchAllMarketplaceSubscriptions");
-                scope.Start();
-                try
-                {
-                    var response = await _privateStoreRestClient.FetchAllSubscriptionsInTenantAsync(Guid.Parse(Id.Name), nextPageToken, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _privateStoreRestClient.CreateFetchAllSubscriptionsInTenantRequest(Guid.Parse(Id.Name), nextPageToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, MarketplaceSubscription.DeserializeMarketplaceSubscription, _privateStoreClientDiagnostics, Pipeline, "PrivateStoreResource.FetchAllMarketplaceSubscriptions", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -831,22 +761,8 @@ namespace Azure.ResourceManager.Marketplace
         /// <returns> A collection of <see cref="MarketplaceSubscription" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<MarketplaceSubscription> FetchAllMarketplaceSubscriptions(string nextPageToken = null, CancellationToken cancellationToken = default)
         {
-            Page<MarketplaceSubscription> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _privateStoreClientDiagnostics.CreateScope("PrivateStoreResource.FetchAllMarketplaceSubscriptions");
-                scope.Start();
-                try
-                {
-                    var response = _privateStoreRestClient.FetchAllSubscriptionsInTenant(Guid.Parse(Id.Name), nextPageToken, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _privateStoreRestClient.CreateFetchAllSubscriptionsInTenantRequest(Guid.Parse(Id.Name), nextPageToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, MarketplaceSubscription.DeserializeMarketplaceSubscription, _privateStoreClientDiagnostics, Pipeline, "PrivateStoreResource.FetchAllMarketplaceSubscriptions", "value", null, cancellationToken);
         }
 
         /// <summary>

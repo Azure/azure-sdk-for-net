@@ -7,7 +7,6 @@
 
 using System;
 using System.Threading;
-using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -51,22 +50,8 @@ namespace Azure.ResourceManager.ResourceMover
         /// <returns> An async collection of <see cref="MoverOperationsDiscovery" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<MoverOperationsDiscovery> GetOperationsDiscoveriesAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<MoverOperationsDiscovery>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = OperationsDiscoveryClientDiagnostics.CreateScope("TenantResourceExtensionClient.GetOperationsDiscoveries");
-                scope.Start();
-                try
-                {
-                    var response = await OperationsDiscoveryRestClient.GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => OperationsDiscoveryRestClient.CreateGetRequest();
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, MoverOperationsDiscovery.DeserializeMoverOperationsDiscovery, OperationsDiscoveryClientDiagnostics, Pipeline, "TenantResourceExtensionClient.GetOperationsDiscoveries", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -77,22 +62,8 @@ namespace Azure.ResourceManager.ResourceMover
         /// <returns> A collection of <see cref="MoverOperationsDiscovery" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<MoverOperationsDiscovery> GetOperationsDiscoveries(CancellationToken cancellationToken = default)
         {
-            Page<MoverOperationsDiscovery> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = OperationsDiscoveryClientDiagnostics.CreateScope("TenantResourceExtensionClient.GetOperationsDiscoveries");
-                scope.Start();
-                try
-                {
-                    var response = OperationsDiscoveryRestClient.Get(cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => OperationsDiscoveryRestClient.CreateGetRequest();
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, MoverOperationsDiscovery.DeserializeMoverOperationsDiscovery, OperationsDiscoveryClientDiagnostics, Pipeline, "TenantResourceExtensionClient.GetOperationsDiscoveries", "value", null, cancellationToken);
         }
     }
 }

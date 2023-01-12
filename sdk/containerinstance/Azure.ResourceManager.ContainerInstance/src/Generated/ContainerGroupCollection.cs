@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -187,37 +186,9 @@ namespace Azure.ResourceManager.ContainerInstance
         /// <returns> An async collection of <see cref="ContainerGroupResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ContainerGroupResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<ContainerGroupResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _containerGroupClientDiagnostics.CreateScope("ContainerGroupCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _containerGroupRestClient.ListByResourceGroupAsync(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ContainerGroupResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<ContainerGroupResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _containerGroupClientDiagnostics.CreateScope("ContainerGroupCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _containerGroupRestClient.ListByResourceGroupNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ContainerGroupResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _containerGroupRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _containerGroupRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ContainerGroupResource(Client, ContainerGroupData.DeserializeContainerGroupData(e)), _containerGroupClientDiagnostics, Pipeline, "ContainerGroupCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -229,37 +200,9 @@ namespace Azure.ResourceManager.ContainerInstance
         /// <returns> A collection of <see cref="ContainerGroupResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ContainerGroupResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<ContainerGroupResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _containerGroupClientDiagnostics.CreateScope("ContainerGroupCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _containerGroupRestClient.ListByResourceGroup(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ContainerGroupResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<ContainerGroupResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _containerGroupClientDiagnostics.CreateScope("ContainerGroupCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _containerGroupRestClient.ListByResourceGroupNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ContainerGroupResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _containerGroupRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _containerGroupRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ContainerGroupResource(Client, ContainerGroupData.DeserializeContainerGroupData(e)), _containerGroupClientDiagnostics, Pipeline, "ContainerGroupCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
