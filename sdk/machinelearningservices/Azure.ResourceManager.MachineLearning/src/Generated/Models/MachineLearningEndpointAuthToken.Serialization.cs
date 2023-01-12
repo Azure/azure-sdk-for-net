@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
 
@@ -15,8 +16,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
         internal static MachineLearningEndpointAuthToken DeserializeMachineLearningEndpointAuthToken(JsonElement element)
         {
             Optional<string> accessToken = default;
-            Optional<long> expiryTimeUtc = default;
-            Optional<long> refreshAfterTimeUtc = default;
+            Optional<DateTimeOffset> expiryTimeUtc = default;
+            Optional<DateTimeOffset> refreshAfterTimeUtc = default;
             Optional<string> tokenType = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -37,7 +38,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    expiryTimeUtc = property.Value.GetInt64();
+                    expiryTimeUtc = property.Value.GetDateTimeOffset("U");
                     continue;
                 }
                 if (property.NameEquals("refreshAfterTimeUtc"))
@@ -47,7 +48,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    refreshAfterTimeUtc = property.Value.GetInt64();
+                    refreshAfterTimeUtc = property.Value.GetDateTimeOffset("U");
                     continue;
                 }
                 if (property.NameEquals("tokenType"))

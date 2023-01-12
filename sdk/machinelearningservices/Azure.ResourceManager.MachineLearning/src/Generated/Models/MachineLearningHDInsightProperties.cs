@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System.Net;
+
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> HDInsight compute properties. </summary>
@@ -19,7 +21,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="sshPort"> Port open for ssh connections on the master node of the cluster. </param>
         /// <param name="address"> Public IP address of the master node of the cluster. </param>
         /// <param name="administratorAccount"> Admin credentials for master node of the cluster. </param>
-        internal MachineLearningHDInsightProperties(int? sshPort, string address, MachineLearningVmSshCredentials administratorAccount)
+        internal MachineLearningHDInsightProperties(int? sshPort, IPAddress address, MachineLearningVmSshCredentials administratorAccount)
         {
             SshPort = sshPort;
             Address = address;
@@ -29,7 +31,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary> Port open for ssh connections on the master node of the cluster. </summary>
         public int? SshPort { get; set; }
         /// <summary> Public IP address of the master node of the cluster. </summary>
-        public string Address { get; set; }
+        public IPAddress Address { get; set; }
         /// <summary> Admin credentials for master node of the cluster. </summary>
         public MachineLearningVmSshCredentials AdministratorAccount { get; set; }
     }

@@ -26,14 +26,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary> Initializes a new instance of MachineLearningCodeConfiguration. </summary>
         /// <param name="codeId"> ARM resource ID of the code asset. </param>
         /// <param name="scoringScript"> [Required] The script to execute on startup. eg. &quot;score.py&quot;. </param>
-        internal MachineLearningCodeConfiguration(string codeId, string scoringScript)
+        internal MachineLearningCodeConfiguration(ResourceIdentifier codeId, string scoringScript)
         {
             CodeId = codeId;
             ScoringScript = scoringScript;
         }
 
         /// <summary> ARM resource ID of the code asset. </summary>
-        public string CodeId { get; set; }
+        public ResourceIdentifier CodeId { get; set; }
         /// <summary> [Required] The script to execute on startup. eg. &quot;score.py&quot;. </summary>
         public string ScoringScript { get; set; }
     }

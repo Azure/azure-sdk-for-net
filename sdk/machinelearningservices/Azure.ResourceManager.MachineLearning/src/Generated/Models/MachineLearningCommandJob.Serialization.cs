@@ -247,7 +247,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         internal static MachineLearningCommandJob DeserializeMachineLearningCommandJob(JsonElement element)
         {
-            Optional<string> codeId = default;
+            Optional<ResourceIdentifier> codeId = default;
             string command = default;
             Optional<MachineLearningDistributionConfiguration> distribution = default;
             ResourceIdentifier environmentId = default;
@@ -278,7 +278,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         codeId = null;
                         continue;
                     }
-                    codeId = property.Value.GetString();
+                    codeId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("command"))

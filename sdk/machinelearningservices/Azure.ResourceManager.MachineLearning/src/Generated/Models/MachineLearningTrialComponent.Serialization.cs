@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    public partial class TrialComponent : IUtf8JsonSerializable
+    public partial class MachineLearningTrialComponent : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -70,12 +70,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
             writer.WriteEndObject();
         }
 
-        internal static TrialComponent DeserializeTrialComponent(JsonElement element)
+        internal static MachineLearningTrialComponent DeserializeMachineLearningTrialComponent(JsonElement element)
         {
-            Optional<string> codeId = default;
+            Optional<ResourceIdentifier> codeId = default;
             string command = default;
             Optional<MachineLearningDistributionConfiguration> distribution = default;
-            string environmentId = default;
+            ResourceIdentifier environmentId = default;
             Optional<IDictionary<string, string>> environmentVariables = default;
             Optional<MachineLearningJobResourceConfiguration> resources = default;
             foreach (var property in element.EnumerateObject())
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         codeId = null;
                         continue;
                     }
-                    codeId = property.Value.GetString();
+                    codeId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("command"))
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (property.NameEquals("environmentId"))
                 {
-                    environmentId = property.Value.GetString();
+                    environmentId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("environmentVariables"))
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     continue;
                 }
             }
-            return new TrialComponent(codeId.Value, command, distribution.Value, environmentId, Optional.ToDictionary(environmentVariables), resources.Value);
+            return new MachineLearningTrialComponent(codeId.Value, command, distribution.Value, environmentId, Optional.ToDictionary(environmentVariables), resources.Value);
         }
     }
 }

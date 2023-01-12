@@ -12,13 +12,13 @@ using Azure.Core;
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> Trial component definition. </summary>
-    public partial class TrialComponent
+    public partial class MachineLearningTrialComponent
     {
-        /// <summary> Initializes a new instance of TrialComponent. </summary>
+        /// <summary> Initializes a new instance of MachineLearningTrialComponent. </summary>
         /// <param name="command"> [Required] The command to execute on startup of the job. eg. &quot;python train.py&quot;. </param>
         /// <param name="environmentId"> [Required] The ARM resource ID of the Environment specification for the job. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="command"/> or <paramref name="environmentId"/> is null. </exception>
-        public TrialComponent(string command, string environmentId)
+        public MachineLearningTrialComponent(string command, ResourceIdentifier environmentId)
         {
             Argument.AssertNotNull(command, nameof(command));
             Argument.AssertNotNull(environmentId, nameof(environmentId));
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             EnvironmentVariables = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of TrialComponent. </summary>
+        /// <summary> Initializes a new instance of MachineLearningTrialComponent. </summary>
         /// <param name="codeId"> ARM resource ID of the code asset. </param>
         /// <param name="command"> [Required] The command to execute on startup of the job. eg. &quot;python train.py&quot;. </param>
         /// <param name="distribution">
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="environmentId"> [Required] The ARM resource ID of the Environment specification for the job. </param>
         /// <param name="environmentVariables"> Environment variables included in the job. </param>
         /// <param name="resources"> Compute Resource configuration for the job. </param>
-        internal TrialComponent(string codeId, string command, MachineLearningDistributionConfiguration distribution, string environmentId, IDictionary<string, string> environmentVariables, MachineLearningJobResourceConfiguration resources)
+        internal MachineLearningTrialComponent(ResourceIdentifier codeId, string command, MachineLearningDistributionConfiguration distribution, ResourceIdentifier environmentId, IDictionary<string, string> environmentVariables, MachineLearningJobResourceConfiguration resources)
         {
             CodeId = codeId;
             Command = command;
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> ARM resource ID of the code asset. </summary>
-        public string CodeId { get; set; }
+        public ResourceIdentifier CodeId { get; set; }
         /// <summary> [Required] The command to execute on startup of the job. eg. &quot;python train.py&quot;. </summary>
         public string Command { get; set; }
         /// <summary>
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// </summary>
         public MachineLearningDistributionConfiguration Distribution { get; set; }
         /// <summary> [Required] The ARM resource ID of the Environment specification for the job. </summary>
-        public string EnvironmentId { get; set; }
+        public ResourceIdentifier EnvironmentId { get; set; }
         /// <summary> Environment variables included in the job. </summary>
         public IDictionary<string, string> EnvironmentVariables { get; set; }
         /// <summary> Compute Resource configuration for the job. </summary>

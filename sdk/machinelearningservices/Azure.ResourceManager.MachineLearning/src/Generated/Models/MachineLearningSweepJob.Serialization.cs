@@ -220,7 +220,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             Optional<IDictionary<string, MachineLearningJobOutput>> outputs = default;
             SamplingAlgorithm samplingAlgorithm = default;
             BinaryData searchSpace = default;
-            TrialComponent trial = default;
+            MachineLearningTrialComponent trial = default;
             Optional<ResourceIdentifier> componentId = default;
             Optional<ResourceIdentifier> computeId = default;
             Optional<string> displayName = default;
@@ -316,7 +316,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (property.NameEquals("trial"))
                 {
-                    trial = TrialComponent.DeserializeTrialComponent(property.Value);
+                    trial = MachineLearningTrialComponent.DeserializeMachineLearningTrialComponent(property.Value);
                     continue;
                 }
                 if (property.NameEquals("componentId"))
