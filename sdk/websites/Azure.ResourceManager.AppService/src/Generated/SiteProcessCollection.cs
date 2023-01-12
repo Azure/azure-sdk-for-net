@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -120,37 +119,9 @@ namespace Azure.ResourceManager.AppService
         /// <returns> An async collection of <see cref="SiteProcessResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SiteProcessResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<SiteProcessResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _siteProcessWebAppsClientDiagnostics.CreateScope("SiteProcessCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _siteProcessWebAppsRestClient.ListProcessesAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new SiteProcessResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<SiteProcessResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _siteProcessWebAppsClientDiagnostics.CreateScope("SiteProcessCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _siteProcessWebAppsRestClient.ListProcessesNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new SiteProcessResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _siteProcessWebAppsRestClient.CreateListProcessesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _siteProcessWebAppsRestClient.CreateListProcessesNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SiteProcessResource(Client, ProcessInfoData.DeserializeProcessInfoData(e)), _siteProcessWebAppsClientDiagnostics, Pipeline, "SiteProcessCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -162,37 +133,9 @@ namespace Azure.ResourceManager.AppService
         /// <returns> A collection of <see cref="SiteProcessResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SiteProcessResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<SiteProcessResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _siteProcessWebAppsClientDiagnostics.CreateScope("SiteProcessCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _siteProcessWebAppsRestClient.ListProcesses(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new SiteProcessResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<SiteProcessResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _siteProcessWebAppsClientDiagnostics.CreateScope("SiteProcessCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _siteProcessWebAppsRestClient.ListProcessesNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new SiteProcessResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _siteProcessWebAppsRestClient.CreateListProcessesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _siteProcessWebAppsRestClient.CreateListProcessesNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SiteProcessResource(Client, ProcessInfoData.DeserializeProcessInfoData(e)), _siteProcessWebAppsClientDiagnostics, Pipeline, "SiteProcessCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

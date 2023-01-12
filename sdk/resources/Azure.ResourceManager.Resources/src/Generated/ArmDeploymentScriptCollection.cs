@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -186,37 +185,9 @@ namespace Azure.ResourceManager.Resources
         /// <returns> An async collection of <see cref="ArmDeploymentScriptResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ArmDeploymentScriptResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<ArmDeploymentScriptResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _armDeploymentScriptDeploymentScriptsClientDiagnostics.CreateScope("ArmDeploymentScriptCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _armDeploymentScriptDeploymentScriptsRestClient.ListByResourceGroupAsync(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ArmDeploymentScriptResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<ArmDeploymentScriptResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _armDeploymentScriptDeploymentScriptsClientDiagnostics.CreateScope("ArmDeploymentScriptCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _armDeploymentScriptDeploymentScriptsRestClient.ListByResourceGroupNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ArmDeploymentScriptResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _armDeploymentScriptDeploymentScriptsRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _armDeploymentScriptDeploymentScriptsRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ArmDeploymentScriptResource(Client, ArmDeploymentScriptData.DeserializeArmDeploymentScriptData(e)), _armDeploymentScriptDeploymentScriptsClientDiagnostics, Pipeline, "ArmDeploymentScriptCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -228,37 +199,9 @@ namespace Azure.ResourceManager.Resources
         /// <returns> A collection of <see cref="ArmDeploymentScriptResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ArmDeploymentScriptResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<ArmDeploymentScriptResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _armDeploymentScriptDeploymentScriptsClientDiagnostics.CreateScope("ArmDeploymentScriptCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _armDeploymentScriptDeploymentScriptsRestClient.ListByResourceGroup(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ArmDeploymentScriptResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<ArmDeploymentScriptResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _armDeploymentScriptDeploymentScriptsClientDiagnostics.CreateScope("ArmDeploymentScriptCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _armDeploymentScriptDeploymentScriptsRestClient.ListByResourceGroupNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ArmDeploymentScriptResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _armDeploymentScriptDeploymentScriptsRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _armDeploymentScriptDeploymentScriptsRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ArmDeploymentScriptResource(Client, ArmDeploymentScriptData.DeserializeArmDeploymentScriptData(e)), _armDeploymentScriptDeploymentScriptsClientDiagnostics, Pipeline, "ArmDeploymentScriptCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

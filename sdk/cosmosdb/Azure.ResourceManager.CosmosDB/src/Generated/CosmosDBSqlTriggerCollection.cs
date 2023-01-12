@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -187,22 +186,8 @@ namespace Azure.ResourceManager.CosmosDB
         /// <returns> An async collection of <see cref="CosmosDBSqlTriggerResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<CosmosDBSqlTriggerResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<CosmosDBSqlTriggerResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _cosmosDBSqlTriggerSqlResourcesClientDiagnostics.CreateScope("CosmosDBSqlTriggerCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _cosmosDBSqlTriggerSqlResourcesRestClient.ListSqlTriggersAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new CosmosDBSqlTriggerResource(Client, value)), null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _cosmosDBSqlTriggerSqlResourcesRestClient.CreateListSqlTriggersRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new CosmosDBSqlTriggerResource(Client, CosmosDBSqlTriggerData.DeserializeCosmosDBSqlTriggerData(e)), _cosmosDBSqlTriggerSqlResourcesClientDiagnostics, Pipeline, "CosmosDBSqlTriggerCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -214,22 +199,8 @@ namespace Azure.ResourceManager.CosmosDB
         /// <returns> A collection of <see cref="CosmosDBSqlTriggerResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<CosmosDBSqlTriggerResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<CosmosDBSqlTriggerResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _cosmosDBSqlTriggerSqlResourcesClientDiagnostics.CreateScope("CosmosDBSqlTriggerCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _cosmosDBSqlTriggerSqlResourcesRestClient.ListSqlTriggers(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new CosmosDBSqlTriggerResource(Client, value)), null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _cosmosDBSqlTriggerSqlResourcesRestClient.CreateListSqlTriggersRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new CosmosDBSqlTriggerResource(Client, CosmosDBSqlTriggerData.DeserializeCosmosDBSqlTriggerData(e)), _cosmosDBSqlTriggerSqlResourcesClientDiagnostics, Pipeline, "CosmosDBSqlTriggerCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>

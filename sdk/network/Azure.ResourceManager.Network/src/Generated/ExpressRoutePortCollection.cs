@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -187,37 +186,9 @@ namespace Azure.ResourceManager.Network
         /// <returns> An async collection of <see cref="ExpressRoutePortResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ExpressRoutePortResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<ExpressRoutePortResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _expressRoutePortClientDiagnostics.CreateScope("ExpressRoutePortCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _expressRoutePortRestClient.ListByResourceGroupAsync(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ExpressRoutePortResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<ExpressRoutePortResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _expressRoutePortClientDiagnostics.CreateScope("ExpressRoutePortCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _expressRoutePortRestClient.ListByResourceGroupNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ExpressRoutePortResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _expressRoutePortRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _expressRoutePortRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ExpressRoutePortResource(Client, ExpressRoutePortData.DeserializeExpressRoutePortData(e)), _expressRoutePortClientDiagnostics, Pipeline, "ExpressRoutePortCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -229,37 +200,9 @@ namespace Azure.ResourceManager.Network
         /// <returns> A collection of <see cref="ExpressRoutePortResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ExpressRoutePortResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<ExpressRoutePortResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _expressRoutePortClientDiagnostics.CreateScope("ExpressRoutePortCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _expressRoutePortRestClient.ListByResourceGroup(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ExpressRoutePortResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<ExpressRoutePortResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _expressRoutePortClientDiagnostics.CreateScope("ExpressRoutePortCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _expressRoutePortRestClient.ListByResourceGroupNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ExpressRoutePortResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _expressRoutePortRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _expressRoutePortRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ExpressRoutePortResource(Client, ExpressRoutePortData.DeserializeExpressRoutePortData(e)), _expressRoutePortClientDiagnostics, Pipeline, "ExpressRoutePortCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

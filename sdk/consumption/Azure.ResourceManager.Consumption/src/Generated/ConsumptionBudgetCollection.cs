@@ -8,7 +8,6 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -176,37 +175,9 @@ namespace Azure.ResourceManager.Consumption
         /// <returns> An async collection of <see cref="ConsumptionBudgetResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ConsumptionBudgetResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<ConsumptionBudgetResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _consumptionBudgetBudgetsClientDiagnostics.CreateScope("ConsumptionBudgetCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _consumptionBudgetBudgetsRestClient.ListAsync(Id, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ConsumptionBudgetResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<ConsumptionBudgetResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _consumptionBudgetBudgetsClientDiagnostics.CreateScope("ConsumptionBudgetCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _consumptionBudgetBudgetsRestClient.ListNextPageAsync(nextLink, Id, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ConsumptionBudgetResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _consumptionBudgetBudgetsRestClient.CreateListRequest(Id);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _consumptionBudgetBudgetsRestClient.CreateListNextPageRequest(nextLink, Id);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ConsumptionBudgetResource(Client, ConsumptionBudgetData.DeserializeConsumptionBudgetData(e)), _consumptionBudgetBudgetsClientDiagnostics, Pipeline, "ConsumptionBudgetCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -218,37 +189,9 @@ namespace Azure.ResourceManager.Consumption
         /// <returns> A collection of <see cref="ConsumptionBudgetResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ConsumptionBudgetResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<ConsumptionBudgetResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _consumptionBudgetBudgetsClientDiagnostics.CreateScope("ConsumptionBudgetCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _consumptionBudgetBudgetsRestClient.List(Id, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ConsumptionBudgetResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<ConsumptionBudgetResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _consumptionBudgetBudgetsClientDiagnostics.CreateScope("ConsumptionBudgetCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _consumptionBudgetBudgetsRestClient.ListNextPage(nextLink, Id, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ConsumptionBudgetResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _consumptionBudgetBudgetsRestClient.CreateListRequest(Id);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _consumptionBudgetBudgetsRestClient.CreateListNextPageRequest(nextLink, Id);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ConsumptionBudgetResource(Client, ConsumptionBudgetData.DeserializeConsumptionBudgetData(e)), _consumptionBudgetBudgetsClientDiagnostics, Pipeline, "ConsumptionBudgetCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
