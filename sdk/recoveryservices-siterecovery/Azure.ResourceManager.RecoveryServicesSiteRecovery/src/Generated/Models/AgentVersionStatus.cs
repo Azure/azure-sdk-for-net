@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary> A value indicating whether security update required. </summary>
+    /// <summary>
+    /// A value indicating whether security update required.
+    /// Serialized Name: AgentVersionStatus
+    /// </summary>
     public readonly partial struct AgentVersionStatus : IEquatable<AgentVersionStatus>
     {
         private readonly string _value;
@@ -28,15 +31,30 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         private const string UpdateRequiredValue = "UpdateRequired";
         private const string SecurityUpdateRequiredValue = "SecurityUpdateRequired";
 
-        /// <summary> Supported. </summary>
+        /// <summary>
+        /// Supported
+        /// Serialized Name: AgentVersionStatus.Supported
+        /// </summary>
         public static AgentVersionStatus Supported { get; } = new AgentVersionStatus(SupportedValue);
-        /// <summary> NotSupported. </summary>
+        /// <summary>
+        /// NotSupported
+        /// Serialized Name: AgentVersionStatus.NotSupported
+        /// </summary>
         public static AgentVersionStatus NotSupported { get; } = new AgentVersionStatus(NotSupportedValue);
-        /// <summary> Deprecated. </summary>
+        /// <summary>
+        /// Deprecated
+        /// Serialized Name: AgentVersionStatus.Deprecated
+        /// </summary>
         public static AgentVersionStatus Deprecated { get; } = new AgentVersionStatus(DeprecatedValue);
-        /// <summary> UpdateRequired. </summary>
+        /// <summary>
+        /// UpdateRequired
+        /// Serialized Name: AgentVersionStatus.UpdateRequired
+        /// </summary>
         public static AgentVersionStatus UpdateRequired { get; } = new AgentVersionStatus(UpdateRequiredValue);
-        /// <summary> SecurityUpdateRequired. </summary>
+        /// <summary>
+        /// SecurityUpdateRequired
+        /// Serialized Name: AgentVersionStatus.SecurityUpdateRequired
+        /// </summary>
         public static AgentVersionStatus SecurityUpdateRequired { get; } = new AgentVersionStatus(SecurityUpdateRequiredValue);
         /// <summary> Determines if two <see cref="AgentVersionStatus"/> values are the same. </summary>
         public static bool operator ==(AgentVersionStatus left, AgentVersionStatus right) => left.Equals(right);

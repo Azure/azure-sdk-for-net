@@ -11,7 +11,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary> Mars agent details. </summary>
+    /// <summary>
+    /// Mars agent details.
+    /// Serialized Name: MarsAgentDetails
+    /// </summary>
     public partial class MarsAgentDetails
     {
         /// <summary> Initializes a new instance of MarsAgentDetails. </summary>
@@ -21,15 +24,42 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> Initializes a new instance of MarsAgentDetails. </summary>
-        /// <param name="id"> The Mars agent Id. </param>
-        /// <param name="name"> The Mars agent name. </param>
-        /// <param name="biosId"> The Mars agent Bios Id. </param>
-        /// <param name="fabricObjectId"> The fabric object Id. </param>
-        /// <param name="fqdn"> The Mars agent Fqdn. </param>
-        /// <param name="version"> The version. </param>
-        /// <param name="lastHeartbeatUtc"> The last heartbeat received from the Mars agent. </param>
-        /// <param name="health"> The health of the Mars agent. </param>
-        /// <param name="healthErrors"> The health errors. </param>
+        /// <param name="id">
+        /// The Mars agent Id.
+        /// Serialized Name: MarsAgentDetails.id
+        /// </param>
+        /// <param name="name">
+        /// The Mars agent name.
+        /// Serialized Name: MarsAgentDetails.name
+        /// </param>
+        /// <param name="biosId">
+        /// The Mars agent Bios Id.
+        /// Serialized Name: MarsAgentDetails.biosId
+        /// </param>
+        /// <param name="fabricObjectId">
+        /// The fabric object Id.
+        /// Serialized Name: MarsAgentDetails.fabricObjectId
+        /// </param>
+        /// <param name="fqdn">
+        /// The Mars agent Fqdn.
+        /// Serialized Name: MarsAgentDetails.fqdn
+        /// </param>
+        /// <param name="version">
+        /// The version.
+        /// Serialized Name: MarsAgentDetails.version
+        /// </param>
+        /// <param name="lastHeartbeatUtc">
+        /// The last heartbeat received from the Mars agent.
+        /// Serialized Name: MarsAgentDetails.lastHeartbeatUtc
+        /// </param>
+        /// <param name="health">
+        /// The health of the Mars agent.
+        /// Serialized Name: MarsAgentDetails.health
+        /// </param>
+        /// <param name="healthErrors">
+        /// The health errors.
+        /// Serialized Name: MarsAgentDetails.healthErrors
+        /// </param>
         internal MarsAgentDetails(string id, string name, string biosId, string fabricObjectId, string fqdn, string version, DateTimeOffset? lastHeartbeatUtc, ProtectionHealth? health, IReadOnlyList<HealthError> healthErrors)
         {
             Id = id;
@@ -43,23 +73,50 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             HealthErrors = healthErrors;
         }
 
-        /// <summary> The Mars agent Id. </summary>
+        /// <summary>
+        /// The Mars agent Id.
+        /// Serialized Name: MarsAgentDetails.id
+        /// </summary>
         public string Id { get; }
-        /// <summary> The Mars agent name. </summary>
+        /// <summary>
+        /// The Mars agent name.
+        /// Serialized Name: MarsAgentDetails.name
+        /// </summary>
         public string Name { get; }
-        /// <summary> The Mars agent Bios Id. </summary>
+        /// <summary>
+        /// The Mars agent Bios Id.
+        /// Serialized Name: MarsAgentDetails.biosId
+        /// </summary>
         public string BiosId { get; }
-        /// <summary> The fabric object Id. </summary>
+        /// <summary>
+        /// The fabric object Id.
+        /// Serialized Name: MarsAgentDetails.fabricObjectId
+        /// </summary>
         public string FabricObjectId { get; }
-        /// <summary> The Mars agent Fqdn. </summary>
+        /// <summary>
+        /// The Mars agent Fqdn.
+        /// Serialized Name: MarsAgentDetails.fqdn
+        /// </summary>
         public string Fqdn { get; }
-        /// <summary> The version. </summary>
+        /// <summary>
+        /// The version.
+        /// Serialized Name: MarsAgentDetails.version
+        /// </summary>
         public string Version { get; }
-        /// <summary> The last heartbeat received from the Mars agent. </summary>
+        /// <summary>
+        /// The last heartbeat received from the Mars agent.
+        /// Serialized Name: MarsAgentDetails.lastHeartbeatUtc
+        /// </summary>
         public DateTimeOffset? LastHeartbeatUtc { get; }
-        /// <summary> The health of the Mars agent. </summary>
+        /// <summary>
+        /// The health of the Mars agent.
+        /// Serialized Name: MarsAgentDetails.health
+        /// </summary>
         public ProtectionHealth? Health { get; }
-        /// <summary> The health errors. </summary>
+        /// <summary>
+        /// The health errors.
+        /// Serialized Name: MarsAgentDetails.healthErrors
+        /// </summary>
         public IReadOnlyList<HealthError> HealthErrors { get; }
     }
 }

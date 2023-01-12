@@ -10,7 +10,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary> class to define the health summary of the Vault. </summary>
+    /// <summary>
+    /// class to define the health summary of the Vault.
+    /// Serialized Name: VaultHealthProperties
+    /// </summary>
     public partial class VaultHealthProperties
     {
         /// <summary> Initializes a new instance of VaultHealthProperties. </summary>
@@ -20,10 +23,22 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> Initializes a new instance of VaultHealthProperties. </summary>
-        /// <param name="vaultErrors"> The list of errors on the vault. </param>
-        /// <param name="protectedItemsHealth"> The list of the health detail of the protected items in the vault. </param>
-        /// <param name="fabricsHealth"> The list of the health detail of the fabrics in the vault. </param>
-        /// <param name="containersHealth"> The list of the health detail of the containers in the vault. </param>
+        /// <param name="vaultErrors">
+        /// The list of errors on the vault.
+        /// Serialized Name: VaultHealthProperties.vaultErrors
+        /// </param>
+        /// <param name="protectedItemsHealth">
+        /// The list of the health detail of the protected items in the vault.
+        /// Serialized Name: VaultHealthProperties.protectedItemsHealth
+        /// </param>
+        /// <param name="fabricsHealth">
+        /// The list of the health detail of the fabrics in the vault.
+        /// Serialized Name: VaultHealthProperties.fabricsHealth
+        /// </param>
+        /// <param name="containersHealth">
+        /// The list of the health detail of the containers in the vault.
+        /// Serialized Name: VaultHealthProperties.containersHealth
+        /// </param>
         internal VaultHealthProperties(IReadOnlyList<HealthError> vaultErrors, ResourceHealthSummary protectedItemsHealth, ResourceHealthSummary fabricsHealth, ResourceHealthSummary containersHealth)
         {
             VaultErrors = vaultErrors;
@@ -32,13 +47,25 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             ContainersHealth = containersHealth;
         }
 
-        /// <summary> The list of errors on the vault. </summary>
+        /// <summary>
+        /// The list of errors on the vault.
+        /// Serialized Name: VaultHealthProperties.vaultErrors
+        /// </summary>
         public IReadOnlyList<HealthError> VaultErrors { get; }
-        /// <summary> The list of the health detail of the protected items in the vault. </summary>
+        /// <summary>
+        /// The list of the health detail of the protected items in the vault.
+        /// Serialized Name: VaultHealthProperties.protectedItemsHealth
+        /// </summary>
         public ResourceHealthSummary ProtectedItemsHealth { get; }
-        /// <summary> The list of the health detail of the fabrics in the vault. </summary>
+        /// <summary>
+        /// The list of the health detail of the fabrics in the vault.
+        /// Serialized Name: VaultHealthProperties.fabricsHealth
+        /// </summary>
         public ResourceHealthSummary FabricsHealth { get; }
-        /// <summary> The list of the health detail of the containers in the vault. </summary>
+        /// <summary>
+        /// The list of the health detail of the containers in the vault.
+        /// Serialized Name: VaultHealthProperties.containersHealth
+        /// </summary>
         public ResourceHealthSummary ContainersHealth { get; }
     }
 }

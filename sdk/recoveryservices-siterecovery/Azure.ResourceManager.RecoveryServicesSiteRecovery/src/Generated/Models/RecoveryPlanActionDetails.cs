@@ -9,6 +9,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
     /// <summary>
     /// Recovery plan action custom details.
+    /// Serialized Name: RecoveryPlanActionDetails
     /// Please note <see cref="RecoveryPlanActionDetails"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="RecoveryPlanAutomationRunbookActionDetails"/>, <see cref="RecoveryPlanManualActionDetails"/> and <see cref="RecoveryPlanScriptActionDetails"/>.
     /// </summary>
@@ -20,13 +21,19 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> Initializes a new instance of RecoveryPlanActionDetails. </summary>
-        /// <param name="instanceType"> Gets the type of action details (see RecoveryPlanActionDetailsTypes enum for possible values). </param>
+        /// <param name="instanceType">
+        /// Gets the type of action details (see RecoveryPlanActionDetailsTypes enum for possible values).
+        /// Serialized Name: RecoveryPlanActionDetails.instanceType
+        /// </param>
         internal RecoveryPlanActionDetails(string instanceType)
         {
             InstanceType = instanceType;
         }
 
-        /// <summary> Gets the type of action details (see RecoveryPlanActionDetailsTypes enum for possible values). </summary>
+        /// <summary>
+        /// Gets the type of action details (see RecoveryPlanActionDetailsTypes enum for possible values).
+        /// Serialized Name: RecoveryPlanActionDetails.instanceType
+        /// </summary>
         internal string InstanceType { get; set; }
     }
 }

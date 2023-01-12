@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary> InMageAzureV2 provider specific input for unplanned failover. </summary>
+    /// <summary>
+    /// InMageAzureV2 provider specific input for unplanned failover.
+    /// Serialized Name: InMageAzureV2UnplannedFailoverInput
+    /// </summary>
     public partial class InMageAzureV2UnplannedFailoverInput : UnplannedFailoverProviderSpecificInput
     {
         /// <summary> Initializes a new instance of InMageAzureV2UnplannedFailoverInput. </summary>
@@ -16,7 +19,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             InstanceType = "InMageAzureV2";
         }
 
-        /// <summary> The recovery point id to be passed to failover to a particular recovery point. In case of latest recovery point, null should be passed. </summary>
+        /// <summary>
+        /// The recovery point id to be passed to failover to a particular recovery point. In case of latest recovery point, null should be passed.
+        /// Serialized Name: InMageAzureV2UnplannedFailoverInput.recoveryPointId
+        /// </summary>
         public string RecoveryPointId { get; set; }
     }
 }

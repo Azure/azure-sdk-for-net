@@ -21,8 +21,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
 {
     /// <summary>
     /// A class representing a collection of <see cref="VCenterResource" /> and their operations.
-    /// Each <see cref="VCenterResource" /> in the collection will belong to the same instance of <see cref="FabricResource" />.
-    /// To get a <see cref="VCenterCollection" /> instance call the GetVCenters method from an instance of <see cref="FabricResource" />.
+    /// Each <see cref="VCenterResource" /> in the collection will belong to the same instance of <see cref="SiteRecoveryFabricResource" />.
+    /// To get a <see cref="VCenterCollection" /> instance call the GetVCenters method from an instance of <see cref="SiteRecoveryFabricResource" />.
     /// </summary>
     public partial class VCenterCollection : ArmCollection, IEnumerable<VCenterResource>, IAsyncEnumerable<VCenterResource>
     {
@@ -49,8 +49,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
 
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != FabricResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, FabricResource.ResourceType), nameof(id));
+            if (id.ResourceType != SiteRecoveryFabricResource.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, SiteRecoveryFabricResource.ResourceType), nameof(id));
         }
 
         /// <summary>

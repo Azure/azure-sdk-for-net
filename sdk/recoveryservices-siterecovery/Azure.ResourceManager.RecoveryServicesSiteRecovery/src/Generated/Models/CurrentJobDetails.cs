@@ -9,7 +9,10 @@ using System;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary> Current job details of the migration item. </summary>
+    /// <summary>
+    /// Current job details of the migration item.
+    /// Serialized Name: CurrentJobDetails
+    /// </summary>
     public partial class CurrentJobDetails
     {
         /// <summary> Initializes a new instance of CurrentJobDetails. </summary>
@@ -18,9 +21,18 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> Initializes a new instance of CurrentJobDetails. </summary>
-        /// <param name="jobName"> The job name. </param>
-        /// <param name="jobId"> The ARM Id of the job being executed. </param>
-        /// <param name="startOn"> The start time of the job. </param>
+        /// <param name="jobName">
+        /// The job name.
+        /// Serialized Name: CurrentJobDetails.jobName
+        /// </param>
+        /// <param name="jobId">
+        /// The ARM Id of the job being executed.
+        /// Serialized Name: CurrentJobDetails.jobId
+        /// </param>
+        /// <param name="startOn">
+        /// The start time of the job.
+        /// Serialized Name: CurrentJobDetails.startTime
+        /// </param>
         internal CurrentJobDetails(string jobName, string jobId, DateTimeOffset? startOn)
         {
             JobName = jobName;
@@ -28,11 +40,20 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             StartOn = startOn;
         }
 
-        /// <summary> The job name. </summary>
+        /// <summary>
+        /// The job name.
+        /// Serialized Name: CurrentJobDetails.jobName
+        /// </summary>
         public string JobName { get; }
-        /// <summary> The ARM Id of the job being executed. </summary>
+        /// <summary>
+        /// The ARM Id of the job being executed.
+        /// Serialized Name: CurrentJobDetails.jobId
+        /// </summary>
         public string JobId { get; }
-        /// <summary> The start time of the job. </summary>
+        /// <summary>
+        /// The start time of the job.
+        /// Serialized Name: CurrentJobDetails.startTime
+        /// </summary>
         public DateTimeOffset? StartOn { get; }
     }
 }

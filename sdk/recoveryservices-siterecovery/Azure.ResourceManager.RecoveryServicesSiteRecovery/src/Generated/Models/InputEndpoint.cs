@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary> The InputEndpoint. </summary>
+    /// <summary>
+    /// The InputEndpoint.
+    /// Serialized Name: InputEndpoint
+    /// </summary>
     public partial class InputEndpoint
     {
         /// <summary> Initializes a new instance of InputEndpoint. </summary>
@@ -16,10 +19,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> Initializes a new instance of InputEndpoint. </summary>
-        /// <param name="endpointName"></param>
-        /// <param name="privatePort"></param>
-        /// <param name="publicPort"></param>
-        /// <param name="protocol"></param>
+        /// <param name="endpointName"> Serialized Name: InputEndpoint.endpointName. </param>
+        /// <param name="privatePort"> Serialized Name: InputEndpoint.privatePort. </param>
+        /// <param name="publicPort"> Serialized Name: InputEndpoint.publicPort. </param>
+        /// <param name="protocol"> Serialized Name: InputEndpoint.protocol. </param>
         internal InputEndpoint(string endpointName, int? privatePort, int? publicPort, string protocol)
         {
             EndpointName = endpointName;
@@ -28,13 +31,13 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             Protocol = protocol;
         }
 
-        /// <summary> Gets the endpoint name. </summary>
+        /// <summary> Serialized Name: InputEndpoint.endpointName. </summary>
         public string EndpointName { get; }
-        /// <summary> Gets the private port. </summary>
+        /// <summary> Serialized Name: InputEndpoint.privatePort. </summary>
         public int? PrivatePort { get; }
-        /// <summary> Gets the public port. </summary>
+        /// <summary> Serialized Name: InputEndpoint.publicPort. </summary>
         public int? PublicPort { get; }
-        /// <summary> Gets the protocol. </summary>
+        /// <summary> Serialized Name: InputEndpoint.protocol. </summary>
         public string Protocol { get; }
     }
 }

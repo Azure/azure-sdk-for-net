@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary> E2E Network Mapping fabric specific settings. </summary>
+    /// <summary>
+    /// E2E Network Mapping fabric specific settings.
+    /// Serialized Name: VmmToVmmNetworkMappingSettings
+    /// </summary>
     public partial class VmmToVmmNetworkMappingSettings : NetworkMappingFabricSpecificSettings
     {
         /// <summary> Initializes a new instance of VmmToVmmNetworkMappingSettings. </summary>
@@ -17,7 +20,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> Initializes a new instance of VmmToVmmNetworkMappingSettings. </summary>
-        /// <param name="instanceType"> Gets the Instance type. </param>
+        /// <param name="instanceType">
+        /// Gets the Instance type.
+        /// Serialized Name: NetworkMappingFabricSpecificSettings.instanceType
+        /// </param>
         internal VmmToVmmNetworkMappingSettings(string instanceType) : base(instanceType)
         {
             InstanceType = instanceType ?? "VmmToVmm";

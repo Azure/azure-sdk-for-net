@@ -11,7 +11,10 @@ using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary> List of network mappings. As with NetworkMapping, it should be possible to reuse a prev version of this class. It doesn&apos;t seem likely this class could be anything more than a slightly bespoke collection of NetworkMapping. Hence it makes sense to override Load with Base.NetworkMapping instead of existing CurrentVersion.NetworkMapping. </summary>
+    /// <summary>
+    /// List of network mappings. As with NetworkMapping, it should be possible to reuse a prev version of this class. It doesn&apos;t seem likely this class could be anything more than a slightly bespoke collection of NetworkMapping. Hence it makes sense to override Load with Base.NetworkMapping instead of existing CurrentVersion.NetworkMapping.
+    /// Serialized Name: NetworkMappingCollection
+    /// </summary>
     internal partial class NetworkMappingCollection
     {
         /// <summary> Initializes a new instance of NetworkMappingCollection. </summary>
@@ -21,17 +24,29 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> Initializes a new instance of NetworkMappingCollection. </summary>
-        /// <param name="value"> The Network Mappings list. </param>
-        /// <param name="nextLink"> The value of next link. </param>
+        /// <param name="value">
+        /// The Network Mappings list.
+        /// Serialized Name: NetworkMappingCollection.value
+        /// </param>
+        /// <param name="nextLink">
+        /// The value of next link.
+        /// Serialized Name: NetworkMappingCollection.nextLink
+        /// </param>
         internal NetworkMappingCollection(IReadOnlyList<NetworkMappingData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
-        /// <summary> The Network Mappings list. </summary>
+        /// <summary>
+        /// The Network Mappings list.
+        /// Serialized Name: NetworkMappingCollection.value
+        /// </summary>
         public IReadOnlyList<NetworkMappingData> Value { get; }
-        /// <summary> The value of next link. </summary>
+        /// <summary>
+        /// The value of next link.
+        /// Serialized Name: NetworkMappingCollection.nextLink
+        /// </summary>
         public string NextLink { get; }
     }
 }

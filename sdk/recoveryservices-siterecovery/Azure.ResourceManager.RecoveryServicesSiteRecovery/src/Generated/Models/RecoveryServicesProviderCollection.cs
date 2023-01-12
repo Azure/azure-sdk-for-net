@@ -11,7 +11,10 @@ using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary> Collection of providers. </summary>
+    /// <summary>
+    /// Collection of providers.
+    /// Serialized Name: RecoveryServicesProviderCollection
+    /// </summary>
     internal partial class RecoveryServicesProviderCollection
     {
         /// <summary> Initializes a new instance of RecoveryServicesProviderCollection. </summary>
@@ -21,17 +24,29 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> Initializes a new instance of RecoveryServicesProviderCollection. </summary>
-        /// <param name="value"> The Servers details. </param>
-        /// <param name="nextLink"> The value of next link. </param>
+        /// <param name="value">
+        /// The Servers details.
+        /// Serialized Name: RecoveryServicesProviderCollection.value
+        /// </param>
+        /// <param name="nextLink">
+        /// The value of next link.
+        /// Serialized Name: RecoveryServicesProviderCollection.nextLink
+        /// </param>
         internal RecoveryServicesProviderCollection(IReadOnlyList<RecoveryServicesProviderData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
-        /// <summary> The Servers details. </summary>
+        /// <summary>
+        /// The Servers details.
+        /// Serialized Name: RecoveryServicesProviderCollection.value
+        /// </summary>
         public IReadOnlyList<RecoveryServicesProviderData> Value { get; }
-        /// <summary> The value of next link. </summary>
+        /// <summary>
+        /// The value of next link.
+        /// Serialized Name: RecoveryServicesProviderCollection.nextLink
+        /// </summary>
         public string NextLink { get; }
     }
 }

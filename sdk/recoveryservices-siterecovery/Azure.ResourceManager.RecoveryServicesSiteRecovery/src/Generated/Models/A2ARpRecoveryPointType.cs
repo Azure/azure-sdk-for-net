@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary> The recovery point type. </summary>
+    /// <summary>
+    /// The recovery point type.
+    /// Serialized Name: A2ARpRecoveryPointType
+    /// </summary>
     public readonly partial struct A2ARpRecoveryPointType : IEquatable<A2ARpRecoveryPointType>
     {
         private readonly string _value;
@@ -27,13 +30,25 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         private const string LatestCrashConsistentValue = "LatestCrashConsistent";
         private const string LatestProcessedValue = "LatestProcessed";
 
-        /// <summary> Latest. </summary>
+        /// <summary>
+        /// Latest
+        /// Serialized Name: A2ARpRecoveryPointType.Latest
+        /// </summary>
         public static A2ARpRecoveryPointType Latest { get; } = new A2ARpRecoveryPointType(LatestValue);
-        /// <summary> LatestApplicationConsistent. </summary>
+        /// <summary>
+        /// LatestApplicationConsistent
+        /// Serialized Name: A2ARpRecoveryPointType.LatestApplicationConsistent
+        /// </summary>
         public static A2ARpRecoveryPointType LatestApplicationConsistent { get; } = new A2ARpRecoveryPointType(LatestApplicationConsistentValue);
-        /// <summary> LatestCrashConsistent. </summary>
+        /// <summary>
+        /// LatestCrashConsistent
+        /// Serialized Name: A2ARpRecoveryPointType.LatestCrashConsistent
+        /// </summary>
         public static A2ARpRecoveryPointType LatestCrashConsistent { get; } = new A2ARpRecoveryPointType(LatestCrashConsistentValue);
-        /// <summary> LatestProcessed. </summary>
+        /// <summary>
+        /// LatestProcessed
+        /// Serialized Name: A2ARpRecoveryPointType.LatestProcessed
+        /// </summary>
         public static A2ARpRecoveryPointType LatestProcessed { get; } = new A2ARpRecoveryPointType(LatestProcessedValue);
         /// <summary> Determines if two <see cref="A2ARpRecoveryPointType"/> values are the same. </summary>
         public static bool operator ==(A2ARpRecoveryPointType left, A2ARpRecoveryPointType right) => left.Equals(right);

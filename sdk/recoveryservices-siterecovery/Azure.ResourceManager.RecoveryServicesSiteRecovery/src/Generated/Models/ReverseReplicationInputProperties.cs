@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary> Reverse replication input properties. </summary>
+    /// <summary>
+    /// Reverse replication input properties.
+    /// Serialized Name: ReverseReplicationInputProperties
+    /// </summary>
     public partial class ReverseReplicationInputProperties
     {
         /// <summary> Initializes a new instance of ReverseReplicationInputProperties. </summary>
@@ -15,10 +18,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         {
         }
 
-        /// <summary> Failover direction. </summary>
+        /// <summary>
+        /// Failover direction.
+        /// Serialized Name: ReverseReplicationInputProperties.failoverDirection
+        /// </summary>
         public string FailoverDirection { get; set; }
         /// <summary>
         /// Provider specific reverse replication input.
+        /// Serialized Name: ReverseReplicationInputProperties.providerSpecificDetails
         /// Please note <see cref="ReverseReplicationProviderSpecificInput"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="A2AReprotectInput"/>, <see cref="HyperVReplicaAzureReprotectInput"/>, <see cref="InMageReprotectInput"/>, <see cref="InMageAzureV2ReprotectInput"/>, <see cref="InMageRcmReprotectInput"/> and <see cref="InMageRcmFailbackReprotectInput"/>.
         /// </summary>

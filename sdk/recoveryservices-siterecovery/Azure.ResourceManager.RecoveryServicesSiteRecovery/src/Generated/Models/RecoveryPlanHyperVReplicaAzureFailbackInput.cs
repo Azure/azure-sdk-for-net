@@ -7,12 +7,21 @@
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary> Recovery plan HVR Azure failback input. </summary>
+    /// <summary>
+    /// Recovery plan HVR Azure failback input.
+    /// Serialized Name: RecoveryPlanHyperVReplicaAzureFailbackInput
+    /// </summary>
     public partial class RecoveryPlanHyperVReplicaAzureFailbackInput : RecoveryPlanProviderSpecificFailoverInput
     {
         /// <summary> Initializes a new instance of RecoveryPlanHyperVReplicaAzureFailbackInput. </summary>
-        /// <param name="dataSyncOption"> The data sync option. </param>
-        /// <param name="recoveryVmCreationOption"> The ALR option. </param>
+        /// <param name="dataSyncOption">
+        /// The data sync option.
+        /// Serialized Name: RecoveryPlanHyperVReplicaAzureFailbackInput.dataSyncOption
+        /// </param>
+        /// <param name="recoveryVmCreationOption">
+        /// The ALR option.
+        /// Serialized Name: RecoveryPlanHyperVReplicaAzureFailbackInput.recoveryVmCreationOption
+        /// </param>
         public RecoveryPlanHyperVReplicaAzureFailbackInput(DataSyncStatus dataSyncOption, AlternateLocationRecoveryOption recoveryVmCreationOption)
         {
             DataSyncOption = dataSyncOption;
@@ -20,9 +29,15 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             InstanceType = "HyperVReplicaAzureFailback";
         }
 
-        /// <summary> The data sync option. </summary>
+        /// <summary>
+        /// The data sync option.
+        /// Serialized Name: RecoveryPlanHyperVReplicaAzureFailbackInput.dataSyncOption
+        /// </summary>
         public DataSyncStatus DataSyncOption { get; }
-        /// <summary> The ALR option. </summary>
+        /// <summary>
+        /// The ALR option.
+        /// Serialized Name: RecoveryPlanHyperVReplicaAzureFailbackInput.recoveryVmCreationOption
+        /// </summary>
         public AlternateLocationRecoveryOption RecoveryVmCreationOption { get; }
     }
 }

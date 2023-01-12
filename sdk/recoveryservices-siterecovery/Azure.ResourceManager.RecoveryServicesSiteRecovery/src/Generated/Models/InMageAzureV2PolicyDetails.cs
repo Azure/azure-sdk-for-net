@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary> InMage Azure v2 specific protection profile details. </summary>
+    /// <summary>
+    /// InMage Azure v2 specific protection profile details.
+    /// Serialized Name: InMageAzureV2PolicyDetails
+    /// </summary>
     public partial class InMageAzureV2PolicyDetails : PolicyProviderSpecificDetails
     {
         /// <summary> Initializes a new instance of InMageAzureV2PolicyDetails. </summary>
@@ -17,12 +20,30 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> Initializes a new instance of InMageAzureV2PolicyDetails. </summary>
-        /// <param name="instanceType"> Gets the class type. Overridden in derived classes. </param>
-        /// <param name="crashConsistentFrequencyInMinutes"> The crash consistent snapshot frequency in minutes. </param>
-        /// <param name="recoveryPointThresholdInMinutes"> The recovery point threshold in minutes. </param>
-        /// <param name="recoveryPointHistory"> The duration in minutes until which the recovery points need to be stored. </param>
-        /// <param name="appConsistentFrequencyInMinutes"> The app consistent snapshot frequency in minutes. </param>
-        /// <param name="multiVmSyncStatus"> A value indicating whether multi-VM sync has to be enabled. </param>
+        /// <param name="instanceType">
+        /// Gets the class type. Overridden in derived classes.
+        /// Serialized Name: PolicyProviderSpecificDetails.instanceType
+        /// </param>
+        /// <param name="crashConsistentFrequencyInMinutes">
+        /// The crash consistent snapshot frequency in minutes.
+        /// Serialized Name: InMageAzureV2PolicyDetails.crashConsistentFrequencyInMinutes
+        /// </param>
+        /// <param name="recoveryPointThresholdInMinutes">
+        /// The recovery point threshold in minutes.
+        /// Serialized Name: InMageAzureV2PolicyDetails.recoveryPointThresholdInMinutes
+        /// </param>
+        /// <param name="recoveryPointHistory">
+        /// The duration in minutes until which the recovery points need to be stored.
+        /// Serialized Name: InMageAzureV2PolicyDetails.recoveryPointHistory
+        /// </param>
+        /// <param name="appConsistentFrequencyInMinutes">
+        /// The app consistent snapshot frequency in minutes.
+        /// Serialized Name: InMageAzureV2PolicyDetails.appConsistentFrequencyInMinutes
+        /// </param>
+        /// <param name="multiVmSyncStatus">
+        /// A value indicating whether multi-VM sync has to be enabled.
+        /// Serialized Name: InMageAzureV2PolicyDetails.multiVmSyncStatus
+        /// </param>
         internal InMageAzureV2PolicyDetails(string instanceType, int? crashConsistentFrequencyInMinutes, int? recoveryPointThresholdInMinutes, int? recoveryPointHistory, int? appConsistentFrequencyInMinutes, string multiVmSyncStatus) : base(instanceType)
         {
             CrashConsistentFrequencyInMinutes = crashConsistentFrequencyInMinutes;
@@ -33,15 +54,30 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             InstanceType = instanceType ?? "InMageAzureV2";
         }
 
-        /// <summary> The crash consistent snapshot frequency in minutes. </summary>
+        /// <summary>
+        /// The crash consistent snapshot frequency in minutes.
+        /// Serialized Name: InMageAzureV2PolicyDetails.crashConsistentFrequencyInMinutes
+        /// </summary>
         public int? CrashConsistentFrequencyInMinutes { get; }
-        /// <summary> The recovery point threshold in minutes. </summary>
+        /// <summary>
+        /// The recovery point threshold in minutes.
+        /// Serialized Name: InMageAzureV2PolicyDetails.recoveryPointThresholdInMinutes
+        /// </summary>
         public int? RecoveryPointThresholdInMinutes { get; }
-        /// <summary> The duration in minutes until which the recovery points need to be stored. </summary>
+        /// <summary>
+        /// The duration in minutes until which the recovery points need to be stored.
+        /// Serialized Name: InMageAzureV2PolicyDetails.recoveryPointHistory
+        /// </summary>
         public int? RecoveryPointHistory { get; }
-        /// <summary> The app consistent snapshot frequency in minutes. </summary>
+        /// <summary>
+        /// The app consistent snapshot frequency in minutes.
+        /// Serialized Name: InMageAzureV2PolicyDetails.appConsistentFrequencyInMinutes
+        /// </summary>
         public int? AppConsistentFrequencyInMinutes { get; }
-        /// <summary> A value indicating whether multi-VM sync has to be enabled. </summary>
+        /// <summary>
+        /// A value indicating whether multi-VM sync has to be enabled.
+        /// Serialized Name: InMageAzureV2PolicyDetails.multiVmSyncStatus
+        /// </summary>
         public string MultiVmSyncStatus { get; }
     }
 }

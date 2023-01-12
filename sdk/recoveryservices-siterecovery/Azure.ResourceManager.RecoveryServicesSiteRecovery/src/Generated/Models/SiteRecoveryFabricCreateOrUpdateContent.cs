@@ -7,18 +7,25 @@
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary> Site details provided during the time of site creation. </summary>
-    public partial class FabricCreateOrUpdateContent
+    /// <summary>
+    /// Site details provided during the time of site creation.
+    /// Serialized Name: FabricCreationInput
+    /// </summary>
+    public partial class SiteRecoveryFabricCreateOrUpdateContent
     {
-        /// <summary> Initializes a new instance of FabricCreateOrUpdateContent. </summary>
-        public FabricCreateOrUpdateContent()
+        /// <summary> Initializes a new instance of SiteRecoveryFabricCreateOrUpdateContent. </summary>
+        public SiteRecoveryFabricCreateOrUpdateContent()
         {
         }
 
-        /// <summary> Fabric creation input. </summary>
+        /// <summary>
+        /// Fabric creation input.
+        /// Serialized Name: FabricCreationInput.properties
+        /// </summary>
         internal FabricCreationInputProperties Properties { get; set; }
         /// <summary>
         /// Fabric provider specific creation input.
+        /// Serialized Name: FabricCreationInputProperties.customDetails
         /// Please note <see cref="FabricSpecificCreationInput"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="AzureFabricCreationInput"/>, <see cref="InMageRcmFabricCreationInput"/> and <see cref="VMwareV2FabricCreationInput"/>.
         /// Please note <see cref="FabricSpecificCreationInput"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.

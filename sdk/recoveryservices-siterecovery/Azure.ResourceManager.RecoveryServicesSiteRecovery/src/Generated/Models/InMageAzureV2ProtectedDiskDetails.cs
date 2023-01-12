@@ -9,7 +9,10 @@ using System;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary> InMageAzureV2 protected disk details. </summary>
+    /// <summary>
+    /// InMageAzureV2 protected disk details.
+    /// Serialized Name: InMageAzureV2ProtectedDiskDetails
+    /// </summary>
     public partial class InMageAzureV2ProtectedDiskDetails
     {
         /// <summary> Initializes a new instance of InMageAzureV2ProtectedDiskDetails. </summary>
@@ -18,29 +21,98 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> Initializes a new instance of InMageAzureV2ProtectedDiskDetails. </summary>
-        /// <param name="diskId"> The disk id. </param>
-        /// <param name="diskName"> The disk name. </param>
-        /// <param name="protectionStage"> The protection stage. </param>
-        /// <param name="healthErrorCode"> The health error code for the disk. </param>
-        /// <param name="rpoInSeconds"> The RPO in seconds. </param>
-        /// <param name="resyncRequired"> A value indicating whether resync is required for this disk. </param>
-        /// <param name="resyncProgressPercentage"> The resync progress percentage. </param>
-        /// <param name="resyncDurationInSeconds"> The resync duration in seconds. </param>
-        /// <param name="diskCapacityInBytes"> The disk capacity in bytes. </param>
-        /// <param name="fileSystemCapacityInBytes"> The disk file system capacity in bytes. </param>
-        /// <param name="sourceDataInMegaBytes"> The source data transit in MB. </param>
-        /// <param name="psDataInMegaBytes"> The PS data transit in MB. </param>
-        /// <param name="targetDataInMegaBytes"> The target data transit in MB. </param>
-        /// <param name="diskResized"> A value indicating whether disk is resized. </param>
-        /// <param name="lastRpoCalculatedOn"> The last RPO calculated time. </param>
-        /// <param name="resyncProcessedBytes"> The resync processed bytes. </param>
-        /// <param name="resyncTotalTransferredBytes"> The resync total transferred bytes. </param>
-        /// <param name="resyncLast15MinutesTransferredBytes"> The resync last 15 minutes transferred bytes. </param>
-        /// <param name="resyncLastDataTransferTimeUTC"> The last data transfer time in UTC. </param>
-        /// <param name="resyncStartOn"> The resync start time. </param>
-        /// <param name="progressHealth"> The Progress Health. </param>
-        /// <param name="progressStatus"> The Progress Status. </param>
-        /// <param name="secondsToTakeSwitchProvider"> The seconds to take for switch provider. </param>
+        /// <param name="diskId">
+        /// The disk id.
+        /// Serialized Name: InMageAzureV2ProtectedDiskDetails.diskId
+        /// </param>
+        /// <param name="diskName">
+        /// The disk name.
+        /// Serialized Name: InMageAzureV2ProtectedDiskDetails.diskName
+        /// </param>
+        /// <param name="protectionStage">
+        /// The protection stage.
+        /// Serialized Name: InMageAzureV2ProtectedDiskDetails.protectionStage
+        /// </param>
+        /// <param name="healthErrorCode">
+        /// The health error code for the disk.
+        /// Serialized Name: InMageAzureV2ProtectedDiskDetails.healthErrorCode
+        /// </param>
+        /// <param name="rpoInSeconds">
+        /// The RPO in seconds.
+        /// Serialized Name: InMageAzureV2ProtectedDiskDetails.rpoInSeconds
+        /// </param>
+        /// <param name="resyncRequired">
+        /// A value indicating whether resync is required for this disk.
+        /// Serialized Name: InMageAzureV2ProtectedDiskDetails.resyncRequired
+        /// </param>
+        /// <param name="resyncProgressPercentage">
+        /// The resync progress percentage.
+        /// Serialized Name: InMageAzureV2ProtectedDiskDetails.resyncProgressPercentage
+        /// </param>
+        /// <param name="resyncDurationInSeconds">
+        /// The resync duration in seconds.
+        /// Serialized Name: InMageAzureV2ProtectedDiskDetails.resyncDurationInSeconds
+        /// </param>
+        /// <param name="diskCapacityInBytes">
+        /// The disk capacity in bytes.
+        /// Serialized Name: InMageAzureV2ProtectedDiskDetails.diskCapacityInBytes
+        /// </param>
+        /// <param name="fileSystemCapacityInBytes">
+        /// The disk file system capacity in bytes.
+        /// Serialized Name: InMageAzureV2ProtectedDiskDetails.fileSystemCapacityInBytes
+        /// </param>
+        /// <param name="sourceDataInMegaBytes">
+        /// The source data transit in MB.
+        /// Serialized Name: InMageAzureV2ProtectedDiskDetails.sourceDataInMegaBytes
+        /// </param>
+        /// <param name="psDataInMegaBytes">
+        /// The PS data transit in MB.
+        /// Serialized Name: InMageAzureV2ProtectedDiskDetails.psDataInMegaBytes
+        /// </param>
+        /// <param name="targetDataInMegaBytes">
+        /// The target data transit in MB.
+        /// Serialized Name: InMageAzureV2ProtectedDiskDetails.targetDataInMegaBytes
+        /// </param>
+        /// <param name="diskResized">
+        /// A value indicating whether disk is resized.
+        /// Serialized Name: InMageAzureV2ProtectedDiskDetails.diskResized
+        /// </param>
+        /// <param name="lastRpoCalculatedOn">
+        /// The last RPO calculated time.
+        /// Serialized Name: InMageAzureV2ProtectedDiskDetails.lastRpoCalculatedTime
+        /// </param>
+        /// <param name="resyncProcessedBytes">
+        /// The resync processed bytes.
+        /// Serialized Name: InMageAzureV2ProtectedDiskDetails.resyncProcessedBytes
+        /// </param>
+        /// <param name="resyncTotalTransferredBytes">
+        /// The resync total transferred bytes.
+        /// Serialized Name: InMageAzureV2ProtectedDiskDetails.resyncTotalTransferredBytes
+        /// </param>
+        /// <param name="resyncLast15MinutesTransferredBytes">
+        /// The resync last 15 minutes transferred bytes.
+        /// Serialized Name: InMageAzureV2ProtectedDiskDetails.resyncLast15MinutesTransferredBytes
+        /// </param>
+        /// <param name="resyncLastDataTransferTimeUTC">
+        /// The last data transfer time in UTC.
+        /// Serialized Name: InMageAzureV2ProtectedDiskDetails.resyncLastDataTransferTimeUTC
+        /// </param>
+        /// <param name="resyncStartOn">
+        /// The resync start time.
+        /// Serialized Name: InMageAzureV2ProtectedDiskDetails.resyncStartTime
+        /// </param>
+        /// <param name="progressHealth">
+        /// The Progress Health.
+        /// Serialized Name: InMageAzureV2ProtectedDiskDetails.progressHealth
+        /// </param>
+        /// <param name="progressStatus">
+        /// The Progress Status.
+        /// Serialized Name: InMageAzureV2ProtectedDiskDetails.progressStatus
+        /// </param>
+        /// <param name="secondsToTakeSwitchProvider">
+        /// The seconds to take for switch provider.
+        /// Serialized Name: InMageAzureV2ProtectedDiskDetails.secondsToTakeSwitchProvider
+        /// </param>
         internal InMageAzureV2ProtectedDiskDetails(string diskId, string diskName, string protectionStage, string healthErrorCode, long? rpoInSeconds, string resyncRequired, int? resyncProgressPercentage, long? resyncDurationInSeconds, long? diskCapacityInBytes, long? fileSystemCapacityInBytes, double? sourceDataInMegaBytes, double? psDataInMegaBytes, double? targetDataInMegaBytes, string diskResized, DateTimeOffset? lastRpoCalculatedOn, long? resyncProcessedBytes, long? resyncTotalTransferredBytes, long? resyncLast15MinutesTransferredBytes, DateTimeOffset? resyncLastDataTransferTimeUTC, DateTimeOffset? resyncStartOn, string progressHealth, string progressStatus, long? secondsToTakeSwitchProvider)
         {
             DiskId = diskId;
@@ -68,51 +140,120 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             SecondsToTakeSwitchProvider = secondsToTakeSwitchProvider;
         }
 
-        /// <summary> The disk id. </summary>
+        /// <summary>
+        /// The disk id.
+        /// Serialized Name: InMageAzureV2ProtectedDiskDetails.diskId
+        /// </summary>
         public string DiskId { get; }
-        /// <summary> The disk name. </summary>
+        /// <summary>
+        /// The disk name.
+        /// Serialized Name: InMageAzureV2ProtectedDiskDetails.diskName
+        /// </summary>
         public string DiskName { get; }
-        /// <summary> The protection stage. </summary>
+        /// <summary>
+        /// The protection stage.
+        /// Serialized Name: InMageAzureV2ProtectedDiskDetails.protectionStage
+        /// </summary>
         public string ProtectionStage { get; }
-        /// <summary> The health error code for the disk. </summary>
+        /// <summary>
+        /// The health error code for the disk.
+        /// Serialized Name: InMageAzureV2ProtectedDiskDetails.healthErrorCode
+        /// </summary>
         public string HealthErrorCode { get; }
-        /// <summary> The RPO in seconds. </summary>
+        /// <summary>
+        /// The RPO in seconds.
+        /// Serialized Name: InMageAzureV2ProtectedDiskDetails.rpoInSeconds
+        /// </summary>
         public long? RpoInSeconds { get; }
-        /// <summary> A value indicating whether resync is required for this disk. </summary>
+        /// <summary>
+        /// A value indicating whether resync is required for this disk.
+        /// Serialized Name: InMageAzureV2ProtectedDiskDetails.resyncRequired
+        /// </summary>
         public string ResyncRequired { get; }
-        /// <summary> The resync progress percentage. </summary>
+        /// <summary>
+        /// The resync progress percentage.
+        /// Serialized Name: InMageAzureV2ProtectedDiskDetails.resyncProgressPercentage
+        /// </summary>
         public int? ResyncProgressPercentage { get; }
-        /// <summary> The resync duration in seconds. </summary>
+        /// <summary>
+        /// The resync duration in seconds.
+        /// Serialized Name: InMageAzureV2ProtectedDiskDetails.resyncDurationInSeconds
+        /// </summary>
         public long? ResyncDurationInSeconds { get; }
-        /// <summary> The disk capacity in bytes. </summary>
+        /// <summary>
+        /// The disk capacity in bytes.
+        /// Serialized Name: InMageAzureV2ProtectedDiskDetails.diskCapacityInBytes
+        /// </summary>
         public long? DiskCapacityInBytes { get; }
-        /// <summary> The disk file system capacity in bytes. </summary>
+        /// <summary>
+        /// The disk file system capacity in bytes.
+        /// Serialized Name: InMageAzureV2ProtectedDiskDetails.fileSystemCapacityInBytes
+        /// </summary>
         public long? FileSystemCapacityInBytes { get; }
-        /// <summary> The source data transit in MB. </summary>
+        /// <summary>
+        /// The source data transit in MB.
+        /// Serialized Name: InMageAzureV2ProtectedDiskDetails.sourceDataInMegaBytes
+        /// </summary>
         public double? SourceDataInMegaBytes { get; }
-        /// <summary> The PS data transit in MB. </summary>
+        /// <summary>
+        /// The PS data transit in MB.
+        /// Serialized Name: InMageAzureV2ProtectedDiskDetails.psDataInMegaBytes
+        /// </summary>
         public double? PsDataInMegaBytes { get; }
-        /// <summary> The target data transit in MB. </summary>
+        /// <summary>
+        /// The target data transit in MB.
+        /// Serialized Name: InMageAzureV2ProtectedDiskDetails.targetDataInMegaBytes
+        /// </summary>
         public double? TargetDataInMegaBytes { get; }
-        /// <summary> A value indicating whether disk is resized. </summary>
+        /// <summary>
+        /// A value indicating whether disk is resized.
+        /// Serialized Name: InMageAzureV2ProtectedDiskDetails.diskResized
+        /// </summary>
         public string DiskResized { get; }
-        /// <summary> The last RPO calculated time. </summary>
+        /// <summary>
+        /// The last RPO calculated time.
+        /// Serialized Name: InMageAzureV2ProtectedDiskDetails.lastRpoCalculatedTime
+        /// </summary>
         public DateTimeOffset? LastRpoCalculatedOn { get; }
-        /// <summary> The resync processed bytes. </summary>
+        /// <summary>
+        /// The resync processed bytes.
+        /// Serialized Name: InMageAzureV2ProtectedDiskDetails.resyncProcessedBytes
+        /// </summary>
         public long? ResyncProcessedBytes { get; }
-        /// <summary> The resync total transferred bytes. </summary>
+        /// <summary>
+        /// The resync total transferred bytes.
+        /// Serialized Name: InMageAzureV2ProtectedDiskDetails.resyncTotalTransferredBytes
+        /// </summary>
         public long? ResyncTotalTransferredBytes { get; }
-        /// <summary> The resync last 15 minutes transferred bytes. </summary>
+        /// <summary>
+        /// The resync last 15 minutes transferred bytes.
+        /// Serialized Name: InMageAzureV2ProtectedDiskDetails.resyncLast15MinutesTransferredBytes
+        /// </summary>
         public long? ResyncLast15MinutesTransferredBytes { get; }
-        /// <summary> The last data transfer time in UTC. </summary>
+        /// <summary>
+        /// The last data transfer time in UTC.
+        /// Serialized Name: InMageAzureV2ProtectedDiskDetails.resyncLastDataTransferTimeUTC
+        /// </summary>
         public DateTimeOffset? ResyncLastDataTransferTimeUTC { get; }
-        /// <summary> The resync start time. </summary>
+        /// <summary>
+        /// The resync start time.
+        /// Serialized Name: InMageAzureV2ProtectedDiskDetails.resyncStartTime
+        /// </summary>
         public DateTimeOffset? ResyncStartOn { get; }
-        /// <summary> The Progress Health. </summary>
+        /// <summary>
+        /// The Progress Health.
+        /// Serialized Name: InMageAzureV2ProtectedDiskDetails.progressHealth
+        /// </summary>
         public string ProgressHealth { get; }
-        /// <summary> The Progress Status. </summary>
+        /// <summary>
+        /// The Progress Status.
+        /// Serialized Name: InMageAzureV2ProtectedDiskDetails.progressStatus
+        /// </summary>
         public string ProgressStatus { get; }
-        /// <summary> The seconds to take for switch provider. </summary>
+        /// <summary>
+        /// The seconds to take for switch provider.
+        /// Serialized Name: InMageAzureV2ProtectedDiskDetails.secondsToTakeSwitchProvider
+        /// </summary>
         public long? SecondsToTakeSwitchProvider { get; }
     }
 }

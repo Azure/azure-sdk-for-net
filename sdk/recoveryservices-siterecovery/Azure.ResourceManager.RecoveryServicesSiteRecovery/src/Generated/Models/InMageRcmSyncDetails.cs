@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary> InMageRcm disk level sync details. </summary>
+    /// <summary>
+    /// InMageRcm disk level sync details.
+    /// Serialized Name: InMageRcmSyncDetails
+    /// </summary>
     public partial class InMageRcmSyncDetails
     {
         /// <summary> Initializes a new instance of InMageRcmSyncDetails. </summary>
@@ -16,14 +19,38 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> Initializes a new instance of InMageRcmSyncDetails. </summary>
-        /// <param name="progressHealth"> The progress health. </param>
-        /// <param name="transferredBytes"> The transferred bytes from source VM to azure for the disk. </param>
-        /// <param name="last15MinutesTransferredBytes"> The bytes transferred in last 15 minutes from source VM to azure. </param>
-        /// <param name="lastDataTransferTimeUtc"> The time of the last data transfer from source VM to azure. </param>
-        /// <param name="processedBytes"> The total processed bytes. This includes bytes that are transferred from source VM to azure and matched bytes. </param>
-        /// <param name="startTime"> The start time. </param>
-        /// <param name="lastRefreshTime"> The last refresh time. </param>
-        /// <param name="progressPercentage"> Progress in percentage. Progress percentage is calculated based on processed bytes. </param>
+        /// <param name="progressHealth">
+        /// The progress health.
+        /// Serialized Name: InMageRcmSyncDetails.progressHealth
+        /// </param>
+        /// <param name="transferredBytes">
+        /// The transferred bytes from source VM to azure for the disk.
+        /// Serialized Name: InMageRcmSyncDetails.transferredBytes
+        /// </param>
+        /// <param name="last15MinutesTransferredBytes">
+        /// The bytes transferred in last 15 minutes from source VM to azure.
+        /// Serialized Name: InMageRcmSyncDetails.last15MinutesTransferredBytes
+        /// </param>
+        /// <param name="lastDataTransferTimeUtc">
+        /// The time of the last data transfer from source VM to azure.
+        /// Serialized Name: InMageRcmSyncDetails.lastDataTransferTimeUtc
+        /// </param>
+        /// <param name="processedBytes">
+        /// The total processed bytes. This includes bytes that are transferred from source VM to azure and matched bytes.
+        /// Serialized Name: InMageRcmSyncDetails.processedBytes
+        /// </param>
+        /// <param name="startTime">
+        /// The start time.
+        /// Serialized Name: InMageRcmSyncDetails.startTime
+        /// </param>
+        /// <param name="lastRefreshTime">
+        /// The last refresh time.
+        /// Serialized Name: InMageRcmSyncDetails.lastRefreshTime
+        /// </param>
+        /// <param name="progressPercentage">
+        /// Progress in percentage. Progress percentage is calculated based on processed bytes.
+        /// Serialized Name: InMageRcmSyncDetails.progressPercentage
+        /// </param>
         internal InMageRcmSyncDetails(DiskReplicationProgressHealth? progressHealth, long? transferredBytes, long? last15MinutesTransferredBytes, string lastDataTransferTimeUtc, long? processedBytes, string startTime, string lastRefreshTime, int? progressPercentage)
         {
             ProgressHealth = progressHealth;
@@ -36,21 +63,45 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             ProgressPercentage = progressPercentage;
         }
 
-        /// <summary> The progress health. </summary>
+        /// <summary>
+        /// The progress health.
+        /// Serialized Name: InMageRcmSyncDetails.progressHealth
+        /// </summary>
         public DiskReplicationProgressHealth? ProgressHealth { get; }
-        /// <summary> The transferred bytes from source VM to azure for the disk. </summary>
+        /// <summary>
+        /// The transferred bytes from source VM to azure for the disk.
+        /// Serialized Name: InMageRcmSyncDetails.transferredBytes
+        /// </summary>
         public long? TransferredBytes { get; }
-        /// <summary> The bytes transferred in last 15 minutes from source VM to azure. </summary>
+        /// <summary>
+        /// The bytes transferred in last 15 minutes from source VM to azure.
+        /// Serialized Name: InMageRcmSyncDetails.last15MinutesTransferredBytes
+        /// </summary>
         public long? Last15MinutesTransferredBytes { get; }
-        /// <summary> The time of the last data transfer from source VM to azure. </summary>
+        /// <summary>
+        /// The time of the last data transfer from source VM to azure.
+        /// Serialized Name: InMageRcmSyncDetails.lastDataTransferTimeUtc
+        /// </summary>
         public string LastDataTransferTimeUtc { get; }
-        /// <summary> The total processed bytes. This includes bytes that are transferred from source VM to azure and matched bytes. </summary>
+        /// <summary>
+        /// The total processed bytes. This includes bytes that are transferred from source VM to azure and matched bytes.
+        /// Serialized Name: InMageRcmSyncDetails.processedBytes
+        /// </summary>
         public long? ProcessedBytes { get; }
-        /// <summary> The start time. </summary>
+        /// <summary>
+        /// The start time.
+        /// Serialized Name: InMageRcmSyncDetails.startTime
+        /// </summary>
         public string StartTime { get; }
-        /// <summary> The last refresh time. </summary>
+        /// <summary>
+        /// The last refresh time.
+        /// Serialized Name: InMageRcmSyncDetails.lastRefreshTime
+        /// </summary>
         public string LastRefreshTime { get; }
-        /// <summary> Progress in percentage. Progress percentage is calculated based on processed bytes. </summary>
+        /// <summary>
+        /// Progress in percentage. Progress percentage is calculated based on processed bytes.
+        /// Serialized Name: InMageRcmSyncDetails.progressPercentage
+        /// </summary>
         public int? ProgressPercentage { get; }
     }
 }

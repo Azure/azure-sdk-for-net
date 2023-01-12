@@ -10,7 +10,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary> HyperVReplicaAzure specific enable protection input. </summary>
+    /// <summary>
+    /// HyperVReplicaAzure specific enable protection input.
+    /// Serialized Name: HyperVReplicaAzureEnableProtectionInput
+    /// </summary>
     public partial class HyperVReplicaAzureEnableProtectionInput : EnableProtectionProviderSpecificInput
     {
         /// <summary> Initializes a new instance of HyperVReplicaAzureEnableProtectionInput. </summary>
@@ -25,61 +28,145 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             InstanceType = "HyperVReplicaAzure";
         }
 
-        /// <summary> The Hyper-V host VM Id. </summary>
+        /// <summary>
+        /// The Hyper-V host VM Id.
+        /// Serialized Name: HyperVReplicaAzureEnableProtectionInput.hvHostVmId
+        /// </summary>
         public string HvHostVmId { get; set; }
-        /// <summary> The VM Name. </summary>
+        /// <summary>
+        /// The VM Name.
+        /// Serialized Name: HyperVReplicaAzureEnableProtectionInput.vmName
+        /// </summary>
         public string VmName { get; set; }
-        /// <summary> The OS type associated with VM. </summary>
+        /// <summary>
+        /// The OS type associated with VM.
+        /// Serialized Name: HyperVReplicaAzureEnableProtectionInput.osType
+        /// </summary>
         public string OSType { get; set; }
-        /// <summary> The OS disk VHD id associated with VM. </summary>
+        /// <summary>
+        /// The OS disk VHD id associated with VM.
+        /// Serialized Name: HyperVReplicaAzureEnableProtectionInput.vhdId
+        /// </summary>
         public string VhdId { get; set; }
-        /// <summary> The storage account Id. </summary>
+        /// <summary>
+        /// The storage account Id.
+        /// Serialized Name: HyperVReplicaAzureEnableProtectionInput.targetStorageAccountId
+        /// </summary>
         public string TargetStorageAccountId { get; set; }
-        /// <summary> The selected target Azure network Id. </summary>
+        /// <summary>
+        /// The selected target Azure network Id.
+        /// Serialized Name: HyperVReplicaAzureEnableProtectionInput.targetAzureNetworkId
+        /// </summary>
         public string TargetAzureNetworkId { get; set; }
-        /// <summary> The selected target Azure subnet Id. </summary>
+        /// <summary>
+        /// The selected target Azure subnet Id.
+        /// Serialized Name: HyperVReplicaAzureEnableProtectionInput.targetAzureSubnetId
+        /// </summary>
         public string TargetAzureSubnetId { get; set; }
-        /// <summary> The selected option to enable RDP\SSH on target vm after failover. String value of SrsDataContract.EnableRDPOnTargetOption enum. </summary>
+        /// <summary>
+        /// The selected option to enable RDP\SSH on target vm after failover. String value of SrsDataContract.EnableRDPOnTargetOption enum.
+        /// Serialized Name: HyperVReplicaAzureEnableProtectionInput.enableRdpOnTargetOption
+        /// </summary>
         public string EnableRdpOnTargetOption { get; set; }
-        /// <summary> The target azure VM Name. </summary>
+        /// <summary>
+        /// The target azure VM Name.
+        /// Serialized Name: HyperVReplicaAzureEnableProtectionInput.targetAzureVmName
+        /// </summary>
         public string TargetAzureVmName { get; set; }
-        /// <summary> The storage account to be used for logging during replication. </summary>
+        /// <summary>
+        /// The storage account to be used for logging during replication.
+        /// Serialized Name: HyperVReplicaAzureEnableProtectionInput.logStorageAccountId
+        /// </summary>
         public string LogStorageAccountId { get; set; }
-        /// <summary> The list of VHD Ids of disks to be protected. </summary>
+        /// <summary>
+        /// The list of VHD Ids of disks to be protected.
+        /// Serialized Name: HyperVReplicaAzureEnableProtectionInput.disksToInclude
+        /// </summary>
         public IList<string> DisksToInclude { get; }
-        /// <summary> The Id of the target resource group (for classic deployment) in which the failover VM is to be created. </summary>
+        /// <summary>
+        /// The Id of the target resource group (for classic deployment) in which the failover VM is to be created.
+        /// Serialized Name: HyperVReplicaAzureEnableProtectionInput.targetAzureV1ResourceGroupId
+        /// </summary>
         public string TargetAzureV1ResourceGroupId { get; set; }
-        /// <summary> The Id of the target resource group (for resource manager deployment) in which the failover VM is to be created. </summary>
+        /// <summary>
+        /// The Id of the target resource group (for resource manager deployment) in which the failover VM is to be created.
+        /// Serialized Name: HyperVReplicaAzureEnableProtectionInput.targetAzureV2ResourceGroupId
+        /// </summary>
         public string TargetAzureV2ResourceGroupId { get; set; }
-        /// <summary> A value indicating whether managed disks should be used during failover. </summary>
+        /// <summary>
+        /// A value indicating whether managed disks should be used during failover.
+        /// Serialized Name: HyperVReplicaAzureEnableProtectionInput.useManagedDisks
+        /// </summary>
         public string UseManagedDisks { get; set; }
-        /// <summary> The target availability set ARM Id for resource manager deployment. </summary>
+        /// <summary>
+        /// The target availability set ARM Id for resource manager deployment.
+        /// Serialized Name: HyperVReplicaAzureEnableProtectionInput.targetAvailabilitySetId
+        /// </summary>
         public string TargetAvailabilitySetId { get; set; }
-        /// <summary> The target availability zone. </summary>
+        /// <summary>
+        /// The target availability zone.
+        /// Serialized Name: HyperVReplicaAzureEnableProtectionInput.targetAvailabilityZone
+        /// </summary>
         public string TargetAvailabilityZone { get; set; }
-        /// <summary> License type. </summary>
+        /// <summary>
+        /// License type.
+        /// Serialized Name: HyperVReplicaAzureEnableProtectionInput.licenseType
+        /// </summary>
         public LicenseType? LicenseType { get; set; }
-        /// <summary> The SQL Server license type. </summary>
+        /// <summary>
+        /// The SQL Server license type.
+        /// Serialized Name: HyperVReplicaAzureEnableProtectionInput.sqlServerLicenseType
+        /// </summary>
         public SqlServerLicenseType? SqlServerLicenseType { get; set; }
-        /// <summary> The target VM size. </summary>
+        /// <summary>
+        /// The target VM size.
+        /// Serialized Name: HyperVReplicaAzureEnableProtectionInput.targetVmSize
+        /// </summary>
         public string TargetVmSize { get; set; }
-        /// <summary> The proximity placement group ARM Id. </summary>
+        /// <summary>
+        /// The proximity placement group ARM Id.
+        /// Serialized Name: HyperVReplicaAzureEnableProtectionInput.targetProximityPlacementGroupId
+        /// </summary>
         public string TargetProximityPlacementGroupId { get; set; }
-        /// <summary> A value indicating whether managed disks should be used during replication. </summary>
+        /// <summary>
+        /// A value indicating whether managed disks should be used during replication.
+        /// Serialized Name: HyperVReplicaAzureEnableProtectionInput.useManagedDisksForReplication
+        /// </summary>
         public string UseManagedDisksForReplication { get; set; }
-        /// <summary> The DiskType. </summary>
+        /// <summary>
+        /// The DiskType.
+        /// Serialized Name: HyperVReplicaAzureEnableProtectionInput.diskType
+        /// </summary>
         public DiskAccountType? DiskType { get; set; }
-        /// <summary> The disks to include list for managed disks. </summary>
+        /// <summary>
+        /// The disks to include list for managed disks.
+        /// Serialized Name: HyperVReplicaAzureEnableProtectionInput.disksToIncludeForManagedDisks
+        /// </summary>
         public IList<HyperVReplicaAzureDiskInputDetails> DisksToIncludeForManagedDisks { get; }
-        /// <summary> The DiskEncryptionSet ARM Id. </summary>
+        /// <summary>
+        /// The DiskEncryptionSet ARM Id.
+        /// Serialized Name: HyperVReplicaAzureEnableProtectionInput.diskEncryptionSetId
+        /// </summary>
         public string DiskEncryptionSetId { get; set; }
-        /// <summary> The target VM tags. </summary>
+        /// <summary>
+        /// The target VM tags.
+        /// Serialized Name: HyperVReplicaAzureEnableProtectionInput.targetVmTags
+        /// </summary>
         public IDictionary<string, string> TargetVmTags { get; }
-        /// <summary> The tags for the seed managed disks. </summary>
+        /// <summary>
+        /// The tags for the seed managed disks.
+        /// Serialized Name: HyperVReplicaAzureEnableProtectionInput.seedManagedDiskTags
+        /// </summary>
         public IDictionary<string, string> SeedManagedDiskTags { get; }
-        /// <summary> The tags for the target managed disks. </summary>
+        /// <summary>
+        /// The tags for the target managed disks.
+        /// Serialized Name: HyperVReplicaAzureEnableProtectionInput.targetManagedDiskTags
+        /// </summary>
         public IDictionary<string, string> TargetManagedDiskTags { get; }
-        /// <summary> The tags for the target NICs. </summary>
+        /// <summary>
+        /// The tags for the target NICs.
+        /// Serialized Name: HyperVReplicaAzureEnableProtectionInput.targetNicTags
+        /// </summary>
         public IDictionary<string, string> TargetNicTags { get; }
     }
 }

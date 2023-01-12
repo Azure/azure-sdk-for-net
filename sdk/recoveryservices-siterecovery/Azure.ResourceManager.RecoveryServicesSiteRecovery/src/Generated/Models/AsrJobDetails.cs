@@ -9,7 +9,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary> This class represents job details based on specific job type. </summary>
+    /// <summary>
+    /// This class represents job details based on specific job type.
+    /// Serialized Name: AsrJobDetails
+    /// </summary>
     public partial class AsrJobDetails : JobDetails
     {
         /// <summary> Initializes a new instance of AsrJobDetails. </summary>
@@ -19,8 +22,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> Initializes a new instance of AsrJobDetails. </summary>
-        /// <param name="instanceType"> Gets the type of job details (see JobDetailsTypes enum for possible values). </param>
-        /// <param name="affectedObjectDetails"> The affected object properties like source server, source cloud, target server, target cloud etc. based on the workflow object details. </param>
+        /// <param name="instanceType">
+        /// Gets the type of job details (see JobDetailsTypes enum for possible values).
+        /// Serialized Name: JobDetails.instanceType
+        /// </param>
+        /// <param name="affectedObjectDetails">
+        /// The affected object properties like source server, source cloud, target server, target cloud etc. based on the workflow object details.
+        /// Serialized Name: JobDetails.affectedObjectDetails
+        /// </param>
         internal AsrJobDetails(string instanceType, IReadOnlyDictionary<string, string> affectedObjectDetails) : base(instanceType, affectedObjectDetails)
         {
             InstanceType = instanceType ?? "AsrJobDetails";

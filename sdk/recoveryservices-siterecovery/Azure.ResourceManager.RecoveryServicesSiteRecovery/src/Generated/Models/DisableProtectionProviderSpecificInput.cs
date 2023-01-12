@@ -9,6 +9,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
     /// <summary>
     /// Disable protection provider specific input.
+    /// Serialized Name: DisableProtectionProviderSpecificInput
     /// Please note <see cref="DisableProtectionProviderSpecificInput"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="InMageDisableProtectionProviderSpecificInput"/>.
     /// </summary>
@@ -19,7 +20,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         {
         }
 
-        /// <summary> The class type. </summary>
+        /// <summary>
+        /// The class type.
+        /// Serialized Name: DisableProtectionProviderSpecificInput.instanceType
+        /// </summary>
         internal string InstanceType { get; set; }
     }
 }

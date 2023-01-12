@@ -10,7 +10,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary> class to define the summary of the health error details. </summary>
+    /// <summary>
+    /// class to define the summary of the health error details.
+    /// Serialized Name: HealthErrorSummary
+    /// </summary>
     public partial class HealthErrorSummary
     {
         /// <summary> Initializes a new instance of HealthErrorSummary. </summary>
@@ -20,13 +23,34 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> Initializes a new instance of HealthErrorSummary. </summary>
-        /// <param name="summaryCode"> The code of the health error. </param>
-        /// <param name="category"> The category of the health error. </param>
-        /// <param name="severity"> Severity of error. </param>
-        /// <param name="summaryMessage"> The summary message of the health error. </param>
-        /// <param name="affectedResourceType"> The type of affected ARM resource. </param>
-        /// <param name="affectedResourceSubtype"> The sub type of any subcomponent within the ARM resource that this might be applicable. Value remains null if not applicable. </param>
-        /// <param name="affectedResourceCorrelationIds"> The list of affected resource correlation Ids. This can be used to uniquely identify the count of items affected by a specific category and severity as well as count of item affected by an specific issue. </param>
+        /// <param name="summaryCode">
+        /// The code of the health error.
+        /// Serialized Name: HealthErrorSummary.summaryCode
+        /// </param>
+        /// <param name="category">
+        /// The category of the health error.
+        /// Serialized Name: HealthErrorSummary.category
+        /// </param>
+        /// <param name="severity">
+        /// Severity of error.
+        /// Serialized Name: HealthErrorSummary.severity
+        /// </param>
+        /// <param name="summaryMessage">
+        /// The summary message of the health error.
+        /// Serialized Name: HealthErrorSummary.summaryMessage
+        /// </param>
+        /// <param name="affectedResourceType">
+        /// The type of affected ARM resource.
+        /// Serialized Name: HealthErrorSummary.affectedResourceType
+        /// </param>
+        /// <param name="affectedResourceSubtype">
+        /// The sub type of any subcomponent within the ARM resource that this might be applicable. Value remains null if not applicable.
+        /// Serialized Name: HealthErrorSummary.affectedResourceSubtype
+        /// </param>
+        /// <param name="affectedResourceCorrelationIds">
+        /// The list of affected resource correlation Ids. This can be used to uniquely identify the count of items affected by a specific category and severity as well as count of item affected by an specific issue.
+        /// Serialized Name: HealthErrorSummary.affectedResourceCorrelationIds
+        /// </param>
         internal HealthErrorSummary(string summaryCode, HealthErrorCategory? category, Severity? severity, string summaryMessage, string affectedResourceType, string affectedResourceSubtype, IReadOnlyList<string> affectedResourceCorrelationIds)
         {
             SummaryCode = summaryCode;
@@ -38,19 +62,40 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             AffectedResourceCorrelationIds = affectedResourceCorrelationIds;
         }
 
-        /// <summary> The code of the health error. </summary>
+        /// <summary>
+        /// The code of the health error.
+        /// Serialized Name: HealthErrorSummary.summaryCode
+        /// </summary>
         public string SummaryCode { get; }
-        /// <summary> The category of the health error. </summary>
+        /// <summary>
+        /// The category of the health error.
+        /// Serialized Name: HealthErrorSummary.category
+        /// </summary>
         public HealthErrorCategory? Category { get; }
-        /// <summary> Severity of error. </summary>
+        /// <summary>
+        /// Severity of error.
+        /// Serialized Name: HealthErrorSummary.severity
+        /// </summary>
         public Severity? Severity { get; }
-        /// <summary> The summary message of the health error. </summary>
+        /// <summary>
+        /// The summary message of the health error.
+        /// Serialized Name: HealthErrorSummary.summaryMessage
+        /// </summary>
         public string SummaryMessage { get; }
-        /// <summary> The type of affected ARM resource. </summary>
+        /// <summary>
+        /// The type of affected ARM resource.
+        /// Serialized Name: HealthErrorSummary.affectedResourceType
+        /// </summary>
         public string AffectedResourceType { get; }
-        /// <summary> The sub type of any subcomponent within the ARM resource that this might be applicable. Value remains null if not applicable. </summary>
+        /// <summary>
+        /// The sub type of any subcomponent within the ARM resource that this might be applicable. Value remains null if not applicable.
+        /// Serialized Name: HealthErrorSummary.affectedResourceSubtype
+        /// </summary>
         public string AffectedResourceSubtype { get; }
-        /// <summary> The list of affected resource correlation Ids. This can be used to uniquely identify the count of items affected by a specific category and severity as well as count of item affected by an specific issue. </summary>
+        /// <summary>
+        /// The list of affected resource correlation Ids. This can be used to uniquely identify the count of items affected by a specific category and severity as well as count of item affected by an specific issue.
+        /// Serialized Name: HealthErrorSummary.affectedResourceCorrelationIds
+        /// </summary>
         public IReadOnlyList<string> AffectedResourceCorrelationIds { get; }
     }
 }

@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary> This class represents the fabric replication group task details. </summary>
+    /// <summary>
+    /// This class represents the fabric replication group task details.
+    /// Serialized Name: FabricReplicationGroupTaskDetails
+    /// </summary>
     public partial class FabricReplicationGroupTaskDetails : JobTaskDetails
     {
         /// <summary> Initializes a new instance of FabricReplicationGroupTaskDetails. </summary>
@@ -17,10 +20,22 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> Initializes a new instance of FabricReplicationGroupTaskDetails. </summary>
-        /// <param name="instanceType"> The type of task details. </param>
-        /// <param name="jobTask"> The job entity. </param>
-        /// <param name="skippedReason"> The skipped reason. </param>
-        /// <param name="skippedReasonString"> The skipped reason string. </param>
+        /// <param name="instanceType">
+        /// The type of task details.
+        /// Serialized Name: TaskTypeDetails.instanceType
+        /// </param>
+        /// <param name="jobTask">
+        /// The job entity.
+        /// Serialized Name: JobTaskDetails.jobTask
+        /// </param>
+        /// <param name="skippedReason">
+        /// The skipped reason.
+        /// Serialized Name: FabricReplicationGroupTaskDetails.skippedReason
+        /// </param>
+        /// <param name="skippedReasonString">
+        /// The skipped reason string.
+        /// Serialized Name: FabricReplicationGroupTaskDetails.skippedReasonString
+        /// </param>
         internal FabricReplicationGroupTaskDetails(string instanceType, JobEntity jobTask, string skippedReason, string skippedReasonString) : base(instanceType, jobTask)
         {
             SkippedReason = skippedReason;
@@ -28,9 +43,15 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             InstanceType = instanceType ?? "FabricReplicationGroupTaskDetails";
         }
 
-        /// <summary> The skipped reason. </summary>
+        /// <summary>
+        /// The skipped reason.
+        /// Serialized Name: FabricReplicationGroupTaskDetails.skippedReason
+        /// </summary>
         public string SkippedReason { get; }
-        /// <summary> The skipped reason string. </summary>
+        /// <summary>
+        /// The skipped reason string.
+        /// Serialized Name: FabricReplicationGroupTaskDetails.skippedReasonString
+        /// </summary>
         public string SkippedReasonString { get; }
     }
 }

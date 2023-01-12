@@ -9,7 +9,10 @@ using System;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary> Recovery point properties. </summary>
+    /// <summary>
+    /// Recovery point properties.
+    /// Serialized Name: RecoveryPointProperties
+    /// </summary>
     public partial class RecoveryPointProperties
     {
         /// <summary> Initializes a new instance of RecoveryPointProperties. </summary>
@@ -18,10 +21,17 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> Initializes a new instance of RecoveryPointProperties. </summary>
-        /// <param name="recoveryPointOn"> The recovery point time. </param>
-        /// <param name="recoveryPointType"> The recovery point type: ApplicationConsistent, CrashConsistent. </param>
+        /// <param name="recoveryPointOn">
+        /// The recovery point time.
+        /// Serialized Name: RecoveryPointProperties.recoveryPointTime
+        /// </param>
+        /// <param name="recoveryPointType">
+        /// The recovery point type: ApplicationConsistent, CrashConsistent.
+        /// Serialized Name: RecoveryPointProperties.recoveryPointType
+        /// </param>
         /// <param name="providerSpecificDetails">
         /// The provider specific details for the recovery point.
+        /// Serialized Name: RecoveryPointProperties.providerSpecificDetails
         /// Please note <see cref="ProviderSpecificRecoveryPointDetails"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="A2ARecoveryPointDetails"/>, <see cref="InMageAzureV2RecoveryPointDetails"/> and <see cref="InMageRcmRecoveryPointDetails"/>.
         /// </param>
@@ -32,12 +42,19 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             ProviderSpecificDetails = providerSpecificDetails;
         }
 
-        /// <summary> The recovery point time. </summary>
+        /// <summary>
+        /// The recovery point time.
+        /// Serialized Name: RecoveryPointProperties.recoveryPointTime
+        /// </summary>
         public DateTimeOffset? RecoveryPointOn { get; }
-        /// <summary> The recovery point type: ApplicationConsistent, CrashConsistent. </summary>
+        /// <summary>
+        /// The recovery point type: ApplicationConsistent, CrashConsistent.
+        /// Serialized Name: RecoveryPointProperties.recoveryPointType
+        /// </summary>
         public string RecoveryPointType { get; }
         /// <summary>
         /// The provider specific details for the recovery point.
+        /// Serialized Name: RecoveryPointProperties.providerSpecificDetails
         /// Please note <see cref="ProviderSpecificRecoveryPointDetails"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="A2ARecoveryPointDetails"/>, <see cref="InMageAzureV2RecoveryPointDetails"/> and <see cref="InMageRcmRecoveryPointDetails"/>.
         /// </summary>

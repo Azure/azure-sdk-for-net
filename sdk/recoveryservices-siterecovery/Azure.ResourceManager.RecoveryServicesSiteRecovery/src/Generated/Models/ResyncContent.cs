@@ -10,11 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary> Resync input. </summary>
+    /// <summary>
+    /// Resync input.
+    /// Serialized Name: ResyncInput
+    /// </summary>
     public partial class ResyncContent
     {
         /// <summary> Initializes a new instance of ResyncContent. </summary>
-        /// <param name="properties"> Resync input properties. </param>
+        /// <param name="properties">
+        /// Resync input properties.
+        /// Serialized Name: ResyncInput.properties
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
         public ResyncContent(ResyncInputProperties properties)
         {
@@ -23,10 +29,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             Properties = properties;
         }
 
-        /// <summary> Resync input properties. </summary>
+        /// <summary>
+        /// Resync input properties.
+        /// Serialized Name: ResyncInput.properties
+        /// </summary>
         internal ResyncInputProperties Properties { get; }
         /// <summary>
         /// The provider specific details.
+        /// Serialized Name: ResyncInputProperties.providerSpecificDetails
         /// Please note <see cref="ResyncProviderSpecificInput"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="VMwareCbtResyncInput"/>.
         /// Please note <see cref="ResyncProviderSpecificInput"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.

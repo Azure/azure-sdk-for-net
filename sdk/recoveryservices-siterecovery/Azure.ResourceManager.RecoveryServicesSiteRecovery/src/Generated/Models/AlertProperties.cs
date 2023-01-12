@@ -10,7 +10,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary> The properties of an alert. </summary>
+    /// <summary>
+    /// The properties of an alert.
+    /// Serialized Name: AlertProperties
+    /// </summary>
     public partial class AlertProperties
     {
         /// <summary> Initializes a new instance of AlertProperties. </summary>
@@ -20,9 +23,18 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> Initializes a new instance of AlertProperties. </summary>
-        /// <param name="sendToOwners"> A value indicating whether to send email to subscription administrator. </param>
-        /// <param name="customEmailAddresses"> The custom email address for sending emails. </param>
-        /// <param name="locale"> The locale for the email notification. </param>
+        /// <param name="sendToOwners">
+        /// A value indicating whether to send email to subscription administrator.
+        /// Serialized Name: AlertProperties.sendToOwners
+        /// </param>
+        /// <param name="customEmailAddresses">
+        /// The custom email address for sending emails.
+        /// Serialized Name: AlertProperties.customEmailAddresses
+        /// </param>
+        /// <param name="locale">
+        /// The locale for the email notification.
+        /// Serialized Name: AlertProperties.locale
+        /// </param>
         internal AlertProperties(string sendToOwners, IReadOnlyList<string> customEmailAddresses, string locale)
         {
             SendToOwners = sendToOwners;
@@ -30,11 +42,20 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             Locale = locale;
         }
 
-        /// <summary> A value indicating whether to send email to subscription administrator. </summary>
+        /// <summary>
+        /// A value indicating whether to send email to subscription administrator.
+        /// Serialized Name: AlertProperties.sendToOwners
+        /// </summary>
         public string SendToOwners { get; }
-        /// <summary> The custom email address for sending emails. </summary>
+        /// <summary>
+        /// The custom email address for sending emails.
+        /// Serialized Name: AlertProperties.customEmailAddresses
+        /// </summary>
         public IReadOnlyList<string> CustomEmailAddresses { get; }
-        /// <summary> The locale for the email notification. </summary>
+        /// <summary>
+        /// The locale for the email notification.
+        /// Serialized Name: AlertProperties.locale
+        /// </summary>
         public string Locale { get; }
     }
 }

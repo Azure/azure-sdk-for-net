@@ -11,7 +11,10 @@ using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary> List of networks. </summary>
+    /// <summary>
+    /// List of networks.
+    /// Serialized Name: NetworkCollection
+    /// </summary>
     internal partial class NetworkCollection
     {
         /// <summary> Initializes a new instance of NetworkCollection. </summary>
@@ -21,17 +24,29 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> Initializes a new instance of NetworkCollection. </summary>
-        /// <param name="value"> The Networks list details. </param>
-        /// <param name="nextLink"> The value of next link. </param>
+        /// <param name="value">
+        /// The Networks list details.
+        /// Serialized Name: NetworkCollection.value
+        /// </param>
+        /// <param name="nextLink">
+        /// The value of next link.
+        /// Serialized Name: NetworkCollection.nextLink
+        /// </param>
         internal NetworkCollection(IReadOnlyList<NetworkData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
-        /// <summary> The Networks list details. </summary>
+        /// <summary>
+        /// The Networks list details.
+        /// Serialized Name: NetworkCollection.value
+        /// </summary>
         public IReadOnlyList<NetworkData> Value { get; }
-        /// <summary> The value of next link. </summary>
+        /// <summary>
+        /// The value of next link.
+        /// Serialized Name: NetworkCollection.nextLink
+        /// </summary>
         public string NextLink { get; }
     }
 }

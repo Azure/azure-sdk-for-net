@@ -11,13 +11,25 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary> InMageRcm specific enable protection input. </summary>
+    /// <summary>
+    /// InMageRcm specific enable protection input.
+    /// Serialized Name: InMageRcmEnableProtectionInput
+    /// </summary>
     public partial class InMageRcmEnableProtectionInput : EnableProtectionProviderSpecificInput
     {
         /// <summary> Initializes a new instance of InMageRcmEnableProtectionInput. </summary>
-        /// <param name="fabricDiscoveryMachineId"> The ARM Id of discovered machine. </param>
-        /// <param name="targetResourceGroupId"> The target resource group ARM Id. </param>
-        /// <param name="processServerId"> The process server Id. </param>
+        /// <param name="fabricDiscoveryMachineId">
+        /// The ARM Id of discovered machine.
+        /// Serialized Name: InMageRcmEnableProtectionInput.fabricDiscoveryMachineId
+        /// </param>
+        /// <param name="targetResourceGroupId">
+        /// The target resource group ARM Id.
+        /// Serialized Name: InMageRcmEnableProtectionInput.targetResourceGroupId
+        /// </param>
+        /// <param name="processServerId">
+        /// The process server Id.
+        /// Serialized Name: InMageRcmEnableProtectionInput.processServerId
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="fabricDiscoveryMachineId"/>, <paramref name="targetResourceGroupId"/> or <paramref name="processServerId"/> is null. </exception>
         public InMageRcmEnableProtectionInput(string fabricDiscoveryMachineId, string targetResourceGroupId, string processServerId)
         {
@@ -32,41 +44,95 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             InstanceType = "InMageRcm";
         }
 
-        /// <summary> The ARM Id of discovered machine. </summary>
+        /// <summary>
+        /// The ARM Id of discovered machine.
+        /// Serialized Name: InMageRcmEnableProtectionInput.fabricDiscoveryMachineId
+        /// </summary>
         public string FabricDiscoveryMachineId { get; }
-        /// <summary> The disks to include list. </summary>
+        /// <summary>
+        /// The disks to include list.
+        /// Serialized Name: InMageRcmEnableProtectionInput.disksToInclude
+        /// </summary>
         public IList<InMageRcmDiskInput> DisksToInclude { get; }
-        /// <summary> The default disk input. </summary>
+        /// <summary>
+        /// The default disk input.
+        /// Serialized Name: InMageRcmEnableProtectionInput.disksDefault
+        /// </summary>
         public InMageRcmDisksDefaultInput DisksDefault { get; set; }
-        /// <summary> The target resource group ARM Id. </summary>
+        /// <summary>
+        /// The target resource group ARM Id.
+        /// Serialized Name: InMageRcmEnableProtectionInput.targetResourceGroupId
+        /// </summary>
         public string TargetResourceGroupId { get; }
-        /// <summary> The selected target network ARM Id. </summary>
+        /// <summary>
+        /// The selected target network ARM Id.
+        /// Serialized Name: InMageRcmEnableProtectionInput.targetNetworkId
+        /// </summary>
         public string TargetNetworkId { get; set; }
-        /// <summary> The selected test network ARM Id. </summary>
+        /// <summary>
+        /// The selected test network ARM Id.
+        /// Serialized Name: InMageRcmEnableProtectionInput.testNetworkId
+        /// </summary>
         public string TestNetworkId { get; set; }
-        /// <summary> The selected target subnet name. </summary>
+        /// <summary>
+        /// The selected target subnet name.
+        /// Serialized Name: InMageRcmEnableProtectionInput.targetSubnetName
+        /// </summary>
         public string TargetSubnetName { get; set; }
-        /// <summary> The selected test subnet name. </summary>
+        /// <summary>
+        /// The selected test subnet name.
+        /// Serialized Name: InMageRcmEnableProtectionInput.testSubnetName
+        /// </summary>
         public string TestSubnetName { get; set; }
-        /// <summary> The target VM name. </summary>
+        /// <summary>
+        /// The target VM name.
+        /// Serialized Name: InMageRcmEnableProtectionInput.targetVmName
+        /// </summary>
         public string TargetVmName { get; set; }
-        /// <summary> The target VM size. </summary>
+        /// <summary>
+        /// The target VM size.
+        /// Serialized Name: InMageRcmEnableProtectionInput.targetVmSize
+        /// </summary>
         public string TargetVmSize { get; set; }
-        /// <summary> The license type. </summary>
+        /// <summary>
+        /// The license type.
+        /// Serialized Name: InMageRcmEnableProtectionInput.licenseType
+        /// </summary>
         public LicenseType? LicenseType { get; set; }
-        /// <summary> The target availability set ARM Id. </summary>
+        /// <summary>
+        /// The target availability set ARM Id.
+        /// Serialized Name: InMageRcmEnableProtectionInput.targetAvailabilitySetId
+        /// </summary>
         public string TargetAvailabilitySetId { get; set; }
-        /// <summary> The target availability zone. </summary>
+        /// <summary>
+        /// The target availability zone.
+        /// Serialized Name: InMageRcmEnableProtectionInput.targetAvailabilityZone
+        /// </summary>
         public string TargetAvailabilityZone { get; set; }
-        /// <summary> The target proximity placement group Id. </summary>
+        /// <summary>
+        /// The target proximity placement group Id.
+        /// Serialized Name: InMageRcmEnableProtectionInput.targetProximityPlacementGroupId
+        /// </summary>
         public string TargetProximityPlacementGroupId { get; set; }
-        /// <summary> The target boot diagnostics storage account ARM Id. </summary>
+        /// <summary>
+        /// The target boot diagnostics storage account ARM Id.
+        /// Serialized Name: InMageRcmEnableProtectionInput.targetBootDiagnosticsStorageAccountId
+        /// </summary>
         public string TargetBootDiagnosticsStorageAccountId { get; set; }
-        /// <summary> The run-as account Id. </summary>
+        /// <summary>
+        /// The run-as account Id.
+        /// Serialized Name: InMageRcmEnableProtectionInput.runAsAccountId
+        /// </summary>
         public string RunAsAccountId { get; set; }
-        /// <summary> The process server Id. </summary>
+        /// <summary>
+        /// The process server Id.
+        /// Serialized Name: InMageRcmEnableProtectionInput.processServerId
+        /// </summary>
         public string ProcessServerId { get; }
-        /// <summary> The multi VM group name. </summary>
+        /// <summary>
+        /// The multi VM group name.
+        /// Serialized Name: InMageRcmEnableProtectionInput.multiVmGroupName
+        /// </summary>
         public string MultiVmGroupName { get; set; }
     }
 }

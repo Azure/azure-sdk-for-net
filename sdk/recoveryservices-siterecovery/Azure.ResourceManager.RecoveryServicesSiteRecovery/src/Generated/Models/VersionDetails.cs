@@ -9,7 +9,10 @@ using System;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary> Version related details. </summary>
+    /// <summary>
+    /// Version related details.
+    /// Serialized Name: VersionDetails
+    /// </summary>
     public partial class VersionDetails
     {
         /// <summary> Initializes a new instance of VersionDetails. </summary>
@@ -18,9 +21,18 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> Initializes a new instance of VersionDetails. </summary>
-        /// <param name="version"> The agent version. </param>
-        /// <param name="expiryOn"> Version expiry date. </param>
-        /// <param name="status"> A value indicating whether security update required. </param>
+        /// <param name="version">
+        /// The agent version.
+        /// Serialized Name: VersionDetails.version
+        /// </param>
+        /// <param name="expiryOn">
+        /// Version expiry date.
+        /// Serialized Name: VersionDetails.expiryDate
+        /// </param>
+        /// <param name="status">
+        /// A value indicating whether security update required.
+        /// Serialized Name: VersionDetails.status
+        /// </param>
         internal VersionDetails(string version, DateTimeOffset? expiryOn, AgentVersionStatus? status)
         {
             Version = version;
@@ -28,11 +40,20 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             Status = status;
         }
 
-        /// <summary> The agent version. </summary>
+        /// <summary>
+        /// The agent version.
+        /// Serialized Name: VersionDetails.version
+        /// </summary>
         public string Version { get; }
-        /// <summary> Version expiry date. </summary>
+        /// <summary>
+        /// Version expiry date.
+        /// Serialized Name: VersionDetails.expiryDate
+        /// </summary>
         public DateTimeOffset? ExpiryOn { get; }
-        /// <summary> A value indicating whether security update required. </summary>
+        /// <summary>
+        /// A value indicating whether security update required.
+        /// Serialized Name: VersionDetails.status
+        /// </summary>
         public AgentVersionStatus? Status { get; }
     }
 }

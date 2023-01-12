@@ -11,7 +11,10 @@ using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary> Replication eligibility results collection response model. </summary>
+    /// <summary>
+    /// Replication eligibility results collection response model.
+    /// Serialized Name: ReplicationEligibilityResultsCollection
+    /// </summary>
     internal partial class ReplicationEligibilityResultsCollection
     {
         /// <summary> Initializes a new instance of ReplicationEligibilityResultsCollection. </summary>
@@ -21,13 +24,19 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> Initializes a new instance of ReplicationEligibilityResultsCollection. </summary>
-        /// <param name="value"> The replication eligibility results details. </param>
+        /// <param name="value">
+        /// The replication eligibility results details.
+        /// Serialized Name: ReplicationEligibilityResultsCollection.value
+        /// </param>
         internal ReplicationEligibilityResultsCollection(IReadOnlyList<ReplicationEligibilityResultData> value)
         {
             Value = value;
         }
 
-        /// <summary> The replication eligibility results details. </summary>
+        /// <summary>
+        /// The replication eligibility results details.
+        /// Serialized Name: ReplicationEligibilityResultsCollection.value
+        /// </summary>
         public IReadOnlyList<ReplicationEligibilityResultData> Value { get; }
     }
 }

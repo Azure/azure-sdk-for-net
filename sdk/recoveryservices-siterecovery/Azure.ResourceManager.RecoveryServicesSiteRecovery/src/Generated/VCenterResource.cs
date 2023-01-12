@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
     /// A Class representing a VCenter along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="VCenterResource" />
     /// from an instance of <see cref="ArmClient" /> using the GetVCenterResource method.
-    /// Otherwise you can get one from its parent resource <see cref="FabricResource" /> using the GetVCenter method.
+    /// Otherwise you can get one from its parent resource <see cref="SiteRecoveryFabricResource" /> using the GetVCenter method.
     /// </summary>
     public partial class VCenterResource : ArmResource
     {

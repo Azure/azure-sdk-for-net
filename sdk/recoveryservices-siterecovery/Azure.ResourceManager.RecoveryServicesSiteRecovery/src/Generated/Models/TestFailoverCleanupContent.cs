@@ -10,11 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary> Input definition for test failover cleanup. </summary>
+    /// <summary>
+    /// Input definition for test failover cleanup.
+    /// Serialized Name: TestFailoverCleanupInput
+    /// </summary>
     public partial class TestFailoverCleanupContent
     {
         /// <summary> Initializes a new instance of TestFailoverCleanupContent. </summary>
-        /// <param name="properties"> Test failover cleanup input properties. </param>
+        /// <param name="properties">
+        /// Test failover cleanup input properties.
+        /// Serialized Name: TestFailoverCleanupInput.properties
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
         public TestFailoverCleanupContent(TestFailoverCleanupInputProperties properties)
         {
@@ -23,9 +29,15 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             Properties = properties;
         }
 
-        /// <summary> Test failover cleanup input properties. </summary>
+        /// <summary>
+        /// Test failover cleanup input properties.
+        /// Serialized Name: TestFailoverCleanupInput.properties
+        /// </summary>
         internal TestFailoverCleanupInputProperties Properties { get; }
-        /// <summary> Test failover cleanup comments. </summary>
+        /// <summary>
+        /// Test failover cleanup comments.
+        /// Serialized Name: TestFailoverCleanupInputProperties.comments
+        /// </summary>
         public string TestFailoverCleanupInputComments
         {
             get => Properties?.Comments;

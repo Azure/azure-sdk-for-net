@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary> HvrA provider specific input for unplanned failover. </summary>
+    /// <summary>
+    /// HvrA provider specific input for unplanned failover.
+    /// Serialized Name: HyperVReplicaAzureUnplannedFailoverInput
+    /// </summary>
     public partial class HyperVReplicaAzureUnplannedFailoverInput : UnplannedFailoverProviderSpecificInput
     {
         /// <summary> Initializes a new instance of HyperVReplicaAzureUnplannedFailoverInput. </summary>
@@ -16,11 +19,20 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             InstanceType = "HyperVReplicaAzure";
         }
 
-        /// <summary> Primary kek certificate pfx. </summary>
+        /// <summary>
+        /// Primary kek certificate pfx.
+        /// Serialized Name: HyperVReplicaAzureUnplannedFailoverInput.primaryKekCertificatePfx
+        /// </summary>
         public string PrimaryKekCertificatePfx { get; set; }
-        /// <summary> Secondary kek certificate pfx. </summary>
+        /// <summary>
+        /// Secondary kek certificate pfx.
+        /// Serialized Name: HyperVReplicaAzureUnplannedFailoverInput.secondaryKekCertificatePfx
+        /// </summary>
         public string SecondaryKekCertificatePfx { get; set; }
-        /// <summary> The recovery point id to be passed to failover to a particular recovery point. In case of latest recovery point, null should be passed. </summary>
+        /// <summary>
+        /// The recovery point id to be passed to failover to a particular recovery point. In case of latest recovery point, null should be passed.
+        /// Serialized Name: HyperVReplicaAzureUnplannedFailoverInput.recoveryPointId
+        /// </summary>
         public string RecoveryPointId { get; set; }
     }
 }

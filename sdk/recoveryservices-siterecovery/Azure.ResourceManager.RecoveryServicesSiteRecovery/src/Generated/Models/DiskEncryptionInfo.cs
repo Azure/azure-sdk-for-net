@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary> Recovery disk encryption info (BEK and KEK). </summary>
+    /// <summary>
+    /// Recovery disk encryption info (BEK and KEK).
+    /// Serialized Name: DiskEncryptionInfo
+    /// </summary>
     public partial class DiskEncryptionInfo
     {
         /// <summary> Initializes a new instance of DiskEncryptionInfo. </summary>
@@ -16,17 +19,29 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> Initializes a new instance of DiskEncryptionInfo. </summary>
-        /// <param name="diskEncryptionKeyInfo"> The recovery KeyVault reference for secret. </param>
-        /// <param name="keyEncryptionKeyInfo"> The recovery KeyVault reference for key. </param>
+        /// <param name="diskEncryptionKeyInfo">
+        /// The recovery KeyVault reference for secret.
+        /// Serialized Name: DiskEncryptionInfo.diskEncryptionKeyInfo
+        /// </param>
+        /// <param name="keyEncryptionKeyInfo">
+        /// The recovery KeyVault reference for key.
+        /// Serialized Name: DiskEncryptionInfo.keyEncryptionKeyInfo
+        /// </param>
         internal DiskEncryptionInfo(DiskEncryptionKeyInfo diskEncryptionKeyInfo, KeyEncryptionKeyInfo keyEncryptionKeyInfo)
         {
             DiskEncryptionKeyInfo = diskEncryptionKeyInfo;
             KeyEncryptionKeyInfo = keyEncryptionKeyInfo;
         }
 
-        /// <summary> The recovery KeyVault reference for secret. </summary>
+        /// <summary>
+        /// The recovery KeyVault reference for secret.
+        /// Serialized Name: DiskEncryptionInfo.diskEncryptionKeyInfo
+        /// </summary>
         public DiskEncryptionKeyInfo DiskEncryptionKeyInfo { get; set; }
-        /// <summary> The recovery KeyVault reference for key. </summary>
+        /// <summary>
+        /// The recovery KeyVault reference for key.
+        /// Serialized Name: DiskEncryptionInfo.keyEncryptionKeyInfo
+        /// </summary>
         public KeyEncryptionKeyInfo KeyEncryptionKeyInfo { get; set; }
     }
 }

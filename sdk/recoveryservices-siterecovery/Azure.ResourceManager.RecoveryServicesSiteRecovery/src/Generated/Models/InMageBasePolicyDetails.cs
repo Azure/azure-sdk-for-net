@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary> Base class for the policies of providers using InMage replication. </summary>
+    /// <summary>
+    /// Base class for the policies of providers using InMage replication.
+    /// Serialized Name: InMageBasePolicyDetails
+    /// </summary>
     public partial class InMageBasePolicyDetails : PolicyProviderSpecificDetails
     {
         /// <summary> Initializes a new instance of InMageBasePolicyDetails. </summary>
@@ -17,11 +20,26 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> Initializes a new instance of InMageBasePolicyDetails. </summary>
-        /// <param name="instanceType"> Gets the class type. Overridden in derived classes. </param>
-        /// <param name="recoveryPointThresholdInMinutes"> The recovery point threshold in minutes. </param>
-        /// <param name="recoveryPointHistory"> The duration in minutes until which the recovery points need to be stored. </param>
-        /// <param name="appConsistentFrequencyInMinutes"> The app consistent snapshot frequency in minutes. </param>
-        /// <param name="multiVmSyncStatus"> A value indicating whether multi-VM sync has to be enabled. </param>
+        /// <param name="instanceType">
+        /// Gets the class type. Overridden in derived classes.
+        /// Serialized Name: PolicyProviderSpecificDetails.instanceType
+        /// </param>
+        /// <param name="recoveryPointThresholdInMinutes">
+        /// The recovery point threshold in minutes.
+        /// Serialized Name: InMageBasePolicyDetails.recoveryPointThresholdInMinutes
+        /// </param>
+        /// <param name="recoveryPointHistory">
+        /// The duration in minutes until which the recovery points need to be stored.
+        /// Serialized Name: InMageBasePolicyDetails.recoveryPointHistory
+        /// </param>
+        /// <param name="appConsistentFrequencyInMinutes">
+        /// The app consistent snapshot frequency in minutes.
+        /// Serialized Name: InMageBasePolicyDetails.appConsistentFrequencyInMinutes
+        /// </param>
+        /// <param name="multiVmSyncStatus">
+        /// A value indicating whether multi-VM sync has to be enabled.
+        /// Serialized Name: InMageBasePolicyDetails.multiVmSyncStatus
+        /// </param>
         internal InMageBasePolicyDetails(string instanceType, int? recoveryPointThresholdInMinutes, int? recoveryPointHistory, int? appConsistentFrequencyInMinutes, string multiVmSyncStatus) : base(instanceType)
         {
             RecoveryPointThresholdInMinutes = recoveryPointThresholdInMinutes;
@@ -31,13 +49,25 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             InstanceType = instanceType ?? "InMageBasePolicyDetails";
         }
 
-        /// <summary> The recovery point threshold in minutes. </summary>
+        /// <summary>
+        /// The recovery point threshold in minutes.
+        /// Serialized Name: InMageBasePolicyDetails.recoveryPointThresholdInMinutes
+        /// </summary>
         public int? RecoveryPointThresholdInMinutes { get; }
-        /// <summary> The duration in minutes until which the recovery points need to be stored. </summary>
+        /// <summary>
+        /// The duration in minutes until which the recovery points need to be stored.
+        /// Serialized Name: InMageBasePolicyDetails.recoveryPointHistory
+        /// </summary>
         public int? RecoveryPointHistory { get; }
-        /// <summary> The app consistent snapshot frequency in minutes. </summary>
+        /// <summary>
+        /// The app consistent snapshot frequency in minutes.
+        /// Serialized Name: InMageBasePolicyDetails.appConsistentFrequencyInMinutes
+        /// </summary>
         public int? AppConsistentFrequencyInMinutes { get; }
-        /// <summary> A value indicating whether multi-VM sync has to be enabled. </summary>
+        /// <summary>
+        /// A value indicating whether multi-VM sync has to be enabled.
+        /// Serialized Name: InMageBasePolicyDetails.multiVmSyncStatus
+        /// </summary>
         public string MultiVmSyncStatus { get; }
     }
 }

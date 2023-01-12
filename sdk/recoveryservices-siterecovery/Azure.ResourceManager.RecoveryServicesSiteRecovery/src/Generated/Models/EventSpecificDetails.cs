@@ -9,6 +9,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
     /// <summary>
     /// Model class for event specific details for an event.
+    /// Serialized Name: EventSpecificDetails
     /// Please note <see cref="EventSpecificDetails"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="JobStatusEventDetails"/>.
     /// </summary>
@@ -20,13 +21,19 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> Initializes a new instance of EventSpecificDetails. </summary>
-        /// <param name="instanceType"> Gets the class type. Overridden in derived classes. </param>
+        /// <param name="instanceType">
+        /// Gets the class type. Overridden in derived classes.
+        /// Serialized Name: EventSpecificDetails.instanceType
+        /// </param>
         internal EventSpecificDetails(string instanceType)
         {
             InstanceType = instanceType;
         }
 
-        /// <summary> Gets the class type. Overridden in derived classes. </summary>
+        /// <summary>
+        /// Gets the class type. Overridden in derived classes.
+        /// Serialized Name: EventSpecificDetails.instanceType
+        /// </summary>
         internal string InstanceType { get; set; }
     }
 }

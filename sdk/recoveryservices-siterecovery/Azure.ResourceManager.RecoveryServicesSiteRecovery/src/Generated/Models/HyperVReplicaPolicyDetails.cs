@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary> Hyper-V Replica Blue specific protection profile details. </summary>
+    /// <summary>
+    /// Hyper-V Replica Blue specific protection profile details.
+    /// Serialized Name: HyperVReplicaPolicyDetails
+    /// </summary>
     public partial class HyperVReplicaPolicyDetails : PolicyProviderSpecificDetails
     {
         /// <summary> Initializes a new instance of HyperVReplicaPolicyDetails. </summary>
@@ -17,17 +20,50 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> Initializes a new instance of HyperVReplicaPolicyDetails. </summary>
-        /// <param name="instanceType"> Gets the class type. Overridden in derived classes. </param>
-        /// <param name="recoveryPoints"> A value indicating the number of recovery points. </param>
-        /// <param name="applicationConsistentSnapshotFrequencyInHours"> A value indicating the application consistent frequency. </param>
-        /// <param name="compression"> A value indicating whether compression has to be enabled. </param>
-        /// <param name="initialReplicationMethod"> A value indicating whether IR is online. </param>
-        /// <param name="onlineReplicationStartTime"> A value indicating the online IR start time. </param>
-        /// <param name="offlineReplicationImportPath"> A value indicating the offline IR import path. </param>
-        /// <param name="offlineReplicationExportPath"> A value indicating the offline IR export path. </param>
-        /// <param name="replicationPort"> A value indicating the recovery HTTPS port. </param>
-        /// <param name="allowedAuthenticationType"> A value indicating the authentication type. </param>
-        /// <param name="replicaDeletionOption"> A value indicating whether the VM has to be auto deleted. Supported Values: String.Empty, None, OnRecoveryCloud. </param>
+        /// <param name="instanceType">
+        /// Gets the class type. Overridden in derived classes.
+        /// Serialized Name: PolicyProviderSpecificDetails.instanceType
+        /// </param>
+        /// <param name="recoveryPoints">
+        /// A value indicating the number of recovery points.
+        /// Serialized Name: HyperVReplicaPolicyDetails.recoveryPoints
+        /// </param>
+        /// <param name="applicationConsistentSnapshotFrequencyInHours">
+        /// A value indicating the application consistent frequency.
+        /// Serialized Name: HyperVReplicaPolicyDetails.applicationConsistentSnapshotFrequencyInHours
+        /// </param>
+        /// <param name="compression">
+        /// A value indicating whether compression has to be enabled.
+        /// Serialized Name: HyperVReplicaPolicyDetails.compression
+        /// </param>
+        /// <param name="initialReplicationMethod">
+        /// A value indicating whether IR is online.
+        /// Serialized Name: HyperVReplicaPolicyDetails.initialReplicationMethod
+        /// </param>
+        /// <param name="onlineReplicationStartTime">
+        /// A value indicating the online IR start time.
+        /// Serialized Name: HyperVReplicaPolicyDetails.onlineReplicationStartTime
+        /// </param>
+        /// <param name="offlineReplicationImportPath">
+        /// A value indicating the offline IR import path.
+        /// Serialized Name: HyperVReplicaPolicyDetails.offlineReplicationImportPath
+        /// </param>
+        /// <param name="offlineReplicationExportPath">
+        /// A value indicating the offline IR export path.
+        /// Serialized Name: HyperVReplicaPolicyDetails.offlineReplicationExportPath
+        /// </param>
+        /// <param name="replicationPort">
+        /// A value indicating the recovery HTTPS port.
+        /// Serialized Name: HyperVReplicaPolicyDetails.replicationPort
+        /// </param>
+        /// <param name="allowedAuthenticationType">
+        /// A value indicating the authentication type.
+        /// Serialized Name: HyperVReplicaPolicyDetails.allowedAuthenticationType
+        /// </param>
+        /// <param name="replicaDeletionOption">
+        /// A value indicating whether the VM has to be auto deleted. Supported Values: String.Empty, None, OnRecoveryCloud
+        /// Serialized Name: HyperVReplicaPolicyDetails.replicaDeletionOption
+        /// </param>
         internal HyperVReplicaPolicyDetails(string instanceType, int? recoveryPoints, int? applicationConsistentSnapshotFrequencyInHours, string compression, string initialReplicationMethod, string onlineReplicationStartTime, string offlineReplicationImportPath, string offlineReplicationExportPath, int? replicationPort, int? allowedAuthenticationType, string replicaDeletionOption) : base(instanceType)
         {
             RecoveryPoints = recoveryPoints;
@@ -43,25 +79,55 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             InstanceType = instanceType ?? "HyperVReplica2012";
         }
 
-        /// <summary> A value indicating the number of recovery points. </summary>
+        /// <summary>
+        /// A value indicating the number of recovery points.
+        /// Serialized Name: HyperVReplicaPolicyDetails.recoveryPoints
+        /// </summary>
         public int? RecoveryPoints { get; }
-        /// <summary> A value indicating the application consistent frequency. </summary>
+        /// <summary>
+        /// A value indicating the application consistent frequency.
+        /// Serialized Name: HyperVReplicaPolicyDetails.applicationConsistentSnapshotFrequencyInHours
+        /// </summary>
         public int? ApplicationConsistentSnapshotFrequencyInHours { get; }
-        /// <summary> A value indicating whether compression has to be enabled. </summary>
+        /// <summary>
+        /// A value indicating whether compression has to be enabled.
+        /// Serialized Name: HyperVReplicaPolicyDetails.compression
+        /// </summary>
         public string Compression { get; }
-        /// <summary> A value indicating whether IR is online. </summary>
+        /// <summary>
+        /// A value indicating whether IR is online.
+        /// Serialized Name: HyperVReplicaPolicyDetails.initialReplicationMethod
+        /// </summary>
         public string InitialReplicationMethod { get; }
-        /// <summary> A value indicating the online IR start time. </summary>
+        /// <summary>
+        /// A value indicating the online IR start time.
+        /// Serialized Name: HyperVReplicaPolicyDetails.onlineReplicationStartTime
+        /// </summary>
         public string OnlineReplicationStartTime { get; }
-        /// <summary> A value indicating the offline IR import path. </summary>
+        /// <summary>
+        /// A value indicating the offline IR import path.
+        /// Serialized Name: HyperVReplicaPolicyDetails.offlineReplicationImportPath
+        /// </summary>
         public string OfflineReplicationImportPath { get; }
-        /// <summary> A value indicating the offline IR export path. </summary>
+        /// <summary>
+        /// A value indicating the offline IR export path.
+        /// Serialized Name: HyperVReplicaPolicyDetails.offlineReplicationExportPath
+        /// </summary>
         public string OfflineReplicationExportPath { get; }
-        /// <summary> A value indicating the recovery HTTPS port. </summary>
+        /// <summary>
+        /// A value indicating the recovery HTTPS port.
+        /// Serialized Name: HyperVReplicaPolicyDetails.replicationPort
+        /// </summary>
         public int? ReplicationPort { get; }
-        /// <summary> A value indicating the authentication type. </summary>
+        /// <summary>
+        /// A value indicating the authentication type.
+        /// Serialized Name: HyperVReplicaPolicyDetails.allowedAuthenticationType
+        /// </summary>
         public int? AllowedAuthenticationType { get; }
-        /// <summary> A value indicating whether the VM has to be auto deleted. Supported Values: String.Empty, None, OnRecoveryCloud. </summary>
+        /// <summary>
+        /// A value indicating whether the VM has to be auto deleted. Supported Values: String.Empty, None, OnRecoveryCloud
+        /// Serialized Name: HyperVReplicaPolicyDetails.replicaDeletionOption
+        /// </summary>
         public string ReplicaDeletionOption { get; }
     }
 }

@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary> A value indicating whether the VM has a physical disk attached. String value of SrsDataContract.PresenceStatus enum. </summary>
+    /// <summary>
+    /// A value indicating whether the VM has a physical disk attached. String value of SrsDataContract.PresenceStatus enum.
+    /// Serialized Name: PresenceStatus
+    /// </summary>
     public readonly partial struct PresenceStatus : IEquatable<PresenceStatus>
     {
         private readonly string _value;
@@ -26,11 +29,20 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         private const string PresentValue = "Present";
         private const string NotPresentValue = "NotPresent";
 
-        /// <summary> Unknown. </summary>
+        /// <summary>
+        /// Unknown
+        /// Serialized Name: PresenceStatus.Unknown
+        /// </summary>
         public static PresenceStatus Unknown { get; } = new PresenceStatus(UnknownValue);
-        /// <summary> Present. </summary>
+        /// <summary>
+        /// Present
+        /// Serialized Name: PresenceStatus.Present
+        /// </summary>
         public static PresenceStatus Present { get; } = new PresenceStatus(PresentValue);
-        /// <summary> NotPresent. </summary>
+        /// <summary>
+        /// NotPresent
+        /// Serialized Name: PresenceStatus.NotPresent
+        /// </summary>
         public static PresenceStatus NotPresent { get; } = new PresenceStatus(NotPresentValue);
         /// <summary> Determines if two <see cref="PresenceStatus"/> values are the same. </summary>
         public static bool operator ==(PresenceStatus left, PresenceStatus right) => left.Equals(right);

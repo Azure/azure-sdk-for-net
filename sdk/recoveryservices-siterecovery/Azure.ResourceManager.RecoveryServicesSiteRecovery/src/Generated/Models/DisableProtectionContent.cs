@@ -10,11 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary> Disable protection input. </summary>
+    /// <summary>
+    /// Disable protection input.
+    /// Serialized Name: DisableProtectionInput
+    /// </summary>
     public partial class DisableProtectionContent
     {
         /// <summary> Initializes a new instance of DisableProtectionContent. </summary>
-        /// <param name="properties"> Disable protection input properties. </param>
+        /// <param name="properties">
+        /// Disable protection input properties.
+        /// Serialized Name: DisableProtectionInput.properties
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
         public DisableProtectionContent(DisableProtectionInputProperties properties)
         {
@@ -23,7 +29,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             Properties = properties;
         }
 
-        /// <summary> Disable protection input properties. </summary>
+        /// <summary>
+        /// Disable protection input properties.
+        /// Serialized Name: DisableProtectionInput.properties
+        /// </summary>
         public DisableProtectionInputProperties Properties { get; }
     }
 }

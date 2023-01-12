@@ -10,7 +10,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary> Azure specific reprotect input. </summary>
+    /// <summary>
+    /// Azure specific reprotect input.
+    /// Serialized Name: A2AReprotectInput
+    /// </summary>
     public partial class A2AReprotectInput : ReverseReplicationProviderSpecificInput
     {
         /// <summary> Initializes a new instance of A2AReprotectInput. </summary>
@@ -20,17 +23,35 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             InstanceType = "A2A";
         }
 
-        /// <summary> The recovery container Id. </summary>
+        /// <summary>
+        /// The recovery container Id.
+        /// Serialized Name: A2AReprotectInput.recoveryContainerId
+        /// </summary>
         public string RecoveryContainerId { get; set; }
-        /// <summary> The list of vm disk details. </summary>
+        /// <summary>
+        /// The list of vm disk details.
+        /// Serialized Name: A2AReprotectInput.vmDisks
+        /// </summary>
         public IList<A2AVmDiskInputDetails> VmDisks { get; }
-        /// <summary> The recovery resource group Id. Valid for V2 scenarios. </summary>
+        /// <summary>
+        /// The recovery resource group Id. Valid for V2 scenarios.
+        /// Serialized Name: A2AReprotectInput.recoveryResourceGroupId
+        /// </summary>
         public string RecoveryResourceGroupId { get; set; }
-        /// <summary> The recovery cloud service Id. Valid for V1 scenarios. </summary>
+        /// <summary>
+        /// The recovery cloud service Id. Valid for V1 scenarios.
+        /// Serialized Name: A2AReprotectInput.recoveryCloudServiceId
+        /// </summary>
         public string RecoveryCloudServiceId { get; set; }
-        /// <summary> The recovery availability set. </summary>
+        /// <summary>
+        /// The recovery availability set.
+        /// Serialized Name: A2AReprotectInput.recoveryAvailabilitySetId
+        /// </summary>
         public string RecoveryAvailabilitySetId { get; set; }
-        /// <summary> The Policy Id. </summary>
+        /// <summary>
+        /// The Policy Id.
+        /// Serialized Name: A2AReprotectInput.policyId
+        /// </summary>
         public string PolicyId { get; set; }
     }
 }

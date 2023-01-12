@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary> A value indicating whether the auto update is enabled. </summary>
+    /// <summary>
+    /// A value indicating whether the auto update is enabled.
+    /// Serialized Name: AgentAutoUpdateStatus
+    /// </summary>
     public readonly partial struct AgentAutoUpdateStatus : IEquatable<AgentAutoUpdateStatus>
     {
         private readonly string _value;
@@ -25,9 +28,15 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         private const string DisabledValue = "Disabled";
         private const string EnabledValue = "Enabled";
 
-        /// <summary> Disabled. </summary>
+        /// <summary>
+        /// Disabled
+        /// Serialized Name: AgentAutoUpdateStatus.Disabled
+        /// </summary>
         public static AgentAutoUpdateStatus Disabled { get; } = new AgentAutoUpdateStatus(DisabledValue);
-        /// <summary> Enabled. </summary>
+        /// <summary>
+        /// Enabled
+        /// Serialized Name: AgentAutoUpdateStatus.Enabled
+        /// </summary>
         public static AgentAutoUpdateStatus Enabled { get; } = new AgentAutoUpdateStatus(EnabledValue);
         /// <summary> Determines if two <see cref="AgentAutoUpdateStatus"/> values are the same. </summary>
         public static bool operator ==(AgentAutoUpdateStatus left, AgentAutoUpdateStatus right) => left.Equals(right);

@@ -10,11 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary> Pause replication input. </summary>
+    /// <summary>
+    /// Pause replication input.
+    /// Serialized Name: PauseReplicationInput
+    /// </summary>
     public partial class PauseReplicationContent
     {
         /// <summary> Initializes a new instance of PauseReplicationContent. </summary>
-        /// <param name="properties"> Pause replication input properties. </param>
+        /// <param name="properties">
+        /// Pause replication input properties.
+        /// Serialized Name: PauseReplicationInput.properties
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
         public PauseReplicationContent(PauseReplicationInputProperties properties)
         {
@@ -23,9 +29,15 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             Properties = properties;
         }
 
-        /// <summary> Pause replication input properties. </summary>
+        /// <summary>
+        /// Pause replication input properties.
+        /// Serialized Name: PauseReplicationInput.properties
+        /// </summary>
         internal PauseReplicationInputProperties Properties { get; }
-        /// <summary> The class type. </summary>
+        /// <summary>
+        /// The class type.
+        /// Serialized Name: PauseReplicationInputProperties.instanceType
+        /// </summary>
         public string PauseReplicationInputInstanceType
         {
             get => Properties?.InstanceType;

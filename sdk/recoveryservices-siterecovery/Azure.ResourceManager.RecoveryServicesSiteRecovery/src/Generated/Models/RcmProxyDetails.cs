@@ -11,7 +11,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary> RCM proxy details. </summary>
+    /// <summary>
+    /// RCM proxy details.
+    /// Serialized Name: RcmProxyDetails
+    /// </summary>
     public partial class RcmProxyDetails
     {
         /// <summary> Initializes a new instance of RcmProxyDetails. </summary>
@@ -21,16 +24,46 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> Initializes a new instance of RcmProxyDetails. </summary>
-        /// <param name="id"> The RCM proxy Id. </param>
-        /// <param name="name"> The RCM proxy name. </param>
-        /// <param name="biosId"> The RCM proxy Bios Id. </param>
-        /// <param name="fabricObjectId"> The fabric object Id. </param>
-        /// <param name="fqdn"> The RCM proxy Fqdn. </param>
-        /// <param name="clientAuthenticationType"> The client authentication type. </param>
-        /// <param name="version"> The version. </param>
-        /// <param name="lastHeartbeatUtc"> The last heartbeat received from the RCM proxy. </param>
-        /// <param name="health"> The health of the RCM proxy. </param>
-        /// <param name="healthErrors"> The health errors. </param>
+        /// <param name="id">
+        /// The RCM proxy Id.
+        /// Serialized Name: RcmProxyDetails.id
+        /// </param>
+        /// <param name="name">
+        /// The RCM proxy name.
+        /// Serialized Name: RcmProxyDetails.name
+        /// </param>
+        /// <param name="biosId">
+        /// The RCM proxy Bios Id.
+        /// Serialized Name: RcmProxyDetails.biosId
+        /// </param>
+        /// <param name="fabricObjectId">
+        /// The fabric object Id.
+        /// Serialized Name: RcmProxyDetails.fabricObjectId
+        /// </param>
+        /// <param name="fqdn">
+        /// The RCM proxy Fqdn.
+        /// Serialized Name: RcmProxyDetails.fqdn
+        /// </param>
+        /// <param name="clientAuthenticationType">
+        /// The client authentication type.
+        /// Serialized Name: RcmProxyDetails.clientAuthenticationType
+        /// </param>
+        /// <param name="version">
+        /// The version.
+        /// Serialized Name: RcmProxyDetails.version
+        /// </param>
+        /// <param name="lastHeartbeatUtc">
+        /// The last heartbeat received from the RCM proxy.
+        /// Serialized Name: RcmProxyDetails.lastHeartbeatUtc
+        /// </param>
+        /// <param name="health">
+        /// The health of the RCM proxy.
+        /// Serialized Name: RcmProxyDetails.health
+        /// </param>
+        /// <param name="healthErrors">
+        /// The health errors.
+        /// Serialized Name: RcmProxyDetails.healthErrors
+        /// </param>
         internal RcmProxyDetails(string id, string name, string biosId, string fabricObjectId, string fqdn, string clientAuthenticationType, string version, DateTimeOffset? lastHeartbeatUtc, ProtectionHealth? health, IReadOnlyList<HealthError> healthErrors)
         {
             Id = id;
@@ -45,25 +78,55 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             HealthErrors = healthErrors;
         }
 
-        /// <summary> The RCM proxy Id. </summary>
+        /// <summary>
+        /// The RCM proxy Id.
+        /// Serialized Name: RcmProxyDetails.id
+        /// </summary>
         public string Id { get; }
-        /// <summary> The RCM proxy name. </summary>
+        /// <summary>
+        /// The RCM proxy name.
+        /// Serialized Name: RcmProxyDetails.name
+        /// </summary>
         public string Name { get; }
-        /// <summary> The RCM proxy Bios Id. </summary>
+        /// <summary>
+        /// The RCM proxy Bios Id.
+        /// Serialized Name: RcmProxyDetails.biosId
+        /// </summary>
         public string BiosId { get; }
-        /// <summary> The fabric object Id. </summary>
+        /// <summary>
+        /// The fabric object Id.
+        /// Serialized Name: RcmProxyDetails.fabricObjectId
+        /// </summary>
         public string FabricObjectId { get; }
-        /// <summary> The RCM proxy Fqdn. </summary>
+        /// <summary>
+        /// The RCM proxy Fqdn.
+        /// Serialized Name: RcmProxyDetails.fqdn
+        /// </summary>
         public string Fqdn { get; }
-        /// <summary> The client authentication type. </summary>
+        /// <summary>
+        /// The client authentication type.
+        /// Serialized Name: RcmProxyDetails.clientAuthenticationType
+        /// </summary>
         public string ClientAuthenticationType { get; }
-        /// <summary> The version. </summary>
+        /// <summary>
+        /// The version.
+        /// Serialized Name: RcmProxyDetails.version
+        /// </summary>
         public string Version { get; }
-        /// <summary> The last heartbeat received from the RCM proxy. </summary>
+        /// <summary>
+        /// The last heartbeat received from the RCM proxy.
+        /// Serialized Name: RcmProxyDetails.lastHeartbeatUtc
+        /// </summary>
         public DateTimeOffset? LastHeartbeatUtc { get; }
-        /// <summary> The health of the RCM proxy. </summary>
+        /// <summary>
+        /// The health of the RCM proxy.
+        /// Serialized Name: RcmProxyDetails.health
+        /// </summary>
         public ProtectionHealth? Health { get; }
-        /// <summary> The health errors. </summary>
+        /// <summary>
+        /// The health errors.
+        /// Serialized Name: RcmProxyDetails.healthErrors
+        /// </summary>
         public IReadOnlyList<HealthError> HealthErrors { get; }
     }
 }

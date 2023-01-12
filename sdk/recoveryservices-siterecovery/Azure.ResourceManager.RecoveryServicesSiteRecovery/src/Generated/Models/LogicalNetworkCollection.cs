@@ -11,7 +11,10 @@ using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary> List of logical networks. </summary>
+    /// <summary>
+    /// List of logical networks.
+    /// Serialized Name: LogicalNetworkCollection
+    /// </summary>
     internal partial class LogicalNetworkCollection
     {
         /// <summary> Initializes a new instance of LogicalNetworkCollection. </summary>
@@ -21,17 +24,29 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> Initializes a new instance of LogicalNetworkCollection. </summary>
-        /// <param name="value"> The Logical Networks list details. </param>
-        /// <param name="nextLink"> The value of next link. </param>
+        /// <param name="value">
+        /// The Logical Networks list details.
+        /// Serialized Name: LogicalNetworkCollection.value
+        /// </param>
+        /// <param name="nextLink">
+        /// The value of next link.
+        /// Serialized Name: LogicalNetworkCollection.nextLink
+        /// </param>
         internal LogicalNetworkCollection(IReadOnlyList<LogicalNetworkData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
-        /// <summary> The Logical Networks list details. </summary>
+        /// <summary>
+        /// The Logical Networks list details.
+        /// Serialized Name: LogicalNetworkCollection.value
+        /// </summary>
         public IReadOnlyList<LogicalNetworkData> Value { get; }
-        /// <summary> The value of next link. </summary>
+        /// <summary>
+        /// The value of next link.
+        /// Serialized Name: LogicalNetworkCollection.nextLink
+        /// </summary>
         public string NextLink { get; }
     }
 }

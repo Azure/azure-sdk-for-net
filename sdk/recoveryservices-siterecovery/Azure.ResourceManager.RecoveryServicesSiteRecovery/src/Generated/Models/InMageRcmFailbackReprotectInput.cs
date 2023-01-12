@@ -10,12 +10,21 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary> InMageRcmFailback specific provider input. </summary>
+    /// <summary>
+    /// InMageRcmFailback specific provider input.
+    /// Serialized Name: InMageRcmFailbackReprotectInput
+    /// </summary>
     public partial class InMageRcmFailbackReprotectInput : ReverseReplicationProviderSpecificInput
     {
         /// <summary> Initializes a new instance of InMageRcmFailbackReprotectInput. </summary>
-        /// <param name="processServerId"> The process server Id. </param>
-        /// <param name="policyId"> The Policy Id. </param>
+        /// <param name="processServerId">
+        /// The process server Id.
+        /// Serialized Name: InMageRcmFailbackReprotectInput.processServerId
+        /// </param>
+        /// <param name="policyId">
+        /// The Policy Id.
+        /// Serialized Name: InMageRcmFailbackReprotectInput.policyId
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="processServerId"/> or <paramref name="policyId"/> is null. </exception>
         public InMageRcmFailbackReprotectInput(string processServerId, string policyId)
         {
@@ -27,11 +36,20 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             InstanceType = "InMageRcmFailback";
         }
 
-        /// <summary> The process server Id. </summary>
+        /// <summary>
+        /// The process server Id.
+        /// Serialized Name: InMageRcmFailbackReprotectInput.processServerId
+        /// </summary>
         public string ProcessServerId { get; }
-        /// <summary> The run as account Id. </summary>
+        /// <summary>
+        /// The run as account Id.
+        /// Serialized Name: InMageRcmFailbackReprotectInput.runAsAccountId
+        /// </summary>
         public string RunAsAccountId { get; set; }
-        /// <summary> The Policy Id. </summary>
+        /// <summary>
+        /// The Policy Id.
+        /// Serialized Name: InMageRcmFailbackReprotectInput.policyId
+        /// </summary>
         public string PolicyId { get; }
     }
 }

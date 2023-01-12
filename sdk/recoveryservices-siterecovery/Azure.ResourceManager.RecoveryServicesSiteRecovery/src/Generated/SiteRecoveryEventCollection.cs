@@ -20,33 +20,33 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
 {
     /// <summary>
-    /// A class representing a collection of <see cref="EventResource" /> and their operations.
-    /// Each <see cref="EventResource" /> in the collection will belong to the same instance of <see cref="ResourceGroupResource" />.
-    /// To get an <see cref="EventCollection" /> instance call the GetEvents method from an instance of <see cref="ResourceGroupResource" />.
+    /// A class representing a collection of <see cref="SiteRecoveryEventResource" /> and their operations.
+    /// Each <see cref="SiteRecoveryEventResource" /> in the collection will belong to the same instance of <see cref="ResourceGroupResource" />.
+    /// To get a <see cref="SiteRecoveryEventCollection" /> instance call the GetSiteRecoveryEvents method from an instance of <see cref="ResourceGroupResource" />.
     /// </summary>
-    public partial class EventCollection : ArmCollection, IEnumerable<EventResource>, IAsyncEnumerable<EventResource>
+    public partial class SiteRecoveryEventCollection : ArmCollection, IEnumerable<SiteRecoveryEventResource>, IAsyncEnumerable<SiteRecoveryEventResource>
     {
-        private readonly ClientDiagnostics _eventReplicationEventsClientDiagnostics;
-        private readonly ReplicationEventsRestOperations _eventReplicationEventsRestClient;
+        private readonly ClientDiagnostics _siteRecoveryEventReplicationEventsClientDiagnostics;
+        private readonly ReplicationEventsRestOperations _siteRecoveryEventReplicationEventsRestClient;
         private readonly string _resourceName;
 
-        /// <summary> Initializes a new instance of the <see cref="EventCollection"/> class for mocking. </summary>
-        protected EventCollection()
+        /// <summary> Initializes a new instance of the <see cref="SiteRecoveryEventCollection"/> class for mocking. </summary>
+        protected SiteRecoveryEventCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="EventCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="SiteRecoveryEventCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         /// <param name="resourceName"> The name of the recovery services vault. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        internal EventCollection(ArmClient client, ResourceIdentifier id, string resourceName) : base(client, id)
+        internal SiteRecoveryEventCollection(ArmClient client, ResourceIdentifier id, string resourceName) : base(client, id)
         {
             _resourceName = resourceName;
-            _eventReplicationEventsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.RecoveryServicesSiteRecovery", EventResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(EventResource.ResourceType, out string eventReplicationEventsApiVersion);
-            _eventReplicationEventsRestClient = new ReplicationEventsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, eventReplicationEventsApiVersion);
+            _siteRecoveryEventReplicationEventsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.RecoveryServicesSiteRecovery", SiteRecoveryEventResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(SiteRecoveryEventResource.ResourceType, out string siteRecoveryEventReplicationEventsApiVersion);
+            _siteRecoveryEventReplicationEventsRestClient = new ReplicationEventsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, siteRecoveryEventReplicationEventsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -67,18 +67,18 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="eventName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="eventName"/> is null. </exception>
-        public virtual async Task<Response<EventResource>> GetAsync(string eventName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SiteRecoveryEventResource>> GetAsync(string eventName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(eventName, nameof(eventName));
 
-            using var scope = _eventReplicationEventsClientDiagnostics.CreateScope("EventCollection.Get");
+            using var scope = _siteRecoveryEventReplicationEventsClientDiagnostics.CreateScope("SiteRecoveryEventCollection.Get");
             scope.Start();
             try
             {
-                var response = await _eventReplicationEventsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, _resourceName, eventName, cancellationToken).ConfigureAwait(false);
+                var response = await _siteRecoveryEventReplicationEventsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, _resourceName, eventName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new EventResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SiteRecoveryEventResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -96,18 +96,18 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="eventName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="eventName"/> is null. </exception>
-        public virtual Response<EventResource> Get(string eventName, CancellationToken cancellationToken = default)
+        public virtual Response<SiteRecoveryEventResource> Get(string eventName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(eventName, nameof(eventName));
 
-            using var scope = _eventReplicationEventsClientDiagnostics.CreateScope("EventCollection.Get");
+            using var scope = _siteRecoveryEventReplicationEventsClientDiagnostics.CreateScope("SiteRecoveryEventCollection.Get");
             scope.Start();
             try
             {
-                var response = _eventReplicationEventsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, _resourceName, eventName, cancellationToken);
+                var response = _siteRecoveryEventReplicationEventsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, _resourceName, eventName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new EventResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SiteRecoveryEventResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -123,12 +123,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// </summary>
         /// <param name="filter"> OData filter options. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="EventResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<EventResource> GetAllAsync(string filter = null, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="SiteRecoveryEventResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<SiteRecoveryEventResource> GetAllAsync(string filter = null, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _eventReplicationEventsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, _resourceName, filter);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _eventReplicationEventsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, _resourceName, filter);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new EventResource(Client, EventData.DeserializeEventData(e)), _eventReplicationEventsClientDiagnostics, Pipeline, "EventCollection.GetAll", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _siteRecoveryEventReplicationEventsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, _resourceName, filter);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _siteRecoveryEventReplicationEventsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, _resourceName, filter);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SiteRecoveryEventResource(Client, SiteRecoveryEventData.DeserializeSiteRecoveryEventData(e)), _siteRecoveryEventReplicationEventsClientDiagnostics, Pipeline, "SiteRecoveryEventCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -138,12 +138,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// </summary>
         /// <param name="filter"> OData filter options. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="EventResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<EventResource> GetAll(string filter = null, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="SiteRecoveryEventResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<SiteRecoveryEventResource> GetAll(string filter = null, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _eventReplicationEventsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, _resourceName, filter);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _eventReplicationEventsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, _resourceName, filter);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new EventResource(Client, EventData.DeserializeEventData(e)), _eventReplicationEventsClientDiagnostics, Pipeline, "EventCollection.GetAll", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _siteRecoveryEventReplicationEventsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, _resourceName, filter);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _siteRecoveryEventReplicationEventsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, _resourceName, filter);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SiteRecoveryEventResource(Client, SiteRecoveryEventData.DeserializeSiteRecoveryEventData(e)), _siteRecoveryEventReplicationEventsClientDiagnostics, Pipeline, "SiteRecoveryEventCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -159,11 +159,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         {
             Argument.AssertNotNullOrEmpty(eventName, nameof(eventName));
 
-            using var scope = _eventReplicationEventsClientDiagnostics.CreateScope("EventCollection.Exists");
+            using var scope = _siteRecoveryEventReplicationEventsClientDiagnostics.CreateScope("SiteRecoveryEventCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _eventReplicationEventsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, _resourceName, eventName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _siteRecoveryEventReplicationEventsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, _resourceName, eventName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -186,11 +186,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         {
             Argument.AssertNotNullOrEmpty(eventName, nameof(eventName));
 
-            using var scope = _eventReplicationEventsClientDiagnostics.CreateScope("EventCollection.Exists");
+            using var scope = _siteRecoveryEventReplicationEventsClientDiagnostics.CreateScope("SiteRecoveryEventCollection.Exists");
             scope.Start();
             try
             {
-                var response = _eventReplicationEventsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, _resourceName, eventName, cancellationToken: cancellationToken);
+                var response = _siteRecoveryEventReplicationEventsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, _resourceName, eventName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
             }
         }
 
-        IEnumerator<EventResource> IEnumerable<EventResource>.GetEnumerator()
+        IEnumerator<SiteRecoveryEventResource> IEnumerable<SiteRecoveryEventResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
             return GetAll().GetEnumerator();
         }
 
-        IAsyncEnumerator<EventResource> IAsyncEnumerable<EventResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<SiteRecoveryEventResource> IAsyncEnumerable<SiteRecoveryEventResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }

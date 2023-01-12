@@ -10,7 +10,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary> InMage Azure V2 input to update replication protected item. </summary>
+    /// <summary>
+    /// InMage Azure V2 input to update replication protected item.
+    /// Serialized Name: InMageAzureV2UpdateReplicationProtectedItemInput
+    /// </summary>
     public partial class InMageAzureV2UpdateReplicationProtectedItemInput : UpdateReplicationProtectedItemProviderInput
     {
         /// <summary> Initializes a new instance of InMageAzureV2UpdateReplicationProtectedItemInput. </summary>
@@ -23,25 +26,55 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             InstanceType = "InMageAzureV2";
         }
 
-        /// <summary> The recovery Azure resource group Id for classic deployment. </summary>
+        /// <summary>
+        /// The recovery Azure resource group Id for classic deployment.
+        /// Serialized Name: InMageAzureV2UpdateReplicationProtectedItemInput.recoveryAzureV1ResourceGroupId
+        /// </summary>
         public string RecoveryAzureV1ResourceGroupId { get; set; }
-        /// <summary> The recovery Azure resource group Id for resource manager deployment. </summary>
+        /// <summary>
+        /// The recovery Azure resource group Id for resource manager deployment.
+        /// Serialized Name: InMageAzureV2UpdateReplicationProtectedItemInput.recoveryAzureV2ResourceGroupId
+        /// </summary>
         public string RecoveryAzureV2ResourceGroupId { get; set; }
-        /// <summary> A value indicating whether managed disks should be used during failover. </summary>
+        /// <summary>
+        /// A value indicating whether managed disks should be used during failover.
+        /// Serialized Name: InMageAzureV2UpdateReplicationProtectedItemInput.useManagedDisks
+        /// </summary>
         public string UseManagedDisks { get; set; }
-        /// <summary> The target proximity placement group Id. </summary>
+        /// <summary>
+        /// The target proximity placement group Id.
+        /// Serialized Name: InMageAzureV2UpdateReplicationProtectedItemInput.targetProximityPlacementGroupId
+        /// </summary>
         public string TargetProximityPlacementGroupId { get; set; }
-        /// <summary> The target availability zone. </summary>
+        /// <summary>
+        /// The target availability zone.
+        /// Serialized Name: InMageAzureV2UpdateReplicationProtectedItemInput.targetAvailabilityZone
+        /// </summary>
         public string TargetAvailabilityZone { get; set; }
-        /// <summary> The target VM tags. </summary>
+        /// <summary>
+        /// The target VM tags.
+        /// Serialized Name: InMageAzureV2UpdateReplicationProtectedItemInput.targetVmTags
+        /// </summary>
         public IDictionary<string, string> TargetVmTags { get; }
-        /// <summary> The tags for the target managed disks. </summary>
+        /// <summary>
+        /// The tags for the target managed disks.
+        /// Serialized Name: InMageAzureV2UpdateReplicationProtectedItemInput.targetManagedDiskTags
+        /// </summary>
         public IDictionary<string, string> TargetManagedDiskTags { get; }
-        /// <summary> The tags for the target NICs. </summary>
+        /// <summary>
+        /// The tags for the target NICs.
+        /// Serialized Name: InMageAzureV2UpdateReplicationProtectedItemInput.targetNicTags
+        /// </summary>
         public IDictionary<string, string> TargetNicTags { get; }
-        /// <summary> The SQL Server license type. </summary>
+        /// <summary>
+        /// The SQL Server license type.
+        /// Serialized Name: InMageAzureV2UpdateReplicationProtectedItemInput.sqlServerLicenseType
+        /// </summary>
         public SqlServerLicenseType? SqlServerLicenseType { get; set; }
-        /// <summary> The list of disk update properties. </summary>
+        /// <summary>
+        /// The list of disk update properties.
+        /// Serialized Name: InMageAzureV2UpdateReplicationProtectedItemInput.vmDisks
+        /// </summary>
         public IList<UpdateDiskInput> VmDisks { get; }
     }
 }

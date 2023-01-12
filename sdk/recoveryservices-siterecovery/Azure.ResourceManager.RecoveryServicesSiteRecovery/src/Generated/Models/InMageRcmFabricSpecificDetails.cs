@@ -11,7 +11,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary> InMageRcm fabric specific details. </summary>
+    /// <summary>
+    /// InMageRcm fabric specific details.
+    /// Serialized Name: InMageRcmFabricSpecificDetails
+    /// </summary>
     public partial class InMageRcmFabricSpecificDetails : FabricSpecificDetails
     {
         /// <summary> Initializes a new instance of InMageRcmFabricSpecificDetails. </summary>
@@ -29,23 +32,74 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> Initializes a new instance of InMageRcmFabricSpecificDetails. </summary>
-        /// <param name="instanceType"> Gets the class type. Overridden in derived classes. </param>
-        /// <param name="vmwareSiteId"> The ARM Id of the VMware site. </param>
-        /// <param name="physicalSiteId"> The ARM Id of the physical site. </param>
-        /// <param name="serviceEndpoint"> The service endpoint. </param>
-        /// <param name="serviceResourceId"> The service resource Id. </param>
-        /// <param name="serviceContainerId"> The service container Id. </param>
-        /// <param name="dataPlaneUri"> The data plane Uri. </param>
-        /// <param name="controlPlaneUri"> The control plane Uri. </param>
-        /// <param name="sourceAgentIdentityDetails"> The source agent identity details. </param>
-        /// <param name="processServers"> The list of process servers. </param>
-        /// <param name="rcmProxies"> The list of RCM proxies. </param>
-        /// <param name="pushInstallers"> The list of push installers. </param>
-        /// <param name="replicationAgents"> The list of replication agents. </param>
-        /// <param name="reprotectAgents"> The list of reprotect agents. </param>
-        /// <param name="marsAgents"> The list of Mars agents. </param>
-        /// <param name="dras"> The list of DRAs. </param>
-        /// <param name="agentDetails"> The list of agent details. </param>
+        /// <param name="instanceType">
+        /// Gets the class type. Overridden in derived classes.
+        /// Serialized Name: FabricSpecificDetails.instanceType
+        /// </param>
+        /// <param name="vmwareSiteId">
+        /// The ARM Id of the VMware site.
+        /// Serialized Name: InMageRcmFabricSpecificDetails.vmwareSiteId
+        /// </param>
+        /// <param name="physicalSiteId">
+        /// The ARM Id of the physical site.
+        /// Serialized Name: InMageRcmFabricSpecificDetails.physicalSiteId
+        /// </param>
+        /// <param name="serviceEndpoint">
+        /// The service endpoint.
+        /// Serialized Name: InMageRcmFabricSpecificDetails.serviceEndpoint
+        /// </param>
+        /// <param name="serviceResourceId">
+        /// The service resource Id.
+        /// Serialized Name: InMageRcmFabricSpecificDetails.serviceResourceId
+        /// </param>
+        /// <param name="serviceContainerId">
+        /// The service container Id.
+        /// Serialized Name: InMageRcmFabricSpecificDetails.serviceContainerId
+        /// </param>
+        /// <param name="dataPlaneUri">
+        /// The data plane Uri.
+        /// Serialized Name: InMageRcmFabricSpecificDetails.dataPlaneUri
+        /// </param>
+        /// <param name="controlPlaneUri">
+        /// The control plane Uri.
+        /// Serialized Name: InMageRcmFabricSpecificDetails.controlPlaneUri
+        /// </param>
+        /// <param name="sourceAgentIdentityDetails">
+        /// The source agent identity details.
+        /// Serialized Name: InMageRcmFabricSpecificDetails.sourceAgentIdentityDetails
+        /// </param>
+        /// <param name="processServers">
+        /// The list of process servers.
+        /// Serialized Name: InMageRcmFabricSpecificDetails.processServers
+        /// </param>
+        /// <param name="rcmProxies">
+        /// The list of RCM proxies.
+        /// Serialized Name: InMageRcmFabricSpecificDetails.rcmProxies
+        /// </param>
+        /// <param name="pushInstallers">
+        /// The list of push installers.
+        /// Serialized Name: InMageRcmFabricSpecificDetails.pushInstallers
+        /// </param>
+        /// <param name="replicationAgents">
+        /// The list of replication agents.
+        /// Serialized Name: InMageRcmFabricSpecificDetails.replicationAgents
+        /// </param>
+        /// <param name="reprotectAgents">
+        /// The list of reprotect agents.
+        /// Serialized Name: InMageRcmFabricSpecificDetails.reprotectAgents
+        /// </param>
+        /// <param name="marsAgents">
+        /// The list of Mars agents.
+        /// Serialized Name: InMageRcmFabricSpecificDetails.marsAgents
+        /// </param>
+        /// <param name="dras">
+        /// The list of DRAs.
+        /// Serialized Name: InMageRcmFabricSpecificDetails.dras
+        /// </param>
+        /// <param name="agentDetails">
+        /// The list of agent details.
+        /// Serialized Name: InMageRcmFabricSpecificDetails.agentDetails
+        /// </param>
         internal InMageRcmFabricSpecificDetails(string instanceType, string vmwareSiteId, string physicalSiteId, string serviceEndpoint, string serviceResourceId, string serviceContainerId, Uri dataPlaneUri, Uri controlPlaneUri, IdentityProviderDetails sourceAgentIdentityDetails, IReadOnlyList<ProcessServerDetails> processServers, IReadOnlyList<RcmProxyDetails> rcmProxies, IReadOnlyList<PushInstallerDetails> pushInstallers, IReadOnlyList<ReplicationAgentDetails> replicationAgents, IReadOnlyList<ReprotectAgentDetails> reprotectAgents, IReadOnlyList<MarsAgentDetails> marsAgents, IReadOnlyList<DraDetails> dras, IReadOnlyList<AgentDetails> agentDetails) : base(instanceType)
         {
             VMwareSiteId = vmwareSiteId;
@@ -67,37 +121,85 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             InstanceType = instanceType ?? "InMageRcm";
         }
 
-        /// <summary> The ARM Id of the VMware site. </summary>
+        /// <summary>
+        /// The ARM Id of the VMware site.
+        /// Serialized Name: InMageRcmFabricSpecificDetails.vmwareSiteId
+        /// </summary>
         public string VMwareSiteId { get; }
-        /// <summary> The ARM Id of the physical site. </summary>
+        /// <summary>
+        /// The ARM Id of the physical site.
+        /// Serialized Name: InMageRcmFabricSpecificDetails.physicalSiteId
+        /// </summary>
         public string PhysicalSiteId { get; }
-        /// <summary> The service endpoint. </summary>
+        /// <summary>
+        /// The service endpoint.
+        /// Serialized Name: InMageRcmFabricSpecificDetails.serviceEndpoint
+        /// </summary>
         public string ServiceEndpoint { get; }
-        /// <summary> The service resource Id. </summary>
+        /// <summary>
+        /// The service resource Id.
+        /// Serialized Name: InMageRcmFabricSpecificDetails.serviceResourceId
+        /// </summary>
         public string ServiceResourceId { get; }
-        /// <summary> The service container Id. </summary>
+        /// <summary>
+        /// The service container Id.
+        /// Serialized Name: InMageRcmFabricSpecificDetails.serviceContainerId
+        /// </summary>
         public string ServiceContainerId { get; }
-        /// <summary> The data plane Uri. </summary>
+        /// <summary>
+        /// The data plane Uri.
+        /// Serialized Name: InMageRcmFabricSpecificDetails.dataPlaneUri
+        /// </summary>
         public Uri DataPlaneUri { get; }
-        /// <summary> The control plane Uri. </summary>
+        /// <summary>
+        /// The control plane Uri.
+        /// Serialized Name: InMageRcmFabricSpecificDetails.controlPlaneUri
+        /// </summary>
         public Uri ControlPlaneUri { get; }
-        /// <summary> The source agent identity details. </summary>
+        /// <summary>
+        /// The source agent identity details.
+        /// Serialized Name: InMageRcmFabricSpecificDetails.sourceAgentIdentityDetails
+        /// </summary>
         public IdentityProviderDetails SourceAgentIdentityDetails { get; }
-        /// <summary> The list of process servers. </summary>
+        /// <summary>
+        /// The list of process servers.
+        /// Serialized Name: InMageRcmFabricSpecificDetails.processServers
+        /// </summary>
         public IReadOnlyList<ProcessServerDetails> ProcessServers { get; }
-        /// <summary> The list of RCM proxies. </summary>
+        /// <summary>
+        /// The list of RCM proxies.
+        /// Serialized Name: InMageRcmFabricSpecificDetails.rcmProxies
+        /// </summary>
         public IReadOnlyList<RcmProxyDetails> RcmProxies { get; }
-        /// <summary> The list of push installers. </summary>
+        /// <summary>
+        /// The list of push installers.
+        /// Serialized Name: InMageRcmFabricSpecificDetails.pushInstallers
+        /// </summary>
         public IReadOnlyList<PushInstallerDetails> PushInstallers { get; }
-        /// <summary> The list of replication agents. </summary>
+        /// <summary>
+        /// The list of replication agents.
+        /// Serialized Name: InMageRcmFabricSpecificDetails.replicationAgents
+        /// </summary>
         public IReadOnlyList<ReplicationAgentDetails> ReplicationAgents { get; }
-        /// <summary> The list of reprotect agents. </summary>
+        /// <summary>
+        /// The list of reprotect agents.
+        /// Serialized Name: InMageRcmFabricSpecificDetails.reprotectAgents
+        /// </summary>
         public IReadOnlyList<ReprotectAgentDetails> ReprotectAgents { get; }
-        /// <summary> The list of Mars agents. </summary>
+        /// <summary>
+        /// The list of Mars agents.
+        /// Serialized Name: InMageRcmFabricSpecificDetails.marsAgents
+        /// </summary>
         public IReadOnlyList<MarsAgentDetails> MarsAgents { get; }
-        /// <summary> The list of DRAs. </summary>
+        /// <summary>
+        /// The list of DRAs.
+        /// Serialized Name: InMageRcmFabricSpecificDetails.dras
+        /// </summary>
         public IReadOnlyList<DraDetails> Dras { get; }
-        /// <summary> The list of agent details. </summary>
+        /// <summary>
+        /// The list of agent details.
+        /// Serialized Name: InMageRcmFabricSpecificDetails.agentDetails
+        /// </summary>
         public IReadOnlyList<AgentDetails> AgentDetails { get; }
     }
 }

@@ -11,7 +11,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary> Recovery plan properties. </summary>
+    /// <summary>
+    /// Recovery plan properties.
+    /// Serialized Name: RecoveryPlanProperties
+    /// </summary>
     public partial class RecoveryPlanProperties
     {
         /// <summary> Initializes a new instance of RecoveryPlanProperties. </summary>
@@ -24,23 +27,69 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> Initializes a new instance of RecoveryPlanProperties. </summary>
-        /// <param name="friendlyName"> The friendly name. </param>
-        /// <param name="primaryFabricId"> The primary fabric Id. </param>
-        /// <param name="primaryFabricFriendlyName"> The primary fabric friendly name. </param>
-        /// <param name="recoveryFabricId"> The recovery fabric Id. </param>
-        /// <param name="recoveryFabricFriendlyName"> The recovery fabric friendly name. </param>
-        /// <param name="failoverDeploymentModel"> The failover deployment model. </param>
-        /// <param name="replicationProviders"> The list of replication providers. </param>
-        /// <param name="allowedOperations"> The list of allowed operations. </param>
-        /// <param name="lastPlannedFailoverOn"> The start time of the last planned failover. </param>
-        /// <param name="lastUnplannedFailoverOn"> The start time of the last unplanned failover. </param>
-        /// <param name="lastTestFailoverOn"> The start time of the last test failover. </param>
-        /// <param name="currentScenario"> The current scenario details. </param>
-        /// <param name="currentScenarioStatus"> The recovery plan status. </param>
-        /// <param name="currentScenarioStatusDescription"> The recovery plan status description. </param>
-        /// <param name="groups"> The recovery plan groups. </param>
+        /// <param name="friendlyName">
+        /// The friendly name.
+        /// Serialized Name: RecoveryPlanProperties.friendlyName
+        /// </param>
+        /// <param name="primaryFabricId">
+        /// The primary fabric Id.
+        /// Serialized Name: RecoveryPlanProperties.primaryFabricId
+        /// </param>
+        /// <param name="primaryFabricFriendlyName">
+        /// The primary fabric friendly name.
+        /// Serialized Name: RecoveryPlanProperties.primaryFabricFriendlyName
+        /// </param>
+        /// <param name="recoveryFabricId">
+        /// The recovery fabric Id.
+        /// Serialized Name: RecoveryPlanProperties.recoveryFabricId
+        /// </param>
+        /// <param name="recoveryFabricFriendlyName">
+        /// The recovery fabric friendly name.
+        /// Serialized Name: RecoveryPlanProperties.recoveryFabricFriendlyName
+        /// </param>
+        /// <param name="failoverDeploymentModel">
+        /// The failover deployment model.
+        /// Serialized Name: RecoveryPlanProperties.failoverDeploymentModel
+        /// </param>
+        /// <param name="replicationProviders">
+        /// The list of replication providers.
+        /// Serialized Name: RecoveryPlanProperties.replicationProviders
+        /// </param>
+        /// <param name="allowedOperations">
+        /// The list of allowed operations.
+        /// Serialized Name: RecoveryPlanProperties.allowedOperations
+        /// </param>
+        /// <param name="lastPlannedFailoverOn">
+        /// The start time of the last planned failover.
+        /// Serialized Name: RecoveryPlanProperties.lastPlannedFailoverTime
+        /// </param>
+        /// <param name="lastUnplannedFailoverOn">
+        /// The start time of the last unplanned failover.
+        /// Serialized Name: RecoveryPlanProperties.lastUnplannedFailoverTime
+        /// </param>
+        /// <param name="lastTestFailoverOn">
+        /// The start time of the last test failover.
+        /// Serialized Name: RecoveryPlanProperties.lastTestFailoverTime
+        /// </param>
+        /// <param name="currentScenario">
+        /// The current scenario details.
+        /// Serialized Name: RecoveryPlanProperties.currentScenario
+        /// </param>
+        /// <param name="currentScenarioStatus">
+        /// The recovery plan status.
+        /// Serialized Name: RecoveryPlanProperties.currentScenarioStatus
+        /// </param>
+        /// <param name="currentScenarioStatusDescription">
+        /// The recovery plan status description.
+        /// Serialized Name: RecoveryPlanProperties.currentScenarioStatusDescription
+        /// </param>
+        /// <param name="groups">
+        /// The recovery plan groups.
+        /// Serialized Name: RecoveryPlanProperties.groups
+        /// </param>
         /// <param name="providerSpecificDetails">
         /// The provider id and provider specific details.
+        /// Serialized Name: RecoveryPlanProperties.providerSpecificDetails
         /// Please note <see cref="RecoveryPlanProviderSpecificDetails"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="RecoveryPlanA2ADetails"/>.
         /// </param>
@@ -64,38 +113,84 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             ProviderSpecificDetails = providerSpecificDetails;
         }
 
-        /// <summary> The friendly name. </summary>
+        /// <summary>
+        /// The friendly name.
+        /// Serialized Name: RecoveryPlanProperties.friendlyName
+        /// </summary>
         public string FriendlyName { get; }
-        /// <summary> The primary fabric Id. </summary>
+        /// <summary>
+        /// The primary fabric Id.
+        /// Serialized Name: RecoveryPlanProperties.primaryFabricId
+        /// </summary>
         public string PrimaryFabricId { get; }
-        /// <summary> The primary fabric friendly name. </summary>
+        /// <summary>
+        /// The primary fabric friendly name.
+        /// Serialized Name: RecoveryPlanProperties.primaryFabricFriendlyName
+        /// </summary>
         public string PrimaryFabricFriendlyName { get; }
-        /// <summary> The recovery fabric Id. </summary>
+        /// <summary>
+        /// The recovery fabric Id.
+        /// Serialized Name: RecoveryPlanProperties.recoveryFabricId
+        /// </summary>
         public string RecoveryFabricId { get; }
-        /// <summary> The recovery fabric friendly name. </summary>
+        /// <summary>
+        /// The recovery fabric friendly name.
+        /// Serialized Name: RecoveryPlanProperties.recoveryFabricFriendlyName
+        /// </summary>
         public string RecoveryFabricFriendlyName { get; }
-        /// <summary> The failover deployment model. </summary>
+        /// <summary>
+        /// The failover deployment model.
+        /// Serialized Name: RecoveryPlanProperties.failoverDeploymentModel
+        /// </summary>
         public string FailoverDeploymentModel { get; }
-        /// <summary> The list of replication providers. </summary>
+        /// <summary>
+        /// The list of replication providers.
+        /// Serialized Name: RecoveryPlanProperties.replicationProviders
+        /// </summary>
         public IReadOnlyList<string> ReplicationProviders { get; }
-        /// <summary> The list of allowed operations. </summary>
+        /// <summary>
+        /// The list of allowed operations.
+        /// Serialized Name: RecoveryPlanProperties.allowedOperations
+        /// </summary>
         public IReadOnlyList<string> AllowedOperations { get; }
-        /// <summary> The start time of the last planned failover. </summary>
+        /// <summary>
+        /// The start time of the last planned failover.
+        /// Serialized Name: RecoveryPlanProperties.lastPlannedFailoverTime
+        /// </summary>
         public DateTimeOffset? LastPlannedFailoverOn { get; }
-        /// <summary> The start time of the last unplanned failover. </summary>
+        /// <summary>
+        /// The start time of the last unplanned failover.
+        /// Serialized Name: RecoveryPlanProperties.lastUnplannedFailoverTime
+        /// </summary>
         public DateTimeOffset? LastUnplannedFailoverOn { get; }
-        /// <summary> The start time of the last test failover. </summary>
+        /// <summary>
+        /// The start time of the last test failover.
+        /// Serialized Name: RecoveryPlanProperties.lastTestFailoverTime
+        /// </summary>
         public DateTimeOffset? LastTestFailoverOn { get; }
-        /// <summary> The current scenario details. </summary>
+        /// <summary>
+        /// The current scenario details.
+        /// Serialized Name: RecoveryPlanProperties.currentScenario
+        /// </summary>
         public CurrentScenarioDetails CurrentScenario { get; }
-        /// <summary> The recovery plan status. </summary>
+        /// <summary>
+        /// The recovery plan status.
+        /// Serialized Name: RecoveryPlanProperties.currentScenarioStatus
+        /// </summary>
         public string CurrentScenarioStatus { get; }
-        /// <summary> The recovery plan status description. </summary>
+        /// <summary>
+        /// The recovery plan status description.
+        /// Serialized Name: RecoveryPlanProperties.currentScenarioStatusDescription
+        /// </summary>
         public string CurrentScenarioStatusDescription { get; }
-        /// <summary> The recovery plan groups. </summary>
+        /// <summary>
+        /// The recovery plan groups.
+        /// Serialized Name: RecoveryPlanProperties.groups
+        /// </summary>
         public IReadOnlyList<RecoveryPlanGroup> Groups { get; }
         /// <summary>
         /// The provider id and provider specific details.
+        /// Serialized Name: RecoveryPlanProperties.providerSpecificDetails
         /// Please note <see cref="RecoveryPlanProviderSpecificDetails"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="RecoveryPlanA2ADetails"/>.
         /// </summary>

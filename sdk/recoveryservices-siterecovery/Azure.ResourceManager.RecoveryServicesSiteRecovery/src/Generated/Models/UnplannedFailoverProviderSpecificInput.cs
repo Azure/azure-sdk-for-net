@@ -9,6 +9,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
     /// <summary>
     /// Provider specific unplanned failover input.
+    /// Serialized Name: UnplannedFailoverProviderSpecificInput
     /// Please note <see cref="UnplannedFailoverProviderSpecificInput"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="A2AUnplannedFailoverInput"/>, <see cref="HyperVReplicaAzureUnplannedFailoverInput"/>, <see cref="InMageUnplannedFailoverInput"/>, <see cref="InMageAzureV2UnplannedFailoverInput"/> and <see cref="InMageRcmUnplannedFailoverInput"/>.
     /// </summary>
@@ -19,7 +20,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         {
         }
 
-        /// <summary> The class type. </summary>
+        /// <summary>
+        /// The class type.
+        /// Serialized Name: UnplannedFailoverProviderSpecificInput.instanceType
+        /// </summary>
         internal string InstanceType { get; set; }
     }
 }

@@ -10,7 +10,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary> Update protected item input properties. </summary>
+    /// <summary>
+    /// Update protected item input properties.
+    /// Serialized Name: UpdateReplicationProtectedItemInputProperties
+    /// </summary>
     public partial class UpdateReplicationProtectedItemInputProperties
     {
         /// <summary> Initializes a new instance of UpdateReplicationProtectedItemInputProperties. </summary>
@@ -19,26 +22,54 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             VmNics = new ChangeTrackingList<VmNicInputDetails>();
         }
 
-        /// <summary> Target Azure VM name given by the user. </summary>
+        /// <summary>
+        /// Target Azure VM name given by the user.
+        /// Serialized Name: UpdateReplicationProtectedItemInputProperties.recoveryAzureVMName
+        /// </summary>
         public string RecoveryAzureVmName { get; set; }
-        /// <summary> Target Azure VM size. </summary>
+        /// <summary>
+        /// Target Azure VM size.
+        /// Serialized Name: UpdateReplicationProtectedItemInputProperties.recoveryAzureVMSize
+        /// </summary>
         public string RecoveryAzureVmSize { get; set; }
-        /// <summary> Target Azure Network Id. </summary>
+        /// <summary>
+        /// Target Azure Network Id.
+        /// Serialized Name: UpdateReplicationProtectedItemInputProperties.selectedRecoveryAzureNetworkId
+        /// </summary>
         public string SelectedRecoveryAzureNetworkId { get; set; }
-        /// <summary> The Azure Network Id for test failover. </summary>
+        /// <summary>
+        /// The Azure Network Id for test failover.
+        /// Serialized Name: UpdateReplicationProtectedItemInputProperties.selectedTfoAzureNetworkId
+        /// </summary>
         public string SelectedTfoAzureNetworkId { get; set; }
-        /// <summary> The selected source nic Id which will be used as the primary nic during failover. </summary>
+        /// <summary>
+        /// The selected source nic Id which will be used as the primary nic during failover.
+        /// Serialized Name: UpdateReplicationProtectedItemInputProperties.selectedSourceNicId
+        /// </summary>
         public string SelectedSourceNicId { get; set; }
-        /// <summary> The selected option to enable RDP\SSH on target vm after failover. String value of SrsDataContract.EnableRDPOnTargetOption enum. </summary>
+        /// <summary>
+        /// The selected option to enable RDP\SSH on target vm after failover. String value of SrsDataContract.EnableRDPOnTargetOption enum.
+        /// Serialized Name: UpdateReplicationProtectedItemInputProperties.enableRdpOnTargetOption
+        /// </summary>
         public string EnableRdpOnTargetOption { get; set; }
-        /// <summary> The list of VM nic details. </summary>
+        /// <summary>
+        /// The list of VM nic details.
+        /// Serialized Name: UpdateReplicationProtectedItemInputProperties.vmNics
+        /// </summary>
         public IList<VmNicInputDetails> VmNics { get; }
-        /// <summary> License type. </summary>
+        /// <summary>
+        /// License type.
+        /// Serialized Name: UpdateReplicationProtectedItemInputProperties.licenseType
+        /// </summary>
         public LicenseType? LicenseType { get; set; }
-        /// <summary> The target availability set Id. </summary>
+        /// <summary>
+        /// The target availability set Id.
+        /// Serialized Name: UpdateReplicationProtectedItemInputProperties.recoveryAvailabilitySetId
+        /// </summary>
         public string RecoveryAvailabilitySetId { get; set; }
         /// <summary>
         /// The provider specific input to update replication protected item.
+        /// Serialized Name: UpdateReplicationProtectedItemInputProperties.providerSpecificDetails
         /// Please note <see cref="UpdateReplicationProtectedItemProviderInput"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="A2AUpdateReplicationProtectedItemInput"/>, <see cref="HyperVReplicaAzureUpdateReplicationProtectedItemInput"/>, <see cref="InMageAzureV2UpdateReplicationProtectedItemInput"/> and <see cref="InMageRcmUpdateReplicationProtectedItemInput"/>.
         /// </summary>

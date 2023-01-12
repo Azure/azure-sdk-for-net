@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary> The test migrate state. </summary>
+    /// <summary>
+    /// The test migrate state.
+    /// Serialized Name: TestMigrationState
+    /// </summary>
     public readonly partial struct TestMigrationState : IEquatable<TestMigrationState>
     {
         private readonly string _value;
@@ -30,19 +33,40 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         private const string TestMigrationCompletedWithInformationValue = "TestMigrationCompletedWithInformation";
         private const string TestMigrationPartiallySucceededValue = "TestMigrationPartiallySucceeded";
 
-        /// <summary> None. </summary>
+        /// <summary>
+        /// None
+        /// Serialized Name: TestMigrationState.None
+        /// </summary>
         public static TestMigrationState None { get; } = new TestMigrationState(NoneValue);
-        /// <summary> TestMigrationInProgress. </summary>
+        /// <summary>
+        /// TestMigrationInProgress
+        /// Serialized Name: TestMigrationState.TestMigrationInProgress
+        /// </summary>
         public static TestMigrationState TestMigrationInProgress { get; } = new TestMigrationState(TestMigrationInProgressValue);
-        /// <summary> TestMigrationSucceeded. </summary>
+        /// <summary>
+        /// TestMigrationSucceeded
+        /// Serialized Name: TestMigrationState.TestMigrationSucceeded
+        /// </summary>
         public static TestMigrationState TestMigrationSucceeded { get; } = new TestMigrationState(TestMigrationSucceededValue);
-        /// <summary> TestMigrationFailed. </summary>
+        /// <summary>
+        /// TestMigrationFailed
+        /// Serialized Name: TestMigrationState.TestMigrationFailed
+        /// </summary>
         public static TestMigrationState TestMigrationFailed { get; } = new TestMigrationState(TestMigrationFailedValue);
-        /// <summary> TestMigrationCleanupInProgress. </summary>
+        /// <summary>
+        /// TestMigrationCleanupInProgress
+        /// Serialized Name: TestMigrationState.TestMigrationCleanupInProgress
+        /// </summary>
         public static TestMigrationState TestMigrationCleanupInProgress { get; } = new TestMigrationState(TestMigrationCleanupInProgressValue);
-        /// <summary> TestMigrationCompletedWithInformation. </summary>
+        /// <summary>
+        /// TestMigrationCompletedWithInformation
+        /// Serialized Name: TestMigrationState.TestMigrationCompletedWithInformation
+        /// </summary>
         public static TestMigrationState TestMigrationCompletedWithInformation { get; } = new TestMigrationState(TestMigrationCompletedWithInformationValue);
-        /// <summary> TestMigrationPartiallySucceeded. </summary>
+        /// <summary>
+        /// TestMigrationPartiallySucceeded
+        /// Serialized Name: TestMigrationState.TestMigrationPartiallySucceeded
+        /// </summary>
         public static TestMigrationState TestMigrationPartiallySucceeded { get; } = new TestMigrationState(TestMigrationPartiallySucceededValue);
         /// <summary> Determines if two <see cref="TestMigrationState"/> values are the same. </summary>
         public static bool operator ==(TestMigrationState left, TestMigrationState right) => left.Equals(right);

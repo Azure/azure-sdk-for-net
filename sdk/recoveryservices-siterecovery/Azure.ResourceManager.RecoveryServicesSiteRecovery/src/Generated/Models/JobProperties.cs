@@ -11,7 +11,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary> Job custom data details. </summary>
+    /// <summary>
+    /// Job custom data details.
+    /// Serialized Name: JobProperties
+    /// </summary>
     public partial class JobProperties
     {
         /// <summary> Initializes a new instance of JobProperties. </summary>
@@ -23,21 +26,61 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> Initializes a new instance of JobProperties. </summary>
-        /// <param name="activityId"> The activity id. </param>
-        /// <param name="scenarioName"> The ScenarioName. </param>
-        /// <param name="friendlyName"> The DisplayName. </param>
-        /// <param name="state"> The status of the Job. It is one of these values - NotStarted, InProgress, Succeeded, Failed, Cancelled, Suspended or Other. </param>
-        /// <param name="stateDescription"> The description of the state of the Job. For e.g. - For Succeeded state, description can be Completed, PartiallySucceeded, CompletedWithInformation or Skipped. </param>
-        /// <param name="tasks"> The tasks. </param>
-        /// <param name="errors"> The errors. </param>
-        /// <param name="startOn"> The start time. </param>
-        /// <param name="endOn"> The end time. </param>
-        /// <param name="allowedActions"> The Allowed action the job. </param>
-        /// <param name="targetObjectId"> The affected Object Id. </param>
-        /// <param name="targetObjectName"> The name of the affected object. </param>
-        /// <param name="targetInstanceType"> The type of the affected object which is of Microsoft.Azure.SiteRecovery.V2015_11_10.AffectedObjectType class. </param>
+        /// <param name="activityId">
+        /// The activity id.
+        /// Serialized Name: JobProperties.activityId
+        /// </param>
+        /// <param name="scenarioName">
+        /// The ScenarioName.
+        /// Serialized Name: JobProperties.scenarioName
+        /// </param>
+        /// <param name="friendlyName">
+        /// The DisplayName.
+        /// Serialized Name: JobProperties.friendlyName
+        /// </param>
+        /// <param name="state">
+        /// The status of the Job. It is one of these values - NotStarted, InProgress, Succeeded, Failed, Cancelled, Suspended or Other.
+        /// Serialized Name: JobProperties.state
+        /// </param>
+        /// <param name="stateDescription">
+        /// The description of the state of the Job. For e.g. - For Succeeded state, description can be Completed, PartiallySucceeded, CompletedWithInformation or Skipped.
+        /// Serialized Name: JobProperties.stateDescription
+        /// </param>
+        /// <param name="tasks">
+        /// The tasks.
+        /// Serialized Name: JobProperties.tasks
+        /// </param>
+        /// <param name="errors">
+        /// The errors.
+        /// Serialized Name: JobProperties.errors
+        /// </param>
+        /// <param name="startOn">
+        /// The start time.
+        /// Serialized Name: JobProperties.startTime
+        /// </param>
+        /// <param name="endOn">
+        /// The end time.
+        /// Serialized Name: JobProperties.endTime
+        /// </param>
+        /// <param name="allowedActions">
+        /// The Allowed action the job.
+        /// Serialized Name: JobProperties.allowedActions
+        /// </param>
+        /// <param name="targetObjectId">
+        /// The affected Object Id.
+        /// Serialized Name: JobProperties.targetObjectId
+        /// </param>
+        /// <param name="targetObjectName">
+        /// The name of the affected object.
+        /// Serialized Name: JobProperties.targetObjectName
+        /// </param>
+        /// <param name="targetInstanceType">
+        /// The type of the affected object which is of Microsoft.Azure.SiteRecovery.V2015_11_10.AffectedObjectType class.
+        /// Serialized Name: JobProperties.targetInstanceType
+        /// </param>
         /// <param name="customDetails">
         /// The custom job details like test failover job details.
+        /// Serialized Name: JobProperties.customDetails
         /// Please note <see cref="JobDetails"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="AsrJobDetails"/>, <see cref="ExportJobDetails"/>, <see cref="FailoverJobDetails"/>, <see cref="SwitchProtectionJobDetails"/> and <see cref="TestFailoverJobDetails"/>.
         /// </param>
@@ -59,34 +102,74 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             CustomDetails = customDetails;
         }
 
-        /// <summary> The activity id. </summary>
+        /// <summary>
+        /// The activity id.
+        /// Serialized Name: JobProperties.activityId
+        /// </summary>
         public string ActivityId { get; }
-        /// <summary> The ScenarioName. </summary>
+        /// <summary>
+        /// The ScenarioName.
+        /// Serialized Name: JobProperties.scenarioName
+        /// </summary>
         public string ScenarioName { get; }
-        /// <summary> The DisplayName. </summary>
+        /// <summary>
+        /// The DisplayName.
+        /// Serialized Name: JobProperties.friendlyName
+        /// </summary>
         public string FriendlyName { get; }
-        /// <summary> The status of the Job. It is one of these values - NotStarted, InProgress, Succeeded, Failed, Cancelled, Suspended or Other. </summary>
+        /// <summary>
+        /// The status of the Job. It is one of these values - NotStarted, InProgress, Succeeded, Failed, Cancelled, Suspended or Other.
+        /// Serialized Name: JobProperties.state
+        /// </summary>
         public string State { get; }
-        /// <summary> The description of the state of the Job. For e.g. - For Succeeded state, description can be Completed, PartiallySucceeded, CompletedWithInformation or Skipped. </summary>
+        /// <summary>
+        /// The description of the state of the Job. For e.g. - For Succeeded state, description can be Completed, PartiallySucceeded, CompletedWithInformation or Skipped.
+        /// Serialized Name: JobProperties.stateDescription
+        /// </summary>
         public string StateDescription { get; }
-        /// <summary> The tasks. </summary>
+        /// <summary>
+        /// The tasks.
+        /// Serialized Name: JobProperties.tasks
+        /// </summary>
         public IReadOnlyList<ASRTask> Tasks { get; }
-        /// <summary> The errors. </summary>
+        /// <summary>
+        /// The errors.
+        /// Serialized Name: JobProperties.errors
+        /// </summary>
         public IReadOnlyList<JobErrorDetails> Errors { get; }
-        /// <summary> The start time. </summary>
+        /// <summary>
+        /// The start time.
+        /// Serialized Name: JobProperties.startTime
+        /// </summary>
         public DateTimeOffset? StartOn { get; }
-        /// <summary> The end time. </summary>
+        /// <summary>
+        /// The end time.
+        /// Serialized Name: JobProperties.endTime
+        /// </summary>
         public DateTimeOffset? EndOn { get; }
-        /// <summary> The Allowed action the job. </summary>
+        /// <summary>
+        /// The Allowed action the job.
+        /// Serialized Name: JobProperties.allowedActions
+        /// </summary>
         public IReadOnlyList<string> AllowedActions { get; }
-        /// <summary> The affected Object Id. </summary>
+        /// <summary>
+        /// The affected Object Id.
+        /// Serialized Name: JobProperties.targetObjectId
+        /// </summary>
         public string TargetObjectId { get; }
-        /// <summary> The name of the affected object. </summary>
+        /// <summary>
+        /// The name of the affected object.
+        /// Serialized Name: JobProperties.targetObjectName
+        /// </summary>
         public string TargetObjectName { get; }
-        /// <summary> The type of the affected object which is of Microsoft.Azure.SiteRecovery.V2015_11_10.AffectedObjectType class. </summary>
+        /// <summary>
+        /// The type of the affected object which is of Microsoft.Azure.SiteRecovery.V2015_11_10.AffectedObjectType class.
+        /// Serialized Name: JobProperties.targetInstanceType
+        /// </summary>
         public string TargetInstanceType { get; }
         /// <summary>
         /// The custom job details like test failover job details.
+        /// Serialized Name: JobProperties.customDetails
         /// Please note <see cref="JobDetails"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="AsrJobDetails"/>, <see cref="ExportJobDetails"/>, <see cref="FailoverJobDetails"/>, <see cref="SwitchProtectionJobDetails"/> and <see cref="TestFailoverJobDetails"/>.
         /// </summary>

@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary> Network Mapping Properties. </summary>
+    /// <summary>
+    /// Network Mapping Properties.
+    /// Serialized Name: NetworkMappingProperties
+    /// </summary>
     public partial class NetworkMappingProperties
     {
         /// <summary> Initializes a new instance of NetworkMappingProperties. </summary>
@@ -16,16 +19,41 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> Initializes a new instance of NetworkMappingProperties. </summary>
-        /// <param name="state"> The pairing state for network mapping. </param>
-        /// <param name="primaryNetworkFriendlyName"> The primary network friendly name. </param>
-        /// <param name="primaryNetworkId"> The primary network id for network mapping. </param>
-        /// <param name="primaryFabricFriendlyName"> The primary fabric friendly name. </param>
-        /// <param name="recoveryNetworkFriendlyName"> The recovery network friendly name. </param>
-        /// <param name="recoveryNetworkId"> The recovery network id for network mapping. </param>
-        /// <param name="recoveryFabricArmId"> The recovery fabric ARM id. </param>
-        /// <param name="recoveryFabricFriendlyName"> The recovery fabric friendly name. </param>
+        /// <param name="state">
+        /// The pairing state for network mapping.
+        /// Serialized Name: NetworkMappingProperties.state
+        /// </param>
+        /// <param name="primaryNetworkFriendlyName">
+        /// The primary network friendly name.
+        /// Serialized Name: NetworkMappingProperties.primaryNetworkFriendlyName
+        /// </param>
+        /// <param name="primaryNetworkId">
+        /// The primary network id for network mapping.
+        /// Serialized Name: NetworkMappingProperties.primaryNetworkId
+        /// </param>
+        /// <param name="primaryFabricFriendlyName">
+        /// The primary fabric friendly name.
+        /// Serialized Name: NetworkMappingProperties.primaryFabricFriendlyName
+        /// </param>
+        /// <param name="recoveryNetworkFriendlyName">
+        /// The recovery network friendly name.
+        /// Serialized Name: NetworkMappingProperties.recoveryNetworkFriendlyName
+        /// </param>
+        /// <param name="recoveryNetworkId">
+        /// The recovery network id for network mapping.
+        /// Serialized Name: NetworkMappingProperties.recoveryNetworkId
+        /// </param>
+        /// <param name="recoveryFabricArmId">
+        /// The recovery fabric ARM id.
+        /// Serialized Name: NetworkMappingProperties.recoveryFabricArmId
+        /// </param>
+        /// <param name="recoveryFabricFriendlyName">
+        /// The recovery fabric friendly name.
+        /// Serialized Name: NetworkMappingProperties.recoveryFabricFriendlyName
+        /// </param>
         /// <param name="fabricSpecificSettings">
         /// The fabric specific settings.
+        /// Serialized Name: NetworkMappingProperties.fabricSpecificSettings
         /// Please note <see cref="NetworkMappingFabricSpecificSettings"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="AzureToAzureNetworkMappingSettings"/>, <see cref="VmmToAzureNetworkMappingSettings"/> and <see cref="VmmToVmmNetworkMappingSettings"/>.
         /// </param>
@@ -42,24 +70,49 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             FabricSpecificSettings = fabricSpecificSettings;
         }
 
-        /// <summary> The pairing state for network mapping. </summary>
+        /// <summary>
+        /// The pairing state for network mapping.
+        /// Serialized Name: NetworkMappingProperties.state
+        /// </summary>
         public string State { get; }
-        /// <summary> The primary network friendly name. </summary>
+        /// <summary>
+        /// The primary network friendly name.
+        /// Serialized Name: NetworkMappingProperties.primaryNetworkFriendlyName
+        /// </summary>
         public string PrimaryNetworkFriendlyName { get; }
-        /// <summary> The primary network id for network mapping. </summary>
+        /// <summary>
+        /// The primary network id for network mapping.
+        /// Serialized Name: NetworkMappingProperties.primaryNetworkId
+        /// </summary>
         public string PrimaryNetworkId { get; }
-        /// <summary> The primary fabric friendly name. </summary>
+        /// <summary>
+        /// The primary fabric friendly name.
+        /// Serialized Name: NetworkMappingProperties.primaryFabricFriendlyName
+        /// </summary>
         public string PrimaryFabricFriendlyName { get; }
-        /// <summary> The recovery network friendly name. </summary>
+        /// <summary>
+        /// The recovery network friendly name.
+        /// Serialized Name: NetworkMappingProperties.recoveryNetworkFriendlyName
+        /// </summary>
         public string RecoveryNetworkFriendlyName { get; }
-        /// <summary> The recovery network id for network mapping. </summary>
+        /// <summary>
+        /// The recovery network id for network mapping.
+        /// Serialized Name: NetworkMappingProperties.recoveryNetworkId
+        /// </summary>
         public string RecoveryNetworkId { get; }
-        /// <summary> The recovery fabric ARM id. </summary>
+        /// <summary>
+        /// The recovery fabric ARM id.
+        /// Serialized Name: NetworkMappingProperties.recoveryFabricArmId
+        /// </summary>
         public string RecoveryFabricArmId { get; }
-        /// <summary> The recovery fabric friendly name. </summary>
+        /// <summary>
+        /// The recovery fabric friendly name.
+        /// Serialized Name: NetworkMappingProperties.recoveryFabricFriendlyName
+        /// </summary>
         public string RecoveryFabricFriendlyName { get; }
         /// <summary>
         /// The fabric specific settings.
+        /// Serialized Name: NetworkMappingProperties.fabricSpecificSettings
         /// Please note <see cref="NetworkMappingFabricSpecificSettings"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="AzureToAzureNetworkMappingSettings"/>, <see cref="VmmToAzureNetworkMappingSettings"/> and <see cref="VmmToVmmNetworkMappingSettings"/>.
         /// </summary>

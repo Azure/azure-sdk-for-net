@@ -10,11 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary> Enable migration input. </summary>
+    /// <summary>
+    /// Enable migration input.
+    /// Serialized Name: EnableMigrationInput
+    /// </summary>
     public partial class MigrationItemCreateOrUpdateContent
     {
         /// <summary> Initializes a new instance of MigrationItemCreateOrUpdateContent. </summary>
-        /// <param name="properties"> Enable migration input properties. </param>
+        /// <param name="properties">
+        /// Enable migration input properties.
+        /// Serialized Name: EnableMigrationInput.properties
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
         public MigrationItemCreateOrUpdateContent(EnableMigrationInputProperties properties)
         {
@@ -23,7 +29,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             Properties = properties;
         }
 
-        /// <summary> Enable migration input properties. </summary>
+        /// <summary>
+        /// Enable migration input properties.
+        /// Serialized Name: EnableMigrationInput.properties
+        /// </summary>
         public EnableMigrationInputProperties Properties { get; }
     }
 }

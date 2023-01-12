@@ -10,11 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary> Common input details for network mapping operation. </summary>
+    /// <summary>
+    /// Common input details for network mapping operation.
+    /// Serialized Name: CreateNetworkMappingInputProperties
+    /// </summary>
     public partial class CreateNetworkMappingInputProperties
     {
         /// <summary> Initializes a new instance of CreateNetworkMappingInputProperties. </summary>
-        /// <param name="recoveryNetworkId"> Recovery network Id. </param>
+        /// <param name="recoveryNetworkId">
+        /// Recovery network Id.
+        /// Serialized Name: CreateNetworkMappingInputProperties.recoveryNetworkId
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="recoveryNetworkId"/> is null. </exception>
         public CreateNetworkMappingInputProperties(string recoveryNetworkId)
         {
@@ -23,12 +29,19 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             RecoveryNetworkId = recoveryNetworkId;
         }
 
-        /// <summary> Recovery fabric Name. </summary>
+        /// <summary>
+        /// Recovery fabric Name.
+        /// Serialized Name: CreateNetworkMappingInputProperties.recoveryFabricName
+        /// </summary>
         public string RecoveryFabricName { get; set; }
-        /// <summary> Recovery network Id. </summary>
+        /// <summary>
+        /// Recovery network Id.
+        /// Serialized Name: CreateNetworkMappingInputProperties.recoveryNetworkId
+        /// </summary>
         public string RecoveryNetworkId { get; }
         /// <summary>
         /// Fabric specific input properties.
+        /// Serialized Name: CreateNetworkMappingInputProperties.fabricSpecificDetails
         /// Please note <see cref="FabricSpecificCreateNetworkMappingInput"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="AzureToAzureCreateNetworkMappingInput"/>, <see cref="VmmToAzureCreateNetworkMappingInput"/> and <see cref="VmmToVmmCreateNetworkMappingInput"/>.
         /// </summary>

@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary> Recovery virtual network input to create new virtual network from given source network. </summary>
+    /// <summary>
+    /// Recovery virtual network input to create new virtual network from given source network.
+    /// Serialized Name: NewRecoveryVirtualNetwork
+    /// </summary>
     public partial class NewRecoveryVirtualNetwork : RecoveryVirtualNetworkCustomDetails
     {
         /// <summary> Initializes a new instance of NewRecoveryVirtualNetwork. </summary>
@@ -17,9 +20,18 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> Initializes a new instance of NewRecoveryVirtualNetwork. </summary>
-        /// <param name="resourceType"> The class type. </param>
-        /// <param name="recoveryVirtualNetworkResourceGroupName"> The name of the resource group to be used to create the recovery virtual network. If absent, target network would be created in the same resource group as target VM. </param>
-        /// <param name="recoveryVirtualNetworkName"> The recovery virtual network name. </param>
+        /// <param name="resourceType">
+        /// The class type.
+        /// Serialized Name: RecoveryVirtualNetworkCustomDetails.resourceType
+        /// </param>
+        /// <param name="recoveryVirtualNetworkResourceGroupName">
+        /// The name of the resource group to be used to create the recovery virtual network. If absent, target network would be created in the same resource group as target VM.
+        /// Serialized Name: NewRecoveryVirtualNetwork.recoveryVirtualNetworkResourceGroupName
+        /// </param>
+        /// <param name="recoveryVirtualNetworkName">
+        /// The recovery virtual network name.
+        /// Serialized Name: NewRecoveryVirtualNetwork.recoveryVirtualNetworkName
+        /// </param>
         internal NewRecoveryVirtualNetwork(string resourceType, string recoveryVirtualNetworkResourceGroupName, string recoveryVirtualNetworkName) : base(resourceType)
         {
             RecoveryVirtualNetworkResourceGroupName = recoveryVirtualNetworkResourceGroupName;
@@ -27,9 +39,15 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             ResourceType = resourceType ?? "New";
         }
 
-        /// <summary> The name of the resource group to be used to create the recovery virtual network. If absent, target network would be created in the same resource group as target VM. </summary>
+        /// <summary>
+        /// The name of the resource group to be used to create the recovery virtual network. If absent, target network would be created in the same resource group as target VM.
+        /// Serialized Name: NewRecoveryVirtualNetwork.recoveryVirtualNetworkResourceGroupName
+        /// </summary>
         public string RecoveryVirtualNetworkResourceGroupName { get; set; }
-        /// <summary> The recovery virtual network name. </summary>
+        /// <summary>
+        /// The recovery virtual network name.
+        /// Serialized Name: NewRecoveryVirtualNetwork.recoveryVirtualNetworkName
+        /// </summary>
         public string RecoveryVirtualNetworkName { get; set; }
     }
 }

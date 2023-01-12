@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary> CS Accounts Details. </summary>
+    /// <summary>
+    /// CS Accounts Details.
+    /// Serialized Name: RunAsAccount
+    /// </summary>
     public partial class RunAsAccount
     {
         /// <summary> Initializes a new instance of RunAsAccount. </summary>
@@ -16,17 +19,29 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> Initializes a new instance of RunAsAccount. </summary>
-        /// <param name="accountId"> The CS RunAs account Id. </param>
-        /// <param name="accountName"> The CS RunAs account name. </param>
+        /// <param name="accountId">
+        /// The CS RunAs account Id.
+        /// Serialized Name: RunAsAccount.accountId
+        /// </param>
+        /// <param name="accountName">
+        /// The CS RunAs account name.
+        /// Serialized Name: RunAsAccount.accountName
+        /// </param>
         internal RunAsAccount(string accountId, string accountName)
         {
             AccountId = accountId;
             AccountName = accountName;
         }
 
-        /// <summary> The CS RunAs account Id. </summary>
+        /// <summary>
+        /// The CS RunAs account Id.
+        /// Serialized Name: RunAsAccount.accountId
+        /// </summary>
         public string AccountId { get; }
-        /// <summary> The CS RunAs account name. </summary>
+        /// <summary>
+        /// The CS RunAs account name.
+        /// Serialized Name: RunAsAccount.accountName
+        /// </summary>
         public string AccountName { get; }
     }
 }

@@ -9,6 +9,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
     /// <summary>
     /// Replication provider specific settings.
+    /// Serialized Name: ReplicationProviderSpecificSettings
     /// Please note <see cref="ReplicationProviderSpecificSettings"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="A2AReplicationDetails"/>, <see cref="A2ACrossClusterMigrationReplicationDetails"/>, <see cref="HyperVReplicaReplicationDetails"/>, <see cref="HyperVReplicaBlueReplicationDetails"/>, <see cref="HyperVReplicaAzureReplicationDetails"/>, <see cref="HyperVReplicaBaseReplicationDetails"/>, <see cref="InMageReplicationDetails"/>, <see cref="InMageAzureV2ReplicationDetails"/>, <see cref="InMageRcmReplicationDetails"/> and <see cref="InMageRcmFailbackReplicationDetails"/>.
     /// </summary>
@@ -20,13 +21,19 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> Initializes a new instance of ReplicationProviderSpecificSettings. </summary>
-        /// <param name="instanceType"> Gets the Instance type. </param>
+        /// <param name="instanceType">
+        /// Gets the Instance type.
+        /// Serialized Name: ReplicationProviderSpecificSettings.instanceType
+        /// </param>
         internal ReplicationProviderSpecificSettings(string instanceType)
         {
             InstanceType = instanceType;
         }
 
-        /// <summary> Gets the Instance type. </summary>
+        /// <summary>
+        /// Gets the Instance type.
+        /// Serialized Name: ReplicationProviderSpecificSettings.instanceType
+        /// </summary>
         internal string InstanceType { get; set; }
     }
 }

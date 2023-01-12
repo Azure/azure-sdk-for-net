@@ -10,7 +10,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary> Represents applicable recovery vm sizes. </summary>
+    /// <summary>
+    /// Represents applicable recovery vm sizes.
+    /// Serialized Name: TargetComputeSize
+    /// </summary>
     public partial class TargetComputeSize : ResourceData
     {
         /// <summary> Initializes a new instance of TargetComputeSize. </summary>
@@ -23,13 +26,19 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="properties"> The custom data. </param>
+        /// <param name="properties">
+        /// The custom data.
+        /// Serialized Name: TargetComputeSize.properties
+        /// </param>
         internal TargetComputeSize(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, TargetComputeSizeProperties properties) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
         }
 
-        /// <summary> The custom data. </summary>
+        /// <summary>
+        /// The custom data.
+        /// Serialized Name: TargetComputeSize.properties
+        /// </summary>
         public TargetComputeSizeProperties Properties { get; }
     }
 }

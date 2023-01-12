@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary> Replication appliance properties. </summary>
+    /// <summary>
+    /// Replication appliance properties.
+    /// Serialized Name: ReplicationApplianceProperties
+    /// </summary>
     internal partial class ReplicationApplianceProperties
     {
         /// <summary> Initializes a new instance of ReplicationApplianceProperties. </summary>
@@ -18,6 +21,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <summary> Initializes a new instance of ReplicationApplianceProperties. </summary>
         /// <param name="providerSpecificDetails">
         /// Provider specific settings.
+        /// Serialized Name: ReplicationApplianceProperties.providerSpecificDetails
         /// Please note <see cref="ApplianceSpecificDetails"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="InMageRcmApplianceSpecificDetails"/>.
         /// </param>
@@ -28,6 +32,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 
         /// <summary>
         /// Provider specific settings.
+        /// Serialized Name: ReplicationApplianceProperties.providerSpecificDetails
         /// Please note <see cref="ApplianceSpecificDetails"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="InMageRcmApplianceSpecificDetails"/>.
         /// </summary>

@@ -10,7 +10,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary> InMageRcm source agent upgrade blocking error details. </summary>
+    /// <summary>
+    /// InMageRcm source agent upgrade blocking error details.
+    /// Serialized Name: InMageRcmAgentUpgradeBlockingErrorDetails
+    /// </summary>
     public partial class InMageRcmAgentUpgradeBlockingErrorDetails
     {
         /// <summary> Initializes a new instance of InMageRcmAgentUpgradeBlockingErrorDetails. </summary>
@@ -21,12 +24,30 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> Initializes a new instance of InMageRcmAgentUpgradeBlockingErrorDetails. </summary>
-        /// <param name="errorCode"> The error code. </param>
-        /// <param name="errorMessage"> The error message. </param>
-        /// <param name="possibleCauses"> The possible causes. </param>
-        /// <param name="recommendedAction"> The recommended action. </param>
-        /// <param name="errorMessageParameters"> The error message parameters. </param>
-        /// <param name="errorTags"> The error tags. </param>
+        /// <param name="errorCode">
+        /// The error code.
+        /// Serialized Name: InMageRcmAgentUpgradeBlockingErrorDetails.errorCode
+        /// </param>
+        /// <param name="errorMessage">
+        /// The error message.
+        /// Serialized Name: InMageRcmAgentUpgradeBlockingErrorDetails.errorMessage
+        /// </param>
+        /// <param name="possibleCauses">
+        /// The possible causes.
+        /// Serialized Name: InMageRcmAgentUpgradeBlockingErrorDetails.possibleCauses
+        /// </param>
+        /// <param name="recommendedAction">
+        /// The recommended action.
+        /// Serialized Name: InMageRcmAgentUpgradeBlockingErrorDetails.recommendedAction
+        /// </param>
+        /// <param name="errorMessageParameters">
+        /// The error message parameters.
+        /// Serialized Name: InMageRcmAgentUpgradeBlockingErrorDetails.errorMessageParameters
+        /// </param>
+        /// <param name="errorTags">
+        /// The error tags.
+        /// Serialized Name: InMageRcmAgentUpgradeBlockingErrorDetails.errorTags
+        /// </param>
         internal InMageRcmAgentUpgradeBlockingErrorDetails(string errorCode, string errorMessage, string possibleCauses, string recommendedAction, IReadOnlyDictionary<string, string> errorMessageParameters, IReadOnlyDictionary<string, string> errorTags)
         {
             ErrorCode = errorCode;
@@ -37,17 +58,35 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             ErrorTags = errorTags;
         }
 
-        /// <summary> The error code. </summary>
+        /// <summary>
+        /// The error code.
+        /// Serialized Name: InMageRcmAgentUpgradeBlockingErrorDetails.errorCode
+        /// </summary>
         public string ErrorCode { get; }
-        /// <summary> The error message. </summary>
+        /// <summary>
+        /// The error message.
+        /// Serialized Name: InMageRcmAgentUpgradeBlockingErrorDetails.errorMessage
+        /// </summary>
         public string ErrorMessage { get; }
-        /// <summary> The possible causes. </summary>
+        /// <summary>
+        /// The possible causes.
+        /// Serialized Name: InMageRcmAgentUpgradeBlockingErrorDetails.possibleCauses
+        /// </summary>
         public string PossibleCauses { get; }
-        /// <summary> The recommended action. </summary>
+        /// <summary>
+        /// The recommended action.
+        /// Serialized Name: InMageRcmAgentUpgradeBlockingErrorDetails.recommendedAction
+        /// </summary>
         public string RecommendedAction { get; }
-        /// <summary> The error message parameters. </summary>
+        /// <summary>
+        /// The error message parameters.
+        /// Serialized Name: InMageRcmAgentUpgradeBlockingErrorDetails.errorMessageParameters
+        /// </summary>
         public IReadOnlyDictionary<string, string> ErrorMessageParameters { get; }
-        /// <summary> The error tags. </summary>
+        /// <summary>
+        /// The error tags.
+        /// Serialized Name: InMageRcmAgentUpgradeBlockingErrorDetails.errorTags
+        /// </summary>
         public IReadOnlyDictionary<string, string> ErrorTags { get; }
     }
 }

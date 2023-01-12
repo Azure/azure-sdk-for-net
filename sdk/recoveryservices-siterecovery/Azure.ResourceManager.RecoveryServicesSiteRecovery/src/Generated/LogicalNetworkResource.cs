@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
     /// A Class representing a LogicalNetwork along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="LogicalNetworkResource" />
     /// from an instance of <see cref="ArmClient" /> using the GetLogicalNetworkResource method.
-    /// Otherwise you can get one from its parent resource <see cref="FabricResource" /> using the GetLogicalNetwork method.
+    /// Otherwise you can get one from its parent resource <see cref="SiteRecoveryFabricResource" /> using the GetLogicalNetwork method.
     /// </summary>
     public partial class LogicalNetworkResource : ArmResource
     {

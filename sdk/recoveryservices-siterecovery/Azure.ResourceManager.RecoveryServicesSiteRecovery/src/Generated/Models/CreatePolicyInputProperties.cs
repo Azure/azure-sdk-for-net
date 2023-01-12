@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary> Policy creation properties. </summary>
+    /// <summary>
+    /// Policy creation properties.
+    /// Serialized Name: CreatePolicyInputProperties
+    /// </summary>
     internal partial class CreatePolicyInputProperties
     {
         /// <summary> Initializes a new instance of CreatePolicyInputProperties. </summary>
@@ -17,6 +20,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 
         /// <summary>
         /// The ReplicationProviderSettings.
+        /// Serialized Name: CreatePolicyInputProperties.providerSpecificInput
         /// Please note <see cref="PolicyProviderSpecificInput"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="A2APolicyCreationInput"/>, <see cref="A2ACrossClusterMigrationPolicyCreationInput"/>, <see cref="HyperVReplicaPolicyInput"/>, <see cref="HyperVReplicaBluePolicyInput"/>, <see cref="HyperVReplicaAzurePolicyInput"/>, <see cref="InMagePolicyInput"/>, <see cref="InMageAzureV2PolicyInput"/>, <see cref="InMageRcmPolicyCreationInput"/>, <see cref="InMageRcmFailbackPolicyCreationInput"/> and <see cref="VMwareCbtPolicyCreationInput"/>.
         /// </summary>

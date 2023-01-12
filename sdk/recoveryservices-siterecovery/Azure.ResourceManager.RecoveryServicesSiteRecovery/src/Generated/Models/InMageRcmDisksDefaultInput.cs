@@ -10,12 +10,21 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary> InMageRcm disk input. </summary>
+    /// <summary>
+    /// InMageRcm disk input.
+    /// Serialized Name: InMageRcmDisksDefaultInput
+    /// </summary>
     public partial class InMageRcmDisksDefaultInput
     {
         /// <summary> Initializes a new instance of InMageRcmDisksDefaultInput. </summary>
-        /// <param name="logStorageAccountId"> The log storage account ARM Id. </param>
-        /// <param name="diskType"> The disk type. </param>
+        /// <param name="logStorageAccountId">
+        /// The log storage account ARM Id.
+        /// Serialized Name: InMageRcmDisksDefaultInput.logStorageAccountId
+        /// </param>
+        /// <param name="diskType">
+        /// The disk type.
+        /// Serialized Name: InMageRcmDisksDefaultInput.diskType
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="logStorageAccountId"/> is null. </exception>
         public InMageRcmDisksDefaultInput(string logStorageAccountId, DiskAccountType diskType)
         {
@@ -25,11 +34,20 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             DiskType = diskType;
         }
 
-        /// <summary> The log storage account ARM Id. </summary>
+        /// <summary>
+        /// The log storage account ARM Id.
+        /// Serialized Name: InMageRcmDisksDefaultInput.logStorageAccountId
+        /// </summary>
         public string LogStorageAccountId { get; }
-        /// <summary> The disk type. </summary>
+        /// <summary>
+        /// The disk type.
+        /// Serialized Name: InMageRcmDisksDefaultInput.diskType
+        /// </summary>
         public DiskAccountType DiskType { get; }
-        /// <summary> The DiskEncryptionSet ARM Id. </summary>
+        /// <summary>
+        /// The DiskEncryptionSet ARM Id.
+        /// Serialized Name: InMageRcmDisksDefaultInput.diskEncryptionSetId
+        /// </summary>
         public string DiskEncryptionSetId { get; set; }
     }
 }

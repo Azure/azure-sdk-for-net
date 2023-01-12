@@ -10,7 +10,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary> Resolve health input properties. </summary>
+    /// <summary>
+    /// Resolve health input properties.
+    /// Serialized Name: ResolveHealthInputProperties
+    /// </summary>
     internal partial class ResolveHealthInputProperties
     {
         /// <summary> Initializes a new instance of ResolveHealthInputProperties. </summary>
@@ -19,7 +22,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             HealthErrors = new ChangeTrackingList<ResolveHealthError>();
         }
 
-        /// <summary> Health errors. </summary>
+        /// <summary>
+        /// Health errors.
+        /// Serialized Name: ResolveHealthInputProperties.healthErrors
+        /// </summary>
         public IList<ResolveHealthError> HealthErrors { get; }
     }
 }

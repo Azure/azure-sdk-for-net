@@ -9,6 +9,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
     /// <summary>
     /// This class represents a task which is actually a workflow so that one can navigate to its individual drill down.
+    /// Serialized Name: JobTaskDetails
     /// Please note <see cref="JobTaskDetails"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="FabricReplicationGroupTaskDetails"/> and <see cref="VirtualMachineTaskDetails"/>.
     /// </summary>
@@ -21,15 +22,24 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> Initializes a new instance of JobTaskDetails. </summary>
-        /// <param name="instanceType"> The type of task details. </param>
-        /// <param name="jobTask"> The job entity. </param>
+        /// <param name="instanceType">
+        /// The type of task details.
+        /// Serialized Name: TaskTypeDetails.instanceType
+        /// </param>
+        /// <param name="jobTask">
+        /// The job entity.
+        /// Serialized Name: JobTaskDetails.jobTask
+        /// </param>
         internal JobTaskDetails(string instanceType, JobEntity jobTask) : base(instanceType)
         {
             JobTask = jobTask;
             InstanceType = instanceType ?? "JobTaskDetails";
         }
 
-        /// <summary> The job entity. </summary>
+        /// <summary>
+        /// The job entity.
+        /// Serialized Name: JobTaskDetails.jobTask
+        /// </summary>
         public JobEntity JobTask { get; }
     }
 }

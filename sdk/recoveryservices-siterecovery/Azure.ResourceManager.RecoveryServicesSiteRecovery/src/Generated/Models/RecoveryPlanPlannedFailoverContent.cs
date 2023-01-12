@@ -10,11 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary> Recovery plan planned failover input. </summary>
+    /// <summary>
+    /// Recovery plan planned failover input.
+    /// Serialized Name: RecoveryPlanPlannedFailoverInput
+    /// </summary>
     public partial class RecoveryPlanPlannedFailoverContent
     {
         /// <summary> Initializes a new instance of RecoveryPlanPlannedFailoverContent. </summary>
-        /// <param name="properties"> The recovery plan planned failover input properties. </param>
+        /// <param name="properties">
+        /// The recovery plan planned failover input properties.
+        /// Serialized Name: RecoveryPlanPlannedFailoverInput.properties
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
         public RecoveryPlanPlannedFailoverContent(RecoveryPlanPlannedFailoverInputProperties properties)
         {
@@ -23,7 +29,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             Properties = properties;
         }
 
-        /// <summary> The recovery plan planned failover input properties. </summary>
+        /// <summary>
+        /// The recovery plan planned failover input properties.
+        /// Serialized Name: RecoveryPlanPlannedFailoverInput.properties
+        /// </summary>
         public RecoveryPlanPlannedFailoverInputProperties Properties { get; }
     }
 }

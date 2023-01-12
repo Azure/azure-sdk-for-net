@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary> The recovery point type. </summary>
+    /// <summary>
+    /// The recovery point type.
+    /// Serialized Name: RecoveryPlanPointType
+    /// </summary>
     public readonly partial struct RecoveryPlanPointType : IEquatable<RecoveryPlanPointType>
     {
         private readonly string _value;
@@ -27,13 +30,25 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         private const string LatestCrashConsistentValue = "LatestCrashConsistent";
         private const string LatestProcessedValue = "LatestProcessed";
 
-        /// <summary> Latest. </summary>
+        /// <summary>
+        /// Latest
+        /// Serialized Name: RecoveryPlanPointType.Latest
+        /// </summary>
         public static RecoveryPlanPointType Latest { get; } = new RecoveryPlanPointType(LatestValue);
-        /// <summary> LatestApplicationConsistent. </summary>
+        /// <summary>
+        /// LatestApplicationConsistent
+        /// Serialized Name: RecoveryPlanPointType.LatestApplicationConsistent
+        /// </summary>
         public static RecoveryPlanPointType LatestApplicationConsistent { get; } = new RecoveryPlanPointType(LatestApplicationConsistentValue);
-        /// <summary> LatestCrashConsistent. </summary>
+        /// <summary>
+        /// LatestCrashConsistent
+        /// Serialized Name: RecoveryPlanPointType.LatestCrashConsistent
+        /// </summary>
         public static RecoveryPlanPointType LatestCrashConsistent { get; } = new RecoveryPlanPointType(LatestCrashConsistentValue);
-        /// <summary> LatestProcessed. </summary>
+        /// <summary>
+        /// LatestProcessed
+        /// Serialized Name: RecoveryPlanPointType.LatestProcessed
+        /// </summary>
         public static RecoveryPlanPointType LatestProcessed { get; } = new RecoveryPlanPointType(LatestProcessedValue);
         /// <summary> Determines if two <see cref="RecoveryPlanPointType"/> values are the same. </summary>
         public static bool operator ==(RecoveryPlanPointType left, RecoveryPlanPointType right) => left.Equals(right);

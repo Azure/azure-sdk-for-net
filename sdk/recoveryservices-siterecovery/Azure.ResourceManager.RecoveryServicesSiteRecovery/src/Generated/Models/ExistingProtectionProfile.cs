@@ -10,11 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary> Existing storage account input. </summary>
+    /// <summary>
+    /// Existing storage account input.
+    /// Serialized Name: ExistingProtectionProfile
+    /// </summary>
     public partial class ExistingProtectionProfile : ProtectionProfileCustomDetails
     {
         /// <summary> Initializes a new instance of ExistingProtectionProfile. </summary>
-        /// <param name="protectionProfileId"> The protection profile Arm Id. Throw error, if resource does not exists. </param>
+        /// <param name="protectionProfileId">
+        /// The protection profile Arm Id. Throw error, if resource does not exists.
+        /// Serialized Name: ExistingProtectionProfile.protectionProfileId
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="protectionProfileId"/> is null. </exception>
         public ExistingProtectionProfile(string protectionProfileId)
         {
@@ -25,15 +31,24 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> Initializes a new instance of ExistingProtectionProfile. </summary>
-        /// <param name="resourceType"> The class type. </param>
-        /// <param name="protectionProfileId"> The protection profile Arm Id. Throw error, if resource does not exists. </param>
+        /// <param name="resourceType">
+        /// The class type.
+        /// Serialized Name: ProtectionProfileCustomDetails.resourceType
+        /// </param>
+        /// <param name="protectionProfileId">
+        /// The protection profile Arm Id. Throw error, if resource does not exists.
+        /// Serialized Name: ExistingProtectionProfile.protectionProfileId
+        /// </param>
         internal ExistingProtectionProfile(string resourceType, string protectionProfileId) : base(resourceType)
         {
             ProtectionProfileId = protectionProfileId;
             ResourceType = resourceType ?? "Existing";
         }
 
-        /// <summary> The protection profile Arm Id. Throw error, if resource does not exists. </summary>
+        /// <summary>
+        /// The protection profile Arm Id. Throw error, if resource does not exists.
+        /// Serialized Name: ExistingProtectionProfile.protectionProfileId
+        /// </summary>
         public string ProtectionProfileId { get; set; }
     }
 }

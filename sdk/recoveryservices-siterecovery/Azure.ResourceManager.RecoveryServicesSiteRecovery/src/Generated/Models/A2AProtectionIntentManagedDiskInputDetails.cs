@@ -10,11 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary> Azure VM managed disk input details. </summary>
+    /// <summary>
+    /// Azure VM managed disk input details.
+    /// Serialized Name: A2AProtectionIntentManagedDiskInputDetails
+    /// </summary>
     public partial class A2AProtectionIntentManagedDiskInputDetails
     {
         /// <summary> Initializes a new instance of A2AProtectionIntentManagedDiskInputDetails. </summary>
-        /// <param name="diskId"> The disk Id. </param>
+        /// <param name="diskId">
+        /// The disk Id.
+        /// Serialized Name: A2AProtectionIntentManagedDiskInputDetails.diskId
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="diskId"/> is null. </exception>
         public A2AProtectionIntentManagedDiskInputDetails(string diskId)
         {
@@ -24,21 +30,38 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> Initializes a new instance of A2AProtectionIntentManagedDiskInputDetails. </summary>
-        /// <param name="diskId"> The disk Id. </param>
+        /// <param name="diskId">
+        /// The disk Id.
+        /// Serialized Name: A2AProtectionIntentManagedDiskInputDetails.diskId
+        /// </param>
         /// <param name="primaryStagingStorageAccountCustomInput">
         /// The primary staging storage account input.
+        /// Serialized Name: A2AProtectionIntentManagedDiskInputDetails.primaryStagingStorageAccountCustomInput
         /// Please note <see cref="StorageAccountCustomDetails"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="ExistingStorageAccount"/>.
         /// </param>
         /// <param name="recoveryResourceGroupCustomInput">
         /// The recovery resource group input.
+        /// Serialized Name: A2AProtectionIntentManagedDiskInputDetails.recoveryResourceGroupCustomInput
         /// Please note <see cref="RecoveryResourceGroupCustomDetails"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="ExistingRecoveryResourceGroup"/>.
         /// </param>
-        /// <param name="recoveryReplicaDiskAccountType"> The replica disk type. Its an optional value and will be same as source disk type if not user provided. </param>
-        /// <param name="recoveryTargetDiskAccountType"> The target disk type after failover. Its an optional value and will be same as source disk type if not user provided. </param>
-        /// <param name="recoveryDiskEncryptionSetId"> The recovery disk encryption set Id. </param>
-        /// <param name="diskEncryptionInfo"> The recovery disk encryption information (for one / single pass flows). </param>
+        /// <param name="recoveryReplicaDiskAccountType">
+        /// The replica disk type. Its an optional value and will be same as source disk type if not user provided.
+        /// Serialized Name: A2AProtectionIntentManagedDiskInputDetails.recoveryReplicaDiskAccountType
+        /// </param>
+        /// <param name="recoveryTargetDiskAccountType">
+        /// The target disk type after failover. Its an optional value and will be same as source disk type if not user provided.
+        /// Serialized Name: A2AProtectionIntentManagedDiskInputDetails.recoveryTargetDiskAccountType
+        /// </param>
+        /// <param name="recoveryDiskEncryptionSetId">
+        /// The recovery disk encryption set Id.
+        /// Serialized Name: A2AProtectionIntentManagedDiskInputDetails.recoveryDiskEncryptionSetId
+        /// </param>
+        /// <param name="diskEncryptionInfo">
+        /// The recovery disk encryption information (for one / single pass flows).
+        /// Serialized Name: A2AProtectionIntentManagedDiskInputDetails.diskEncryptionInfo
+        /// </param>
         internal A2AProtectionIntentManagedDiskInputDetails(string diskId, StorageAccountCustomDetails primaryStagingStorageAccountCustomInput, RecoveryResourceGroupCustomDetails recoveryResourceGroupCustomInput, string recoveryReplicaDiskAccountType, string recoveryTargetDiskAccountType, string recoveryDiskEncryptionSetId, DiskEncryptionInfo diskEncryptionInfo)
         {
             DiskId = diskId;
@@ -50,27 +73,44 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             DiskEncryptionInfo = diskEncryptionInfo;
         }
 
-        /// <summary> The disk Id. </summary>
+        /// <summary>
+        /// The disk Id.
+        /// Serialized Name: A2AProtectionIntentManagedDiskInputDetails.diskId
+        /// </summary>
         public string DiskId { get; set; }
         /// <summary>
         /// The primary staging storage account input.
+        /// Serialized Name: A2AProtectionIntentManagedDiskInputDetails.primaryStagingStorageAccountCustomInput
         /// Please note <see cref="StorageAccountCustomDetails"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="ExistingStorageAccount"/>.
         /// </summary>
         public StorageAccountCustomDetails PrimaryStagingStorageAccountCustomInput { get; set; }
         /// <summary>
         /// The recovery resource group input.
+        /// Serialized Name: A2AProtectionIntentManagedDiskInputDetails.recoveryResourceGroupCustomInput
         /// Please note <see cref="RecoveryResourceGroupCustomDetails"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="ExistingRecoveryResourceGroup"/>.
         /// </summary>
         public RecoveryResourceGroupCustomDetails RecoveryResourceGroupCustomInput { get; set; }
-        /// <summary> The replica disk type. Its an optional value and will be same as source disk type if not user provided. </summary>
+        /// <summary>
+        /// The replica disk type. Its an optional value and will be same as source disk type if not user provided.
+        /// Serialized Name: A2AProtectionIntentManagedDiskInputDetails.recoveryReplicaDiskAccountType
+        /// </summary>
         public string RecoveryReplicaDiskAccountType { get; set; }
-        /// <summary> The target disk type after failover. Its an optional value and will be same as source disk type if not user provided. </summary>
+        /// <summary>
+        /// The target disk type after failover. Its an optional value and will be same as source disk type if not user provided.
+        /// Serialized Name: A2AProtectionIntentManagedDiskInputDetails.recoveryTargetDiskAccountType
+        /// </summary>
         public string RecoveryTargetDiskAccountType { get; set; }
-        /// <summary> The recovery disk encryption set Id. </summary>
+        /// <summary>
+        /// The recovery disk encryption set Id.
+        /// Serialized Name: A2AProtectionIntentManagedDiskInputDetails.recoveryDiskEncryptionSetId
+        /// </summary>
         public string RecoveryDiskEncryptionSetId { get; set; }
-        /// <summary> The recovery disk encryption information (for one / single pass flows). </summary>
+        /// <summary>
+        /// The recovery disk encryption information (for one / single pass flows).
+        /// Serialized Name: A2AProtectionIntentManagedDiskInputDetails.diskEncryptionInfo
+        /// </summary>
         public DiskEncryptionInfo DiskEncryptionInfo { get; set; }
     }
 }

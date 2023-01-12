@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary> This class represents the task details for an automation runbook. </summary>
+    /// <summary>
+    /// This class represents the task details for an automation runbook.
+    /// Serialized Name: AutomationRunbookTaskDetails
+    /// </summary>
     public partial class AutomationRunbookTaskDetails : TaskTypeDetails
     {
         /// <summary> Initializes a new instance of AutomationRunbookTaskDetails. </summary>
@@ -17,16 +20,46 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> Initializes a new instance of AutomationRunbookTaskDetails. </summary>
-        /// <param name="instanceType"> The type of task details. </param>
-        /// <param name="name"> The recovery plan task name. </param>
-        /// <param name="cloudServiceName"> The cloud service of the automation runbook account. </param>
-        /// <param name="subscriptionId"> The subscription Id of the automation runbook account. </param>
-        /// <param name="accountName"> The automation account name of the runbook. </param>
-        /// <param name="runbookId"> The runbook Id. </param>
-        /// <param name="runbookName"> The runbook name. </param>
-        /// <param name="jobId"> The job Id of the runbook execution. </param>
-        /// <param name="jobOutput"> The execution output of the runbook. </param>
-        /// <param name="isPrimarySideScript"> A value indicating whether it is a primary side script or not. </param>
+        /// <param name="instanceType">
+        /// The type of task details.
+        /// Serialized Name: TaskTypeDetails.instanceType
+        /// </param>
+        /// <param name="name">
+        /// The recovery plan task name.
+        /// Serialized Name: AutomationRunbookTaskDetails.name
+        /// </param>
+        /// <param name="cloudServiceName">
+        /// The cloud service of the automation runbook account.
+        /// Serialized Name: AutomationRunbookTaskDetails.cloudServiceName
+        /// </param>
+        /// <param name="subscriptionId">
+        /// The subscription Id of the automation runbook account.
+        /// Serialized Name: AutomationRunbookTaskDetails.subscriptionId
+        /// </param>
+        /// <param name="accountName">
+        /// The automation account name of the runbook.
+        /// Serialized Name: AutomationRunbookTaskDetails.accountName
+        /// </param>
+        /// <param name="runbookId">
+        /// The runbook Id.
+        /// Serialized Name: AutomationRunbookTaskDetails.runbookId
+        /// </param>
+        /// <param name="runbookName">
+        /// The runbook name.
+        /// Serialized Name: AutomationRunbookTaskDetails.runbookName
+        /// </param>
+        /// <param name="jobId">
+        /// The job Id of the runbook execution.
+        /// Serialized Name: AutomationRunbookTaskDetails.jobId
+        /// </param>
+        /// <param name="jobOutput">
+        /// The execution output of the runbook.
+        /// Serialized Name: AutomationRunbookTaskDetails.jobOutput
+        /// </param>
+        /// <param name="isPrimarySideScript">
+        /// A value indicating whether it is a primary side script or not.
+        /// Serialized Name: AutomationRunbookTaskDetails.isPrimarySideScript
+        /// </param>
         internal AutomationRunbookTaskDetails(string instanceType, string name, string cloudServiceName, string subscriptionId, string accountName, string runbookId, string runbookName, string jobId, string jobOutput, bool? isPrimarySideScript) : base(instanceType)
         {
             Name = name;
@@ -41,23 +74,50 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             InstanceType = instanceType ?? "AutomationRunbookTaskDetails";
         }
 
-        /// <summary> The recovery plan task name. </summary>
+        /// <summary>
+        /// The recovery plan task name.
+        /// Serialized Name: AutomationRunbookTaskDetails.name
+        /// </summary>
         public string Name { get; }
-        /// <summary> The cloud service of the automation runbook account. </summary>
+        /// <summary>
+        /// The cloud service of the automation runbook account.
+        /// Serialized Name: AutomationRunbookTaskDetails.cloudServiceName
+        /// </summary>
         public string CloudServiceName { get; }
-        /// <summary> The subscription Id of the automation runbook account. </summary>
+        /// <summary>
+        /// The subscription Id of the automation runbook account.
+        /// Serialized Name: AutomationRunbookTaskDetails.subscriptionId
+        /// </summary>
         public string SubscriptionId { get; }
-        /// <summary> The automation account name of the runbook. </summary>
+        /// <summary>
+        /// The automation account name of the runbook.
+        /// Serialized Name: AutomationRunbookTaskDetails.accountName
+        /// </summary>
         public string AccountName { get; }
-        /// <summary> The runbook Id. </summary>
+        /// <summary>
+        /// The runbook Id.
+        /// Serialized Name: AutomationRunbookTaskDetails.runbookId
+        /// </summary>
         public string RunbookId { get; }
-        /// <summary> The runbook name. </summary>
+        /// <summary>
+        /// The runbook name.
+        /// Serialized Name: AutomationRunbookTaskDetails.runbookName
+        /// </summary>
         public string RunbookName { get; }
-        /// <summary> The job Id of the runbook execution. </summary>
+        /// <summary>
+        /// The job Id of the runbook execution.
+        /// Serialized Name: AutomationRunbookTaskDetails.jobId
+        /// </summary>
         public string JobId { get; }
-        /// <summary> The execution output of the runbook. </summary>
+        /// <summary>
+        /// The execution output of the runbook.
+        /// Serialized Name: AutomationRunbookTaskDetails.jobOutput
+        /// </summary>
         public string JobOutput { get; }
-        /// <summary> A value indicating whether it is a primary side script or not. </summary>
+        /// <summary>
+        /// A value indicating whether it is a primary side script or not.
+        /// Serialized Name: AutomationRunbookTaskDetails.isPrimarySideScript
+        /// </summary>
         public bool? IsPrimarySideScript { get; }
     }
 }

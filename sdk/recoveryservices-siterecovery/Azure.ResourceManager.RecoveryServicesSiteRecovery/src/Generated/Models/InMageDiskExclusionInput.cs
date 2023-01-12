@@ -10,7 +10,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary> DiskExclusionInput when doing enable protection of virtual machine in InMage provider. </summary>
+    /// <summary>
+    /// DiskExclusionInput when doing enable protection of virtual machine in InMage provider.
+    /// Serialized Name: InMageDiskExclusionInput
+    /// </summary>
     public partial class InMageDiskExclusionInput
     {
         /// <summary> Initializes a new instance of InMageDiskExclusionInput. </summary>
@@ -20,9 +23,15 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             DiskSignatureOptions = new ChangeTrackingList<InMageDiskSignatureExclusionOptions>();
         }
 
-        /// <summary> The volume label based option for disk exclusion. </summary>
+        /// <summary>
+        /// The volume label based option for disk exclusion.
+        /// Serialized Name: InMageDiskExclusionInput.volumeOptions
+        /// </summary>
         public IList<InMageVolumeExclusionOptions> VolumeOptions { get; }
-        /// <summary> The guest disk signature based option for disk exclusion. </summary>
+        /// <summary>
+        /// The guest disk signature based option for disk exclusion.
+        /// Serialized Name: InMageDiskExclusionInput.diskSignatureOptions
+        /// </summary>
         public IList<InMageDiskSignatureExclusionOptions> DiskSignatureOptions { get; }
     }
 }

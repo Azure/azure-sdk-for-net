@@ -24,23 +24,38 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="properties"> Properties of the storage object. </param>
-        /// <param name="location"> Resource Location. </param>
+        /// <param name="properties">
+        /// Properties of the storage object.
+        /// Serialized Name: StorageClassification.properties
+        /// </param>
+        /// <param name="location">
+        /// Resource Location
+        /// Serialized Name: Resource.location
+        /// </param>
         internal StorageClassificationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, StorageClassificationProperties properties, AzureLocation? location) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
             Location = location;
         }
 
-        /// <summary> Properties of the storage object. </summary>
+        /// <summary>
+        /// Properties of the storage object.
+        /// Serialized Name: StorageClassification.properties
+        /// </summary>
         internal StorageClassificationProperties Properties { get; }
-        /// <summary> Friendly name of the Storage classification. </summary>
+        /// <summary>
+        /// Friendly name of the Storage classification.
+        /// Serialized Name: StorageClassificationProperties.friendlyName
+        /// </summary>
         public string StorageClassificationFriendlyName
         {
             get => Properties?.FriendlyName;
         }
 
-        /// <summary> Resource Location. </summary>
+        /// <summary>
+        /// Resource Location
+        /// Serialized Name: Resource.location
+        /// </summary>
         public AzureLocation? Location { get; }
     }
 }

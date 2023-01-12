@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary> Disk input details. </summary>
+    /// <summary>
+    /// Disk input details.
+    /// Serialized Name: InMageAzureV2DiskInputDetails
+    /// </summary>
     public partial class InMageAzureV2DiskInputDetails
     {
         /// <summary> Initializes a new instance of InMageAzureV2DiskInputDetails. </summary>
@@ -15,13 +18,25 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         {
         }
 
-        /// <summary> The DiskId. </summary>
+        /// <summary>
+        /// The DiskId.
+        /// Serialized Name: InMageAzureV2DiskInputDetails.diskId
+        /// </summary>
         public string DiskId { get; set; }
-        /// <summary> The LogStorageAccountId. </summary>
+        /// <summary>
+        /// The LogStorageAccountId.
+        /// Serialized Name: InMageAzureV2DiskInputDetails.logStorageAccountId
+        /// </summary>
         public string LogStorageAccountId { get; set; }
-        /// <summary> The DiskType. </summary>
+        /// <summary>
+        /// The DiskType.
+        /// Serialized Name: InMageAzureV2DiskInputDetails.diskType
+        /// </summary>
         public DiskAccountType? DiskType { get; set; }
-        /// <summary> The DiskEncryptionSet ARM ID. </summary>
+        /// <summary>
+        /// The DiskEncryptionSet ARM ID.
+        /// Serialized Name: InMageAzureV2DiskInputDetails.diskEncryptionSetId
+        /// </summary>
         public string DiskEncryptionSetId { get; set; }
     }
 }

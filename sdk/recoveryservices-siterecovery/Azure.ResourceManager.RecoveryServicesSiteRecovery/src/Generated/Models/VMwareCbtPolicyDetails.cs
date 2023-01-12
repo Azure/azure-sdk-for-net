@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary> VMware Cbt specific policy details. </summary>
+    /// <summary>
+    /// VMware Cbt specific policy details.
+    /// Serialized Name: VmwareCbtPolicyDetails
+    /// </summary>
     public partial class VMwareCbtPolicyDetails : PolicyProviderSpecificDetails
     {
         /// <summary> Initializes a new instance of VMwareCbtPolicyDetails. </summary>
@@ -17,10 +20,22 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> Initializes a new instance of VMwareCbtPolicyDetails. </summary>
-        /// <param name="instanceType"> Gets the class type. Overridden in derived classes. </param>
-        /// <param name="recoveryPointHistoryInMinutes"> The duration in minutes until which the recovery points need to be stored. </param>
-        /// <param name="appConsistentFrequencyInMinutes"> The app consistent snapshot frequency in minutes. </param>
-        /// <param name="crashConsistentFrequencyInMinutes"> The crash consistent snapshot frequency in minutes. </param>
+        /// <param name="instanceType">
+        /// Gets the class type. Overridden in derived classes.
+        /// Serialized Name: PolicyProviderSpecificDetails.instanceType
+        /// </param>
+        /// <param name="recoveryPointHistoryInMinutes">
+        /// The duration in minutes until which the recovery points need to be stored.
+        /// Serialized Name: VmwareCbtPolicyDetails.recoveryPointHistoryInMinutes
+        /// </param>
+        /// <param name="appConsistentFrequencyInMinutes">
+        /// The app consistent snapshot frequency in minutes.
+        /// Serialized Name: VmwareCbtPolicyDetails.appConsistentFrequencyInMinutes
+        /// </param>
+        /// <param name="crashConsistentFrequencyInMinutes">
+        /// The crash consistent snapshot frequency in minutes.
+        /// Serialized Name: VmwareCbtPolicyDetails.crashConsistentFrequencyInMinutes
+        /// </param>
         internal VMwareCbtPolicyDetails(string instanceType, int? recoveryPointHistoryInMinutes, int? appConsistentFrequencyInMinutes, int? crashConsistentFrequencyInMinutes) : base(instanceType)
         {
             RecoveryPointHistoryInMinutes = recoveryPointHistoryInMinutes;
@@ -29,11 +44,20 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             InstanceType = instanceType ?? "VMwareCbt";
         }
 
-        /// <summary> The duration in minutes until which the recovery points need to be stored. </summary>
+        /// <summary>
+        /// The duration in minutes until which the recovery points need to be stored.
+        /// Serialized Name: VmwareCbtPolicyDetails.recoveryPointHistoryInMinutes
+        /// </summary>
         public int? RecoveryPointHistoryInMinutes { get; }
-        /// <summary> The app consistent snapshot frequency in minutes. </summary>
+        /// <summary>
+        /// The app consistent snapshot frequency in minutes.
+        /// Serialized Name: VmwareCbtPolicyDetails.appConsistentFrequencyInMinutes
+        /// </summary>
         public int? AppConsistentFrequencyInMinutes { get; }
-        /// <summary> The crash consistent snapshot frequency in minutes. </summary>
+        /// <summary>
+        /// The crash consistent snapshot frequency in minutes.
+        /// Serialized Name: VmwareCbtPolicyDetails.crashConsistentFrequencyInMinutes
+        /// </summary>
         public int? CrashConsistentFrequencyInMinutes { get; }
     }
 }

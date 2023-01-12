@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary> Input definition for switch provider input properties. </summary>
+    /// <summary>
+    /// Input definition for switch provider input properties.
+    /// Serialized Name: SwitchProviderInputProperties
+    /// </summary>
     public partial class SwitchProviderInputProperties
     {
         /// <summary> Initializes a new instance of SwitchProviderInputProperties. </summary>
@@ -15,10 +18,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         {
         }
 
-        /// <summary> Target provider type. </summary>
+        /// <summary>
+        /// Target provider type.
+        /// Serialized Name: SwitchProviderInputProperties.targetInstanceType
+        /// </summary>
         public string TargetInstanceType { get; set; }
         /// <summary>
         /// Provider specific settings.
+        /// Serialized Name: SwitchProviderInputProperties.providerSpecificDetails
         /// Please note <see cref="SwitchProviderSpecificInput"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="InMageAzureV2SwitchProviderInput"/>.
         /// </summary>

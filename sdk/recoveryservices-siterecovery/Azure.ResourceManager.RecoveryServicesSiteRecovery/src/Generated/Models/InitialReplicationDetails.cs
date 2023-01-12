@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary> Initial replication details. </summary>
+    /// <summary>
+    /// Initial replication details.
+    /// Serialized Name: InitialReplicationDetails
+    /// </summary>
     public partial class InitialReplicationDetails
     {
         /// <summary> Initializes a new instance of InitialReplicationDetails. </summary>
@@ -16,17 +19,29 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> Initializes a new instance of InitialReplicationDetails. </summary>
-        /// <param name="initialReplicationType"> Initial replication type. </param>
-        /// <param name="initialReplicationProgressPercentage"> The initial replication progress percentage. </param>
+        /// <param name="initialReplicationType">
+        /// Initial replication type.
+        /// Serialized Name: InitialReplicationDetails.initialReplicationType
+        /// </param>
+        /// <param name="initialReplicationProgressPercentage">
+        /// The initial replication progress percentage.
+        /// Serialized Name: InitialReplicationDetails.initialReplicationProgressPercentage
+        /// </param>
         internal InitialReplicationDetails(string initialReplicationType, string initialReplicationProgressPercentage)
         {
             InitialReplicationType = initialReplicationType;
             InitialReplicationProgressPercentage = initialReplicationProgressPercentage;
         }
 
-        /// <summary> Initial replication type. </summary>
+        /// <summary>
+        /// Initial replication type.
+        /// Serialized Name: InitialReplicationDetails.initialReplicationType
+        /// </summary>
         public string InitialReplicationType { get; }
-        /// <summary> The initial replication progress percentage. </summary>
+        /// <summary>
+        /// The initial replication progress percentage.
+        /// Serialized Name: InitialReplicationDetails.initialReplicationProgressPercentage
+        /// </summary>
         public string InitialReplicationProgressPercentage { get; }
     }
 }

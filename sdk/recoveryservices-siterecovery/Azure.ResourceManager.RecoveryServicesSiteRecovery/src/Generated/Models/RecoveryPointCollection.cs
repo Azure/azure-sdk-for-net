@@ -11,7 +11,10 @@ using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary> Collection of recovery point details. </summary>
+    /// <summary>
+    /// Collection of recovery point details.
+    /// Serialized Name: RecoveryPointCollection
+    /// </summary>
     internal partial class RecoveryPointCollection
     {
         /// <summary> Initializes a new instance of RecoveryPointCollection. </summary>
@@ -21,17 +24,29 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> Initializes a new instance of RecoveryPointCollection. </summary>
-        /// <param name="value"> The recovery point details. </param>
-        /// <param name="nextLink"> The value of next link. </param>
+        /// <param name="value">
+        /// The recovery point details.
+        /// Serialized Name: RecoveryPointCollection.value
+        /// </param>
+        /// <param name="nextLink">
+        /// The value of next link.
+        /// Serialized Name: RecoveryPointCollection.nextLink
+        /// </param>
         internal RecoveryPointCollection(IReadOnlyList<RecoveryPointData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
-        /// <summary> The recovery point details. </summary>
+        /// <summary>
+        /// The recovery point details.
+        /// Serialized Name: RecoveryPointCollection.value
+        /// </summary>
         public IReadOnlyList<RecoveryPointData> Value { get; }
-        /// <summary> The value of next link. </summary>
+        /// <summary>
+        /// The value of next link.
+        /// Serialized Name: RecoveryPointCollection.nextLink
+        /// </summary>
         public string NextLink { get; }
     }
 }

@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary> Input required to add vCenter. </summary>
+    /// <summary>
+    /// Input required to add vCenter.
+    /// Serialized Name: AddVCenterRequest
+    /// </summary>
     public partial class VCenterCreateOrUpdateContent
     {
         /// <summary> Initializes a new instance of VCenterCreateOrUpdateContent. </summary>
@@ -15,7 +18,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         {
         }
 
-        /// <summary> The properties of an add vCenter request. </summary>
+        /// <summary>
+        /// The properties of an add vCenter request.
+        /// Serialized Name: AddVCenterRequest.properties
+        /// </summary>
         public AddVCenterRequestProperties Properties { get; set; }
     }
 }

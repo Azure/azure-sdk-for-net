@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary> Represents the error used to indicate why the target compute size is not applicable. </summary>
+    /// <summary>
+    /// Represents the error used to indicate why the target compute size is not applicable.
+    /// Serialized Name: ComputeSizeErrorDetails
+    /// </summary>
     public partial class ComputeSizeErrorDetails
     {
         /// <summary> Initializes a new instance of ComputeSizeErrorDetails. </summary>
@@ -16,17 +19,29 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> Initializes a new instance of ComputeSizeErrorDetails. </summary>
-        /// <param name="message"> The error message. </param>
-        /// <param name="severity"> The severity of the error. </param>
+        /// <param name="message">
+        /// The error message.
+        /// Serialized Name: ComputeSizeErrorDetails.message
+        /// </param>
+        /// <param name="severity">
+        /// The severity of the error.
+        /// Serialized Name: ComputeSizeErrorDetails.severity
+        /// </param>
         internal ComputeSizeErrorDetails(string message, string severity)
         {
             Message = message;
             Severity = severity;
         }
 
-        /// <summary> The error message. </summary>
+        /// <summary>
+        /// The error message.
+        /// Serialized Name: ComputeSizeErrorDetails.message
+        /// </summary>
         public string Message { get; }
-        /// <summary> The severity of the error. </summary>
+        /// <summary>
+        /// The severity of the error.
+        /// Serialized Name: ComputeSizeErrorDetails.severity
+        /// </summary>
         public string Severity { get; }
     }
 }

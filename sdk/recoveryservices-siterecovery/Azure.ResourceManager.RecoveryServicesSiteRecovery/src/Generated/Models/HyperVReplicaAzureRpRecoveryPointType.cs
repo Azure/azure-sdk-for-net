@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary> The recovery point type. </summary>
+    /// <summary>
+    /// The recovery point type.
+    /// Serialized Name: HyperVReplicaAzureRpRecoveryPointType
+    /// </summary>
     public readonly partial struct HyperVReplicaAzureRpRecoveryPointType : IEquatable<HyperVReplicaAzureRpRecoveryPointType>
     {
         private readonly string _value;
@@ -26,11 +29,20 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         private const string LatestApplicationConsistentValue = "LatestApplicationConsistent";
         private const string LatestProcessedValue = "LatestProcessed";
 
-        /// <summary> Latest. </summary>
+        /// <summary>
+        /// Latest
+        /// Serialized Name: HyperVReplicaAzureRpRecoveryPointType.Latest
+        /// </summary>
         public static HyperVReplicaAzureRpRecoveryPointType Latest { get; } = new HyperVReplicaAzureRpRecoveryPointType(LatestValue);
-        /// <summary> LatestApplicationConsistent. </summary>
+        /// <summary>
+        /// LatestApplicationConsistent
+        /// Serialized Name: HyperVReplicaAzureRpRecoveryPointType.LatestApplicationConsistent
+        /// </summary>
         public static HyperVReplicaAzureRpRecoveryPointType LatestApplicationConsistent { get; } = new HyperVReplicaAzureRpRecoveryPointType(LatestApplicationConsistentValue);
-        /// <summary> LatestProcessed. </summary>
+        /// <summary>
+        /// LatestProcessed
+        /// Serialized Name: HyperVReplicaAzureRpRecoveryPointType.LatestProcessed
+        /// </summary>
         public static HyperVReplicaAzureRpRecoveryPointType LatestProcessed { get; } = new HyperVReplicaAzureRpRecoveryPointType(LatestProcessedValue);
         /// <summary> Determines if two <see cref="HyperVReplicaAzureRpRecoveryPointType"/> values are the same. </summary>
         public static bool operator ==(HyperVReplicaAzureRpRecoveryPointType left, HyperVReplicaAzureRpRecoveryPointType right) => left.Equals(right);

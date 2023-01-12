@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary> Recovery plan A2A specific details. </summary>
+    /// <summary>
+    /// Recovery plan A2A specific details.
+    /// Serialized Name: RecoveryPlanA2ADetails
+    /// </summary>
     public partial class RecoveryPlanA2ADetails : RecoveryPlanProviderSpecificDetails
     {
         /// <summary> Initializes a new instance of RecoveryPlanA2ADetails. </summary>
@@ -17,11 +20,26 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> Initializes a new instance of RecoveryPlanA2ADetails. </summary>
-        /// <param name="instanceType"> Gets the Instance type. </param>
-        /// <param name="primaryZone"> The primary zone. </param>
-        /// <param name="recoveryZone"> The recovery zone. </param>
-        /// <param name="primaryExtendedLocation"> The primary extended location. </param>
-        /// <param name="recoveryExtendedLocation"> The recovery extended location. </param>
+        /// <param name="instanceType">
+        /// Gets the Instance type.
+        /// Serialized Name: RecoveryPlanProviderSpecificDetails.instanceType
+        /// </param>
+        /// <param name="primaryZone">
+        /// The primary zone.
+        /// Serialized Name: RecoveryPlanA2ADetails.primaryZone
+        /// </param>
+        /// <param name="recoveryZone">
+        /// The recovery zone.
+        /// Serialized Name: RecoveryPlanA2ADetails.recoveryZone
+        /// </param>
+        /// <param name="primaryExtendedLocation">
+        /// The primary extended location.
+        /// Serialized Name: RecoveryPlanA2ADetails.primaryExtendedLocation
+        /// </param>
+        /// <param name="recoveryExtendedLocation">
+        /// The recovery extended location.
+        /// Serialized Name: RecoveryPlanA2ADetails.recoveryExtendedLocation
+        /// </param>
         internal RecoveryPlanA2ADetails(string instanceType, string primaryZone, string recoveryZone, ExtendedLocation primaryExtendedLocation, ExtendedLocation recoveryExtendedLocation) : base(instanceType)
         {
             PrimaryZone = primaryZone;
@@ -31,13 +49,25 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             InstanceType = instanceType ?? "A2A";
         }
 
-        /// <summary> The primary zone. </summary>
+        /// <summary>
+        /// The primary zone.
+        /// Serialized Name: RecoveryPlanA2ADetails.primaryZone
+        /// </summary>
         public string PrimaryZone { get; }
-        /// <summary> The recovery zone. </summary>
+        /// <summary>
+        /// The recovery zone.
+        /// Serialized Name: RecoveryPlanA2ADetails.recoveryZone
+        /// </summary>
         public string RecoveryZone { get; }
-        /// <summary> The primary extended location. </summary>
+        /// <summary>
+        /// The primary extended location.
+        /// Serialized Name: RecoveryPlanA2ADetails.primaryExtendedLocation
+        /// </summary>
         public ExtendedLocation PrimaryExtendedLocation { get; }
-        /// <summary> The recovery extended location. </summary>
+        /// <summary>
+        /// The recovery extended location.
+        /// Serialized Name: RecoveryPlanA2ADetails.recoveryExtendedLocation
+        /// </summary>
         public ExtendedLocation RecoveryExtendedLocation { get; }
     }
 }

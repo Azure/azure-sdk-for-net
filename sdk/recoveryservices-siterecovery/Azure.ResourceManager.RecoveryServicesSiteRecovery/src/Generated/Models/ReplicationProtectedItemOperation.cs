@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary> The ReplicationProtectedItemOperation. </summary>
+    /// <summary>
+    /// The ReplicationProtectedItemOperation.
+    /// Serialized Name: ReplicationProtectedItemOperation
+    /// </summary>
     public readonly partial struct ReplicationProtectedItemOperation : IEquatable<ReplicationProtectedItemOperation>
     {
         private readonly string _value;
@@ -37,33 +40,75 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         private const string SwitchProtectionValue = "SwitchProtection";
         private const string CompleteMigrationValue = "CompleteMigration";
 
-        /// <summary> ReverseReplicate. </summary>
+        /// <summary>
+        /// ReverseReplicate
+        /// Serialized Name: ReplicationProtectedItemOperation.ReverseReplicate
+        /// </summary>
         public static ReplicationProtectedItemOperation ReverseReplicate { get; } = new ReplicationProtectedItemOperation(ReverseReplicateValue);
-        /// <summary> Commit. </summary>
+        /// <summary>
+        /// Commit
+        /// Serialized Name: ReplicationProtectedItemOperation.Commit
+        /// </summary>
         public static ReplicationProtectedItemOperation Commit { get; } = new ReplicationProtectedItemOperation(CommitValue);
-        /// <summary> PlannedFailover. </summary>
+        /// <summary>
+        /// PlannedFailover
+        /// Serialized Name: ReplicationProtectedItemOperation.PlannedFailover
+        /// </summary>
         public static ReplicationProtectedItemOperation PlannedFailover { get; } = new ReplicationProtectedItemOperation(PlannedFailoverValue);
-        /// <summary> UnplannedFailover. </summary>
+        /// <summary>
+        /// UnplannedFailover
+        /// Serialized Name: ReplicationProtectedItemOperation.UnplannedFailover
+        /// </summary>
         public static ReplicationProtectedItemOperation UnplannedFailover { get; } = new ReplicationProtectedItemOperation(UnplannedFailoverValue);
-        /// <summary> DisableProtection. </summary>
+        /// <summary>
+        /// DisableProtection
+        /// Serialized Name: ReplicationProtectedItemOperation.DisableProtection
+        /// </summary>
         public static ReplicationProtectedItemOperation DisableProtection { get; } = new ReplicationProtectedItemOperation(DisableProtectionValue);
-        /// <summary> TestFailover. </summary>
+        /// <summary>
+        /// TestFailover
+        /// Serialized Name: ReplicationProtectedItemOperation.TestFailover
+        /// </summary>
         public static ReplicationProtectedItemOperation TestFailover { get; } = new ReplicationProtectedItemOperation(TestFailoverValue);
-        /// <summary> TestFailoverCleanup. </summary>
+        /// <summary>
+        /// TestFailoverCleanup
+        /// Serialized Name: ReplicationProtectedItemOperation.TestFailoverCleanup
+        /// </summary>
         public static ReplicationProtectedItemOperation TestFailoverCleanup { get; } = new ReplicationProtectedItemOperation(TestFailoverCleanupValue);
-        /// <summary> Failback. </summary>
+        /// <summary>
+        /// Failback
+        /// Serialized Name: ReplicationProtectedItemOperation.Failback
+        /// </summary>
         public static ReplicationProtectedItemOperation Failback { get; } = new ReplicationProtectedItemOperation(FailbackValue);
-        /// <summary> FinalizeFailback. </summary>
+        /// <summary>
+        /// FinalizeFailback
+        /// Serialized Name: ReplicationProtectedItemOperation.FinalizeFailback
+        /// </summary>
         public static ReplicationProtectedItemOperation FinalizeFailback { get; } = new ReplicationProtectedItemOperation(FinalizeFailbackValue);
-        /// <summary> CancelFailover. </summary>
+        /// <summary>
+        /// CancelFailover
+        /// Serialized Name: ReplicationProtectedItemOperation.CancelFailover
+        /// </summary>
         public static ReplicationProtectedItemOperation CancelFailover { get; } = new ReplicationProtectedItemOperation(CancelFailoverValue);
-        /// <summary> ChangePit. </summary>
+        /// <summary>
+        /// ChangePit
+        /// Serialized Name: ReplicationProtectedItemOperation.ChangePit
+        /// </summary>
         public static ReplicationProtectedItemOperation ChangePit { get; } = new ReplicationProtectedItemOperation(ChangePitValue);
-        /// <summary> RepairReplication. </summary>
+        /// <summary>
+        /// RepairReplication
+        /// Serialized Name: ReplicationProtectedItemOperation.RepairReplication
+        /// </summary>
         public static ReplicationProtectedItemOperation RepairReplication { get; } = new ReplicationProtectedItemOperation(RepairReplicationValue);
-        /// <summary> SwitchProtection. </summary>
+        /// <summary>
+        /// SwitchProtection
+        /// Serialized Name: ReplicationProtectedItemOperation.SwitchProtection
+        /// </summary>
         public static ReplicationProtectedItemOperation SwitchProtection { get; } = new ReplicationProtectedItemOperation(SwitchProtectionValue);
-        /// <summary> CompleteMigration. </summary>
+        /// <summary>
+        /// CompleteMigration
+        /// Serialized Name: ReplicationProtectedItemOperation.CompleteMigration
+        /// </summary>
         public static ReplicationProtectedItemOperation CompleteMigration { get; } = new ReplicationProtectedItemOperation(CompleteMigrationValue);
         /// <summary> Determines if two <see cref="ReplicationProtectedItemOperation"/> values are the same. </summary>
         public static bool operator ==(ReplicationProtectedItemOperation left, ReplicationProtectedItemOperation right) => left.Equals(right);

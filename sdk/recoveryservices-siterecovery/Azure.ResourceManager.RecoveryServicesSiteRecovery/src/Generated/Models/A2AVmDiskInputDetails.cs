@@ -10,13 +10,25 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary> A2A disk input details. </summary>
+    /// <summary>
+    /// A2A disk input details.
+    /// Serialized Name: A2AVmDiskInputDetails
+    /// </summary>
     public partial class A2AVmDiskInputDetails
     {
         /// <summary> Initializes a new instance of A2AVmDiskInputDetails. </summary>
-        /// <param name="diskUri"> The disk Uri. </param>
-        /// <param name="recoveryAzureStorageAccountId"> The recovery VHD storage account Id. </param>
-        /// <param name="primaryStagingAzureStorageAccountId"> The primary staging storage account Id. </param>
+        /// <param name="diskUri">
+        /// The disk Uri.
+        /// Serialized Name: A2AVmDiskInputDetails.diskUri
+        /// </param>
+        /// <param name="recoveryAzureStorageAccountId">
+        /// The recovery VHD storage account Id.
+        /// Serialized Name: A2AVmDiskInputDetails.recoveryAzureStorageAccountId
+        /// </param>
+        /// <param name="primaryStagingAzureStorageAccountId">
+        /// The primary staging storage account Id.
+        /// Serialized Name: A2AVmDiskInputDetails.primaryStagingAzureStorageAccountId
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="diskUri"/>, <paramref name="recoveryAzureStorageAccountId"/> or <paramref name="primaryStagingAzureStorageAccountId"/> is null. </exception>
         public A2AVmDiskInputDetails(Uri diskUri, string recoveryAzureStorageAccountId, string primaryStagingAzureStorageAccountId)
         {
@@ -29,11 +41,20 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             PrimaryStagingAzureStorageAccountId = primaryStagingAzureStorageAccountId;
         }
 
-        /// <summary> The disk Uri. </summary>
+        /// <summary>
+        /// The disk Uri.
+        /// Serialized Name: A2AVmDiskInputDetails.diskUri
+        /// </summary>
         public Uri DiskUri { get; }
-        /// <summary> The recovery VHD storage account Id. </summary>
+        /// <summary>
+        /// The recovery VHD storage account Id.
+        /// Serialized Name: A2AVmDiskInputDetails.recoveryAzureStorageAccountId
+        /// </summary>
         public string RecoveryAzureStorageAccountId { get; }
-        /// <summary> The primary staging storage account Id. </summary>
+        /// <summary>
+        /// The primary staging storage account Id.
+        /// Serialized Name: A2AVmDiskInputDetails.primaryStagingAzureStorageAccountId
+        /// </summary>
         public string PrimaryStagingAzureStorageAccountId { get; }
     }
 }

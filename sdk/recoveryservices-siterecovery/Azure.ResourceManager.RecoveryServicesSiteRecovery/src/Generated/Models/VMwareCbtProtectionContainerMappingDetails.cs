@@ -11,7 +11,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary> VMwareCbt provider specific container mapping details. </summary>
+    /// <summary>
+    /// VMwareCbt provider specific container mapping details.
+    /// Serialized Name: VMwareCbtProtectionContainerMappingDetails
+    /// </summary>
     public partial class VMwareCbtProtectionContainerMappingDetails : ProtectionContainerMappingProviderSpecificDetails
     {
         /// <summary> Initializes a new instance of VMwareCbtProtectionContainerMappingDetails. </summary>
@@ -22,14 +25,38 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> Initializes a new instance of VMwareCbtProtectionContainerMappingDetails. </summary>
-        /// <param name="instanceType"> Gets the class type. Overridden in derived classes. </param>
-        /// <param name="keyVaultId"> The target key vault ARM Id. </param>
-        /// <param name="keyVaultUri"> The target key vault URI. </param>
-        /// <param name="storageAccountId"> The storage account ARM Id. </param>
-        /// <param name="storageAccountSasSecretName"> The secret name of the storage account. </param>
-        /// <param name="serviceBusConnectionStringSecretName"> The secret name of the service bus connection string. </param>
-        /// <param name="targetLocation"> The target location. </param>
-        /// <param name="roleSizeToNicCountMap"> The role size to NIC count map. </param>
+        /// <param name="instanceType">
+        /// Gets the class type. Overridden in derived classes.
+        /// Serialized Name: ProtectionContainerMappingProviderSpecificDetails.instanceType
+        /// </param>
+        /// <param name="keyVaultId">
+        /// The target key vault ARM Id.
+        /// Serialized Name: VMwareCbtProtectionContainerMappingDetails.keyVaultId
+        /// </param>
+        /// <param name="keyVaultUri">
+        /// The target key vault URI.
+        /// Serialized Name: VMwareCbtProtectionContainerMappingDetails.keyVaultUri
+        /// </param>
+        /// <param name="storageAccountId">
+        /// The storage account ARM Id.
+        /// Serialized Name: VMwareCbtProtectionContainerMappingDetails.storageAccountId
+        /// </param>
+        /// <param name="storageAccountSasSecretName">
+        /// The secret name of the storage account.
+        /// Serialized Name: VMwareCbtProtectionContainerMappingDetails.storageAccountSasSecretName
+        /// </param>
+        /// <param name="serviceBusConnectionStringSecretName">
+        /// The secret name of the service bus connection string.
+        /// Serialized Name: VMwareCbtProtectionContainerMappingDetails.serviceBusConnectionStringSecretName
+        /// </param>
+        /// <param name="targetLocation">
+        /// The target location.
+        /// Serialized Name: VMwareCbtProtectionContainerMappingDetails.targetLocation
+        /// </param>
+        /// <param name="roleSizeToNicCountMap">
+        /// The role size to NIC count map.
+        /// Serialized Name: VMwareCbtProtectionContainerMappingDetails.roleSizeToNicCountMap
+        /// </param>
         internal VMwareCbtProtectionContainerMappingDetails(string instanceType, string keyVaultId, Uri keyVaultUri, string storageAccountId, string storageAccountSasSecretName, string serviceBusConnectionStringSecretName, string targetLocation, IReadOnlyDictionary<string, int> roleSizeToNicCountMap) : base(instanceType)
         {
             KeyVaultId = keyVaultId;
@@ -42,19 +69,40 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             InstanceType = instanceType ?? "VMwareCbt";
         }
 
-        /// <summary> The target key vault ARM Id. </summary>
+        /// <summary>
+        /// The target key vault ARM Id.
+        /// Serialized Name: VMwareCbtProtectionContainerMappingDetails.keyVaultId
+        /// </summary>
         public string KeyVaultId { get; }
-        /// <summary> The target key vault URI. </summary>
+        /// <summary>
+        /// The target key vault URI.
+        /// Serialized Name: VMwareCbtProtectionContainerMappingDetails.keyVaultUri
+        /// </summary>
         public Uri KeyVaultUri { get; }
-        /// <summary> The storage account ARM Id. </summary>
+        /// <summary>
+        /// The storage account ARM Id.
+        /// Serialized Name: VMwareCbtProtectionContainerMappingDetails.storageAccountId
+        /// </summary>
         public string StorageAccountId { get; }
-        /// <summary> The secret name of the storage account. </summary>
+        /// <summary>
+        /// The secret name of the storage account.
+        /// Serialized Name: VMwareCbtProtectionContainerMappingDetails.storageAccountSasSecretName
+        /// </summary>
         public string StorageAccountSasSecretName { get; }
-        /// <summary> The secret name of the service bus connection string. </summary>
+        /// <summary>
+        /// The secret name of the service bus connection string.
+        /// Serialized Name: VMwareCbtProtectionContainerMappingDetails.serviceBusConnectionStringSecretName
+        /// </summary>
         public string ServiceBusConnectionStringSecretName { get; }
-        /// <summary> The target location. </summary>
+        /// <summary>
+        /// The target location.
+        /// Serialized Name: VMwareCbtProtectionContainerMappingDetails.targetLocation
+        /// </summary>
         public string TargetLocation { get; }
-        /// <summary> The role size to NIC count map. </summary>
+        /// <summary>
+        /// The role size to NIC count map.
+        /// Serialized Name: VMwareCbtProtectionContainerMappingDetails.roleSizeToNicCountMap
+        /// </summary>
         public IReadOnlyDictionary<string, int> RoleSizeToNicCountMap { get; }
     }
 }

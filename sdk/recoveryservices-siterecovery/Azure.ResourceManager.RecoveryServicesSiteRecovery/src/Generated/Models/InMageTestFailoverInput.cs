@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary> Provider specific input for InMage test failover. </summary>
+    /// <summary>
+    /// Provider specific input for InMage test failover.
+    /// Serialized Name: InMageTestFailoverInput
+    /// </summary>
     public partial class InMageTestFailoverInput : TestFailoverProviderSpecificInput
     {
         /// <summary> Initializes a new instance of InMageTestFailoverInput. </summary>
@@ -16,9 +19,15 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             InstanceType = "InMage";
         }
 
-        /// <summary> The recovery point type. Values from LatestTime, LatestTag or Custom. In the case of custom, the recovery point provided by RecoveryPointId will be used. In the other two cases, recovery point id will be ignored. </summary>
+        /// <summary>
+        /// The recovery point type. Values from LatestTime, LatestTag or Custom. In the case of custom, the recovery point provided by RecoveryPointId will be used. In the other two cases, recovery point id will be ignored.
+        /// Serialized Name: InMageTestFailoverInput.recoveryPointType
+        /// </summary>
         public RecoveryPointType? RecoveryPointType { get; set; }
-        /// <summary> The recovery point id to be passed to test failover to a particular recovery point. In case of latest recovery point, null should be passed. </summary>
+        /// <summary>
+        /// The recovery point id to be passed to test failover to a particular recovery point. In case of latest recovery point, null should be passed.
+        /// Serialized Name: InMageTestFailoverInput.recoveryPointId
+        /// </summary>
         public string RecoveryPointId { get; set; }
     }
 }

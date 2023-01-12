@@ -10,12 +10,21 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary> Recovery plan script action details. </summary>
+    /// <summary>
+    /// Recovery plan script action details.
+    /// Serialized Name: RecoveryPlanScriptActionDetails
+    /// </summary>
     public partial class RecoveryPlanScriptActionDetails : RecoveryPlanActionDetails
     {
         /// <summary> Initializes a new instance of RecoveryPlanScriptActionDetails. </summary>
-        /// <param name="path"> The script path. </param>
-        /// <param name="fabricLocation"> The fabric location. </param>
+        /// <param name="path">
+        /// The script path.
+        /// Serialized Name: RecoveryPlanScriptActionDetails.path
+        /// </param>
+        /// <param name="fabricLocation">
+        /// The fabric location.
+        /// Serialized Name: RecoveryPlanScriptActionDetails.fabricLocation
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="path"/> is null. </exception>
         public RecoveryPlanScriptActionDetails(string path, RecoveryPlanActionLocation fabricLocation)
         {
@@ -27,10 +36,22 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> Initializes a new instance of RecoveryPlanScriptActionDetails. </summary>
-        /// <param name="instanceType"> Gets the type of action details (see RecoveryPlanActionDetailsTypes enum for possible values). </param>
-        /// <param name="path"> The script path. </param>
-        /// <param name="timeout"> The script timeout. </param>
-        /// <param name="fabricLocation"> The fabric location. </param>
+        /// <param name="instanceType">
+        /// Gets the type of action details (see RecoveryPlanActionDetailsTypes enum for possible values).
+        /// Serialized Name: RecoveryPlanActionDetails.instanceType
+        /// </param>
+        /// <param name="path">
+        /// The script path.
+        /// Serialized Name: RecoveryPlanScriptActionDetails.path
+        /// </param>
+        /// <param name="timeout">
+        /// The script timeout.
+        /// Serialized Name: RecoveryPlanScriptActionDetails.timeout
+        /// </param>
+        /// <param name="fabricLocation">
+        /// The fabric location.
+        /// Serialized Name: RecoveryPlanScriptActionDetails.fabricLocation
+        /// </param>
         internal RecoveryPlanScriptActionDetails(string instanceType, string path, string timeout, RecoveryPlanActionLocation fabricLocation) : base(instanceType)
         {
             Path = path;
@@ -39,11 +60,20 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             InstanceType = instanceType ?? "ScriptActionDetails";
         }
 
-        /// <summary> The script path. </summary>
+        /// <summary>
+        /// The script path.
+        /// Serialized Name: RecoveryPlanScriptActionDetails.path
+        /// </summary>
         public string Path { get; set; }
-        /// <summary> The script timeout. </summary>
+        /// <summary>
+        /// The script timeout.
+        /// Serialized Name: RecoveryPlanScriptActionDetails.timeout
+        /// </summary>
         public string Timeout { get; set; }
-        /// <summary> The fabric location. </summary>
+        /// <summary>
+        /// The fabric location.
+        /// Serialized Name: RecoveryPlanScriptActionDetails.fabricLocation
+        /// </summary>
         public RecoveryPlanActionLocation FabricLocation { get; set; }
     }
 }

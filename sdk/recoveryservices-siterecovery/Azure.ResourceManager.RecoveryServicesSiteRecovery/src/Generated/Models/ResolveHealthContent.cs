@@ -9,7 +9,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary> Resolve health input. </summary>
+    /// <summary>
+    /// Resolve health input.
+    /// Serialized Name: ResolveHealthInput
+    /// </summary>
     public partial class ResolveHealthContent
     {
         /// <summary> Initializes a new instance of ResolveHealthContent. </summary>
@@ -17,9 +20,15 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         {
         }
 
-        /// <summary> Disable resolve health input properties. </summary>
+        /// <summary>
+        /// Disable resolve health input properties.
+        /// Serialized Name: ResolveHealthInput.properties
+        /// </summary>
         internal ResolveHealthInputProperties Properties { get; set; }
-        /// <summary> Health errors. </summary>
+        /// <summary>
+        /// Health errors.
+        /// Serialized Name: ResolveHealthInputProperties.healthErrors
+        /// </summary>
         public IList<ResolveHealthError> ResolveHealthErrors
         {
             get

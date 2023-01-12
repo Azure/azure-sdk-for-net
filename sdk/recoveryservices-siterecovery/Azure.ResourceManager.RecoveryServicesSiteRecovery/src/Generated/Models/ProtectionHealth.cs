@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary> The health. </summary>
+    /// <summary>
+    /// The health.
+    /// Serialized Name: ProtectionHealth
+    /// </summary>
     public readonly partial struct ProtectionHealth : IEquatable<ProtectionHealth>
     {
         private readonly string _value;
@@ -27,13 +30,25 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         private const string WarningValue = "Warning";
         private const string CriticalValue = "Critical";
 
-        /// <summary> None. </summary>
+        /// <summary>
+        /// None
+        /// Serialized Name: ProtectionHealth.None
+        /// </summary>
         public static ProtectionHealth None { get; } = new ProtectionHealth(NoneValue);
-        /// <summary> Normal. </summary>
+        /// <summary>
+        /// Normal
+        /// Serialized Name: ProtectionHealth.Normal
+        /// </summary>
         public static ProtectionHealth Normal { get; } = new ProtectionHealth(NormalValue);
-        /// <summary> Warning. </summary>
+        /// <summary>
+        /// Warning
+        /// Serialized Name: ProtectionHealth.Warning
+        /// </summary>
         public static ProtectionHealth Warning { get; } = new ProtectionHealth(WarningValue);
-        /// <summary> Critical. </summary>
+        /// <summary>
+        /// Critical
+        /// Serialized Name: ProtectionHealth.Critical
+        /// </summary>
         public static ProtectionHealth Critical { get; } = new ProtectionHealth(CriticalValue);
         /// <summary> Determines if two <see cref="ProtectionHealth"/> values are the same. </summary>
         public static bool operator ==(ProtectionHealth left, ProtectionHealth right) => left.Equals(right);

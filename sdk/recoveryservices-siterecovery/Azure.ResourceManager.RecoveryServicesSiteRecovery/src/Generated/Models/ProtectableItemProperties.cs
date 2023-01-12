@@ -10,7 +10,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary> Replication protected item custom data details. </summary>
+    /// <summary>
+    /// Replication protected item custom data details.
+    /// Serialized Name: ProtectableItemProperties
+    /// </summary>
     public partial class ProtectableItemProperties
     {
         /// <summary> Initializes a new instance of ProtectableItemProperties. </summary>
@@ -21,14 +24,33 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> Initializes a new instance of ProtectableItemProperties. </summary>
-        /// <param name="friendlyName"> The name. </param>
-        /// <param name="protectionStatus"> The protection status. </param>
-        /// <param name="replicationProtectedItemId"> The ARM resource of protected items. </param>
-        /// <param name="recoveryServicesProviderId"> The recovery provider ARM Id. </param>
-        /// <param name="protectionReadinessErrors"> The Current protection readiness errors. </param>
-        /// <param name="supportedReplicationProviders"> The list of replication providers supported for the protectable item. </param>
+        /// <param name="friendlyName">
+        /// The name.
+        /// Serialized Name: ProtectableItemProperties.friendlyName
+        /// </param>
+        /// <param name="protectionStatus">
+        /// The protection status.
+        /// Serialized Name: ProtectableItemProperties.protectionStatus
+        /// </param>
+        /// <param name="replicationProtectedItemId">
+        /// The ARM resource of protected items.
+        /// Serialized Name: ProtectableItemProperties.replicationProtectedItemId
+        /// </param>
+        /// <param name="recoveryServicesProviderId">
+        /// The recovery provider ARM Id.
+        /// Serialized Name: ProtectableItemProperties.recoveryServicesProviderId
+        /// </param>
+        /// <param name="protectionReadinessErrors">
+        /// The Current protection readiness errors.
+        /// Serialized Name: ProtectableItemProperties.protectionReadinessErrors
+        /// </param>
+        /// <param name="supportedReplicationProviders">
+        /// The list of replication providers supported for the protectable item.
+        /// Serialized Name: ProtectableItemProperties.supportedReplicationProviders
+        /// </param>
         /// <param name="customDetails">
         /// The Replication provider custom settings.
+        /// Serialized Name: ProtectableItemProperties.customDetails
         /// Please note <see cref="ConfigurationSettings"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="HyperVVirtualMachineDetails"/>, <see cref="ReplicationGroupDetails"/>, <see cref="VMwareVirtualMachineDetails"/> and <see cref="VmmVirtualMachineDetails"/>.
         /// </param>
@@ -43,20 +65,39 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             CustomDetails = customDetails;
         }
 
-        /// <summary> The name. </summary>
+        /// <summary>
+        /// The name.
+        /// Serialized Name: ProtectableItemProperties.friendlyName
+        /// </summary>
         public string FriendlyName { get; }
-        /// <summary> The protection status. </summary>
+        /// <summary>
+        /// The protection status.
+        /// Serialized Name: ProtectableItemProperties.protectionStatus
+        /// </summary>
         public string ProtectionStatus { get; }
-        /// <summary> The ARM resource of protected items. </summary>
+        /// <summary>
+        /// The ARM resource of protected items.
+        /// Serialized Name: ProtectableItemProperties.replicationProtectedItemId
+        /// </summary>
         public string ReplicationProtectedItemId { get; }
-        /// <summary> The recovery provider ARM Id. </summary>
+        /// <summary>
+        /// The recovery provider ARM Id.
+        /// Serialized Name: ProtectableItemProperties.recoveryServicesProviderId
+        /// </summary>
         public string RecoveryServicesProviderId { get; }
-        /// <summary> The Current protection readiness errors. </summary>
+        /// <summary>
+        /// The Current protection readiness errors.
+        /// Serialized Name: ProtectableItemProperties.protectionReadinessErrors
+        /// </summary>
         public IReadOnlyList<string> ProtectionReadinessErrors { get; }
-        /// <summary> The list of replication providers supported for the protectable item. </summary>
+        /// <summary>
+        /// The list of replication providers supported for the protectable item.
+        /// Serialized Name: ProtectableItemProperties.supportedReplicationProviders
+        /// </summary>
         public IReadOnlyList<string> SupportedReplicationProviders { get; }
         /// <summary>
         /// The Replication provider custom settings.
+        /// Serialized Name: ProtectableItemProperties.customDetails
         /// Please note <see cref="ConfigurationSettings"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="HyperVVirtualMachineDetails"/>, <see cref="ReplicationGroupDetails"/>, <see cref="VMwareVirtualMachineDetails"/> and <see cref="VmmVirtualMachineDetails"/>.
         /// </summary>

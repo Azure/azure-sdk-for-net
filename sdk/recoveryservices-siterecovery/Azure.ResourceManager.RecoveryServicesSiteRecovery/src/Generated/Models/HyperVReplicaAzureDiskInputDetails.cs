@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary> Disk input details. </summary>
+    /// <summary>
+    /// Disk input details.
+    /// Serialized Name: HyperVReplicaAzureDiskInputDetails
+    /// </summary>
     public partial class HyperVReplicaAzureDiskInputDetails
     {
         /// <summary> Initializes a new instance of HyperVReplicaAzureDiskInputDetails. </summary>
@@ -15,13 +18,25 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         {
         }
 
-        /// <summary> The DiskId. </summary>
+        /// <summary>
+        /// The DiskId.
+        /// Serialized Name: HyperVReplicaAzureDiskInputDetails.diskId
+        /// </summary>
         public string DiskId { get; set; }
-        /// <summary> The LogStorageAccountId. </summary>
+        /// <summary>
+        /// The LogStorageAccountId.
+        /// Serialized Name: HyperVReplicaAzureDiskInputDetails.logStorageAccountId
+        /// </summary>
         public string LogStorageAccountId { get; set; }
-        /// <summary> The DiskType. </summary>
+        /// <summary>
+        /// The DiskType.
+        /// Serialized Name: HyperVReplicaAzureDiskInputDetails.diskType
+        /// </summary>
         public DiskAccountType? DiskType { get; set; }
-        /// <summary> The DiskEncryptionSet ARM ID. </summary>
+        /// <summary>
+        /// The DiskEncryptionSet ARM ID.
+        /// Serialized Name: HyperVReplicaAzureDiskInputDetails.diskEncryptionSetId
+        /// </summary>
         public string DiskEncryptionSetId { get; set; }
     }
 }

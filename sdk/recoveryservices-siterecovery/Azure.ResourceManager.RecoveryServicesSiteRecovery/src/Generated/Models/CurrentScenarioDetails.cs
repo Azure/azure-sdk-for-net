@@ -9,7 +9,10 @@ using System;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary> Current scenario details of the protected entity. </summary>
+    /// <summary>
+    /// Current scenario details of the protected entity.
+    /// Serialized Name: CurrentScenarioDetails
+    /// </summary>
     public partial class CurrentScenarioDetails
     {
         /// <summary> Initializes a new instance of CurrentScenarioDetails. </summary>
@@ -18,9 +21,18 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> Initializes a new instance of CurrentScenarioDetails. </summary>
-        /// <param name="scenarioName"> Scenario name. </param>
-        /// <param name="jobId"> ARM Id of the job being executed. </param>
-        /// <param name="startOn"> Start time of the workflow. </param>
+        /// <param name="scenarioName">
+        /// Scenario name.
+        /// Serialized Name: CurrentScenarioDetails.scenarioName
+        /// </param>
+        /// <param name="jobId">
+        /// ARM Id of the job being executed.
+        /// Serialized Name: CurrentScenarioDetails.jobId
+        /// </param>
+        /// <param name="startOn">
+        /// Start time of the workflow.
+        /// Serialized Name: CurrentScenarioDetails.startTime
+        /// </param>
         internal CurrentScenarioDetails(string scenarioName, string jobId, DateTimeOffset? startOn)
         {
             ScenarioName = scenarioName;
@@ -28,11 +40,20 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             StartOn = startOn;
         }
 
-        /// <summary> Scenario name. </summary>
+        /// <summary>
+        /// Scenario name.
+        /// Serialized Name: CurrentScenarioDetails.scenarioName
+        /// </summary>
         public string ScenarioName { get; }
-        /// <summary> ARM Id of the job being executed. </summary>
+        /// <summary>
+        /// ARM Id of the job being executed.
+        /// Serialized Name: CurrentScenarioDetails.jobId
+        /// </summary>
         public string JobId { get; }
-        /// <summary> Start time of the workflow. </summary>
+        /// <summary>
+        /// Start time of the workflow.
+        /// Serialized Name: CurrentScenarioDetails.startTime
+        /// </summary>
         public DateTimeOffset? StartOn { get; }
     }
 }

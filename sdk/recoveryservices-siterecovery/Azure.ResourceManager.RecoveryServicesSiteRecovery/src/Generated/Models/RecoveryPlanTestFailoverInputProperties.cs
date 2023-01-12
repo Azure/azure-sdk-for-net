@@ -11,12 +11,21 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary> Recovery plan test failover input properties. </summary>
+    /// <summary>
+    /// Recovery plan test failover input properties.
+    /// Serialized Name: RecoveryPlanTestFailoverInputProperties
+    /// </summary>
     public partial class RecoveryPlanTestFailoverInputProperties
     {
         /// <summary> Initializes a new instance of RecoveryPlanTestFailoverInputProperties. </summary>
-        /// <param name="failoverDirection"> The failover direction. </param>
-        /// <param name="networkType"> The network type to be used for test failover. </param>
+        /// <param name="failoverDirection">
+        /// The failover direction.
+        /// Serialized Name: RecoveryPlanTestFailoverInputProperties.failoverDirection
+        /// </param>
+        /// <param name="networkType">
+        /// The network type to be used for test failover.
+        /// Serialized Name: RecoveryPlanTestFailoverInputProperties.networkType
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="networkType"/> is null. </exception>
         public RecoveryPlanTestFailoverInputProperties(PossibleOperationsDirection failoverDirection, string networkType)
         {
@@ -27,14 +36,24 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             ProviderSpecificDetails = new ChangeTrackingList<RecoveryPlanProviderSpecificFailoverInput>();
         }
 
-        /// <summary> The failover direction. </summary>
+        /// <summary>
+        /// The failover direction.
+        /// Serialized Name: RecoveryPlanTestFailoverInputProperties.failoverDirection
+        /// </summary>
         public PossibleOperationsDirection FailoverDirection { get; }
-        /// <summary> The network type to be used for test failover. </summary>
+        /// <summary>
+        /// The network type to be used for test failover.
+        /// Serialized Name: RecoveryPlanTestFailoverInputProperties.networkType
+        /// </summary>
         public string NetworkType { get; }
-        /// <summary> The Id of the network to be used for test failover. </summary>
+        /// <summary>
+        /// The Id of the network to be used for test failover.
+        /// Serialized Name: RecoveryPlanTestFailoverInputProperties.networkId
+        /// </summary>
         public string NetworkId { get; set; }
         /// <summary>
         /// The provider specific properties.
+        /// Serialized Name: RecoveryPlanTestFailoverInputProperties.providerSpecificDetails
         /// Please note <see cref="RecoveryPlanProviderSpecificFailoverInput"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="RecoveryPlanA2AFailoverInput"/>, <see cref="RecoveryPlanHyperVReplicaAzureFailoverInput"/>, <see cref="RecoveryPlanHyperVReplicaAzureFailbackInput"/>, <see cref="RecoveryPlanInMageFailoverInput"/>, <see cref="RecoveryPlanInMageAzureV2FailoverInput"/>, <see cref="RecoveryPlanInMageRcmFailoverInput"/> and <see cref="RecoveryPlanInMageRcmFailbackFailoverInput"/>.
         /// </summary>

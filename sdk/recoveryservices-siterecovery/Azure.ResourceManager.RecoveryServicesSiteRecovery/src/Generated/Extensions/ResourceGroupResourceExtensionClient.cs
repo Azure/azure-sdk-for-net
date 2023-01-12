@@ -91,12 +91,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
             return apiVersion;
         }
 
-        /// <summary> Gets a collection of AlertResources in the ResourceGroupResource. </summary>
+        /// <summary> Gets a collection of ReplicationAlertConfigurationResources in the ResourceGroupResource. </summary>
         /// <param name="resourceName"> The name of the recovery services vault. </param>
-        /// <returns> An object representing collection of AlertResources and their operations over a AlertResource. </returns>
-        public virtual AlertCollection GetAlerts(string resourceName)
+        /// <returns> An object representing collection of ReplicationAlertConfigurationResources and their operations over a ReplicationAlertConfigurationResource. </returns>
+        public virtual ReplicationAlertConfigurationCollection GetReplicationAlertConfigurations(string resourceName)
         {
-            return new AlertCollection(Client, Id, resourceName);
+            return new ReplicationAlertConfigurationCollection(Client, Id, resourceName);
         }
 
         /// <summary> Gets a collection of ReplicationEligibilityResultResources in the ResourceGroupResource. </summary>
@@ -107,28 +107,28 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
             return new ReplicationEligibilityResultCollection(Client, Id, virtualMachineName);
         }
 
-        /// <summary> Gets a collection of EventResources in the ResourceGroupResource. </summary>
+        /// <summary> Gets a collection of SiteRecoveryEventResources in the ResourceGroupResource. </summary>
         /// <param name="resourceName"> The name of the recovery services vault. </param>
-        /// <returns> An object representing collection of EventResources and their operations over a EventResource. </returns>
-        public virtual EventCollection GetEvents(string resourceName)
+        /// <returns> An object representing collection of SiteRecoveryEventResources and their operations over a SiteRecoveryEventResource. </returns>
+        public virtual SiteRecoveryEventCollection GetSiteRecoveryEvents(string resourceName)
         {
-            return new EventCollection(Client, Id, resourceName);
+            return new SiteRecoveryEventCollection(Client, Id, resourceName);
         }
 
-        /// <summary> Gets a collection of FabricResources in the ResourceGroupResource. </summary>
+        /// <summary> Gets a collection of SiteRecoveryFabricResources in the ResourceGroupResource. </summary>
         /// <param name="resourceName"> The name of the recovery services vault. </param>
-        /// <returns> An object representing collection of FabricResources and their operations over a FabricResource. </returns>
-        public virtual FabricCollection GetFabrics(string resourceName)
+        /// <returns> An object representing collection of SiteRecoveryFabricResources and their operations over a SiteRecoveryFabricResource. </returns>
+        public virtual SiteRecoveryFabricCollection GetSiteRecoveryFabrics(string resourceName)
         {
-            return new FabricCollection(Client, Id, resourceName);
+            return new SiteRecoveryFabricCollection(Client, Id, resourceName);
         }
 
-        /// <summary> Gets a collection of JobResources in the ResourceGroupResource. </summary>
+        /// <summary> Gets a collection of SiteRecoveryJobResources in the ResourceGroupResource. </summary>
         /// <param name="resourceName"> The name of the recovery services vault. </param>
-        /// <returns> An object representing collection of JobResources and their operations over a JobResource. </returns>
-        public virtual JobCollection GetJobs(string resourceName)
+        /// <returns> An object representing collection of SiteRecoveryJobResources and their operations over a SiteRecoveryJobResource. </returns>
+        public virtual SiteRecoveryJobCollection GetSiteRecoveryJobs(string resourceName)
         {
-            return new JobCollection(Client, Id, resourceName);
+            return new SiteRecoveryJobCollection(Client, Id, resourceName);
         }
 
         /// <summary> Gets a collection of PolicyResources in the ResourceGroupResource. </summary>

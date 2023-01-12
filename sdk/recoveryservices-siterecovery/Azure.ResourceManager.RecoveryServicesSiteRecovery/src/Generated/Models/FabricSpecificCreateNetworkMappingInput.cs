@@ -9,6 +9,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
     /// <summary>
     /// Input details specific to fabrics during Network Mapping.
+    /// Serialized Name: FabricSpecificCreateNetworkMappingInput
     /// Please note <see cref="FabricSpecificCreateNetworkMappingInput"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="AzureToAzureCreateNetworkMappingInput"/>, <see cref="VmmToAzureCreateNetworkMappingInput"/> and <see cref="VmmToVmmCreateNetworkMappingInput"/>.
     /// </summary>
@@ -19,7 +20,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         {
         }
 
-        /// <summary> The instance type. </summary>
+        /// <summary>
+        /// The instance type.
+        /// Serialized Name: FabricSpecificCreateNetworkMappingInput.instanceType
+        /// </summary>
         internal string InstanceType { get; set; }
     }
 }

@@ -10,12 +10,21 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary> New Protection profile input. </summary>
+    /// <summary>
+    /// New Protection profile input.
+    /// Serialized Name: NewProtectionProfile
+    /// </summary>
     public partial class NewProtectionProfile : ProtectionProfileCustomDetails
     {
         /// <summary> Initializes a new instance of NewProtectionProfile. </summary>
-        /// <param name="policyName"> The protection profile input. </param>
-        /// <param name="multiVmSyncStatus"> A value indicating whether multi-VM sync has to be enabled. Value should be &apos;Enabled&apos; or &apos;Disabled&apos;. </param>
+        /// <param name="policyName">
+        /// The protection profile input.
+        /// Serialized Name: NewProtectionProfile.policyName
+        /// </param>
+        /// <param name="multiVmSyncStatus">
+        /// A value indicating whether multi-VM sync has to be enabled. Value should be &apos;Enabled&apos; or &apos;Disabled&apos;.
+        /// Serialized Name: NewProtectionProfile.multiVmSyncStatus
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="policyName"/> is null. </exception>
         public NewProtectionProfile(string policyName, SetMultiVmSyncStatus multiVmSyncStatus)
         {
@@ -27,12 +36,30 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> Initializes a new instance of NewProtectionProfile. </summary>
-        /// <param name="resourceType"> The class type. </param>
-        /// <param name="policyName"> The protection profile input. </param>
-        /// <param name="recoveryPointHistory"> The duration in minutes until which the recovery points need to be stored. </param>
-        /// <param name="crashConsistentFrequencyInMinutes"> The crash consistent snapshot frequency (in minutes). </param>
-        /// <param name="appConsistentFrequencyInMinutes"> The app consistent snapshot frequency (in minutes). </param>
-        /// <param name="multiVmSyncStatus"> A value indicating whether multi-VM sync has to be enabled. Value should be &apos;Enabled&apos; or &apos;Disabled&apos;. </param>
+        /// <param name="resourceType">
+        /// The class type.
+        /// Serialized Name: ProtectionProfileCustomDetails.resourceType
+        /// </param>
+        /// <param name="policyName">
+        /// The protection profile input.
+        /// Serialized Name: NewProtectionProfile.policyName
+        /// </param>
+        /// <param name="recoveryPointHistory">
+        /// The duration in minutes until which the recovery points need to be stored.
+        /// Serialized Name: NewProtectionProfile.recoveryPointHistory
+        /// </param>
+        /// <param name="crashConsistentFrequencyInMinutes">
+        /// The crash consistent snapshot frequency (in minutes).
+        /// Serialized Name: NewProtectionProfile.crashConsistentFrequencyInMinutes
+        /// </param>
+        /// <param name="appConsistentFrequencyInMinutes">
+        /// The app consistent snapshot frequency (in minutes).
+        /// Serialized Name: NewProtectionProfile.appConsistentFrequencyInMinutes
+        /// </param>
+        /// <param name="multiVmSyncStatus">
+        /// A value indicating whether multi-VM sync has to be enabled. Value should be &apos;Enabled&apos; or &apos;Disabled&apos;.
+        /// Serialized Name: NewProtectionProfile.multiVmSyncStatus
+        /// </param>
         internal NewProtectionProfile(string resourceType, string policyName, int? recoveryPointHistory, int? crashConsistentFrequencyInMinutes, int? appConsistentFrequencyInMinutes, SetMultiVmSyncStatus multiVmSyncStatus) : base(resourceType)
         {
             PolicyName = policyName;
@@ -43,15 +70,30 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             ResourceType = resourceType ?? "New";
         }
 
-        /// <summary> The protection profile input. </summary>
+        /// <summary>
+        /// The protection profile input.
+        /// Serialized Name: NewProtectionProfile.policyName
+        /// </summary>
         public string PolicyName { get; set; }
-        /// <summary> The duration in minutes until which the recovery points need to be stored. </summary>
+        /// <summary>
+        /// The duration in minutes until which the recovery points need to be stored.
+        /// Serialized Name: NewProtectionProfile.recoveryPointHistory
+        /// </summary>
         public int? RecoveryPointHistory { get; set; }
-        /// <summary> The crash consistent snapshot frequency (in minutes). </summary>
+        /// <summary>
+        /// The crash consistent snapshot frequency (in minutes).
+        /// Serialized Name: NewProtectionProfile.crashConsistentFrequencyInMinutes
+        /// </summary>
         public int? CrashConsistentFrequencyInMinutes { get; set; }
-        /// <summary> The app consistent snapshot frequency (in minutes). </summary>
+        /// <summary>
+        /// The app consistent snapshot frequency (in minutes).
+        /// Serialized Name: NewProtectionProfile.appConsistentFrequencyInMinutes
+        /// </summary>
         public int? AppConsistentFrequencyInMinutes { get; set; }
-        /// <summary> A value indicating whether multi-VM sync has to be enabled. Value should be &apos;Enabled&apos; or &apos;Disabled&apos;. </summary>
+        /// <summary>
+        /// A value indicating whether multi-VM sync has to be enabled. Value should be &apos;Enabled&apos; or &apos;Disabled&apos;.
+        /// Serialized Name: NewProtectionProfile.multiVmSyncStatus
+        /// </summary>
         public SetMultiVmSyncStatus MultiVmSyncStatus { get; set; }
     }
 }

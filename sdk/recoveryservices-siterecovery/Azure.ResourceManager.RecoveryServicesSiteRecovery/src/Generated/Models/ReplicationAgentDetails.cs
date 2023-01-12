@@ -11,7 +11,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary> Replication agent details. </summary>
+    /// <summary>
+    /// Replication agent details.
+    /// Serialized Name: ReplicationAgentDetails
+    /// </summary>
     public partial class ReplicationAgentDetails
     {
         /// <summary> Initializes a new instance of ReplicationAgentDetails. </summary>
@@ -21,15 +24,42 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> Initializes a new instance of ReplicationAgentDetails. </summary>
-        /// <param name="id"> The replication agent Id. </param>
-        /// <param name="name"> The replication agent name. </param>
-        /// <param name="biosId"> The replication agent Bios Id. </param>
-        /// <param name="fabricObjectId"> The fabric object Id. </param>
-        /// <param name="fqdn"> The replication agent Fqdn. </param>
-        /// <param name="version"> The version. </param>
-        /// <param name="lastHeartbeatUtc"> The last heartbeat received from the replication agent. </param>
-        /// <param name="health"> The health of the replication agent. </param>
-        /// <param name="healthErrors"> The health errors. </param>
+        /// <param name="id">
+        /// The replication agent Id.
+        /// Serialized Name: ReplicationAgentDetails.id
+        /// </param>
+        /// <param name="name">
+        /// The replication agent name.
+        /// Serialized Name: ReplicationAgentDetails.name
+        /// </param>
+        /// <param name="biosId">
+        /// The replication agent Bios Id.
+        /// Serialized Name: ReplicationAgentDetails.biosId
+        /// </param>
+        /// <param name="fabricObjectId">
+        /// The fabric object Id.
+        /// Serialized Name: ReplicationAgentDetails.fabricObjectId
+        /// </param>
+        /// <param name="fqdn">
+        /// The replication agent Fqdn.
+        /// Serialized Name: ReplicationAgentDetails.fqdn
+        /// </param>
+        /// <param name="version">
+        /// The version.
+        /// Serialized Name: ReplicationAgentDetails.version
+        /// </param>
+        /// <param name="lastHeartbeatUtc">
+        /// The last heartbeat received from the replication agent.
+        /// Serialized Name: ReplicationAgentDetails.lastHeartbeatUtc
+        /// </param>
+        /// <param name="health">
+        /// The health of the replication agent.
+        /// Serialized Name: ReplicationAgentDetails.health
+        /// </param>
+        /// <param name="healthErrors">
+        /// The health errors.
+        /// Serialized Name: ReplicationAgentDetails.healthErrors
+        /// </param>
         internal ReplicationAgentDetails(string id, string name, string biosId, string fabricObjectId, string fqdn, string version, DateTimeOffset? lastHeartbeatUtc, ProtectionHealth? health, IReadOnlyList<HealthError> healthErrors)
         {
             Id = id;
@@ -43,23 +73,50 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             HealthErrors = healthErrors;
         }
 
-        /// <summary> The replication agent Id. </summary>
+        /// <summary>
+        /// The replication agent Id.
+        /// Serialized Name: ReplicationAgentDetails.id
+        /// </summary>
         public string Id { get; }
-        /// <summary> The replication agent name. </summary>
+        /// <summary>
+        /// The replication agent name.
+        /// Serialized Name: ReplicationAgentDetails.name
+        /// </summary>
         public string Name { get; }
-        /// <summary> The replication agent Bios Id. </summary>
+        /// <summary>
+        /// The replication agent Bios Id.
+        /// Serialized Name: ReplicationAgentDetails.biosId
+        /// </summary>
         public string BiosId { get; }
-        /// <summary> The fabric object Id. </summary>
+        /// <summary>
+        /// The fabric object Id.
+        /// Serialized Name: ReplicationAgentDetails.fabricObjectId
+        /// </summary>
         public string FabricObjectId { get; }
-        /// <summary> The replication agent Fqdn. </summary>
+        /// <summary>
+        /// The replication agent Fqdn.
+        /// Serialized Name: ReplicationAgentDetails.fqdn
+        /// </summary>
         public string Fqdn { get; }
-        /// <summary> The version. </summary>
+        /// <summary>
+        /// The version.
+        /// Serialized Name: ReplicationAgentDetails.version
+        /// </summary>
         public string Version { get; }
-        /// <summary> The last heartbeat received from the replication agent. </summary>
+        /// <summary>
+        /// The last heartbeat received from the replication agent.
+        /// Serialized Name: ReplicationAgentDetails.lastHeartbeatUtc
+        /// </summary>
         public DateTimeOffset? LastHeartbeatUtc { get; }
-        /// <summary> The health of the replication agent. </summary>
+        /// <summary>
+        /// The health of the replication agent.
+        /// Serialized Name: ReplicationAgentDetails.health
+        /// </summary>
         public ProtectionHealth? Health { get; }
-        /// <summary> The health errors. </summary>
+        /// <summary>
+        /// The health errors.
+        /// Serialized Name: ReplicationAgentDetails.healthErrors
+        /// </summary>
         public IReadOnlyList<HealthError> HealthErrors { get; }
     }
 }

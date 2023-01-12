@@ -10,11 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary> Input for test migrate cleanup. </summary>
+    /// <summary>
+    /// Input for test migrate cleanup.
+    /// Serialized Name: TestMigrateCleanupInput
+    /// </summary>
     public partial class TestMigrateCleanupContent
     {
         /// <summary> Initializes a new instance of TestMigrateCleanupContent. </summary>
-        /// <param name="properties"> Test migrate cleanup input properties. </param>
+        /// <param name="properties">
+        /// Test migrate cleanup input properties.
+        /// Serialized Name: TestMigrateCleanupInput.properties
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
         public TestMigrateCleanupContent(TestMigrateCleanupInputProperties properties)
         {
@@ -23,9 +29,15 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             Properties = properties;
         }
 
-        /// <summary> Test migrate cleanup input properties. </summary>
+        /// <summary>
+        /// Test migrate cleanup input properties.
+        /// Serialized Name: TestMigrateCleanupInput.properties
+        /// </summary>
         internal TestMigrateCleanupInputProperties Properties { get; }
-        /// <summary> Test migrate cleanup comments. </summary>
+        /// <summary>
+        /// Test migrate cleanup comments.
+        /// Serialized Name: TestMigrateCleanupInputProperties.comments
+        /// </summary>
         public string TestMigrateCleanupInputComments
         {
             get => Properties?.Comments;

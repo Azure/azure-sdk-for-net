@@ -11,7 +11,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary> Health Error. </summary>
+    /// <summary>
+    /// Health Error.
+    /// Serialized Name: HealthError
+    /// </summary>
     public partial class HealthError
     {
         /// <summary> Initializes a new instance of HealthError. </summary>
@@ -21,21 +24,66 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> Initializes a new instance of HealthError. </summary>
-        /// <param name="innerHealthErrors"> The inner health errors. HealthError having a list of HealthError as child errors is problematic. InnerHealthError is used because this will prevent an infinite loop of structures when Hydra tries to auto-generate the contract. We are exposing the related health errors as inner health errors and all API consumers can utilize this in the same fashion as Exception -&amp;gt; InnerException. </param>
-        /// <param name="errorSource"> Source of error. </param>
-        /// <param name="errorType"> Type of error. </param>
-        /// <param name="errorLevel"> Level of error. </param>
-        /// <param name="errorCategory"> Category of error. </param>
-        /// <param name="errorCode"> Error code. </param>
-        /// <param name="summaryMessage"> Summary message of the entity. </param>
-        /// <param name="errorMessage"> Error message. </param>
-        /// <param name="possibleCauses"> Possible causes of error. </param>
-        /// <param name="recommendedAction"> Recommended action to resolve error. </param>
-        /// <param name="creationTimeUtc"> Error creation time (UTC). </param>
-        /// <param name="recoveryProviderErrorMessage"> DRA error message. </param>
-        /// <param name="entityId"> ID of the entity. </param>
-        /// <param name="errorId"> The health error unique id. </param>
-        /// <param name="customerResolvability"> Value indicating whether the health error is customer resolvable. </param>
+        /// <param name="innerHealthErrors">
+        /// The inner health errors. HealthError having a list of HealthError as child errors is problematic. InnerHealthError is used because this will prevent an infinite loop of structures when Hydra tries to auto-generate the contract. We are exposing the related health errors as inner health errors and all API consumers can utilize this in the same fashion as Exception -&amp;gt; InnerException.
+        /// Serialized Name: HealthError.innerHealthErrors
+        /// </param>
+        /// <param name="errorSource">
+        /// Source of error.
+        /// Serialized Name: HealthError.errorSource
+        /// </param>
+        /// <param name="errorType">
+        /// Type of error.
+        /// Serialized Name: HealthError.errorType
+        /// </param>
+        /// <param name="errorLevel">
+        /// Level of error.
+        /// Serialized Name: HealthError.errorLevel
+        /// </param>
+        /// <param name="errorCategory">
+        /// Category of error.
+        /// Serialized Name: HealthError.errorCategory
+        /// </param>
+        /// <param name="errorCode">
+        /// Error code.
+        /// Serialized Name: HealthError.errorCode
+        /// </param>
+        /// <param name="summaryMessage">
+        /// Summary message of the entity.
+        /// Serialized Name: HealthError.summaryMessage
+        /// </param>
+        /// <param name="errorMessage">
+        /// Error message.
+        /// Serialized Name: HealthError.errorMessage
+        /// </param>
+        /// <param name="possibleCauses">
+        /// Possible causes of error.
+        /// Serialized Name: HealthError.possibleCauses
+        /// </param>
+        /// <param name="recommendedAction">
+        /// Recommended action to resolve error.
+        /// Serialized Name: HealthError.recommendedAction
+        /// </param>
+        /// <param name="creationTimeUtc">
+        /// Error creation time (UTC).
+        /// Serialized Name: HealthError.creationTimeUtc
+        /// </param>
+        /// <param name="recoveryProviderErrorMessage">
+        /// DRA error message.
+        /// Serialized Name: HealthError.recoveryProviderErrorMessage
+        /// </param>
+        /// <param name="entityId">
+        /// ID of the entity.
+        /// Serialized Name: HealthError.entityId
+        /// </param>
+        /// <param name="errorId">
+        /// The health error unique id.
+        /// Serialized Name: HealthError.errorId
+        /// </param>
+        /// <param name="customerResolvability">
+        /// Value indicating whether the health error is customer resolvable.
+        /// Serialized Name: HealthError.customerResolvability
+        /// </param>
         internal HealthError(IReadOnlyList<InnerHealthError> innerHealthErrors, string errorSource, string errorType, string errorLevel, string errorCategory, string errorCode, string summaryMessage, string errorMessage, string possibleCauses, string recommendedAction, DateTimeOffset? creationTimeUtc, string recoveryProviderErrorMessage, string entityId, string errorId, HealthErrorCustomerResolvability? customerResolvability)
         {
             InnerHealthErrors = innerHealthErrors;
@@ -55,35 +103,80 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             CustomerResolvability = customerResolvability;
         }
 
-        /// <summary> The inner health errors. HealthError having a list of HealthError as child errors is problematic. InnerHealthError is used because this will prevent an infinite loop of structures when Hydra tries to auto-generate the contract. We are exposing the related health errors as inner health errors and all API consumers can utilize this in the same fashion as Exception -&amp;gt; InnerException. </summary>
+        /// <summary>
+        /// The inner health errors. HealthError having a list of HealthError as child errors is problematic. InnerHealthError is used because this will prevent an infinite loop of structures when Hydra tries to auto-generate the contract. We are exposing the related health errors as inner health errors and all API consumers can utilize this in the same fashion as Exception -&amp;gt; InnerException.
+        /// Serialized Name: HealthError.innerHealthErrors
+        /// </summary>
         public IReadOnlyList<InnerHealthError> InnerHealthErrors { get; }
-        /// <summary> Source of error. </summary>
+        /// <summary>
+        /// Source of error.
+        /// Serialized Name: HealthError.errorSource
+        /// </summary>
         public string ErrorSource { get; }
-        /// <summary> Type of error. </summary>
+        /// <summary>
+        /// Type of error.
+        /// Serialized Name: HealthError.errorType
+        /// </summary>
         public string ErrorType { get; }
-        /// <summary> Level of error. </summary>
+        /// <summary>
+        /// Level of error.
+        /// Serialized Name: HealthError.errorLevel
+        /// </summary>
         public string ErrorLevel { get; }
-        /// <summary> Category of error. </summary>
+        /// <summary>
+        /// Category of error.
+        /// Serialized Name: HealthError.errorCategory
+        /// </summary>
         public string ErrorCategory { get; }
-        /// <summary> Error code. </summary>
+        /// <summary>
+        /// Error code.
+        /// Serialized Name: HealthError.errorCode
+        /// </summary>
         public string ErrorCode { get; }
-        /// <summary> Summary message of the entity. </summary>
+        /// <summary>
+        /// Summary message of the entity.
+        /// Serialized Name: HealthError.summaryMessage
+        /// </summary>
         public string SummaryMessage { get; }
-        /// <summary> Error message. </summary>
+        /// <summary>
+        /// Error message.
+        /// Serialized Name: HealthError.errorMessage
+        /// </summary>
         public string ErrorMessage { get; }
-        /// <summary> Possible causes of error. </summary>
+        /// <summary>
+        /// Possible causes of error.
+        /// Serialized Name: HealthError.possibleCauses
+        /// </summary>
         public string PossibleCauses { get; }
-        /// <summary> Recommended action to resolve error. </summary>
+        /// <summary>
+        /// Recommended action to resolve error.
+        /// Serialized Name: HealthError.recommendedAction
+        /// </summary>
         public string RecommendedAction { get; }
-        /// <summary> Error creation time (UTC). </summary>
+        /// <summary>
+        /// Error creation time (UTC).
+        /// Serialized Name: HealthError.creationTimeUtc
+        /// </summary>
         public DateTimeOffset? CreationTimeUtc { get; }
-        /// <summary> DRA error message. </summary>
+        /// <summary>
+        /// DRA error message.
+        /// Serialized Name: HealthError.recoveryProviderErrorMessage
+        /// </summary>
         public string RecoveryProviderErrorMessage { get; }
-        /// <summary> ID of the entity. </summary>
+        /// <summary>
+        /// ID of the entity.
+        /// Serialized Name: HealthError.entityId
+        /// </summary>
         public string EntityId { get; }
-        /// <summary> The health error unique id. </summary>
+        /// <summary>
+        /// The health error unique id.
+        /// Serialized Name: HealthError.errorId
+        /// </summary>
         public string ErrorId { get; }
-        /// <summary> Value indicating whether the health error is customer resolvable. </summary>
+        /// <summary>
+        /// Value indicating whether the health error is customer resolvable.
+        /// Serialized Name: HealthError.customerResolvability
+        /// </summary>
         public HealthErrorCustomerResolvability? CustomerResolvability { get; }
     }
 }

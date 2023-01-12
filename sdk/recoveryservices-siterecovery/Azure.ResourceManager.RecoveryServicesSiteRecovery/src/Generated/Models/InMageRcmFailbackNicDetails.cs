@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary> InMageRcmFailback NIC details. </summary>
+    /// <summary>
+    /// InMageRcmFailback NIC details.
+    /// Serialized Name: InMageRcmFailbackNicDetails
+    /// </summary>
     public partial class InMageRcmFailbackNicDetails
     {
         /// <summary> Initializes a new instance of InMageRcmFailbackNicDetails. </summary>
@@ -16,10 +19,22 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> Initializes a new instance of InMageRcmFailbackNicDetails. </summary>
-        /// <param name="macAddress"> The mac address. </param>
-        /// <param name="networkName"> The network name. </param>
-        /// <param name="adapterType"> The adapter type. </param>
-        /// <param name="sourceIPAddress"> The IP address. </param>
+        /// <param name="macAddress">
+        /// The mac address.
+        /// Serialized Name: InMageRcmFailbackNicDetails.macAddress
+        /// </param>
+        /// <param name="networkName">
+        /// The network name.
+        /// Serialized Name: InMageRcmFailbackNicDetails.networkName
+        /// </param>
+        /// <param name="adapterType">
+        /// The adapter type.
+        /// Serialized Name: InMageRcmFailbackNicDetails.adapterType
+        /// </param>
+        /// <param name="sourceIPAddress">
+        /// The IP address.
+        /// Serialized Name: InMageRcmFailbackNicDetails.sourceIpAddress
+        /// </param>
         internal InMageRcmFailbackNicDetails(string macAddress, string networkName, string adapterType, string sourceIPAddress)
         {
             MacAddress = macAddress;
@@ -28,13 +43,25 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             SourceIPAddress = sourceIPAddress;
         }
 
-        /// <summary> The mac address. </summary>
+        /// <summary>
+        /// The mac address.
+        /// Serialized Name: InMageRcmFailbackNicDetails.macAddress
+        /// </summary>
         public string MacAddress { get; }
-        /// <summary> The network name. </summary>
+        /// <summary>
+        /// The network name.
+        /// Serialized Name: InMageRcmFailbackNicDetails.networkName
+        /// </summary>
         public string NetworkName { get; }
-        /// <summary> The adapter type. </summary>
+        /// <summary>
+        /// The adapter type.
+        /// Serialized Name: InMageRcmFailbackNicDetails.adapterType
+        /// </summary>
         public string AdapterType { get; }
-        /// <summary> The IP address. </summary>
+        /// <summary>
+        /// The IP address.
+        /// Serialized Name: InMageRcmFailbackNicDetails.sourceIpAddress
+        /// </summary>
         public string SourceIPAddress { get; }
     }
 }

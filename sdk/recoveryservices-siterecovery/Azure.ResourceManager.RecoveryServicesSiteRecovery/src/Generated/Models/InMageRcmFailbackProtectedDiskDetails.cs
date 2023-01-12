@@ -9,7 +9,10 @@ using System;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary> InMageRcmFailback protected disk details. </summary>
+    /// <summary>
+    /// InMageRcmFailback protected disk details.
+    /// Serialized Name: InMageRcmFailbackProtectedDiskDetails
+    /// </summary>
     public partial class InMageRcmFailbackProtectedDiskDetails
     {
         /// <summary> Initializes a new instance of InMageRcmFailbackProtectedDiskDetails. </summary>
@@ -18,17 +21,50 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> Initializes a new instance of InMageRcmFailbackProtectedDiskDetails. </summary>
-        /// <param name="diskId"> The disk Id (reported by source agent). </param>
-        /// <param name="diskName"> The disk name. </param>
-        /// <param name="isOSDisk"> A value indicating whether the disk is the OS disk. </param>
-        /// <param name="capacityInBytes"> The disk capacity in bytes. </param>
-        /// <param name="diskUuid"> The disk Uuid (reported by vCenter). </param>
-        /// <param name="dataPendingInLogDataStoreInMB"> The data pending in log data store in MB. </param>
-        /// <param name="dataPendingAtSourceAgentInMB"> The data pending at source agent in MB. </param>
-        /// <param name="isInitialReplicationComplete"> A value indicating whether initial replication is complete or not. </param>
-        /// <param name="irDetails"> The initial replication details. </param>
-        /// <param name="resyncDetails"> The resync details. </param>
-        /// <param name="lastSyncOn"> The last sync time. </param>
+        /// <param name="diskId">
+        /// The disk Id (reported by source agent).
+        /// Serialized Name: InMageRcmFailbackProtectedDiskDetails.diskId
+        /// </param>
+        /// <param name="diskName">
+        /// The disk name.
+        /// Serialized Name: InMageRcmFailbackProtectedDiskDetails.diskName
+        /// </param>
+        /// <param name="isOSDisk">
+        /// A value indicating whether the disk is the OS disk.
+        /// Serialized Name: InMageRcmFailbackProtectedDiskDetails.isOSDisk
+        /// </param>
+        /// <param name="capacityInBytes">
+        /// The disk capacity in bytes.
+        /// Serialized Name: InMageRcmFailbackProtectedDiskDetails.capacityInBytes
+        /// </param>
+        /// <param name="diskUuid">
+        /// The disk Uuid (reported by vCenter).
+        /// Serialized Name: InMageRcmFailbackProtectedDiskDetails.diskUuid
+        /// </param>
+        /// <param name="dataPendingInLogDataStoreInMB">
+        /// The data pending in log data store in MB.
+        /// Serialized Name: InMageRcmFailbackProtectedDiskDetails.dataPendingInLogDataStoreInMB
+        /// </param>
+        /// <param name="dataPendingAtSourceAgentInMB">
+        /// The data pending at source agent in MB.
+        /// Serialized Name: InMageRcmFailbackProtectedDiskDetails.dataPendingAtSourceAgentInMB
+        /// </param>
+        /// <param name="isInitialReplicationComplete">
+        /// A value indicating whether initial replication is complete or not.
+        /// Serialized Name: InMageRcmFailbackProtectedDiskDetails.isInitialReplicationComplete
+        /// </param>
+        /// <param name="irDetails">
+        /// The initial replication details.
+        /// Serialized Name: InMageRcmFailbackProtectedDiskDetails.irDetails
+        /// </param>
+        /// <param name="resyncDetails">
+        /// The resync details.
+        /// Serialized Name: InMageRcmFailbackProtectedDiskDetails.resyncDetails
+        /// </param>
+        /// <param name="lastSyncOn">
+        /// The last sync time.
+        /// Serialized Name: InMageRcmFailbackProtectedDiskDetails.lastSyncTime
+        /// </param>
         internal InMageRcmFailbackProtectedDiskDetails(string diskId, string diskName, string isOSDisk, long? capacityInBytes, string diskUuid, double? dataPendingInLogDataStoreInMB, double? dataPendingAtSourceAgentInMB, string isInitialReplicationComplete, InMageRcmFailbackSyncDetails irDetails, InMageRcmFailbackSyncDetails resyncDetails, DateTimeOffset? lastSyncOn)
         {
             DiskId = diskId;
@@ -44,27 +80,60 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             LastSyncOn = lastSyncOn;
         }
 
-        /// <summary> The disk Id (reported by source agent). </summary>
+        /// <summary>
+        /// The disk Id (reported by source agent).
+        /// Serialized Name: InMageRcmFailbackProtectedDiskDetails.diskId
+        /// </summary>
         public string DiskId { get; }
-        /// <summary> The disk name. </summary>
+        /// <summary>
+        /// The disk name.
+        /// Serialized Name: InMageRcmFailbackProtectedDiskDetails.diskName
+        /// </summary>
         public string DiskName { get; }
-        /// <summary> A value indicating whether the disk is the OS disk. </summary>
+        /// <summary>
+        /// A value indicating whether the disk is the OS disk.
+        /// Serialized Name: InMageRcmFailbackProtectedDiskDetails.isOSDisk
+        /// </summary>
         public string IsOSDisk { get; }
-        /// <summary> The disk capacity in bytes. </summary>
+        /// <summary>
+        /// The disk capacity in bytes.
+        /// Serialized Name: InMageRcmFailbackProtectedDiskDetails.capacityInBytes
+        /// </summary>
         public long? CapacityInBytes { get; }
-        /// <summary> The disk Uuid (reported by vCenter). </summary>
+        /// <summary>
+        /// The disk Uuid (reported by vCenter).
+        /// Serialized Name: InMageRcmFailbackProtectedDiskDetails.diskUuid
+        /// </summary>
         public string DiskUuid { get; }
-        /// <summary> The data pending in log data store in MB. </summary>
+        /// <summary>
+        /// The data pending in log data store in MB.
+        /// Serialized Name: InMageRcmFailbackProtectedDiskDetails.dataPendingInLogDataStoreInMB
+        /// </summary>
         public double? DataPendingInLogDataStoreInMB { get; }
-        /// <summary> The data pending at source agent in MB. </summary>
+        /// <summary>
+        /// The data pending at source agent in MB.
+        /// Serialized Name: InMageRcmFailbackProtectedDiskDetails.dataPendingAtSourceAgentInMB
+        /// </summary>
         public double? DataPendingAtSourceAgentInMB { get; }
-        /// <summary> A value indicating whether initial replication is complete or not. </summary>
+        /// <summary>
+        /// A value indicating whether initial replication is complete or not.
+        /// Serialized Name: InMageRcmFailbackProtectedDiskDetails.isInitialReplicationComplete
+        /// </summary>
         public string IsInitialReplicationComplete { get; }
-        /// <summary> The initial replication details. </summary>
+        /// <summary>
+        /// The initial replication details.
+        /// Serialized Name: InMageRcmFailbackProtectedDiskDetails.irDetails
+        /// </summary>
         public InMageRcmFailbackSyncDetails IrDetails { get; }
-        /// <summary> The resync details. </summary>
+        /// <summary>
+        /// The resync details.
+        /// Serialized Name: InMageRcmFailbackProtectedDiskDetails.resyncDetails
+        /// </summary>
         public InMageRcmFailbackSyncDetails ResyncDetails { get; }
-        /// <summary> The last sync time. </summary>
+        /// <summary>
+        /// The last sync time.
+        /// Serialized Name: InMageRcmFailbackProtectedDiskDetails.lastSyncTime
+        /// </summary>
         public DateTimeOffset? LastSyncOn { get; }
     }
 }

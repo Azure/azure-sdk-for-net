@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary> Input required to update vCenter. </summary>
+    /// <summary>
+    /// Input required to update vCenter.
+    /// Serialized Name: UpdateVCenterRequest
+    /// </summary>
     public partial class VCenterPatch
     {
         /// <summary> Initializes a new instance of VCenterPatch. </summary>
@@ -15,7 +18,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         {
         }
 
-        /// <summary> The update VCenter Request Properties. </summary>
+        /// <summary>
+        /// The update VCenter Request Properties.
+        /// Serialized Name: UpdateVCenterRequest.properties
+        /// </summary>
         public UpdateVCenterRequestProperties Properties { get; set; }
     }
 }

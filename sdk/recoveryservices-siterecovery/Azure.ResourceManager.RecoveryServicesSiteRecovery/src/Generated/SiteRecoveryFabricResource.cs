@@ -19,46 +19,46 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
 {
     /// <summary>
-    /// A Class representing a Fabric along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="FabricResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetFabricResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetFabric method.
+    /// A Class representing a SiteRecoveryFabric along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="SiteRecoveryFabricResource" />
+    /// from an instance of <see cref="ArmClient" /> using the GetSiteRecoveryFabricResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetSiteRecoveryFabric method.
     /// </summary>
-    public partial class FabricResource : ArmResource
+    public partial class SiteRecoveryFabricResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="FabricResource"/> instance. </summary>
+        /// <summary> Generate the resource identifier of a <see cref="SiteRecoveryFabricResource"/> instance. </summary>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string resourceName, string fabricName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationFabrics/{fabricName}";
             return new ResourceIdentifier(resourceId);
         }
 
-        private readonly ClientDiagnostics _fabricReplicationFabricsClientDiagnostics;
-        private readonly ReplicationFabricsRestOperations _fabricReplicationFabricsRestClient;
-        private readonly FabricData _data;
+        private readonly ClientDiagnostics _siteRecoveryFabricReplicationFabricsClientDiagnostics;
+        private readonly ReplicationFabricsRestOperations _siteRecoveryFabricReplicationFabricsRestClient;
+        private readonly SiteRecoveryFabricData _data;
 
-        /// <summary> Initializes a new instance of the <see cref="FabricResource"/> class for mocking. </summary>
-        protected FabricResource()
+        /// <summary> Initializes a new instance of the <see cref="SiteRecoveryFabricResource"/> class for mocking. </summary>
+        protected SiteRecoveryFabricResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "FabricResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref = "SiteRecoveryFabricResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal FabricResource(ArmClient client, FabricData data) : this(client, data.Id)
+        internal SiteRecoveryFabricResource(ArmClient client, SiteRecoveryFabricData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="FabricResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="SiteRecoveryFabricResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal FabricResource(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal SiteRecoveryFabricResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _fabricReplicationFabricsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.RecoveryServicesSiteRecovery", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string fabricReplicationFabricsApiVersion);
-            _fabricReplicationFabricsRestClient = new ReplicationFabricsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, fabricReplicationFabricsApiVersion);
+            _siteRecoveryFabricReplicationFabricsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.RecoveryServicesSiteRecovery", ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ResourceType, out string siteRecoveryFabricReplicationFabricsApiVersion);
+            _siteRecoveryFabricReplicationFabricsRestClient = new ReplicationFabricsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, siteRecoveryFabricReplicationFabricsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
 
         /// <summary> Gets the data representing this Feature. </summary>
         /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
-        public virtual FabricData Data
+        public virtual SiteRecoveryFabricData Data
         {
             get
             {
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> Gets a collection of LogicalNetworkResources in the Fabric. </summary>
+        /// <summary> Gets a collection of LogicalNetworkResources in the SiteRecoveryFabric. </summary>
         /// <returns> An object representing collection of LogicalNetworkResources and their operations over a LogicalNetworkResource. </returns>
         public virtual LogicalNetworkCollection GetLogicalNetworks()
         {
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
             return GetLogicalNetworks().Get(logicalNetworkName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of NetworkResources in the Fabric. </summary>
+        /// <summary> Gets a collection of NetworkResources in the SiteRecoveryFabric. </summary>
         /// <returns> An object representing collection of NetworkResources and their operations over a NetworkResource. </returns>
         public virtual NetworkCollection GetNetworks()
         {
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
             return GetNetworks().Get(networkName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of ProtectionContainerResources in the Fabric. </summary>
+        /// <summary> Gets a collection of ProtectionContainerResources in the SiteRecoveryFabric. </summary>
         /// <returns> An object representing collection of ProtectionContainerResources and their operations over a ProtectionContainerResource. </returns>
         public virtual ProtectionContainerCollection GetProtectionContainers()
         {
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
             return GetProtectionContainers().Get(protectionContainerName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of RecoveryServicesProviderResources in the Fabric. </summary>
+        /// <summary> Gets a collection of RecoveryServicesProviderResources in the SiteRecoveryFabric. </summary>
         /// <returns> An object representing collection of RecoveryServicesProviderResources and their operations over a RecoveryServicesProviderResource. </returns>
         public virtual RecoveryServicesProviderCollection GetRecoveryServicesProviders()
         {
@@ -236,7 +236,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
             return GetRecoveryServicesProviders().Get(providerName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of StorageClassificationResources in the Fabric. </summary>
+        /// <summary> Gets a collection of StorageClassificationResources in the SiteRecoveryFabric. </summary>
         /// <returns> An object representing collection of StorageClassificationResources and their operations over a StorageClassificationResource. </returns>
         public virtual StorageClassificationCollection GetStorageClassifications()
         {
@@ -273,7 +273,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
             return GetStorageClassifications().Get(storageClassificationName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of VCenterResources in the Fabric. </summary>
+        /// <summary> Gets a collection of VCenterResources in the SiteRecoveryFabric. </summary>
         /// <returns> An object representing collection of VCenterResources and their operations over a VCenterResource. </returns>
         public virtual VCenterCollection GetVCenters()
         {
@@ -317,16 +317,16 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// </summary>
         /// <param name="filter"> OData filter options. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<FabricResource>> GetAsync(string filter = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SiteRecoveryFabricResource>> GetAsync(string filter = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _fabricReplicationFabricsClientDiagnostics.CreateScope("FabricResource.Get");
+            using var scope = _siteRecoveryFabricReplicationFabricsClientDiagnostics.CreateScope("SiteRecoveryFabricResource.Get");
             scope.Start();
             try
             {
-                var response = await _fabricReplicationFabricsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, cancellationToken).ConfigureAwait(false);
+                var response = await _siteRecoveryFabricReplicationFabricsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new FabricResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SiteRecoveryFabricResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -342,16 +342,16 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// </summary>
         /// <param name="filter"> OData filter options. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<FabricResource> Get(string filter = null, CancellationToken cancellationToken = default)
+        public virtual Response<SiteRecoveryFabricResource> Get(string filter = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _fabricReplicationFabricsClientDiagnostics.CreateScope("FabricResource.Get");
+            using var scope = _siteRecoveryFabricReplicationFabricsClientDiagnostics.CreateScope("SiteRecoveryFabricResource.Get");
             scope.Start();
             try
             {
-                var response = _fabricReplicationFabricsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, cancellationToken);
+                var response = _siteRecoveryFabricReplicationFabricsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new FabricResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SiteRecoveryFabricResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -369,16 +369,16 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <param name="content"> Fabric creation input. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<ArmOperation<FabricResource>> UpdateAsync(WaitUntil waitUntil, FabricCreateOrUpdateContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<SiteRecoveryFabricResource>> UpdateAsync(WaitUntil waitUntil, SiteRecoveryFabricCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _fabricReplicationFabricsClientDiagnostics.CreateScope("FabricResource.Update");
+            using var scope = _siteRecoveryFabricReplicationFabricsClientDiagnostics.CreateScope("SiteRecoveryFabricResource.Update");
             scope.Start();
             try
             {
-                var response = await _fabricReplicationFabricsRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content, cancellationToken).ConfigureAwait(false);
-                var operation = new RecoveryServicesSiteRecoveryArmOperation<FabricResource>(new FabricOperationSource(Client), _fabricReplicationFabricsClientDiagnostics, Pipeline, _fabricReplicationFabricsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                var response = await _siteRecoveryFabricReplicationFabricsRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content, cancellationToken).ConfigureAwait(false);
+                var operation = new RecoveryServicesSiteRecoveryArmOperation<SiteRecoveryFabricResource>(new SiteRecoveryFabricOperationSource(Client), _siteRecoveryFabricReplicationFabricsClientDiagnostics, Pipeline, _siteRecoveryFabricReplicationFabricsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -399,16 +399,16 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <param name="content"> Fabric creation input. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual ArmOperation<FabricResource> Update(WaitUntil waitUntil, FabricCreateOrUpdateContent content, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<SiteRecoveryFabricResource> Update(WaitUntil waitUntil, SiteRecoveryFabricCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _fabricReplicationFabricsClientDiagnostics.CreateScope("FabricResource.Update");
+            using var scope = _siteRecoveryFabricReplicationFabricsClientDiagnostics.CreateScope("SiteRecoveryFabricResource.Update");
             scope.Start();
             try
             {
-                var response = _fabricReplicationFabricsRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content, cancellationToken);
-                var operation = new RecoveryServicesSiteRecoveryArmOperation<FabricResource>(new FabricOperationSource(Client), _fabricReplicationFabricsClientDiagnostics, Pipeline, _fabricReplicationFabricsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                var response = _siteRecoveryFabricReplicationFabricsRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content, cancellationToken);
+                var operation = new RecoveryServicesSiteRecoveryArmOperation<SiteRecoveryFabricResource>(new SiteRecoveryFabricOperationSource(Client), _siteRecoveryFabricReplicationFabricsClientDiagnostics, Pipeline, _siteRecoveryFabricReplicationFabricsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -427,14 +427,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation<FabricResource>> CheckConsistencyAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<SiteRecoveryFabricResource>> CheckConsistencyAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _fabricReplicationFabricsClientDiagnostics.CreateScope("FabricResource.CheckConsistency");
+            using var scope = _siteRecoveryFabricReplicationFabricsClientDiagnostics.CreateScope("SiteRecoveryFabricResource.CheckConsistency");
             scope.Start();
             try
             {
-                var response = await _fabricReplicationFabricsRestClient.CheckConsistencyAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new RecoveryServicesSiteRecoveryArmOperation<FabricResource>(new FabricOperationSource(Client), _fabricReplicationFabricsClientDiagnostics, Pipeline, _fabricReplicationFabricsRestClient.CreateCheckConsistencyRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var response = await _siteRecoveryFabricReplicationFabricsRestClient.CheckConsistencyAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var operation = new RecoveryServicesSiteRecoveryArmOperation<SiteRecoveryFabricResource>(new SiteRecoveryFabricOperationSource(Client), _siteRecoveryFabricReplicationFabricsClientDiagnostics, Pipeline, _siteRecoveryFabricReplicationFabricsRestClient.CreateCheckConsistencyRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -453,14 +453,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation<FabricResource> CheckConsistency(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<SiteRecoveryFabricResource> CheckConsistency(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _fabricReplicationFabricsClientDiagnostics.CreateScope("FabricResource.CheckConsistency");
+            using var scope = _siteRecoveryFabricReplicationFabricsClientDiagnostics.CreateScope("SiteRecoveryFabricResource.CheckConsistency");
             scope.Start();
             try
             {
-                var response = _fabricReplicationFabricsRestClient.CheckConsistency(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new RecoveryServicesSiteRecoveryArmOperation<FabricResource>(new FabricOperationSource(Client), _fabricReplicationFabricsClientDiagnostics, Pipeline, _fabricReplicationFabricsRestClient.CreateCheckConsistencyRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var response = _siteRecoveryFabricReplicationFabricsRestClient.CheckConsistency(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var operation = new RecoveryServicesSiteRecoveryArmOperation<SiteRecoveryFabricResource>(new SiteRecoveryFabricOperationSource(Client), _siteRecoveryFabricReplicationFabricsClientDiagnostics, Pipeline, _siteRecoveryFabricReplicationFabricsRestClient.CreateCheckConsistencyRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -481,12 +481,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> MigrateToAadAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _fabricReplicationFabricsClientDiagnostics.CreateScope("FabricResource.MigrateToAad");
+            using var scope = _siteRecoveryFabricReplicationFabricsClientDiagnostics.CreateScope("SiteRecoveryFabricResource.MigrateToAad");
             scope.Start();
             try
             {
-                var response = await _fabricReplicationFabricsRestClient.MigrateToAadAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new RecoveryServicesSiteRecoveryArmOperation(_fabricReplicationFabricsClientDiagnostics, Pipeline, _fabricReplicationFabricsRestClient.CreateMigrateToAadRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var response = await _siteRecoveryFabricReplicationFabricsRestClient.MigrateToAadAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var operation = new RecoveryServicesSiteRecoveryArmOperation(_siteRecoveryFabricReplicationFabricsClientDiagnostics, Pipeline, _siteRecoveryFabricReplicationFabricsRestClient.CreateMigrateToAadRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -507,12 +507,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation MigrateToAad(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _fabricReplicationFabricsClientDiagnostics.CreateScope("FabricResource.MigrateToAad");
+            using var scope = _siteRecoveryFabricReplicationFabricsClientDiagnostics.CreateScope("SiteRecoveryFabricResource.MigrateToAad");
             scope.Start();
             try
             {
-                var response = _fabricReplicationFabricsRestClient.MigrateToAad(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new RecoveryServicesSiteRecoveryArmOperation(_fabricReplicationFabricsClientDiagnostics, Pipeline, _fabricReplicationFabricsRestClient.CreateMigrateToAadRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var response = _siteRecoveryFabricReplicationFabricsRestClient.MigrateToAad(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var operation = new RecoveryServicesSiteRecoveryArmOperation(_siteRecoveryFabricReplicationFabricsClientDiagnostics, Pipeline, _siteRecoveryFabricReplicationFabricsRestClient.CreateMigrateToAadRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -533,16 +533,16 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <param name="content"> The input to the failover process server operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<ArmOperation<FabricResource>> ReassociateGatewayAsync(WaitUntil waitUntil, FailoverProcessServerContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<SiteRecoveryFabricResource>> ReassociateGatewayAsync(WaitUntil waitUntil, FailoverProcessServerContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _fabricReplicationFabricsClientDiagnostics.CreateScope("FabricResource.ReassociateGateway");
+            using var scope = _siteRecoveryFabricReplicationFabricsClientDiagnostics.CreateScope("SiteRecoveryFabricResource.ReassociateGateway");
             scope.Start();
             try
             {
-                var response = await _fabricReplicationFabricsRestClient.ReassociateGatewayAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content, cancellationToken).ConfigureAwait(false);
-                var operation = new RecoveryServicesSiteRecoveryArmOperation<FabricResource>(new FabricOperationSource(Client), _fabricReplicationFabricsClientDiagnostics, Pipeline, _fabricReplicationFabricsRestClient.CreateReassociateGatewayRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                var response = await _siteRecoveryFabricReplicationFabricsRestClient.ReassociateGatewayAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content, cancellationToken).ConfigureAwait(false);
+                var operation = new RecoveryServicesSiteRecoveryArmOperation<SiteRecoveryFabricResource>(new SiteRecoveryFabricOperationSource(Client), _siteRecoveryFabricReplicationFabricsClientDiagnostics, Pipeline, _siteRecoveryFabricReplicationFabricsRestClient.CreateReassociateGatewayRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -563,16 +563,16 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <param name="content"> The input to the failover process server operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual ArmOperation<FabricResource> ReassociateGateway(WaitUntil waitUntil, FailoverProcessServerContent content, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<SiteRecoveryFabricResource> ReassociateGateway(WaitUntil waitUntil, FailoverProcessServerContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _fabricReplicationFabricsClientDiagnostics.CreateScope("FabricResource.ReassociateGateway");
+            using var scope = _siteRecoveryFabricReplicationFabricsClientDiagnostics.CreateScope("SiteRecoveryFabricResource.ReassociateGateway");
             scope.Start();
             try
             {
-                var response = _fabricReplicationFabricsRestClient.ReassociateGateway(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content, cancellationToken);
-                var operation = new RecoveryServicesSiteRecoveryArmOperation<FabricResource>(new FabricOperationSource(Client), _fabricReplicationFabricsClientDiagnostics, Pipeline, _fabricReplicationFabricsRestClient.CreateReassociateGatewayRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                var response = _siteRecoveryFabricReplicationFabricsRestClient.ReassociateGateway(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content, cancellationToken);
+                var operation = new RecoveryServicesSiteRecoveryArmOperation<SiteRecoveryFabricResource>(new SiteRecoveryFabricOperationSource(Client), _siteRecoveryFabricReplicationFabricsClientDiagnostics, Pipeline, _siteRecoveryFabricReplicationFabricsRestClient.CreateReassociateGatewayRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -593,12 +593,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _fabricReplicationFabricsClientDiagnostics.CreateScope("FabricResource.Delete");
+            using var scope = _siteRecoveryFabricReplicationFabricsClientDiagnostics.CreateScope("SiteRecoveryFabricResource.Delete");
             scope.Start();
             try
             {
-                var response = await _fabricReplicationFabricsRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new RecoveryServicesSiteRecoveryArmOperation(_fabricReplicationFabricsClientDiagnostics, Pipeline, _fabricReplicationFabricsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var response = await _siteRecoveryFabricReplicationFabricsRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var operation = new RecoveryServicesSiteRecoveryArmOperation(_siteRecoveryFabricReplicationFabricsClientDiagnostics, Pipeline, _siteRecoveryFabricReplicationFabricsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -619,12 +619,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _fabricReplicationFabricsClientDiagnostics.CreateScope("FabricResource.Delete");
+            using var scope = _siteRecoveryFabricReplicationFabricsClientDiagnostics.CreateScope("SiteRecoveryFabricResource.Delete");
             scope.Start();
             try
             {
-                var response = _fabricReplicationFabricsRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new RecoveryServicesSiteRecoveryArmOperation(_fabricReplicationFabricsClientDiagnostics, Pipeline, _fabricReplicationFabricsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var response = _siteRecoveryFabricReplicationFabricsRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var operation = new RecoveryServicesSiteRecoveryArmOperation(_siteRecoveryFabricReplicationFabricsClientDiagnostics, Pipeline, _siteRecoveryFabricReplicationFabricsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -645,16 +645,16 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <param name="content"> Renew certificate input. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<ArmOperation<FabricResource>> RenewCertificateAsync(WaitUntil waitUntil, RenewCertificateContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<SiteRecoveryFabricResource>> RenewCertificateAsync(WaitUntil waitUntil, RenewCertificateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _fabricReplicationFabricsClientDiagnostics.CreateScope("FabricResource.RenewCertificate");
+            using var scope = _siteRecoveryFabricReplicationFabricsClientDiagnostics.CreateScope("SiteRecoveryFabricResource.RenewCertificate");
             scope.Start();
             try
             {
-                var response = await _fabricReplicationFabricsRestClient.RenewCertificateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content, cancellationToken).ConfigureAwait(false);
-                var operation = new RecoveryServicesSiteRecoveryArmOperation<FabricResource>(new FabricOperationSource(Client), _fabricReplicationFabricsClientDiagnostics, Pipeline, _fabricReplicationFabricsRestClient.CreateRenewCertificateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                var response = await _siteRecoveryFabricReplicationFabricsRestClient.RenewCertificateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content, cancellationToken).ConfigureAwait(false);
+                var operation = new RecoveryServicesSiteRecoveryArmOperation<SiteRecoveryFabricResource>(new SiteRecoveryFabricOperationSource(Client), _siteRecoveryFabricReplicationFabricsClientDiagnostics, Pipeline, _siteRecoveryFabricReplicationFabricsRestClient.CreateRenewCertificateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -675,16 +675,16 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <param name="content"> Renew certificate input. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual ArmOperation<FabricResource> RenewCertificate(WaitUntil waitUntil, RenewCertificateContent content, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<SiteRecoveryFabricResource> RenewCertificate(WaitUntil waitUntil, RenewCertificateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _fabricReplicationFabricsClientDiagnostics.CreateScope("FabricResource.RenewCertificate");
+            using var scope = _siteRecoveryFabricReplicationFabricsClientDiagnostics.CreateScope("SiteRecoveryFabricResource.RenewCertificate");
             scope.Start();
             try
             {
-                var response = _fabricReplicationFabricsRestClient.RenewCertificate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content, cancellationToken);
-                var operation = new RecoveryServicesSiteRecoveryArmOperation<FabricResource>(new FabricOperationSource(Client), _fabricReplicationFabricsClientDiagnostics, Pipeline, _fabricReplicationFabricsRestClient.CreateRenewCertificateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                var response = _siteRecoveryFabricReplicationFabricsRestClient.RenewCertificate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content, cancellationToken);
+                var operation = new RecoveryServicesSiteRecoveryArmOperation<SiteRecoveryFabricResource>(new SiteRecoveryFabricOperationSource(Client), _siteRecoveryFabricReplicationFabricsClientDiagnostics, Pipeline, _siteRecoveryFabricReplicationFabricsRestClient.CreateRenewCertificateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

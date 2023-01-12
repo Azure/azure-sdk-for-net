@@ -10,12 +10,16 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary> Migrate input properties. </summary>
+    /// <summary>
+    /// Migrate input properties.
+    /// Serialized Name: MigrateInputProperties
+    /// </summary>
     public partial class MigrateInputProperties
     {
         /// <summary> Initializes a new instance of MigrateInputProperties. </summary>
         /// <param name="providerSpecificDetails">
         /// The provider specific details.
+        /// Serialized Name: MigrateInputProperties.providerSpecificDetails
         /// Please note <see cref="MigrateProviderSpecificInput"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="VMwareCbtMigrateInput"/>.
         /// </param>
@@ -29,6 +33,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 
         /// <summary>
         /// The provider specific details.
+        /// Serialized Name: MigrateInputProperties.providerSpecificDetails
         /// Please note <see cref="MigrateProviderSpecificInput"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="VMwareCbtMigrateInput"/>.
         /// </summary>

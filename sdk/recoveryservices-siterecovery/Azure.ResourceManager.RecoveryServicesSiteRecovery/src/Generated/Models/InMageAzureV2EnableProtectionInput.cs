@@ -10,7 +10,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary> VMware Azure specific enable protection input. </summary>
+    /// <summary>
+    /// VMware Azure specific enable protection input.
+    /// Serialized Name: InMageAzureV2EnableProtectionInput
+    /// </summary>
     public partial class InMageAzureV2EnableProtectionInput : EnableProtectionProviderSpecificInput
     {
         /// <summary> Initializes a new instance of InMageAzureV2EnableProtectionInput. </summary>
@@ -24,57 +27,135 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             InstanceType = "InMageAzureV2";
         }
 
-        /// <summary> The Master target Id. </summary>
+        /// <summary>
+        /// The Master target Id.
+        /// Serialized Name: InMageAzureV2EnableProtectionInput.masterTargetId
+        /// </summary>
         public string MasterTargetId { get; set; }
-        /// <summary> The Process Server Id. </summary>
+        /// <summary>
+        /// The Process Server Id.
+        /// Serialized Name: InMageAzureV2EnableProtectionInput.processServerId
+        /// </summary>
         public string ProcessServerId { get; set; }
-        /// <summary> The storage account Id. </summary>
+        /// <summary>
+        /// The storage account Id.
+        /// Serialized Name: InMageAzureV2EnableProtectionInput.storageAccountId
+        /// </summary>
         public string StorageAccountId { get; set; }
-        /// <summary> The CS account Id. </summary>
+        /// <summary>
+        /// The CS account Id.
+        /// Serialized Name: InMageAzureV2EnableProtectionInput.runAsAccountId
+        /// </summary>
         public string RunAsAccountId { get; set; }
-        /// <summary> The multi VM group Id. </summary>
+        /// <summary>
+        /// The multi VM group Id.
+        /// Serialized Name: InMageAzureV2EnableProtectionInput.multiVmGroupId
+        /// </summary>
         public string MultiVmGroupId { get; set; }
-        /// <summary> The multi VM group name. </summary>
+        /// <summary>
+        /// The multi VM group name.
+        /// Serialized Name: InMageAzureV2EnableProtectionInput.multiVmGroupName
+        /// </summary>
         public string MultiVmGroupName { get; set; }
-        /// <summary> The disks to include list. </summary>
+        /// <summary>
+        /// The disks to include list.
+        /// Serialized Name: InMageAzureV2EnableProtectionInput.disksToInclude
+        /// </summary>
         public IList<InMageAzureV2DiskInputDetails> DisksToInclude { get; }
-        /// <summary> The selected target Azure network Id. </summary>
+        /// <summary>
+        /// The selected target Azure network Id.
+        /// Serialized Name: InMageAzureV2EnableProtectionInput.targetAzureNetworkId
+        /// </summary>
         public string TargetAzureNetworkId { get; set; }
-        /// <summary> The selected target Azure subnet Id. </summary>
+        /// <summary>
+        /// The selected target Azure subnet Id.
+        /// Serialized Name: InMageAzureV2EnableProtectionInput.targetAzureSubnetId
+        /// </summary>
         public string TargetAzureSubnetId { get; set; }
-        /// <summary> The selected option to enable RDP\SSH on target VM after failover. String value of SrsDataContract.EnableRDPOnTargetOption enum. </summary>
+        /// <summary>
+        /// The selected option to enable RDP\SSH on target VM after failover. String value of SrsDataContract.EnableRDPOnTargetOption enum.
+        /// Serialized Name: InMageAzureV2EnableProtectionInput.enableRdpOnTargetOption
+        /// </summary>
         public string EnableRdpOnTargetOption { get; set; }
-        /// <summary> The target azure VM Name. </summary>
+        /// <summary>
+        /// The target azure VM Name.
+        /// Serialized Name: InMageAzureV2EnableProtectionInput.targetAzureVmName
+        /// </summary>
         public string TargetAzureVmName { get; set; }
-        /// <summary> The storage account to be used for logging during replication. </summary>
+        /// <summary>
+        /// The storage account to be used for logging during replication.
+        /// Serialized Name: InMageAzureV2EnableProtectionInput.logStorageAccountId
+        /// </summary>
         public string LogStorageAccountId { get; set; }
-        /// <summary> The Id of the target resource group (for classic deployment) in which the failover VM is to be created. </summary>
+        /// <summary>
+        /// The Id of the target resource group (for classic deployment) in which the failover VM is to be created.
+        /// Serialized Name: InMageAzureV2EnableProtectionInput.targetAzureV1ResourceGroupId
+        /// </summary>
         public string TargetAzureV1ResourceGroupId { get; set; }
-        /// <summary> The Id of the target resource group (for resource manager deployment) in which the failover VM is to be created. </summary>
+        /// <summary>
+        /// The Id of the target resource group (for resource manager deployment) in which the failover VM is to be created.
+        /// Serialized Name: InMageAzureV2EnableProtectionInput.targetAzureV2ResourceGroupId
+        /// </summary>
         public string TargetAzureV2ResourceGroupId { get; set; }
-        /// <summary> The DiskType. </summary>
+        /// <summary>
+        /// The DiskType.
+        /// Serialized Name: InMageAzureV2EnableProtectionInput.diskType
+        /// </summary>
         public DiskAccountType? DiskType { get; set; }
-        /// <summary> The target availability set ARM Id for resource manager deployment. </summary>
+        /// <summary>
+        /// The target availability set ARM Id for resource manager deployment.
+        /// Serialized Name: InMageAzureV2EnableProtectionInput.targetAvailabilitySetId
+        /// </summary>
         public string TargetAvailabilitySetId { get; set; }
-        /// <summary> The target availability zone. </summary>
+        /// <summary>
+        /// The target availability zone.
+        /// Serialized Name: InMageAzureV2EnableProtectionInput.targetAvailabilityZone
+        /// </summary>
         public string TargetAvailabilityZone { get; set; }
-        /// <summary> The proximity placement group ARM Id. </summary>
+        /// <summary>
+        /// The proximity placement group ARM Id.
+        /// Serialized Name: InMageAzureV2EnableProtectionInput.targetProximityPlacementGroupId
+        /// </summary>
         public string TargetProximityPlacementGroupId { get; set; }
-        /// <summary> License type. </summary>
+        /// <summary>
+        /// License type.
+        /// Serialized Name: InMageAzureV2EnableProtectionInput.licenseType
+        /// </summary>
         public LicenseType? LicenseType { get; set; }
-        /// <summary> The SQL Server license type. </summary>
+        /// <summary>
+        /// The SQL Server license type.
+        /// Serialized Name: InMageAzureV2EnableProtectionInput.sqlServerLicenseType
+        /// </summary>
         public SqlServerLicenseType? SqlServerLicenseType { get; set; }
-        /// <summary> The target VM size. </summary>
+        /// <summary>
+        /// The target VM size.
+        /// Serialized Name: InMageAzureV2EnableProtectionInput.targetVmSize
+        /// </summary>
         public string TargetVmSize { get; set; }
-        /// <summary> The DiskEncryptionSet ARM Id. </summary>
+        /// <summary>
+        /// The DiskEncryptionSet ARM Id.
+        /// Serialized Name: InMageAzureV2EnableProtectionInput.diskEncryptionSetId
+        /// </summary>
         public string DiskEncryptionSetId { get; set; }
-        /// <summary> The target VM tags. </summary>
+        /// <summary>
+        /// The target VM tags.
+        /// Serialized Name: InMageAzureV2EnableProtectionInput.targetVmTags
+        /// </summary>
         public IDictionary<string, string> TargetVmTags { get; }
-        /// <summary> The tags for the seed managed disks. </summary>
+        /// <summary>
+        /// The tags for the seed managed disks.
+        /// Serialized Name: InMageAzureV2EnableProtectionInput.seedManagedDiskTags
+        /// </summary>
         public IDictionary<string, string> SeedManagedDiskTags { get; }
-        /// <summary> The tags for the target managed disks. </summary>
+        /// <summary>
+        /// The tags for the target managed disks.
+        /// Serialized Name: InMageAzureV2EnableProtectionInput.targetManagedDiskTags
+        /// </summary>
         public IDictionary<string, string> TargetManagedDiskTags { get; }
-        /// <summary> The tags for the target NICs. </summary>
+        /// <summary>
+        /// The tags for the target NICs.
+        /// Serialized Name: InMageAzureV2EnableProtectionInput.targetNicTags
+        /// </summary>
         public IDictionary<string, string> TargetNicTags { get; }
     }
 }

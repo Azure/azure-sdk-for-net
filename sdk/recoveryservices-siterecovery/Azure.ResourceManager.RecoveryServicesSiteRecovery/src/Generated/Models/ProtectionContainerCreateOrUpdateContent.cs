@@ -9,7 +9,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary> Create protection container input. </summary>
+    /// <summary>
+    /// Create protection container input.
+    /// Serialized Name: CreateProtectionContainerInput
+    /// </summary>
     public partial class ProtectionContainerCreateOrUpdateContent
     {
         /// <summary> Initializes a new instance of ProtectionContainerCreateOrUpdateContent. </summary>
@@ -17,10 +20,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         {
         }
 
-        /// <summary> Create protection container input properties. </summary>
+        /// <summary>
+        /// Create protection container input properties.
+        /// Serialized Name: CreateProtectionContainerInput.properties
+        /// </summary>
         internal CreateProtectionContainerInputProperties Properties { get; set; }
         /// <summary>
         /// Provider specific inputs for container creation.
+        /// Serialized Name: CreateProtectionContainerInputProperties.providerSpecificInput
         /// Please note <see cref="ReplicationProviderSpecificContainerCreationInput"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="A2AContainerCreationInput"/>, <see cref="A2ACrossClusterMigrationContainerCreationInput"/> and <see cref="VMwareCbtContainerCreationInput"/>.
         /// Please note <see cref="ReplicationProviderSpecificContainerCreationInput"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.

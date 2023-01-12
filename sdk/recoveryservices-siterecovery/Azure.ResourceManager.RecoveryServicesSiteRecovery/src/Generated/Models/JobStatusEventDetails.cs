@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary> Model class for event details of a job status event. </summary>
+    /// <summary>
+    /// Model class for event details of a job status event.
+    /// Serialized Name: JobStatusEventDetails
+    /// </summary>
     public partial class JobStatusEventDetails : EventSpecificDetails
     {
         /// <summary> Initializes a new instance of JobStatusEventDetails. </summary>
@@ -17,11 +20,26 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> Initializes a new instance of JobStatusEventDetails. </summary>
-        /// <param name="instanceType"> Gets the class type. Overridden in derived classes. </param>
-        /// <param name="jobId"> Job arm id for the event. </param>
-        /// <param name="jobFriendlyName"> JobName for the Event. </param>
-        /// <param name="jobStatus"> JobStatus for the Event. </param>
-        /// <param name="affectedObjectType"> AffectedObjectType for the event. </param>
+        /// <param name="instanceType">
+        /// Gets the class type. Overridden in derived classes.
+        /// Serialized Name: EventSpecificDetails.instanceType
+        /// </param>
+        /// <param name="jobId">
+        /// Job arm id for the event.
+        /// Serialized Name: JobStatusEventDetails.jobId
+        /// </param>
+        /// <param name="jobFriendlyName">
+        /// JobName for the Event.
+        /// Serialized Name: JobStatusEventDetails.jobFriendlyName
+        /// </param>
+        /// <param name="jobStatus">
+        /// JobStatus for the Event.
+        /// Serialized Name: JobStatusEventDetails.jobStatus
+        /// </param>
+        /// <param name="affectedObjectType">
+        /// AffectedObjectType for the event.
+        /// Serialized Name: JobStatusEventDetails.affectedObjectType
+        /// </param>
         internal JobStatusEventDetails(string instanceType, string jobId, string jobFriendlyName, string jobStatus, string affectedObjectType) : base(instanceType)
         {
             JobId = jobId;
@@ -31,13 +49,25 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             InstanceType = instanceType ?? "JobStatus";
         }
 
-        /// <summary> Job arm id for the event. </summary>
+        /// <summary>
+        /// Job arm id for the event.
+        /// Serialized Name: JobStatusEventDetails.jobId
+        /// </summary>
         public string JobId { get; }
-        /// <summary> JobName for the Event. </summary>
+        /// <summary>
+        /// JobName for the Event.
+        /// Serialized Name: JobStatusEventDetails.jobFriendlyName
+        /// </summary>
         public string JobFriendlyName { get; }
-        /// <summary> JobStatus for the Event. </summary>
+        /// <summary>
+        /// JobStatus for the Event.
+        /// Serialized Name: JobStatusEventDetails.jobStatus
+        /// </summary>
         public string JobStatus { get; }
-        /// <summary> AffectedObjectType for the event. </summary>
+        /// <summary>
+        /// AffectedObjectType for the event.
+        /// Serialized Name: JobStatusEventDetails.affectedObjectType
+        /// </summary>
         public string AffectedObjectType { get; }
     }
 }

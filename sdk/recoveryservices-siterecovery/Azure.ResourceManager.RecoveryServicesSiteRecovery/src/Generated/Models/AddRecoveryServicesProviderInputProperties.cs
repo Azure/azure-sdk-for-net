@@ -10,13 +10,25 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary> The properties of an add provider request. </summary>
+    /// <summary>
+    /// The properties of an add provider request.
+    /// Serialized Name: AddRecoveryServicesProviderInputProperties
+    /// </summary>
     public partial class AddRecoveryServicesProviderInputProperties
     {
         /// <summary> Initializes a new instance of AddRecoveryServicesProviderInputProperties. </summary>
-        /// <param name="machineName"> The name of the machine where the provider is getting added. </param>
-        /// <param name="authenticationIdentityInput"> The identity provider input for DRA authentication. </param>
-        /// <param name="resourceAccessIdentityInput"> The identity provider input for resource access. </param>
+        /// <param name="machineName">
+        /// The name of the machine where the provider is getting added.
+        /// Serialized Name: AddRecoveryServicesProviderInputProperties.machineName
+        /// </param>
+        /// <param name="authenticationIdentityInput">
+        /// The identity provider input for DRA authentication.
+        /// Serialized Name: AddRecoveryServicesProviderInputProperties.authenticationIdentityInput
+        /// </param>
+        /// <param name="resourceAccessIdentityInput">
+        /// The identity provider input for resource access.
+        /// Serialized Name: AddRecoveryServicesProviderInputProperties.resourceAccessIdentityInput
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="machineName"/>, <paramref name="authenticationIdentityInput"/> or <paramref name="resourceAccessIdentityInput"/> is null. </exception>
         public AddRecoveryServicesProviderInputProperties(string machineName, IdentityProviderInput authenticationIdentityInput, IdentityProviderInput resourceAccessIdentityInput)
         {
@@ -29,17 +41,35 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             ResourceAccessIdentityInput = resourceAccessIdentityInput;
         }
 
-        /// <summary> The name of the machine where the provider is getting added. </summary>
+        /// <summary>
+        /// The name of the machine where the provider is getting added.
+        /// Serialized Name: AddRecoveryServicesProviderInputProperties.machineName
+        /// </summary>
         public string MachineName { get; }
-        /// <summary> The Id of the machine where the provider is getting added. </summary>
+        /// <summary>
+        /// The Id of the machine where the provider is getting added.
+        /// Serialized Name: AddRecoveryServicesProviderInputProperties.machineId
+        /// </summary>
         public string MachineId { get; set; }
-        /// <summary> The Bios Id of the machine. </summary>
+        /// <summary>
+        /// The Bios Id of the machine.
+        /// Serialized Name: AddRecoveryServicesProviderInputProperties.biosId
+        /// </summary>
         public string BiosId { get; set; }
-        /// <summary> The identity provider input for DRA authentication. </summary>
+        /// <summary>
+        /// The identity provider input for DRA authentication.
+        /// Serialized Name: AddRecoveryServicesProviderInputProperties.authenticationIdentityInput
+        /// </summary>
         public IdentityProviderInput AuthenticationIdentityInput { get; }
-        /// <summary> The identity provider input for resource access. </summary>
+        /// <summary>
+        /// The identity provider input for resource access.
+        /// Serialized Name: AddRecoveryServicesProviderInputProperties.resourceAccessIdentityInput
+        /// </summary>
         public IdentityProviderInput ResourceAccessIdentityInput { get; }
-        /// <summary> The identity provider input for data plane authentication. </summary>
+        /// <summary>
+        /// The identity provider input for data plane authentication.
+        /// Serialized Name: AddRecoveryServicesProviderInputProperties.dataPlaneAuthenticationIdentityInput
+        /// </summary>
         public IdentityProviderInput DataPlaneAuthenticationIdentityInput { get; set; }
     }
 }

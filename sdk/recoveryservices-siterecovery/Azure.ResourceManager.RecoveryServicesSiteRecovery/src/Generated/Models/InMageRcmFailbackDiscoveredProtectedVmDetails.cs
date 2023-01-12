@@ -11,7 +11,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary> InMageRcmFailback discovered VM details. </summary>
+    /// <summary>
+    /// InMageRcmFailback discovered VM details.
+    /// Serialized Name: InMageRcmFailbackDiscoveredProtectedVmDetails
+    /// </summary>
     public partial class InMageRcmFailbackDiscoveredProtectedVmDetails
     {
         /// <summary> Initializes a new instance of InMageRcmFailbackDiscoveredProtectedVmDetails. </summary>
@@ -22,18 +25,54 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> Initializes a new instance of InMageRcmFailbackDiscoveredProtectedVmDetails. </summary>
-        /// <param name="vCenterId"> The VCenter Id. </param>
-        /// <param name="vCenterFqdn"> The VCenter fqdn. </param>
-        /// <param name="datastores"> The list of datastores. </param>
-        /// <param name="ipAddresses"> The list of IP addresses. </param>
-        /// <param name="vmwareToolsStatus"> The VMware tools status. </param>
-        /// <param name="powerStatus"> The VM power status. </param>
-        /// <param name="vmFqdn"> The VM fqdn. </param>
-        /// <param name="osName"> The VM&apos;s OS name. </param>
-        /// <param name="createdTimestamp"> The SDS created timestamp. </param>
-        /// <param name="updatedTimestamp"> The SDS updated timestamp. </param>
-        /// <param name="isDeleted"> A value indicating whether the VM is deleted. </param>
-        /// <param name="lastDiscoveryTimeInUtc"> The last time when SDS information discovered in SRS. </param>
+        /// <param name="vCenterId">
+        /// The VCenter Id.
+        /// Serialized Name: InMageRcmFailbackDiscoveredProtectedVmDetails.vCenterId
+        /// </param>
+        /// <param name="vCenterFqdn">
+        /// The VCenter fqdn.
+        /// Serialized Name: InMageRcmFailbackDiscoveredProtectedVmDetails.vCenterFqdn
+        /// </param>
+        /// <param name="datastores">
+        /// The list of datastores.
+        /// Serialized Name: InMageRcmFailbackDiscoveredProtectedVmDetails.datastores
+        /// </param>
+        /// <param name="ipAddresses">
+        /// The list of IP addresses.
+        /// Serialized Name: InMageRcmFailbackDiscoveredProtectedVmDetails.ipAddresses
+        /// </param>
+        /// <param name="vmwareToolsStatus">
+        /// The VMware tools status.
+        /// Serialized Name: InMageRcmFailbackDiscoveredProtectedVmDetails.vmwareToolsStatus
+        /// </param>
+        /// <param name="powerStatus">
+        /// The VM power status.
+        /// Serialized Name: InMageRcmFailbackDiscoveredProtectedVmDetails.powerStatus
+        /// </param>
+        /// <param name="vmFqdn">
+        /// The VM fqdn.
+        /// Serialized Name: InMageRcmFailbackDiscoveredProtectedVmDetails.vmFqdn
+        /// </param>
+        /// <param name="osName">
+        /// The VM&apos;s OS name.
+        /// Serialized Name: InMageRcmFailbackDiscoveredProtectedVmDetails.osName
+        /// </param>
+        /// <param name="createdTimestamp">
+        /// The SDS created timestamp.
+        /// Serialized Name: InMageRcmFailbackDiscoveredProtectedVmDetails.createdTimestamp
+        /// </param>
+        /// <param name="updatedTimestamp">
+        /// The SDS updated timestamp.
+        /// Serialized Name: InMageRcmFailbackDiscoveredProtectedVmDetails.updatedTimestamp
+        /// </param>
+        /// <param name="isDeleted">
+        /// A value indicating whether the VM is deleted.
+        /// Serialized Name: InMageRcmFailbackDiscoveredProtectedVmDetails.isDeleted
+        /// </param>
+        /// <param name="lastDiscoveryTimeInUtc">
+        /// The last time when SDS information discovered in SRS.
+        /// Serialized Name: InMageRcmFailbackDiscoveredProtectedVmDetails.lastDiscoveryTimeInUtc
+        /// </param>
         internal InMageRcmFailbackDiscoveredProtectedVmDetails(string vCenterId, string vCenterFqdn, IReadOnlyList<string> datastores, IReadOnlyList<string> ipAddresses, string vmwareToolsStatus, string powerStatus, string vmFqdn, string osName, DateTimeOffset? createdTimestamp, DateTimeOffset? updatedTimestamp, bool? isDeleted, DateTimeOffset? lastDiscoveryTimeInUtc)
         {
             VCenterId = vCenterId;
@@ -50,29 +89,65 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             LastDiscoveryTimeInUtc = lastDiscoveryTimeInUtc;
         }
 
-        /// <summary> The VCenter Id. </summary>
+        /// <summary>
+        /// The VCenter Id.
+        /// Serialized Name: InMageRcmFailbackDiscoveredProtectedVmDetails.vCenterId
+        /// </summary>
         public string VCenterId { get; }
-        /// <summary> The VCenter fqdn. </summary>
+        /// <summary>
+        /// The VCenter fqdn.
+        /// Serialized Name: InMageRcmFailbackDiscoveredProtectedVmDetails.vCenterFqdn
+        /// </summary>
         public string VCenterFqdn { get; }
-        /// <summary> The list of datastores. </summary>
+        /// <summary>
+        /// The list of datastores.
+        /// Serialized Name: InMageRcmFailbackDiscoveredProtectedVmDetails.datastores
+        /// </summary>
         public IReadOnlyList<string> Datastores { get; }
-        /// <summary> The list of IP addresses. </summary>
+        /// <summary>
+        /// The list of IP addresses.
+        /// Serialized Name: InMageRcmFailbackDiscoveredProtectedVmDetails.ipAddresses
+        /// </summary>
         public IReadOnlyList<string> IPAddresses { get; }
-        /// <summary> The VMware tools status. </summary>
+        /// <summary>
+        /// The VMware tools status.
+        /// Serialized Name: InMageRcmFailbackDiscoveredProtectedVmDetails.vmwareToolsStatus
+        /// </summary>
         public string VMwareToolsStatus { get; }
-        /// <summary> The VM power status. </summary>
+        /// <summary>
+        /// The VM power status.
+        /// Serialized Name: InMageRcmFailbackDiscoveredProtectedVmDetails.powerStatus
+        /// </summary>
         public string PowerStatus { get; }
-        /// <summary> The VM fqdn. </summary>
+        /// <summary>
+        /// The VM fqdn.
+        /// Serialized Name: InMageRcmFailbackDiscoveredProtectedVmDetails.vmFqdn
+        /// </summary>
         public string VmFqdn { get; }
-        /// <summary> The VM&apos;s OS name. </summary>
+        /// <summary>
+        /// The VM&apos;s OS name.
+        /// Serialized Name: InMageRcmFailbackDiscoveredProtectedVmDetails.osName
+        /// </summary>
         public string OSName { get; }
-        /// <summary> The SDS created timestamp. </summary>
+        /// <summary>
+        /// The SDS created timestamp.
+        /// Serialized Name: InMageRcmFailbackDiscoveredProtectedVmDetails.createdTimestamp
+        /// </summary>
         public DateTimeOffset? CreatedTimestamp { get; }
-        /// <summary> The SDS updated timestamp. </summary>
+        /// <summary>
+        /// The SDS updated timestamp.
+        /// Serialized Name: InMageRcmFailbackDiscoveredProtectedVmDetails.updatedTimestamp
+        /// </summary>
         public DateTimeOffset? UpdatedTimestamp { get; }
-        /// <summary> A value indicating whether the VM is deleted. </summary>
+        /// <summary>
+        /// A value indicating whether the VM is deleted.
+        /// Serialized Name: InMageRcmFailbackDiscoveredProtectedVmDetails.isDeleted
+        /// </summary>
         public bool? IsDeleted { get; }
-        /// <summary> The last time when SDS information discovered in SRS. </summary>
+        /// <summary>
+        /// The last time when SDS information discovered in SRS.
+        /// Serialized Name: InMageRcmFailbackDiscoveredProtectedVmDetails.lastDiscoveryTimeInUtc
+        /// </summary>
         public DateTimeOffset? LastDiscoveryTimeInUtc { get; }
     }
 }

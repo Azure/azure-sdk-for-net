@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary> The properties of an update vCenter request. </summary>
+    /// <summary>
+    /// The properties of an update vCenter request.
+    /// Serialized Name: UpdateVCenterRequestProperties
+    /// </summary>
     public partial class UpdateVCenterRequestProperties
     {
         /// <summary> Initializes a new instance of UpdateVCenterRequestProperties. </summary>
@@ -15,15 +18,30 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         {
         }
 
-        /// <summary> The friendly name of the vCenter. </summary>
+        /// <summary>
+        /// The friendly name of the vCenter.
+        /// Serialized Name: UpdateVCenterRequestProperties.friendlyName
+        /// </summary>
         public string FriendlyName { get; set; }
-        /// <summary> The IP address of the vCenter to be discovered. </summary>
+        /// <summary>
+        /// The IP address of the vCenter to be discovered.
+        /// Serialized Name: UpdateVCenterRequestProperties.ipAddress
+        /// </summary>
         public string IPAddress { get; set; }
-        /// <summary> The process server Id from where the update can be orchestrated. </summary>
+        /// <summary>
+        /// The process server Id from where the update can be orchestrated.
+        /// Serialized Name: UpdateVCenterRequestProperties.processServerId
+        /// </summary>
         public string ProcessServerId { get; set; }
-        /// <summary> The port number for discovery. </summary>
+        /// <summary>
+        /// The port number for discovery.
+        /// Serialized Name: UpdateVCenterRequestProperties.port
+        /// </summary>
         public string Port { get; set; }
-        /// <summary> The CS account Id which has privileges to update the vCenter. </summary>
+        /// <summary>
+        /// The CS account Id which has privileges to update the vCenter.
+        /// Serialized Name: UpdateVCenterRequestProperties.runAsAccountId
+        /// </summary>
         public string RunAsAccountId { get; set; }
     }
 }

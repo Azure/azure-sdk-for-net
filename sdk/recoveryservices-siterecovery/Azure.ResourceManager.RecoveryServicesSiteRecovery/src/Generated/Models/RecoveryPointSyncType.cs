@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary> A value indicating whether the recovery point is multi VM consistent. </summary>
+    /// <summary>
+    /// A value indicating whether the recovery point is multi VM consistent.
+    /// Serialized Name: RecoveryPointSyncType
+    /// </summary>
     public readonly partial struct RecoveryPointSyncType : IEquatable<RecoveryPointSyncType>
     {
         private readonly string _value;
@@ -25,9 +28,15 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         private const string MultiVmSyncRecoveryPointValue = "MultiVmSyncRecoveryPoint";
         private const string PerVmRecoveryPointValue = "PerVmRecoveryPoint";
 
-        /// <summary> MultiVmSyncRecoveryPoint. </summary>
+        /// <summary>
+        /// MultiVmSyncRecoveryPoint
+        /// Serialized Name: RecoveryPointSyncType.MultiVmSyncRecoveryPoint
+        /// </summary>
         public static RecoveryPointSyncType MultiVmSyncRecoveryPoint { get; } = new RecoveryPointSyncType(MultiVmSyncRecoveryPointValue);
-        /// <summary> PerVmRecoveryPoint. </summary>
+        /// <summary>
+        /// PerVmRecoveryPoint
+        /// Serialized Name: RecoveryPointSyncType.PerVmRecoveryPoint
+        /// </summary>
         public static RecoveryPointSyncType PerVmRecoveryPoint { get; } = new RecoveryPointSyncType(PerVmRecoveryPointValue);
         /// <summary> Determines if two <see cref="RecoveryPointSyncType"/> values are the same. </summary>
         public static bool operator ==(RecoveryPointSyncType left, RecoveryPointSyncType right) => left.Equals(right);

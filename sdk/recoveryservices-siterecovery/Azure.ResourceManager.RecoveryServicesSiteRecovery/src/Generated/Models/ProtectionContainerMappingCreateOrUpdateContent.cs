@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary> Configure pairing input. </summary>
+    /// <summary>
+    /// Configure pairing input.
+    /// Serialized Name: CreateProtectionContainerMappingInput
+    /// </summary>
     public partial class ProtectionContainerMappingCreateOrUpdateContent
     {
         /// <summary> Initializes a new instance of ProtectionContainerMappingCreateOrUpdateContent. </summary>
@@ -15,7 +18,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         {
         }
 
-        /// <summary> Configure protection input properties. </summary>
+        /// <summary>
+        /// Configure protection input properties.
+        /// Serialized Name: CreateProtectionContainerMappingInput.properties
+        /// </summary>
         public CreateProtectionContainerMappingInputProperties Properties { get; set; }
     }
 }

@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary> Guest disk signature based disk exclusion option when doing enable protection of virtual machine in InMage provider. </summary>
+    /// <summary>
+    /// Guest disk signature based disk exclusion option when doing enable protection of virtual machine in InMage provider.
+    /// Serialized Name: InMageDiskSignatureExclusionOptions
+    /// </summary>
     public partial class InMageDiskSignatureExclusionOptions
     {
         /// <summary> Initializes a new instance of InMageDiskSignatureExclusionOptions. </summary>
@@ -15,7 +18,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         {
         }
 
-        /// <summary> The guest signature of disk to be excluded from replication. </summary>
+        /// <summary>
+        /// The guest signature of disk to be excluded from replication.
+        /// Serialized Name: InMageDiskSignatureExclusionOptions.diskSignature
+        /// </summary>
         public string DiskSignature { get; set; }
     }
 }

@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary> The SQL Server license type. </summary>
+    /// <summary>
+    /// The SQL Server license type.
+    /// Serialized Name: SqlServerLicenseType
+    /// </summary>
     public readonly partial struct SqlServerLicenseType : IEquatable<SqlServerLicenseType>
     {
         private readonly string _value;
@@ -27,13 +30,25 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         private const string PaygValue = "PAYG";
         private const string AhubValue = "AHUB";
 
-        /// <summary> NotSpecified. </summary>
+        /// <summary>
+        /// NotSpecified
+        /// Serialized Name: SqlServerLicenseType.NotSpecified
+        /// </summary>
         public static SqlServerLicenseType NotSpecified { get; } = new SqlServerLicenseType(NotSpecifiedValue);
-        /// <summary> NoLicenseType. </summary>
+        /// <summary>
+        /// NoLicenseType
+        /// Serialized Name: SqlServerLicenseType.NoLicenseType
+        /// </summary>
         public static SqlServerLicenseType NoLicenseType { get; } = new SqlServerLicenseType(NoLicenseTypeValue);
-        /// <summary> PAYG. </summary>
+        /// <summary>
+        /// PAYG
+        /// Serialized Name: SqlServerLicenseType.PAYG
+        /// </summary>
         public static SqlServerLicenseType Payg { get; } = new SqlServerLicenseType(PaygValue);
-        /// <summary> AHUB. </summary>
+        /// <summary>
+        /// AHUB
+        /// Serialized Name: SqlServerLicenseType.AHUB
+        /// </summary>
         public static SqlServerLicenseType Ahub { get; } = new SqlServerLicenseType(AhubValue);
         /// <summary> Determines if two <see cref="SqlServerLicenseType"/> values are the same. </summary>
         public static bool operator ==(SqlServerLicenseType left, SqlServerLicenseType right) => left.Equals(right);

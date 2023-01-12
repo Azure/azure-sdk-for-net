@@ -11,7 +11,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary> Details of a Master Target Server. </summary>
+    /// <summary>
+    /// Details of a Master Target Server.
+    /// Serialized Name: MasterTargetServer
+    /// </summary>
     public partial class MasterTargetServer
     {
         /// <summary> Initializes a new instance of MasterTargetServer. </summary>
@@ -24,24 +27,78 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> Initializes a new instance of MasterTargetServer. </summary>
-        /// <param name="id"> The server Id. </param>
-        /// <param name="ipAddress"> The IP address of the server. </param>
-        /// <param name="name"> The server name. </param>
-        /// <param name="osType"> The OS type of the server. </param>
-        /// <param name="agentVersion"> The version of the scout component on the server. </param>
-        /// <param name="lastHeartbeat"> The last heartbeat received from the server. </param>
-        /// <param name="versionStatus"> Version status. </param>
-        /// <param name="retentionVolumes"> The retention volumes of Master target Server. </param>
-        /// <param name="dataStores"> The list of data stores in the fabric. </param>
-        /// <param name="validationErrors"> Validation errors. </param>
-        /// <param name="healthErrors"> Health errors. </param>
-        /// <param name="diskCount"> Disk count of the master target. </param>
-        /// <param name="osVersion"> OS Version of the master target. </param>
-        /// <param name="agentExpiryOn"> Agent expiry date. </param>
-        /// <param name="marsAgentVersion"> MARS agent version. </param>
-        /// <param name="marsAgentExpiryOn"> MARS agent expiry date. </param>
-        /// <param name="agentVersionDetails"> Agent version details. </param>
-        /// <param name="marsAgentVersionDetails"> Mars agent version details. </param>
+        /// <param name="id">
+        /// The server Id.
+        /// Serialized Name: MasterTargetServer.id
+        /// </param>
+        /// <param name="ipAddress">
+        /// The IP address of the server.
+        /// Serialized Name: MasterTargetServer.ipAddress
+        /// </param>
+        /// <param name="name">
+        /// The server name.
+        /// Serialized Name: MasterTargetServer.name
+        /// </param>
+        /// <param name="osType">
+        /// The OS type of the server.
+        /// Serialized Name: MasterTargetServer.osType
+        /// </param>
+        /// <param name="agentVersion">
+        /// The version of the scout component on the server.
+        /// Serialized Name: MasterTargetServer.agentVersion
+        /// </param>
+        /// <param name="lastHeartbeat">
+        /// The last heartbeat received from the server.
+        /// Serialized Name: MasterTargetServer.lastHeartbeat
+        /// </param>
+        /// <param name="versionStatus">
+        /// Version status.
+        /// Serialized Name: MasterTargetServer.versionStatus
+        /// </param>
+        /// <param name="retentionVolumes">
+        /// The retention volumes of Master target Server.
+        /// Serialized Name: MasterTargetServer.retentionVolumes
+        /// </param>
+        /// <param name="dataStores">
+        /// The list of data stores in the fabric.
+        /// Serialized Name: MasterTargetServer.dataStores
+        /// </param>
+        /// <param name="validationErrors">
+        /// Validation errors.
+        /// Serialized Name: MasterTargetServer.validationErrors
+        /// </param>
+        /// <param name="healthErrors">
+        /// Health errors.
+        /// Serialized Name: MasterTargetServer.healthErrors
+        /// </param>
+        /// <param name="diskCount">
+        /// Disk count of the master target.
+        /// Serialized Name: MasterTargetServer.diskCount
+        /// </param>
+        /// <param name="osVersion">
+        /// OS Version of the master target.
+        /// Serialized Name: MasterTargetServer.osVersion
+        /// </param>
+        /// <param name="agentExpiryOn">
+        /// Agent expiry date.
+        /// Serialized Name: MasterTargetServer.agentExpiryDate
+        /// </param>
+        /// <param name="marsAgentVersion">
+        /// MARS agent version.
+        /// Serialized Name: MasterTargetServer.marsAgentVersion
+        /// </param>
+        /// <param name="marsAgentExpiryOn">
+        /// MARS agent expiry date.
+        /// Serialized Name: MasterTargetServer.marsAgentExpiryDate
+        /// </param>
+        /// <param name="agentVersionDetails">
+        /// Agent version details.
+        /// Serialized Name: MasterTargetServer.agentVersionDetails
+        /// </param>
+        /// <param name="marsAgentVersionDetails">
+        /// Mars agent version details.
+        /// Serialized Name: MasterTargetServer.marsAgentVersionDetails
+        /// </param>
         internal MasterTargetServer(string id, string ipAddress, string name, string osType, string agentVersion, DateTimeOffset? lastHeartbeat, string versionStatus, IReadOnlyList<RetentionVolume> retentionVolumes, IReadOnlyList<DataStore> dataStores, IReadOnlyList<HealthError> validationErrors, IReadOnlyList<HealthError> healthErrors, int? diskCount, string osVersion, DateTimeOffset? agentExpiryOn, string marsAgentVersion, DateTimeOffset? marsAgentExpiryOn, VersionDetails agentVersionDetails, VersionDetails marsAgentVersionDetails)
         {
             Id = id;
@@ -64,41 +121,95 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             MarsAgentVersionDetails = marsAgentVersionDetails;
         }
 
-        /// <summary> The server Id. </summary>
+        /// <summary>
+        /// The server Id.
+        /// Serialized Name: MasterTargetServer.id
+        /// </summary>
         public string Id { get; }
-        /// <summary> The IP address of the server. </summary>
+        /// <summary>
+        /// The IP address of the server.
+        /// Serialized Name: MasterTargetServer.ipAddress
+        /// </summary>
         public string IPAddress { get; }
-        /// <summary> The server name. </summary>
+        /// <summary>
+        /// The server name.
+        /// Serialized Name: MasterTargetServer.name
+        /// </summary>
         public string Name { get; }
-        /// <summary> The OS type of the server. </summary>
+        /// <summary>
+        /// The OS type of the server.
+        /// Serialized Name: MasterTargetServer.osType
+        /// </summary>
         public string OSType { get; }
-        /// <summary> The version of the scout component on the server. </summary>
+        /// <summary>
+        /// The version of the scout component on the server.
+        /// Serialized Name: MasterTargetServer.agentVersion
+        /// </summary>
         public string AgentVersion { get; }
-        /// <summary> The last heartbeat received from the server. </summary>
+        /// <summary>
+        /// The last heartbeat received from the server.
+        /// Serialized Name: MasterTargetServer.lastHeartbeat
+        /// </summary>
         public DateTimeOffset? LastHeartbeat { get; }
-        /// <summary> Version status. </summary>
+        /// <summary>
+        /// Version status.
+        /// Serialized Name: MasterTargetServer.versionStatus
+        /// </summary>
         public string VersionStatus { get; }
-        /// <summary> The retention volumes of Master target Server. </summary>
+        /// <summary>
+        /// The retention volumes of Master target Server.
+        /// Serialized Name: MasterTargetServer.retentionVolumes
+        /// </summary>
         public IReadOnlyList<RetentionVolume> RetentionVolumes { get; }
-        /// <summary> The list of data stores in the fabric. </summary>
+        /// <summary>
+        /// The list of data stores in the fabric.
+        /// Serialized Name: MasterTargetServer.dataStores
+        /// </summary>
         public IReadOnlyList<DataStore> DataStores { get; }
-        /// <summary> Validation errors. </summary>
+        /// <summary>
+        /// Validation errors.
+        /// Serialized Name: MasterTargetServer.validationErrors
+        /// </summary>
         public IReadOnlyList<HealthError> ValidationErrors { get; }
-        /// <summary> Health errors. </summary>
+        /// <summary>
+        /// Health errors.
+        /// Serialized Name: MasterTargetServer.healthErrors
+        /// </summary>
         public IReadOnlyList<HealthError> HealthErrors { get; }
-        /// <summary> Disk count of the master target. </summary>
+        /// <summary>
+        /// Disk count of the master target.
+        /// Serialized Name: MasterTargetServer.diskCount
+        /// </summary>
         public int? DiskCount { get; }
-        /// <summary> OS Version of the master target. </summary>
+        /// <summary>
+        /// OS Version of the master target.
+        /// Serialized Name: MasterTargetServer.osVersion
+        /// </summary>
         public string OSVersion { get; }
-        /// <summary> Agent expiry date. </summary>
+        /// <summary>
+        /// Agent expiry date.
+        /// Serialized Name: MasterTargetServer.agentExpiryDate
+        /// </summary>
         public DateTimeOffset? AgentExpiryOn { get; }
-        /// <summary> MARS agent version. </summary>
+        /// <summary>
+        /// MARS agent version.
+        /// Serialized Name: MasterTargetServer.marsAgentVersion
+        /// </summary>
         public string MarsAgentVersion { get; }
-        /// <summary> MARS agent expiry date. </summary>
+        /// <summary>
+        /// MARS agent expiry date.
+        /// Serialized Name: MasterTargetServer.marsAgentExpiryDate
+        /// </summary>
         public DateTimeOffset? MarsAgentExpiryOn { get; }
-        /// <summary> Agent version details. </summary>
+        /// <summary>
+        /// Agent version details.
+        /// Serialized Name: MasterTargetServer.agentVersionDetails
+        /// </summary>
         public VersionDetails AgentVersionDetails { get; }
-        /// <summary> Mars agent version details. </summary>
+        /// <summary>
+        /// Mars agent version details.
+        /// Serialized Name: MasterTargetServer.marsAgentVersionDetails
+        /// </summary>
         public VersionDetails MarsAgentVersionDetails { get; }
     }
 }

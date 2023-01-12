@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary> The datastore details of the MT. </summary>
+    /// <summary>
+    /// The datastore details of the MT.
+    /// Serialized Name: DataStore
+    /// </summary>
     public partial class DataStore
     {
         /// <summary> Initializes a new instance of DataStore. </summary>
@@ -16,11 +19,26 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> Initializes a new instance of DataStore. </summary>
-        /// <param name="symbolicName"> The symbolic name of data store. </param>
-        /// <param name="uuid"> The uuid of data store. </param>
-        /// <param name="capacity"> The capacity of data store in GBs. </param>
-        /// <param name="freeSpace"> The free space of data store in GBs. </param>
-        /// <param name="dataStoreType"> The type of data store. </param>
+        /// <param name="symbolicName">
+        /// The symbolic name of data store.
+        /// Serialized Name: DataStore.symbolicName
+        /// </param>
+        /// <param name="uuid">
+        /// The uuid of data store.
+        /// Serialized Name: DataStore.uuid
+        /// </param>
+        /// <param name="capacity">
+        /// The capacity of data store in GBs.
+        /// Serialized Name: DataStore.capacity
+        /// </param>
+        /// <param name="freeSpace">
+        /// The free space of data store in GBs.
+        /// Serialized Name: DataStore.freeSpace
+        /// </param>
+        /// <param name="dataStoreType">
+        /// The type of data store.
+        /// Serialized Name: DataStore.type
+        /// </param>
         internal DataStore(string symbolicName, string uuid, string capacity, string freeSpace, string dataStoreType)
         {
             SymbolicName = symbolicName;
@@ -30,15 +48,30 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             DataStoreType = dataStoreType;
         }
 
-        /// <summary> The symbolic name of data store. </summary>
+        /// <summary>
+        /// The symbolic name of data store.
+        /// Serialized Name: DataStore.symbolicName
+        /// </summary>
         public string SymbolicName { get; }
-        /// <summary> The uuid of data store. </summary>
+        /// <summary>
+        /// The uuid of data store.
+        /// Serialized Name: DataStore.uuid
+        /// </summary>
         public string Uuid { get; }
-        /// <summary> The capacity of data store in GBs. </summary>
+        /// <summary>
+        /// The capacity of data store in GBs.
+        /// Serialized Name: DataStore.capacity
+        /// </summary>
         public string Capacity { get; }
-        /// <summary> The free space of data store in GBs. </summary>
+        /// <summary>
+        /// The free space of data store in GBs.
+        /// Serialized Name: DataStore.freeSpace
+        /// </summary>
         public string FreeSpace { get; }
-        /// <summary> The type of data store. </summary>
+        /// <summary>
+        /// The type of data store.
+        /// Serialized Name: DataStore.type
+        /// </summary>
         public string DataStoreType { get; }
     }
 }

@@ -10,7 +10,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary> Network Properties. </summary>
+    /// <summary>
+    /// Network Properties.
+    /// Serialized Name: NetworkProperties
+    /// </summary>
     public partial class NetworkProperties
     {
         /// <summary> Initializes a new instance of NetworkProperties. </summary>
@@ -20,10 +23,22 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> Initializes a new instance of NetworkProperties. </summary>
-        /// <param name="fabricType"> The Fabric Type. </param>
-        /// <param name="subnets"> The List of subnets. </param>
-        /// <param name="friendlyName"> The Friendly Name. </param>
-        /// <param name="networkType"> The Network Type. </param>
+        /// <param name="fabricType">
+        /// The Fabric Type.
+        /// Serialized Name: NetworkProperties.fabricType
+        /// </param>
+        /// <param name="subnets">
+        /// The List of subnets.
+        /// Serialized Name: NetworkProperties.subnets
+        /// </param>
+        /// <param name="friendlyName">
+        /// The Friendly Name.
+        /// Serialized Name: NetworkProperties.friendlyName
+        /// </param>
+        /// <param name="networkType">
+        /// The Network Type.
+        /// Serialized Name: NetworkProperties.networkType
+        /// </param>
         internal NetworkProperties(string fabricType, IReadOnlyList<Subnet> subnets, string friendlyName, string networkType)
         {
             FabricType = fabricType;
@@ -32,13 +47,25 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             NetworkType = networkType;
         }
 
-        /// <summary> The Fabric Type. </summary>
+        /// <summary>
+        /// The Fabric Type.
+        /// Serialized Name: NetworkProperties.fabricType
+        /// </summary>
         public string FabricType { get; }
-        /// <summary> The List of subnets. </summary>
+        /// <summary>
+        /// The List of subnets.
+        /// Serialized Name: NetworkProperties.subnets
+        /// </summary>
         public IReadOnlyList<Subnet> Subnets { get; }
-        /// <summary> The Friendly Name. </summary>
+        /// <summary>
+        /// The Friendly Name.
+        /// Serialized Name: NetworkProperties.friendlyName
+        /// </summary>
         public string FriendlyName { get; }
-        /// <summary> The Network Type. </summary>
+        /// <summary>
+        /// The Network Type.
+        /// Serialized Name: NetworkProperties.networkType
+        /// </summary>
         public string NetworkType { get; }
     }
 }

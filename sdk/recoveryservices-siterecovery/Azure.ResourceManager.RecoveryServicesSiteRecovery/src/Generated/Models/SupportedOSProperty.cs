@@ -10,7 +10,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary> Supported operating systems property. </summary>
+    /// <summary>
+    /// Supported operating systems property.
+    /// Serialized Name: SupportedOSProperty
+    /// </summary>
     public partial class SupportedOSProperty
     {
         /// <summary> Initializes a new instance of SupportedOSProperty. </summary>
@@ -20,17 +23,29 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> Initializes a new instance of SupportedOSProperty. </summary>
-        /// <param name="instanceType"> The replication provider type. </param>
-        /// <param name="supportedOS"> The list of supported operating systems. </param>
+        /// <param name="instanceType">
+        /// The replication provider type.
+        /// Serialized Name: SupportedOSProperty.instanceType
+        /// </param>
+        /// <param name="supportedOS">
+        /// The list of supported operating systems.
+        /// Serialized Name: SupportedOSProperty.supportedOs
+        /// </param>
         internal SupportedOSProperty(string instanceType, IReadOnlyList<SupportedOSDetails> supportedOS)
         {
             InstanceType = instanceType;
             SupportedOS = supportedOS;
         }
 
-        /// <summary> The replication provider type. </summary>
+        /// <summary>
+        /// The replication provider type.
+        /// Serialized Name: SupportedOSProperty.instanceType
+        /// </summary>
         public string InstanceType { get; }
-        /// <summary> The list of supported operating systems. </summary>
+        /// <summary>
+        /// The list of supported operating systems.
+        /// Serialized Name: SupportedOSProperty.supportedOs
+        /// </summary>
         public IReadOnlyList<SupportedOSDetails> SupportedOS { get; }
     }
 }

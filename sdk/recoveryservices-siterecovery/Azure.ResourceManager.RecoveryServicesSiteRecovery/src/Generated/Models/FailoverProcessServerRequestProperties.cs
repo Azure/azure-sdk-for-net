@@ -10,7 +10,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary> The properties of the Failover Process Server request. </summary>
+    /// <summary>
+    /// The properties of the Failover Process Server request.
+    /// Serialized Name: FailoverProcessServerRequestProperties
+    /// </summary>
     public partial class FailoverProcessServerRequestProperties
     {
         /// <summary> Initializes a new instance of FailoverProcessServerRequestProperties. </summary>
@@ -19,15 +22,30 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             VmsToMigrate = new ChangeTrackingList<string>();
         }
 
-        /// <summary> The container identifier. </summary>
+        /// <summary>
+        /// The container identifier.
+        /// Serialized Name: FailoverProcessServerRequestProperties.containerName
+        /// </summary>
         public string ContainerName { get; set; }
-        /// <summary> The source process server. </summary>
+        /// <summary>
+        /// The source process server.
+        /// Serialized Name: FailoverProcessServerRequestProperties.sourceProcessServerId
+        /// </summary>
         public string SourceProcessServerId { get; set; }
-        /// <summary> The new process server. </summary>
+        /// <summary>
+        /// The new process server.
+        /// Serialized Name: FailoverProcessServerRequestProperties.targetProcessServerId
+        /// </summary>
         public string TargetProcessServerId { get; set; }
-        /// <summary> The VMS to migrate. </summary>
+        /// <summary>
+        /// The VMS to migrate.
+        /// Serialized Name: FailoverProcessServerRequestProperties.vmsToMigrate
+        /// </summary>
         public IList<string> VmsToMigrate { get; }
-        /// <summary> A value for failover type. It can be systemlevel/serverlevel. </summary>
+        /// <summary>
+        /// A value for failover type. It can be systemlevel/serverlevel.
+        /// Serialized Name: FailoverProcessServerRequestProperties.updateType
+        /// </summary>
         public string UpdateType { get; set; }
     }
 }

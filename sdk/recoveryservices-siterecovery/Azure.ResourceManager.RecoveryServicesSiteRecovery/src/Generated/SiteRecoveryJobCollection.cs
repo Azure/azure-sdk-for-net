@@ -20,33 +20,33 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
 {
     /// <summary>
-    /// A class representing a collection of <see cref="JobResource" /> and their operations.
-    /// Each <see cref="JobResource" /> in the collection will belong to the same instance of <see cref="ResourceGroupResource" />.
-    /// To get a <see cref="JobCollection" /> instance call the GetJobs method from an instance of <see cref="ResourceGroupResource" />.
+    /// A class representing a collection of <see cref="SiteRecoveryJobResource" /> and their operations.
+    /// Each <see cref="SiteRecoveryJobResource" /> in the collection will belong to the same instance of <see cref="ResourceGroupResource" />.
+    /// To get a <see cref="SiteRecoveryJobCollection" /> instance call the GetSiteRecoveryJobs method from an instance of <see cref="ResourceGroupResource" />.
     /// </summary>
-    public partial class JobCollection : ArmCollection, IEnumerable<JobResource>, IAsyncEnumerable<JobResource>
+    public partial class SiteRecoveryJobCollection : ArmCollection, IEnumerable<SiteRecoveryJobResource>, IAsyncEnumerable<SiteRecoveryJobResource>
     {
-        private readonly ClientDiagnostics _jobReplicationJobsClientDiagnostics;
-        private readonly ReplicationJobsRestOperations _jobReplicationJobsRestClient;
+        private readonly ClientDiagnostics _siteRecoveryJobReplicationJobsClientDiagnostics;
+        private readonly ReplicationJobsRestOperations _siteRecoveryJobReplicationJobsRestClient;
         private readonly string _resourceName;
 
-        /// <summary> Initializes a new instance of the <see cref="JobCollection"/> class for mocking. </summary>
-        protected JobCollection()
+        /// <summary> Initializes a new instance of the <see cref="SiteRecoveryJobCollection"/> class for mocking. </summary>
+        protected SiteRecoveryJobCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="JobCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="SiteRecoveryJobCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         /// <param name="resourceName"> The name of the recovery services vault. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        internal JobCollection(ArmClient client, ResourceIdentifier id, string resourceName) : base(client, id)
+        internal SiteRecoveryJobCollection(ArmClient client, ResourceIdentifier id, string resourceName) : base(client, id)
         {
             _resourceName = resourceName;
-            _jobReplicationJobsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.RecoveryServicesSiteRecovery", JobResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(JobResource.ResourceType, out string jobReplicationJobsApiVersion);
-            _jobReplicationJobsRestClient = new ReplicationJobsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, jobReplicationJobsApiVersion);
+            _siteRecoveryJobReplicationJobsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.RecoveryServicesSiteRecovery", SiteRecoveryJobResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(SiteRecoveryJobResource.ResourceType, out string siteRecoveryJobReplicationJobsApiVersion);
+            _siteRecoveryJobReplicationJobsRestClient = new ReplicationJobsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, siteRecoveryJobReplicationJobsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -67,18 +67,18 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="jobName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="jobName"/> is null. </exception>
-        public virtual async Task<Response<JobResource>> GetAsync(string jobName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SiteRecoveryJobResource>> GetAsync(string jobName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(jobName, nameof(jobName));
 
-            using var scope = _jobReplicationJobsClientDiagnostics.CreateScope("JobCollection.Get");
+            using var scope = _siteRecoveryJobReplicationJobsClientDiagnostics.CreateScope("SiteRecoveryJobCollection.Get");
             scope.Start();
             try
             {
-                var response = await _jobReplicationJobsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, _resourceName, jobName, cancellationToken).ConfigureAwait(false);
+                var response = await _siteRecoveryJobReplicationJobsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, _resourceName, jobName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new JobResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SiteRecoveryJobResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -96,18 +96,18 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="jobName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="jobName"/> is null. </exception>
-        public virtual Response<JobResource> Get(string jobName, CancellationToken cancellationToken = default)
+        public virtual Response<SiteRecoveryJobResource> Get(string jobName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(jobName, nameof(jobName));
 
-            using var scope = _jobReplicationJobsClientDiagnostics.CreateScope("JobCollection.Get");
+            using var scope = _siteRecoveryJobReplicationJobsClientDiagnostics.CreateScope("SiteRecoveryJobCollection.Get");
             scope.Start();
             try
             {
-                var response = _jobReplicationJobsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, _resourceName, jobName, cancellationToken);
+                var response = _siteRecoveryJobReplicationJobsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, _resourceName, jobName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new JobResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SiteRecoveryJobResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -123,12 +123,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// </summary>
         /// <param name="filter"> OData filter options. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="JobResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<JobResource> GetAllAsync(string filter = null, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="SiteRecoveryJobResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<SiteRecoveryJobResource> GetAllAsync(string filter = null, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _jobReplicationJobsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, _resourceName, filter);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _jobReplicationJobsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, _resourceName, filter);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new JobResource(Client, JobData.DeserializeJobData(e)), _jobReplicationJobsClientDiagnostics, Pipeline, "JobCollection.GetAll", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _siteRecoveryJobReplicationJobsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, _resourceName, filter);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _siteRecoveryJobReplicationJobsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, _resourceName, filter);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SiteRecoveryJobResource(Client, SiteRecoveryJobData.DeserializeSiteRecoveryJobData(e)), _siteRecoveryJobReplicationJobsClientDiagnostics, Pipeline, "SiteRecoveryJobCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -138,12 +138,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// </summary>
         /// <param name="filter"> OData filter options. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="JobResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<JobResource> GetAll(string filter = null, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="SiteRecoveryJobResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<SiteRecoveryJobResource> GetAll(string filter = null, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _jobReplicationJobsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, _resourceName, filter);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _jobReplicationJobsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, _resourceName, filter);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new JobResource(Client, JobData.DeserializeJobData(e)), _jobReplicationJobsClientDiagnostics, Pipeline, "JobCollection.GetAll", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _siteRecoveryJobReplicationJobsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, _resourceName, filter);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _siteRecoveryJobReplicationJobsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, _resourceName, filter);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SiteRecoveryJobResource(Client, SiteRecoveryJobData.DeserializeSiteRecoveryJobData(e)), _siteRecoveryJobReplicationJobsClientDiagnostics, Pipeline, "SiteRecoveryJobCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -159,11 +159,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         {
             Argument.AssertNotNullOrEmpty(jobName, nameof(jobName));
 
-            using var scope = _jobReplicationJobsClientDiagnostics.CreateScope("JobCollection.Exists");
+            using var scope = _siteRecoveryJobReplicationJobsClientDiagnostics.CreateScope("SiteRecoveryJobCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _jobReplicationJobsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, _resourceName, jobName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _siteRecoveryJobReplicationJobsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, _resourceName, jobName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -186,11 +186,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         {
             Argument.AssertNotNullOrEmpty(jobName, nameof(jobName));
 
-            using var scope = _jobReplicationJobsClientDiagnostics.CreateScope("JobCollection.Exists");
+            using var scope = _siteRecoveryJobReplicationJobsClientDiagnostics.CreateScope("SiteRecoveryJobCollection.Exists");
             scope.Start();
             try
             {
-                var response = _jobReplicationJobsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, _resourceName, jobName, cancellationToken: cancellationToken);
+                var response = _siteRecoveryJobReplicationJobsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, _resourceName, jobName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
             }
         }
 
-        IEnumerator<JobResource> IEnumerable<JobResource>.GetEnumerator()
+        IEnumerator<SiteRecoveryJobResource> IEnumerable<SiteRecoveryJobResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
             return GetAll().GetEnumerator();
         }
 
-        IAsyncEnumerator<JobResource> IAsyncEnumerable<JobResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<SiteRecoveryJobResource> IAsyncEnumerable<SiteRecoveryJobResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }

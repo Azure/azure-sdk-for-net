@@ -10,11 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary> Resume replication input. </summary>
+    /// <summary>
+    /// Resume replication input.
+    /// Serialized Name: ResumeReplicationInput
+    /// </summary>
     public partial class ResumeReplicationContent
     {
         /// <summary> Initializes a new instance of ResumeReplicationContent. </summary>
-        /// <param name="properties"> Resume replication input properties. </param>
+        /// <param name="properties">
+        /// Resume replication input properties.
+        /// Serialized Name: ResumeReplicationInput.properties
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
         public ResumeReplicationContent(ResumeReplicationInputProperties properties)
         {
@@ -23,10 +29,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             Properties = properties;
         }
 
-        /// <summary> Resume replication input properties. </summary>
+        /// <summary>
+        /// Resume replication input properties.
+        /// Serialized Name: ResumeReplicationInput.properties
+        /// </summary>
         internal ResumeReplicationInputProperties Properties { get; }
         /// <summary>
         /// The provider specific input for resume replication.
+        /// Serialized Name: ResumeReplicationInputProperties.providerSpecificDetails
         /// Please note <see cref="ResumeReplicationProviderSpecificInput"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="VMwareCbtResumeReplicationInput"/>.
         /// Please note <see cref="ResumeReplicationProviderSpecificInput"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.

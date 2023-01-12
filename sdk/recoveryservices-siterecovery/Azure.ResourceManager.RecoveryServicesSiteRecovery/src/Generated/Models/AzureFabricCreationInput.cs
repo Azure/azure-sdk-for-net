@@ -9,7 +9,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary> Fabric provider specific settings. </summary>
+    /// <summary>
+    /// Fabric provider specific settings.
+    /// Serialized Name: AzureFabricCreationInput
+    /// </summary>
     public partial class AzureFabricCreationInput : FabricSpecificCreationInput
     {
         /// <summary> Initializes a new instance of AzureFabricCreationInput. </summary>
@@ -18,7 +21,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             InstanceType = "Azure";
         }
 
-        /// <summary> The Location. </summary>
+        /// <summary>
+        /// The Location.
+        /// Serialized Name: AzureFabricCreationInput.location
+        /// </summary>
         public AzureLocation? Location { get; set; }
     }
 }

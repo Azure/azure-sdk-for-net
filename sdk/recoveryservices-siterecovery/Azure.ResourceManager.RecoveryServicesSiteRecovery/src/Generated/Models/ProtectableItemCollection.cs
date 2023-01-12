@@ -11,7 +11,10 @@ using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary> Protectable item collection. </summary>
+    /// <summary>
+    /// Protectable item collection.
+    /// Serialized Name: ProtectableItemCollection
+    /// </summary>
     internal partial class ProtectableItemCollection
     {
         /// <summary> Initializes a new instance of ProtectableItemCollection. </summary>
@@ -21,17 +24,29 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> Initializes a new instance of ProtectableItemCollection. </summary>
-        /// <param name="value"> The Protectable item details. </param>
-        /// <param name="nextLink"> The value of next link. </param>
+        /// <param name="value">
+        /// The Protectable item details.
+        /// Serialized Name: ProtectableItemCollection.value
+        /// </param>
+        /// <param name="nextLink">
+        /// The value of next link.
+        /// Serialized Name: ProtectableItemCollection.nextLink
+        /// </param>
         internal ProtectableItemCollection(IReadOnlyList<ProtectableItemData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
-        /// <summary> The Protectable item details. </summary>
+        /// <summary>
+        /// The Protectable item details.
+        /// Serialized Name: ProtectableItemCollection.value
+        /// </summary>
         public IReadOnlyList<ProtectableItemData> Value { get; }
-        /// <summary> The value of next link. </summary>
+        /// <summary>
+        /// The value of next link.
+        /// Serialized Name: ProtectableItemCollection.nextLink
+        /// </summary>
         public string NextLink { get; }
     }
 }

@@ -10,11 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary> ApplyRecoveryPoint input specific to InMageRcm provider. </summary>
+    /// <summary>
+    /// ApplyRecoveryPoint input specific to InMageRcm provider.
+    /// Serialized Name: InMageRcmApplyRecoveryPointInput
+    /// </summary>
     public partial class InMageRcmApplyRecoveryPointInput : ApplyRecoveryPointProviderSpecificInput
     {
         /// <summary> Initializes a new instance of InMageRcmApplyRecoveryPointInput. </summary>
-        /// <param name="recoveryPointId"> The recovery point Id. </param>
+        /// <param name="recoveryPointId">
+        /// The recovery point Id.
+        /// Serialized Name: InMageRcmApplyRecoveryPointInput.recoveryPointId
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="recoveryPointId"/> is null. </exception>
         public InMageRcmApplyRecoveryPointInput(string recoveryPointId)
         {
@@ -24,7 +30,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             InstanceType = "InMageRcm";
         }
 
-        /// <summary> The recovery point Id. </summary>
+        /// <summary>
+        /// The recovery point Id.
+        /// Serialized Name: InMageRcmApplyRecoveryPointInput.recoveryPointId
+        /// </summary>
         public string RecoveryPointId { get; }
     }
 }

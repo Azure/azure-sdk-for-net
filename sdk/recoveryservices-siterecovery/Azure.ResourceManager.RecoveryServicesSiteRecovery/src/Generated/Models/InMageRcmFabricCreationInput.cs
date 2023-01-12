@@ -10,13 +10,25 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary> InMageRcm fabric provider specific settings. </summary>
+    /// <summary>
+    /// InMageRcm fabric provider specific settings.
+    /// Serialized Name: InMageRcmFabricCreationInput
+    /// </summary>
     public partial class InMageRcmFabricCreationInput : FabricSpecificCreationInput
     {
         /// <summary> Initializes a new instance of InMageRcmFabricCreationInput. </summary>
-        /// <param name="vmwareSiteId"> The ARM Id of the VMware site. </param>
-        /// <param name="physicalSiteId"> The ARM Id of the physical site. </param>
-        /// <param name="sourceAgentIdentity"> The identity provider input for source agent authentication. </param>
+        /// <param name="vmwareSiteId">
+        /// The ARM Id of the VMware site.
+        /// Serialized Name: InMageRcmFabricCreationInput.vmwareSiteId
+        /// </param>
+        /// <param name="physicalSiteId">
+        /// The ARM Id of the physical site.
+        /// Serialized Name: InMageRcmFabricCreationInput.physicalSiteId
+        /// </param>
+        /// <param name="sourceAgentIdentity">
+        /// The identity provider input for source agent authentication.
+        /// Serialized Name: InMageRcmFabricCreationInput.sourceAgentIdentity
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="vmwareSiteId"/>, <paramref name="physicalSiteId"/> or <paramref name="sourceAgentIdentity"/> is null. </exception>
         public InMageRcmFabricCreationInput(string vmwareSiteId, string physicalSiteId, IdentityProviderInput sourceAgentIdentity)
         {
@@ -30,11 +42,20 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             InstanceType = "InMageRcm";
         }
 
-        /// <summary> The ARM Id of the VMware site. </summary>
+        /// <summary>
+        /// The ARM Id of the VMware site.
+        /// Serialized Name: InMageRcmFabricCreationInput.vmwareSiteId
+        /// </summary>
         public string VMwareSiteId { get; }
-        /// <summary> The ARM Id of the physical site. </summary>
+        /// <summary>
+        /// The ARM Id of the physical site.
+        /// Serialized Name: InMageRcmFabricCreationInput.physicalSiteId
+        /// </summary>
         public string PhysicalSiteId { get; }
-        /// <summary> The identity provider input for source agent authentication. </summary>
+        /// <summary>
+        /// The identity provider input for source agent authentication.
+        /// Serialized Name: InMageRcmFabricCreationInput.sourceAgentIdentity
+        /// </summary>
         public IdentityProviderInput SourceAgentIdentity { get; }
     }
 }

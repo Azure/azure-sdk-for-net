@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary> Enable protection input. </summary>
+    /// <summary>
+    /// Enable protection input.
+    /// Serialized Name: EnableProtectionInput
+    /// </summary>
     public partial class ReplicationProtectedItemCreateOrUpdateContent
     {
         /// <summary> Initializes a new instance of ReplicationProtectedItemCreateOrUpdateContent. </summary>
@@ -15,7 +18,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         {
         }
 
-        /// <summary> Enable protection input properties. </summary>
+        /// <summary>
+        /// Enable protection input properties.
+        /// Serialized Name: EnableProtectionInput.properties
+        /// </summary>
         public EnableProtectionInputProperties Properties { get; set; }
     }
 }

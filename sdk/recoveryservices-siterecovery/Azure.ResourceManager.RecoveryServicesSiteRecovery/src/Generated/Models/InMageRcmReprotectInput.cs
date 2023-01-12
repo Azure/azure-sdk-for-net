@@ -10,13 +10,25 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary> InMageRcm specific provider input. </summary>
+    /// <summary>
+    /// InMageRcm specific provider input.
+    /// Serialized Name: InMageRcmReprotectInput
+    /// </summary>
     public partial class InMageRcmReprotectInput : ReverseReplicationProviderSpecificInput
     {
         /// <summary> Initializes a new instance of InMageRcmReprotectInput. </summary>
-        /// <param name="reprotectAgentId"> The reprotect agent Id. </param>
-        /// <param name="datastoreName"> The target datastore name. </param>
-        /// <param name="logStorageAccountId"> The log storage account ARM Id. </param>
+        /// <param name="reprotectAgentId">
+        /// The reprotect agent Id.
+        /// Serialized Name: InMageRcmReprotectInput.reprotectAgentId
+        /// </param>
+        /// <param name="datastoreName">
+        /// The target datastore name.
+        /// Serialized Name: InMageRcmReprotectInput.datastoreName
+        /// </param>
+        /// <param name="logStorageAccountId">
+        /// The log storage account ARM Id.
+        /// Serialized Name: InMageRcmReprotectInput.logStorageAccountId
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="reprotectAgentId"/>, <paramref name="datastoreName"/> or <paramref name="logStorageAccountId"/> is null. </exception>
         public InMageRcmReprotectInput(string reprotectAgentId, string datastoreName, string logStorageAccountId)
         {
@@ -30,13 +42,25 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             InstanceType = "InMageRcm";
         }
 
-        /// <summary> The reprotect agent Id. </summary>
+        /// <summary>
+        /// The reprotect agent Id.
+        /// Serialized Name: InMageRcmReprotectInput.reprotectAgentId
+        /// </summary>
         public string ReprotectAgentId { get; }
-        /// <summary> The target datastore name. </summary>
+        /// <summary>
+        /// The target datastore name.
+        /// Serialized Name: InMageRcmReprotectInput.datastoreName
+        /// </summary>
         public string DatastoreName { get; }
-        /// <summary> The log storage account ARM Id. </summary>
+        /// <summary>
+        /// The log storage account ARM Id.
+        /// Serialized Name: InMageRcmReprotectInput.logStorageAccountId
+        /// </summary>
         public string LogStorageAccountId { get; }
-        /// <summary> The Policy Id. </summary>
+        /// <summary>
+        /// The Policy Id.
+        /// Serialized Name: InMageRcmReprotectInput.policyId
+        /// </summary>
         public string PolicyId { get; set; }
     }
 }

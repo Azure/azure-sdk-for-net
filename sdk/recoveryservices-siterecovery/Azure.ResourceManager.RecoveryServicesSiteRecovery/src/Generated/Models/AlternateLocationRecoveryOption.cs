@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary> The ALR option. </summary>
+    /// <summary>
+    /// The ALR option.
+    /// Serialized Name: AlternateLocationRecoveryOption
+    /// </summary>
     public readonly partial struct AlternateLocationRecoveryOption : IEquatable<AlternateLocationRecoveryOption>
     {
         private readonly string _value;
@@ -25,9 +28,15 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         private const string CreateVmIfNotFoundValue = "CreateVmIfNotFound";
         private const string NoActionValue = "NoAction";
 
-        /// <summary> CreateVmIfNotFound. </summary>
+        /// <summary>
+        /// CreateVmIfNotFound
+        /// Serialized Name: AlternateLocationRecoveryOption.CreateVmIfNotFound
+        /// </summary>
         public static AlternateLocationRecoveryOption CreateVmIfNotFound { get; } = new AlternateLocationRecoveryOption(CreateVmIfNotFoundValue);
-        /// <summary> NoAction. </summary>
+        /// <summary>
+        /// NoAction
+        /// Serialized Name: AlternateLocationRecoveryOption.NoAction
+        /// </summary>
         public static AlternateLocationRecoveryOption NoAction { get; } = new AlternateLocationRecoveryOption(NoActionValue);
         /// <summary> Determines if two <see cref="AlternateLocationRecoveryOption"/> values are the same. </summary>
         public static bool operator ==(AlternateLocationRecoveryOption left, AlternateLocationRecoveryOption right) => left.Equals(right);

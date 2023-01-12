@@ -11,7 +11,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary> Details of the Process Server. </summary>
+    /// <summary>
+    /// Details of the Process Server.
+    /// Serialized Name: ProcessServer
+    /// </summary>
     public partial class ProcessServer
     {
         /// <summary> Initializes a new instance of ProcessServer. </summary>
@@ -22,42 +25,150 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> Initializes a new instance of ProcessServer. </summary>
-        /// <param name="friendlyName"> The Process Server&apos;s friendly name. </param>
-        /// <param name="id"> The Process Server Id. </param>
-        /// <param name="ipAddress"> The IP address of the server. </param>
-        /// <param name="osType"> The OS type of the server. </param>
-        /// <param name="agentVersion"> The version of the scout component on the server. </param>
-        /// <param name="lastHeartbeat"> The last heartbeat received from the server. </param>
-        /// <param name="versionStatus"> Version status. </param>
-        /// <param name="mobilityServiceUpdates"> The list of the mobility service updates available on the Process Server. </param>
-        /// <param name="hostId"> The agent generated Id. </param>
-        /// <param name="machineCount"> The servers configured with this PS. </param>
-        /// <param name="replicationPairCount"> The number of replication pairs configured in this PS. </param>
-        /// <param name="systemLoad"> The percentage of the system load. </param>
-        /// <param name="systemLoadStatus"> The system load status. </param>
-        /// <param name="cpuLoad"> The percentage of the CPU load. </param>
-        /// <param name="cpuLoadStatus"> The CPU load status. </param>
-        /// <param name="totalMemoryInBytes"> The total memory. </param>
-        /// <param name="availableMemoryInBytes"> The available memory. </param>
-        /// <param name="memoryUsageStatus"> The memory usage status. </param>
-        /// <param name="totalSpaceInBytes"> The total space. </param>
-        /// <param name="availableSpaceInBytes"> The available space. </param>
-        /// <param name="spaceUsageStatus"> The space usage status. </param>
-        /// <param name="psServiceStatus"> The PS service status. </param>
-        /// <param name="sslCertExpiryOn"> The PS SSL cert expiry date. </param>
-        /// <param name="sslCertExpiryRemainingDays"> CS SSL cert expiry date. </param>
-        /// <param name="osVersion"> OS Version of the process server. Note: This will get populated if user has CS version greater than 9.12.0.0. </param>
-        /// <param name="healthErrors"> Health errors. </param>
-        /// <param name="agentExpiryOn"> Agent expiry date. </param>
-        /// <param name="agentVersionDetails"> The agent version details. </param>
-        /// <param name="health"> The health of Process Server. </param>
-        /// <param name="psStatsRefreshOn"> The process server stats refresh time. </param>
-        /// <param name="throughputUploadPendingDataInBytes"> The uploading pending data in bytes. </param>
-        /// <param name="throughputInMBps"> The throughput in MBps. </param>
-        /// <param name="throughputInBytes"> The throughput in bytes. </param>
-        /// <param name="throughputStatus"> The throughput status. </param>
-        /// <param name="marsCommunicationStatus"> The MARS communication status. </param>
-        /// <param name="marsRegistrationStatus"> The MARS registration status. </param>
+        /// <param name="friendlyName">
+        /// The Process Server&apos;s friendly name.
+        /// Serialized Name: ProcessServer.friendlyName
+        /// </param>
+        /// <param name="id">
+        /// The Process Server Id.
+        /// Serialized Name: ProcessServer.id
+        /// </param>
+        /// <param name="ipAddress">
+        /// The IP address of the server.
+        /// Serialized Name: ProcessServer.ipAddress
+        /// </param>
+        /// <param name="osType">
+        /// The OS type of the server.
+        /// Serialized Name: ProcessServer.osType
+        /// </param>
+        /// <param name="agentVersion">
+        /// The version of the scout component on the server.
+        /// Serialized Name: ProcessServer.agentVersion
+        /// </param>
+        /// <param name="lastHeartbeat">
+        /// The last heartbeat received from the server.
+        /// Serialized Name: ProcessServer.lastHeartbeat
+        /// </param>
+        /// <param name="versionStatus">
+        /// Version status.
+        /// Serialized Name: ProcessServer.versionStatus
+        /// </param>
+        /// <param name="mobilityServiceUpdates">
+        /// The list of the mobility service updates available on the Process Server.
+        /// Serialized Name: ProcessServer.mobilityServiceUpdates
+        /// </param>
+        /// <param name="hostId">
+        /// The agent generated Id.
+        /// Serialized Name: ProcessServer.hostId
+        /// </param>
+        /// <param name="machineCount">
+        /// The servers configured with this PS.
+        /// Serialized Name: ProcessServer.machineCount
+        /// </param>
+        /// <param name="replicationPairCount">
+        /// The number of replication pairs configured in this PS.
+        /// Serialized Name: ProcessServer.replicationPairCount
+        /// </param>
+        /// <param name="systemLoad">
+        /// The percentage of the system load.
+        /// Serialized Name: ProcessServer.systemLoad
+        /// </param>
+        /// <param name="systemLoadStatus">
+        /// The system load status.
+        /// Serialized Name: ProcessServer.systemLoadStatus
+        /// </param>
+        /// <param name="cpuLoad">
+        /// The percentage of the CPU load.
+        /// Serialized Name: ProcessServer.cpuLoad
+        /// </param>
+        /// <param name="cpuLoadStatus">
+        /// The CPU load status.
+        /// Serialized Name: ProcessServer.cpuLoadStatus
+        /// </param>
+        /// <param name="totalMemoryInBytes">
+        /// The total memory.
+        /// Serialized Name: ProcessServer.totalMemoryInBytes
+        /// </param>
+        /// <param name="availableMemoryInBytes">
+        /// The available memory.
+        /// Serialized Name: ProcessServer.availableMemoryInBytes
+        /// </param>
+        /// <param name="memoryUsageStatus">
+        /// The memory usage status.
+        /// Serialized Name: ProcessServer.memoryUsageStatus
+        /// </param>
+        /// <param name="totalSpaceInBytes">
+        /// The total space.
+        /// Serialized Name: ProcessServer.totalSpaceInBytes
+        /// </param>
+        /// <param name="availableSpaceInBytes">
+        /// The available space.
+        /// Serialized Name: ProcessServer.availableSpaceInBytes
+        /// </param>
+        /// <param name="spaceUsageStatus">
+        /// The space usage status.
+        /// Serialized Name: ProcessServer.spaceUsageStatus
+        /// </param>
+        /// <param name="psServiceStatus">
+        /// The PS service status.
+        /// Serialized Name: ProcessServer.psServiceStatus
+        /// </param>
+        /// <param name="sslCertExpiryOn">
+        /// The PS SSL cert expiry date.
+        /// Serialized Name: ProcessServer.sslCertExpiryDate
+        /// </param>
+        /// <param name="sslCertExpiryRemainingDays">
+        /// CS SSL cert expiry date.
+        /// Serialized Name: ProcessServer.sslCertExpiryRemainingDays
+        /// </param>
+        /// <param name="osVersion">
+        /// OS Version of the process server. Note: This will get populated if user has CS version greater than 9.12.0.0.
+        /// Serialized Name: ProcessServer.osVersion
+        /// </param>
+        /// <param name="healthErrors">
+        /// Health errors.
+        /// Serialized Name: ProcessServer.healthErrors
+        /// </param>
+        /// <param name="agentExpiryOn">
+        /// Agent expiry date.
+        /// Serialized Name: ProcessServer.agentExpiryDate
+        /// </param>
+        /// <param name="agentVersionDetails">
+        /// The agent version details.
+        /// Serialized Name: ProcessServer.agentVersionDetails
+        /// </param>
+        /// <param name="health">
+        /// The health of Process Server.
+        /// Serialized Name: ProcessServer.health
+        /// </param>
+        /// <param name="psStatsRefreshOn">
+        /// The process server stats refresh time.
+        /// Serialized Name: ProcessServer.psStatsRefreshTime
+        /// </param>
+        /// <param name="throughputUploadPendingDataInBytes">
+        /// The uploading pending data in bytes.
+        /// Serialized Name: ProcessServer.throughputUploadPendingDataInBytes
+        /// </param>
+        /// <param name="throughputInMBps">
+        /// The throughput in MBps.
+        /// Serialized Name: ProcessServer.throughputInMBps
+        /// </param>
+        /// <param name="throughputInBytes">
+        /// The throughput in bytes.
+        /// Serialized Name: ProcessServer.throughputInBytes
+        /// </param>
+        /// <param name="throughputStatus">
+        /// The throughput status.
+        /// Serialized Name: ProcessServer.throughputStatus
+        /// </param>
+        /// <param name="marsCommunicationStatus">
+        /// The MARS communication status.
+        /// Serialized Name: ProcessServer.marsCommunicationStatus
+        /// </param>
+        /// <param name="marsRegistrationStatus">
+        /// The MARS registration status.
+        /// Serialized Name: ProcessServer.marsRegistrationStatus
+        /// </param>
         internal ProcessServer(string friendlyName, string id, string ipAddress, string osType, string agentVersion, DateTimeOffset? lastHeartbeat, string versionStatus, IReadOnlyList<MobilityServiceUpdate> mobilityServiceUpdates, string hostId, string machineCount, string replicationPairCount, string systemLoad, string systemLoadStatus, string cpuLoad, string cpuLoadStatus, long? totalMemoryInBytes, long? availableMemoryInBytes, string memoryUsageStatus, long? totalSpaceInBytes, long? availableSpaceInBytes, string spaceUsageStatus, string psServiceStatus, DateTimeOffset? sslCertExpiryOn, int? sslCertExpiryRemainingDays, string osVersion, IReadOnlyList<HealthError> healthErrors, DateTimeOffset? agentExpiryOn, VersionDetails agentVersionDetails, ProtectionHealth? health, DateTimeOffset? psStatsRefreshOn, long? throughputUploadPendingDataInBytes, long? throughputInMBps, long? throughputInBytes, string throughputStatus, string marsCommunicationStatus, string marsRegistrationStatus)
         {
             FriendlyName = friendlyName;
@@ -98,77 +209,185 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             MarsRegistrationStatus = marsRegistrationStatus;
         }
 
-        /// <summary> The Process Server&apos;s friendly name. </summary>
+        /// <summary>
+        /// The Process Server&apos;s friendly name.
+        /// Serialized Name: ProcessServer.friendlyName
+        /// </summary>
         public string FriendlyName { get; }
-        /// <summary> The Process Server Id. </summary>
+        /// <summary>
+        /// The Process Server Id.
+        /// Serialized Name: ProcessServer.id
+        /// </summary>
         public string Id { get; }
-        /// <summary> The IP address of the server. </summary>
+        /// <summary>
+        /// The IP address of the server.
+        /// Serialized Name: ProcessServer.ipAddress
+        /// </summary>
         public string IPAddress { get; }
-        /// <summary> The OS type of the server. </summary>
+        /// <summary>
+        /// The OS type of the server.
+        /// Serialized Name: ProcessServer.osType
+        /// </summary>
         public string OSType { get; }
-        /// <summary> The version of the scout component on the server. </summary>
+        /// <summary>
+        /// The version of the scout component on the server.
+        /// Serialized Name: ProcessServer.agentVersion
+        /// </summary>
         public string AgentVersion { get; }
-        /// <summary> The last heartbeat received from the server. </summary>
+        /// <summary>
+        /// The last heartbeat received from the server.
+        /// Serialized Name: ProcessServer.lastHeartbeat
+        /// </summary>
         public DateTimeOffset? LastHeartbeat { get; }
-        /// <summary> Version status. </summary>
+        /// <summary>
+        /// Version status.
+        /// Serialized Name: ProcessServer.versionStatus
+        /// </summary>
         public string VersionStatus { get; }
-        /// <summary> The list of the mobility service updates available on the Process Server. </summary>
+        /// <summary>
+        /// The list of the mobility service updates available on the Process Server.
+        /// Serialized Name: ProcessServer.mobilityServiceUpdates
+        /// </summary>
         public IReadOnlyList<MobilityServiceUpdate> MobilityServiceUpdates { get; }
-        /// <summary> The agent generated Id. </summary>
+        /// <summary>
+        /// The agent generated Id.
+        /// Serialized Name: ProcessServer.hostId
+        /// </summary>
         public string HostId { get; }
-        /// <summary> The servers configured with this PS. </summary>
+        /// <summary>
+        /// The servers configured with this PS.
+        /// Serialized Name: ProcessServer.machineCount
+        /// </summary>
         public string MachineCount { get; }
-        /// <summary> The number of replication pairs configured in this PS. </summary>
+        /// <summary>
+        /// The number of replication pairs configured in this PS.
+        /// Serialized Name: ProcessServer.replicationPairCount
+        /// </summary>
         public string ReplicationPairCount { get; }
-        /// <summary> The percentage of the system load. </summary>
+        /// <summary>
+        /// The percentage of the system load.
+        /// Serialized Name: ProcessServer.systemLoad
+        /// </summary>
         public string SystemLoad { get; }
-        /// <summary> The system load status. </summary>
+        /// <summary>
+        /// The system load status.
+        /// Serialized Name: ProcessServer.systemLoadStatus
+        /// </summary>
         public string SystemLoadStatus { get; }
-        /// <summary> The percentage of the CPU load. </summary>
+        /// <summary>
+        /// The percentage of the CPU load.
+        /// Serialized Name: ProcessServer.cpuLoad
+        /// </summary>
         public string CpuLoad { get; }
-        /// <summary> The CPU load status. </summary>
+        /// <summary>
+        /// The CPU load status.
+        /// Serialized Name: ProcessServer.cpuLoadStatus
+        /// </summary>
         public string CpuLoadStatus { get; }
-        /// <summary> The total memory. </summary>
+        /// <summary>
+        /// The total memory.
+        /// Serialized Name: ProcessServer.totalMemoryInBytes
+        /// </summary>
         public long? TotalMemoryInBytes { get; }
-        /// <summary> The available memory. </summary>
+        /// <summary>
+        /// The available memory.
+        /// Serialized Name: ProcessServer.availableMemoryInBytes
+        /// </summary>
         public long? AvailableMemoryInBytes { get; }
-        /// <summary> The memory usage status. </summary>
+        /// <summary>
+        /// The memory usage status.
+        /// Serialized Name: ProcessServer.memoryUsageStatus
+        /// </summary>
         public string MemoryUsageStatus { get; }
-        /// <summary> The total space. </summary>
+        /// <summary>
+        /// The total space.
+        /// Serialized Name: ProcessServer.totalSpaceInBytes
+        /// </summary>
         public long? TotalSpaceInBytes { get; }
-        /// <summary> The available space. </summary>
+        /// <summary>
+        /// The available space.
+        /// Serialized Name: ProcessServer.availableSpaceInBytes
+        /// </summary>
         public long? AvailableSpaceInBytes { get; }
-        /// <summary> The space usage status. </summary>
+        /// <summary>
+        /// The space usage status.
+        /// Serialized Name: ProcessServer.spaceUsageStatus
+        /// </summary>
         public string SpaceUsageStatus { get; }
-        /// <summary> The PS service status. </summary>
+        /// <summary>
+        /// The PS service status.
+        /// Serialized Name: ProcessServer.psServiceStatus
+        /// </summary>
         public string PsServiceStatus { get; }
-        /// <summary> The PS SSL cert expiry date. </summary>
+        /// <summary>
+        /// The PS SSL cert expiry date.
+        /// Serialized Name: ProcessServer.sslCertExpiryDate
+        /// </summary>
         public DateTimeOffset? SslCertExpiryOn { get; }
-        /// <summary> CS SSL cert expiry date. </summary>
+        /// <summary>
+        /// CS SSL cert expiry date.
+        /// Serialized Name: ProcessServer.sslCertExpiryRemainingDays
+        /// </summary>
         public int? SslCertExpiryRemainingDays { get; }
-        /// <summary> OS Version of the process server. Note: This will get populated if user has CS version greater than 9.12.0.0. </summary>
+        /// <summary>
+        /// OS Version of the process server. Note: This will get populated if user has CS version greater than 9.12.0.0.
+        /// Serialized Name: ProcessServer.osVersion
+        /// </summary>
         public string OSVersion { get; }
-        /// <summary> Health errors. </summary>
+        /// <summary>
+        /// Health errors.
+        /// Serialized Name: ProcessServer.healthErrors
+        /// </summary>
         public IReadOnlyList<HealthError> HealthErrors { get; }
-        /// <summary> Agent expiry date. </summary>
+        /// <summary>
+        /// Agent expiry date.
+        /// Serialized Name: ProcessServer.agentExpiryDate
+        /// </summary>
         public DateTimeOffset? AgentExpiryOn { get; }
-        /// <summary> The agent version details. </summary>
+        /// <summary>
+        /// The agent version details.
+        /// Serialized Name: ProcessServer.agentVersionDetails
+        /// </summary>
         public VersionDetails AgentVersionDetails { get; }
-        /// <summary> The health of Process Server. </summary>
+        /// <summary>
+        /// The health of Process Server.
+        /// Serialized Name: ProcessServer.health
+        /// </summary>
         public ProtectionHealth? Health { get; }
-        /// <summary> The process server stats refresh time. </summary>
+        /// <summary>
+        /// The process server stats refresh time.
+        /// Serialized Name: ProcessServer.psStatsRefreshTime
+        /// </summary>
         public DateTimeOffset? PsStatsRefreshOn { get; }
-        /// <summary> The uploading pending data in bytes. </summary>
+        /// <summary>
+        /// The uploading pending data in bytes.
+        /// Serialized Name: ProcessServer.throughputUploadPendingDataInBytes
+        /// </summary>
         public long? ThroughputUploadPendingDataInBytes { get; }
-        /// <summary> The throughput in MBps. </summary>
+        /// <summary>
+        /// The throughput in MBps.
+        /// Serialized Name: ProcessServer.throughputInMBps
+        /// </summary>
         public long? ThroughputInMBps { get; }
-        /// <summary> The throughput in bytes. </summary>
+        /// <summary>
+        /// The throughput in bytes.
+        /// Serialized Name: ProcessServer.throughputInBytes
+        /// </summary>
         public long? ThroughputInBytes { get; }
-        /// <summary> The throughput status. </summary>
+        /// <summary>
+        /// The throughput status.
+        /// Serialized Name: ProcessServer.throughputStatus
+        /// </summary>
         public string ThroughputStatus { get; }
-        /// <summary> The MARS communication status. </summary>
+        /// <summary>
+        /// The MARS communication status.
+        /// Serialized Name: ProcessServer.marsCommunicationStatus
+        /// </summary>
         public string MarsCommunicationStatus { get; }
-        /// <summary> The MARS registration status. </summary>
+        /// <summary>
+        /// The MARS registration status.
+        /// Serialized Name: ProcessServer.marsRegistrationStatus
+        /// </summary>
         public string MarsRegistrationStatus { get; }
     }
 }

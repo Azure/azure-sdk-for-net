@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary> Resolve health errors input properties. </summary>
+    /// <summary>
+    /// Resolve health errors input properties.
+    /// Serialized Name: ResolveHealthError
+    /// </summary>
     public partial class ResolveHealthError
     {
         /// <summary> Initializes a new instance of ResolveHealthError. </summary>
@@ -15,7 +18,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         {
         }
 
-        /// <summary> Health error id. </summary>
+        /// <summary>
+        /// Health error id.
+        /// Serialized Name: ResolveHealthError.healthErrorId
+        /// </summary>
         public string HealthErrorId { get; set; }
     }
 }

@@ -10,7 +10,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary> VMware/Physical specific Disk Details. </summary>
+    /// <summary>
+    /// VMware/Physical specific Disk Details.
+    /// Serialized Name: InMageDiskDetails
+    /// </summary>
     public partial class InMageDiskDetails
     {
         /// <summary> Initializes a new instance of InMageDiskDetails. </summary>
@@ -20,12 +23,30 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> Initializes a new instance of InMageDiskDetails. </summary>
-        /// <param name="diskId"> The disk Id. </param>
-        /// <param name="diskName"> The disk name. </param>
-        /// <param name="diskSizeInMB"> The disk size in MB. </param>
-        /// <param name="diskType"> Whether disk is system disk or data disk. </param>
-        /// <param name="diskConfiguration"> Whether disk is dynamic disk or basic disk. </param>
-        /// <param name="volumeList"> Volumes of the disk. </param>
+        /// <param name="diskId">
+        /// The disk Id.
+        /// Serialized Name: InMageDiskDetails.diskId
+        /// </param>
+        /// <param name="diskName">
+        /// The disk name.
+        /// Serialized Name: InMageDiskDetails.diskName
+        /// </param>
+        /// <param name="diskSizeInMB">
+        /// The disk size in MB.
+        /// Serialized Name: InMageDiskDetails.diskSizeInMB
+        /// </param>
+        /// <param name="diskType">
+        /// Whether disk is system disk or data disk.
+        /// Serialized Name: InMageDiskDetails.diskType
+        /// </param>
+        /// <param name="diskConfiguration">
+        /// Whether disk is dynamic disk or basic disk.
+        /// Serialized Name: InMageDiskDetails.diskConfiguration
+        /// </param>
+        /// <param name="volumeList">
+        /// Volumes of the disk.
+        /// Serialized Name: InMageDiskDetails.volumeList
+        /// </param>
         internal InMageDiskDetails(string diskId, string diskName, string diskSizeInMB, string diskType, string diskConfiguration, IReadOnlyList<DiskVolumeDetails> volumeList)
         {
             DiskId = diskId;
@@ -36,17 +57,35 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             VolumeList = volumeList;
         }
 
-        /// <summary> The disk Id. </summary>
+        /// <summary>
+        /// The disk Id.
+        /// Serialized Name: InMageDiskDetails.diskId
+        /// </summary>
         public string DiskId { get; }
-        /// <summary> The disk name. </summary>
+        /// <summary>
+        /// The disk name.
+        /// Serialized Name: InMageDiskDetails.diskName
+        /// </summary>
         public string DiskName { get; }
-        /// <summary> The disk size in MB. </summary>
+        /// <summary>
+        /// The disk size in MB.
+        /// Serialized Name: InMageDiskDetails.diskSizeInMB
+        /// </summary>
         public string DiskSizeInMB { get; }
-        /// <summary> Whether disk is system disk or data disk. </summary>
+        /// <summary>
+        /// Whether disk is system disk or data disk.
+        /// Serialized Name: InMageDiskDetails.diskType
+        /// </summary>
         public string DiskType { get; }
-        /// <summary> Whether disk is dynamic disk or basic disk. </summary>
+        /// <summary>
+        /// Whether disk is dynamic disk or basic disk.
+        /// Serialized Name: InMageDiskDetails.diskConfiguration
+        /// </summary>
         public string DiskConfiguration { get; }
-        /// <summary> Volumes of the disk. </summary>
+        /// <summary>
+        /// Volumes of the disk.
+        /// Serialized Name: InMageDiskDetails.volumeList
+        /// </summary>
         public IReadOnlyList<DiskVolumeDetails> VolumeList { get; }
     }
 }

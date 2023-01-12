@@ -11,7 +11,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary> vCenter properties. </summary>
+    /// <summary>
+    /// vCenter properties.
+    /// Serialized Name: VCenterProperties
+    /// </summary>
     public partial class VCenterProperties
     {
         /// <summary> Initializes a new instance of VCenterProperties. </summary>
@@ -21,17 +24,50 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> Initializes a new instance of VCenterProperties. </summary>
-        /// <param name="friendlyName"> Friendly name of the vCenter. </param>
-        /// <param name="internalId"> VCenter internal ID. </param>
-        /// <param name="lastHeartbeat"> The time when the last heartbeat was received by vCenter. </param>
-        /// <param name="discoveryStatus"> The VCenter discovery status. </param>
-        /// <param name="processServerId"> The process server Id. </param>
-        /// <param name="ipAddress"> The IP address of the vCenter. </param>
-        /// <param name="infrastructureId"> The infrastructure Id of vCenter. </param>
-        /// <param name="port"> The port number for discovery. </param>
-        /// <param name="runAsAccountId"> The account Id which has privileges to discover the vCenter. </param>
-        /// <param name="fabricArmResourceName"> The ARM resource name of the fabric containing this VCenter. </param>
-        /// <param name="healthErrors"> The health errors for this VCenter. </param>
+        /// <param name="friendlyName">
+        /// Friendly name of the vCenter.
+        /// Serialized Name: VCenterProperties.friendlyName
+        /// </param>
+        /// <param name="internalId">
+        /// VCenter internal ID.
+        /// Serialized Name: VCenterProperties.internalId
+        /// </param>
+        /// <param name="lastHeartbeat">
+        /// The time when the last heartbeat was received by vCenter.
+        /// Serialized Name: VCenterProperties.lastHeartbeat
+        /// </param>
+        /// <param name="discoveryStatus">
+        /// The VCenter discovery status.
+        /// Serialized Name: VCenterProperties.discoveryStatus
+        /// </param>
+        /// <param name="processServerId">
+        /// The process server Id.
+        /// Serialized Name: VCenterProperties.processServerId
+        /// </param>
+        /// <param name="ipAddress">
+        /// The IP address of the vCenter.
+        /// Serialized Name: VCenterProperties.ipAddress
+        /// </param>
+        /// <param name="infrastructureId">
+        /// The infrastructure Id of vCenter.
+        /// Serialized Name: VCenterProperties.infrastructureId
+        /// </param>
+        /// <param name="port">
+        /// The port number for discovery.
+        /// Serialized Name: VCenterProperties.port
+        /// </param>
+        /// <param name="runAsAccountId">
+        /// The account Id which has privileges to discover the vCenter.
+        /// Serialized Name: VCenterProperties.runAsAccountId
+        /// </param>
+        /// <param name="fabricArmResourceName">
+        /// The ARM resource name of the fabric containing this VCenter.
+        /// Serialized Name: VCenterProperties.fabricArmResourceName
+        /// </param>
+        /// <param name="healthErrors">
+        /// The health errors for this VCenter.
+        /// Serialized Name: VCenterProperties.healthErrors
+        /// </param>
         internal VCenterProperties(string friendlyName, string internalId, DateTimeOffset? lastHeartbeat, string discoveryStatus, string processServerId, string ipAddress, string infrastructureId, string port, string runAsAccountId, string fabricArmResourceName, IReadOnlyList<HealthError> healthErrors)
         {
             FriendlyName = friendlyName;
@@ -47,27 +83,60 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             HealthErrors = healthErrors;
         }
 
-        /// <summary> Friendly name of the vCenter. </summary>
+        /// <summary>
+        /// Friendly name of the vCenter.
+        /// Serialized Name: VCenterProperties.friendlyName
+        /// </summary>
         public string FriendlyName { get; }
-        /// <summary> VCenter internal ID. </summary>
+        /// <summary>
+        /// VCenter internal ID.
+        /// Serialized Name: VCenterProperties.internalId
+        /// </summary>
         public string InternalId { get; }
-        /// <summary> The time when the last heartbeat was received by vCenter. </summary>
+        /// <summary>
+        /// The time when the last heartbeat was received by vCenter.
+        /// Serialized Name: VCenterProperties.lastHeartbeat
+        /// </summary>
         public DateTimeOffset? LastHeartbeat { get; }
-        /// <summary> The VCenter discovery status. </summary>
+        /// <summary>
+        /// The VCenter discovery status.
+        /// Serialized Name: VCenterProperties.discoveryStatus
+        /// </summary>
         public string DiscoveryStatus { get; }
-        /// <summary> The process server Id. </summary>
+        /// <summary>
+        /// The process server Id.
+        /// Serialized Name: VCenterProperties.processServerId
+        /// </summary>
         public string ProcessServerId { get; }
-        /// <summary> The IP address of the vCenter. </summary>
+        /// <summary>
+        /// The IP address of the vCenter.
+        /// Serialized Name: VCenterProperties.ipAddress
+        /// </summary>
         public string IPAddress { get; }
-        /// <summary> The infrastructure Id of vCenter. </summary>
+        /// <summary>
+        /// The infrastructure Id of vCenter.
+        /// Serialized Name: VCenterProperties.infrastructureId
+        /// </summary>
         public string InfrastructureId { get; }
-        /// <summary> The port number for discovery. </summary>
+        /// <summary>
+        /// The port number for discovery.
+        /// Serialized Name: VCenterProperties.port
+        /// </summary>
         public string Port { get; }
-        /// <summary> The account Id which has privileges to discover the vCenter. </summary>
+        /// <summary>
+        /// The account Id which has privileges to discover the vCenter.
+        /// Serialized Name: VCenterProperties.runAsAccountId
+        /// </summary>
         public string RunAsAccountId { get; }
-        /// <summary> The ARM resource name of the fabric containing this VCenter. </summary>
+        /// <summary>
+        /// The ARM resource name of the fabric containing this VCenter.
+        /// Serialized Name: VCenterProperties.fabricArmResourceName
+        /// </summary>
         public string FabricArmResourceName { get; }
-        /// <summary> The health errors for this VCenter. </summary>
+        /// <summary>
+        /// The health errors for this VCenter.
+        /// Serialized Name: VCenterProperties.healthErrors
+        /// </summary>
         public IReadOnlyList<HealthError> HealthErrors { get; }
     }
 }

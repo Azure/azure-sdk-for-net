@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary> The retention details of the MT. </summary>
+    /// <summary>
+    /// The retention details of the MT.
+    /// Serialized Name: RetentionVolume
+    /// </summary>
     public partial class RetentionVolume
     {
         /// <summary> Initializes a new instance of RetentionVolume. </summary>
@@ -16,10 +19,22 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> Initializes a new instance of RetentionVolume. </summary>
-        /// <param name="volumeName"> The volume name. </param>
-        /// <param name="capacityInBytes"> The volume capacity. </param>
-        /// <param name="freeSpaceInBytes"> The free space available in this volume. </param>
-        /// <param name="thresholdPercentage"> The threshold percentage. </param>
+        /// <param name="volumeName">
+        /// The volume name.
+        /// Serialized Name: RetentionVolume.volumeName
+        /// </param>
+        /// <param name="capacityInBytes">
+        /// The volume capacity.
+        /// Serialized Name: RetentionVolume.capacityInBytes
+        /// </param>
+        /// <param name="freeSpaceInBytes">
+        /// The free space available in this volume.
+        /// Serialized Name: RetentionVolume.freeSpaceInBytes
+        /// </param>
+        /// <param name="thresholdPercentage">
+        /// The threshold percentage.
+        /// Serialized Name: RetentionVolume.thresholdPercentage
+        /// </param>
         internal RetentionVolume(string volumeName, long? capacityInBytes, long? freeSpaceInBytes, int? thresholdPercentage)
         {
             VolumeName = volumeName;
@@ -28,13 +43,25 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             ThresholdPercentage = thresholdPercentage;
         }
 
-        /// <summary> The volume name. </summary>
+        /// <summary>
+        /// The volume name.
+        /// Serialized Name: RetentionVolume.volumeName
+        /// </summary>
         public string VolumeName { get; }
-        /// <summary> The volume capacity. </summary>
+        /// <summary>
+        /// The volume capacity.
+        /// Serialized Name: RetentionVolume.capacityInBytes
+        /// </summary>
         public long? CapacityInBytes { get; }
-        /// <summary> The free space available in this volume. </summary>
+        /// <summary>
+        /// The free space available in this volume.
+        /// Serialized Name: RetentionVolume.freeSpaceInBytes
+        /// </summary>
         public long? FreeSpaceInBytes { get; }
-        /// <summary> The threshold percentage. </summary>
+        /// <summary>
+        /// The threshold percentage.
+        /// Serialized Name: RetentionVolume.thresholdPercentage
+        /// </summary>
         public int? ThresholdPercentage { get; }
     }
 }

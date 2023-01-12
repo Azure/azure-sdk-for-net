@@ -9,7 +9,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary> VMM fabric provider specific VM settings. </summary>
+    /// <summary>
+    /// VMM fabric provider specific VM settings.
+    /// Serialized Name: VmmVirtualMachineDetails
+    /// </summary>
     public partial class VmmVirtualMachineDetails : HyperVVirtualMachineDetails
     {
         /// <summary> Initializes a new instance of VmmVirtualMachineDetails. </summary>
@@ -19,15 +22,42 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> Initializes a new instance of VmmVirtualMachineDetails. </summary>
-        /// <param name="instanceType"> Gets the class type. Overridden in derived classes. </param>
-        /// <param name="sourceItemId"> The source id of the object. </param>
-        /// <param name="generation"> The id of the object in fabric. </param>
-        /// <param name="osDetails"> The Last replication time. </param>
-        /// <param name="diskDetails"> The Last successful failover time. </param>
-        /// <param name="hasPhysicalDisk"> A value indicating whether the VM has a physical disk attached. String value of SrsDataContract.PresenceStatus enum. </param>
-        /// <param name="hasFibreChannelAdapter"> A value indicating whether the VM has a fibre channel adapter attached. String value of SrsDataContract.PresenceStatus enum. </param>
-        /// <param name="hasSharedVhd"> A value indicating whether the VM has a shared VHD attached. String value of SrsDataContract.PresenceStatus enum. </param>
-        /// <param name="hyperVHostId"> The Id of the hyper-v host in fabric. </param>
+        /// <param name="instanceType">
+        /// Gets the class type. Overridden in derived classes.
+        /// Serialized Name: ConfigurationSettings.instanceType
+        /// </param>
+        /// <param name="sourceItemId">
+        /// The source id of the object.
+        /// Serialized Name: HyperVVirtualMachineDetails.sourceItemId
+        /// </param>
+        /// <param name="generation">
+        /// The id of the object in fabric.
+        /// Serialized Name: HyperVVirtualMachineDetails.generation
+        /// </param>
+        /// <param name="osDetails">
+        /// The Last replication time.
+        /// Serialized Name: HyperVVirtualMachineDetails.osDetails
+        /// </param>
+        /// <param name="diskDetails">
+        /// The Last successful failover time.
+        /// Serialized Name: HyperVVirtualMachineDetails.diskDetails
+        /// </param>
+        /// <param name="hasPhysicalDisk">
+        /// A value indicating whether the VM has a physical disk attached. String value of SrsDataContract.PresenceStatus enum.
+        /// Serialized Name: HyperVVirtualMachineDetails.hasPhysicalDisk
+        /// </param>
+        /// <param name="hasFibreChannelAdapter">
+        /// A value indicating whether the VM has a fibre channel adapter attached. String value of SrsDataContract.PresenceStatus enum.
+        /// Serialized Name: HyperVVirtualMachineDetails.hasFibreChannelAdapter
+        /// </param>
+        /// <param name="hasSharedVhd">
+        /// A value indicating whether the VM has a shared VHD attached. String value of SrsDataContract.PresenceStatus enum.
+        /// Serialized Name: HyperVVirtualMachineDetails.hasSharedVhd
+        /// </param>
+        /// <param name="hyperVHostId">
+        /// The Id of the hyper-v host in fabric.
+        /// Serialized Name: HyperVVirtualMachineDetails.hyperVHostId
+        /// </param>
         internal VmmVirtualMachineDetails(string instanceType, string sourceItemId, string generation, OSDetails osDetails, IReadOnlyList<DiskDetails> diskDetails, PresenceStatus? hasPhysicalDisk, PresenceStatus? hasFibreChannelAdapter, PresenceStatus? hasSharedVhd, string hyperVHostId) : base(instanceType, sourceItemId, generation, osDetails, diskDetails, hasPhysicalDisk, hasFibreChannelAdapter, hasSharedVhd, hyperVHostId)
         {
             InstanceType = instanceType ?? "VmmVirtualMachine";

@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary> Storage mapping input. </summary>
+    /// <summary>
+    /// Storage mapping input.
+    /// Serialized Name: StorageClassificationMappingInput
+    /// </summary>
     public partial class StorageClassificationMappingCreateOrUpdateContent
     {
         /// <summary> Initializes a new instance of StorageClassificationMappingCreateOrUpdateContent. </summary>
@@ -15,9 +18,15 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         {
         }
 
-        /// <summary> Storage mapping input properties. </summary>
+        /// <summary>
+        /// Storage mapping input properties.
+        /// Serialized Name: StorageClassificationMappingInput.properties
+        /// </summary>
         internal StorageMappingInputProperties Properties { get; set; }
-        /// <summary> The ID of the storage object. </summary>
+        /// <summary>
+        /// The ID of the storage object.
+        /// Serialized Name: StorageMappingInputProperties.targetStorageClassificationId
+        /// </summary>
         public string TargetStorageClassificationId
         {
             get => Properties is null ? default : Properties.TargetStorageClassificationId;

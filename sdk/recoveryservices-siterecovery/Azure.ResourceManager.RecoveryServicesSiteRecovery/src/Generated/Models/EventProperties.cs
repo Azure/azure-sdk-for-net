@@ -11,7 +11,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary> The properties of a monitoring event. </summary>
+    /// <summary>
+    /// The properties of a monitoring event.
+    /// Serialized Name: EventProperties
+    /// </summary>
     public partial class EventProperties
     {
         /// <summary> Initializes a new instance of EventProperties. </summary>
@@ -21,25 +24,54 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> Initializes a new instance of EventProperties. </summary>
-        /// <param name="eventCode"> The Id of the monitoring event. </param>
-        /// <param name="description"> The event name. </param>
-        /// <param name="eventType"> The type of the event. for example: VM Health, Server Health, Job Failure etc. </param>
-        /// <param name="affectedObjectFriendlyName"> The friendly name of the source of the event on which it is raised (for example, VM, VMM etc). </param>
-        /// <param name="affectedObjectCorrelationId"> The affected object correlationId for the event. </param>
-        /// <param name="severity"> The severity of the event. </param>
-        /// <param name="timeOfOccurrence"> The time of occurrence of the event. </param>
-        /// <param name="fabricId"> The ARM ID of the fabric. </param>
+        /// <param name="eventCode">
+        /// The Id of the monitoring event.
+        /// Serialized Name: EventProperties.eventCode
+        /// </param>
+        /// <param name="description">
+        /// The event name.
+        /// Serialized Name: EventProperties.description
+        /// </param>
+        /// <param name="eventType">
+        /// The type of the event. for example: VM Health, Server Health, Job Failure etc.
+        /// Serialized Name: EventProperties.eventType
+        /// </param>
+        /// <param name="affectedObjectFriendlyName">
+        /// The friendly name of the source of the event on which it is raised (for example, VM, VMM etc).
+        /// Serialized Name: EventProperties.affectedObjectFriendlyName
+        /// </param>
+        /// <param name="affectedObjectCorrelationId">
+        /// The affected object correlationId for the event.
+        /// Serialized Name: EventProperties.affectedObjectCorrelationId
+        /// </param>
+        /// <param name="severity">
+        /// The severity of the event.
+        /// Serialized Name: EventProperties.severity
+        /// </param>
+        /// <param name="timeOfOccurrence">
+        /// The time of occurrence of the event.
+        /// Serialized Name: EventProperties.timeOfOccurrence
+        /// </param>
+        /// <param name="fabricId">
+        /// The ARM ID of the fabric.
+        /// Serialized Name: EventProperties.fabricId
+        /// </param>
         /// <param name="providerSpecificDetails">
         /// The provider specific settings.
+        /// Serialized Name: EventProperties.providerSpecificDetails
         /// Please note <see cref="EventProviderSpecificDetails"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="A2AEventDetails"/>, <see cref="HyperVReplica2012EventDetails"/>, <see cref="HyperVReplica2012R2EventDetails"/>, <see cref="HyperVReplicaAzureEventDetails"/>, <see cref="HyperVReplicaBaseEventDetails"/>, <see cref="InMageAzureV2EventDetails"/>, <see cref="InMageRcmEventDetails"/>, <see cref="InMageRcmFailbackEventDetails"/> and <see cref="VMwareCbtEventDetails"/>.
         /// </param>
         /// <param name="eventSpecificDetails">
         /// The event specific settings.
+        /// Serialized Name: EventProperties.eventSpecificDetails
         /// Please note <see cref="EventSpecificDetails"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="JobStatusEventDetails"/>.
         /// </param>
-        /// <param name="healthErrors"> The list of errors / warnings capturing details associated with the issue(s). </param>
+        /// <param name="healthErrors">
+        /// The list of errors / warnings capturing details associated with the issue(s).
+        /// Serialized Name: EventProperties.healthErrors
+        /// </param>
         internal EventProperties(string eventCode, string description, string eventType, string affectedObjectFriendlyName, string affectedObjectCorrelationId, string severity, DateTimeOffset? timeOfOccurrence, string fabricId, EventProviderSpecificDetails providerSpecificDetails, EventSpecificDetails eventSpecificDetails, IReadOnlyList<HealthError> healthErrors)
         {
             EventCode = eventCode;
@@ -55,35 +87,64 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             HealthErrors = healthErrors;
         }
 
-        /// <summary> The Id of the monitoring event. </summary>
+        /// <summary>
+        /// The Id of the monitoring event.
+        /// Serialized Name: EventProperties.eventCode
+        /// </summary>
         public string EventCode { get; }
-        /// <summary> The event name. </summary>
+        /// <summary>
+        /// The event name.
+        /// Serialized Name: EventProperties.description
+        /// </summary>
         public string Description { get; }
-        /// <summary> The type of the event. for example: VM Health, Server Health, Job Failure etc. </summary>
+        /// <summary>
+        /// The type of the event. for example: VM Health, Server Health, Job Failure etc.
+        /// Serialized Name: EventProperties.eventType
+        /// </summary>
         public string EventType { get; }
-        /// <summary> The friendly name of the source of the event on which it is raised (for example, VM, VMM etc). </summary>
+        /// <summary>
+        /// The friendly name of the source of the event on which it is raised (for example, VM, VMM etc).
+        /// Serialized Name: EventProperties.affectedObjectFriendlyName
+        /// </summary>
         public string AffectedObjectFriendlyName { get; }
-        /// <summary> The affected object correlationId for the event. </summary>
+        /// <summary>
+        /// The affected object correlationId for the event.
+        /// Serialized Name: EventProperties.affectedObjectCorrelationId
+        /// </summary>
         public string AffectedObjectCorrelationId { get; }
-        /// <summary> The severity of the event. </summary>
+        /// <summary>
+        /// The severity of the event.
+        /// Serialized Name: EventProperties.severity
+        /// </summary>
         public string Severity { get; }
-        /// <summary> The time of occurrence of the event. </summary>
+        /// <summary>
+        /// The time of occurrence of the event.
+        /// Serialized Name: EventProperties.timeOfOccurrence
+        /// </summary>
         public DateTimeOffset? TimeOfOccurrence { get; }
-        /// <summary> The ARM ID of the fabric. </summary>
+        /// <summary>
+        /// The ARM ID of the fabric.
+        /// Serialized Name: EventProperties.fabricId
+        /// </summary>
         public string FabricId { get; }
         /// <summary>
         /// The provider specific settings.
+        /// Serialized Name: EventProperties.providerSpecificDetails
         /// Please note <see cref="EventProviderSpecificDetails"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="A2AEventDetails"/>, <see cref="HyperVReplica2012EventDetails"/>, <see cref="HyperVReplica2012R2EventDetails"/>, <see cref="HyperVReplicaAzureEventDetails"/>, <see cref="HyperVReplicaBaseEventDetails"/>, <see cref="InMageAzureV2EventDetails"/>, <see cref="InMageRcmEventDetails"/>, <see cref="InMageRcmFailbackEventDetails"/> and <see cref="VMwareCbtEventDetails"/>.
         /// </summary>
         public EventProviderSpecificDetails ProviderSpecificDetails { get; }
         /// <summary>
         /// The event specific settings.
+        /// Serialized Name: EventProperties.eventSpecificDetails
         /// Please note <see cref="EventSpecificDetails"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="JobStatusEventDetails"/>.
         /// </summary>
         public EventSpecificDetails EventSpecificDetails { get; }
-        /// <summary> The list of errors / warnings capturing details associated with the issue(s). </summary>
+        /// <summary>
+        /// The list of errors / warnings capturing details associated with the issue(s).
+        /// Serialized Name: EventProperties.healthErrors
+        /// </summary>
         public IReadOnlyList<HealthError> HealthErrors { get; }
     }
 }

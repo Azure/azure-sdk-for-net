@@ -12,13 +12,25 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary> Recovery plan creation properties. </summary>
+    /// <summary>
+    /// Recovery plan creation properties.
+    /// Serialized Name: CreateRecoveryPlanInputProperties
+    /// </summary>
     public partial class CreateRecoveryPlanInputProperties
     {
         /// <summary> Initializes a new instance of CreateRecoveryPlanInputProperties. </summary>
-        /// <param name="primaryFabricId"> The primary fabric Id. </param>
-        /// <param name="recoveryFabricId"> The recovery fabric Id. </param>
-        /// <param name="groups"> The recovery plan groups. </param>
+        /// <param name="primaryFabricId">
+        /// The primary fabric Id.
+        /// Serialized Name: CreateRecoveryPlanInputProperties.primaryFabricId
+        /// </param>
+        /// <param name="recoveryFabricId">
+        /// The recovery fabric Id.
+        /// Serialized Name: CreateRecoveryPlanInputProperties.recoveryFabricId
+        /// </param>
+        /// <param name="groups">
+        /// The recovery plan groups.
+        /// Serialized Name: CreateRecoveryPlanInputProperties.groups
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="primaryFabricId"/>, <paramref name="recoveryFabricId"/> or <paramref name="groups"/> is null. </exception>
         public CreateRecoveryPlanInputProperties(string primaryFabricId, string recoveryFabricId, IEnumerable<RecoveryPlanGroup> groups)
         {
@@ -32,16 +44,29 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             ProviderSpecificInput = new ChangeTrackingList<RecoveryPlanProviderSpecificInput>();
         }
 
-        /// <summary> The primary fabric Id. </summary>
+        /// <summary>
+        /// The primary fabric Id.
+        /// Serialized Name: CreateRecoveryPlanInputProperties.primaryFabricId
+        /// </summary>
         public string PrimaryFabricId { get; }
-        /// <summary> The recovery fabric Id. </summary>
+        /// <summary>
+        /// The recovery fabric Id.
+        /// Serialized Name: CreateRecoveryPlanInputProperties.recoveryFabricId
+        /// </summary>
         public string RecoveryFabricId { get; }
-        /// <summary> The failover deployment model. </summary>
+        /// <summary>
+        /// The failover deployment model.
+        /// Serialized Name: CreateRecoveryPlanInputProperties.failoverDeploymentModel
+        /// </summary>
         public FailoverDeploymentModel? FailoverDeploymentModel { get; set; }
-        /// <summary> The recovery plan groups. </summary>
+        /// <summary>
+        /// The recovery plan groups.
+        /// Serialized Name: CreateRecoveryPlanInputProperties.groups
+        /// </summary>
         public IList<RecoveryPlanGroup> Groups { get; }
         /// <summary>
         /// The provider specific input.
+        /// Serialized Name: CreateRecoveryPlanInputProperties.providerSpecificInput
         /// Please note <see cref="RecoveryPlanProviderSpecificInput"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="RecoveryPlanA2AInput"/>.
         /// </summary>

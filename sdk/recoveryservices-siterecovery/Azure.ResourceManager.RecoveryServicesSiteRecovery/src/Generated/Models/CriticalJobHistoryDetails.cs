@@ -9,7 +9,10 @@ using System;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary> Critical past job details of the migration item. </summary>
+    /// <summary>
+    /// Critical past job details of the migration item.
+    /// Serialized Name: CriticalJobHistoryDetails
+    /// </summary>
     public partial class CriticalJobHistoryDetails
     {
         /// <summary> Initializes a new instance of CriticalJobHistoryDetails. </summary>
@@ -18,10 +21,22 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> Initializes a new instance of CriticalJobHistoryDetails. </summary>
-        /// <param name="jobName"> The job name. </param>
-        /// <param name="jobId"> The ARM Id of the job being executed. </param>
-        /// <param name="startOn"> The start time of the job. </param>
-        /// <param name="jobStatus"> The job state. </param>
+        /// <param name="jobName">
+        /// The job name.
+        /// Serialized Name: CriticalJobHistoryDetails.jobName
+        /// </param>
+        /// <param name="jobId">
+        /// The ARM Id of the job being executed.
+        /// Serialized Name: CriticalJobHistoryDetails.jobId
+        /// </param>
+        /// <param name="startOn">
+        /// The start time of the job.
+        /// Serialized Name: CriticalJobHistoryDetails.startTime
+        /// </param>
+        /// <param name="jobStatus">
+        /// The job state.
+        /// Serialized Name: CriticalJobHistoryDetails.jobStatus
+        /// </param>
         internal CriticalJobHistoryDetails(string jobName, string jobId, DateTimeOffset? startOn, string jobStatus)
         {
             JobName = jobName;
@@ -30,13 +45,25 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             JobStatus = jobStatus;
         }
 
-        /// <summary> The job name. </summary>
+        /// <summary>
+        /// The job name.
+        /// Serialized Name: CriticalJobHistoryDetails.jobName
+        /// </summary>
         public string JobName { get; }
-        /// <summary> The ARM Id of the job being executed. </summary>
+        /// <summary>
+        /// The ARM Id of the job being executed.
+        /// Serialized Name: CriticalJobHistoryDetails.jobId
+        /// </summary>
         public string JobId { get; }
-        /// <summary> The start time of the job. </summary>
+        /// <summary>
+        /// The start time of the job.
+        /// Serialized Name: CriticalJobHistoryDetails.startTime
+        /// </summary>
         public DateTimeOffset? StartOn { get; }
-        /// <summary> The job state. </summary>
+        /// <summary>
+        /// The job state.
+        /// Serialized Name: CriticalJobHistoryDetails.jobStatus
+        /// </summary>
         public string JobStatus { get; }
     }
 }

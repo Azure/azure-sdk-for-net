@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary> Key Encryption Key (KEK) information. </summary>
+    /// <summary>
+    /// Key Encryption Key (KEK) information.
+    /// Serialized Name: KeyEncryptionKeyInfo
+    /// </summary>
     public partial class KeyEncryptionKeyInfo
     {
         /// <summary> Initializes a new instance of KeyEncryptionKeyInfo. </summary>
@@ -16,17 +19,29 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> Initializes a new instance of KeyEncryptionKeyInfo. </summary>
-        /// <param name="keyIdentifier"> The key URL / identifier. </param>
-        /// <param name="keyVaultResourceArmId"> The KeyVault resource ARM Id for key. </param>
+        /// <param name="keyIdentifier">
+        /// The key URL / identifier.
+        /// Serialized Name: KeyEncryptionKeyInfo.keyIdentifier
+        /// </param>
+        /// <param name="keyVaultResourceArmId">
+        /// The KeyVault resource ARM Id for key.
+        /// Serialized Name: KeyEncryptionKeyInfo.keyVaultResourceArmId
+        /// </param>
         internal KeyEncryptionKeyInfo(string keyIdentifier, string keyVaultResourceArmId)
         {
             KeyIdentifier = keyIdentifier;
             KeyVaultResourceArmId = keyVaultResourceArmId;
         }
 
-        /// <summary> The key URL / identifier. </summary>
+        /// <summary>
+        /// The key URL / identifier.
+        /// Serialized Name: KeyEncryptionKeyInfo.keyIdentifier
+        /// </summary>
         public string KeyIdentifier { get; set; }
-        /// <summary> The KeyVault resource ARM Id for key. </summary>
+        /// <summary>
+        /// The KeyVault resource ARM Id for key.
+        /// Serialized Name: KeyEncryptionKeyInfo.keyVaultResourceArmId
+        /// </summary>
         public string KeyVaultResourceArmId { get; set; }
     }
 }

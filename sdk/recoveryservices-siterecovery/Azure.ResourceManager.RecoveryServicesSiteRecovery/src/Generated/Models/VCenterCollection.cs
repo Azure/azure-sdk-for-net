@@ -11,7 +11,10 @@ using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary> Collection of vCenter details. </summary>
+    /// <summary>
+    /// Collection of vCenter details.
+    /// Serialized Name: VCenterCollection
+    /// </summary>
     internal partial class VCenterCollection
     {
         /// <summary> Initializes a new instance of VCenterCollection. </summary>
@@ -21,17 +24,29 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> Initializes a new instance of VCenterCollection. </summary>
-        /// <param name="value"> The vCenter details. </param>
-        /// <param name="nextLink"> The value of next link. </param>
+        /// <param name="value">
+        /// The vCenter details.
+        /// Serialized Name: VCenterCollection.value
+        /// </param>
+        /// <param name="nextLink">
+        /// The value of next link.
+        /// Serialized Name: VCenterCollection.nextLink
+        /// </param>
         internal VCenterCollection(IReadOnlyList<VCenterData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
-        /// <summary> The vCenter details. </summary>
+        /// <summary>
+        /// The vCenter details.
+        /// Serialized Name: VCenterCollection.value
+        /// </summary>
         public IReadOnlyList<VCenterData> Value { get; }
-        /// <summary> The value of next link. </summary>
+        /// <summary>
+        /// The value of next link.
+        /// Serialized Name: VCenterCollection.nextLink
+        /// </summary>
         public string NextLink { get; }
     }
 }

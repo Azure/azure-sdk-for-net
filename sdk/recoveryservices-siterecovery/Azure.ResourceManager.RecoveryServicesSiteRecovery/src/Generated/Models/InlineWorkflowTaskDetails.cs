@@ -10,7 +10,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary> This class represents the inline workflow task details. </summary>
+    /// <summary>
+    /// This class represents the inline workflow task details.
+    /// Serialized Name: InlineWorkflowTaskDetails
+    /// </summary>
     public partial class InlineWorkflowTaskDetails : GroupTaskDetails
     {
         /// <summary> Initializes a new instance of InlineWorkflowTaskDetails. </summary>
@@ -21,16 +24,28 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> Initializes a new instance of InlineWorkflowTaskDetails. </summary>
-        /// <param name="instanceType"> The type of task details. </param>
-        /// <param name="childTasks"> The child tasks. </param>
-        /// <param name="workflowIds"> The list of child workflow ids. </param>
+        /// <param name="instanceType">
+        /// The type of task details.
+        /// Serialized Name: GroupTaskDetails.instanceType
+        /// </param>
+        /// <param name="childTasks">
+        /// The child tasks.
+        /// Serialized Name: GroupTaskDetails.childTasks
+        /// </param>
+        /// <param name="workflowIds">
+        /// The list of child workflow ids.
+        /// Serialized Name: InlineWorkflowTaskDetails.workflowIds
+        /// </param>
         internal InlineWorkflowTaskDetails(string instanceType, IReadOnlyList<ASRTask> childTasks, IReadOnlyList<string> workflowIds) : base(instanceType, childTasks)
         {
             WorkflowIds = workflowIds;
             InstanceType = instanceType ?? "InlineWorkflowTaskDetails";
         }
 
-        /// <summary> The list of child workflow ids. </summary>
+        /// <summary>
+        /// The list of child workflow ids.
+        /// Serialized Name: InlineWorkflowTaskDetails.workflowIds
+        /// </summary>
         public IReadOnlyList<string> WorkflowIds { get; }
     }
 }

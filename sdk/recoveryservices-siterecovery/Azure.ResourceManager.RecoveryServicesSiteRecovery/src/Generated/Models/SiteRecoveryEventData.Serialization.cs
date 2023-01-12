@@ -12,11 +12,11 @@ using Azure.ResourceManager.RecoveryServicesSiteRecovery.Models;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
 {
-    public partial class AlertData
+    public partial class SiteRecoveryEventData
     {
-        internal static AlertData DeserializeAlertData(JsonElement element)
+        internal static SiteRecoveryEventData DeserializeSiteRecoveryEventData(JsonElement element)
         {
-            Optional<AlertProperties> properties = default;
+            Optional<EventProperties> properties = default;
             Optional<AzureLocation> location = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    properties = AlertProperties.DeserializeAlertProperties(property.Value);
+                    properties = EventProperties.DeserializeEventProperties(property.Value);
                     continue;
                 }
                 if (property.NameEquals("location"))
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
                     continue;
                 }
             }
-            return new AlertData(id, name, type, systemData.Value, properties.Value, Optional.ToNullable(location));
+            return new SiteRecoveryEventData(id, name, type, systemData.Value, properties.Value, Optional.ToNullable(location));
         }
     }
 }

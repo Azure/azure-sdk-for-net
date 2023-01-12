@@ -7,11 +7,17 @@
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary> The UnknownConfigurationSettings. </summary>
+    /// <summary>
+    /// The UnknownConfigurationSettings.
+    /// Serialized Name: UnknownConfigurationSettings
+    /// </summary>
     internal partial class UnknownConfigurationSettings : ConfigurationSettings
     {
         /// <summary> Initializes a new instance of UnknownConfigurationSettings. </summary>
-        /// <param name="instanceType"> Gets the class type. Overridden in derived classes. </param>
+        /// <param name="instanceType">
+        /// Gets the class type. Overridden in derived classes.
+        /// Serialized Name: ConfigurationSettings.instanceType
+        /// </param>
         internal UnknownConfigurationSettings(string instanceType) : base(instanceType)
         {
             InstanceType = instanceType ?? "Unknown";

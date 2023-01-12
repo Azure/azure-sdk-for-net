@@ -11,7 +11,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary> A2A protected disk details. </summary>
+    /// <summary>
+    /// A2A protected disk details.
+    /// Serialized Name: A2AProtectedDiskDetails
+    /// </summary>
     public partial class A2AProtectedDiskDetails
     {
         /// <summary> Initializes a new instance of A2AProtectedDiskDetails. </summary>
@@ -21,29 +24,98 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> Initializes a new instance of A2AProtectedDiskDetails. </summary>
-        /// <param name="diskUri"> The disk uri. </param>
-        /// <param name="recoveryAzureStorageAccountId"> The recovery disk storage account. </param>
-        /// <param name="primaryDiskAzureStorageAccountId"> The primary disk storage account. </param>
-        /// <param name="recoveryDiskUri"> Recovery disk uri. </param>
-        /// <param name="diskName"> The disk name. </param>
-        /// <param name="diskCapacityInBytes"> The disk capacity in bytes. </param>
-        /// <param name="primaryStagingAzureStorageAccountId"> The primary staging storage account. </param>
-        /// <param name="diskType"> The type of disk. </param>
-        /// <param name="resyncRequired"> A value indicating whether resync is required for this disk. </param>
-        /// <param name="monitoringPercentageCompletion"> The percentage of the monitoring job. The type of the monitoring job is defined by MonitoringJobType property. </param>
-        /// <param name="monitoringJobType"> The type of the monitoring job. The progress is contained in MonitoringPercentageCompletion property. </param>
-        /// <param name="dataPendingInStagingStorageAccountInMB"> The data pending for replication in MB at staging account. </param>
-        /// <param name="dataPendingAtSourceAgentInMB"> The data pending at source virtual machine in MB. </param>
-        /// <param name="diskState"> The disk state. </param>
-        /// <param name="allowedDiskLevelOperation"> The disk level operations list. </param>
-        /// <param name="isDiskEncrypted"> A value indicating whether vm has encrypted os disk or not. </param>
-        /// <param name="secretIdentifier"> The secret URL / identifier (BEK). </param>
-        /// <param name="dekKeyVaultArmId"> The KeyVault resource id for secret (BEK). </param>
-        /// <param name="isDiskKeyEncrypted"> A value indicating whether disk key got encrypted or not. </param>
-        /// <param name="keyIdentifier"> The key URL / identifier (KEK). </param>
-        /// <param name="kekKeyVaultArmId"> The KeyVault resource id for key (KEK). </param>
-        /// <param name="failoverDiskName"> The failover name for the managed disk. </param>
-        /// <param name="tfoDiskName"> The test failover name for the managed disk. </param>
+        /// <param name="diskUri">
+        /// The disk uri.
+        /// Serialized Name: A2AProtectedDiskDetails.diskUri
+        /// </param>
+        /// <param name="recoveryAzureStorageAccountId">
+        /// The recovery disk storage account.
+        /// Serialized Name: A2AProtectedDiskDetails.recoveryAzureStorageAccountId
+        /// </param>
+        /// <param name="primaryDiskAzureStorageAccountId">
+        /// The primary disk storage account.
+        /// Serialized Name: A2AProtectedDiskDetails.primaryDiskAzureStorageAccountId
+        /// </param>
+        /// <param name="recoveryDiskUri">
+        /// Recovery disk uri.
+        /// Serialized Name: A2AProtectedDiskDetails.recoveryDiskUri
+        /// </param>
+        /// <param name="diskName">
+        /// The disk name.
+        /// Serialized Name: A2AProtectedDiskDetails.diskName
+        /// </param>
+        /// <param name="diskCapacityInBytes">
+        /// The disk capacity in bytes.
+        /// Serialized Name: A2AProtectedDiskDetails.diskCapacityInBytes
+        /// </param>
+        /// <param name="primaryStagingAzureStorageAccountId">
+        /// The primary staging storage account.
+        /// Serialized Name: A2AProtectedDiskDetails.primaryStagingAzureStorageAccountId
+        /// </param>
+        /// <param name="diskType">
+        /// The type of disk.
+        /// Serialized Name: A2AProtectedDiskDetails.diskType
+        /// </param>
+        /// <param name="resyncRequired">
+        /// A value indicating whether resync is required for this disk.
+        /// Serialized Name: A2AProtectedDiskDetails.resyncRequired
+        /// </param>
+        /// <param name="monitoringPercentageCompletion">
+        /// The percentage of the monitoring job. The type of the monitoring job is defined by MonitoringJobType property.
+        /// Serialized Name: A2AProtectedDiskDetails.monitoringPercentageCompletion
+        /// </param>
+        /// <param name="monitoringJobType">
+        /// The type of the monitoring job. The progress is contained in MonitoringPercentageCompletion property.
+        /// Serialized Name: A2AProtectedDiskDetails.monitoringJobType
+        /// </param>
+        /// <param name="dataPendingInStagingStorageAccountInMB">
+        /// The data pending for replication in MB at staging account.
+        /// Serialized Name: A2AProtectedDiskDetails.dataPendingInStagingStorageAccountInMB
+        /// </param>
+        /// <param name="dataPendingAtSourceAgentInMB">
+        /// The data pending at source virtual machine in MB.
+        /// Serialized Name: A2AProtectedDiskDetails.dataPendingAtSourceAgentInMB
+        /// </param>
+        /// <param name="diskState">
+        /// The disk state.
+        /// Serialized Name: A2AProtectedDiskDetails.diskState
+        /// </param>
+        /// <param name="allowedDiskLevelOperation">
+        /// The disk level operations list.
+        /// Serialized Name: A2AProtectedDiskDetails.allowedDiskLevelOperation
+        /// </param>
+        /// <param name="isDiskEncrypted">
+        /// A value indicating whether vm has encrypted os disk or not.
+        /// Serialized Name: A2AProtectedDiskDetails.isDiskEncrypted
+        /// </param>
+        /// <param name="secretIdentifier">
+        /// The secret URL / identifier (BEK).
+        /// Serialized Name: A2AProtectedDiskDetails.secretIdentifier
+        /// </param>
+        /// <param name="dekKeyVaultArmId">
+        /// The KeyVault resource id for secret (BEK).
+        /// Serialized Name: A2AProtectedDiskDetails.dekKeyVaultArmId
+        /// </param>
+        /// <param name="isDiskKeyEncrypted">
+        /// A value indicating whether disk key got encrypted or not.
+        /// Serialized Name: A2AProtectedDiskDetails.isDiskKeyEncrypted
+        /// </param>
+        /// <param name="keyIdentifier">
+        /// The key URL / identifier (KEK).
+        /// Serialized Name: A2AProtectedDiskDetails.keyIdentifier
+        /// </param>
+        /// <param name="kekKeyVaultArmId">
+        /// The KeyVault resource id for key (KEK).
+        /// Serialized Name: A2AProtectedDiskDetails.kekKeyVaultArmId
+        /// </param>
+        /// <param name="failoverDiskName">
+        /// The failover name for the managed disk.
+        /// Serialized Name: A2AProtectedDiskDetails.failoverDiskName
+        /// </param>
+        /// <param name="tfoDiskName">
+        /// The test failover name for the managed disk.
+        /// Serialized Name: A2AProtectedDiskDetails.tfoDiskName
+        /// </param>
         internal A2AProtectedDiskDetails(Uri diskUri, string recoveryAzureStorageAccountId, string primaryDiskAzureStorageAccountId, Uri recoveryDiskUri, string diskName, long? diskCapacityInBytes, string primaryStagingAzureStorageAccountId, string diskType, bool? resyncRequired, int? monitoringPercentageCompletion, string monitoringJobType, double? dataPendingInStagingStorageAccountInMB, double? dataPendingAtSourceAgentInMB, string diskState, IReadOnlyList<string> allowedDiskLevelOperation, bool? isDiskEncrypted, string secretIdentifier, string dekKeyVaultArmId, bool? isDiskKeyEncrypted, string keyIdentifier, string kekKeyVaultArmId, string failoverDiskName, string tfoDiskName)
         {
             DiskUri = diskUri;
@@ -71,51 +143,120 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             TfoDiskName = tfoDiskName;
         }
 
-        /// <summary> The disk uri. </summary>
+        /// <summary>
+        /// The disk uri.
+        /// Serialized Name: A2AProtectedDiskDetails.diskUri
+        /// </summary>
         public Uri DiskUri { get; }
-        /// <summary> The recovery disk storage account. </summary>
+        /// <summary>
+        /// The recovery disk storage account.
+        /// Serialized Name: A2AProtectedDiskDetails.recoveryAzureStorageAccountId
+        /// </summary>
         public string RecoveryAzureStorageAccountId { get; }
-        /// <summary> The primary disk storage account. </summary>
+        /// <summary>
+        /// The primary disk storage account.
+        /// Serialized Name: A2AProtectedDiskDetails.primaryDiskAzureStorageAccountId
+        /// </summary>
         public string PrimaryDiskAzureStorageAccountId { get; }
-        /// <summary> Recovery disk uri. </summary>
+        /// <summary>
+        /// Recovery disk uri.
+        /// Serialized Name: A2AProtectedDiskDetails.recoveryDiskUri
+        /// </summary>
         public Uri RecoveryDiskUri { get; }
-        /// <summary> The disk name. </summary>
+        /// <summary>
+        /// The disk name.
+        /// Serialized Name: A2AProtectedDiskDetails.diskName
+        /// </summary>
         public string DiskName { get; }
-        /// <summary> The disk capacity in bytes. </summary>
+        /// <summary>
+        /// The disk capacity in bytes.
+        /// Serialized Name: A2AProtectedDiskDetails.diskCapacityInBytes
+        /// </summary>
         public long? DiskCapacityInBytes { get; }
-        /// <summary> The primary staging storage account. </summary>
+        /// <summary>
+        /// The primary staging storage account.
+        /// Serialized Name: A2AProtectedDiskDetails.primaryStagingAzureStorageAccountId
+        /// </summary>
         public string PrimaryStagingAzureStorageAccountId { get; }
-        /// <summary> The type of disk. </summary>
+        /// <summary>
+        /// The type of disk.
+        /// Serialized Name: A2AProtectedDiskDetails.diskType
+        /// </summary>
         public string DiskType { get; }
-        /// <summary> A value indicating whether resync is required for this disk. </summary>
+        /// <summary>
+        /// A value indicating whether resync is required for this disk.
+        /// Serialized Name: A2AProtectedDiskDetails.resyncRequired
+        /// </summary>
         public bool? ResyncRequired { get; }
-        /// <summary> The percentage of the monitoring job. The type of the monitoring job is defined by MonitoringJobType property. </summary>
+        /// <summary>
+        /// The percentage of the monitoring job. The type of the monitoring job is defined by MonitoringJobType property.
+        /// Serialized Name: A2AProtectedDiskDetails.monitoringPercentageCompletion
+        /// </summary>
         public int? MonitoringPercentageCompletion { get; }
-        /// <summary> The type of the monitoring job. The progress is contained in MonitoringPercentageCompletion property. </summary>
+        /// <summary>
+        /// The type of the monitoring job. The progress is contained in MonitoringPercentageCompletion property.
+        /// Serialized Name: A2AProtectedDiskDetails.monitoringJobType
+        /// </summary>
         public string MonitoringJobType { get; }
-        /// <summary> The data pending for replication in MB at staging account. </summary>
+        /// <summary>
+        /// The data pending for replication in MB at staging account.
+        /// Serialized Name: A2AProtectedDiskDetails.dataPendingInStagingStorageAccountInMB
+        /// </summary>
         public double? DataPendingInStagingStorageAccountInMB { get; }
-        /// <summary> The data pending at source virtual machine in MB. </summary>
+        /// <summary>
+        /// The data pending at source virtual machine in MB.
+        /// Serialized Name: A2AProtectedDiskDetails.dataPendingAtSourceAgentInMB
+        /// </summary>
         public double? DataPendingAtSourceAgentInMB { get; }
-        /// <summary> The disk state. </summary>
+        /// <summary>
+        /// The disk state.
+        /// Serialized Name: A2AProtectedDiskDetails.diskState
+        /// </summary>
         public string DiskState { get; }
-        /// <summary> The disk level operations list. </summary>
+        /// <summary>
+        /// The disk level operations list.
+        /// Serialized Name: A2AProtectedDiskDetails.allowedDiskLevelOperation
+        /// </summary>
         public IReadOnlyList<string> AllowedDiskLevelOperation { get; }
-        /// <summary> A value indicating whether vm has encrypted os disk or not. </summary>
+        /// <summary>
+        /// A value indicating whether vm has encrypted os disk or not.
+        /// Serialized Name: A2AProtectedDiskDetails.isDiskEncrypted
+        /// </summary>
         public bool? IsDiskEncrypted { get; }
-        /// <summary> The secret URL / identifier (BEK). </summary>
+        /// <summary>
+        /// The secret URL / identifier (BEK).
+        /// Serialized Name: A2AProtectedDiskDetails.secretIdentifier
+        /// </summary>
         public string SecretIdentifier { get; }
-        /// <summary> The KeyVault resource id for secret (BEK). </summary>
+        /// <summary>
+        /// The KeyVault resource id for secret (BEK).
+        /// Serialized Name: A2AProtectedDiskDetails.dekKeyVaultArmId
+        /// </summary>
         public string DekKeyVaultArmId { get; }
-        /// <summary> A value indicating whether disk key got encrypted or not. </summary>
+        /// <summary>
+        /// A value indicating whether disk key got encrypted or not.
+        /// Serialized Name: A2AProtectedDiskDetails.isDiskKeyEncrypted
+        /// </summary>
         public bool? IsDiskKeyEncrypted { get; }
-        /// <summary> The key URL / identifier (KEK). </summary>
+        /// <summary>
+        /// The key URL / identifier (KEK).
+        /// Serialized Name: A2AProtectedDiskDetails.keyIdentifier
+        /// </summary>
         public string KeyIdentifier { get; }
-        /// <summary> The KeyVault resource id for key (KEK). </summary>
+        /// <summary>
+        /// The KeyVault resource id for key (KEK).
+        /// Serialized Name: A2AProtectedDiskDetails.kekKeyVaultArmId
+        /// </summary>
         public string KekKeyVaultArmId { get; }
-        /// <summary> The failover name for the managed disk. </summary>
+        /// <summary>
+        /// The failover name for the managed disk.
+        /// Serialized Name: A2AProtectedDiskDetails.failoverDiskName
+        /// </summary>
         public string FailoverDiskName { get; }
-        /// <summary> The test failover name for the managed disk. </summary>
+        /// <summary>
+        /// The test failover name for the managed disk.
+        /// Serialized Name: A2AProtectedDiskDetails.tfoDiskName
+        /// </summary>
         public string TfoDiskName { get; }
     }
 }

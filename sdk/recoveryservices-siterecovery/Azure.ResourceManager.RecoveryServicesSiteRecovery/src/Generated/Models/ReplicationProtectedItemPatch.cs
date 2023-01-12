@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary> Update replication protected item input. </summary>
+    /// <summary>
+    /// Update replication protected item input.
+    /// Serialized Name: UpdateReplicationProtectedItemInput
+    /// </summary>
     public partial class ReplicationProtectedItemPatch
     {
         /// <summary> Initializes a new instance of ReplicationProtectedItemPatch. </summary>
@@ -15,7 +18,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         {
         }
 
-        /// <summary> Update replication protected item properties. </summary>
+        /// <summary>
+        /// Update replication protected item properties.
+        /// Serialized Name: UpdateReplicationProtectedItemInput.properties
+        /// </summary>
         public UpdateReplicationProtectedItemInputProperties Properties { get; set; }
     }
 }

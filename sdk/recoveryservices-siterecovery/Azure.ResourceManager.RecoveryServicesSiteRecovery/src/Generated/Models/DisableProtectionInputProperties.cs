@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary> Disable protection input properties. </summary>
+    /// <summary>
+    /// Disable protection input properties.
+    /// Serialized Name: DisableProtectionInputProperties
+    /// </summary>
     public partial class DisableProtectionInputProperties
     {
         /// <summary> Initializes a new instance of DisableProtectionInputProperties. </summary>
@@ -15,10 +18,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         {
         }
 
-        /// <summary> Disable protection reason. It can have values NotSpecified/MigrationComplete. </summary>
+        /// <summary>
+        /// Disable protection reason. It can have values NotSpecified/MigrationComplete.
+        /// Serialized Name: DisableProtectionInputProperties.disableProtectionReason
+        /// </summary>
         public DisableProtectionReason? DisableProtectionReason { get; set; }
         /// <summary>
         /// Replication provider specific input.
+        /// Serialized Name: DisableProtectionInputProperties.replicationProviderInput
         /// Please note <see cref="DisableProtectionProviderSpecificInput"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="InMageDisableProtectionProviderSpecificInput"/>.
         /// </summary>

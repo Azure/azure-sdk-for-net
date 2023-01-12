@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary> A2ACrossClusterMigration cloud creation input. </summary>
+    /// <summary>
+    /// A2ACrossClusterMigration cloud creation input.
+    /// Serialized Name: A2ACrossClusterMigrationContainerCreationInput
+    /// </summary>
     public partial class A2ACrossClusterMigrationContainerCreationInput : ReplicationProviderSpecificContainerCreationInput
     {
         /// <summary> Initializes a new instance of A2ACrossClusterMigrationContainerCreationInput. </summary>

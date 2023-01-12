@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary> InMageAzureV2 Managed disk details. </summary>
+    /// <summary>
+    /// InMageAzureV2 Managed disk details.
+    /// Serialized Name: InMageAzureV2ManagedDiskDetails
+    /// </summary>
     public partial class InMageAzureV2ManagedDiskDetails
     {
         /// <summary> Initializes a new instance of InMageAzureV2ManagedDiskDetails. </summary>
@@ -16,11 +19,26 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> Initializes a new instance of InMageAzureV2ManagedDiskDetails. </summary>
-        /// <param name="diskId"> The disk id. </param>
-        /// <param name="seedManagedDiskId"> Seed managed disk Id. </param>
-        /// <param name="replicaDiskType"> The replica disk type. </param>
-        /// <param name="diskEncryptionSetId"> The DiskEncryptionSet ARM ID. </param>
-        /// <param name="targetDiskName"> The target disk name. </param>
+        /// <param name="diskId">
+        /// The disk id.
+        /// Serialized Name: InMageAzureV2ManagedDiskDetails.diskId
+        /// </param>
+        /// <param name="seedManagedDiskId">
+        /// Seed managed disk Id.
+        /// Serialized Name: InMageAzureV2ManagedDiskDetails.seedManagedDiskId
+        /// </param>
+        /// <param name="replicaDiskType">
+        /// The replica disk type.
+        /// Serialized Name: InMageAzureV2ManagedDiskDetails.replicaDiskType
+        /// </param>
+        /// <param name="diskEncryptionSetId">
+        /// The DiskEncryptionSet ARM ID.
+        /// Serialized Name: InMageAzureV2ManagedDiskDetails.diskEncryptionSetId
+        /// </param>
+        /// <param name="targetDiskName">
+        /// The target disk name.
+        /// Serialized Name: InMageAzureV2ManagedDiskDetails.targetDiskName
+        /// </param>
         internal InMageAzureV2ManagedDiskDetails(string diskId, string seedManagedDiskId, string replicaDiskType, string diskEncryptionSetId, string targetDiskName)
         {
             DiskId = diskId;
@@ -30,15 +48,30 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             TargetDiskName = targetDiskName;
         }
 
-        /// <summary> The disk id. </summary>
+        /// <summary>
+        /// The disk id.
+        /// Serialized Name: InMageAzureV2ManagedDiskDetails.diskId
+        /// </summary>
         public string DiskId { get; }
-        /// <summary> Seed managed disk Id. </summary>
+        /// <summary>
+        /// Seed managed disk Id.
+        /// Serialized Name: InMageAzureV2ManagedDiskDetails.seedManagedDiskId
+        /// </summary>
         public string SeedManagedDiskId { get; }
-        /// <summary> The replica disk type. </summary>
+        /// <summary>
+        /// The replica disk type.
+        /// Serialized Name: InMageAzureV2ManagedDiskDetails.replicaDiskType
+        /// </summary>
         public string ReplicaDiskType { get; }
-        /// <summary> The DiskEncryptionSet ARM ID. </summary>
+        /// <summary>
+        /// The DiskEncryptionSet ARM ID.
+        /// Serialized Name: InMageAzureV2ManagedDiskDetails.diskEncryptionSetId
+        /// </summary>
         public string DiskEncryptionSetId { get; }
-        /// <summary> The target disk name. </summary>
+        /// <summary>
+        /// The target disk name.
+        /// Serialized Name: InMageAzureV2ManagedDiskDetails.targetDiskName
+        /// </summary>
         public string TargetDiskName { get; }
     }
 }

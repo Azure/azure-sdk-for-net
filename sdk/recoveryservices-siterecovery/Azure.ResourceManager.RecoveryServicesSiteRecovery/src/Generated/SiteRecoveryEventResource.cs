@@ -18,46 +18,46 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
 {
     /// <summary>
-    /// A Class representing an Event along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="EventResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetEventResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetEvent method.
+    /// A Class representing a SiteRecoveryEvent along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="SiteRecoveryEventResource" />
+    /// from an instance of <see cref="ArmClient" /> using the GetSiteRecoveryEventResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetSiteRecoveryEvent method.
     /// </summary>
-    public partial class EventResource : ArmResource
+    public partial class SiteRecoveryEventResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="EventResource"/> instance. </summary>
+        /// <summary> Generate the resource identifier of a <see cref="SiteRecoveryEventResource"/> instance. </summary>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string resourceName, string eventName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationEvents/{eventName}";
             return new ResourceIdentifier(resourceId);
         }
 
-        private readonly ClientDiagnostics _eventReplicationEventsClientDiagnostics;
-        private readonly ReplicationEventsRestOperations _eventReplicationEventsRestClient;
-        private readonly EventData _data;
+        private readonly ClientDiagnostics _siteRecoveryEventReplicationEventsClientDiagnostics;
+        private readonly ReplicationEventsRestOperations _siteRecoveryEventReplicationEventsRestClient;
+        private readonly SiteRecoveryEventData _data;
 
-        /// <summary> Initializes a new instance of the <see cref="EventResource"/> class for mocking. </summary>
-        protected EventResource()
+        /// <summary> Initializes a new instance of the <see cref="SiteRecoveryEventResource"/> class for mocking. </summary>
+        protected SiteRecoveryEventResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "EventResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref = "SiteRecoveryEventResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal EventResource(ArmClient client, EventData data) : this(client, data.Id)
+        internal SiteRecoveryEventResource(ArmClient client, SiteRecoveryEventData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="EventResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="SiteRecoveryEventResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal EventResource(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal SiteRecoveryEventResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _eventReplicationEventsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.RecoveryServicesSiteRecovery", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string eventReplicationEventsApiVersion);
-            _eventReplicationEventsRestClient = new ReplicationEventsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, eventReplicationEventsApiVersion);
+            _siteRecoveryEventReplicationEventsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.RecoveryServicesSiteRecovery", ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ResourceType, out string siteRecoveryEventReplicationEventsApiVersion);
+            _siteRecoveryEventReplicationEventsRestClient = new ReplicationEventsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, siteRecoveryEventReplicationEventsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
 
         /// <summary> Gets the data representing this Feature. </summary>
         /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
-        public virtual EventData Data
+        public virtual SiteRecoveryEventData Data
         {
             get
             {
@@ -93,16 +93,16 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// Operation Id: ReplicationEvents_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<EventResource>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SiteRecoveryEventResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _eventReplicationEventsClientDiagnostics.CreateScope("EventResource.Get");
+            using var scope = _siteRecoveryEventReplicationEventsClientDiagnostics.CreateScope("SiteRecoveryEventResource.Get");
             scope.Start();
             try
             {
-                var response = await _eventReplicationEventsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _siteRecoveryEventReplicationEventsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new EventResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SiteRecoveryEventResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -117,16 +117,16 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// Operation Id: ReplicationEvents_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<EventResource> Get(CancellationToken cancellationToken = default)
+        public virtual Response<SiteRecoveryEventResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _eventReplicationEventsClientDiagnostics.CreateScope("EventResource.Get");
+            using var scope = _siteRecoveryEventReplicationEventsClientDiagnostics.CreateScope("SiteRecoveryEventResource.Get");
             scope.Start();
             try
             {
-                var response = _eventReplicationEventsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var response = _siteRecoveryEventReplicationEventsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new EventResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SiteRecoveryEventResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

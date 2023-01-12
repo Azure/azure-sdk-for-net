@@ -11,14 +11,29 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary> InMageAzureV2 specific provider input. </summary>
+    /// <summary>
+    /// InMageAzureV2 specific provider input.
+    /// Serialized Name: InMageReprotectInput
+    /// </summary>
     public partial class InMageReprotectInput : ReverseReplicationProviderSpecificInput
     {
         /// <summary> Initializes a new instance of InMageReprotectInput. </summary>
-        /// <param name="masterTargetId"> The Master Target Id. </param>
-        /// <param name="processServerId"> The Process Server Id. </param>
-        /// <param name="retentionDrive"> The retention drive to use on the MT. </param>
-        /// <param name="profileId"> The Policy Id. </param>
+        /// <param name="masterTargetId">
+        /// The Master Target Id.
+        /// Serialized Name: InMageReprotectInput.masterTargetId
+        /// </param>
+        /// <param name="processServerId">
+        /// The Process Server Id.
+        /// Serialized Name: InMageReprotectInput.processServerId
+        /// </param>
+        /// <param name="retentionDrive">
+        /// The retention drive to use on the MT.
+        /// Serialized Name: InMageReprotectInput.retentionDrive
+        /// </param>
+        /// <param name="profileId">
+        /// The Policy Id.
+        /// Serialized Name: InMageReprotectInput.profileId
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="masterTargetId"/>, <paramref name="processServerId"/>, <paramref name="retentionDrive"/> or <paramref name="profileId"/> is null. </exception>
         public InMageReprotectInput(string masterTargetId, string processServerId, string retentionDrive, string profileId)
         {
@@ -35,21 +50,45 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             InstanceType = "InMage";
         }
 
-        /// <summary> The Master Target Id. </summary>
+        /// <summary>
+        /// The Master Target Id.
+        /// Serialized Name: InMageReprotectInput.masterTargetId
+        /// </summary>
         public string MasterTargetId { get; }
-        /// <summary> The Process Server Id. </summary>
+        /// <summary>
+        /// The Process Server Id.
+        /// Serialized Name: InMageReprotectInput.processServerId
+        /// </summary>
         public string ProcessServerId { get; }
-        /// <summary> The retention drive to use on the MT. </summary>
+        /// <summary>
+        /// The retention drive to use on the MT.
+        /// Serialized Name: InMageReprotectInput.retentionDrive
+        /// </summary>
         public string RetentionDrive { get; }
-        /// <summary> The CS account Id. </summary>
+        /// <summary>
+        /// The CS account Id.
+        /// Serialized Name: InMageReprotectInput.runAsAccountId
+        /// </summary>
         public string RunAsAccountId { get; set; }
-        /// <summary> The target datastore name. </summary>
+        /// <summary>
+        /// The target datastore name.
+        /// Serialized Name: InMageReprotectInput.datastoreName
+        /// </summary>
         public string DatastoreName { get; set; }
-        /// <summary> The enable disk exclusion input. </summary>
+        /// <summary>
+        /// The enable disk exclusion input.
+        /// Serialized Name: InMageReprotectInput.diskExclusionInput
+        /// </summary>
         public InMageDiskExclusionInput DiskExclusionInput { get; set; }
-        /// <summary> The Policy Id. </summary>
+        /// <summary>
+        /// The Policy Id.
+        /// Serialized Name: InMageReprotectInput.profileId
+        /// </summary>
         public string ProfileId { get; }
-        /// <summary> The disks to include list. </summary>
+        /// <summary>
+        /// The disks to include list.
+        /// Serialized Name: InMageReprotectInput.disksToInclude
+        /// </summary>
         public IList<string> DisksToInclude { get; }
     }
 }

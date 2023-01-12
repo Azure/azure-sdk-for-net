@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary> A value indicating whether multi-VM sync has to be enabled. Value should be &apos;Enabled&apos; or &apos;Disabled&apos;. </summary>
+    /// <summary>
+    /// A value indicating whether multi-VM sync has to be enabled. Value should be &apos;Enabled&apos; or &apos;Disabled&apos;.
+    /// Serialized Name: SetMultiVmSyncStatus
+    /// </summary>
     public readonly partial struct SetMultiVmSyncStatus : IEquatable<SetMultiVmSyncStatus>
     {
         private readonly string _value;
@@ -25,9 +28,15 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         private const string EnableValue = "Enable";
         private const string DisableValue = "Disable";
 
-        /// <summary> Enable. </summary>
+        /// <summary>
+        /// Enable
+        /// Serialized Name: SetMultiVmSyncStatus.Enable
+        /// </summary>
         public static SetMultiVmSyncStatus Enable { get; } = new SetMultiVmSyncStatus(EnableValue);
-        /// <summary> Disable. </summary>
+        /// <summary>
+        /// Disable
+        /// Serialized Name: SetMultiVmSyncStatus.Disable
+        /// </summary>
         public static SetMultiVmSyncStatus Disable { get; } = new SetMultiVmSyncStatus(DisableValue);
         /// <summary> Determines if two <see cref="SetMultiVmSyncStatus"/> values are the same. </summary>
         public static bool operator ==(SetMultiVmSyncStatus left, SetMultiVmSyncStatus right) => left.Equals(right);

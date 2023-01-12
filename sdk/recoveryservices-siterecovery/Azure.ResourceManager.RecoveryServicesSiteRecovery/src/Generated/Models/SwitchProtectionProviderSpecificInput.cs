@@ -9,6 +9,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
     /// <summary>
     /// Provider specific switch protection input.
+    /// Serialized Name: SwitchProtectionProviderSpecificInput
     /// Please note <see cref="SwitchProtectionProviderSpecificInput"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="A2ASwitchProtectionInput"/>.
     /// </summary>
@@ -19,7 +20,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         {
         }
 
-        /// <summary> Gets the Instance type. </summary>
+        /// <summary>
+        /// Gets the Instance type.
+        /// Serialized Name: SwitchProtectionProviderSpecificInput.instanceType
+        /// </summary>
         internal string InstanceType { get; set; }
     }
 }

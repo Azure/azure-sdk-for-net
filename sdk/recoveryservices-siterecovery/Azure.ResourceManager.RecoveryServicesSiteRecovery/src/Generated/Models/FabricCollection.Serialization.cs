@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     {
         internal static FabricCollection DeserializeFabricCollection(JsonElement element)
         {
-            Optional<IReadOnlyList<FabricData>> value = default;
+            Optional<IReadOnlyList<SiteRecoveryFabricData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -27,10 +27,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<FabricData> array = new List<FabricData>();
+                    List<SiteRecoveryFabricData> array = new List<SiteRecoveryFabricData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(FabricData.DeserializeFabricData(item));
+                        array.Add(SiteRecoveryFabricData.DeserializeSiteRecoveryFabricData(item));
                     }
                     value = array;
                     continue;

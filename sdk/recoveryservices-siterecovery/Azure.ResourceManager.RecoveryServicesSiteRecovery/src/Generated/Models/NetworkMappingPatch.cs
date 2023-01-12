@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary> Update network mapping input. </summary>
+    /// <summary>
+    /// Update network mapping input.
+    /// Serialized Name: UpdateNetworkMappingInput
+    /// </summary>
     public partial class NetworkMappingPatch
     {
         /// <summary> Initializes a new instance of NetworkMappingPatch. </summary>
@@ -15,7 +18,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         {
         }
 
-        /// <summary> The input properties needed to update network mapping. </summary>
+        /// <summary>
+        /// The input properties needed to update network mapping.
+        /// Serialized Name: UpdateNetworkMappingInput.properties
+        /// </summary>
         public UpdateNetworkMappingInputProperties Properties { get; set; }
     }
 }

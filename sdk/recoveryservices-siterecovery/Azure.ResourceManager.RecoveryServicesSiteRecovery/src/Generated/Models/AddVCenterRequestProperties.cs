@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary> The properties of an add vCenter request. </summary>
+    /// <summary>
+    /// The properties of an add vCenter request.
+    /// Serialized Name: AddVCenterRequestProperties
+    /// </summary>
     public partial class AddVCenterRequestProperties
     {
         /// <summary> Initializes a new instance of AddVCenterRequestProperties. </summary>
@@ -15,15 +18,30 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         {
         }
 
-        /// <summary> The friendly name of the vCenter. </summary>
+        /// <summary>
+        /// The friendly name of the vCenter.
+        /// Serialized Name: AddVCenterRequestProperties.friendlyName
+        /// </summary>
         public string FriendlyName { get; set; }
-        /// <summary> The IP address of the vCenter to be discovered. </summary>
+        /// <summary>
+        /// The IP address of the vCenter to be discovered.
+        /// Serialized Name: AddVCenterRequestProperties.ipAddress
+        /// </summary>
         public string IPAddress { get; set; }
-        /// <summary> The process server Id from where the discovery is orchestrated. </summary>
+        /// <summary>
+        /// The process server Id from where the discovery is orchestrated.
+        /// Serialized Name: AddVCenterRequestProperties.processServerId
+        /// </summary>
         public string ProcessServerId { get; set; }
-        /// <summary> The port number for discovery. </summary>
+        /// <summary>
+        /// The port number for discovery.
+        /// Serialized Name: AddVCenterRequestProperties.port
+        /// </summary>
         public string Port { get; set; }
-        /// <summary> The account Id which has privileges to discover the vCenter. </summary>
+        /// <summary>
+        /// The account Id which has privileges to discover the vCenter.
+        /// Serialized Name: AddVCenterRequestProperties.runAsAccountId
+        /// </summary>
         public string RunAsAccountId { get; set; }
     }
 }

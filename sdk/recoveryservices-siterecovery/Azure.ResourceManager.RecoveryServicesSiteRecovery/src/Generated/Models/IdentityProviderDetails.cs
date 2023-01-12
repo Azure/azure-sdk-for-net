@@ -9,7 +9,10 @@ using System;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary> Identity provider details. </summary>
+    /// <summary>
+    /// Identity provider details.
+    /// Serialized Name: IdentityProviderDetails
+    /// </summary>
     public partial class IdentityProviderDetails
     {
         /// <summary> Initializes a new instance of IdentityProviderDetails. </summary>
@@ -18,11 +21,26 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> Initializes a new instance of IdentityProviderDetails. </summary>
-        /// <param name="tenantId"> The tenant Id for the service principal with which the on-premise management/data plane components would communicate with our Azure services. </param>
-        /// <param name="applicationId"> The application/client Id for the service principal with which the on-premise management/data plane components would communicate with our Azure services. </param>
-        /// <param name="objectId"> The object Id of the service principal with which the on-premise management/data plane components would communicate with our Azure services. </param>
-        /// <param name="audience"> The intended Audience of the service principal with which the on-premise management/data plane components would communicate with our Azure services. </param>
-        /// <param name="aadAuthority"> The base authority for Azure Active Directory authentication. </param>
+        /// <param name="tenantId">
+        /// The tenant Id for the service principal with which the on-premise management/data plane components would communicate with our Azure services.
+        /// Serialized Name: IdentityProviderDetails.tenantId
+        /// </param>
+        /// <param name="applicationId">
+        /// The application/client Id for the service principal with which the on-premise management/data plane components would communicate with our Azure services.
+        /// Serialized Name: IdentityProviderDetails.applicationId
+        /// </param>
+        /// <param name="objectId">
+        /// The object Id of the service principal with which the on-premise management/data plane components would communicate with our Azure services.
+        /// Serialized Name: IdentityProviderDetails.objectId
+        /// </param>
+        /// <param name="audience">
+        /// The intended Audience of the service principal with which the on-premise management/data plane components would communicate with our Azure services.
+        /// Serialized Name: IdentityProviderDetails.audience
+        /// </param>
+        /// <param name="aadAuthority">
+        /// The base authority for Azure Active Directory authentication.
+        /// Serialized Name: IdentityProviderDetails.aadAuthority
+        /// </param>
         internal IdentityProviderDetails(Guid? tenantId, string applicationId, string objectId, string audience, string aadAuthority)
         {
             TenantId = tenantId;
@@ -32,15 +50,30 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             AadAuthority = aadAuthority;
         }
 
-        /// <summary> The tenant Id for the service principal with which the on-premise management/data plane components would communicate with our Azure services. </summary>
+        /// <summary>
+        /// The tenant Id for the service principal with which the on-premise management/data plane components would communicate with our Azure services.
+        /// Serialized Name: IdentityProviderDetails.tenantId
+        /// </summary>
         public Guid? TenantId { get; }
-        /// <summary> The application/client Id for the service principal with which the on-premise management/data plane components would communicate with our Azure services. </summary>
+        /// <summary>
+        /// The application/client Id for the service principal with which the on-premise management/data plane components would communicate with our Azure services.
+        /// Serialized Name: IdentityProviderDetails.applicationId
+        /// </summary>
         public string ApplicationId { get; }
-        /// <summary> The object Id of the service principal with which the on-premise management/data plane components would communicate with our Azure services. </summary>
+        /// <summary>
+        /// The object Id of the service principal with which the on-premise management/data plane components would communicate with our Azure services.
+        /// Serialized Name: IdentityProviderDetails.objectId
+        /// </summary>
         public string ObjectId { get; }
-        /// <summary> The intended Audience of the service principal with which the on-premise management/data plane components would communicate with our Azure services. </summary>
+        /// <summary>
+        /// The intended Audience of the service principal with which the on-premise management/data plane components would communicate with our Azure services.
+        /// Serialized Name: IdentityProviderDetails.audience
+        /// </summary>
         public string Audience { get; }
-        /// <summary> The base authority for Azure Active Directory authentication. </summary>
+        /// <summary>
+        /// The base authority for Azure Active Directory authentication.
+        /// Serialized Name: IdentityProviderDetails.aadAuthority
+        /// </summary>
         public string AadAuthority { get; }
     }
 }

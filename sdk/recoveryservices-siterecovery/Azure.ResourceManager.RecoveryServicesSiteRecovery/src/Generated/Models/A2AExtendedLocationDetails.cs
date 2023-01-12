@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary> ExtendedLocation details data. </summary>
+    /// <summary>
+    /// ExtendedLocation details data.
+    /// Serialized Name: A2AExtendedLocationDetails
+    /// </summary>
     public partial class A2AExtendedLocationDetails
     {
         /// <summary> Initializes a new instance of A2AExtendedLocationDetails. </summary>
@@ -16,17 +19,29 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> Initializes a new instance of A2AExtendedLocationDetails. </summary>
-        /// <param name="primaryExtendedLocation"> The primary ExtendedLocation. </param>
-        /// <param name="recoveryExtendedLocation"> The recovery ExtendedLocation. </param>
+        /// <param name="primaryExtendedLocation">
+        /// The primary ExtendedLocation.
+        /// Serialized Name: A2AExtendedLocationDetails.primaryExtendedLocation
+        /// </param>
+        /// <param name="recoveryExtendedLocation">
+        /// The recovery ExtendedLocation.
+        /// Serialized Name: A2AExtendedLocationDetails.recoveryExtendedLocation
+        /// </param>
         internal A2AExtendedLocationDetails(ExtendedLocation primaryExtendedLocation, ExtendedLocation recoveryExtendedLocation)
         {
             PrimaryExtendedLocation = primaryExtendedLocation;
             RecoveryExtendedLocation = recoveryExtendedLocation;
         }
 
-        /// <summary> The primary ExtendedLocation. </summary>
+        /// <summary>
+        /// The primary ExtendedLocation.
+        /// Serialized Name: A2AExtendedLocationDetails.primaryExtendedLocation
+        /// </summary>
         public ExtendedLocation PrimaryExtendedLocation { get; }
-        /// <summary> The recovery ExtendedLocation. </summary>
+        /// <summary>
+        /// The recovery ExtendedLocation.
+        /// Serialized Name: A2AExtendedLocationDetails.recoveryExtendedLocation
+        /// </summary>
         public ExtendedLocation RecoveryExtendedLocation { get; }
     }
 }

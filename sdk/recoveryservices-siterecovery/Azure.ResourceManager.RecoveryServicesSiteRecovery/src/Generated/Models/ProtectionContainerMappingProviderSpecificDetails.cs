@@ -9,6 +9,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
     /// <summary>
     /// Container mapping provider specific details.
+    /// Serialized Name: ProtectionContainerMappingProviderSpecificDetails
     /// Please note <see cref="ProtectionContainerMappingProviderSpecificDetails"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="A2AProtectionContainerMappingDetails"/>, <see cref="InMageRcmProtectionContainerMappingDetails"/> and <see cref="VMwareCbtProtectionContainerMappingDetails"/>.
     /// </summary>
@@ -20,13 +21,19 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> Initializes a new instance of ProtectionContainerMappingProviderSpecificDetails. </summary>
-        /// <param name="instanceType"> Gets the class type. Overridden in derived classes. </param>
+        /// <param name="instanceType">
+        /// Gets the class type. Overridden in derived classes.
+        /// Serialized Name: ProtectionContainerMappingProviderSpecificDetails.instanceType
+        /// </param>
         internal ProtectionContainerMappingProviderSpecificDetails(string instanceType)
         {
             InstanceType = instanceType;
         }
 
-        /// <summary> Gets the class type. Overridden in derived classes. </summary>
+        /// <summary>
+        /// Gets the class type. Overridden in derived classes.
+        /// Serialized Name: ProtectionContainerMappingProviderSpecificDetails.instanceType
+        /// </summary>
         internal string InstanceType { get; set; }
     }
 }

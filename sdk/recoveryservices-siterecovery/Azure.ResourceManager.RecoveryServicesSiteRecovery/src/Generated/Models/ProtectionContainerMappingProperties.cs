@@ -10,7 +10,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary> Protection container mapping properties. </summary>
+    /// <summary>
+    /// Protection container mapping properties.
+    /// Serialized Name: ProtectionContainerMappingProperties
+    /// </summary>
     public partial class ProtectionContainerMappingProperties
     {
         /// <summary> Initializes a new instance of ProtectionContainerMappingProperties. </summary>
@@ -20,21 +23,52 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> Initializes a new instance of ProtectionContainerMappingProperties. </summary>
-        /// <param name="targetProtectionContainerId"> Paired protection container ARM ID. </param>
-        /// <param name="targetProtectionContainerFriendlyName"> Friendly name of paired container. </param>
+        /// <param name="targetProtectionContainerId">
+        /// Paired protection container ARM ID.
+        /// Serialized Name: ProtectionContainerMappingProperties.targetProtectionContainerId
+        /// </param>
+        /// <param name="targetProtectionContainerFriendlyName">
+        /// Friendly name of paired container.
+        /// Serialized Name: ProtectionContainerMappingProperties.targetProtectionContainerFriendlyName
+        /// </param>
         /// <param name="providerSpecificDetails">
         /// Provider specific provider details.
+        /// Serialized Name: ProtectionContainerMappingProperties.providerSpecificDetails
         /// Please note <see cref="ProtectionContainerMappingProviderSpecificDetails"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="A2AProtectionContainerMappingDetails"/>, <see cref="InMageRcmProtectionContainerMappingDetails"/> and <see cref="VMwareCbtProtectionContainerMappingDetails"/>.
         /// </param>
-        /// <param name="health"> Health of pairing. </param>
-        /// <param name="healthErrorDetails"> Health error. </param>
-        /// <param name="policyId"> Policy ARM Id. </param>
-        /// <param name="state"> Association Status. </param>
-        /// <param name="sourceProtectionContainerFriendlyName"> Friendly name of source protection container. </param>
-        /// <param name="sourceFabricFriendlyName"> Friendly name of source fabric. </param>
-        /// <param name="targetFabricFriendlyName"> Friendly name of target fabric. </param>
-        /// <param name="policyFriendlyName"> Friendly name of replication policy. </param>
+        /// <param name="health">
+        /// Health of pairing.
+        /// Serialized Name: ProtectionContainerMappingProperties.health
+        /// </param>
+        /// <param name="healthErrorDetails">
+        /// Health error.
+        /// Serialized Name: ProtectionContainerMappingProperties.healthErrorDetails
+        /// </param>
+        /// <param name="policyId">
+        /// Policy ARM Id.
+        /// Serialized Name: ProtectionContainerMappingProperties.policyId
+        /// </param>
+        /// <param name="state">
+        /// Association Status.
+        /// Serialized Name: ProtectionContainerMappingProperties.state
+        /// </param>
+        /// <param name="sourceProtectionContainerFriendlyName">
+        /// Friendly name of source protection container.
+        /// Serialized Name: ProtectionContainerMappingProperties.sourceProtectionContainerFriendlyName
+        /// </param>
+        /// <param name="sourceFabricFriendlyName">
+        /// Friendly name of source fabric.
+        /// Serialized Name: ProtectionContainerMappingProperties.sourceFabricFriendlyName
+        /// </param>
+        /// <param name="targetFabricFriendlyName">
+        /// Friendly name of target fabric.
+        /// Serialized Name: ProtectionContainerMappingProperties.targetFabricFriendlyName
+        /// </param>
+        /// <param name="policyFriendlyName">
+        /// Friendly name of replication policy.
+        /// Serialized Name: ProtectionContainerMappingProperties.policyFriendlyName
+        /// </param>
         internal ProtectionContainerMappingProperties(string targetProtectionContainerId, string targetProtectionContainerFriendlyName, ProtectionContainerMappingProviderSpecificDetails providerSpecificDetails, string health, IReadOnlyList<HealthError> healthErrorDetails, string policyId, string state, string sourceProtectionContainerFriendlyName, string sourceFabricFriendlyName, string targetFabricFriendlyName, string policyFriendlyName)
         {
             TargetProtectionContainerId = targetProtectionContainerId;
@@ -50,31 +84,62 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             PolicyFriendlyName = policyFriendlyName;
         }
 
-        /// <summary> Paired protection container ARM ID. </summary>
+        /// <summary>
+        /// Paired protection container ARM ID.
+        /// Serialized Name: ProtectionContainerMappingProperties.targetProtectionContainerId
+        /// </summary>
         public string TargetProtectionContainerId { get; }
-        /// <summary> Friendly name of paired container. </summary>
+        /// <summary>
+        /// Friendly name of paired container.
+        /// Serialized Name: ProtectionContainerMappingProperties.targetProtectionContainerFriendlyName
+        /// </summary>
         public string TargetProtectionContainerFriendlyName { get; }
         /// <summary>
         /// Provider specific provider details.
+        /// Serialized Name: ProtectionContainerMappingProperties.providerSpecificDetails
         /// Please note <see cref="ProtectionContainerMappingProviderSpecificDetails"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="A2AProtectionContainerMappingDetails"/>, <see cref="InMageRcmProtectionContainerMappingDetails"/> and <see cref="VMwareCbtProtectionContainerMappingDetails"/>.
         /// </summary>
         public ProtectionContainerMappingProviderSpecificDetails ProviderSpecificDetails { get; }
-        /// <summary> Health of pairing. </summary>
+        /// <summary>
+        /// Health of pairing.
+        /// Serialized Name: ProtectionContainerMappingProperties.health
+        /// </summary>
         public string Health { get; }
-        /// <summary> Health error. </summary>
+        /// <summary>
+        /// Health error.
+        /// Serialized Name: ProtectionContainerMappingProperties.healthErrorDetails
+        /// </summary>
         public IReadOnlyList<HealthError> HealthErrorDetails { get; }
-        /// <summary> Policy ARM Id. </summary>
+        /// <summary>
+        /// Policy ARM Id.
+        /// Serialized Name: ProtectionContainerMappingProperties.policyId
+        /// </summary>
         public string PolicyId { get; }
-        /// <summary> Association Status. </summary>
+        /// <summary>
+        /// Association Status.
+        /// Serialized Name: ProtectionContainerMappingProperties.state
+        /// </summary>
         public string State { get; }
-        /// <summary> Friendly name of source protection container. </summary>
+        /// <summary>
+        /// Friendly name of source protection container.
+        /// Serialized Name: ProtectionContainerMappingProperties.sourceProtectionContainerFriendlyName
+        /// </summary>
         public string SourceProtectionContainerFriendlyName { get; }
-        /// <summary> Friendly name of source fabric. </summary>
+        /// <summary>
+        /// Friendly name of source fabric.
+        /// Serialized Name: ProtectionContainerMappingProperties.sourceFabricFriendlyName
+        /// </summary>
         public string SourceFabricFriendlyName { get; }
-        /// <summary> Friendly name of target fabric. </summary>
+        /// <summary>
+        /// Friendly name of target fabric.
+        /// Serialized Name: ProtectionContainerMappingProperties.targetFabricFriendlyName
+        /// </summary>
         public string TargetFabricFriendlyName { get; }
-        /// <summary> Friendly name of replication policy. </summary>
+        /// <summary>
+        /// Friendly name of replication policy.
+        /// Serialized Name: ProtectionContainerMappingProperties.policyFriendlyName
+        /// </summary>
         public string PolicyFriendlyName { get; }
     }
 }

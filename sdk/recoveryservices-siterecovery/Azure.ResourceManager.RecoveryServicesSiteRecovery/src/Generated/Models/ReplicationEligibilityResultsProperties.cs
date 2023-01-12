@@ -10,7 +10,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary> Properties model for replication eligibility results API. </summary>
+    /// <summary>
+    /// Properties model for replication eligibility results API.
+    /// Serialized Name: ReplicationEligibilityResultsProperties
+    /// </summary>
     public partial class ReplicationEligibilityResultsProperties
     {
         /// <summary> Initializes a new instance of ReplicationEligibilityResultsProperties. </summary>
@@ -20,17 +23,29 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> Initializes a new instance of ReplicationEligibilityResultsProperties. </summary>
-        /// <param name="clientRequestId"> The client request Id. </param>
-        /// <param name="errors"> The error details. </param>
+        /// <param name="clientRequestId">
+        /// The client request Id.
+        /// Serialized Name: ReplicationEligibilityResultsProperties.clientRequestId
+        /// </param>
+        /// <param name="errors">
+        /// The error details.
+        /// Serialized Name: ReplicationEligibilityResultsProperties.errors
+        /// </param>
         internal ReplicationEligibilityResultsProperties(string clientRequestId, IReadOnlyList<ReplicationEligibilityResultsErrorInfo> errors)
         {
             ClientRequestId = clientRequestId;
             Errors = errors;
         }
 
-        /// <summary> The client request Id. </summary>
+        /// <summary>
+        /// The client request Id.
+        /// Serialized Name: ReplicationEligibilityResultsProperties.clientRequestId
+        /// </summary>
         public string ClientRequestId { get; }
-        /// <summary> The error details. </summary>
+        /// <summary>
+        /// The error details.
+        /// Serialized Name: ReplicationEligibilityResultsProperties.errors
+        /// </summary>
         public IReadOnlyList<ReplicationEligibilityResultsErrorInfo> Errors { get; }
     }
 }

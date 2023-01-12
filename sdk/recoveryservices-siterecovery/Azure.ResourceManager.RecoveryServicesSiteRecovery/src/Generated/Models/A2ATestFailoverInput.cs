@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary> A2A provider specific input for test failover. </summary>
+    /// <summary>
+    /// A2A provider specific input for test failover.
+    /// Serialized Name: A2ATestFailoverInput
+    /// </summary>
     public partial class A2ATestFailoverInput : TestFailoverProviderSpecificInput
     {
         /// <summary> Initializes a new instance of A2ATestFailoverInput. </summary>
@@ -16,9 +19,15 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             InstanceType = "A2A";
         }
 
-        /// <summary> The recovery point id to be passed to test failover to a particular recovery point. In case of latest recovery point, null should be passed. </summary>
+        /// <summary>
+        /// The recovery point id to be passed to test failover to a particular recovery point. In case of latest recovery point, null should be passed.
+        /// Serialized Name: A2ATestFailoverInput.recoveryPointId
+        /// </summary>
         public string RecoveryPointId { get; set; }
-        /// <summary> A value indicating whether to use recovery cloud service for TFO or not. </summary>
+        /// <summary>
+        /// A value indicating whether to use recovery cloud service for TFO or not.
+        /// Serialized Name: A2ATestFailoverInput.cloudServiceCreationOption
+        /// </summary>
         public string CloudServiceCreationOption { get; set; }
     }
 }

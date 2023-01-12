@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary> Recovery plan A2A input. </summary>
+    /// <summary>
+    /// Recovery plan A2A input.
+    /// Serialized Name: RecoveryPlanA2AInput
+    /// </summary>
     public partial class RecoveryPlanA2AInput : RecoveryPlanProviderSpecificInput
     {
         /// <summary> Initializes a new instance of RecoveryPlanA2AInput. </summary>
@@ -16,13 +19,25 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             InstanceType = "A2A";
         }
 
-        /// <summary> The primary zone. </summary>
+        /// <summary>
+        /// The primary zone.
+        /// Serialized Name: RecoveryPlanA2AInput.primaryZone
+        /// </summary>
         public string PrimaryZone { get; set; }
-        /// <summary> The recovery zone. </summary>
+        /// <summary>
+        /// The recovery zone.
+        /// Serialized Name: RecoveryPlanA2AInput.recoveryZone
+        /// </summary>
         public string RecoveryZone { get; set; }
-        /// <summary> The primary extended location. </summary>
+        /// <summary>
+        /// The primary extended location.
+        /// Serialized Name: RecoveryPlanA2AInput.primaryExtendedLocation
+        /// </summary>
         public ExtendedLocation PrimaryExtendedLocation { get; set; }
-        /// <summary> The recovery extended location. </summary>
+        /// <summary>
+        /// The recovery extended location.
+        /// Serialized Name: RecoveryPlanA2AInput.recoveryExtendedLocation
+        /// </summary>
         public ExtendedLocation RecoveryExtendedLocation { get; set; }
     }
 }

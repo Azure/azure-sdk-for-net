@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary> Volume details. </summary>
+    /// <summary>
+    /// Volume details.
+    /// Serialized Name: DiskVolumeDetails
+    /// </summary>
     public partial class DiskVolumeDetails
     {
         /// <summary> Initializes a new instance of DiskVolumeDetails. </summary>
@@ -16,17 +19,29 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> Initializes a new instance of DiskVolumeDetails. </summary>
-        /// <param name="label"> The volume label. </param>
-        /// <param name="name"> The volume name. </param>
+        /// <param name="label">
+        /// The volume label.
+        /// Serialized Name: DiskVolumeDetails.label
+        /// </param>
+        /// <param name="name">
+        /// The volume name.
+        /// Serialized Name: DiskVolumeDetails.name
+        /// </param>
         internal DiskVolumeDetails(string label, string name)
         {
             Label = label;
             Name = name;
         }
 
-        /// <summary> The volume label. </summary>
+        /// <summary>
+        /// The volume label.
+        /// Serialized Name: DiskVolumeDetails.label
+        /// </summary>
         public string Label { get; }
-        /// <summary> The volume name. </summary>
+        /// <summary>
+        /// The volume name.
+        /// Serialized Name: DiskVolumeDetails.name
+        /// </summary>
         public string Name { get; }
     }
 }

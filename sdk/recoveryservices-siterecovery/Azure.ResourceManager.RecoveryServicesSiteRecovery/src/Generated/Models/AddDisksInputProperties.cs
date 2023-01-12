@@ -10,12 +10,16 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary> Add Disks input properties. </summary>
+    /// <summary>
+    /// Add Disks input properties.
+    /// Serialized Name: AddDisksInputProperties
+    /// </summary>
     internal partial class AddDisksInputProperties
     {
         /// <summary> Initializes a new instance of AddDisksInputProperties. </summary>
         /// <param name="providerSpecificDetails">
         /// The ReplicationProviderInput. For HyperVReplicaAzure provider, it will be AzureEnableProtectionInput object. For San provider, it will be SanEnableProtectionInput object. For HyperVReplicaAzure provider, it can be null.
+        /// Serialized Name: AddDisksInputProperties.providerSpecificDetails
         /// Please note <see cref="AddDisksProviderSpecificInput"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="A2AAddDisksInput"/>.
         /// </param>
@@ -29,6 +33,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 
         /// <summary>
         /// The ReplicationProviderInput. For HyperVReplicaAzure provider, it will be AzureEnableProtectionInput object. For San provider, it will be SanEnableProtectionInput object. For HyperVReplicaAzure provider, it can be null.
+        /// Serialized Name: AddDisksInputProperties.providerSpecificDetails
         /// Please note <see cref="AddDisksProviderSpecificInput"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="A2AAddDisksInput"/>.
         /// </summary>

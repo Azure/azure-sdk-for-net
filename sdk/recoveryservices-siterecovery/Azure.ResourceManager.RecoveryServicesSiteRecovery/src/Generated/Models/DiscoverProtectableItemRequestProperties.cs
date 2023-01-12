@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary> Discover protectable item properties. </summary>
+    /// <summary>
+    /// Discover protectable item properties.
+    /// Serialized Name: DiscoverProtectableItemRequestProperties
+    /// </summary>
     public partial class DiscoverProtectableItemRequestProperties
     {
         /// <summary> Initializes a new instance of DiscoverProtectableItemRequestProperties. </summary>
@@ -15,11 +18,20 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         {
         }
 
-        /// <summary> The friendly name of the physical machine. </summary>
+        /// <summary>
+        /// The friendly name of the physical machine.
+        /// Serialized Name: DiscoverProtectableItemRequestProperties.friendlyName
+        /// </summary>
         public string FriendlyName { get; set; }
-        /// <summary> The IP address of the physical machine to be discovered. </summary>
+        /// <summary>
+        /// The IP address of the physical machine to be discovered.
+        /// Serialized Name: DiscoverProtectableItemRequestProperties.ipAddress
+        /// </summary>
         public string IPAddress { get; set; }
-        /// <summary> The OS type on the physical machine. </summary>
+        /// <summary>
+        /// The OS type on the physical machine.
+        /// Serialized Name: DiscoverProtectableItemRequestProperties.osType
+        /// </summary>
         public string OSType { get; set; }
     }
 }

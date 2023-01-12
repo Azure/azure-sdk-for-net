@@ -11,7 +11,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary> Recovery services provider properties. </summary>
+    /// <summary>
+    /// Recovery services provider properties.
+    /// Serialized Name: RecoveryServicesProviderProperties
+    /// </summary>
     public partial class RecoveryServicesProviderProperties
     {
         /// <summary> Initializes a new instance of RecoveryServicesProviderProperties. </summary>
@@ -22,26 +25,86 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> Initializes a new instance of RecoveryServicesProviderProperties. </summary>
-        /// <param name="fabricType"> Type of the site. </param>
-        /// <param name="friendlyName"> Friendly name of the DRA. </param>
-        /// <param name="providerVersion"> The provider version. </param>
-        /// <param name="serverVersion"> The fabric provider. </param>
-        /// <param name="providerVersionState"> DRA version status. </param>
-        /// <param name="providerVersionExpiryOn"> Expiry date of the version. </param>
-        /// <param name="fabricFriendlyName"> The fabric friendly name. </param>
-        /// <param name="lastHeartBeat"> Time when last heartbeat was sent by the DRA. </param>
-        /// <param name="connectionStatus"> A value indicating whether DRA is responsive. </param>
-        /// <param name="protectedItemCount"> Number of protected VMs currently managed by the DRA. </param>
-        /// <param name="allowedScenarios"> The scenarios allowed on this provider. </param>
-        /// <param name="healthErrorDetails"> The recovery services provider health error details. </param>
-        /// <param name="draIdentifier"> The DRA Id. </param>
-        /// <param name="machineId"> The machine Id. </param>
-        /// <param name="machineName"> The machine name. </param>
-        /// <param name="biosId"> The Bios Id. </param>
-        /// <param name="authenticationIdentityDetails"> The authentication identity details. </param>
-        /// <param name="resourceAccessIdentityDetails"> The resource access identity details. </param>
-        /// <param name="dataPlaneAuthenticationIdentityDetails"> The data plane authentication identity details. </param>
-        /// <param name="providerVersionDetails"> The provider version details. </param>
+        /// <param name="fabricType">
+        /// Type of the site.
+        /// Serialized Name: RecoveryServicesProviderProperties.fabricType
+        /// </param>
+        /// <param name="friendlyName">
+        /// Friendly name of the DRA.
+        /// Serialized Name: RecoveryServicesProviderProperties.friendlyName
+        /// </param>
+        /// <param name="providerVersion">
+        /// The provider version.
+        /// Serialized Name: RecoveryServicesProviderProperties.providerVersion
+        /// </param>
+        /// <param name="serverVersion">
+        /// The fabric provider.
+        /// Serialized Name: RecoveryServicesProviderProperties.serverVersion
+        /// </param>
+        /// <param name="providerVersionState">
+        /// DRA version status.
+        /// Serialized Name: RecoveryServicesProviderProperties.providerVersionState
+        /// </param>
+        /// <param name="providerVersionExpiryOn">
+        /// Expiry date of the version.
+        /// Serialized Name: RecoveryServicesProviderProperties.providerVersionExpiryDate
+        /// </param>
+        /// <param name="fabricFriendlyName">
+        /// The fabric friendly name.
+        /// Serialized Name: RecoveryServicesProviderProperties.fabricFriendlyName
+        /// </param>
+        /// <param name="lastHeartBeat">
+        /// Time when last heartbeat was sent by the DRA.
+        /// Serialized Name: RecoveryServicesProviderProperties.lastHeartBeat
+        /// </param>
+        /// <param name="connectionStatus">
+        /// A value indicating whether DRA is responsive.
+        /// Serialized Name: RecoveryServicesProviderProperties.connectionStatus
+        /// </param>
+        /// <param name="protectedItemCount">
+        /// Number of protected VMs currently managed by the DRA.
+        /// Serialized Name: RecoveryServicesProviderProperties.protectedItemCount
+        /// </param>
+        /// <param name="allowedScenarios">
+        /// The scenarios allowed on this provider.
+        /// Serialized Name: RecoveryServicesProviderProperties.allowedScenarios
+        /// </param>
+        /// <param name="healthErrorDetails">
+        /// The recovery services provider health error details.
+        /// Serialized Name: RecoveryServicesProviderProperties.healthErrorDetails
+        /// </param>
+        /// <param name="draIdentifier">
+        /// The DRA Id.
+        /// Serialized Name: RecoveryServicesProviderProperties.draIdentifier
+        /// </param>
+        /// <param name="machineId">
+        /// The machine Id.
+        /// Serialized Name: RecoveryServicesProviderProperties.machineId
+        /// </param>
+        /// <param name="machineName">
+        /// The machine name.
+        /// Serialized Name: RecoveryServicesProviderProperties.machineName
+        /// </param>
+        /// <param name="biosId">
+        /// The Bios Id.
+        /// Serialized Name: RecoveryServicesProviderProperties.biosId
+        /// </param>
+        /// <param name="authenticationIdentityDetails">
+        /// The authentication identity details.
+        /// Serialized Name: RecoveryServicesProviderProperties.authenticationIdentityDetails
+        /// </param>
+        /// <param name="resourceAccessIdentityDetails">
+        /// The resource access identity details.
+        /// Serialized Name: RecoveryServicesProviderProperties.resourceAccessIdentityDetails
+        /// </param>
+        /// <param name="dataPlaneAuthenticationIdentityDetails">
+        /// The data plane authentication identity details.
+        /// Serialized Name: RecoveryServicesProviderProperties.dataPlaneAuthenticationIdentityDetails
+        /// </param>
+        /// <param name="providerVersionDetails">
+        /// The provider version details.
+        /// Serialized Name: RecoveryServicesProviderProperties.providerVersionDetails
+        /// </param>
         internal RecoveryServicesProviderProperties(string fabricType, string friendlyName, string providerVersion, string serverVersion, string providerVersionState, DateTimeOffset? providerVersionExpiryOn, string fabricFriendlyName, DateTimeOffset? lastHeartBeat, string connectionStatus, int? protectedItemCount, IReadOnlyList<string> allowedScenarios, IReadOnlyList<HealthError> healthErrorDetails, string draIdentifier, string machineId, string machineName, string biosId, IdentityProviderDetails authenticationIdentityDetails, IdentityProviderDetails resourceAccessIdentityDetails, IdentityProviderDetails dataPlaneAuthenticationIdentityDetails, VersionDetails providerVersionDetails)
         {
             FabricType = fabricType;
@@ -66,45 +129,105 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             ProviderVersionDetails = providerVersionDetails;
         }
 
-        /// <summary> Type of the site. </summary>
+        /// <summary>
+        /// Type of the site.
+        /// Serialized Name: RecoveryServicesProviderProperties.fabricType
+        /// </summary>
         public string FabricType { get; }
-        /// <summary> Friendly name of the DRA. </summary>
+        /// <summary>
+        /// Friendly name of the DRA.
+        /// Serialized Name: RecoveryServicesProviderProperties.friendlyName
+        /// </summary>
         public string FriendlyName { get; }
-        /// <summary> The provider version. </summary>
+        /// <summary>
+        /// The provider version.
+        /// Serialized Name: RecoveryServicesProviderProperties.providerVersion
+        /// </summary>
         public string ProviderVersion { get; }
-        /// <summary> The fabric provider. </summary>
+        /// <summary>
+        /// The fabric provider.
+        /// Serialized Name: RecoveryServicesProviderProperties.serverVersion
+        /// </summary>
         public string ServerVersion { get; }
-        /// <summary> DRA version status. </summary>
+        /// <summary>
+        /// DRA version status.
+        /// Serialized Name: RecoveryServicesProviderProperties.providerVersionState
+        /// </summary>
         public string ProviderVersionState { get; }
-        /// <summary> Expiry date of the version. </summary>
+        /// <summary>
+        /// Expiry date of the version.
+        /// Serialized Name: RecoveryServicesProviderProperties.providerVersionExpiryDate
+        /// </summary>
         public DateTimeOffset? ProviderVersionExpiryOn { get; }
-        /// <summary> The fabric friendly name. </summary>
+        /// <summary>
+        /// The fabric friendly name.
+        /// Serialized Name: RecoveryServicesProviderProperties.fabricFriendlyName
+        /// </summary>
         public string FabricFriendlyName { get; }
-        /// <summary> Time when last heartbeat was sent by the DRA. </summary>
+        /// <summary>
+        /// Time when last heartbeat was sent by the DRA.
+        /// Serialized Name: RecoveryServicesProviderProperties.lastHeartBeat
+        /// </summary>
         public DateTimeOffset? LastHeartBeat { get; }
-        /// <summary> A value indicating whether DRA is responsive. </summary>
+        /// <summary>
+        /// A value indicating whether DRA is responsive.
+        /// Serialized Name: RecoveryServicesProviderProperties.connectionStatus
+        /// </summary>
         public string ConnectionStatus { get; }
-        /// <summary> Number of protected VMs currently managed by the DRA. </summary>
+        /// <summary>
+        /// Number of protected VMs currently managed by the DRA.
+        /// Serialized Name: RecoveryServicesProviderProperties.protectedItemCount
+        /// </summary>
         public int? ProtectedItemCount { get; }
-        /// <summary> The scenarios allowed on this provider. </summary>
+        /// <summary>
+        /// The scenarios allowed on this provider.
+        /// Serialized Name: RecoveryServicesProviderProperties.allowedScenarios
+        /// </summary>
         public IReadOnlyList<string> AllowedScenarios { get; }
-        /// <summary> The recovery services provider health error details. </summary>
+        /// <summary>
+        /// The recovery services provider health error details.
+        /// Serialized Name: RecoveryServicesProviderProperties.healthErrorDetails
+        /// </summary>
         public IReadOnlyList<HealthError> HealthErrorDetails { get; }
-        /// <summary> The DRA Id. </summary>
+        /// <summary>
+        /// The DRA Id.
+        /// Serialized Name: RecoveryServicesProviderProperties.draIdentifier
+        /// </summary>
         public string DraIdentifier { get; }
-        /// <summary> The machine Id. </summary>
+        /// <summary>
+        /// The machine Id.
+        /// Serialized Name: RecoveryServicesProviderProperties.machineId
+        /// </summary>
         public string MachineId { get; }
-        /// <summary> The machine name. </summary>
+        /// <summary>
+        /// The machine name.
+        /// Serialized Name: RecoveryServicesProviderProperties.machineName
+        /// </summary>
         public string MachineName { get; }
-        /// <summary> The Bios Id. </summary>
+        /// <summary>
+        /// The Bios Id.
+        /// Serialized Name: RecoveryServicesProviderProperties.biosId
+        /// </summary>
         public string BiosId { get; }
-        /// <summary> The authentication identity details. </summary>
+        /// <summary>
+        /// The authentication identity details.
+        /// Serialized Name: RecoveryServicesProviderProperties.authenticationIdentityDetails
+        /// </summary>
         public IdentityProviderDetails AuthenticationIdentityDetails { get; }
-        /// <summary> The resource access identity details. </summary>
+        /// <summary>
+        /// The resource access identity details.
+        /// Serialized Name: RecoveryServicesProviderProperties.resourceAccessIdentityDetails
+        /// </summary>
         public IdentityProviderDetails ResourceAccessIdentityDetails { get; }
-        /// <summary> The data plane authentication identity details. </summary>
+        /// <summary>
+        /// The data plane authentication identity details.
+        /// Serialized Name: RecoveryServicesProviderProperties.dataPlaneAuthenticationIdentityDetails
+        /// </summary>
         public IdentityProviderDetails DataPlaneAuthenticationIdentityDetails { get; }
-        /// <summary> The provider version details. </summary>
+        /// <summary>
+        /// The provider version details.
+        /// Serialized Name: RecoveryServicesProviderProperties.providerVersionDetails
+        /// </summary>
         public VersionDetails ProviderVersionDetails { get; }
     }
 }

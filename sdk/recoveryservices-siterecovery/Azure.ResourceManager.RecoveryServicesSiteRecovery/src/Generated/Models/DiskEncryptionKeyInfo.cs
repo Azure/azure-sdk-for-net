@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary> Disk Encryption Key Information (BitLocker Encryption Key (BEK) on Windows). </summary>
+    /// <summary>
+    /// Disk Encryption Key Information (BitLocker Encryption Key (BEK) on Windows).
+    /// Serialized Name: DiskEncryptionKeyInfo
+    /// </summary>
     public partial class DiskEncryptionKeyInfo
     {
         /// <summary> Initializes a new instance of DiskEncryptionKeyInfo. </summary>
@@ -16,17 +19,29 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> Initializes a new instance of DiskEncryptionKeyInfo. </summary>
-        /// <param name="secretIdentifier"> The secret url / identifier. </param>
-        /// <param name="keyVaultResourceArmId"> The KeyVault resource ARM id for secret. </param>
+        /// <param name="secretIdentifier">
+        /// The secret url / identifier.
+        /// Serialized Name: DiskEncryptionKeyInfo.secretIdentifier
+        /// </param>
+        /// <param name="keyVaultResourceArmId">
+        /// The KeyVault resource ARM id for secret.
+        /// Serialized Name: DiskEncryptionKeyInfo.keyVaultResourceArmId
+        /// </param>
         internal DiskEncryptionKeyInfo(string secretIdentifier, string keyVaultResourceArmId)
         {
             SecretIdentifier = secretIdentifier;
             KeyVaultResourceArmId = keyVaultResourceArmId;
         }
 
-        /// <summary> The secret url / identifier. </summary>
+        /// <summary>
+        /// The secret url / identifier.
+        /// Serialized Name: DiskEncryptionKeyInfo.secretIdentifier
+        /// </summary>
         public string SecretIdentifier { get; set; }
-        /// <summary> The KeyVault resource ARM id for secret. </summary>
+        /// <summary>
+        /// The KeyVault resource ARM id for secret.
+        /// Serialized Name: DiskEncryptionKeyInfo.keyVaultResourceArmId
+        /// </summary>
         public string KeyVaultResourceArmId { get; set; }
     }
 }

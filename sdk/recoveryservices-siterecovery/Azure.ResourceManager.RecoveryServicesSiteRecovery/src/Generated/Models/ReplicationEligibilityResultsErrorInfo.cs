@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary> Error model that can be exposed to the user. </summary>
+    /// <summary>
+    /// Error model that can be exposed to the user.
+    /// Serialized Name: ReplicationEligibilityResultsErrorInfo
+    /// </summary>
     public partial class ReplicationEligibilityResultsErrorInfo
     {
         /// <summary> Initializes a new instance of ReplicationEligibilityResultsErrorInfo. </summary>
@@ -16,11 +19,26 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> Initializes a new instance of ReplicationEligibilityResultsErrorInfo. </summary>
-        /// <param name="code"> The error code. </param>
-        /// <param name="message"> The error message. </param>
-        /// <param name="possibleCauses"> The possible causes. </param>
-        /// <param name="recommendedAction"> The recommended action. </param>
-        /// <param name="status"> The error status. </param>
+        /// <param name="code">
+        /// The error code.
+        /// Serialized Name: ReplicationEligibilityResultsErrorInfo.code
+        /// </param>
+        /// <param name="message">
+        /// The error message.
+        /// Serialized Name: ReplicationEligibilityResultsErrorInfo.message
+        /// </param>
+        /// <param name="possibleCauses">
+        /// The possible causes.
+        /// Serialized Name: ReplicationEligibilityResultsErrorInfo.possibleCauses
+        /// </param>
+        /// <param name="recommendedAction">
+        /// The recommended action.
+        /// Serialized Name: ReplicationEligibilityResultsErrorInfo.recommendedAction
+        /// </param>
+        /// <param name="status">
+        /// The error status.
+        /// Serialized Name: ReplicationEligibilityResultsErrorInfo.status
+        /// </param>
         internal ReplicationEligibilityResultsErrorInfo(string code, string message, string possibleCauses, string recommendedAction, string status)
         {
             Code = code;
@@ -30,15 +48,30 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             Status = status;
         }
 
-        /// <summary> The error code. </summary>
+        /// <summary>
+        /// The error code.
+        /// Serialized Name: ReplicationEligibilityResultsErrorInfo.code
+        /// </summary>
         public string Code { get; }
-        /// <summary> The error message. </summary>
+        /// <summary>
+        /// The error message.
+        /// Serialized Name: ReplicationEligibilityResultsErrorInfo.message
+        /// </summary>
         public string Message { get; }
-        /// <summary> The possible causes. </summary>
+        /// <summary>
+        /// The possible causes.
+        /// Serialized Name: ReplicationEligibilityResultsErrorInfo.possibleCauses
+        /// </summary>
         public string PossibleCauses { get; }
-        /// <summary> The recommended action. </summary>
+        /// <summary>
+        /// The recommended action.
+        /// Serialized Name: ReplicationEligibilityResultsErrorInfo.recommendedAction
+        /// </summary>
         public string RecommendedAction { get; }
-        /// <summary> The error status. </summary>
+        /// <summary>
+        /// The error status.
+        /// Serialized Name: ReplicationEligibilityResultsErrorInfo.status
+        /// </summary>
         public string Status { get; }
     }
 }

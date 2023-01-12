@@ -10,7 +10,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary> A2A specific switch protection input. </summary>
+    /// <summary>
+    /// A2A specific switch protection input.
+    /// Serialized Name: A2ASwitchProtectionInput
+    /// </summary>
     public partial class A2ASwitchProtectionInput : SwitchProtectionProviderSpecificInput
     {
         /// <summary> Initializes a new instance of A2ASwitchProtectionInput. </summary>
@@ -21,31 +24,70 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             InstanceType = "A2A";
         }
 
-        /// <summary> The recovery container Id. </summary>
+        /// <summary>
+        /// The recovery container Id.
+        /// Serialized Name: A2ASwitchProtectionInput.recoveryContainerId
+        /// </summary>
         public string RecoveryContainerId { get; set; }
-        /// <summary> The list of vm disk details. </summary>
+        /// <summary>
+        /// The list of vm disk details.
+        /// Serialized Name: A2ASwitchProtectionInput.vmDisks
+        /// </summary>
         public IList<A2AVmDiskInputDetails> VmDisks { get; }
-        /// <summary> The list of vm managed disk details. </summary>
+        /// <summary>
+        /// The list of vm managed disk details.
+        /// Serialized Name: A2ASwitchProtectionInput.vmManagedDisks
+        /// </summary>
         public IList<A2AVmManagedDiskInputDetails> VmManagedDisks { get; }
-        /// <summary> The recovery resource group Id. Valid for V2 scenarios. </summary>
+        /// <summary>
+        /// The recovery resource group Id. Valid for V2 scenarios.
+        /// Serialized Name: A2ASwitchProtectionInput.recoveryResourceGroupId
+        /// </summary>
         public string RecoveryResourceGroupId { get; set; }
-        /// <summary> The recovery cloud service Id. Valid for V1 scenarios. </summary>
+        /// <summary>
+        /// The recovery cloud service Id. Valid for V1 scenarios.
+        /// Serialized Name: A2ASwitchProtectionInput.recoveryCloudServiceId
+        /// </summary>
         public string RecoveryCloudServiceId { get; set; }
-        /// <summary> The recovery availability set. </summary>
+        /// <summary>
+        /// The recovery availability set.
+        /// Serialized Name: A2ASwitchProtectionInput.recoveryAvailabilitySetId
+        /// </summary>
         public string RecoveryAvailabilitySetId { get; set; }
-        /// <summary> The Policy Id. </summary>
+        /// <summary>
+        /// The Policy Id.
+        /// Serialized Name: A2ASwitchProtectionInput.policyId
+        /// </summary>
         public string PolicyId { get; set; }
-        /// <summary> The boot diagnostic storage account. </summary>
+        /// <summary>
+        /// The boot diagnostic storage account.
+        /// Serialized Name: A2ASwitchProtectionInput.recoveryBootDiagStorageAccountId
+        /// </summary>
         public string RecoveryBootDiagStorageAccountId { get; set; }
-        /// <summary> The recovery availability zone. </summary>
+        /// <summary>
+        /// The recovery availability zone.
+        /// Serialized Name: A2ASwitchProtectionInput.recoveryAvailabilityZone
+        /// </summary>
         public string RecoveryAvailabilityZone { get; set; }
-        /// <summary> The recovery proximity placement group Id. </summary>
+        /// <summary>
+        /// The recovery proximity placement group Id.
+        /// Serialized Name: A2ASwitchProtectionInput.recoveryProximityPlacementGroupId
+        /// </summary>
         public string RecoveryProximityPlacementGroupId { get; set; }
-        /// <summary> The virtual machine scale set id. </summary>
+        /// <summary>
+        /// The virtual machine scale set id.
+        /// Serialized Name: A2ASwitchProtectionInput.recoveryVirtualMachineScaleSetId
+        /// </summary>
         public string RecoveryVirtualMachineScaleSetId { get; set; }
-        /// <summary> The recovery capacity reservation group Id. </summary>
+        /// <summary>
+        /// The recovery capacity reservation group Id.
+        /// Serialized Name: A2ASwitchProtectionInput.recoveryCapacityReservationGroupId
+        /// </summary>
         public string RecoveryCapacityReservationGroupId { get; set; }
-        /// <summary> The recovery disk encryption information. </summary>
+        /// <summary>
+        /// The recovery disk encryption information.
+        /// Serialized Name: A2ASwitchProtectionInput.diskEncryptionInfo
+        /// </summary>
         public DiskEncryptionInfo DiskEncryptionInfo { get; set; }
     }
 }

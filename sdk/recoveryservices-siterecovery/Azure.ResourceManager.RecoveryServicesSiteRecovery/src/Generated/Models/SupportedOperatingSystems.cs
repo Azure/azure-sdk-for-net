@@ -11,7 +11,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary> Supported operating systems. </summary>
+    /// <summary>
+    /// Supported operating systems.
+    /// Serialized Name: SupportedOperatingSystems
+    /// </summary>
     public partial class SupportedOperatingSystems : ResourceData
     {
         /// <summary> Initializes a new instance of SupportedOperatingSystems. </summary>
@@ -24,23 +27,38 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="properties"> The supported operating systems properties. </param>
-        /// <param name="location"> Resource Location. </param>
+        /// <param name="properties">
+        /// The supported operating systems properties.
+        /// Serialized Name: SupportedOperatingSystems.properties
+        /// </param>
+        /// <param name="location">
+        /// Resource Location
+        /// Serialized Name: Resource.location
+        /// </param>
         internal SupportedOperatingSystems(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SupportedOSProperties properties, AzureLocation? location) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
             Location = location;
         }
 
-        /// <summary> The supported operating systems properties. </summary>
+        /// <summary>
+        /// The supported operating systems properties.
+        /// Serialized Name: SupportedOperatingSystems.properties
+        /// </summary>
         internal SupportedOSProperties Properties { get; }
-        /// <summary> The supported operating systems property list. </summary>
+        /// <summary>
+        /// The supported operating systems property list.
+        /// Serialized Name: SupportedOSProperties.supportedOsList
+        /// </summary>
         public IReadOnlyList<SupportedOSProperty> SupportedOSList
         {
             get => Properties?.SupportedOSList;
         }
 
-        /// <summary> Resource Location. </summary>
+        /// <summary>
+        /// Resource Location
+        /// Serialized Name: Resource.location
+        /// </summary>
         public AzureLocation? Location { get; }
     }
 }

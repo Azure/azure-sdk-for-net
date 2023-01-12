@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary> Resume job params. </summary>
+    /// <summary>
+    /// Resume job params.
+    /// Serialized Name: ResumeJobParams
+    /// </summary>
     public partial class ResumeJobParams
     {
         /// <summary> Initializes a new instance of ResumeJobParams. </summary>
@@ -15,9 +18,15 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         {
         }
 
-        /// <summary> Resume job properties. </summary>
+        /// <summary>
+        /// Resume job properties.
+        /// Serialized Name: ResumeJobParams.properties
+        /// </summary>
         internal ResumeJobParamsProperties Properties { get; set; }
-        /// <summary> Resume job comments. </summary>
+        /// <summary>
+        /// Resume job comments.
+        /// Serialized Name: ResumeJobParamsProperties.comments
+        /// </summary>
         public string ResumeJobParamsComments
         {
             get => Properties is null ? default : Properties.Comments;

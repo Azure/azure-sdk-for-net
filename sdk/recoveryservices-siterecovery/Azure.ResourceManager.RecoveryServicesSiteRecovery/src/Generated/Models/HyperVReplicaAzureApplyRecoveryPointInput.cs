@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary> ApplyRecoveryPoint input specific to HyperVReplicaAzure provider. </summary>
+    /// <summary>
+    /// ApplyRecoveryPoint input specific to HyperVReplicaAzure provider.
+    /// Serialized Name: HyperVReplicaAzureApplyRecoveryPointInput
+    /// </summary>
     public partial class HyperVReplicaAzureApplyRecoveryPointInput : ApplyRecoveryPointProviderSpecificInput
     {
         /// <summary> Initializes a new instance of HyperVReplicaAzureApplyRecoveryPointInput. </summary>
@@ -16,9 +19,15 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             InstanceType = "HyperVReplicaAzure";
         }
 
-        /// <summary> The primary kek certificate pfx. </summary>
+        /// <summary>
+        /// The primary kek certificate pfx.
+        /// Serialized Name: HyperVReplicaAzureApplyRecoveryPointInput.primaryKekCertificatePfx
+        /// </summary>
         public string PrimaryKekCertificatePfx { get; set; }
-        /// <summary> The secondary kek certificate pfx. </summary>
+        /// <summary>
+        /// The secondary kek certificate pfx.
+        /// Serialized Name: HyperVReplicaAzureApplyRecoveryPointInput.secondaryKekCertificatePfx
+        /// </summary>
         public string SecondaryKekCertificatePfx { get; set; }
     }
 }

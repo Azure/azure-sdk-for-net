@@ -10,7 +10,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary> Hyper V VM network input details. </summary>
+    /// <summary>
+    /// Hyper V VM network input details.
+    /// Serialized Name: VMNicInputDetails
+    /// </summary>
     public partial class VmNicInputDetails
     {
         /// <summary> Initializes a new instance of VmNicInputDetails. </summary>
@@ -19,33 +22,75 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             IPConfigs = new ChangeTrackingList<IPConfigInputDetails>();
         }
 
-        /// <summary> The nic Id. </summary>
+        /// <summary>
+        /// The nic Id.
+        /// Serialized Name: VMNicInputDetails.nicId
+        /// </summary>
         public string NicId { get; set; }
-        /// <summary> The IP configurations to be used by NIC during test failover and failover. </summary>
+        /// <summary>
+        /// The IP configurations to be used by NIC during test failover and failover.
+        /// Serialized Name: VMNicInputDetails.ipConfigs
+        /// </summary>
         public IList<IPConfigInputDetails> IPConfigs { get; }
-        /// <summary> Selection type for failover. </summary>
+        /// <summary>
+        /// Selection type for failover.
+        /// Serialized Name: VMNicInputDetails.selectionType
+        /// </summary>
         public string SelectionType { get; set; }
-        /// <summary> The id of the NSG associated with the NIC. </summary>
+        /// <summary>
+        /// The id of the NSG associated with the NIC.
+        /// Serialized Name: VMNicInputDetails.recoveryNetworkSecurityGroupId
+        /// </summary>
         public string RecoveryNetworkSecurityGroupId { get; set; }
-        /// <summary> Whether the NIC has accelerated networking enabled. </summary>
+        /// <summary>
+        /// Whether the NIC has accelerated networking enabled.
+        /// Serialized Name: VMNicInputDetails.enableAcceleratedNetworkingOnRecovery
+        /// </summary>
         public bool? EnableAcceleratedNetworkingOnRecovery { get; set; }
-        /// <summary> The NSG to be used by NIC during test failover. </summary>
+        /// <summary>
+        /// The NSG to be used by NIC during test failover.
+        /// Serialized Name: VMNicInputDetails.tfoNetworkSecurityGroupId
+        /// </summary>
         public string TfoNetworkSecurityGroupId { get; set; }
-        /// <summary> Whether the test NIC has accelerated networking enabled. </summary>
+        /// <summary>
+        /// Whether the test NIC has accelerated networking enabled.
+        /// Serialized Name: VMNicInputDetails.enableAcceleratedNetworkingOnTfo
+        /// </summary>
         public bool? EnableAcceleratedNetworkingOnTfo { get; set; }
-        /// <summary> The name of the NIC to be used when creating target NICs. </summary>
+        /// <summary>
+        /// The name of the NIC to be used when creating target NICs.
+        /// Serialized Name: VMNicInputDetails.recoveryNicName
+        /// </summary>
         public string RecoveryNicName { get; set; }
-        /// <summary> The resource group of the NIC to be used when creating target NICs. </summary>
+        /// <summary>
+        /// The resource group of the NIC to be used when creating target NICs.
+        /// Serialized Name: VMNicInputDetails.recoveryNicResourceGroupName
+        /// </summary>
         public string RecoveryNicResourceGroupName { get; set; }
-        /// <summary> A value indicating whether an existing NIC is allowed to be reused during failover subject to availability. </summary>
+        /// <summary>
+        /// A value indicating whether an existing NIC is allowed to be reused during failover subject to availability.
+        /// Serialized Name: VMNicInputDetails.reuseExistingNic
+        /// </summary>
         public bool? ReuseExistingNic { get; set; }
-        /// <summary> The name of the NIC to be used when creating target NICs in TFO. </summary>
+        /// <summary>
+        /// The name of the NIC to be used when creating target NICs in TFO.
+        /// Serialized Name: VMNicInputDetails.tfoNicName
+        /// </summary>
         public string TfoNicName { get; set; }
-        /// <summary> The resource group of the NIC to be used when creating target NICs in TFO. </summary>
+        /// <summary>
+        /// The resource group of the NIC to be used when creating target NICs in TFO.
+        /// Serialized Name: VMNicInputDetails.tfoNicResourceGroupName
+        /// </summary>
         public string TfoNicResourceGroupName { get; set; }
-        /// <summary> A value indicating whether an existing NIC is allowed to be reused during test failover subject to availability. </summary>
+        /// <summary>
+        /// A value indicating whether an existing NIC is allowed to be reused during test failover subject to availability.
+        /// Serialized Name: VMNicInputDetails.tfoReuseExistingNic
+        /// </summary>
         public bool? TfoReuseExistingNic { get; set; }
-        /// <summary> Target NIC name. </summary>
+        /// <summary>
+        /// Target NIC name.
+        /// Serialized Name: VMNicInputDetails.targetNicName
+        /// </summary>
         public string TargetNicName { get; set; }
     }
 }

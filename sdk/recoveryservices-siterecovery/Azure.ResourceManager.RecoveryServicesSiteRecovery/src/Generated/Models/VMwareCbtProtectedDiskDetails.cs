@@ -9,7 +9,10 @@ using System;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary> VMwareCbt protected disk details. </summary>
+    /// <summary>
+    /// VMwareCbt protected disk details.
+    /// Serialized Name: VMwareCbtProtectedDiskDetails
+    /// </summary>
     public partial class VMwareCbtProtectedDiskDetails
     {
         /// <summary> Initializes a new instance of VMwareCbtProtectedDiskDetails. </summary>
@@ -18,20 +21,62 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> Initializes a new instance of VMwareCbtProtectedDiskDetails. </summary>
-        /// <param name="diskId"> The disk id. </param>
-        /// <param name="diskName"> The disk name. </param>
-        /// <param name="diskType"> The disk type. </param>
-        /// <param name="diskPath"> The disk path. </param>
-        /// <param name="isOSDisk"> A value indicating whether the disk is the OS disk. </param>
-        /// <param name="capacityInBytes"> The disk capacity in bytes. </param>
-        /// <param name="logStorageAccountId"> The log storage account ARM Id. </param>
-        /// <param name="logStorageAccountSasSecretName"> The key vault secret name of the log storage account. </param>
-        /// <param name="diskEncryptionSetId"> The DiskEncryptionSet ARM Id. </param>
-        /// <param name="seedManagedDiskId"> The ARM Id of the seed managed disk. </param>
-        /// <param name="seedBlobUri"> The uri of the seed blob. </param>
-        /// <param name="targetManagedDiskId"> The ARM Id of the target managed disk. </param>
-        /// <param name="targetBlobUri"> The uri of the target blob. </param>
-        /// <param name="targetDiskName"> The name for the target managed disk. </param>
+        /// <param name="diskId">
+        /// The disk id.
+        /// Serialized Name: VMwareCbtProtectedDiskDetails.diskId
+        /// </param>
+        /// <param name="diskName">
+        /// The disk name.
+        /// Serialized Name: VMwareCbtProtectedDiskDetails.diskName
+        /// </param>
+        /// <param name="diskType">
+        /// The disk type.
+        /// Serialized Name: VMwareCbtProtectedDiskDetails.diskType
+        /// </param>
+        /// <param name="diskPath">
+        /// The disk path.
+        /// Serialized Name: VMwareCbtProtectedDiskDetails.diskPath
+        /// </param>
+        /// <param name="isOSDisk">
+        /// A value indicating whether the disk is the OS disk.
+        /// Serialized Name: VMwareCbtProtectedDiskDetails.isOSDisk
+        /// </param>
+        /// <param name="capacityInBytes">
+        /// The disk capacity in bytes.
+        /// Serialized Name: VMwareCbtProtectedDiskDetails.capacityInBytes
+        /// </param>
+        /// <param name="logStorageAccountId">
+        /// The log storage account ARM Id.
+        /// Serialized Name: VMwareCbtProtectedDiskDetails.logStorageAccountId
+        /// </param>
+        /// <param name="logStorageAccountSasSecretName">
+        /// The key vault secret name of the log storage account.
+        /// Serialized Name: VMwareCbtProtectedDiskDetails.logStorageAccountSasSecretName
+        /// </param>
+        /// <param name="diskEncryptionSetId">
+        /// The DiskEncryptionSet ARM Id.
+        /// Serialized Name: VMwareCbtProtectedDiskDetails.diskEncryptionSetId
+        /// </param>
+        /// <param name="seedManagedDiskId">
+        /// The ARM Id of the seed managed disk.
+        /// Serialized Name: VMwareCbtProtectedDiskDetails.seedManagedDiskId
+        /// </param>
+        /// <param name="seedBlobUri">
+        /// The uri of the seed blob.
+        /// Serialized Name: VMwareCbtProtectedDiskDetails.seedBlobUri
+        /// </param>
+        /// <param name="targetManagedDiskId">
+        /// The ARM Id of the target managed disk.
+        /// Serialized Name: VMwareCbtProtectedDiskDetails.targetManagedDiskId
+        /// </param>
+        /// <param name="targetBlobUri">
+        /// The uri of the target blob.
+        /// Serialized Name: VMwareCbtProtectedDiskDetails.targetBlobUri
+        /// </param>
+        /// <param name="targetDiskName">
+        /// The name for the target managed disk.
+        /// Serialized Name: VMwareCbtProtectedDiskDetails.targetDiskName
+        /// </param>
         internal VMwareCbtProtectedDiskDetails(string diskId, string diskName, DiskAccountType? diskType, string diskPath, string isOSDisk, long? capacityInBytes, string logStorageAccountId, string logStorageAccountSasSecretName, string diskEncryptionSetId, string seedManagedDiskId, Uri seedBlobUri, string targetManagedDiskId, Uri targetBlobUri, string targetDiskName)
         {
             DiskId = diskId;
@@ -50,33 +95,75 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             TargetDiskName = targetDiskName;
         }
 
-        /// <summary> The disk id. </summary>
+        /// <summary>
+        /// The disk id.
+        /// Serialized Name: VMwareCbtProtectedDiskDetails.diskId
+        /// </summary>
         public string DiskId { get; }
-        /// <summary> The disk name. </summary>
+        /// <summary>
+        /// The disk name.
+        /// Serialized Name: VMwareCbtProtectedDiskDetails.diskName
+        /// </summary>
         public string DiskName { get; }
-        /// <summary> The disk type. </summary>
+        /// <summary>
+        /// The disk type.
+        /// Serialized Name: VMwareCbtProtectedDiskDetails.diskType
+        /// </summary>
         public DiskAccountType? DiskType { get; }
-        /// <summary> The disk path. </summary>
+        /// <summary>
+        /// The disk path.
+        /// Serialized Name: VMwareCbtProtectedDiskDetails.diskPath
+        /// </summary>
         public string DiskPath { get; }
-        /// <summary> A value indicating whether the disk is the OS disk. </summary>
+        /// <summary>
+        /// A value indicating whether the disk is the OS disk.
+        /// Serialized Name: VMwareCbtProtectedDiskDetails.isOSDisk
+        /// </summary>
         public string IsOSDisk { get; }
-        /// <summary> The disk capacity in bytes. </summary>
+        /// <summary>
+        /// The disk capacity in bytes.
+        /// Serialized Name: VMwareCbtProtectedDiskDetails.capacityInBytes
+        /// </summary>
         public long? CapacityInBytes { get; }
-        /// <summary> The log storage account ARM Id. </summary>
+        /// <summary>
+        /// The log storage account ARM Id.
+        /// Serialized Name: VMwareCbtProtectedDiskDetails.logStorageAccountId
+        /// </summary>
         public string LogStorageAccountId { get; }
-        /// <summary> The key vault secret name of the log storage account. </summary>
+        /// <summary>
+        /// The key vault secret name of the log storage account.
+        /// Serialized Name: VMwareCbtProtectedDiskDetails.logStorageAccountSasSecretName
+        /// </summary>
         public string LogStorageAccountSasSecretName { get; }
-        /// <summary> The DiskEncryptionSet ARM Id. </summary>
+        /// <summary>
+        /// The DiskEncryptionSet ARM Id.
+        /// Serialized Name: VMwareCbtProtectedDiskDetails.diskEncryptionSetId
+        /// </summary>
         public string DiskEncryptionSetId { get; }
-        /// <summary> The ARM Id of the seed managed disk. </summary>
+        /// <summary>
+        /// The ARM Id of the seed managed disk.
+        /// Serialized Name: VMwareCbtProtectedDiskDetails.seedManagedDiskId
+        /// </summary>
         public string SeedManagedDiskId { get; }
-        /// <summary> The uri of the seed blob. </summary>
+        /// <summary>
+        /// The uri of the seed blob.
+        /// Serialized Name: VMwareCbtProtectedDiskDetails.seedBlobUri
+        /// </summary>
         public Uri SeedBlobUri { get; }
-        /// <summary> The ARM Id of the target managed disk. </summary>
+        /// <summary>
+        /// The ARM Id of the target managed disk.
+        /// Serialized Name: VMwareCbtProtectedDiskDetails.targetManagedDiskId
+        /// </summary>
         public string TargetManagedDiskId { get; }
-        /// <summary> The uri of the target blob. </summary>
+        /// <summary>
+        /// The uri of the target blob.
+        /// Serialized Name: VMwareCbtProtectedDiskDetails.targetBlobUri
+        /// </summary>
         public Uri TargetBlobUri { get; }
-        /// <summary> The name for the target managed disk. </summary>
+        /// <summary>
+        /// The name for the target managed disk.
+        /// Serialized Name: VMwareCbtProtectedDiskDetails.targetDiskName
+        /// </summary>
         public string TargetDiskName { get; }
     }
 }

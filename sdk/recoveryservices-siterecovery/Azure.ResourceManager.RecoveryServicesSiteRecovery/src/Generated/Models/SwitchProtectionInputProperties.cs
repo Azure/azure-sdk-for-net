@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary> Switch protection input properties. </summary>
+    /// <summary>
+    /// Switch protection input properties.
+    /// Serialized Name: SwitchProtectionInputProperties
+    /// </summary>
     public partial class SwitchProtectionInputProperties
     {
         /// <summary> Initializes a new instance of SwitchProtectionInputProperties. </summary>
@@ -15,10 +18,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         {
         }
 
-        /// <summary> The unique replication protected item name. </summary>
+        /// <summary>
+        /// The unique replication protected item name.
+        /// Serialized Name: SwitchProtectionInputProperties.replicationProtectedItemName
+        /// </summary>
         public string ReplicationProtectedItemName { get; set; }
         /// <summary>
         /// Provider specific switch protection input.
+        /// Serialized Name: SwitchProtectionInputProperties.providerSpecificDetails
         /// Please note <see cref="SwitchProtectionProviderSpecificInput"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="A2ASwitchProtectionInput"/>.
         /// </summary>

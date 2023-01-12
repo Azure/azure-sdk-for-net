@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary> This class represents the manual action task details. </summary>
+    /// <summary>
+    /// This class represents the manual action task details.
+    /// Serialized Name: ManualActionTaskDetails
+    /// </summary>
     public partial class ManualActionTaskDetails : TaskTypeDetails
     {
         /// <summary> Initializes a new instance of ManualActionTaskDetails. </summary>
@@ -17,10 +20,22 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> Initializes a new instance of ManualActionTaskDetails. </summary>
-        /// <param name="instanceType"> The type of task details. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="instructions"> The instructions. </param>
-        /// <param name="observation"> The observation. </param>
+        /// <param name="instanceType">
+        /// The type of task details.
+        /// Serialized Name: TaskTypeDetails.instanceType
+        /// </param>
+        /// <param name="name">
+        /// The name.
+        /// Serialized Name: ManualActionTaskDetails.name
+        /// </param>
+        /// <param name="instructions">
+        /// The instructions.
+        /// Serialized Name: ManualActionTaskDetails.instructions
+        /// </param>
+        /// <param name="observation">
+        /// The observation.
+        /// Serialized Name: ManualActionTaskDetails.observation
+        /// </param>
         internal ManualActionTaskDetails(string instanceType, string name, string instructions, string observation) : base(instanceType)
         {
             Name = name;
@@ -29,11 +44,20 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             InstanceType = instanceType ?? "ManualActionTaskDetails";
         }
 
-        /// <summary> The name. </summary>
+        /// <summary>
+        /// The name.
+        /// Serialized Name: ManualActionTaskDetails.name
+        /// </summary>
         public string Name { get; }
-        /// <summary> The instructions. </summary>
+        /// <summary>
+        /// The instructions.
+        /// Serialized Name: ManualActionTaskDetails.instructions
+        /// </summary>
         public string Instructions { get; }
-        /// <summary> The observation. </summary>
+        /// <summary>
+        /// The observation.
+        /// Serialized Name: ManualActionTaskDetails.observation
+        /// </summary>
         public string Observation { get; }
     }
 }

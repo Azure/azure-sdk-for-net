@@ -10,11 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary> Recovery plan group details. </summary>
+    /// <summary>
+    /// Recovery plan group details.
+    /// Serialized Name: RecoveryPlanGroup
+    /// </summary>
     public partial class RecoveryPlanGroup
     {
         /// <summary> Initializes a new instance of RecoveryPlanGroup. </summary>
-        /// <param name="groupType"> The group type. </param>
+        /// <param name="groupType">
+        /// The group type.
+        /// Serialized Name: RecoveryPlanGroup.groupType
+        /// </param>
         public RecoveryPlanGroup(RecoveryPlanGroupType groupType)
         {
             GroupType = groupType;
@@ -24,10 +30,22 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> Initializes a new instance of RecoveryPlanGroup. </summary>
-        /// <param name="groupType"> The group type. </param>
-        /// <param name="replicationProtectedItems"> The list of protected items. </param>
-        /// <param name="startGroupActions"> The start group actions. </param>
-        /// <param name="endGroupActions"> The end group actions. </param>
+        /// <param name="groupType">
+        /// The group type.
+        /// Serialized Name: RecoveryPlanGroup.groupType
+        /// </param>
+        /// <param name="replicationProtectedItems">
+        /// The list of protected items.
+        /// Serialized Name: RecoveryPlanGroup.replicationProtectedItems
+        /// </param>
+        /// <param name="startGroupActions">
+        /// The start group actions.
+        /// Serialized Name: RecoveryPlanGroup.startGroupActions
+        /// </param>
+        /// <param name="endGroupActions">
+        /// The end group actions.
+        /// Serialized Name: RecoveryPlanGroup.endGroupActions
+        /// </param>
         internal RecoveryPlanGroup(RecoveryPlanGroupType groupType, IList<RecoveryPlanProtectedItem> replicationProtectedItems, IList<RecoveryPlanAction> startGroupActions, IList<RecoveryPlanAction> endGroupActions)
         {
             GroupType = groupType;
@@ -36,13 +54,25 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             EndGroupActions = endGroupActions;
         }
 
-        /// <summary> The group type. </summary>
+        /// <summary>
+        /// The group type.
+        /// Serialized Name: RecoveryPlanGroup.groupType
+        /// </summary>
         public RecoveryPlanGroupType GroupType { get; set; }
-        /// <summary> The list of protected items. </summary>
+        /// <summary>
+        /// The list of protected items.
+        /// Serialized Name: RecoveryPlanGroup.replicationProtectedItems
+        /// </summary>
         public IList<RecoveryPlanProtectedItem> ReplicationProtectedItems { get; }
-        /// <summary> The start group actions. </summary>
+        /// <summary>
+        /// The start group actions.
+        /// Serialized Name: RecoveryPlanGroup.startGroupActions
+        /// </summary>
         public IList<RecoveryPlanAction> StartGroupActions { get; }
-        /// <summary> The end group actions. </summary>
+        /// <summary>
+        /// The end group actions.
+        /// Serialized Name: RecoveryPlanGroup.endGroupActions
+        /// </summary>
         public IList<RecoveryPlanAction> EndGroupActions { get; }
     }
 }

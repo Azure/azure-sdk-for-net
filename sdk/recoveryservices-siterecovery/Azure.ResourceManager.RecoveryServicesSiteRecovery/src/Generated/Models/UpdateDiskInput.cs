@@ -10,11 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary> Disk input for update. </summary>
+    /// <summary>
+    /// Disk input for update.
+    /// Serialized Name: UpdateDiskInput
+    /// </summary>
     public partial class UpdateDiskInput
     {
         /// <summary> Initializes a new instance of UpdateDiskInput. </summary>
-        /// <param name="diskId"> The disk Id. </param>
+        /// <param name="diskId">
+        /// The disk Id.
+        /// Serialized Name: UpdateDiskInput.diskId
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="diskId"/> is null. </exception>
         public UpdateDiskInput(string diskId)
         {
@@ -23,9 +29,15 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             DiskId = diskId;
         }
 
-        /// <summary> The disk Id. </summary>
+        /// <summary>
+        /// The disk Id.
+        /// Serialized Name: UpdateDiskInput.diskId
+        /// </summary>
         public string DiskId { get; }
-        /// <summary> The target disk name. </summary>
+        /// <summary>
+        /// The target disk name.
+        /// Serialized Name: UpdateDiskInput.targetDiskName
+        /// </summary>
         public string TargetDiskName { get; set; }
     }
 }

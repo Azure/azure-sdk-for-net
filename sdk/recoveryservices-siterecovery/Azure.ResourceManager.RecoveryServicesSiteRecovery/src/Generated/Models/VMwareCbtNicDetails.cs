@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary> VMwareCbt NIC details. </summary>
+    /// <summary>
+    /// VMwareCbt NIC details.
+    /// Serialized Name: VMwareCbtNicDetails
+    /// </summary>
     public partial class VMwareCbtNicDetails
     {
         /// <summary> Initializes a new instance of VMwareCbtNicDetails. </summary>
@@ -16,20 +19,62 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> Initializes a new instance of VMwareCbtNicDetails. </summary>
-        /// <param name="nicId"> The NIC Id. </param>
-        /// <param name="isPrimaryNic"> A value indicating whether this is the primary NIC. </param>
-        /// <param name="sourceIPAddress"> The source IP address. </param>
-        /// <param name="sourceIPAddressType"> The source IP address type. </param>
-        /// <param name="sourceNetworkId"> Source network Id. </param>
-        /// <param name="targetIPAddress"> The target IP address. </param>
-        /// <param name="targetIPAddressType"> The target IP address type. </param>
-        /// <param name="targetSubnetName"> Target subnet name. </param>
-        /// <param name="testNetworkId"> Source network Id. </param>
-        /// <param name="testSubnetName"> Test subnet name. </param>
-        /// <param name="testIPAddress"> The test IP address. </param>
-        /// <param name="testIPAddressType"> The test IP address type. </param>
-        /// <param name="targetNicName"> Target NIC name. </param>
-        /// <param name="isSelectedForMigration"> A value indicating whether this NIC is selected for migration. </param>
+        /// <param name="nicId">
+        /// The NIC Id.
+        /// Serialized Name: VMwareCbtNicDetails.nicId
+        /// </param>
+        /// <param name="isPrimaryNic">
+        /// A value indicating whether this is the primary NIC.
+        /// Serialized Name: VMwareCbtNicDetails.isPrimaryNic
+        /// </param>
+        /// <param name="sourceIPAddress">
+        /// The source IP address.
+        /// Serialized Name: VMwareCbtNicDetails.sourceIPAddress
+        /// </param>
+        /// <param name="sourceIPAddressType">
+        /// The source IP address type.
+        /// Serialized Name: VMwareCbtNicDetails.sourceIPAddressType
+        /// </param>
+        /// <param name="sourceNetworkId">
+        /// Source network Id.
+        /// Serialized Name: VMwareCbtNicDetails.sourceNetworkId
+        /// </param>
+        /// <param name="targetIPAddress">
+        /// The target IP address.
+        /// Serialized Name: VMwareCbtNicDetails.targetIPAddress
+        /// </param>
+        /// <param name="targetIPAddressType">
+        /// The target IP address type.
+        /// Serialized Name: VMwareCbtNicDetails.targetIPAddressType
+        /// </param>
+        /// <param name="targetSubnetName">
+        /// Target subnet name.
+        /// Serialized Name: VMwareCbtNicDetails.targetSubnetName
+        /// </param>
+        /// <param name="testNetworkId">
+        /// Source network Id.
+        /// Serialized Name: VMwareCbtNicDetails.testNetworkId
+        /// </param>
+        /// <param name="testSubnetName">
+        /// Test subnet name.
+        /// Serialized Name: VMwareCbtNicDetails.testSubnetName
+        /// </param>
+        /// <param name="testIPAddress">
+        /// The test IP address.
+        /// Serialized Name: VMwareCbtNicDetails.testIPAddress
+        /// </param>
+        /// <param name="testIPAddressType">
+        /// The test IP address type.
+        /// Serialized Name: VMwareCbtNicDetails.testIPAddressType
+        /// </param>
+        /// <param name="targetNicName">
+        /// Target NIC name.
+        /// Serialized Name: VMwareCbtNicDetails.targetNicName
+        /// </param>
+        /// <param name="isSelectedForMigration">
+        /// A value indicating whether this NIC is selected for migration.
+        /// Serialized Name: VMwareCbtNicDetails.isSelectedForMigration
+        /// </param>
         internal VMwareCbtNicDetails(string nicId, string isPrimaryNic, string sourceIPAddress, EthernetAddressType? sourceIPAddressType, string sourceNetworkId, string targetIPAddress, EthernetAddressType? targetIPAddressType, string targetSubnetName, string testNetworkId, string testSubnetName, string testIPAddress, EthernetAddressType? testIPAddressType, string targetNicName, string isSelectedForMigration)
         {
             NicId = nicId;
@@ -48,33 +93,75 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             IsSelectedForMigration = isSelectedForMigration;
         }
 
-        /// <summary> The NIC Id. </summary>
+        /// <summary>
+        /// The NIC Id.
+        /// Serialized Name: VMwareCbtNicDetails.nicId
+        /// </summary>
         public string NicId { get; }
-        /// <summary> A value indicating whether this is the primary NIC. </summary>
+        /// <summary>
+        /// A value indicating whether this is the primary NIC.
+        /// Serialized Name: VMwareCbtNicDetails.isPrimaryNic
+        /// </summary>
         public string IsPrimaryNic { get; }
-        /// <summary> The source IP address. </summary>
+        /// <summary>
+        /// The source IP address.
+        /// Serialized Name: VMwareCbtNicDetails.sourceIPAddress
+        /// </summary>
         public string SourceIPAddress { get; }
-        /// <summary> The source IP address type. </summary>
+        /// <summary>
+        /// The source IP address type.
+        /// Serialized Name: VMwareCbtNicDetails.sourceIPAddressType
+        /// </summary>
         public EthernetAddressType? SourceIPAddressType { get; }
-        /// <summary> Source network Id. </summary>
+        /// <summary>
+        /// Source network Id.
+        /// Serialized Name: VMwareCbtNicDetails.sourceNetworkId
+        /// </summary>
         public string SourceNetworkId { get; }
-        /// <summary> The target IP address. </summary>
+        /// <summary>
+        /// The target IP address.
+        /// Serialized Name: VMwareCbtNicDetails.targetIPAddress
+        /// </summary>
         public string TargetIPAddress { get; }
-        /// <summary> The target IP address type. </summary>
+        /// <summary>
+        /// The target IP address type.
+        /// Serialized Name: VMwareCbtNicDetails.targetIPAddressType
+        /// </summary>
         public EthernetAddressType? TargetIPAddressType { get; }
-        /// <summary> Target subnet name. </summary>
+        /// <summary>
+        /// Target subnet name.
+        /// Serialized Name: VMwareCbtNicDetails.targetSubnetName
+        /// </summary>
         public string TargetSubnetName { get; }
-        /// <summary> Source network Id. </summary>
+        /// <summary>
+        /// Source network Id.
+        /// Serialized Name: VMwareCbtNicDetails.testNetworkId
+        /// </summary>
         public string TestNetworkId { get; }
-        /// <summary> Test subnet name. </summary>
+        /// <summary>
+        /// Test subnet name.
+        /// Serialized Name: VMwareCbtNicDetails.testSubnetName
+        /// </summary>
         public string TestSubnetName { get; }
-        /// <summary> The test IP address. </summary>
+        /// <summary>
+        /// The test IP address.
+        /// Serialized Name: VMwareCbtNicDetails.testIPAddress
+        /// </summary>
         public string TestIPAddress { get; }
-        /// <summary> The test IP address type. </summary>
+        /// <summary>
+        /// The test IP address type.
+        /// Serialized Name: VMwareCbtNicDetails.testIPAddressType
+        /// </summary>
         public EthernetAddressType? TestIPAddressType { get; }
-        /// <summary> Target NIC name. </summary>
+        /// <summary>
+        /// Target NIC name.
+        /// Serialized Name: VMwareCbtNicDetails.targetNicName
+        /// </summary>
         public string TargetNicName { get; }
-        /// <summary> A value indicating whether this NIC is selected for migration. </summary>
+        /// <summary>
+        /// A value indicating whether this NIC is selected for migration.
+        /// Serialized Name: VMwareCbtNicDetails.isSelectedForMigration
+        /// </summary>
         public string IsSelectedForMigration { get; }
     }
 }

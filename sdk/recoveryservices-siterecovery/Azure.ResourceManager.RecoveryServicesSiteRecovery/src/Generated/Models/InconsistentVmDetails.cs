@@ -10,7 +10,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary> This class stores the monitoring details for consistency check of inconsistent Protected Entity. </summary>
+    /// <summary>
+    /// This class stores the monitoring details for consistency check of inconsistent Protected Entity.
+    /// Serialized Name: InconsistentVmDetails
+    /// </summary>
     public partial class InconsistentVmDetails
     {
         /// <summary> Initializes a new instance of InconsistentVmDetails. </summary>
@@ -21,10 +24,22 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> Initializes a new instance of InconsistentVmDetails. </summary>
-        /// <param name="vmName"> The Vm name. </param>
-        /// <param name="cloudName"> The Cloud name. </param>
-        /// <param name="details"> The list of details regarding state of the Protected Entity in SRS and On prem. </param>
-        /// <param name="errorIds"> The list of error ids. </param>
+        /// <param name="vmName">
+        /// The Vm name.
+        /// Serialized Name: InconsistentVmDetails.vmName
+        /// </param>
+        /// <param name="cloudName">
+        /// The Cloud name.
+        /// Serialized Name: InconsistentVmDetails.cloudName
+        /// </param>
+        /// <param name="details">
+        /// The list of details regarding state of the Protected Entity in SRS and On prem.
+        /// Serialized Name: InconsistentVmDetails.details
+        /// </param>
+        /// <param name="errorIds">
+        /// The list of error ids.
+        /// Serialized Name: InconsistentVmDetails.errorIds
+        /// </param>
         internal InconsistentVmDetails(string vmName, string cloudName, IReadOnlyList<string> details, IReadOnlyList<string> errorIds)
         {
             VmName = vmName;
@@ -33,13 +48,25 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             ErrorIds = errorIds;
         }
 
-        /// <summary> The Vm name. </summary>
+        /// <summary>
+        /// The Vm name.
+        /// Serialized Name: InconsistentVmDetails.vmName
+        /// </summary>
         public string VmName { get; }
-        /// <summary> The Cloud name. </summary>
+        /// <summary>
+        /// The Cloud name.
+        /// Serialized Name: InconsistentVmDetails.cloudName
+        /// </summary>
         public string CloudName { get; }
-        /// <summary> The list of details regarding state of the Protected Entity in SRS and On prem. </summary>
+        /// <summary>
+        /// The list of details regarding state of the Protected Entity in SRS and On prem.
+        /// Serialized Name: InconsistentVmDetails.details
+        /// </summary>
         public IReadOnlyList<string> Details { get; }
-        /// <summary> The list of error ids. </summary>
+        /// <summary>
+        /// The list of error ids.
+        /// Serialized Name: InconsistentVmDetails.errorIds
+        /// </summary>
         public IReadOnlyList<string> ErrorIds { get; }
     }
 }

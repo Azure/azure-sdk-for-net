@@ -10,7 +10,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary> Target compute size collection. </summary>
+    /// <summary>
+    /// Target compute size collection.
+    /// Serialized Name: TargetComputeSizeCollection
+    /// </summary>
     internal partial class TargetComputeSizeCollection
     {
         /// <summary> Initializes a new instance of TargetComputeSizeCollection. </summary>
@@ -20,17 +23,29 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> Initializes a new instance of TargetComputeSizeCollection. </summary>
-        /// <param name="value"> The list of target compute sizes. </param>
-        /// <param name="nextLink"> The value of next link. </param>
+        /// <param name="value">
+        /// The list of target compute sizes.
+        /// Serialized Name: TargetComputeSizeCollection.value
+        /// </param>
+        /// <param name="nextLink">
+        /// The value of next link.
+        /// Serialized Name: TargetComputeSizeCollection.nextLink
+        /// </param>
         internal TargetComputeSizeCollection(IReadOnlyList<TargetComputeSize> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
-        /// <summary> The list of target compute sizes. </summary>
+        /// <summary>
+        /// The list of target compute sizes.
+        /// Serialized Name: TargetComputeSizeCollection.value
+        /// </summary>
         public IReadOnlyList<TargetComputeSize> Value { get; }
-        /// <summary> The value of next link. </summary>
+        /// <summary>
+        /// The value of next link.
+        /// Serialized Name: TargetComputeSizeCollection.nextLink
+        /// </summary>
         public string NextLink { get; }
     }
 }

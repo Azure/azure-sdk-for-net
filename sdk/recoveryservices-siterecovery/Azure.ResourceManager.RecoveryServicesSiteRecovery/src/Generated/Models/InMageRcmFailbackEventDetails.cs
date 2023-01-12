@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary> Event details for InMageRcmFailback provider. </summary>
+    /// <summary>
+    /// Event details for InMageRcmFailback provider.
+    /// Serialized Name: InMageRcmFailbackEventDetails
+    /// </summary>
     public partial class InMageRcmFailbackEventDetails : EventProviderSpecificDetails
     {
         /// <summary> Initializes a new instance of InMageRcmFailbackEventDetails. </summary>
@@ -17,12 +20,30 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> Initializes a new instance of InMageRcmFailbackEventDetails. </summary>
-        /// <param name="instanceType"> Gets the class type. Overridden in derived classes. </param>
-        /// <param name="protectedItemName"> The protected item name. </param>
-        /// <param name="vmName"> The protected item name. </param>
-        /// <param name="applianceName"> The appliance name. </param>
-        /// <param name="serverType"> The server type. </param>
-        /// <param name="componentDisplayName"> The component display name. </param>
+        /// <param name="instanceType">
+        /// Gets the class type. Overridden in derived classes.
+        /// Serialized Name: EventProviderSpecificDetails.instanceType
+        /// </param>
+        /// <param name="protectedItemName">
+        /// The protected item name.
+        /// Serialized Name: InMageRcmFailbackEventDetails.protectedItemName
+        /// </param>
+        /// <param name="vmName">
+        /// The protected item name.
+        /// Serialized Name: InMageRcmFailbackEventDetails.vmName
+        /// </param>
+        /// <param name="applianceName">
+        /// The appliance name.
+        /// Serialized Name: InMageRcmFailbackEventDetails.applianceName
+        /// </param>
+        /// <param name="serverType">
+        /// The server type.
+        /// Serialized Name: InMageRcmFailbackEventDetails.serverType
+        /// </param>
+        /// <param name="componentDisplayName">
+        /// The component display name.
+        /// Serialized Name: InMageRcmFailbackEventDetails.componentDisplayName
+        /// </param>
         internal InMageRcmFailbackEventDetails(string instanceType, string protectedItemName, string vmName, string applianceName, string serverType, string componentDisplayName) : base(instanceType)
         {
             ProtectedItemName = protectedItemName;
@@ -33,15 +54,30 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             InstanceType = instanceType ?? "InMageRcmFailback";
         }
 
-        /// <summary> The protected item name. </summary>
+        /// <summary>
+        /// The protected item name.
+        /// Serialized Name: InMageRcmFailbackEventDetails.protectedItemName
+        /// </summary>
         public string ProtectedItemName { get; }
-        /// <summary> The protected item name. </summary>
+        /// <summary>
+        /// The protected item name.
+        /// Serialized Name: InMageRcmFailbackEventDetails.vmName
+        /// </summary>
         public string VmName { get; }
-        /// <summary> The appliance name. </summary>
+        /// <summary>
+        /// The appliance name.
+        /// Serialized Name: InMageRcmFailbackEventDetails.applianceName
+        /// </summary>
         public string ApplianceName { get; }
-        /// <summary> The server type. </summary>
+        /// <summary>
+        /// The server type.
+        /// Serialized Name: InMageRcmFailbackEventDetails.serverType
+        /// </summary>
         public string ServerType { get; }
-        /// <summary> The component display name. </summary>
+        /// <summary>
+        /// The component display name.
+        /// Serialized Name: InMageRcmFailbackEventDetails.componentDisplayName
+        /// </summary>
         public string ComponentDisplayName { get; }
     }
 }

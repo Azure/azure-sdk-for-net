@@ -11,7 +11,10 @@ using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary> Protection Container collection. </summary>
+    /// <summary>
+    /// Protection Container collection.
+    /// Serialized Name: ProtectionContainerCollection
+    /// </summary>
     internal partial class ProtectionContainerCollection
     {
         /// <summary> Initializes a new instance of ProtectionContainerCollection. </summary>
@@ -21,17 +24,29 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> Initializes a new instance of ProtectionContainerCollection. </summary>
-        /// <param name="value"> The Protection Container details. </param>
-        /// <param name="nextLink"> The value of next link. </param>
+        /// <param name="value">
+        /// The Protection Container details.
+        /// Serialized Name: ProtectionContainerCollection.value
+        /// </param>
+        /// <param name="nextLink">
+        /// The value of next link.
+        /// Serialized Name: ProtectionContainerCollection.nextLink
+        /// </param>
         internal ProtectionContainerCollection(IReadOnlyList<ProtectionContainerData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
-        /// <summary> The Protection Container details. </summary>
+        /// <summary>
+        /// The Protection Container details.
+        /// Serialized Name: ProtectionContainerCollection.value
+        /// </summary>
         public IReadOnlyList<ProtectionContainerData> Value { get; }
-        /// <summary> The value of next link. </summary>
+        /// <summary>
+        /// The value of next link.
+        /// Serialized Name: ProtectionContainerCollection.nextLink
+        /// </summary>
         public string NextLink { get; }
     }
 }

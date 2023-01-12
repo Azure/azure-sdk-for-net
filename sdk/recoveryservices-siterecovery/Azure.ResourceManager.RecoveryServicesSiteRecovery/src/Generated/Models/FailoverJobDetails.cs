@@ -10,7 +10,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary> This class represents the details for a failover job. </summary>
+    /// <summary>
+    /// This class represents the details for a failover job.
+    /// Serialized Name: FailoverJobDetails
+    /// </summary>
     public partial class FailoverJobDetails : JobDetails
     {
         /// <summary> Initializes a new instance of FailoverJobDetails. </summary>
@@ -21,16 +24,28 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> Initializes a new instance of FailoverJobDetails. </summary>
-        /// <param name="instanceType"> Gets the type of job details (see JobDetailsTypes enum for possible values). </param>
-        /// <param name="affectedObjectDetails"> The affected object properties like source server, source cloud, target server, target cloud etc. based on the workflow object details. </param>
-        /// <param name="protectedItemDetails"> The test VM details. </param>
+        /// <param name="instanceType">
+        /// Gets the type of job details (see JobDetailsTypes enum for possible values).
+        /// Serialized Name: JobDetails.instanceType
+        /// </param>
+        /// <param name="affectedObjectDetails">
+        /// The affected object properties like source server, source cloud, target server, target cloud etc. based on the workflow object details.
+        /// Serialized Name: JobDetails.affectedObjectDetails
+        /// </param>
+        /// <param name="protectedItemDetails">
+        /// The test VM details.
+        /// Serialized Name: FailoverJobDetails.protectedItemDetails
+        /// </param>
         internal FailoverJobDetails(string instanceType, IReadOnlyDictionary<string, string> affectedObjectDetails, IReadOnlyList<FailoverReplicationProtectedItemDetails> protectedItemDetails) : base(instanceType, affectedObjectDetails)
         {
             ProtectedItemDetails = protectedItemDetails;
             InstanceType = instanceType ?? "FailoverJobDetails";
         }
 
-        /// <summary> The test VM details. </summary>
+        /// <summary>
+        /// The test VM details.
+        /// Serialized Name: FailoverJobDetails.protectedItemDetails
+        /// </summary>
         public IReadOnlyList<FailoverReplicationProtectedItemDetails> ProtectedItemDetails { get; }
     }
 }

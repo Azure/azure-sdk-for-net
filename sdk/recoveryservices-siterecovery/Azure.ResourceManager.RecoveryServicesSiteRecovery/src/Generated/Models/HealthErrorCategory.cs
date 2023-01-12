@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary> The category of the health error. </summary>
+    /// <summary>
+    /// The category of the health error.
+    /// Serialized Name: HealthErrorCategory
+    /// </summary>
     public readonly partial struct HealthErrorCategory : IEquatable<HealthErrorCategory>
     {
         private readonly string _value;
@@ -34,27 +37,60 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         private const string AgentAutoUpdateRunAsAccountExpiryValue = "AgentAutoUpdateRunAsAccountExpiry";
         private const string AgentAutoUpdateRunAsAccountExpiredValue = "AgentAutoUpdateRunAsAccountExpired";
 
-        /// <summary> None. </summary>
+        /// <summary>
+        /// None
+        /// Serialized Name: HealthErrorCategory.None
+        /// </summary>
         public static HealthErrorCategory None { get; } = new HealthErrorCategory(NoneValue);
-        /// <summary> Replication. </summary>
+        /// <summary>
+        /// Replication
+        /// Serialized Name: HealthErrorCategory.Replication
+        /// </summary>
         public static HealthErrorCategory Replication { get; } = new HealthErrorCategory(ReplicationValue);
-        /// <summary> TestFailover. </summary>
+        /// <summary>
+        /// TestFailover
+        /// Serialized Name: HealthErrorCategory.TestFailover
+        /// </summary>
         public static HealthErrorCategory TestFailover { get; } = new HealthErrorCategory(TestFailoverValue);
-        /// <summary> Configuration. </summary>
+        /// <summary>
+        /// Configuration
+        /// Serialized Name: HealthErrorCategory.Configuration
+        /// </summary>
         public static HealthErrorCategory Configuration { get; } = new HealthErrorCategory(ConfigurationValue);
-        /// <summary> FabricInfrastructure. </summary>
+        /// <summary>
+        /// FabricInfrastructure
+        /// Serialized Name: HealthErrorCategory.FabricInfrastructure
+        /// </summary>
         public static HealthErrorCategory FabricInfrastructure { get; } = new HealthErrorCategory(FabricInfrastructureValue);
-        /// <summary> VersionExpiry. </summary>
+        /// <summary>
+        /// VersionExpiry
+        /// Serialized Name: HealthErrorCategory.VersionExpiry
+        /// </summary>
         public static HealthErrorCategory VersionExpiry { get; } = new HealthErrorCategory(VersionExpiryValue);
-        /// <summary> AgentAutoUpdateInfra. </summary>
+        /// <summary>
+        /// AgentAutoUpdateInfra
+        /// Serialized Name: HealthErrorCategory.AgentAutoUpdateInfra
+        /// </summary>
         public static HealthErrorCategory AgentAutoUpdateInfra { get; } = new HealthErrorCategory(AgentAutoUpdateInfraValue);
-        /// <summary> AgentAutoUpdateArtifactDeleted. </summary>
+        /// <summary>
+        /// AgentAutoUpdateArtifactDeleted
+        /// Serialized Name: HealthErrorCategory.AgentAutoUpdateArtifactDeleted
+        /// </summary>
         public static HealthErrorCategory AgentAutoUpdateArtifactDeleted { get; } = new HealthErrorCategory(AgentAutoUpdateArtifactDeletedValue);
-        /// <summary> AgentAutoUpdateRunAsAccount. </summary>
+        /// <summary>
+        /// AgentAutoUpdateRunAsAccount
+        /// Serialized Name: HealthErrorCategory.AgentAutoUpdateRunAsAccount
+        /// </summary>
         public static HealthErrorCategory AgentAutoUpdateRunAsAccount { get; } = new HealthErrorCategory(AgentAutoUpdateRunAsAccountValue);
-        /// <summary> AgentAutoUpdateRunAsAccountExpiry. </summary>
+        /// <summary>
+        /// AgentAutoUpdateRunAsAccountExpiry
+        /// Serialized Name: HealthErrorCategory.AgentAutoUpdateRunAsAccountExpiry
+        /// </summary>
         public static HealthErrorCategory AgentAutoUpdateRunAsAccountExpiry { get; } = new HealthErrorCategory(AgentAutoUpdateRunAsAccountExpiryValue);
-        /// <summary> AgentAutoUpdateRunAsAccountExpired. </summary>
+        /// <summary>
+        /// AgentAutoUpdateRunAsAccountExpired
+        /// Serialized Name: HealthErrorCategory.AgentAutoUpdateRunAsAccountExpired
+        /// </summary>
         public static HealthErrorCategory AgentAutoUpdateRunAsAccountExpired { get; } = new HealthErrorCategory(AgentAutoUpdateRunAsAccountExpiredValue);
         /// <summary> Determines if two <see cref="HealthErrorCategory"/> values are the same. </summary>
         public static bool operator ==(HealthErrorCategory left, HealthErrorCategory right) => left.Equals(right);

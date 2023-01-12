@@ -9,7 +9,10 @@ using System;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary> Implements InnerHealthError class. HealthError object has a list of InnerHealthErrors as child errors. InnerHealthError is used because this will prevent an infinite loop of structures when Hydra tries to auto-generate the contract. We are exposing the related health errors as inner health errors and all API consumers can utilize this in the same fashion as Exception -&amp;gt; InnerException. </summary>
+    /// <summary>
+    /// Implements InnerHealthError class. HealthError object has a list of InnerHealthErrors as child errors. InnerHealthError is used because this will prevent an infinite loop of structures when Hydra tries to auto-generate the contract. We are exposing the related health errors as inner health errors and all API consumers can utilize this in the same fashion as Exception -&amp;gt; InnerException.
+    /// Serialized Name: InnerHealthError
+    /// </summary>
     public partial class InnerHealthError
     {
         /// <summary> Initializes a new instance of InnerHealthError. </summary>
@@ -18,20 +21,62 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> Initializes a new instance of InnerHealthError. </summary>
-        /// <param name="errorSource"> Source of error. </param>
-        /// <param name="errorType"> Type of error. </param>
-        /// <param name="errorLevel"> Level of error. </param>
-        /// <param name="errorCategory"> Category of error. </param>
-        /// <param name="errorCode"> Error code. </param>
-        /// <param name="summaryMessage"> Summary message of the entity. </param>
-        /// <param name="errorMessage"> Error message. </param>
-        /// <param name="possibleCauses"> Possible causes of error. </param>
-        /// <param name="recommendedAction"> Recommended action to resolve error. </param>
-        /// <param name="creationTimeUtc"> Error creation time (UTC). </param>
-        /// <param name="recoveryProviderErrorMessage"> DRA error message. </param>
-        /// <param name="entityId"> ID of the entity. </param>
-        /// <param name="errorId"> The health error unique id. </param>
-        /// <param name="customerResolvability"> Value indicating whether the health error is customer resolvable. </param>
+        /// <param name="errorSource">
+        /// Source of error.
+        /// Serialized Name: InnerHealthError.errorSource
+        /// </param>
+        /// <param name="errorType">
+        /// Type of error.
+        /// Serialized Name: InnerHealthError.errorType
+        /// </param>
+        /// <param name="errorLevel">
+        /// Level of error.
+        /// Serialized Name: InnerHealthError.errorLevel
+        /// </param>
+        /// <param name="errorCategory">
+        /// Category of error.
+        /// Serialized Name: InnerHealthError.errorCategory
+        /// </param>
+        /// <param name="errorCode">
+        /// Error code.
+        /// Serialized Name: InnerHealthError.errorCode
+        /// </param>
+        /// <param name="summaryMessage">
+        /// Summary message of the entity.
+        /// Serialized Name: InnerHealthError.summaryMessage
+        /// </param>
+        /// <param name="errorMessage">
+        /// Error message.
+        /// Serialized Name: InnerHealthError.errorMessage
+        /// </param>
+        /// <param name="possibleCauses">
+        /// Possible causes of error.
+        /// Serialized Name: InnerHealthError.possibleCauses
+        /// </param>
+        /// <param name="recommendedAction">
+        /// Recommended action to resolve error.
+        /// Serialized Name: InnerHealthError.recommendedAction
+        /// </param>
+        /// <param name="creationTimeUtc">
+        /// Error creation time (UTC).
+        /// Serialized Name: InnerHealthError.creationTimeUtc
+        /// </param>
+        /// <param name="recoveryProviderErrorMessage">
+        /// DRA error message.
+        /// Serialized Name: InnerHealthError.recoveryProviderErrorMessage
+        /// </param>
+        /// <param name="entityId">
+        /// ID of the entity.
+        /// Serialized Name: InnerHealthError.entityId
+        /// </param>
+        /// <param name="errorId">
+        /// The health error unique id.
+        /// Serialized Name: InnerHealthError.errorId
+        /// </param>
+        /// <param name="customerResolvability">
+        /// Value indicating whether the health error is customer resolvable.
+        /// Serialized Name: InnerHealthError.customerResolvability
+        /// </param>
         internal InnerHealthError(string errorSource, string errorType, string errorLevel, string errorCategory, string errorCode, string summaryMessage, string errorMessage, string possibleCauses, string recommendedAction, DateTimeOffset? creationTimeUtc, string recoveryProviderErrorMessage, string entityId, string errorId, HealthErrorCustomerResolvability? customerResolvability)
         {
             ErrorSource = errorSource;
@@ -50,33 +95,75 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             CustomerResolvability = customerResolvability;
         }
 
-        /// <summary> Source of error. </summary>
+        /// <summary>
+        /// Source of error.
+        /// Serialized Name: InnerHealthError.errorSource
+        /// </summary>
         public string ErrorSource { get; }
-        /// <summary> Type of error. </summary>
+        /// <summary>
+        /// Type of error.
+        /// Serialized Name: InnerHealthError.errorType
+        /// </summary>
         public string ErrorType { get; }
-        /// <summary> Level of error. </summary>
+        /// <summary>
+        /// Level of error.
+        /// Serialized Name: InnerHealthError.errorLevel
+        /// </summary>
         public string ErrorLevel { get; }
-        /// <summary> Category of error. </summary>
+        /// <summary>
+        /// Category of error.
+        /// Serialized Name: InnerHealthError.errorCategory
+        /// </summary>
         public string ErrorCategory { get; }
-        /// <summary> Error code. </summary>
+        /// <summary>
+        /// Error code.
+        /// Serialized Name: InnerHealthError.errorCode
+        /// </summary>
         public string ErrorCode { get; }
-        /// <summary> Summary message of the entity. </summary>
+        /// <summary>
+        /// Summary message of the entity.
+        /// Serialized Name: InnerHealthError.summaryMessage
+        /// </summary>
         public string SummaryMessage { get; }
-        /// <summary> Error message. </summary>
+        /// <summary>
+        /// Error message.
+        /// Serialized Name: InnerHealthError.errorMessage
+        /// </summary>
         public string ErrorMessage { get; }
-        /// <summary> Possible causes of error. </summary>
+        /// <summary>
+        /// Possible causes of error.
+        /// Serialized Name: InnerHealthError.possibleCauses
+        /// </summary>
         public string PossibleCauses { get; }
-        /// <summary> Recommended action to resolve error. </summary>
+        /// <summary>
+        /// Recommended action to resolve error.
+        /// Serialized Name: InnerHealthError.recommendedAction
+        /// </summary>
         public string RecommendedAction { get; }
-        /// <summary> Error creation time (UTC). </summary>
+        /// <summary>
+        /// Error creation time (UTC).
+        /// Serialized Name: InnerHealthError.creationTimeUtc
+        /// </summary>
         public DateTimeOffset? CreationTimeUtc { get; }
-        /// <summary> DRA error message. </summary>
+        /// <summary>
+        /// DRA error message.
+        /// Serialized Name: InnerHealthError.recoveryProviderErrorMessage
+        /// </summary>
         public string RecoveryProviderErrorMessage { get; }
-        /// <summary> ID of the entity. </summary>
+        /// <summary>
+        /// ID of the entity.
+        /// Serialized Name: InnerHealthError.entityId
+        /// </summary>
         public string EntityId { get; }
-        /// <summary> The health error unique id. </summary>
+        /// <summary>
+        /// The health error unique id.
+        /// Serialized Name: InnerHealthError.errorId
+        /// </summary>
         public string ErrorId { get; }
-        /// <summary> Value indicating whether the health error is customer resolvable. </summary>
+        /// <summary>
+        /// Value indicating whether the health error is customer resolvable.
+        /// Serialized Name: InnerHealthError.customerResolvability
+        /// </summary>
         public HealthErrorCustomerResolvability? CustomerResolvability { get; }
     }
 }

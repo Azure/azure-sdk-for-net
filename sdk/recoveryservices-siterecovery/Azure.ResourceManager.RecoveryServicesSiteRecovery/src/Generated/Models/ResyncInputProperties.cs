@@ -10,12 +10,16 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary> Resync input properties. </summary>
+    /// <summary>
+    /// Resync input properties.
+    /// Serialized Name: ResyncInputProperties
+    /// </summary>
     public partial class ResyncInputProperties
     {
         /// <summary> Initializes a new instance of ResyncInputProperties. </summary>
         /// <param name="providerSpecificDetails">
         /// The provider specific details.
+        /// Serialized Name: ResyncInputProperties.providerSpecificDetails
         /// Please note <see cref="ResyncProviderSpecificInput"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="VMwareCbtResyncInput"/>.
         /// </param>
@@ -29,6 +33,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 
         /// <summary>
         /// The provider specific details.
+        /// Serialized Name: ResyncInputProperties.providerSpecificDetails
         /// Please note <see cref="ResyncProviderSpecificInput"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="VMwareCbtResyncInput"/>.
         /// </summary>

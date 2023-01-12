@@ -9,6 +9,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
     /// <summary>
     /// Hyper-V Replica specific policy Input.
+    /// Serialized Name: HyperVReplicaPolicyInput
     /// Please note <see cref="HyperVReplicaPolicyInput"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="HyperVReplicaBluePolicyInput"/>.
     /// </summary>
@@ -20,25 +21,55 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             InstanceType = "HyperVReplica2012";
         }
 
-        /// <summary> A value indicating the number of recovery points. </summary>
+        /// <summary>
+        /// A value indicating the number of recovery points.
+        /// Serialized Name: HyperVReplicaPolicyInput.recoveryPoints
+        /// </summary>
         public int? RecoveryPoints { get; set; }
-        /// <summary> A value indicating the application consistent frequency. </summary>
+        /// <summary>
+        /// A value indicating the application consistent frequency.
+        /// Serialized Name: HyperVReplicaPolicyInput.applicationConsistentSnapshotFrequencyInHours
+        /// </summary>
         public int? ApplicationConsistentSnapshotFrequencyInHours { get; set; }
-        /// <summary> A value indicating whether compression has to be enabled. </summary>
+        /// <summary>
+        /// A value indicating whether compression has to be enabled.
+        /// Serialized Name: HyperVReplicaPolicyInput.compression
+        /// </summary>
         public string Compression { get; set; }
-        /// <summary> A value indicating whether IR is online. </summary>
+        /// <summary>
+        /// A value indicating whether IR is online.
+        /// Serialized Name: HyperVReplicaPolicyInput.initialReplicationMethod
+        /// </summary>
         public string InitialReplicationMethod { get; set; }
-        /// <summary> A value indicating the online IR start time. </summary>
+        /// <summary>
+        /// A value indicating the online IR start time.
+        /// Serialized Name: HyperVReplicaPolicyInput.onlineReplicationStartTime
+        /// </summary>
         public string OnlineReplicationStartTime { get; set; }
-        /// <summary> A value indicating the offline IR import path. </summary>
+        /// <summary>
+        /// A value indicating the offline IR import path.
+        /// Serialized Name: HyperVReplicaPolicyInput.offlineReplicationImportPath
+        /// </summary>
         public string OfflineReplicationImportPath { get; set; }
-        /// <summary> A value indicating the offline IR export path. </summary>
+        /// <summary>
+        /// A value indicating the offline IR export path.
+        /// Serialized Name: HyperVReplicaPolicyInput.offlineReplicationExportPath
+        /// </summary>
         public string OfflineReplicationExportPath { get; set; }
-        /// <summary> A value indicating the recovery HTTPS port. </summary>
+        /// <summary>
+        /// A value indicating the recovery HTTPS port.
+        /// Serialized Name: HyperVReplicaPolicyInput.replicationPort
+        /// </summary>
         public int? ReplicationPort { get; set; }
-        /// <summary> A value indicating the authentication type. </summary>
+        /// <summary>
+        /// A value indicating the authentication type.
+        /// Serialized Name: HyperVReplicaPolicyInput.allowedAuthenticationType
+        /// </summary>
         public int? AllowedAuthenticationType { get; set; }
-        /// <summary> A value indicating whether the VM has to be auto deleted. </summary>
+        /// <summary>
+        /// A value indicating whether the VM has to be auto deleted.
+        /// Serialized Name: HyperVReplicaPolicyInput.replicaDeletion
+        /// </summary>
         public string ReplicaDeletion { get; set; }
     }
 }

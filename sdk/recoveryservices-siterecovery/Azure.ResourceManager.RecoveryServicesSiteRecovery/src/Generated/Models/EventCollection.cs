@@ -11,27 +11,42 @@ using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary> Collection of fabric details. </summary>
+    /// <summary>
+    /// Collection of fabric details.
+    /// Serialized Name: EventCollection
+    /// </summary>
     internal partial class EventCollection
     {
         /// <summary> Initializes a new instance of EventCollection. </summary>
         internal EventCollection()
         {
-            Value = new ChangeTrackingList<EventData>();
+            Value = new ChangeTrackingList<SiteRecoveryEventData>();
         }
 
         /// <summary> Initializes a new instance of EventCollection. </summary>
-        /// <param name="value"> The list of events. </param>
-        /// <param name="nextLink"> The value of next link. </param>
-        internal EventCollection(IReadOnlyList<EventData> value, string nextLink)
+        /// <param name="value">
+        /// The list of events.
+        /// Serialized Name: EventCollection.value
+        /// </param>
+        /// <param name="nextLink">
+        /// The value of next link.
+        /// Serialized Name: EventCollection.nextLink
+        /// </param>
+        internal EventCollection(IReadOnlyList<SiteRecoveryEventData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
-        /// <summary> The list of events. </summary>
-        public IReadOnlyList<EventData> Value { get; }
-        /// <summary> The value of next link. </summary>
+        /// <summary>
+        /// The list of events.
+        /// Serialized Name: EventCollection.value
+        /// </summary>
+        public IReadOnlyList<SiteRecoveryEventData> Value { get; }
+        /// <summary>
+        /// The value of next link.
+        /// Serialized Name: EventCollection.nextLink
+        /// </summary>
         public string NextLink { get; }
     }
 }

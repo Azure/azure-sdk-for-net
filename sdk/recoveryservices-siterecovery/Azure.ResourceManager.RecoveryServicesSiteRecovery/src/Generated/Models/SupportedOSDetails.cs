@@ -10,7 +10,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary> Supported operating system details. </summary>
+    /// <summary>
+    /// Supported operating system details.
+    /// Serialized Name: SupportedOSDetails
+    /// </summary>
     public partial class SupportedOSDetails
     {
         /// <summary> Initializes a new instance of SupportedOSDetails. </summary>
@@ -20,9 +23,18 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> Initializes a new instance of SupportedOSDetails. </summary>
-        /// <param name="osName"> The name. </param>
-        /// <param name="osType"> The type. </param>
-        /// <param name="osVersions"> The list of version for operating system. </param>
+        /// <param name="osName">
+        /// The name.
+        /// Serialized Name: SupportedOSDetails.osName
+        /// </param>
+        /// <param name="osType">
+        /// The type.
+        /// Serialized Name: SupportedOSDetails.osType
+        /// </param>
+        /// <param name="osVersions">
+        /// The list of version for operating system.
+        /// Serialized Name: SupportedOSDetails.osVersions
+        /// </param>
         internal SupportedOSDetails(string osName, string osType, IReadOnlyList<OSVersionWrapper> osVersions)
         {
             OSName = osName;
@@ -30,11 +42,20 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             OSVersions = osVersions;
         }
 
-        /// <summary> The name. </summary>
+        /// <summary>
+        /// The name.
+        /// Serialized Name: SupportedOSDetails.osName
+        /// </summary>
         public string OSName { get; }
-        /// <summary> The type. </summary>
+        /// <summary>
+        /// The type.
+        /// Serialized Name: SupportedOSDetails.osType
+        /// </summary>
         public string OSType { get; }
-        /// <summary> The list of version for operating system. </summary>
+        /// <summary>
+        /// The list of version for operating system.
+        /// Serialized Name: SupportedOSDetails.osVersions
+        /// </summary>
         public IReadOnlyList<OSVersionWrapper> OSVersions { get; }
     }
 }

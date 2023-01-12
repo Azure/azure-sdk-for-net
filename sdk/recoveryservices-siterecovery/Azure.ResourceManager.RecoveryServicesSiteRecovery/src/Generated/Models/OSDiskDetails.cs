@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary> Details of the OS Disk. </summary>
+    /// <summary>
+    /// Details of the OS Disk.
+    /// Serialized Name: OSDiskDetails
+    /// </summary>
     public partial class OSDiskDetails
     {
         /// <summary> Initializes a new instance of OSDiskDetails. </summary>
@@ -16,9 +19,18 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> Initializes a new instance of OSDiskDetails. </summary>
-        /// <param name="osVhdId"> The id of the disk containing the OS. </param>
-        /// <param name="osType"> The type of the OS on the VM. </param>
-        /// <param name="vhdName"> The OS disk VHD name. </param>
+        /// <param name="osVhdId">
+        /// The id of the disk containing the OS.
+        /// Serialized Name: OSDiskDetails.osVhdId
+        /// </param>
+        /// <param name="osType">
+        /// The type of the OS on the VM.
+        /// Serialized Name: OSDiskDetails.osType
+        /// </param>
+        /// <param name="vhdName">
+        /// The OS disk VHD name.
+        /// Serialized Name: OSDiskDetails.vhdName
+        /// </param>
         internal OSDiskDetails(string osVhdId, string osType, string vhdName)
         {
             OSVhdId = osVhdId;
@@ -26,11 +38,20 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             VhdName = vhdName;
         }
 
-        /// <summary> The id of the disk containing the OS. </summary>
+        /// <summary>
+        /// The id of the disk containing the OS.
+        /// Serialized Name: OSDiskDetails.osVhdId
+        /// </summary>
         public string OSVhdId { get; }
-        /// <summary> The type of the OS on the VM. </summary>
+        /// <summary>
+        /// The type of the OS on the VM.
+        /// Serialized Name: OSDiskDetails.osType
+        /// </summary>
         public string OSType { get; }
-        /// <summary> The OS disk VHD name. </summary>
+        /// <summary>
+        /// The OS disk VHD name.
+        /// Serialized Name: OSDiskDetails.vhdName
+        /// </summary>
         public string VhdName { get; }
     }
 }

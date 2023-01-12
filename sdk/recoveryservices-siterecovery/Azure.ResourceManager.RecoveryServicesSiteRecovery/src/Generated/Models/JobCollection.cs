@@ -11,27 +11,42 @@ using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary> Collection of jobs. </summary>
+    /// <summary>
+    /// Collection of jobs.
+    /// Serialized Name: JobCollection
+    /// </summary>
     internal partial class JobCollection
     {
         /// <summary> Initializes a new instance of JobCollection. </summary>
         internal JobCollection()
         {
-            Value = new ChangeTrackingList<JobData>();
+            Value = new ChangeTrackingList<SiteRecoveryJobData>();
         }
 
         /// <summary> Initializes a new instance of JobCollection. </summary>
-        /// <param name="value"> The list of jobs. </param>
-        /// <param name="nextLink"> The value of next link. </param>
-        internal JobCollection(IReadOnlyList<JobData> value, string nextLink)
+        /// <param name="value">
+        /// The list of jobs.
+        /// Serialized Name: JobCollection.value
+        /// </param>
+        /// <param name="nextLink">
+        /// The value of next link.
+        /// Serialized Name: JobCollection.nextLink
+        /// </param>
+        internal JobCollection(IReadOnlyList<SiteRecoveryJobData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
-        /// <summary> The list of jobs. </summary>
-        public IReadOnlyList<JobData> Value { get; }
-        /// <summary> The value of next link. </summary>
+        /// <summary>
+        /// The list of jobs.
+        /// Serialized Name: JobCollection.value
+        /// </summary>
+        public IReadOnlyList<SiteRecoveryJobData> Value { get; }
+        /// <summary>
+        /// The value of next link.
+        /// Serialized Name: JobCollection.nextLink
+        /// </summary>
         public string NextLink { get; }
     }
 }

@@ -10,13 +10,20 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary> Update appliance for protected item input properties. </summary>
+    /// <summary>
+    /// Update appliance for protected item input properties.
+    /// Serialized Name: UpdateApplianceForReplicationProtectedItemInputProperties
+    /// </summary>
     public partial class UpdateApplianceForReplicationProtectedItemInputProperties
     {
         /// <summary> Initializes a new instance of UpdateApplianceForReplicationProtectedItemInputProperties. </summary>
-        /// <param name="targetApplianceId"> The target appliance Id. </param>
+        /// <param name="targetApplianceId">
+        /// The target appliance Id.
+        /// Serialized Name: UpdateApplianceForReplicationProtectedItemInputProperties.targetApplianceId
+        /// </param>
         /// <param name="providerSpecificDetails">
         /// The provider specific input to update replication protected item.
+        /// Serialized Name: UpdateApplianceForReplicationProtectedItemInputProperties.providerSpecificDetails
         /// Please note <see cref="UpdateApplianceForReplicationProtectedItemProviderSpecificInput"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="InMageRcmUpdateApplianceForReplicationProtectedItemInput"/>.
         /// </param>
@@ -30,10 +37,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             ProviderSpecificDetails = providerSpecificDetails;
         }
 
-        /// <summary> The target appliance Id. </summary>
+        /// <summary>
+        /// The target appliance Id.
+        /// Serialized Name: UpdateApplianceForReplicationProtectedItemInputProperties.targetApplianceId
+        /// </summary>
         public string TargetApplianceId { get; }
         /// <summary>
         /// The provider specific input to update replication protected item.
+        /// Serialized Name: UpdateApplianceForReplicationProtectedItemInputProperties.providerSpecificDetails
         /// Please note <see cref="UpdateApplianceForReplicationProtectedItemProviderSpecificInput"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="InMageRcmUpdateApplianceForReplicationProtectedItemInput"/>.
         /// </summary>

@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary> The output type of the jobs. </summary>
+    /// <summary>
+    /// The output type of the jobs.
+    /// Serialized Name: ExportJobOutputSerializationType
+    /// </summary>
     public readonly partial struct ExportJobOutputSerializationType : IEquatable<ExportJobOutputSerializationType>
     {
         private readonly string _value;
@@ -26,11 +29,20 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         private const string XmlValue = "Xml";
         private const string ExcelValue = "Excel";
 
-        /// <summary> Json. </summary>
+        /// <summary>
+        /// Json
+        /// Serialized Name: ExportJobOutputSerializationType.Json
+        /// </summary>
         public static ExportJobOutputSerializationType Json { get; } = new ExportJobOutputSerializationType(JsonValue);
-        /// <summary> Xml. </summary>
+        /// <summary>
+        /// Xml
+        /// Serialized Name: ExportJobOutputSerializationType.Xml
+        /// </summary>
         public static ExportJobOutputSerializationType Xml { get; } = new ExportJobOutputSerializationType(XmlValue);
-        /// <summary> Excel. </summary>
+        /// <summary>
+        /// Excel
+        /// Serialized Name: ExportJobOutputSerializationType.Excel
+        /// </summary>
         public static ExportJobOutputSerializationType Excel { get; } = new ExportJobOutputSerializationType(ExcelValue);
         /// <summary> Determines if two <see cref="ExportJobOutputSerializationType"/> values are the same. </summary>
         public static bool operator ==(ExportJobOutputSerializationType left, ExportJobOutputSerializationType right) => left.Equals(right);

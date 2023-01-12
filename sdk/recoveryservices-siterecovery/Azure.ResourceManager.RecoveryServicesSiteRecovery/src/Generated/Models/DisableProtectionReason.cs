@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary> Disable protection reason. It can have values NotSpecified/MigrationComplete. </summary>
+    /// <summary>
+    /// Disable protection reason. It can have values NotSpecified/MigrationComplete.
+    /// Serialized Name: DisableProtectionReason
+    /// </summary>
     public readonly partial struct DisableProtectionReason : IEquatable<DisableProtectionReason>
     {
         private readonly string _value;
@@ -25,9 +28,15 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         private const string NotSpecifiedValue = "NotSpecified";
         private const string MigrationCompleteValue = "MigrationComplete";
 
-        /// <summary> NotSpecified. </summary>
+        /// <summary>
+        /// NotSpecified
+        /// Serialized Name: DisableProtectionReason.NotSpecified
+        /// </summary>
         public static DisableProtectionReason NotSpecified { get; } = new DisableProtectionReason(NotSpecifiedValue);
-        /// <summary> MigrationComplete. </summary>
+        /// <summary>
+        /// MigrationComplete
+        /// Serialized Name: DisableProtectionReason.MigrationComplete
+        /// </summary>
         public static DisableProtectionReason MigrationComplete { get; } = new DisableProtectionReason(MigrationCompleteValue);
         /// <summary> Determines if two <see cref="DisableProtectionReason"/> values are the same. </summary>
         public static bool operator ==(DisableProtectionReason left, DisableProtectionReason right) => left.Equals(right);

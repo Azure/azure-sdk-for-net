@@ -12,11 +12,11 @@ using Azure.ResourceManager.RecoveryServicesSiteRecovery.Models;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
 {
-    public partial class FabricData
+    public partial class SiteRecoveryJobData
     {
-        internal static FabricData DeserializeFabricData(JsonElement element)
+        internal static SiteRecoveryJobData DeserializeSiteRecoveryJobData(JsonElement element)
         {
-            Optional<FabricProperties> properties = default;
+            Optional<JobProperties> properties = default;
             Optional<AzureLocation> location = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    properties = FabricProperties.DeserializeFabricProperties(property.Value);
+                    properties = JobProperties.DeserializeJobProperties(property.Value);
                     continue;
                 }
                 if (property.NameEquals("location"))
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
                     continue;
                 }
             }
-            return new FabricData(id, name, type, systemData.Value, properties.Value, Optional.ToNullable(location));
+            return new SiteRecoveryJobData(id, name, type, systemData.Value, properties.Value, Optional.ToNullable(location));
         }
     }
 }

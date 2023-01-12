@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary> Vault setting properties. </summary>
+    /// <summary>
+    /// Vault setting properties.
+    /// Serialized Name: VaultSettingProperties
+    /// </summary>
     public partial class VaultSettingProperties
     {
         /// <summary> Initializes a new instance of VaultSettingProperties. </summary>
@@ -16,17 +19,29 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> Initializes a new instance of VaultSettingProperties. </summary>
-        /// <param name="migrationSolutionId"> The migration solution ARM Id. </param>
-        /// <param name="vmwareToAzureProviderType"> VMware to Azure provider type. </param>
+        /// <param name="migrationSolutionId">
+        /// The migration solution ARM Id.
+        /// Serialized Name: VaultSettingProperties.migrationSolutionId
+        /// </param>
+        /// <param name="vmwareToAzureProviderType">
+        /// VMware to Azure provider type.
+        /// Serialized Name: VaultSettingProperties.vmwareToAzureProviderType
+        /// </param>
         internal VaultSettingProperties(string migrationSolutionId, string vmwareToAzureProviderType)
         {
             MigrationSolutionId = migrationSolutionId;
             VMwareToAzureProviderType = vmwareToAzureProviderType;
         }
 
-        /// <summary> The migration solution ARM Id. </summary>
+        /// <summary>
+        /// The migration solution ARM Id.
+        /// Serialized Name: VaultSettingProperties.migrationSolutionId
+        /// </summary>
         public string MigrationSolutionId { get; }
-        /// <summary> VMware to Azure provider type. </summary>
+        /// <summary>
+        /// VMware to Azure provider type.
+        /// Serialized Name: VaultSettingProperties.vmwareToAzureProviderType
+        /// </summary>
         public string VMwareToAzureProviderType { get; }
     }
 }

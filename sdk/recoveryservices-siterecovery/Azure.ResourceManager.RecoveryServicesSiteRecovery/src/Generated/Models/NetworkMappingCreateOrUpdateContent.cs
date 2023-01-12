@@ -10,11 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary> Create network mappings input. </summary>
+    /// <summary>
+    /// Create network mappings input.
+    /// Serialized Name: CreateNetworkMappingInput
+    /// </summary>
     public partial class NetworkMappingCreateOrUpdateContent
     {
         /// <summary> Initializes a new instance of NetworkMappingCreateOrUpdateContent. </summary>
-        /// <param name="properties"> Input properties for creating network mapping. </param>
+        /// <param name="properties">
+        /// Input properties for creating network mapping.
+        /// Serialized Name: CreateNetworkMappingInput.properties
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
         public NetworkMappingCreateOrUpdateContent(CreateNetworkMappingInputProperties properties)
         {
@@ -23,7 +29,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             Properties = properties;
         }
 
-        /// <summary> Input properties for creating network mapping. </summary>
+        /// <summary>
+        /// Input properties for creating network mapping.
+        /// Serialized Name: CreateNetworkMappingInput.properties
+        /// </summary>
         public CreateNetworkMappingInputProperties Properties { get; }
     }
 }

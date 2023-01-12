@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary> Hyper-V Managed disk details. </summary>
+    /// <summary>
+    /// Hyper-V Managed disk details.
+    /// Serialized Name: HyperVReplicaAzureManagedDiskDetails
+    /// </summary>
     public partial class HyperVReplicaAzureManagedDiskDetails
     {
         /// <summary> Initializes a new instance of HyperVReplicaAzureManagedDiskDetails. </summary>
@@ -16,10 +19,22 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> Initializes a new instance of HyperVReplicaAzureManagedDiskDetails. </summary>
-        /// <param name="diskId"> The disk Id. </param>
-        /// <param name="seedManagedDiskId"> Seed managed disk Id. </param>
-        /// <param name="replicaDiskType"> The replica disk type. </param>
-        /// <param name="diskEncryptionSetId"> The disk encryption set ARM Id. </param>
+        /// <param name="diskId">
+        /// The disk Id.
+        /// Serialized Name: HyperVReplicaAzureManagedDiskDetails.diskId
+        /// </param>
+        /// <param name="seedManagedDiskId">
+        /// Seed managed disk Id.
+        /// Serialized Name: HyperVReplicaAzureManagedDiskDetails.seedManagedDiskId
+        /// </param>
+        /// <param name="replicaDiskType">
+        /// The replica disk type.
+        /// Serialized Name: HyperVReplicaAzureManagedDiskDetails.replicaDiskType
+        /// </param>
+        /// <param name="diskEncryptionSetId">
+        /// The disk encryption set ARM Id.
+        /// Serialized Name: HyperVReplicaAzureManagedDiskDetails.diskEncryptionSetId
+        /// </param>
         internal HyperVReplicaAzureManagedDiskDetails(string diskId, string seedManagedDiskId, string replicaDiskType, string diskEncryptionSetId)
         {
             DiskId = diskId;
@@ -28,13 +43,25 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             DiskEncryptionSetId = diskEncryptionSetId;
         }
 
-        /// <summary> The disk Id. </summary>
+        /// <summary>
+        /// The disk Id.
+        /// Serialized Name: HyperVReplicaAzureManagedDiskDetails.diskId
+        /// </summary>
         public string DiskId { get; }
-        /// <summary> Seed managed disk Id. </summary>
+        /// <summary>
+        /// Seed managed disk Id.
+        /// Serialized Name: HyperVReplicaAzureManagedDiskDetails.seedManagedDiskId
+        /// </summary>
         public string SeedManagedDiskId { get; }
-        /// <summary> The replica disk type. </summary>
+        /// <summary>
+        /// The replica disk type.
+        /// Serialized Name: HyperVReplicaAzureManagedDiskDetails.replicaDiskType
+        /// </summary>
         public string ReplicaDiskType { get; }
-        /// <summary> The disk encryption set ARM Id. </summary>
+        /// <summary>
+        /// The disk encryption set ARM Id.
+        /// Serialized Name: HyperVReplicaAzureManagedDiskDetails.diskEncryptionSetId
+        /// </summary>
         public string DiskEncryptionSetId { get; }
     }
 }

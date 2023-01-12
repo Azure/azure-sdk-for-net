@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary> The resync state. </summary>
+    /// <summary>
+    /// The resync state.
+    /// Serialized Name: ResyncState
+    /// </summary>
     public readonly partial struct ResyncState : IEquatable<ResyncState>
     {
         private readonly string _value;
@@ -26,11 +29,20 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         private const string PreparedForResynchronizationValue = "PreparedForResynchronization";
         private const string StartedResynchronizationValue = "StartedResynchronization";
 
-        /// <summary> None. </summary>
+        /// <summary>
+        /// None
+        /// Serialized Name: ResyncState.None
+        /// </summary>
         public static ResyncState None { get; } = new ResyncState(NoneValue);
-        /// <summary> PreparedForResynchronization. </summary>
+        /// <summary>
+        /// PreparedForResynchronization
+        /// Serialized Name: ResyncState.PreparedForResynchronization
+        /// </summary>
         public static ResyncState PreparedForResynchronization { get; } = new ResyncState(PreparedForResynchronizationValue);
-        /// <summary> StartedResynchronization. </summary>
+        /// <summary>
+        /// StartedResynchronization
+        /// Serialized Name: ResyncState.StartedResynchronization
+        /// </summary>
         public static ResyncState StartedResynchronization { get; } = new ResyncState(StartedResynchronizationValue);
         /// <summary> Determines if two <see cref="ResyncState"/> values are the same. </summary>
         public static bool operator ==(ResyncState left, ResyncState right) => left.Equals(right);

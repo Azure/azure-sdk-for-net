@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary> The recovery point type. </summary>
+    /// <summary>
+    /// The recovery point type.
+    /// Serialized Name: MigrationRecoveryPointType
+    /// </summary>
     public readonly partial struct MigrationRecoveryPointType : IEquatable<MigrationRecoveryPointType>
     {
         private readonly string _value;
@@ -26,11 +29,20 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         private const string ApplicationConsistentValue = "ApplicationConsistent";
         private const string CrashConsistentValue = "CrashConsistent";
 
-        /// <summary> NotSpecified. </summary>
+        /// <summary>
+        /// NotSpecified
+        /// Serialized Name: MigrationRecoveryPointType.NotSpecified
+        /// </summary>
         public static MigrationRecoveryPointType NotSpecified { get; } = new MigrationRecoveryPointType(NotSpecifiedValue);
-        /// <summary> ApplicationConsistent. </summary>
+        /// <summary>
+        /// ApplicationConsistent
+        /// Serialized Name: MigrationRecoveryPointType.ApplicationConsistent
+        /// </summary>
         public static MigrationRecoveryPointType ApplicationConsistent { get; } = new MigrationRecoveryPointType(ApplicationConsistentValue);
-        /// <summary> CrashConsistent. </summary>
+        /// <summary>
+        /// CrashConsistent
+        /// Serialized Name: MigrationRecoveryPointType.CrashConsistent
+        /// </summary>
         public static MigrationRecoveryPointType CrashConsistent { get; } = new MigrationRecoveryPointType(CrashConsistentValue);
         /// <summary> Determines if two <see cref="MigrationRecoveryPointType"/> values are the same. </summary>
         public static bool operator ==(MigrationRecoveryPointType left, MigrationRecoveryPointType right) => left.Equals(right);

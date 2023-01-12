@@ -10,7 +10,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary> Supported operating systems properties. </summary>
+    /// <summary>
+    /// Supported operating systems properties.
+    /// Serialized Name: SupportedOSProperties
+    /// </summary>
     internal partial class SupportedOSProperties
     {
         /// <summary> Initializes a new instance of SupportedOSProperties. </summary>
@@ -20,13 +23,19 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> Initializes a new instance of SupportedOSProperties. </summary>
-        /// <param name="supportedOSList"> The supported operating systems property list. </param>
+        /// <param name="supportedOSList">
+        /// The supported operating systems property list.
+        /// Serialized Name: SupportedOSProperties.supportedOsList
+        /// </param>
         internal SupportedOSProperties(IReadOnlyList<SupportedOSProperty> supportedOSList)
         {
             SupportedOSList = supportedOSList;
         }
 
-        /// <summary> The supported operating systems property list. </summary>
+        /// <summary>
+        /// The supported operating systems property list.
+        /// Serialized Name: SupportedOSProperties.supportedOsList
+        /// </summary>
         public IReadOnlyList<SupportedOSProperty> SupportedOSList { get; }
     }
 }

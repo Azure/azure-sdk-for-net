@@ -11,7 +11,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary> Store the fabric details specific to the VMware fabric. </summary>
+    /// <summary>
+    /// Store the fabric details specific to the VMware fabric.
+    /// Serialized Name: VMwareDetails
+    /// </summary>
     public partial class VMwareDetails : FabricSpecificDetails
     {
         /// <summary> Initializes a new instance of VMwareDetails. </summary>
@@ -25,40 +28,142 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> Initializes a new instance of VMwareDetails. </summary>
-        /// <param name="instanceType"> Gets the class type. Overridden in derived classes. </param>
-        /// <param name="processServers"> The list of Process Servers associated with the fabric. </param>
-        /// <param name="masterTargetServers"> The list of Master Target servers associated with the fabric. </param>
-        /// <param name="runAsAccounts"> The list of run as accounts created on the server. </param>
-        /// <param name="replicationPairCount"> The number of replication pairs configured in this CS. </param>
-        /// <param name="processServerCount"> The number of process servers. </param>
-        /// <param name="agentCount"> The number of source and target servers configured to talk to this CS. </param>
-        /// <param name="protectedServers"> The number of protected servers. </param>
-        /// <param name="systemLoad"> The percentage of the system load. </param>
-        /// <param name="systemLoadStatus"> The system load status. </param>
-        /// <param name="cpuLoad"> The percentage of the CPU load. </param>
-        /// <param name="cpuLoadStatus"> The CPU load status. </param>
-        /// <param name="totalMemoryInBytes"> The total memory. </param>
-        /// <param name="availableMemoryInBytes"> The available memory. </param>
-        /// <param name="memoryUsageStatus"> The memory usage status. </param>
-        /// <param name="totalSpaceInBytes"> The total space. </param>
-        /// <param name="availableSpaceInBytes"> The available space. </param>
-        /// <param name="spaceUsageStatus"> The space usage status. </param>
-        /// <param name="webLoad"> The web load. </param>
-        /// <param name="webLoadStatus"> The web load status. </param>
-        /// <param name="databaseServerLoad"> The database server load. </param>
-        /// <param name="databaseServerLoadStatus"> The database server load status. </param>
-        /// <param name="csServiceStatus"> The CS service status. </param>
-        /// <param name="ipAddress"> The IP address. </param>
-        /// <param name="agentVersion"> The agent Version. </param>
-        /// <param name="hostName"> The host name. </param>
-        /// <param name="lastHeartbeat"> The last heartbeat received from CS server. </param>
-        /// <param name="versionStatus"> Version status. </param>
-        /// <param name="sslCertExpiryOn"> CS SSL cert expiry date. </param>
-        /// <param name="sslCertExpiryRemainingDays"> CS SSL cert expiry date. </param>
-        /// <param name="psTemplateVersion"> PS template version. </param>
-        /// <param name="agentExpiryOn"> Agent expiry date. </param>
-        /// <param name="agentVersionDetails"> The agent version details. </param>
-        /// <param name="switchProviderBlockingErrorDetails"> The switch provider blocking error information. </param>
+        /// <param name="instanceType">
+        /// Gets the class type. Overridden in derived classes.
+        /// Serialized Name: FabricSpecificDetails.instanceType
+        /// </param>
+        /// <param name="processServers">
+        /// The list of Process Servers associated with the fabric.
+        /// Serialized Name: VMwareDetails.processServers
+        /// </param>
+        /// <param name="masterTargetServers">
+        /// The list of Master Target servers associated with the fabric.
+        /// Serialized Name: VMwareDetails.masterTargetServers
+        /// </param>
+        /// <param name="runAsAccounts">
+        /// The list of run as accounts created on the server.
+        /// Serialized Name: VMwareDetails.runAsAccounts
+        /// </param>
+        /// <param name="replicationPairCount">
+        /// The number of replication pairs configured in this CS.
+        /// Serialized Name: VMwareDetails.replicationPairCount
+        /// </param>
+        /// <param name="processServerCount">
+        /// The number of process servers.
+        /// Serialized Name: VMwareDetails.processServerCount
+        /// </param>
+        /// <param name="agentCount">
+        /// The number of source and target servers configured to talk to this CS.
+        /// Serialized Name: VMwareDetails.agentCount
+        /// </param>
+        /// <param name="protectedServers">
+        /// The number of protected servers.
+        /// Serialized Name: VMwareDetails.protectedServers
+        /// </param>
+        /// <param name="systemLoad">
+        /// The percentage of the system load.
+        /// Serialized Name: VMwareDetails.systemLoad
+        /// </param>
+        /// <param name="systemLoadStatus">
+        /// The system load status.
+        /// Serialized Name: VMwareDetails.systemLoadStatus
+        /// </param>
+        /// <param name="cpuLoad">
+        /// The percentage of the CPU load.
+        /// Serialized Name: VMwareDetails.cpuLoad
+        /// </param>
+        /// <param name="cpuLoadStatus">
+        /// The CPU load status.
+        /// Serialized Name: VMwareDetails.cpuLoadStatus
+        /// </param>
+        /// <param name="totalMemoryInBytes">
+        /// The total memory.
+        /// Serialized Name: VMwareDetails.totalMemoryInBytes
+        /// </param>
+        /// <param name="availableMemoryInBytes">
+        /// The available memory.
+        /// Serialized Name: VMwareDetails.availableMemoryInBytes
+        /// </param>
+        /// <param name="memoryUsageStatus">
+        /// The memory usage status.
+        /// Serialized Name: VMwareDetails.memoryUsageStatus
+        /// </param>
+        /// <param name="totalSpaceInBytes">
+        /// The total space.
+        /// Serialized Name: VMwareDetails.totalSpaceInBytes
+        /// </param>
+        /// <param name="availableSpaceInBytes">
+        /// The available space.
+        /// Serialized Name: VMwareDetails.availableSpaceInBytes
+        /// </param>
+        /// <param name="spaceUsageStatus">
+        /// The space usage status.
+        /// Serialized Name: VMwareDetails.spaceUsageStatus
+        /// </param>
+        /// <param name="webLoad">
+        /// The web load.
+        /// Serialized Name: VMwareDetails.webLoad
+        /// </param>
+        /// <param name="webLoadStatus">
+        /// The web load status.
+        /// Serialized Name: VMwareDetails.webLoadStatus
+        /// </param>
+        /// <param name="databaseServerLoad">
+        /// The database server load.
+        /// Serialized Name: VMwareDetails.databaseServerLoad
+        /// </param>
+        /// <param name="databaseServerLoadStatus">
+        /// The database server load status.
+        /// Serialized Name: VMwareDetails.databaseServerLoadStatus
+        /// </param>
+        /// <param name="csServiceStatus">
+        /// The CS service status.
+        /// Serialized Name: VMwareDetails.csServiceStatus
+        /// </param>
+        /// <param name="ipAddress">
+        /// The IP address.
+        /// Serialized Name: VMwareDetails.ipAddress
+        /// </param>
+        /// <param name="agentVersion">
+        /// The agent Version.
+        /// Serialized Name: VMwareDetails.agentVersion
+        /// </param>
+        /// <param name="hostName">
+        /// The host name.
+        /// Serialized Name: VMwareDetails.hostName
+        /// </param>
+        /// <param name="lastHeartbeat">
+        /// The last heartbeat received from CS server.
+        /// Serialized Name: VMwareDetails.lastHeartbeat
+        /// </param>
+        /// <param name="versionStatus">
+        /// Version status.
+        /// Serialized Name: VMwareDetails.versionStatus
+        /// </param>
+        /// <param name="sslCertExpiryOn">
+        /// CS SSL cert expiry date.
+        /// Serialized Name: VMwareDetails.sslCertExpiryDate
+        /// </param>
+        /// <param name="sslCertExpiryRemainingDays">
+        /// CS SSL cert expiry date.
+        /// Serialized Name: VMwareDetails.sslCertExpiryRemainingDays
+        /// </param>
+        /// <param name="psTemplateVersion">
+        /// PS template version.
+        /// Serialized Name: VMwareDetails.psTemplateVersion
+        /// </param>
+        /// <param name="agentExpiryOn">
+        /// Agent expiry date.
+        /// Serialized Name: VMwareDetails.agentExpiryDate
+        /// </param>
+        /// <param name="agentVersionDetails">
+        /// The agent version details.
+        /// Serialized Name: VMwareDetails.agentVersionDetails
+        /// </param>
+        /// <param name="switchProviderBlockingErrorDetails">
+        /// The switch provider blocking error information.
+        /// Serialized Name: VMwareDetails.switchProviderBlockingErrorDetails
+        /// </param>
         internal VMwareDetails(string instanceType, IReadOnlyList<ProcessServer> processServers, IReadOnlyList<MasterTargetServer> masterTargetServers, IReadOnlyList<RunAsAccount> runAsAccounts, string replicationPairCount, string processServerCount, string agentCount, string protectedServers, string systemLoad, string systemLoadStatus, string cpuLoad, string cpuLoadStatus, long? totalMemoryInBytes, long? availableMemoryInBytes, string memoryUsageStatus, long? totalSpaceInBytes, long? availableSpaceInBytes, string spaceUsageStatus, string webLoad, string webLoadStatus, string databaseServerLoad, string databaseServerLoadStatus, string csServiceStatus, string ipAddress, string agentVersion, string hostName, DateTimeOffset? lastHeartbeat, string versionStatus, DateTimeOffset? sslCertExpiryOn, int? sslCertExpiryRemainingDays, string psTemplateVersion, DateTimeOffset? agentExpiryOn, VersionDetails agentVersionDetails, IReadOnlyList<InMageFabricSwitchProviderBlockingErrorDetails> switchProviderBlockingErrorDetails) : base(instanceType)
         {
             ProcessServers = processServers;
@@ -97,71 +202,170 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             InstanceType = instanceType ?? "VMware";
         }
 
-        /// <summary> The list of Process Servers associated with the fabric. </summary>
+        /// <summary>
+        /// The list of Process Servers associated with the fabric.
+        /// Serialized Name: VMwareDetails.processServers
+        /// </summary>
         public IReadOnlyList<ProcessServer> ProcessServers { get; }
-        /// <summary> The list of Master Target servers associated with the fabric. </summary>
+        /// <summary>
+        /// The list of Master Target servers associated with the fabric.
+        /// Serialized Name: VMwareDetails.masterTargetServers
+        /// </summary>
         public IReadOnlyList<MasterTargetServer> MasterTargetServers { get; }
-        /// <summary> The list of run as accounts created on the server. </summary>
+        /// <summary>
+        /// The list of run as accounts created on the server.
+        /// Serialized Name: VMwareDetails.runAsAccounts
+        /// </summary>
         public IReadOnlyList<RunAsAccount> RunAsAccounts { get; }
-        /// <summary> The number of replication pairs configured in this CS. </summary>
+        /// <summary>
+        /// The number of replication pairs configured in this CS.
+        /// Serialized Name: VMwareDetails.replicationPairCount
+        /// </summary>
         public string ReplicationPairCount { get; }
-        /// <summary> The number of process servers. </summary>
+        /// <summary>
+        /// The number of process servers.
+        /// Serialized Name: VMwareDetails.processServerCount
+        /// </summary>
         public string ProcessServerCount { get; }
-        /// <summary> The number of source and target servers configured to talk to this CS. </summary>
+        /// <summary>
+        /// The number of source and target servers configured to talk to this CS.
+        /// Serialized Name: VMwareDetails.agentCount
+        /// </summary>
         public string AgentCount { get; }
-        /// <summary> The number of protected servers. </summary>
+        /// <summary>
+        /// The number of protected servers.
+        /// Serialized Name: VMwareDetails.protectedServers
+        /// </summary>
         public string ProtectedServers { get; }
-        /// <summary> The percentage of the system load. </summary>
+        /// <summary>
+        /// The percentage of the system load.
+        /// Serialized Name: VMwareDetails.systemLoad
+        /// </summary>
         public string SystemLoad { get; }
-        /// <summary> The system load status. </summary>
+        /// <summary>
+        /// The system load status.
+        /// Serialized Name: VMwareDetails.systemLoadStatus
+        /// </summary>
         public string SystemLoadStatus { get; }
-        /// <summary> The percentage of the CPU load. </summary>
+        /// <summary>
+        /// The percentage of the CPU load.
+        /// Serialized Name: VMwareDetails.cpuLoad
+        /// </summary>
         public string CpuLoad { get; }
-        /// <summary> The CPU load status. </summary>
+        /// <summary>
+        /// The CPU load status.
+        /// Serialized Name: VMwareDetails.cpuLoadStatus
+        /// </summary>
         public string CpuLoadStatus { get; }
-        /// <summary> The total memory. </summary>
+        /// <summary>
+        /// The total memory.
+        /// Serialized Name: VMwareDetails.totalMemoryInBytes
+        /// </summary>
         public long? TotalMemoryInBytes { get; }
-        /// <summary> The available memory. </summary>
+        /// <summary>
+        /// The available memory.
+        /// Serialized Name: VMwareDetails.availableMemoryInBytes
+        /// </summary>
         public long? AvailableMemoryInBytes { get; }
-        /// <summary> The memory usage status. </summary>
+        /// <summary>
+        /// The memory usage status.
+        /// Serialized Name: VMwareDetails.memoryUsageStatus
+        /// </summary>
         public string MemoryUsageStatus { get; }
-        /// <summary> The total space. </summary>
+        /// <summary>
+        /// The total space.
+        /// Serialized Name: VMwareDetails.totalSpaceInBytes
+        /// </summary>
         public long? TotalSpaceInBytes { get; }
-        /// <summary> The available space. </summary>
+        /// <summary>
+        /// The available space.
+        /// Serialized Name: VMwareDetails.availableSpaceInBytes
+        /// </summary>
         public long? AvailableSpaceInBytes { get; }
-        /// <summary> The space usage status. </summary>
+        /// <summary>
+        /// The space usage status.
+        /// Serialized Name: VMwareDetails.spaceUsageStatus
+        /// </summary>
         public string SpaceUsageStatus { get; }
-        /// <summary> The web load. </summary>
+        /// <summary>
+        /// The web load.
+        /// Serialized Name: VMwareDetails.webLoad
+        /// </summary>
         public string WebLoad { get; }
-        /// <summary> The web load status. </summary>
+        /// <summary>
+        /// The web load status.
+        /// Serialized Name: VMwareDetails.webLoadStatus
+        /// </summary>
         public string WebLoadStatus { get; }
-        /// <summary> The database server load. </summary>
+        /// <summary>
+        /// The database server load.
+        /// Serialized Name: VMwareDetails.databaseServerLoad
+        /// </summary>
         public string DatabaseServerLoad { get; }
-        /// <summary> The database server load status. </summary>
+        /// <summary>
+        /// The database server load status.
+        /// Serialized Name: VMwareDetails.databaseServerLoadStatus
+        /// </summary>
         public string DatabaseServerLoadStatus { get; }
-        /// <summary> The CS service status. </summary>
+        /// <summary>
+        /// The CS service status.
+        /// Serialized Name: VMwareDetails.csServiceStatus
+        /// </summary>
         public string CsServiceStatus { get; }
-        /// <summary> The IP address. </summary>
+        /// <summary>
+        /// The IP address.
+        /// Serialized Name: VMwareDetails.ipAddress
+        /// </summary>
         public string IPAddress { get; }
-        /// <summary> The agent Version. </summary>
+        /// <summary>
+        /// The agent Version.
+        /// Serialized Name: VMwareDetails.agentVersion
+        /// </summary>
         public string AgentVersion { get; }
-        /// <summary> The host name. </summary>
+        /// <summary>
+        /// The host name.
+        /// Serialized Name: VMwareDetails.hostName
+        /// </summary>
         public string HostName { get; }
-        /// <summary> The last heartbeat received from CS server. </summary>
+        /// <summary>
+        /// The last heartbeat received from CS server.
+        /// Serialized Name: VMwareDetails.lastHeartbeat
+        /// </summary>
         public DateTimeOffset? LastHeartbeat { get; }
-        /// <summary> Version status. </summary>
+        /// <summary>
+        /// Version status.
+        /// Serialized Name: VMwareDetails.versionStatus
+        /// </summary>
         public string VersionStatus { get; }
-        /// <summary> CS SSL cert expiry date. </summary>
+        /// <summary>
+        /// CS SSL cert expiry date.
+        /// Serialized Name: VMwareDetails.sslCertExpiryDate
+        /// </summary>
         public DateTimeOffset? SslCertExpiryOn { get; }
-        /// <summary> CS SSL cert expiry date. </summary>
+        /// <summary>
+        /// CS SSL cert expiry date.
+        /// Serialized Name: VMwareDetails.sslCertExpiryRemainingDays
+        /// </summary>
         public int? SslCertExpiryRemainingDays { get; }
-        /// <summary> PS template version. </summary>
+        /// <summary>
+        /// PS template version.
+        /// Serialized Name: VMwareDetails.psTemplateVersion
+        /// </summary>
         public string PsTemplateVersion { get; }
-        /// <summary> Agent expiry date. </summary>
+        /// <summary>
+        /// Agent expiry date.
+        /// Serialized Name: VMwareDetails.agentExpiryDate
+        /// </summary>
         public DateTimeOffset? AgentExpiryOn { get; }
-        /// <summary> The agent version details. </summary>
+        /// <summary>
+        /// The agent version details.
+        /// Serialized Name: VMwareDetails.agentVersionDetails
+        /// </summary>
         public VersionDetails AgentVersionDetails { get; }
-        /// <summary> The switch provider blocking error information. </summary>
+        /// <summary>
+        /// The switch provider blocking error information.
+        /// Serialized Name: VMwareDetails.switchProviderBlockingErrorDetails
+        /// </summary>
         public IReadOnlyList<InMageFabricSwitchProviderBlockingErrorDetails> SwitchProviderBlockingErrorDetails { get; }
     }
 }

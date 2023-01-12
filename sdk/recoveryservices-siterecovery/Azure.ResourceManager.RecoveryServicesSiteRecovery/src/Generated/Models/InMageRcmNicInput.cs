@@ -10,12 +10,21 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary> InMageRcm NIC input. </summary>
+    /// <summary>
+    /// InMageRcm NIC input.
+    /// Serialized Name: InMageRcmNicInput
+    /// </summary>
     public partial class InMageRcmNicInput
     {
         /// <summary> Initializes a new instance of InMageRcmNicInput. </summary>
-        /// <param name="nicId"> The NIC Id. </param>
-        /// <param name="isPrimaryNic"> A value indicating whether this is the primary NIC. </param>
+        /// <param name="nicId">
+        /// The NIC Id.
+        /// Serialized Name: InMageRcmNicInput.nicId
+        /// </param>
+        /// <param name="isPrimaryNic">
+        /// A value indicating whether this is the primary NIC.
+        /// Serialized Name: InMageRcmNicInput.isPrimaryNic
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nicId"/> or <paramref name="isPrimaryNic"/> is null. </exception>
         public InMageRcmNicInput(string nicId, string isPrimaryNic)
         {
@@ -26,19 +35,40 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             IsPrimaryNic = isPrimaryNic;
         }
 
-        /// <summary> The NIC Id. </summary>
+        /// <summary>
+        /// The NIC Id.
+        /// Serialized Name: InMageRcmNicInput.nicId
+        /// </summary>
         public string NicId { get; }
-        /// <summary> A value indicating whether this is the primary NIC. </summary>
+        /// <summary>
+        /// A value indicating whether this is the primary NIC.
+        /// Serialized Name: InMageRcmNicInput.isPrimaryNic
+        /// </summary>
         public string IsPrimaryNic { get; }
-        /// <summary> A value indicating whether this NIC is selected for failover. </summary>
+        /// <summary>
+        /// A value indicating whether this NIC is selected for failover.
+        /// Serialized Name: InMageRcmNicInput.isSelectedForFailover
+        /// </summary>
         public string IsSelectedForFailover { get; set; }
-        /// <summary> Target subnet name. </summary>
+        /// <summary>
+        /// Target subnet name.
+        /// Serialized Name: InMageRcmNicInput.targetSubnetName
+        /// </summary>
         public string TargetSubnetName { get; set; }
-        /// <summary> The target static IP address. </summary>
+        /// <summary>
+        /// The target static IP address.
+        /// Serialized Name: InMageRcmNicInput.targetStaticIPAddress
+        /// </summary>
         public string TargetStaticIPAddress { get; set; }
-        /// <summary> The test subnet name. </summary>
+        /// <summary>
+        /// The test subnet name.
+        /// Serialized Name: InMageRcmNicInput.testSubnetName
+        /// </summary>
         public string TestSubnetName { get; set; }
-        /// <summary> The test static IP address. </summary>
+        /// <summary>
+        /// The test static IP address.
+        /// Serialized Name: InMageRcmNicInput.testStaticIPAddress
+        /// </summary>
         public string TestStaticIPAddress { get; set; }
     }
 }

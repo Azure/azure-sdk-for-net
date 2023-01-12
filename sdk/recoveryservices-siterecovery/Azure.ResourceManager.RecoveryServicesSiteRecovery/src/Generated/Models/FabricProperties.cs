@@ -10,7 +10,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary> Fabric properties. </summary>
+    /// <summary>
+    /// Fabric properties.
+    /// Serialized Name: FabricProperties
+    /// </summary>
     public partial class FabricProperties
     {
         /// <summary> Initializes a new instance of FabricProperties. </summary>
@@ -20,18 +23,40 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> Initializes a new instance of FabricProperties. </summary>
-        /// <param name="friendlyName"> Friendly name of the fabric. </param>
-        /// <param name="encryptionDetails"> Encryption details for the fabric. </param>
-        /// <param name="rolloverEncryptionDetails"> Rollover encryption details for the fabric. </param>
-        /// <param name="internalIdentifier"> Dra Registration Id. </param>
-        /// <param name="bcdrState"> BCDR state of the fabric. </param>
+        /// <param name="friendlyName">
+        /// Friendly name of the fabric.
+        /// Serialized Name: FabricProperties.friendlyName
+        /// </param>
+        /// <param name="encryptionDetails">
+        /// Encryption details for the fabric.
+        /// Serialized Name: FabricProperties.encryptionDetails
+        /// </param>
+        /// <param name="rolloverEncryptionDetails">
+        /// Rollover encryption details for the fabric.
+        /// Serialized Name: FabricProperties.rolloverEncryptionDetails
+        /// </param>
+        /// <param name="internalIdentifier">
+        /// Dra Registration Id.
+        /// Serialized Name: FabricProperties.internalIdentifier
+        /// </param>
+        /// <param name="bcdrState">
+        /// BCDR state of the fabric.
+        /// Serialized Name: FabricProperties.bcdrState
+        /// </param>
         /// <param name="customDetails">
         /// Fabric specific settings.
+        /// Serialized Name: FabricProperties.customDetails
         /// Please note <see cref="FabricSpecificDetails"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="AzureFabricSpecificDetails"/>, <see cref="HyperVSiteDetails"/>, <see cref="InMageRcmFabricSpecificDetails"/>, <see cref="VmmDetails"/>, <see cref="VMwareDetails"/> and <see cref="VMwareV2FabricSpecificDetails"/>.
         /// </param>
-        /// <param name="healthErrorDetails"> Fabric health error details. </param>
-        /// <param name="health"> Health of fabric. </param>
+        /// <param name="healthErrorDetails">
+        /// Fabric health error details.
+        /// Serialized Name: FabricProperties.healthErrorDetails
+        /// </param>
+        /// <param name="health">
+        /// Health of fabric.
+        /// Serialized Name: FabricProperties.health
+        /// </param>
         internal FabricProperties(string friendlyName, EncryptionDetails encryptionDetails, EncryptionDetails rolloverEncryptionDetails, string internalIdentifier, string bcdrState, FabricSpecificDetails customDetails, IReadOnlyList<HealthError> healthErrorDetails, string health)
         {
             FriendlyName = friendlyName;
@@ -44,25 +69,47 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             Health = health;
         }
 
-        /// <summary> Friendly name of the fabric. </summary>
+        /// <summary>
+        /// Friendly name of the fabric.
+        /// Serialized Name: FabricProperties.friendlyName
+        /// </summary>
         public string FriendlyName { get; }
-        /// <summary> Encryption details for the fabric. </summary>
+        /// <summary>
+        /// Encryption details for the fabric.
+        /// Serialized Name: FabricProperties.encryptionDetails
+        /// </summary>
         public EncryptionDetails EncryptionDetails { get; }
-        /// <summary> Rollover encryption details for the fabric. </summary>
+        /// <summary>
+        /// Rollover encryption details for the fabric.
+        /// Serialized Name: FabricProperties.rolloverEncryptionDetails
+        /// </summary>
         public EncryptionDetails RolloverEncryptionDetails { get; }
-        /// <summary> Dra Registration Id. </summary>
+        /// <summary>
+        /// Dra Registration Id.
+        /// Serialized Name: FabricProperties.internalIdentifier
+        /// </summary>
         public string InternalIdentifier { get; }
-        /// <summary> BCDR state of the fabric. </summary>
+        /// <summary>
+        /// BCDR state of the fabric.
+        /// Serialized Name: FabricProperties.bcdrState
+        /// </summary>
         public string BcdrState { get; }
         /// <summary>
         /// Fabric specific settings.
+        /// Serialized Name: FabricProperties.customDetails
         /// Please note <see cref="FabricSpecificDetails"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="AzureFabricSpecificDetails"/>, <see cref="HyperVSiteDetails"/>, <see cref="InMageRcmFabricSpecificDetails"/>, <see cref="VmmDetails"/>, <see cref="VMwareDetails"/> and <see cref="VMwareV2FabricSpecificDetails"/>.
         /// </summary>
         public FabricSpecificDetails CustomDetails { get; }
-        /// <summary> Fabric health error details. </summary>
+        /// <summary>
+        /// Fabric health error details.
+        /// Serialized Name: FabricProperties.healthErrorDetails
+        /// </summary>
         public IReadOnlyList<HealthError> HealthErrorDetails { get; }
-        /// <summary> Health of fabric. </summary>
+        /// <summary>
+        /// Health of fabric.
+        /// Serialized Name: FabricProperties.health
+        /// </summary>
         public string Health { get; }
     }
 }

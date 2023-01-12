@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary> The recovery point type. </summary>
+    /// <summary>
+    /// The recovery point type.
+    /// Serialized Name: RpInMageRecoveryPointType
+    /// </summary>
     public readonly partial struct RpInMageRecoveryPointType : IEquatable<RpInMageRecoveryPointType>
     {
         private readonly string _value;
@@ -26,11 +29,20 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         private const string LatestTagValue = "LatestTag";
         private const string CustomValue = "Custom";
 
-        /// <summary> LatestTime. </summary>
+        /// <summary>
+        /// LatestTime
+        /// Serialized Name: RpInMageRecoveryPointType.LatestTime
+        /// </summary>
         public static RpInMageRecoveryPointType LatestTime { get; } = new RpInMageRecoveryPointType(LatestTimeValue);
-        /// <summary> LatestTag. </summary>
+        /// <summary>
+        /// LatestTag
+        /// Serialized Name: RpInMageRecoveryPointType.LatestTag
+        /// </summary>
         public static RpInMageRecoveryPointType LatestTag { get; } = new RpInMageRecoveryPointType(LatestTagValue);
-        /// <summary> Custom. </summary>
+        /// <summary>
+        /// Custom
+        /// Serialized Name: RpInMageRecoveryPointType.Custom
+        /// </summary>
         public static RpInMageRecoveryPointType Custom { get; } = new RpInMageRecoveryPointType(CustomValue);
         /// <summary> Determines if two <see cref="RpInMageRecoveryPointType"/> values are the same. </summary>
         public static bool operator ==(RpInMageRecoveryPointType left, RpInMageRecoveryPointType right) => left.Equals(right);

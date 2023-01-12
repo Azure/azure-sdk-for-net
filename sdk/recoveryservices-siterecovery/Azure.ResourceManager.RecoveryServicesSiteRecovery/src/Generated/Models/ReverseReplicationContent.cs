@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary> Reverse replication input. </summary>
+    /// <summary>
+    /// Reverse replication input.
+    /// Serialized Name: ReverseReplicationInput
+    /// </summary>
     public partial class ReverseReplicationContent
     {
         /// <summary> Initializes a new instance of ReverseReplicationContent. </summary>
@@ -15,7 +18,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         {
         }
 
-        /// <summary> Reverse replication properties. </summary>
+        /// <summary>
+        /// Reverse replication properties.
+        /// Serialized Name: ReverseReplicationInput.properties
+        /// </summary>
         public ReverseReplicationInputProperties Properties { get; set; }
     }
 }

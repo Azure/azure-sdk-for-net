@@ -15,7 +15,15 @@ skip-csproj: true
 modelerfour:
   flatten-payloads: false
 
+mgmt-debug: 
+  show-serialized-names: true
+
 rename-mapping:
+  Alert: ReplicationAlertConfiguration
+  AlertCollection: ReplicationAlertConfigurationListResult
+  Event: SiteRecoveryEvent
+  Fabric: SiteRecoveryFabric
+  Job: SiteRecoveryJob
   InMageRcmFailbackReplicationDetails.targetvCenterId: TargetVCenterId
 
 format-by-name-rules:

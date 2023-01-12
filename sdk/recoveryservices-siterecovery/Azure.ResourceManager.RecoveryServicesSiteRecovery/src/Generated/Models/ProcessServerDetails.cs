@@ -11,7 +11,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary> Process server details. </summary>
+    /// <summary>
+    /// Process server details.
+    /// Serialized Name: ProcessServerDetails
+    /// </summary>
     public partial class ProcessServerDetails
     {
         /// <summary> Initializes a new instance of ProcessServerDetails. </summary>
@@ -22,35 +25,122 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> Initializes a new instance of ProcessServerDetails. </summary>
-        /// <param name="id"> The process server Id. </param>
-        /// <param name="name"> The process server name. </param>
-        /// <param name="biosId"> The process server Bios Id. </param>
-        /// <param name="fabricObjectId"> The fabric object Id. </param>
-        /// <param name="fqdn"> The process server Fqdn. </param>
-        /// <param name="ipAddresses"> The list of IP addresses for communicating with the RCM component. </param>
-        /// <param name="version"> The version. </param>
-        /// <param name="lastHeartbeatUtc"> The last heartbeat received from the process server. </param>
-        /// <param name="totalMemoryInBytes"> The total memory. </param>
-        /// <param name="availableMemoryInBytes"> The available memory. </param>
-        /// <param name="usedMemoryInBytes"> The used memory. </param>
-        /// <param name="memoryUsagePercentage"> The memory usage percentage. </param>
-        /// <param name="totalSpaceInBytes"> The total disk space. </param>
-        /// <param name="availableSpaceInBytes"> The available disk space. </param>
-        /// <param name="usedSpaceInBytes"> The used disk space. </param>
-        /// <param name="freeSpacePercentage"> The free disk space percentage. </param>
-        /// <param name="throughputUploadPendingDataInBytes"> The uploading pending data in bytes. </param>
-        /// <param name="throughputInBytes"> The throughput in bytes. </param>
-        /// <param name="processorUsagePercentage"> The processor usage percentage. </param>
-        /// <param name="throughputStatus"> The throughput status. </param>
-        /// <param name="systemLoad"> The system load. </param>
-        /// <param name="systemLoadStatus"> The system load status. </param>
-        /// <param name="diskUsageStatus"> The disk usage status. </param>
-        /// <param name="memoryUsageStatus"> The memory usage status. </param>
-        /// <param name="processorUsageStatus"> The processor usage status. </param>
-        /// <param name="health"> The health of the process server. </param>
-        /// <param name="healthErrors"> The health errors. </param>
-        /// <param name="protectedItemCount"> The protected item count. </param>
-        /// <param name="historicHealth"> The historic health of the process server based on the health in last 24 hours. </param>
+        /// <param name="id">
+        /// The process server Id.
+        /// Serialized Name: ProcessServerDetails.id
+        /// </param>
+        /// <param name="name">
+        /// The process server name.
+        /// Serialized Name: ProcessServerDetails.name
+        /// </param>
+        /// <param name="biosId">
+        /// The process server Bios Id.
+        /// Serialized Name: ProcessServerDetails.biosId
+        /// </param>
+        /// <param name="fabricObjectId">
+        /// The fabric object Id.
+        /// Serialized Name: ProcessServerDetails.fabricObjectId
+        /// </param>
+        /// <param name="fqdn">
+        /// The process server Fqdn.
+        /// Serialized Name: ProcessServerDetails.fqdn
+        /// </param>
+        /// <param name="ipAddresses">
+        /// The list of IP addresses for communicating with the RCM component.
+        /// Serialized Name: ProcessServerDetails.ipAddresses
+        /// </param>
+        /// <param name="version">
+        /// The version.
+        /// Serialized Name: ProcessServerDetails.version
+        /// </param>
+        /// <param name="lastHeartbeatUtc">
+        /// The last heartbeat received from the process server.
+        /// Serialized Name: ProcessServerDetails.lastHeartbeatUtc
+        /// </param>
+        /// <param name="totalMemoryInBytes">
+        /// The total memory.
+        /// Serialized Name: ProcessServerDetails.totalMemoryInBytes
+        /// </param>
+        /// <param name="availableMemoryInBytes">
+        /// The available memory.
+        /// Serialized Name: ProcessServerDetails.availableMemoryInBytes
+        /// </param>
+        /// <param name="usedMemoryInBytes">
+        /// The used memory.
+        /// Serialized Name: ProcessServerDetails.usedMemoryInBytes
+        /// </param>
+        /// <param name="memoryUsagePercentage">
+        /// The memory usage percentage.
+        /// Serialized Name: ProcessServerDetails.memoryUsagePercentage
+        /// </param>
+        /// <param name="totalSpaceInBytes">
+        /// The total disk space.
+        /// Serialized Name: ProcessServerDetails.totalSpaceInBytes
+        /// </param>
+        /// <param name="availableSpaceInBytes">
+        /// The available disk space.
+        /// Serialized Name: ProcessServerDetails.availableSpaceInBytes
+        /// </param>
+        /// <param name="usedSpaceInBytes">
+        /// The used disk space.
+        /// Serialized Name: ProcessServerDetails.usedSpaceInBytes
+        /// </param>
+        /// <param name="freeSpacePercentage">
+        /// The free disk space percentage.
+        /// Serialized Name: ProcessServerDetails.freeSpacePercentage
+        /// </param>
+        /// <param name="throughputUploadPendingDataInBytes">
+        /// The uploading pending data in bytes.
+        /// Serialized Name: ProcessServerDetails.throughputUploadPendingDataInBytes
+        /// </param>
+        /// <param name="throughputInBytes">
+        /// The throughput in bytes.
+        /// Serialized Name: ProcessServerDetails.throughputInBytes
+        /// </param>
+        /// <param name="processorUsagePercentage">
+        /// The processor usage percentage.
+        /// Serialized Name: ProcessServerDetails.processorUsagePercentage
+        /// </param>
+        /// <param name="throughputStatus">
+        /// The throughput status.
+        /// Serialized Name: ProcessServerDetails.throughputStatus
+        /// </param>
+        /// <param name="systemLoad">
+        /// The system load.
+        /// Serialized Name: ProcessServerDetails.systemLoad
+        /// </param>
+        /// <param name="systemLoadStatus">
+        /// The system load status.
+        /// Serialized Name: ProcessServerDetails.systemLoadStatus
+        /// </param>
+        /// <param name="diskUsageStatus">
+        /// The disk usage status.
+        /// Serialized Name: ProcessServerDetails.diskUsageStatus
+        /// </param>
+        /// <param name="memoryUsageStatus">
+        /// The memory usage status.
+        /// Serialized Name: ProcessServerDetails.memoryUsageStatus
+        /// </param>
+        /// <param name="processorUsageStatus">
+        /// The processor usage status.
+        /// Serialized Name: ProcessServerDetails.processorUsageStatus
+        /// </param>
+        /// <param name="health">
+        /// The health of the process server.
+        /// Serialized Name: ProcessServerDetails.health
+        /// </param>
+        /// <param name="healthErrors">
+        /// The health errors.
+        /// Serialized Name: ProcessServerDetails.healthErrors
+        /// </param>
+        /// <param name="protectedItemCount">
+        /// The protected item count.
+        /// Serialized Name: ProcessServerDetails.protectedItemCount
+        /// </param>
+        /// <param name="historicHealth">
+        /// The historic health of the process server based on the health in last 24 hours.
+        /// Serialized Name: ProcessServerDetails.historicHealth
+        /// </param>
         internal ProcessServerDetails(string id, string name, string biosId, string fabricObjectId, string fqdn, IReadOnlyList<string> ipAddresses, string version, DateTimeOffset? lastHeartbeatUtc, long? totalMemoryInBytes, long? availableMemoryInBytes, long? usedMemoryInBytes, double? memoryUsagePercentage, long? totalSpaceInBytes, long? availableSpaceInBytes, long? usedSpaceInBytes, double? freeSpacePercentage, long? throughputUploadPendingDataInBytes, long? throughputInBytes, double? processorUsagePercentage, RcmComponentStatus? throughputStatus, long? systemLoad, RcmComponentStatus? systemLoadStatus, RcmComponentStatus? diskUsageStatus, RcmComponentStatus? memoryUsageStatus, RcmComponentStatus? processorUsageStatus, ProtectionHealth? health, IReadOnlyList<HealthError> healthErrors, int? protectedItemCount, ProtectionHealth? historicHealth)
         {
             Id = id;
@@ -84,63 +174,150 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             HistoricHealth = historicHealth;
         }
 
-        /// <summary> The process server Id. </summary>
+        /// <summary>
+        /// The process server Id.
+        /// Serialized Name: ProcessServerDetails.id
+        /// </summary>
         public string Id { get; }
-        /// <summary> The process server name. </summary>
+        /// <summary>
+        /// The process server name.
+        /// Serialized Name: ProcessServerDetails.name
+        /// </summary>
         public string Name { get; }
-        /// <summary> The process server Bios Id. </summary>
+        /// <summary>
+        /// The process server Bios Id.
+        /// Serialized Name: ProcessServerDetails.biosId
+        /// </summary>
         public string BiosId { get; }
-        /// <summary> The fabric object Id. </summary>
+        /// <summary>
+        /// The fabric object Id.
+        /// Serialized Name: ProcessServerDetails.fabricObjectId
+        /// </summary>
         public string FabricObjectId { get; }
-        /// <summary> The process server Fqdn. </summary>
+        /// <summary>
+        /// The process server Fqdn.
+        /// Serialized Name: ProcessServerDetails.fqdn
+        /// </summary>
         public string Fqdn { get; }
-        /// <summary> The list of IP addresses for communicating with the RCM component. </summary>
+        /// <summary>
+        /// The list of IP addresses for communicating with the RCM component.
+        /// Serialized Name: ProcessServerDetails.ipAddresses
+        /// </summary>
         public IReadOnlyList<string> IPAddresses { get; }
-        /// <summary> The version. </summary>
+        /// <summary>
+        /// The version.
+        /// Serialized Name: ProcessServerDetails.version
+        /// </summary>
         public string Version { get; }
-        /// <summary> The last heartbeat received from the process server. </summary>
+        /// <summary>
+        /// The last heartbeat received from the process server.
+        /// Serialized Name: ProcessServerDetails.lastHeartbeatUtc
+        /// </summary>
         public DateTimeOffset? LastHeartbeatUtc { get; }
-        /// <summary> The total memory. </summary>
+        /// <summary>
+        /// The total memory.
+        /// Serialized Name: ProcessServerDetails.totalMemoryInBytes
+        /// </summary>
         public long? TotalMemoryInBytes { get; }
-        /// <summary> The available memory. </summary>
+        /// <summary>
+        /// The available memory.
+        /// Serialized Name: ProcessServerDetails.availableMemoryInBytes
+        /// </summary>
         public long? AvailableMemoryInBytes { get; }
-        /// <summary> The used memory. </summary>
+        /// <summary>
+        /// The used memory.
+        /// Serialized Name: ProcessServerDetails.usedMemoryInBytes
+        /// </summary>
         public long? UsedMemoryInBytes { get; }
-        /// <summary> The memory usage percentage. </summary>
+        /// <summary>
+        /// The memory usage percentage.
+        /// Serialized Name: ProcessServerDetails.memoryUsagePercentage
+        /// </summary>
         public double? MemoryUsagePercentage { get; }
-        /// <summary> The total disk space. </summary>
+        /// <summary>
+        /// The total disk space.
+        /// Serialized Name: ProcessServerDetails.totalSpaceInBytes
+        /// </summary>
         public long? TotalSpaceInBytes { get; }
-        /// <summary> The available disk space. </summary>
+        /// <summary>
+        /// The available disk space.
+        /// Serialized Name: ProcessServerDetails.availableSpaceInBytes
+        /// </summary>
         public long? AvailableSpaceInBytes { get; }
-        /// <summary> The used disk space. </summary>
+        /// <summary>
+        /// The used disk space.
+        /// Serialized Name: ProcessServerDetails.usedSpaceInBytes
+        /// </summary>
         public long? UsedSpaceInBytes { get; }
-        /// <summary> The free disk space percentage. </summary>
+        /// <summary>
+        /// The free disk space percentage.
+        /// Serialized Name: ProcessServerDetails.freeSpacePercentage
+        /// </summary>
         public double? FreeSpacePercentage { get; }
-        /// <summary> The uploading pending data in bytes. </summary>
+        /// <summary>
+        /// The uploading pending data in bytes.
+        /// Serialized Name: ProcessServerDetails.throughputUploadPendingDataInBytes
+        /// </summary>
         public long? ThroughputUploadPendingDataInBytes { get; }
-        /// <summary> The throughput in bytes. </summary>
+        /// <summary>
+        /// The throughput in bytes.
+        /// Serialized Name: ProcessServerDetails.throughputInBytes
+        /// </summary>
         public long? ThroughputInBytes { get; }
-        /// <summary> The processor usage percentage. </summary>
+        /// <summary>
+        /// The processor usage percentage.
+        /// Serialized Name: ProcessServerDetails.processorUsagePercentage
+        /// </summary>
         public double? ProcessorUsagePercentage { get; }
-        /// <summary> The throughput status. </summary>
+        /// <summary>
+        /// The throughput status.
+        /// Serialized Name: ProcessServerDetails.throughputStatus
+        /// </summary>
         public RcmComponentStatus? ThroughputStatus { get; }
-        /// <summary> The system load. </summary>
+        /// <summary>
+        /// The system load.
+        /// Serialized Name: ProcessServerDetails.systemLoad
+        /// </summary>
         public long? SystemLoad { get; }
-        /// <summary> The system load status. </summary>
+        /// <summary>
+        /// The system load status.
+        /// Serialized Name: ProcessServerDetails.systemLoadStatus
+        /// </summary>
         public RcmComponentStatus? SystemLoadStatus { get; }
-        /// <summary> The disk usage status. </summary>
+        /// <summary>
+        /// The disk usage status.
+        /// Serialized Name: ProcessServerDetails.diskUsageStatus
+        /// </summary>
         public RcmComponentStatus? DiskUsageStatus { get; }
-        /// <summary> The memory usage status. </summary>
+        /// <summary>
+        /// The memory usage status.
+        /// Serialized Name: ProcessServerDetails.memoryUsageStatus
+        /// </summary>
         public RcmComponentStatus? MemoryUsageStatus { get; }
-        /// <summary> The processor usage status. </summary>
+        /// <summary>
+        /// The processor usage status.
+        /// Serialized Name: ProcessServerDetails.processorUsageStatus
+        /// </summary>
         public RcmComponentStatus? ProcessorUsageStatus { get; }
-        /// <summary> The health of the process server. </summary>
+        /// <summary>
+        /// The health of the process server.
+        /// Serialized Name: ProcessServerDetails.health
+        /// </summary>
         public ProtectionHealth? Health { get; }
-        /// <summary> The health errors. </summary>
+        /// <summary>
+        /// The health errors.
+        /// Serialized Name: ProcessServerDetails.healthErrors
+        /// </summary>
         public IReadOnlyList<HealthError> HealthErrors { get; }
-        /// <summary> The protected item count. </summary>
+        /// <summary>
+        /// The protected item count.
+        /// Serialized Name: ProcessServerDetails.protectedItemCount
+        /// </summary>
         public int? ProtectedItemCount { get; }
-        /// <summary> The historic health of the process server based on the health in last 24 hours. </summary>
+        /// <summary>
+        /// The historic health of the process server based on the health in last 24 hours.
+        /// Serialized Name: ProcessServerDetails.historicHealth
+        /// </summary>
         public ProtectionHealth? HistoricHealth { get; }
     }
 }

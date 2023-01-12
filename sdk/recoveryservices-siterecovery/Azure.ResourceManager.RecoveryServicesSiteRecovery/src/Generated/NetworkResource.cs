@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
     /// A Class representing a Network along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="NetworkResource" />
     /// from an instance of <see cref="ArmClient" /> using the GetNetworkResource method.
-    /// Otherwise you can get one from its parent resource <see cref="FabricResource" /> using the GetNetwork method.
+    /// Otherwise you can get one from its parent resource <see cref="SiteRecoveryFabricResource" /> using the GetNetwork method.
     /// </summary>
     public partial class NetworkResource : ArmResource
     {

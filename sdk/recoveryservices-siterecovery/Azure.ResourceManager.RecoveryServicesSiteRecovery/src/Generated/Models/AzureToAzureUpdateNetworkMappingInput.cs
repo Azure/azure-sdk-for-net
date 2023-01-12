@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary> Updates network mappings input. </summary>
+    /// <summary>
+    /// Updates network mappings input.
+    /// Serialized Name: AzureToAzureUpdateNetworkMappingInput
+    /// </summary>
     public partial class AzureToAzureUpdateNetworkMappingInput : FabricSpecificUpdateNetworkMappingInput
     {
         /// <summary> Initializes a new instance of AzureToAzureUpdateNetworkMappingInput. </summary>
@@ -16,7 +19,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             InstanceType = "AzureToAzure";
         }
 
-        /// <summary> The primary azure vnet Id. </summary>
+        /// <summary>
+        /// The primary azure vnet Id.
+        /// Serialized Name: AzureToAzureUpdateNetworkMappingInput.primaryNetworkId
+        /// </summary>
         public string PrimaryNetworkId { get; set; }
     }
 }

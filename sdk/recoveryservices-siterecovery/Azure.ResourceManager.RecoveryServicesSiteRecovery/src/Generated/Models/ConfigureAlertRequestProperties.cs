@@ -10,7 +10,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary> Properties of a configure alert request. </summary>
+    /// <summary>
+    /// Properties of a configure alert request.
+    /// Serialized Name: ConfigureAlertRequestProperties
+    /// </summary>
     public partial class ConfigureAlertRequestProperties
     {
         /// <summary> Initializes a new instance of ConfigureAlertRequestProperties. </summary>
@@ -19,11 +22,20 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             CustomEmailAddresses = new ChangeTrackingList<string>();
         }
 
-        /// <summary> A value indicating whether to send email to subscription administrator. </summary>
+        /// <summary>
+        /// A value indicating whether to send email to subscription administrator.
+        /// Serialized Name: ConfigureAlertRequestProperties.sendToOwners
+        /// </summary>
         public string SendToOwners { get; set; }
-        /// <summary> The custom email address for sending emails. </summary>
+        /// <summary>
+        /// The custom email address for sending emails.
+        /// Serialized Name: ConfigureAlertRequestProperties.customEmailAddresses
+        /// </summary>
         public IList<string> CustomEmailAddresses { get; }
-        /// <summary> The locale for the email notification. </summary>
+        /// <summary>
+        /// The locale for the email notification.
+        /// Serialized Name: ConfigureAlertRequestProperties.locale
+        /// </summary>
         public string Locale { get; set; }
     }
 }

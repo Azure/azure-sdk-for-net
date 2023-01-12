@@ -24,17 +24,29 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="properties"> The custom data. </param>
-        /// <param name="location"> Resource Location. </param>
+        /// <param name="properties">
+        /// The custom data.
+        /// Serialized Name: Policy.properties
+        /// </param>
+        /// <param name="location">
+        /// Resource Location
+        /// Serialized Name: Resource.location
+        /// </param>
         internal PolicyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, PolicyProperties properties, AzureLocation? location) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
             Location = location;
         }
 
-        /// <summary> The custom data. </summary>
+        /// <summary>
+        /// The custom data.
+        /// Serialized Name: Policy.properties
+        /// </summary>
         public PolicyProperties Properties { get; }
-        /// <summary> Resource Location. </summary>
+        /// <summary>
+        /// Resource Location
+        /// Serialized Name: Resource.location
+        /// </summary>
         public AzureLocation? Location { get; }
     }
 }

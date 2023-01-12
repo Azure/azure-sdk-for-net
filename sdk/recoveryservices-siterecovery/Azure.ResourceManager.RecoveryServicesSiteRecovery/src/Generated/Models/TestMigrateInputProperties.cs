@@ -10,12 +10,16 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary> Test migrate input properties. </summary>
+    /// <summary>
+    /// Test migrate input properties.
+    /// Serialized Name: TestMigrateInputProperties
+    /// </summary>
     public partial class TestMigrateInputProperties
     {
         /// <summary> Initializes a new instance of TestMigrateInputProperties. </summary>
         /// <param name="providerSpecificDetails">
         /// The provider specific details.
+        /// Serialized Name: TestMigrateInputProperties.providerSpecificDetails
         /// Please note <see cref="TestMigrateProviderSpecificInput"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="VMwareCbtTestMigrateInput"/>.
         /// </param>
@@ -29,6 +33,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 
         /// <summary>
         /// The provider specific details.
+        /// Serialized Name: TestMigrateInputProperties.providerSpecificDetails
         /// Please note <see cref="TestMigrateProviderSpecificInput"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="VMwareCbtTestMigrateInput"/>.
         /// </summary>

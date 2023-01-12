@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary> Logical Network Properties. </summary>
+    /// <summary>
+    /// Logical Network Properties.
+    /// Serialized Name: LogicalNetworkProperties
+    /// </summary>
     public partial class LogicalNetworkProperties
     {
         /// <summary> Initializes a new instance of LogicalNetworkProperties. </summary>
@@ -16,10 +19,22 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> Initializes a new instance of LogicalNetworkProperties. </summary>
-        /// <param name="friendlyName"> The Friendly Name. </param>
-        /// <param name="networkVirtualizationStatus"> A value indicating whether Network Virtualization is enabled for the logical network. </param>
-        /// <param name="logicalNetworkUsage"> A value indicating whether logical network is used as private test network by test failover. </param>
-        /// <param name="logicalNetworkDefinitionsStatus"> A value indicating whether logical network definitions are isolated. </param>
+        /// <param name="friendlyName">
+        /// The Friendly Name.
+        /// Serialized Name: LogicalNetworkProperties.friendlyName
+        /// </param>
+        /// <param name="networkVirtualizationStatus">
+        /// A value indicating whether Network Virtualization is enabled for the logical network.
+        /// Serialized Name: LogicalNetworkProperties.networkVirtualizationStatus
+        /// </param>
+        /// <param name="logicalNetworkUsage">
+        /// A value indicating whether logical network is used as private test network by test failover.
+        /// Serialized Name: LogicalNetworkProperties.logicalNetworkUsage
+        /// </param>
+        /// <param name="logicalNetworkDefinitionsStatus">
+        /// A value indicating whether logical network definitions are isolated.
+        /// Serialized Name: LogicalNetworkProperties.logicalNetworkDefinitionsStatus
+        /// </param>
         internal LogicalNetworkProperties(string friendlyName, string networkVirtualizationStatus, string logicalNetworkUsage, string logicalNetworkDefinitionsStatus)
         {
             FriendlyName = friendlyName;
@@ -28,13 +43,25 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             LogicalNetworkDefinitionsStatus = logicalNetworkDefinitionsStatus;
         }
 
-        /// <summary> The Friendly Name. </summary>
+        /// <summary>
+        /// The Friendly Name.
+        /// Serialized Name: LogicalNetworkProperties.friendlyName
+        /// </summary>
         public string FriendlyName { get; }
-        /// <summary> A value indicating whether Network Virtualization is enabled for the logical network. </summary>
+        /// <summary>
+        /// A value indicating whether Network Virtualization is enabled for the logical network.
+        /// Serialized Name: LogicalNetworkProperties.networkVirtualizationStatus
+        /// </summary>
         public string NetworkVirtualizationStatus { get; }
-        /// <summary> A value indicating whether logical network is used as private test network by test failover. </summary>
+        /// <summary>
+        /// A value indicating whether logical network is used as private test network by test failover.
+        /// Serialized Name: LogicalNetworkProperties.logicalNetworkUsage
+        /// </summary>
         public string LogicalNetworkUsage { get; }
-        /// <summary> A value indicating whether logical network definitions are isolated. </summary>
+        /// <summary>
+        /// A value indicating whether logical network definitions are isolated.
+        /// Serialized Name: LogicalNetworkProperties.logicalNetworkDefinitionsStatus
+        /// </summary>
         public string LogicalNetworkDefinitionsStatus { get; }
     }
 }

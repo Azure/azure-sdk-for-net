@@ -11,11 +11,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary> A2A provider specific settings. </summary>
+    /// <summary>
+    /// A2A provider specific settings.
+    /// Serialized Name: A2AReplicationIntentDetails
+    /// </summary>
     public partial class A2AReplicationIntentDetails : ReplicationProtectionIntentProviderSpecificSettings
     {
         /// <summary> Initializes a new instance of A2AReplicationIntentDetails. </summary>
-        /// <param name="recoveryAvailabilityType"> The recovery availability type of the virtual machine. </param>
+        /// <param name="recoveryAvailabilityType">
+        /// The recovery availability type of the virtual machine.
+        /// Serialized Name: A2AReplicationIntentDetails.recoveryAvailabilityType
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="recoveryAvailabilityType"/> is null. </exception>
         internal A2AReplicationIntentDetails(string recoveryAvailabilityType)
         {
@@ -28,53 +34,110 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> Initializes a new instance of A2AReplicationIntentDetails. </summary>
-        /// <param name="instanceType"> Gets the Instance type. </param>
-        /// <param name="fabricObjectId"> The fabric specific object Id of the virtual machine. </param>
-        /// <param name="primaryLocation"> The primary location for the virtual machine. </param>
-        /// <param name="recoveryLocation"> The recovery location for the virtual machine. </param>
-        /// <param name="recoverySubscriptionId"> The recovery subscription Id of the virtual machine. </param>
-        /// <param name="vmDisks"> The list of vm disk details. </param>
-        /// <param name="vmManagedDisks"> The list of vm managed disk details. </param>
-        /// <param name="recoveryResourceGroupId"> The recovery resource group id. </param>
+        /// <param name="instanceType">
+        /// Gets the Instance type.
+        /// Serialized Name: ReplicationProtectionIntentProviderSpecificSettings.instanceType
+        /// </param>
+        /// <param name="fabricObjectId">
+        /// The fabric specific object Id of the virtual machine.
+        /// Serialized Name: A2AReplicationIntentDetails.fabricObjectId
+        /// </param>
+        /// <param name="primaryLocation">
+        /// The primary location for the virtual machine.
+        /// Serialized Name: A2AReplicationIntentDetails.primaryLocation
+        /// </param>
+        /// <param name="recoveryLocation">
+        /// The recovery location for the virtual machine.
+        /// Serialized Name: A2AReplicationIntentDetails.recoveryLocation
+        /// </param>
+        /// <param name="recoverySubscriptionId">
+        /// The recovery subscription Id of the virtual machine.
+        /// Serialized Name: A2AReplicationIntentDetails.recoverySubscriptionId
+        /// </param>
+        /// <param name="vmDisks">
+        /// The list of vm disk details.
+        /// Serialized Name: A2AReplicationIntentDetails.vmDisks
+        /// </param>
+        /// <param name="vmManagedDisks">
+        /// The list of vm managed disk details.
+        /// Serialized Name: A2AReplicationIntentDetails.vmManagedDisks
+        /// </param>
+        /// <param name="recoveryResourceGroupId">
+        /// The recovery resource group id.
+        /// Serialized Name: A2AReplicationIntentDetails.recoveryResourceGroupId
+        /// </param>
         /// <param name="protectionProfile">
         /// The protection profile custom details.
+        /// Serialized Name: A2AReplicationIntentDetails.protectionProfile
         /// Please note <see cref="ProtectionProfileCustomDetails"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="ExistingProtectionProfile"/> and <see cref="NewProtectionProfile"/>.
         /// </param>
         /// <param name="primaryStagingStorageAccount">
         /// The primary staging storage account details.
+        /// Serialized Name: A2AReplicationIntentDetails.primaryStagingStorageAccount
         /// Please note <see cref="StorageAccountCustomDetails"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="ExistingStorageAccount"/>.
         /// </param>
         /// <param name="recoveryAvailabilitySet">
         /// The recovery availability set details.
+        /// Serialized Name: A2AReplicationIntentDetails.recoveryAvailabilitySet
         /// Please note <see cref="RecoveryAvailabilitySetCustomDetails"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="ExistingRecoveryAvailabilitySet"/>.
         /// </param>
         /// <param name="recoveryVirtualNetwork">
         /// The recovery virtual network details.
+        /// Serialized Name: A2AReplicationIntentDetails.recoveryVirtualNetwork
         /// Please note <see cref="RecoveryVirtualNetworkCustomDetails"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="ExistingRecoveryVirtualNetwork"/> and <see cref="NewRecoveryVirtualNetwork"/>.
         /// </param>
         /// <param name="recoveryProximityPlacementGroup">
         /// The recovery proximity placement group custom details.
+        /// Serialized Name: A2AReplicationIntentDetails.recoveryProximityPlacementGroup
         /// Please note <see cref="RecoveryProximityPlacementGroupCustomDetails"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="ExistingRecoveryProximityPlacementGroup"/>.
         /// </param>
-        /// <param name="autoProtectionOfDataDisk"> A value indicating whether the auto protection is enabled. </param>
-        /// <param name="multiVmGroupName"> The multi vm group name. </param>
-        /// <param name="multiVmGroupId"> The multi vm group id. </param>
+        /// <param name="autoProtectionOfDataDisk">
+        /// A value indicating whether the auto protection is enabled.
+        /// Serialized Name: A2AReplicationIntentDetails.autoProtectionOfDataDisk
+        /// </param>
+        /// <param name="multiVmGroupName">
+        /// The multi vm group name.
+        /// Serialized Name: A2AReplicationIntentDetails.multiVmGroupName
+        /// </param>
+        /// <param name="multiVmGroupId">
+        /// The multi vm group id.
+        /// Serialized Name: A2AReplicationIntentDetails.multiVmGroupId
+        /// </param>
         /// <param name="recoveryBootDiagStorageAccount">
         /// The boot diagnostic storage account.
+        /// Serialized Name: A2AReplicationIntentDetails.recoveryBootDiagStorageAccount
         /// Please note <see cref="StorageAccountCustomDetails"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="ExistingStorageAccount"/>.
         /// </param>
-        /// <param name="diskEncryptionInfo"> The recovery disk encryption information (for two pass flows). </param>
-        /// <param name="recoveryAvailabilityZone"> The recovery availability zone. </param>
-        /// <param name="recoveryAvailabilityType"> The recovery availability type of the virtual machine. </param>
-        /// <param name="agentAutoUpdateStatus"> A value indicating whether the auto update is enabled. </param>
-        /// <param name="automationAccountArmId"> The automation account arm id. </param>
-        /// <param name="automationAccountAuthenticationType"> A value indicating the type authentication to use for automation Account. </param>
+        /// <param name="diskEncryptionInfo">
+        /// The recovery disk encryption information (for two pass flows).
+        /// Serialized Name: A2AReplicationIntentDetails.diskEncryptionInfo
+        /// </param>
+        /// <param name="recoveryAvailabilityZone">
+        /// The recovery availability zone.
+        /// Serialized Name: A2AReplicationIntentDetails.recoveryAvailabilityZone
+        /// </param>
+        /// <param name="recoveryAvailabilityType">
+        /// The recovery availability type of the virtual machine.
+        /// Serialized Name: A2AReplicationIntentDetails.recoveryAvailabilityType
+        /// </param>
+        /// <param name="agentAutoUpdateStatus">
+        /// A value indicating whether the auto update is enabled.
+        /// Serialized Name: A2AReplicationIntentDetails.agentAutoUpdateStatus
+        /// </param>
+        /// <param name="automationAccountArmId">
+        /// The automation account arm id.
+        /// Serialized Name: A2AReplicationIntentDetails.automationAccountArmId
+        /// </param>
+        /// <param name="automationAccountAuthenticationType">
+        /// A value indicating the type authentication to use for automation Account.
+        /// Serialized Name: A2AReplicationIntentDetails.automationAccountAuthenticationType
+        /// </param>
         internal A2AReplicationIntentDetails(string instanceType, string fabricObjectId, string primaryLocation, string recoveryLocation, string recoverySubscriptionId, IReadOnlyList<A2AProtectionIntentDiskInputDetails> vmDisks, IReadOnlyList<A2AProtectionIntentManagedDiskInputDetails> vmManagedDisks, string recoveryResourceGroupId, ProtectionProfileCustomDetails protectionProfile, StorageAccountCustomDetails primaryStagingStorageAccount, RecoveryAvailabilitySetCustomDetails recoveryAvailabilitySet, RecoveryVirtualNetworkCustomDetails recoveryVirtualNetwork, RecoveryProximityPlacementGroupCustomDetails recoveryProximityPlacementGroup, AutoProtectionOfDataDisk? autoProtectionOfDataDisk, string multiVmGroupName, string multiVmGroupId, StorageAccountCustomDetails recoveryBootDiagStorageAccount, DiskEncryptionInfo diskEncryptionInfo, string recoveryAvailabilityZone, string recoveryAvailabilityType, AgentAutoUpdateStatus? agentAutoUpdateStatus, string automationAccountArmId, AutomationAccountAuthenticationType? automationAccountAuthenticationType) : base(instanceType)
         {
             FabricObjectId = fabricObjectId;
@@ -102,73 +165,127 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             InstanceType = instanceType ?? "A2A";
         }
 
-        /// <summary> The fabric specific object Id of the virtual machine. </summary>
+        /// <summary>
+        /// The fabric specific object Id of the virtual machine.
+        /// Serialized Name: A2AReplicationIntentDetails.fabricObjectId
+        /// </summary>
         public string FabricObjectId { get; }
-        /// <summary> The primary location for the virtual machine. </summary>
+        /// <summary>
+        /// The primary location for the virtual machine.
+        /// Serialized Name: A2AReplicationIntentDetails.primaryLocation
+        /// </summary>
         public string PrimaryLocation { get; }
-        /// <summary> The recovery location for the virtual machine. </summary>
+        /// <summary>
+        /// The recovery location for the virtual machine.
+        /// Serialized Name: A2AReplicationIntentDetails.recoveryLocation
+        /// </summary>
         public string RecoveryLocation { get; }
-        /// <summary> The recovery subscription Id of the virtual machine. </summary>
+        /// <summary>
+        /// The recovery subscription Id of the virtual machine.
+        /// Serialized Name: A2AReplicationIntentDetails.recoverySubscriptionId
+        /// </summary>
         public string RecoverySubscriptionId { get; }
-        /// <summary> The list of vm disk details. </summary>
+        /// <summary>
+        /// The list of vm disk details.
+        /// Serialized Name: A2AReplicationIntentDetails.vmDisks
+        /// </summary>
         public IReadOnlyList<A2AProtectionIntentDiskInputDetails> VmDisks { get; }
-        /// <summary> The list of vm managed disk details. </summary>
+        /// <summary>
+        /// The list of vm managed disk details.
+        /// Serialized Name: A2AReplicationIntentDetails.vmManagedDisks
+        /// </summary>
         public IReadOnlyList<A2AProtectionIntentManagedDiskInputDetails> VmManagedDisks { get; }
-        /// <summary> The recovery resource group id. </summary>
+        /// <summary>
+        /// The recovery resource group id.
+        /// Serialized Name: A2AReplicationIntentDetails.recoveryResourceGroupId
+        /// </summary>
         public string RecoveryResourceGroupId { get; }
         /// <summary>
         /// The protection profile custom details.
+        /// Serialized Name: A2AReplicationIntentDetails.protectionProfile
         /// Please note <see cref="ProtectionProfileCustomDetails"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="ExistingProtectionProfile"/> and <see cref="NewProtectionProfile"/>.
         /// </summary>
         public ProtectionProfileCustomDetails ProtectionProfile { get; }
         /// <summary>
         /// The primary staging storage account details.
+        /// Serialized Name: A2AReplicationIntentDetails.primaryStagingStorageAccount
         /// Please note <see cref="StorageAccountCustomDetails"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="ExistingStorageAccount"/>.
         /// </summary>
         public StorageAccountCustomDetails PrimaryStagingStorageAccount { get; }
         /// <summary>
         /// The recovery availability set details.
+        /// Serialized Name: A2AReplicationIntentDetails.recoveryAvailabilitySet
         /// Please note <see cref="RecoveryAvailabilitySetCustomDetails"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="ExistingRecoveryAvailabilitySet"/>.
         /// </summary>
         public RecoveryAvailabilitySetCustomDetails RecoveryAvailabilitySet { get; }
         /// <summary>
         /// The recovery virtual network details.
+        /// Serialized Name: A2AReplicationIntentDetails.recoveryVirtualNetwork
         /// Please note <see cref="RecoveryVirtualNetworkCustomDetails"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="ExistingRecoveryVirtualNetwork"/> and <see cref="NewRecoveryVirtualNetwork"/>.
         /// </summary>
         public RecoveryVirtualNetworkCustomDetails RecoveryVirtualNetwork { get; }
         /// <summary>
         /// The recovery proximity placement group custom details.
+        /// Serialized Name: A2AReplicationIntentDetails.recoveryProximityPlacementGroup
         /// Please note <see cref="RecoveryProximityPlacementGroupCustomDetails"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="ExistingRecoveryProximityPlacementGroup"/>.
         /// </summary>
         public RecoveryProximityPlacementGroupCustomDetails RecoveryProximityPlacementGroup { get; }
-        /// <summary> A value indicating whether the auto protection is enabled. </summary>
+        /// <summary>
+        /// A value indicating whether the auto protection is enabled.
+        /// Serialized Name: A2AReplicationIntentDetails.autoProtectionOfDataDisk
+        /// </summary>
         public AutoProtectionOfDataDisk? AutoProtectionOfDataDisk { get; }
-        /// <summary> The multi vm group name. </summary>
+        /// <summary>
+        /// The multi vm group name.
+        /// Serialized Name: A2AReplicationIntentDetails.multiVmGroupName
+        /// </summary>
         public string MultiVmGroupName { get; }
-        /// <summary> The multi vm group id. </summary>
+        /// <summary>
+        /// The multi vm group id.
+        /// Serialized Name: A2AReplicationIntentDetails.multiVmGroupId
+        /// </summary>
         public string MultiVmGroupId { get; }
         /// <summary>
         /// The boot diagnostic storage account.
+        /// Serialized Name: A2AReplicationIntentDetails.recoveryBootDiagStorageAccount
         /// Please note <see cref="StorageAccountCustomDetails"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="ExistingStorageAccount"/>.
         /// </summary>
         public StorageAccountCustomDetails RecoveryBootDiagStorageAccount { get; }
-        /// <summary> The recovery disk encryption information (for two pass flows). </summary>
+        /// <summary>
+        /// The recovery disk encryption information (for two pass flows).
+        /// Serialized Name: A2AReplicationIntentDetails.diskEncryptionInfo
+        /// </summary>
         public DiskEncryptionInfo DiskEncryptionInfo { get; }
-        /// <summary> The recovery availability zone. </summary>
+        /// <summary>
+        /// The recovery availability zone.
+        /// Serialized Name: A2AReplicationIntentDetails.recoveryAvailabilityZone
+        /// </summary>
         public string RecoveryAvailabilityZone { get; }
-        /// <summary> The recovery availability type of the virtual machine. </summary>
+        /// <summary>
+        /// The recovery availability type of the virtual machine.
+        /// Serialized Name: A2AReplicationIntentDetails.recoveryAvailabilityType
+        /// </summary>
         public string RecoveryAvailabilityType { get; }
-        /// <summary> A value indicating whether the auto update is enabled. </summary>
+        /// <summary>
+        /// A value indicating whether the auto update is enabled.
+        /// Serialized Name: A2AReplicationIntentDetails.agentAutoUpdateStatus
+        /// </summary>
         public AgentAutoUpdateStatus? AgentAutoUpdateStatus { get; }
-        /// <summary> The automation account arm id. </summary>
+        /// <summary>
+        /// The automation account arm id.
+        /// Serialized Name: A2AReplicationIntentDetails.automationAccountArmId
+        /// </summary>
         public string AutomationAccountArmId { get; }
-        /// <summary> A value indicating the type authentication to use for automation Account. </summary>
+        /// <summary>
+        /// A value indicating the type authentication to use for automation Account.
+        /// Serialized Name: A2AReplicationIntentDetails.automationAccountAuthenticationType
+        /// </summary>
         public AutomationAccountAuthenticationType? AutomationAccountAuthenticationType { get; }
     }
 }

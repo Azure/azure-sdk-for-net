@@ -7,22 +7,37 @@
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary> Recovery plan A2A failover input. </summary>
+    /// <summary>
+    /// Recovery plan A2A failover input.
+    /// Serialized Name: RecoveryPlanA2AFailoverInput
+    /// </summary>
     public partial class RecoveryPlanA2AFailoverInput : RecoveryPlanProviderSpecificFailoverInput
     {
         /// <summary> Initializes a new instance of RecoveryPlanA2AFailoverInput. </summary>
-        /// <param name="recoveryPointType"> The recovery point type. </param>
+        /// <param name="recoveryPointType">
+        /// The recovery point type.
+        /// Serialized Name: RecoveryPlanA2AFailoverInput.recoveryPointType
+        /// </param>
         public RecoveryPlanA2AFailoverInput(A2ARpRecoveryPointType recoveryPointType)
         {
             RecoveryPointType = recoveryPointType;
             InstanceType = "A2A";
         }
 
-        /// <summary> The recovery point type. </summary>
+        /// <summary>
+        /// The recovery point type.
+        /// Serialized Name: RecoveryPlanA2AFailoverInput.recoveryPointType
+        /// </summary>
         public A2ARpRecoveryPointType RecoveryPointType { get; }
-        /// <summary> A value indicating whether to use recovery cloud service for TFO or not. </summary>
+        /// <summary>
+        /// A value indicating whether to use recovery cloud service for TFO or not.
+        /// Serialized Name: RecoveryPlanA2AFailoverInput.cloudServiceCreationOption
+        /// </summary>
         public string CloudServiceCreationOption { get; set; }
-        /// <summary> A value indicating whether multi VM sync enabled VMs should use multi VM sync points for failover. </summary>
+        /// <summary>
+        /// A value indicating whether multi VM sync enabled VMs should use multi VM sync points for failover.
+        /// Serialized Name: RecoveryPlanA2AFailoverInput.multiVmSyncPointOption
+        /// </summary>
         public MultiVmSyncPointOption? MultiVmSyncPointOption { get; set; }
     }
 }

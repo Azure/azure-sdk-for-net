@@ -11,7 +11,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary> VMwareCbt provider specific settings. </summary>
+    /// <summary>
+    /// VMwareCbt provider specific settings.
+    /// Serialized Name: VMwareCbtMigrationDetails
+    /// </summary>
     public partial class VMwareCbtMigrationDetails : MigrationProviderSpecificSettings
     {
         /// <summary> Initializes a new instance of VMwareCbtMigrationDetails. </summary>
@@ -27,45 +30,162 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> Initializes a new instance of VMwareCbtMigrationDetails. </summary>
-        /// <param name="instanceType"> Gets the instance type. </param>
-        /// <param name="vmwareMachineId"> The ARM Id of the VM discovered in VMware. </param>
-        /// <param name="osType"> The type of the OS on the VM. </param>
-        /// <param name="firmwareType"> The firmware type. </param>
-        /// <param name="targetGeneration"> The target generation. </param>
-        /// <param name="licenseType"> License Type of the VM to be used. </param>
-        /// <param name="sqlServerLicenseType"> The SQL Server license type. </param>
-        /// <param name="dataMoverRunAsAccountId"> The data mover run as account Id. </param>
-        /// <param name="snapshotRunAsAccountId"> The snapshot run as account Id. </param>
-        /// <param name="storageAccountId"> The replication storage account ARM Id. This is applicable only for the blob based replication test hook. </param>
-        /// <param name="targetVmName"> Target VM name. </param>
-        /// <param name="targetVmSize"> The target VM size. </param>
-        /// <param name="targetLocation"> The target location. </param>
-        /// <param name="targetResourceGroupId"> The target resource group Id. </param>
-        /// <param name="targetAvailabilitySetId"> The target availability set Id. </param>
-        /// <param name="targetAvailabilityZone"> The target availability zone. </param>
-        /// <param name="targetProximityPlacementGroupId"> The target proximity placement group Id. </param>
-        /// <param name="targetBootDiagnosticsStorageAccountId"> The target boot diagnostics storage account ARM Id. </param>
-        /// <param name="targetVmTags"> The target VM tags. </param>
-        /// <param name="protectedDisks"> The list of protected disks. </param>
-        /// <param name="targetNetworkId"> The target network Id. </param>
-        /// <param name="testNetworkId"> The test network Id. </param>
-        /// <param name="vmNics"> The network details. </param>
-        /// <param name="targetNicTags"> The tags for the target NICs. </param>
-        /// <param name="migrationRecoveryPointId"> The recovery point Id to which the VM was migrated. </param>
-        /// <param name="lastRecoveryPointReceived"> The last recovery point received time. </param>
-        /// <param name="lastRecoveryPointId"> The last recovery point Id. </param>
-        /// <param name="initialSeedingProgressPercentage"> The initial seeding progress percentage. </param>
-        /// <param name="migrationProgressPercentage"> The migration progress percentage. </param>
-        /// <param name="resyncProgressPercentage"> The resync progress percentage. </param>
-        /// <param name="resumeProgressPercentage"> The resume progress percentage. </param>
-        /// <param name="initialSeedingRetryCount"> The initial seeding retry count. </param>
-        /// <param name="resyncRetryCount"> The resync retry count. </param>
-        /// <param name="resumeRetryCount"> The resume retry count. </param>
-        /// <param name="resyncRequired"> A value indicating whether resync is required. </param>
-        /// <param name="resyncState"> The resync state. </param>
-        /// <param name="performAutoResync"> A value indicating whether auto resync is to be done. </param>
-        /// <param name="seedDiskTags"> The tags for the seed disks. </param>
-        /// <param name="targetDiskTags"> The tags for the target disks. </param>
+        /// <param name="instanceType">
+        /// Gets the instance type.
+        /// Serialized Name: MigrationProviderSpecificSettings.instanceType
+        /// </param>
+        /// <param name="vmwareMachineId">
+        /// The ARM Id of the VM discovered in VMware.
+        /// Serialized Name: VMwareCbtMigrationDetails.vmwareMachineId
+        /// </param>
+        /// <param name="osType">
+        /// The type of the OS on the VM.
+        /// Serialized Name: VMwareCbtMigrationDetails.osType
+        /// </param>
+        /// <param name="firmwareType">
+        /// The firmware type.
+        /// Serialized Name: VMwareCbtMigrationDetails.firmwareType
+        /// </param>
+        /// <param name="targetGeneration">
+        /// The target generation.
+        /// Serialized Name: VMwareCbtMigrationDetails.targetGeneration
+        /// </param>
+        /// <param name="licenseType">
+        /// License Type of the VM to be used.
+        /// Serialized Name: VMwareCbtMigrationDetails.licenseType
+        /// </param>
+        /// <param name="sqlServerLicenseType">
+        /// The SQL Server license type.
+        /// Serialized Name: VMwareCbtMigrationDetails.sqlServerLicenseType
+        /// </param>
+        /// <param name="dataMoverRunAsAccountId">
+        /// The data mover run as account Id.
+        /// Serialized Name: VMwareCbtMigrationDetails.dataMoverRunAsAccountId
+        /// </param>
+        /// <param name="snapshotRunAsAccountId">
+        /// The snapshot run as account Id.
+        /// Serialized Name: VMwareCbtMigrationDetails.snapshotRunAsAccountId
+        /// </param>
+        /// <param name="storageAccountId">
+        /// The replication storage account ARM Id. This is applicable only for the blob based replication test hook.
+        /// Serialized Name: VMwareCbtMigrationDetails.storageAccountId
+        /// </param>
+        /// <param name="targetVmName">
+        /// Target VM name.
+        /// Serialized Name: VMwareCbtMigrationDetails.targetVmName
+        /// </param>
+        /// <param name="targetVmSize">
+        /// The target VM size.
+        /// Serialized Name: VMwareCbtMigrationDetails.targetVmSize
+        /// </param>
+        /// <param name="targetLocation">
+        /// The target location.
+        /// Serialized Name: VMwareCbtMigrationDetails.targetLocation
+        /// </param>
+        /// <param name="targetResourceGroupId">
+        /// The target resource group Id.
+        /// Serialized Name: VMwareCbtMigrationDetails.targetResourceGroupId
+        /// </param>
+        /// <param name="targetAvailabilitySetId">
+        /// The target availability set Id.
+        /// Serialized Name: VMwareCbtMigrationDetails.targetAvailabilitySetId
+        /// </param>
+        /// <param name="targetAvailabilityZone">
+        /// The target availability zone.
+        /// Serialized Name: VMwareCbtMigrationDetails.targetAvailabilityZone
+        /// </param>
+        /// <param name="targetProximityPlacementGroupId">
+        /// The target proximity placement group Id.
+        /// Serialized Name: VMwareCbtMigrationDetails.targetProximityPlacementGroupId
+        /// </param>
+        /// <param name="targetBootDiagnosticsStorageAccountId">
+        /// The target boot diagnostics storage account ARM Id.
+        /// Serialized Name: VMwareCbtMigrationDetails.targetBootDiagnosticsStorageAccountId
+        /// </param>
+        /// <param name="targetVmTags">
+        /// The target VM tags.
+        /// Serialized Name: VMwareCbtMigrationDetails.targetVmTags
+        /// </param>
+        /// <param name="protectedDisks">
+        /// The list of protected disks.
+        /// Serialized Name: VMwareCbtMigrationDetails.protectedDisks
+        /// </param>
+        /// <param name="targetNetworkId">
+        /// The target network Id.
+        /// Serialized Name: VMwareCbtMigrationDetails.targetNetworkId
+        /// </param>
+        /// <param name="testNetworkId">
+        /// The test network Id.
+        /// Serialized Name: VMwareCbtMigrationDetails.testNetworkId
+        /// </param>
+        /// <param name="vmNics">
+        /// The network details.
+        /// Serialized Name: VMwareCbtMigrationDetails.vmNics
+        /// </param>
+        /// <param name="targetNicTags">
+        /// The tags for the target NICs.
+        /// Serialized Name: VMwareCbtMigrationDetails.targetNicTags
+        /// </param>
+        /// <param name="migrationRecoveryPointId">
+        /// The recovery point Id to which the VM was migrated.
+        /// Serialized Name: VMwareCbtMigrationDetails.migrationRecoveryPointId
+        /// </param>
+        /// <param name="lastRecoveryPointReceived">
+        /// The last recovery point received time.
+        /// Serialized Name: VMwareCbtMigrationDetails.lastRecoveryPointReceived
+        /// </param>
+        /// <param name="lastRecoveryPointId">
+        /// The last recovery point Id.
+        /// Serialized Name: VMwareCbtMigrationDetails.lastRecoveryPointId
+        /// </param>
+        /// <param name="initialSeedingProgressPercentage">
+        /// The initial seeding progress percentage.
+        /// Serialized Name: VMwareCbtMigrationDetails.initialSeedingProgressPercentage
+        /// </param>
+        /// <param name="migrationProgressPercentage">
+        /// The migration progress percentage.
+        /// Serialized Name: VMwareCbtMigrationDetails.migrationProgressPercentage
+        /// </param>
+        /// <param name="resyncProgressPercentage">
+        /// The resync progress percentage.
+        /// Serialized Name: VMwareCbtMigrationDetails.resyncProgressPercentage
+        /// </param>
+        /// <param name="resumeProgressPercentage">
+        /// The resume progress percentage.
+        /// Serialized Name: VMwareCbtMigrationDetails.resumeProgressPercentage
+        /// </param>
+        /// <param name="initialSeedingRetryCount">
+        /// The initial seeding retry count.
+        /// Serialized Name: VMwareCbtMigrationDetails.initialSeedingRetryCount
+        /// </param>
+        /// <param name="resyncRetryCount">
+        /// The resync retry count.
+        /// Serialized Name: VMwareCbtMigrationDetails.resyncRetryCount
+        /// </param>
+        /// <param name="resumeRetryCount">
+        /// The resume retry count.
+        /// Serialized Name: VMwareCbtMigrationDetails.resumeRetryCount
+        /// </param>
+        /// <param name="resyncRequired">
+        /// A value indicating whether resync is required.
+        /// Serialized Name: VMwareCbtMigrationDetails.resyncRequired
+        /// </param>
+        /// <param name="resyncState">
+        /// The resync state.
+        /// Serialized Name: VMwareCbtMigrationDetails.resyncState
+        /// </param>
+        /// <param name="performAutoResync">
+        /// A value indicating whether auto resync is to be done.
+        /// Serialized Name: VMwareCbtMigrationDetails.performAutoResync
+        /// </param>
+        /// <param name="seedDiskTags">
+        /// The tags for the seed disks.
+        /// Serialized Name: VMwareCbtMigrationDetails.seedDiskTags
+        /// </param>
+        /// <param name="targetDiskTags">
+        /// The tags for the target disks.
+        /// Serialized Name: VMwareCbtMigrationDetails.targetDiskTags
+        /// </param>
         internal VMwareCbtMigrationDetails(string instanceType, string vmwareMachineId, string osType, string firmwareType, string targetGeneration, string licenseType, string sqlServerLicenseType, string dataMoverRunAsAccountId, string snapshotRunAsAccountId, string storageAccountId, string targetVmName, string targetVmSize, string targetLocation, string targetResourceGroupId, string targetAvailabilitySetId, string targetAvailabilityZone, string targetProximityPlacementGroupId, string targetBootDiagnosticsStorageAccountId, IReadOnlyDictionary<string, string> targetVmTags, IReadOnlyList<VMwareCbtProtectedDiskDetails> protectedDisks, string targetNetworkId, string testNetworkId, IReadOnlyList<VMwareCbtNicDetails> vmNics, IReadOnlyDictionary<string, string> targetNicTags, string migrationRecoveryPointId, DateTimeOffset? lastRecoveryPointReceived, string lastRecoveryPointId, int? initialSeedingProgressPercentage, int? migrationProgressPercentage, int? resyncProgressPercentage, int? resumeProgressPercentage, long? initialSeedingRetryCount, long? resyncRetryCount, long? resumeRetryCount, string resyncRequired, ResyncState? resyncState, string performAutoResync, IReadOnlyDictionary<string, string> seedDiskTags, IReadOnlyDictionary<string, string> targetDiskTags) : base(instanceType)
         {
             VMwareMachineId = vmwareMachineId;
@@ -109,81 +229,195 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             InstanceType = instanceType ?? "VMwareCbt";
         }
 
-        /// <summary> The ARM Id of the VM discovered in VMware. </summary>
+        /// <summary>
+        /// The ARM Id of the VM discovered in VMware.
+        /// Serialized Name: VMwareCbtMigrationDetails.vmwareMachineId
+        /// </summary>
         public string VMwareMachineId { get; }
-        /// <summary> The type of the OS on the VM. </summary>
+        /// <summary>
+        /// The type of the OS on the VM.
+        /// Serialized Name: VMwareCbtMigrationDetails.osType
+        /// </summary>
         public string OSType { get; }
-        /// <summary> The firmware type. </summary>
+        /// <summary>
+        /// The firmware type.
+        /// Serialized Name: VMwareCbtMigrationDetails.firmwareType
+        /// </summary>
         public string FirmwareType { get; }
-        /// <summary> The target generation. </summary>
+        /// <summary>
+        /// The target generation.
+        /// Serialized Name: VMwareCbtMigrationDetails.targetGeneration
+        /// </summary>
         public string TargetGeneration { get; }
-        /// <summary> License Type of the VM to be used. </summary>
+        /// <summary>
+        /// License Type of the VM to be used.
+        /// Serialized Name: VMwareCbtMigrationDetails.licenseType
+        /// </summary>
         public string LicenseType { get; }
-        /// <summary> The SQL Server license type. </summary>
+        /// <summary>
+        /// The SQL Server license type.
+        /// Serialized Name: VMwareCbtMigrationDetails.sqlServerLicenseType
+        /// </summary>
         public string SqlServerLicenseType { get; }
-        /// <summary> The data mover run as account Id. </summary>
+        /// <summary>
+        /// The data mover run as account Id.
+        /// Serialized Name: VMwareCbtMigrationDetails.dataMoverRunAsAccountId
+        /// </summary>
         public string DataMoverRunAsAccountId { get; }
-        /// <summary> The snapshot run as account Id. </summary>
+        /// <summary>
+        /// The snapshot run as account Id.
+        /// Serialized Name: VMwareCbtMigrationDetails.snapshotRunAsAccountId
+        /// </summary>
         public string SnapshotRunAsAccountId { get; }
-        /// <summary> The replication storage account ARM Id. This is applicable only for the blob based replication test hook. </summary>
+        /// <summary>
+        /// The replication storage account ARM Id. This is applicable only for the blob based replication test hook.
+        /// Serialized Name: VMwareCbtMigrationDetails.storageAccountId
+        /// </summary>
         public string StorageAccountId { get; }
-        /// <summary> Target VM name. </summary>
+        /// <summary>
+        /// Target VM name.
+        /// Serialized Name: VMwareCbtMigrationDetails.targetVmName
+        /// </summary>
         public string TargetVmName { get; }
-        /// <summary> The target VM size. </summary>
+        /// <summary>
+        /// The target VM size.
+        /// Serialized Name: VMwareCbtMigrationDetails.targetVmSize
+        /// </summary>
         public string TargetVmSize { get; }
-        /// <summary> The target location. </summary>
+        /// <summary>
+        /// The target location.
+        /// Serialized Name: VMwareCbtMigrationDetails.targetLocation
+        /// </summary>
         public string TargetLocation { get; }
-        /// <summary> The target resource group Id. </summary>
+        /// <summary>
+        /// The target resource group Id.
+        /// Serialized Name: VMwareCbtMigrationDetails.targetResourceGroupId
+        /// </summary>
         public string TargetResourceGroupId { get; }
-        /// <summary> The target availability set Id. </summary>
+        /// <summary>
+        /// The target availability set Id.
+        /// Serialized Name: VMwareCbtMigrationDetails.targetAvailabilitySetId
+        /// </summary>
         public string TargetAvailabilitySetId { get; }
-        /// <summary> The target availability zone. </summary>
+        /// <summary>
+        /// The target availability zone.
+        /// Serialized Name: VMwareCbtMigrationDetails.targetAvailabilityZone
+        /// </summary>
         public string TargetAvailabilityZone { get; }
-        /// <summary> The target proximity placement group Id. </summary>
+        /// <summary>
+        /// The target proximity placement group Id.
+        /// Serialized Name: VMwareCbtMigrationDetails.targetProximityPlacementGroupId
+        /// </summary>
         public string TargetProximityPlacementGroupId { get; }
-        /// <summary> The target boot diagnostics storage account ARM Id. </summary>
+        /// <summary>
+        /// The target boot diagnostics storage account ARM Id.
+        /// Serialized Name: VMwareCbtMigrationDetails.targetBootDiagnosticsStorageAccountId
+        /// </summary>
         public string TargetBootDiagnosticsStorageAccountId { get; }
-        /// <summary> The target VM tags. </summary>
+        /// <summary>
+        /// The target VM tags.
+        /// Serialized Name: VMwareCbtMigrationDetails.targetVmTags
+        /// </summary>
         public IReadOnlyDictionary<string, string> TargetVmTags { get; }
-        /// <summary> The list of protected disks. </summary>
+        /// <summary>
+        /// The list of protected disks.
+        /// Serialized Name: VMwareCbtMigrationDetails.protectedDisks
+        /// </summary>
         public IReadOnlyList<VMwareCbtProtectedDiskDetails> ProtectedDisks { get; }
-        /// <summary> The target network Id. </summary>
+        /// <summary>
+        /// The target network Id.
+        /// Serialized Name: VMwareCbtMigrationDetails.targetNetworkId
+        /// </summary>
         public string TargetNetworkId { get; }
-        /// <summary> The test network Id. </summary>
+        /// <summary>
+        /// The test network Id.
+        /// Serialized Name: VMwareCbtMigrationDetails.testNetworkId
+        /// </summary>
         public string TestNetworkId { get; }
-        /// <summary> The network details. </summary>
+        /// <summary>
+        /// The network details.
+        /// Serialized Name: VMwareCbtMigrationDetails.vmNics
+        /// </summary>
         public IReadOnlyList<VMwareCbtNicDetails> VmNics { get; }
-        /// <summary> The tags for the target NICs. </summary>
+        /// <summary>
+        /// The tags for the target NICs.
+        /// Serialized Name: VMwareCbtMigrationDetails.targetNicTags
+        /// </summary>
         public IReadOnlyDictionary<string, string> TargetNicTags { get; }
-        /// <summary> The recovery point Id to which the VM was migrated. </summary>
+        /// <summary>
+        /// The recovery point Id to which the VM was migrated.
+        /// Serialized Name: VMwareCbtMigrationDetails.migrationRecoveryPointId
+        /// </summary>
         public string MigrationRecoveryPointId { get; }
-        /// <summary> The last recovery point received time. </summary>
+        /// <summary>
+        /// The last recovery point received time.
+        /// Serialized Name: VMwareCbtMigrationDetails.lastRecoveryPointReceived
+        /// </summary>
         public DateTimeOffset? LastRecoveryPointReceived { get; }
-        /// <summary> The last recovery point Id. </summary>
+        /// <summary>
+        /// The last recovery point Id.
+        /// Serialized Name: VMwareCbtMigrationDetails.lastRecoveryPointId
+        /// </summary>
         public string LastRecoveryPointId { get; }
-        /// <summary> The initial seeding progress percentage. </summary>
+        /// <summary>
+        /// The initial seeding progress percentage.
+        /// Serialized Name: VMwareCbtMigrationDetails.initialSeedingProgressPercentage
+        /// </summary>
         public int? InitialSeedingProgressPercentage { get; }
-        /// <summary> The migration progress percentage. </summary>
+        /// <summary>
+        /// The migration progress percentage.
+        /// Serialized Name: VMwareCbtMigrationDetails.migrationProgressPercentage
+        /// </summary>
         public int? MigrationProgressPercentage { get; }
-        /// <summary> The resync progress percentage. </summary>
+        /// <summary>
+        /// The resync progress percentage.
+        /// Serialized Name: VMwareCbtMigrationDetails.resyncProgressPercentage
+        /// </summary>
         public int? ResyncProgressPercentage { get; }
-        /// <summary> The resume progress percentage. </summary>
+        /// <summary>
+        /// The resume progress percentage.
+        /// Serialized Name: VMwareCbtMigrationDetails.resumeProgressPercentage
+        /// </summary>
         public int? ResumeProgressPercentage { get; }
-        /// <summary> The initial seeding retry count. </summary>
+        /// <summary>
+        /// The initial seeding retry count.
+        /// Serialized Name: VMwareCbtMigrationDetails.initialSeedingRetryCount
+        /// </summary>
         public long? InitialSeedingRetryCount { get; }
-        /// <summary> The resync retry count. </summary>
+        /// <summary>
+        /// The resync retry count.
+        /// Serialized Name: VMwareCbtMigrationDetails.resyncRetryCount
+        /// </summary>
         public long? ResyncRetryCount { get; }
-        /// <summary> The resume retry count. </summary>
+        /// <summary>
+        /// The resume retry count.
+        /// Serialized Name: VMwareCbtMigrationDetails.resumeRetryCount
+        /// </summary>
         public long? ResumeRetryCount { get; }
-        /// <summary> A value indicating whether resync is required. </summary>
+        /// <summary>
+        /// A value indicating whether resync is required.
+        /// Serialized Name: VMwareCbtMigrationDetails.resyncRequired
+        /// </summary>
         public string ResyncRequired { get; }
-        /// <summary> The resync state. </summary>
+        /// <summary>
+        /// The resync state.
+        /// Serialized Name: VMwareCbtMigrationDetails.resyncState
+        /// </summary>
         public ResyncState? ResyncState { get; }
-        /// <summary> A value indicating whether auto resync is to be done. </summary>
+        /// <summary>
+        /// A value indicating whether auto resync is to be done.
+        /// Serialized Name: VMwareCbtMigrationDetails.performAutoResync
+        /// </summary>
         public string PerformAutoResync { get; }
-        /// <summary> The tags for the seed disks. </summary>
+        /// <summary>
+        /// The tags for the seed disks.
+        /// Serialized Name: VMwareCbtMigrationDetails.seedDiskTags
+        /// </summary>
         public IReadOnlyDictionary<string, string> SeedDiskTags { get; }
-        /// <summary> The tags for the target disks. </summary>
+        /// <summary>
+        /// The tags for the target disks.
+        /// Serialized Name: VMwareCbtMigrationDetails.targetDiskTags
+        /// </summary>
         public IReadOnlyDictionary<string, string> TargetDiskTags { get; }
     }
 }

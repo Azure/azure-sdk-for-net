@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary> Severity of error. </summary>
+    /// <summary>
+    /// Severity of error.
+    /// Serialized Name: Severity
+    /// </summary>
     public readonly partial struct Severity : IEquatable<Severity>
     {
         private readonly string _value;
@@ -27,13 +30,25 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         private const string ErrorValue = "Error";
         private const string InfoValue = "Info";
 
-        /// <summary> NONE. </summary>
+        /// <summary>
+        /// NONE
+        /// Serialized Name: Severity.NONE
+        /// </summary>
         public static Severity None { get; } = new Severity(NoneValue);
-        /// <summary> Warning. </summary>
+        /// <summary>
+        /// Warning
+        /// Serialized Name: Severity.Warning
+        /// </summary>
         public static Severity Warning { get; } = new Severity(WarningValue);
-        /// <summary> Error. </summary>
+        /// <summary>
+        /// Error
+        /// Serialized Name: Severity.Error
+        /// </summary>
         public static Severity Error { get; } = new Severity(ErrorValue);
-        /// <summary> Info. </summary>
+        /// <summary>
+        /// Info
+        /// Serialized Name: Severity.Info
+        /// </summary>
         public static Severity Info { get; } = new Severity(InfoValue);
         /// <summary> Determines if two <see cref="Severity"/> values are the same. </summary>
         public static bool operator ==(Severity left, Severity right) => left.Equals(right);

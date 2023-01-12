@@ -11,7 +11,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary> Migration item properties. </summary>
+    /// <summary>
+    /// Migration item properties.
+    /// Serialized Name: MigrationItemProperties
+    /// </summary>
     public partial class MigrationItemProperties
     {
         /// <summary> Initializes a new instance of MigrationItemProperties. </summary>
@@ -23,27 +26,85 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> Initializes a new instance of MigrationItemProperties. </summary>
-        /// <param name="machineName"> The on-premise virtual machine name. </param>
-        /// <param name="policyId"> The ARM Id of policy governing this item. </param>
-        /// <param name="policyFriendlyName"> The name of policy governing this item. </param>
-        /// <param name="recoveryServicesProviderId"> The recovery services provider ARM Id. </param>
-        /// <param name="replicationStatus"> The replication status. </param>
-        /// <param name="migrationState"> The migration status. </param>
-        /// <param name="migrationStateDescription"> The migration state description. </param>
-        /// <param name="lastTestMigrationOn"> The last test migration time. </param>
-        /// <param name="lastTestMigrationStatus"> The status of the last test migration. </param>
-        /// <param name="lastMigrationOn"> The last migration time. </param>
-        /// <param name="lastMigrationStatus"> The status of the last migration. </param>
-        /// <param name="testMigrateState"> The test migrate state. </param>
-        /// <param name="testMigrateStateDescription"> The test migrate state description. </param>
-        /// <param name="health"> The consolidated health. </param>
-        /// <param name="healthErrors"> The list of health errors. </param>
-        /// <param name="allowedOperations"> The allowed operations on the migration item based on the current migration state of the item. </param>
-        /// <param name="currentJob"> The current job details. </param>
-        /// <param name="criticalJobHistory"> The critical past job details. </param>
-        /// <param name="eventCorrelationId"> The correlation Id for events associated with this migration item. </param>
+        /// <param name="machineName">
+        /// The on-premise virtual machine name.
+        /// Serialized Name: MigrationItemProperties.machineName
+        /// </param>
+        /// <param name="policyId">
+        /// The ARM Id of policy governing this item.
+        /// Serialized Name: MigrationItemProperties.policyId
+        /// </param>
+        /// <param name="policyFriendlyName">
+        /// The name of policy governing this item.
+        /// Serialized Name: MigrationItemProperties.policyFriendlyName
+        /// </param>
+        /// <param name="recoveryServicesProviderId">
+        /// The recovery services provider ARM Id.
+        /// Serialized Name: MigrationItemProperties.recoveryServicesProviderId
+        /// </param>
+        /// <param name="replicationStatus">
+        /// The replication status.
+        /// Serialized Name: MigrationItemProperties.replicationStatus
+        /// </param>
+        /// <param name="migrationState">
+        /// The migration status.
+        /// Serialized Name: MigrationItemProperties.migrationState
+        /// </param>
+        /// <param name="migrationStateDescription">
+        /// The migration state description.
+        /// Serialized Name: MigrationItemProperties.migrationStateDescription
+        /// </param>
+        /// <param name="lastTestMigrationOn">
+        /// The last test migration time.
+        /// Serialized Name: MigrationItemProperties.lastTestMigrationTime
+        /// </param>
+        /// <param name="lastTestMigrationStatus">
+        /// The status of the last test migration.
+        /// Serialized Name: MigrationItemProperties.lastTestMigrationStatus
+        /// </param>
+        /// <param name="lastMigrationOn">
+        /// The last migration time.
+        /// Serialized Name: MigrationItemProperties.lastMigrationTime
+        /// </param>
+        /// <param name="lastMigrationStatus">
+        /// The status of the last migration.
+        /// Serialized Name: MigrationItemProperties.lastMigrationStatus
+        /// </param>
+        /// <param name="testMigrateState">
+        /// The test migrate state.
+        /// Serialized Name: MigrationItemProperties.testMigrateState
+        /// </param>
+        /// <param name="testMigrateStateDescription">
+        /// The test migrate state description.
+        /// Serialized Name: MigrationItemProperties.testMigrateStateDescription
+        /// </param>
+        /// <param name="health">
+        /// The consolidated health.
+        /// Serialized Name: MigrationItemProperties.health
+        /// </param>
+        /// <param name="healthErrors">
+        /// The list of health errors.
+        /// Serialized Name: MigrationItemProperties.healthErrors
+        /// </param>
+        /// <param name="allowedOperations">
+        /// The allowed operations on the migration item based on the current migration state of the item.
+        /// Serialized Name: MigrationItemProperties.allowedOperations
+        /// </param>
+        /// <param name="currentJob">
+        /// The current job details.
+        /// Serialized Name: MigrationItemProperties.currentJob
+        /// </param>
+        /// <param name="criticalJobHistory">
+        /// The critical past job details.
+        /// Serialized Name: MigrationItemProperties.criticalJobHistory
+        /// </param>
+        /// <param name="eventCorrelationId">
+        /// The correlation Id for events associated with this migration item.
+        /// Serialized Name: MigrationItemProperties.eventCorrelationId
+        /// </param>
         /// <param name="providerSpecificDetails">
         /// The migration provider custom settings.
+        /// Serialized Name: MigrationItemProperties.providerSpecificDetails
         /// Please note <see cref="MigrationProviderSpecificSettings"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="VMwareCbtMigrationDetails"/>.
         /// </param>
@@ -71,46 +132,104 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             ProviderSpecificDetails = providerSpecificDetails;
         }
 
-        /// <summary> The on-premise virtual machine name. </summary>
+        /// <summary>
+        /// The on-premise virtual machine name.
+        /// Serialized Name: MigrationItemProperties.machineName
+        /// </summary>
         public string MachineName { get; }
-        /// <summary> The ARM Id of policy governing this item. </summary>
+        /// <summary>
+        /// The ARM Id of policy governing this item.
+        /// Serialized Name: MigrationItemProperties.policyId
+        /// </summary>
         public string PolicyId { get; }
-        /// <summary> The name of policy governing this item. </summary>
+        /// <summary>
+        /// The name of policy governing this item.
+        /// Serialized Name: MigrationItemProperties.policyFriendlyName
+        /// </summary>
         public string PolicyFriendlyName { get; }
-        /// <summary> The recovery services provider ARM Id. </summary>
+        /// <summary>
+        /// The recovery services provider ARM Id.
+        /// Serialized Name: MigrationItemProperties.recoveryServicesProviderId
+        /// </summary>
         public string RecoveryServicesProviderId { get; }
-        /// <summary> The replication status. </summary>
+        /// <summary>
+        /// The replication status.
+        /// Serialized Name: MigrationItemProperties.replicationStatus
+        /// </summary>
         public string ReplicationStatus { get; }
-        /// <summary> The migration status. </summary>
+        /// <summary>
+        /// The migration status.
+        /// Serialized Name: MigrationItemProperties.migrationState
+        /// </summary>
         public MigrationState? MigrationState { get; }
-        /// <summary> The migration state description. </summary>
+        /// <summary>
+        /// The migration state description.
+        /// Serialized Name: MigrationItemProperties.migrationStateDescription
+        /// </summary>
         public string MigrationStateDescription { get; }
-        /// <summary> The last test migration time. </summary>
+        /// <summary>
+        /// The last test migration time.
+        /// Serialized Name: MigrationItemProperties.lastTestMigrationTime
+        /// </summary>
         public DateTimeOffset? LastTestMigrationOn { get; }
-        /// <summary> The status of the last test migration. </summary>
+        /// <summary>
+        /// The status of the last test migration.
+        /// Serialized Name: MigrationItemProperties.lastTestMigrationStatus
+        /// </summary>
         public string LastTestMigrationStatus { get; }
-        /// <summary> The last migration time. </summary>
+        /// <summary>
+        /// The last migration time.
+        /// Serialized Name: MigrationItemProperties.lastMigrationTime
+        /// </summary>
         public DateTimeOffset? LastMigrationOn { get; }
-        /// <summary> The status of the last migration. </summary>
+        /// <summary>
+        /// The status of the last migration.
+        /// Serialized Name: MigrationItemProperties.lastMigrationStatus
+        /// </summary>
         public string LastMigrationStatus { get; }
-        /// <summary> The test migrate state. </summary>
+        /// <summary>
+        /// The test migrate state.
+        /// Serialized Name: MigrationItemProperties.testMigrateState
+        /// </summary>
         public TestMigrationState? TestMigrateState { get; }
-        /// <summary> The test migrate state description. </summary>
+        /// <summary>
+        /// The test migrate state description.
+        /// Serialized Name: MigrationItemProperties.testMigrateStateDescription
+        /// </summary>
         public string TestMigrateStateDescription { get; }
-        /// <summary> The consolidated health. </summary>
+        /// <summary>
+        /// The consolidated health.
+        /// Serialized Name: MigrationItemProperties.health
+        /// </summary>
         public ProtectionHealth? Health { get; }
-        /// <summary> The list of health errors. </summary>
+        /// <summary>
+        /// The list of health errors.
+        /// Serialized Name: MigrationItemProperties.healthErrors
+        /// </summary>
         public IReadOnlyList<HealthError> HealthErrors { get; }
-        /// <summary> The allowed operations on the migration item based on the current migration state of the item. </summary>
+        /// <summary>
+        /// The allowed operations on the migration item based on the current migration state of the item.
+        /// Serialized Name: MigrationItemProperties.allowedOperations
+        /// </summary>
         public IReadOnlyList<MigrationItemOperation> AllowedOperations { get; }
-        /// <summary> The current job details. </summary>
+        /// <summary>
+        /// The current job details.
+        /// Serialized Name: MigrationItemProperties.currentJob
+        /// </summary>
         public CurrentJobDetails CurrentJob { get; }
-        /// <summary> The critical past job details. </summary>
+        /// <summary>
+        /// The critical past job details.
+        /// Serialized Name: MigrationItemProperties.criticalJobHistory
+        /// </summary>
         public IReadOnlyList<CriticalJobHistoryDetails> CriticalJobHistory { get; }
-        /// <summary> The correlation Id for events associated with this migration item. </summary>
+        /// <summary>
+        /// The correlation Id for events associated with this migration item.
+        /// Serialized Name: MigrationItemProperties.eventCorrelationId
+        /// </summary>
         public string EventCorrelationId { get; }
         /// <summary>
         /// The migration provider custom settings.
+        /// Serialized Name: MigrationItemProperties.providerSpecificDetails
         /// Please note <see cref="MigrationProviderSpecificSettings"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="VMwareCbtMigrationDetails"/>.
         /// </summary>

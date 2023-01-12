@@ -24,17 +24,29 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="properties"> Recovery point properties. </param>
-        /// <param name="location"> Resource Location. </param>
+        /// <param name="properties">
+        /// Recovery point properties.
+        /// Serialized Name: MigrationRecoveryPoint.properties
+        /// </param>
+        /// <param name="location">
+        /// Resource Location
+        /// Serialized Name: Resource.location
+        /// </param>
         internal MigrationRecoveryPointData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, MigrationRecoveryPointProperties properties, AzureLocation? location) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
             Location = location;
         }
 
-        /// <summary> Recovery point properties. </summary>
+        /// <summary>
+        /// Recovery point properties.
+        /// Serialized Name: MigrationRecoveryPoint.properties
+        /// </summary>
         public MigrationRecoveryPointProperties Properties { get; }
-        /// <summary> Resource Location. </summary>
+        /// <summary>
+        /// Resource Location
+        /// Serialized Name: Resource.location
+        /// </summary>
         public AzureLocation? Location { get; }
     }
 }

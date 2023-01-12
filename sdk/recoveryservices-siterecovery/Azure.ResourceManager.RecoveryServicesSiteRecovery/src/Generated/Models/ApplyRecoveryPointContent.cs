@@ -10,11 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary> Input to apply recovery point. </summary>
+    /// <summary>
+    /// Input to apply recovery point.
+    /// Serialized Name: ApplyRecoveryPointInput
+    /// </summary>
     public partial class ApplyRecoveryPointContent
     {
         /// <summary> Initializes a new instance of ApplyRecoveryPointContent. </summary>
-        /// <param name="properties"> The input properties to apply recovery point. </param>
+        /// <param name="properties">
+        /// The input properties to apply recovery point.
+        /// Serialized Name: ApplyRecoveryPointInput.properties
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
         public ApplyRecoveryPointContent(ApplyRecoveryPointInputProperties properties)
         {
@@ -23,7 +29,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             Properties = properties;
         }
 
-        /// <summary> The input properties to apply recovery point. </summary>
+        /// <summary>
+        /// The input properties to apply recovery point.
+        /// Serialized Name: ApplyRecoveryPointInput.properties
+        /// </summary>
         public ApplyRecoveryPointInputProperties Properties { get; }
     }
 }

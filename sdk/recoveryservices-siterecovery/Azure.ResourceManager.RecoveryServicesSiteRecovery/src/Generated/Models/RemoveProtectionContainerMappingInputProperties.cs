@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary> Unpairing input properties. </summary>
+    /// <summary>
+    /// Unpairing input properties.
+    /// Serialized Name: RemoveProtectionContainerMappingInputProperties
+    /// </summary>
     internal partial class RemoveProtectionContainerMappingInputProperties
     {
         /// <summary> Initializes a new instance of RemoveProtectionContainerMappingInputProperties. </summary>
@@ -15,9 +18,15 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         {
         }
 
-        /// <summary> Provider specific input for unpairing. </summary>
+        /// <summary>
+        /// Provider specific input for unpairing.
+        /// Serialized Name: RemoveProtectionContainerMappingInputProperties.providerSpecificInput
+        /// </summary>
         internal ReplicationProviderContainerUnmappingInput ProviderSpecificInput { get; set; }
-        /// <summary> The class type. </summary>
+        /// <summary>
+        /// The class type.
+        /// Serialized Name: ReplicationProviderContainerUnmappingInput.instanceType
+        /// </summary>
         public string ProviderSpecificInputInstanceType
         {
             get => ProviderSpecificInput is null ? default : ProviderSpecificInput.InstanceType;

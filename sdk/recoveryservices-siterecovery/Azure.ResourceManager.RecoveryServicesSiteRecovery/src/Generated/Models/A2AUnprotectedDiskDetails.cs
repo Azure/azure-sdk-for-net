@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary> A2A unprotected disk details. </summary>
+    /// <summary>
+    /// A2A unprotected disk details.
+    /// Serialized Name: A2AUnprotectedDiskDetails
+    /// </summary>
     public partial class A2AUnprotectedDiskDetails
     {
         /// <summary> Initializes a new instance of A2AUnprotectedDiskDetails. </summary>
@@ -16,17 +19,29 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> Initializes a new instance of A2AUnprotectedDiskDetails. </summary>
-        /// <param name="diskLunId"> The source lun Id for the data disk. </param>
-        /// <param name="diskAutoProtectionStatus"> A value indicating whether the disk auto protection is enabled. </param>
+        /// <param name="diskLunId">
+        /// The source lun Id for the data disk.
+        /// Serialized Name: A2AUnprotectedDiskDetails.diskLunId
+        /// </param>
+        /// <param name="diskAutoProtectionStatus">
+        /// A value indicating whether the disk auto protection is enabled.
+        /// Serialized Name: A2AUnprotectedDiskDetails.diskAutoProtectionStatus
+        /// </param>
         internal A2AUnprotectedDiskDetails(int? diskLunId, AutoProtectionOfDataDisk? diskAutoProtectionStatus)
         {
             DiskLunId = diskLunId;
             DiskAutoProtectionStatus = diskAutoProtectionStatus;
         }
 
-        /// <summary> The source lun Id for the data disk. </summary>
+        /// <summary>
+        /// The source lun Id for the data disk.
+        /// Serialized Name: A2AUnprotectedDiskDetails.diskLunId
+        /// </summary>
         public int? DiskLunId { get; }
-        /// <summary> A value indicating whether the disk auto protection is enabled. </summary>
+        /// <summary>
+        /// A value indicating whether the disk auto protection is enabled.
+        /// Serialized Name: A2AUnprotectedDiskDetails.diskAutoProtectionStatus
+        /// </summary>
         public AutoProtectionOfDataDisk? DiskAutoProtectionStatus { get; }
     }
 }

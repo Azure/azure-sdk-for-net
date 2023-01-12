@@ -10,11 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary> Input required to add a provider. </summary>
+    /// <summary>
+    /// Input required to add a provider.
+    /// Serialized Name: AddRecoveryServicesProviderInput
+    /// </summary>
     public partial class RecoveryServicesProviderCreateOrUpdateContent
     {
         /// <summary> Initializes a new instance of RecoveryServicesProviderCreateOrUpdateContent. </summary>
-        /// <param name="properties"> The properties of an add provider request. </param>
+        /// <param name="properties">
+        /// The properties of an add provider request.
+        /// Serialized Name: AddRecoveryServicesProviderInput.properties
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
         public RecoveryServicesProviderCreateOrUpdateContent(AddRecoveryServicesProviderInputProperties properties)
         {
@@ -23,7 +29,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             Properties = properties;
         }
 
-        /// <summary> The properties of an add provider request. </summary>
+        /// <summary>
+        /// The properties of an add provider request.
+        /// Serialized Name: AddRecoveryServicesProviderInput.properties
+        /// </summary>
         public AddRecoveryServicesProviderInputProperties Properties { get; }
     }
 }

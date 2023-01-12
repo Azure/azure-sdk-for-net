@@ -10,7 +10,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary> InMageAzureV2 switch provider blocking error details. </summary>
+    /// <summary>
+    /// InMageAzureV2 switch provider blocking error details.
+    /// Serialized Name: InMageAzureV2SwitchProviderBlockingErrorDetails
+    /// </summary>
     public partial class InMageAzureV2SwitchProviderBlockingErrorDetails
     {
         /// <summary> Initializes a new instance of InMageAzureV2SwitchProviderBlockingErrorDetails. </summary>
@@ -21,12 +24,30 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> Initializes a new instance of InMageAzureV2SwitchProviderBlockingErrorDetails. </summary>
-        /// <param name="errorCode"> The error code. </param>
-        /// <param name="errorMessage"> The error message. </param>
-        /// <param name="possibleCauses"> The possible causes. </param>
-        /// <param name="recommendedAction"> The recommended action. </param>
-        /// <param name="errorMessageParameters"> The error message parameters. </param>
-        /// <param name="errorTags"> The error tags. </param>
+        /// <param name="errorCode">
+        /// The error code.
+        /// Serialized Name: InMageAzureV2SwitchProviderBlockingErrorDetails.errorCode
+        /// </param>
+        /// <param name="errorMessage">
+        /// The error message.
+        /// Serialized Name: InMageAzureV2SwitchProviderBlockingErrorDetails.errorMessage
+        /// </param>
+        /// <param name="possibleCauses">
+        /// The possible causes.
+        /// Serialized Name: InMageAzureV2SwitchProviderBlockingErrorDetails.possibleCauses
+        /// </param>
+        /// <param name="recommendedAction">
+        /// The recommended action.
+        /// Serialized Name: InMageAzureV2SwitchProviderBlockingErrorDetails.recommendedAction
+        /// </param>
+        /// <param name="errorMessageParameters">
+        /// The error message parameters.
+        /// Serialized Name: InMageAzureV2SwitchProviderBlockingErrorDetails.errorMessageParameters
+        /// </param>
+        /// <param name="errorTags">
+        /// The error tags.
+        /// Serialized Name: InMageAzureV2SwitchProviderBlockingErrorDetails.errorTags
+        /// </param>
         internal InMageAzureV2SwitchProviderBlockingErrorDetails(string errorCode, string errorMessage, string possibleCauses, string recommendedAction, IReadOnlyDictionary<string, string> errorMessageParameters, IReadOnlyDictionary<string, string> errorTags)
         {
             ErrorCode = errorCode;
@@ -37,17 +58,35 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             ErrorTags = errorTags;
         }
 
-        /// <summary> The error code. </summary>
+        /// <summary>
+        /// The error code.
+        /// Serialized Name: InMageAzureV2SwitchProviderBlockingErrorDetails.errorCode
+        /// </summary>
         public string ErrorCode { get; }
-        /// <summary> The error message. </summary>
+        /// <summary>
+        /// The error message.
+        /// Serialized Name: InMageAzureV2SwitchProviderBlockingErrorDetails.errorMessage
+        /// </summary>
         public string ErrorMessage { get; }
-        /// <summary> The possible causes. </summary>
+        /// <summary>
+        /// The possible causes.
+        /// Serialized Name: InMageAzureV2SwitchProviderBlockingErrorDetails.possibleCauses
+        /// </summary>
         public string PossibleCauses { get; }
-        /// <summary> The recommended action. </summary>
+        /// <summary>
+        /// The recommended action.
+        /// Serialized Name: InMageAzureV2SwitchProviderBlockingErrorDetails.recommendedAction
+        /// </summary>
         public string RecommendedAction { get; }
-        /// <summary> The error message parameters. </summary>
+        /// <summary>
+        /// The error message parameters.
+        /// Serialized Name: InMageAzureV2SwitchProviderBlockingErrorDetails.errorMessageParameters
+        /// </summary>
         public IReadOnlyDictionary<string, string> ErrorMessageParameters { get; }
-        /// <summary> The error tags. </summary>
+        /// <summary>
+        /// The error tags.
+        /// Serialized Name: InMageAzureV2SwitchProviderBlockingErrorDetails.errorTags
+        /// </summary>
         public IReadOnlyDictionary<string, string> ErrorTags { get; }
     }
 }

@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     {
         internal static EventCollection DeserializeEventCollection(JsonElement element)
         {
-            Optional<IReadOnlyList<EventData>> value = default;
+            Optional<IReadOnlyList<SiteRecoveryEventData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -27,10 +27,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<EventData> array = new List<EventData>();
+                    List<SiteRecoveryEventData> array = new List<SiteRecoveryEventData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(EventData.DeserializeEventData(item));
+                        array.Add(SiteRecoveryEventData.DeserializeSiteRecoveryEventData(item));
                     }
                     value = array;
                     continue;

@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary> Create network mappings input properties/behavior specific to Vmm to Azure Network mapping. </summary>
+    /// <summary>
+    /// Create network mappings input properties/behavior specific to Vmm to Azure Network mapping.
+    /// Serialized Name: VmmToAzureCreateNetworkMappingInput
+    /// </summary>
     public partial class VmmToAzureCreateNetworkMappingInput : FabricSpecificCreateNetworkMappingInput
     {
         /// <summary> Initializes a new instance of VmmToAzureCreateNetworkMappingInput. </summary>

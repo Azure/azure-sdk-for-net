@@ -9,7 +9,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary> Update recovery plan input class. </summary>
+    /// <summary>
+    /// Update recovery plan input class.
+    /// Serialized Name: UpdateRecoveryPlanInput
+    /// </summary>
     public partial class RecoveryPlanPatch
     {
         /// <summary> Initializes a new instance of RecoveryPlanPatch. </summary>
@@ -17,9 +20,15 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         {
         }
 
-        /// <summary> Recovery plan update properties. </summary>
+        /// <summary>
+        /// Recovery plan update properties.
+        /// Serialized Name: UpdateRecoveryPlanInput.properties
+        /// </summary>
         internal UpdateRecoveryPlanInputProperties Properties { get; set; }
-        /// <summary> The recovery plan groups. </summary>
+        /// <summary>
+        /// The recovery plan groups.
+        /// Serialized Name: UpdateRecoveryPlanInputProperties.groups
+        /// </summary>
         public IList<RecoveryPlanGroup> UpdateRecoveryPlanInputGroups
         {
             get

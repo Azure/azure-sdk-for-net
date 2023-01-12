@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
 {
     /// <summary>
     /// A class representing a collection of <see cref="NetworkResource" /> and their operations.
-    /// Each <see cref="NetworkResource" /> in the collection will belong to the same instance of <see cref="FabricResource" />.
-    /// To get a <see cref="NetworkCollection" /> instance call the GetNetworks method from an instance of <see cref="FabricResource" />.
+    /// Each <see cref="NetworkResource" /> in the collection will belong to the same instance of <see cref="SiteRecoveryFabricResource" />.
+    /// To get a <see cref="NetworkCollection" /> instance call the GetNetworks method from an instance of <see cref="SiteRecoveryFabricResource" />.
     /// </summary>
     public partial class NetworkCollection : ArmCollection, IEnumerable<NetworkResource>, IAsyncEnumerable<NetworkResource>
     {
@@ -48,8 +48,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
 
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != FabricResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, FabricResource.ResourceType), nameof(id));
+            if (id.ResourceType != SiteRecoveryFabricResource.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, SiteRecoveryFabricResource.ResourceType), nameof(id));
         }
 
         /// <summary>

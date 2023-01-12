@@ -11,7 +11,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary> InMageRcm provider specific details. </summary>
+    /// <summary>
+    /// InMageRcm provider specific details.
+    /// Serialized Name: InMageRcmReplicationDetails
+    /// </summary>
     public partial class InMageRcmReplicationDetails : ReplicationProviderSpecificSettings
     {
         /// <summary> Initializes a new instance of InMageRcmReplicationDetails. </summary>
@@ -25,59 +28,218 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> Initializes a new instance of InMageRcmReplicationDetails. </summary>
-        /// <param name="instanceType"> Gets the Instance type. </param>
-        /// <param name="internalIdentifier"> The virtual machine internal identifier. </param>
-        /// <param name="fabricDiscoveryMachineId"> The ARM Id of the discovered VM. </param>
-        /// <param name="multiVmGroupName"> The multi VM group name. </param>
-        /// <param name="discoveryType"> The type of the discovered VM. </param>
-        /// <param name="processServerId"> The process server Id. </param>
-        /// <param name="processorCoreCount"> The processor core count. </param>
-        /// <param name="allocatedMemoryInMB"> The allocated memory in MB. </param>
-        /// <param name="processServerName"> The process server name. </param>
-        /// <param name="runAsAccountId"> The run-as account Id. </param>
-        /// <param name="osType"> The type of the OS on the VM. </param>
-        /// <param name="firmwareType"> The firmware type. </param>
-        /// <param name="primaryNicIPAddress"> The IP address of the primary network interface. </param>
-        /// <param name="targetGeneration"> The target generation. </param>
-        /// <param name="licenseType"> License Type of the VM to be used. </param>
-        /// <param name="storageAccountId"> The replication storage account ARM Id. This is applicable only for the blob based replication test hook. </param>
-        /// <param name="targetVmName"> Target VM name. </param>
-        /// <param name="targetVmSize"> The target VM size. </param>
-        /// <param name="targetResourceGroupId"> The target resource group Id. </param>
-        /// <param name="targetLocation"> The target location. </param>
-        /// <param name="targetAvailabilitySetId"> The target availability set Id. </param>
-        /// <param name="targetAvailabilityZone"> The target availability zone. </param>
-        /// <param name="targetProximityPlacementGroupId"> The target proximity placement group Id. </param>
-        /// <param name="targetBootDiagnosticsStorageAccountId"> The target boot diagnostics storage account ARM Id. </param>
-        /// <param name="targetNetworkId"> The target network Id. </param>
-        /// <param name="testNetworkId"> The test network Id. </param>
-        /// <param name="failoverRecoveryPointId"> The recovery point Id to which the VM was failed over. </param>
-        /// <param name="lastRecoveryPointReceived"> The last recovery point received time. </param>
-        /// <param name="lastRpoInSeconds"> The last recovery point objective value. </param>
-        /// <param name="lastRpoCalculatedOn"> The last recovery point objective calculated time. </param>
-        /// <param name="lastRecoveryPointId"> The last recovery point Id. </param>
-        /// <param name="initialReplicationProgressPercentage"> The initial replication progress percentage. This is calculated based on total bytes processed for all disks in the source VM. </param>
-        /// <param name="initialReplicationProcessedBytes"> The initial replication processed bytes. This includes sum of total bytes transferred and matched bytes on all selected disks in source VM. </param>
-        /// <param name="initialReplicationTransferredBytes"> The initial replication transferred bytes from source VM to azure for all selected disks on source VM. </param>
-        /// <param name="initialReplicationProgressHealth"> The initial replication progress health. </param>
-        /// <param name="resyncProgressPercentage"> The resync progress percentage. This is calculated based on total bytes processed for all disks in the source VM. </param>
-        /// <param name="resyncProcessedBytes"> The resync processed bytes. This includes sum of total bytes transferred and matched bytes on all selected disks in source VM. </param>
-        /// <param name="resyncTransferredBytes"> The resync transferred bytes from source VM to azure for all selected disks on source VM. </param>
-        /// <param name="resyncProgressHealth"> The resync progress health. </param>
-        /// <param name="resyncRequired"> A value indicating whether resync is required. </param>
-        /// <param name="resyncState"> The resync state. </param>
-        /// <param name="agentUpgradeState"> The agent auto upgrade state. </param>
-        /// <param name="lastAgentUpgradeType"> The last agent upgrade type. </param>
-        /// <param name="agentUpgradeJobId"> The agent upgrade job Id. </param>
-        /// <param name="agentUpgradeAttemptToVersion"> The agent version to which last agent upgrade was attempted. </param>
-        /// <param name="protectedDisks"> The list of protected disks. </param>
-        /// <param name="isLastUpgradeSuccessful"> A value indicating whether last agent upgrade was successful or not. </param>
-        /// <param name="isAgentRegistrationSuccessfulAfterFailover"> A value indicating whether agent registration was successful after failover. </param>
-        /// <param name="mobilityAgentDetails"> The mobility agent information. </param>
-        /// <param name="lastAgentUpgradeErrorDetails"> The last agent upgrade error information. </param>
-        /// <param name="agentUpgradeBlockingErrorDetails"> The agent upgrade blocking error information. </param>
-        /// <param name="vmNics"> The network details. </param>
-        /// <param name="discoveredVmDetails"> The discovered VM details. </param>
+        /// <param name="instanceType">
+        /// Gets the Instance type.
+        /// Serialized Name: ReplicationProviderSpecificSettings.instanceType
+        /// </param>
+        /// <param name="internalIdentifier">
+        /// The virtual machine internal identifier.
+        /// Serialized Name: InMageRcmReplicationDetails.internalIdentifier
+        /// </param>
+        /// <param name="fabricDiscoveryMachineId">
+        /// The ARM Id of the discovered VM.
+        /// Serialized Name: InMageRcmReplicationDetails.fabricDiscoveryMachineId
+        /// </param>
+        /// <param name="multiVmGroupName">
+        /// The multi VM group name.
+        /// Serialized Name: InMageRcmReplicationDetails.multiVmGroupName
+        /// </param>
+        /// <param name="discoveryType">
+        /// The type of the discovered VM.
+        /// Serialized Name: InMageRcmReplicationDetails.discoveryType
+        /// </param>
+        /// <param name="processServerId">
+        /// The process server Id.
+        /// Serialized Name: InMageRcmReplicationDetails.processServerId
+        /// </param>
+        /// <param name="processorCoreCount">
+        /// The processor core count.
+        /// Serialized Name: InMageRcmReplicationDetails.processorCoreCount
+        /// </param>
+        /// <param name="allocatedMemoryInMB">
+        /// The allocated memory in MB.
+        /// Serialized Name: InMageRcmReplicationDetails.allocatedMemoryInMB
+        /// </param>
+        /// <param name="processServerName">
+        /// The process server name.
+        /// Serialized Name: InMageRcmReplicationDetails.processServerName
+        /// </param>
+        /// <param name="runAsAccountId">
+        /// The run-as account Id.
+        /// Serialized Name: InMageRcmReplicationDetails.runAsAccountId
+        /// </param>
+        /// <param name="osType">
+        /// The type of the OS on the VM.
+        /// Serialized Name: InMageRcmReplicationDetails.osType
+        /// </param>
+        /// <param name="firmwareType">
+        /// The firmware type.
+        /// Serialized Name: InMageRcmReplicationDetails.firmwareType
+        /// </param>
+        /// <param name="primaryNicIPAddress">
+        /// The IP address of the primary network interface.
+        /// Serialized Name: InMageRcmReplicationDetails.primaryNicIpAddress
+        /// </param>
+        /// <param name="targetGeneration">
+        /// The target generation.
+        /// Serialized Name: InMageRcmReplicationDetails.targetGeneration
+        /// </param>
+        /// <param name="licenseType">
+        /// License Type of the VM to be used.
+        /// Serialized Name: InMageRcmReplicationDetails.licenseType
+        /// </param>
+        /// <param name="storageAccountId">
+        /// The replication storage account ARM Id. This is applicable only for the blob based replication test hook.
+        /// Serialized Name: InMageRcmReplicationDetails.storageAccountId
+        /// </param>
+        /// <param name="targetVmName">
+        /// Target VM name.
+        /// Serialized Name: InMageRcmReplicationDetails.targetVmName
+        /// </param>
+        /// <param name="targetVmSize">
+        /// The target VM size.
+        /// Serialized Name: InMageRcmReplicationDetails.targetVmSize
+        /// </param>
+        /// <param name="targetResourceGroupId">
+        /// The target resource group Id.
+        /// Serialized Name: InMageRcmReplicationDetails.targetResourceGroupId
+        /// </param>
+        /// <param name="targetLocation">
+        /// The target location.
+        /// Serialized Name: InMageRcmReplicationDetails.targetLocation
+        /// </param>
+        /// <param name="targetAvailabilitySetId">
+        /// The target availability set Id.
+        /// Serialized Name: InMageRcmReplicationDetails.targetAvailabilitySetId
+        /// </param>
+        /// <param name="targetAvailabilityZone">
+        /// The target availability zone.
+        /// Serialized Name: InMageRcmReplicationDetails.targetAvailabilityZone
+        /// </param>
+        /// <param name="targetProximityPlacementGroupId">
+        /// The target proximity placement group Id.
+        /// Serialized Name: InMageRcmReplicationDetails.targetProximityPlacementGroupId
+        /// </param>
+        /// <param name="targetBootDiagnosticsStorageAccountId">
+        /// The target boot diagnostics storage account ARM Id.
+        /// Serialized Name: InMageRcmReplicationDetails.targetBootDiagnosticsStorageAccountId
+        /// </param>
+        /// <param name="targetNetworkId">
+        /// The target network Id.
+        /// Serialized Name: InMageRcmReplicationDetails.targetNetworkId
+        /// </param>
+        /// <param name="testNetworkId">
+        /// The test network Id.
+        /// Serialized Name: InMageRcmReplicationDetails.testNetworkId
+        /// </param>
+        /// <param name="failoverRecoveryPointId">
+        /// The recovery point Id to which the VM was failed over.
+        /// Serialized Name: InMageRcmReplicationDetails.failoverRecoveryPointId
+        /// </param>
+        /// <param name="lastRecoveryPointReceived">
+        /// The last recovery point received time.
+        /// Serialized Name: InMageRcmReplicationDetails.lastRecoveryPointReceived
+        /// </param>
+        /// <param name="lastRpoInSeconds">
+        /// The last recovery point objective value.
+        /// Serialized Name: InMageRcmReplicationDetails.lastRpoInSeconds
+        /// </param>
+        /// <param name="lastRpoCalculatedOn">
+        /// The last recovery point objective calculated time.
+        /// Serialized Name: InMageRcmReplicationDetails.lastRpoCalculatedTime
+        /// </param>
+        /// <param name="lastRecoveryPointId">
+        /// The last recovery point Id.
+        /// Serialized Name: InMageRcmReplicationDetails.lastRecoveryPointId
+        /// </param>
+        /// <param name="initialReplicationProgressPercentage">
+        /// The initial replication progress percentage. This is calculated based on total bytes processed for all disks in the source VM.
+        /// Serialized Name: InMageRcmReplicationDetails.initialReplicationProgressPercentage
+        /// </param>
+        /// <param name="initialReplicationProcessedBytes">
+        /// The initial replication processed bytes. This includes sum of total bytes transferred and matched bytes on all selected disks in source VM.
+        /// Serialized Name: InMageRcmReplicationDetails.initialReplicationProcessedBytes
+        /// </param>
+        /// <param name="initialReplicationTransferredBytes">
+        /// The initial replication transferred bytes from source VM to azure for all selected disks on source VM.
+        /// Serialized Name: InMageRcmReplicationDetails.initialReplicationTransferredBytes
+        /// </param>
+        /// <param name="initialReplicationProgressHealth">
+        /// The initial replication progress health.
+        /// Serialized Name: InMageRcmReplicationDetails.initialReplicationProgressHealth
+        /// </param>
+        /// <param name="resyncProgressPercentage">
+        /// The resync progress percentage. This is calculated based on total bytes processed for all disks in the source VM.
+        /// Serialized Name: InMageRcmReplicationDetails.resyncProgressPercentage
+        /// </param>
+        /// <param name="resyncProcessedBytes">
+        /// The resync processed bytes. This includes sum of total bytes transferred and matched bytes on all selected disks in source VM.
+        /// Serialized Name: InMageRcmReplicationDetails.resyncProcessedBytes
+        /// </param>
+        /// <param name="resyncTransferredBytes">
+        /// The resync transferred bytes from source VM to azure for all selected disks on source VM.
+        /// Serialized Name: InMageRcmReplicationDetails.resyncTransferredBytes
+        /// </param>
+        /// <param name="resyncProgressHealth">
+        /// The resync progress health.
+        /// Serialized Name: InMageRcmReplicationDetails.resyncProgressHealth
+        /// </param>
+        /// <param name="resyncRequired">
+        /// A value indicating whether resync is required.
+        /// Serialized Name: InMageRcmReplicationDetails.resyncRequired
+        /// </param>
+        /// <param name="resyncState">
+        /// The resync state.
+        /// Serialized Name: InMageRcmReplicationDetails.resyncState
+        /// </param>
+        /// <param name="agentUpgradeState">
+        /// The agent auto upgrade state.
+        /// Serialized Name: InMageRcmReplicationDetails.agentUpgradeState
+        /// </param>
+        /// <param name="lastAgentUpgradeType">
+        /// The last agent upgrade type.
+        /// Serialized Name: InMageRcmReplicationDetails.lastAgentUpgradeType
+        /// </param>
+        /// <param name="agentUpgradeJobId">
+        /// The agent upgrade job Id.
+        /// Serialized Name: InMageRcmReplicationDetails.agentUpgradeJobId
+        /// </param>
+        /// <param name="agentUpgradeAttemptToVersion">
+        /// The agent version to which last agent upgrade was attempted.
+        /// Serialized Name: InMageRcmReplicationDetails.agentUpgradeAttemptToVersion
+        /// </param>
+        /// <param name="protectedDisks">
+        /// The list of protected disks.
+        /// Serialized Name: InMageRcmReplicationDetails.protectedDisks
+        /// </param>
+        /// <param name="isLastUpgradeSuccessful">
+        /// A value indicating whether last agent upgrade was successful or not.
+        /// Serialized Name: InMageRcmReplicationDetails.isLastUpgradeSuccessful
+        /// </param>
+        /// <param name="isAgentRegistrationSuccessfulAfterFailover">
+        /// A value indicating whether agent registration was successful after failover.
+        /// Serialized Name: InMageRcmReplicationDetails.isAgentRegistrationSuccessfulAfterFailover
+        /// </param>
+        /// <param name="mobilityAgentDetails">
+        /// The mobility agent information.
+        /// Serialized Name: InMageRcmReplicationDetails.mobilityAgentDetails
+        /// </param>
+        /// <param name="lastAgentUpgradeErrorDetails">
+        /// The last agent upgrade error information.
+        /// Serialized Name: InMageRcmReplicationDetails.lastAgentUpgradeErrorDetails
+        /// </param>
+        /// <param name="agentUpgradeBlockingErrorDetails">
+        /// The agent upgrade blocking error information.
+        /// Serialized Name: InMageRcmReplicationDetails.agentUpgradeBlockingErrorDetails
+        /// </param>
+        /// <param name="vmNics">
+        /// The network details.
+        /// Serialized Name: InMageRcmReplicationDetails.vmNics
+        /// </param>
+        /// <param name="discoveredVmDetails">
+        /// The discovered VM details.
+        /// Serialized Name: InMageRcmReplicationDetails.discoveredVmDetails
+        /// </param>
         internal InMageRcmReplicationDetails(string instanceType, string internalIdentifier, string fabricDiscoveryMachineId, string multiVmGroupName, string discoveryType, string processServerId, int? processorCoreCount, double? allocatedMemoryInMB, string processServerName, string runAsAccountId, string osType, string firmwareType, string primaryNicIPAddress, string targetGeneration, string licenseType, string storageAccountId, string targetVmName, string targetVmSize, string targetResourceGroupId, string targetLocation, string targetAvailabilitySetId, string targetAvailabilityZone, string targetProximityPlacementGroupId, string targetBootDiagnosticsStorageAccountId, string targetNetworkId, string testNetworkId, string failoverRecoveryPointId, DateTimeOffset? lastRecoveryPointReceived, long? lastRpoInSeconds, DateTimeOffset? lastRpoCalculatedOn, string lastRecoveryPointId, int? initialReplicationProgressPercentage, long? initialReplicationProcessedBytes, long? initialReplicationTransferredBytes, VmReplicationProgressHealth? initialReplicationProgressHealth, int? resyncProgressPercentage, long? resyncProcessedBytes, long? resyncTransferredBytes, VmReplicationProgressHealth? resyncProgressHealth, string resyncRequired, ResyncState? resyncState, MobilityAgentUpgradeState? agentUpgradeState, string lastAgentUpgradeType, string agentUpgradeJobId, string agentUpgradeAttemptToVersion, IReadOnlyList<InMageRcmProtectedDiskDetails> protectedDisks, string isLastUpgradeSuccessful, bool? isAgentRegistrationSuccessfulAfterFailover, InMageRcmMobilityAgentDetails mobilityAgentDetails, IReadOnlyList<InMageRcmLastAgentUpgradeErrorDetails> lastAgentUpgradeErrorDetails, IReadOnlyList<InMageRcmAgentUpgradeBlockingErrorDetails> agentUpgradeBlockingErrorDetails, IReadOnlyList<InMageRcmNicDetails> vmNics, InMageRcmDiscoveredProtectedVmDetails discoveredVmDetails) : base(instanceType)
         {
             InternalIdentifier = internalIdentifier;
@@ -135,109 +297,265 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             InstanceType = instanceType ?? "InMageRcm";
         }
 
-        /// <summary> The virtual machine internal identifier. </summary>
+        /// <summary>
+        /// The virtual machine internal identifier.
+        /// Serialized Name: InMageRcmReplicationDetails.internalIdentifier
+        /// </summary>
         public string InternalIdentifier { get; }
-        /// <summary> The ARM Id of the discovered VM. </summary>
+        /// <summary>
+        /// The ARM Id of the discovered VM.
+        /// Serialized Name: InMageRcmReplicationDetails.fabricDiscoveryMachineId
+        /// </summary>
         public string FabricDiscoveryMachineId { get; }
-        /// <summary> The multi VM group name. </summary>
+        /// <summary>
+        /// The multi VM group name.
+        /// Serialized Name: InMageRcmReplicationDetails.multiVmGroupName
+        /// </summary>
         public string MultiVmGroupName { get; }
-        /// <summary> The type of the discovered VM. </summary>
+        /// <summary>
+        /// The type of the discovered VM.
+        /// Serialized Name: InMageRcmReplicationDetails.discoveryType
+        /// </summary>
         public string DiscoveryType { get; }
-        /// <summary> The process server Id. </summary>
+        /// <summary>
+        /// The process server Id.
+        /// Serialized Name: InMageRcmReplicationDetails.processServerId
+        /// </summary>
         public string ProcessServerId { get; }
-        /// <summary> The processor core count. </summary>
+        /// <summary>
+        /// The processor core count.
+        /// Serialized Name: InMageRcmReplicationDetails.processorCoreCount
+        /// </summary>
         public int? ProcessorCoreCount { get; }
-        /// <summary> The allocated memory in MB. </summary>
+        /// <summary>
+        /// The allocated memory in MB.
+        /// Serialized Name: InMageRcmReplicationDetails.allocatedMemoryInMB
+        /// </summary>
         public double? AllocatedMemoryInMB { get; }
-        /// <summary> The process server name. </summary>
+        /// <summary>
+        /// The process server name.
+        /// Serialized Name: InMageRcmReplicationDetails.processServerName
+        /// </summary>
         public string ProcessServerName { get; }
-        /// <summary> The run-as account Id. </summary>
+        /// <summary>
+        /// The run-as account Id.
+        /// Serialized Name: InMageRcmReplicationDetails.runAsAccountId
+        /// </summary>
         public string RunAsAccountId { get; }
-        /// <summary> The type of the OS on the VM. </summary>
+        /// <summary>
+        /// The type of the OS on the VM.
+        /// Serialized Name: InMageRcmReplicationDetails.osType
+        /// </summary>
         public string OSType { get; }
-        /// <summary> The firmware type. </summary>
+        /// <summary>
+        /// The firmware type.
+        /// Serialized Name: InMageRcmReplicationDetails.firmwareType
+        /// </summary>
         public string FirmwareType { get; }
-        /// <summary> The IP address of the primary network interface. </summary>
+        /// <summary>
+        /// The IP address of the primary network interface.
+        /// Serialized Name: InMageRcmReplicationDetails.primaryNicIpAddress
+        /// </summary>
         public string PrimaryNicIPAddress { get; }
-        /// <summary> The target generation. </summary>
+        /// <summary>
+        /// The target generation.
+        /// Serialized Name: InMageRcmReplicationDetails.targetGeneration
+        /// </summary>
         public string TargetGeneration { get; }
-        /// <summary> License Type of the VM to be used. </summary>
+        /// <summary>
+        /// License Type of the VM to be used.
+        /// Serialized Name: InMageRcmReplicationDetails.licenseType
+        /// </summary>
         public string LicenseType { get; }
-        /// <summary> The replication storage account ARM Id. This is applicable only for the blob based replication test hook. </summary>
+        /// <summary>
+        /// The replication storage account ARM Id. This is applicable only for the blob based replication test hook.
+        /// Serialized Name: InMageRcmReplicationDetails.storageAccountId
+        /// </summary>
         public string StorageAccountId { get; }
-        /// <summary> Target VM name. </summary>
+        /// <summary>
+        /// Target VM name.
+        /// Serialized Name: InMageRcmReplicationDetails.targetVmName
+        /// </summary>
         public string TargetVmName { get; }
-        /// <summary> The target VM size. </summary>
+        /// <summary>
+        /// The target VM size.
+        /// Serialized Name: InMageRcmReplicationDetails.targetVmSize
+        /// </summary>
         public string TargetVmSize { get; }
-        /// <summary> The target resource group Id. </summary>
+        /// <summary>
+        /// The target resource group Id.
+        /// Serialized Name: InMageRcmReplicationDetails.targetResourceGroupId
+        /// </summary>
         public string TargetResourceGroupId { get; }
-        /// <summary> The target location. </summary>
+        /// <summary>
+        /// The target location.
+        /// Serialized Name: InMageRcmReplicationDetails.targetLocation
+        /// </summary>
         public string TargetLocation { get; }
-        /// <summary> The target availability set Id. </summary>
+        /// <summary>
+        /// The target availability set Id.
+        /// Serialized Name: InMageRcmReplicationDetails.targetAvailabilitySetId
+        /// </summary>
         public string TargetAvailabilitySetId { get; }
-        /// <summary> The target availability zone. </summary>
+        /// <summary>
+        /// The target availability zone.
+        /// Serialized Name: InMageRcmReplicationDetails.targetAvailabilityZone
+        /// </summary>
         public string TargetAvailabilityZone { get; }
-        /// <summary> The target proximity placement group Id. </summary>
+        /// <summary>
+        /// The target proximity placement group Id.
+        /// Serialized Name: InMageRcmReplicationDetails.targetProximityPlacementGroupId
+        /// </summary>
         public string TargetProximityPlacementGroupId { get; }
-        /// <summary> The target boot diagnostics storage account ARM Id. </summary>
+        /// <summary>
+        /// The target boot diagnostics storage account ARM Id.
+        /// Serialized Name: InMageRcmReplicationDetails.targetBootDiagnosticsStorageAccountId
+        /// </summary>
         public string TargetBootDiagnosticsStorageAccountId { get; }
-        /// <summary> The target network Id. </summary>
+        /// <summary>
+        /// The target network Id.
+        /// Serialized Name: InMageRcmReplicationDetails.targetNetworkId
+        /// </summary>
         public string TargetNetworkId { get; }
-        /// <summary> The test network Id. </summary>
+        /// <summary>
+        /// The test network Id.
+        /// Serialized Name: InMageRcmReplicationDetails.testNetworkId
+        /// </summary>
         public string TestNetworkId { get; }
-        /// <summary> The recovery point Id to which the VM was failed over. </summary>
+        /// <summary>
+        /// The recovery point Id to which the VM was failed over.
+        /// Serialized Name: InMageRcmReplicationDetails.failoverRecoveryPointId
+        /// </summary>
         public string FailoverRecoveryPointId { get; }
-        /// <summary> The last recovery point received time. </summary>
+        /// <summary>
+        /// The last recovery point received time.
+        /// Serialized Name: InMageRcmReplicationDetails.lastRecoveryPointReceived
+        /// </summary>
         public DateTimeOffset? LastRecoveryPointReceived { get; }
-        /// <summary> The last recovery point objective value. </summary>
+        /// <summary>
+        /// The last recovery point objective value.
+        /// Serialized Name: InMageRcmReplicationDetails.lastRpoInSeconds
+        /// </summary>
         public long? LastRpoInSeconds { get; }
-        /// <summary> The last recovery point objective calculated time. </summary>
+        /// <summary>
+        /// The last recovery point objective calculated time.
+        /// Serialized Name: InMageRcmReplicationDetails.lastRpoCalculatedTime
+        /// </summary>
         public DateTimeOffset? LastRpoCalculatedOn { get; }
-        /// <summary> The last recovery point Id. </summary>
+        /// <summary>
+        /// The last recovery point Id.
+        /// Serialized Name: InMageRcmReplicationDetails.lastRecoveryPointId
+        /// </summary>
         public string LastRecoveryPointId { get; }
-        /// <summary> The initial replication progress percentage. This is calculated based on total bytes processed for all disks in the source VM. </summary>
+        /// <summary>
+        /// The initial replication progress percentage. This is calculated based on total bytes processed for all disks in the source VM.
+        /// Serialized Name: InMageRcmReplicationDetails.initialReplicationProgressPercentage
+        /// </summary>
         public int? InitialReplicationProgressPercentage { get; }
-        /// <summary> The initial replication processed bytes. This includes sum of total bytes transferred and matched bytes on all selected disks in source VM. </summary>
+        /// <summary>
+        /// The initial replication processed bytes. This includes sum of total bytes transferred and matched bytes on all selected disks in source VM.
+        /// Serialized Name: InMageRcmReplicationDetails.initialReplicationProcessedBytes
+        /// </summary>
         public long? InitialReplicationProcessedBytes { get; }
-        /// <summary> The initial replication transferred bytes from source VM to azure for all selected disks on source VM. </summary>
+        /// <summary>
+        /// The initial replication transferred bytes from source VM to azure for all selected disks on source VM.
+        /// Serialized Name: InMageRcmReplicationDetails.initialReplicationTransferredBytes
+        /// </summary>
         public long? InitialReplicationTransferredBytes { get; }
-        /// <summary> The initial replication progress health. </summary>
+        /// <summary>
+        /// The initial replication progress health.
+        /// Serialized Name: InMageRcmReplicationDetails.initialReplicationProgressHealth
+        /// </summary>
         public VmReplicationProgressHealth? InitialReplicationProgressHealth { get; }
-        /// <summary> The resync progress percentage. This is calculated based on total bytes processed for all disks in the source VM. </summary>
+        /// <summary>
+        /// The resync progress percentage. This is calculated based on total bytes processed for all disks in the source VM.
+        /// Serialized Name: InMageRcmReplicationDetails.resyncProgressPercentage
+        /// </summary>
         public int? ResyncProgressPercentage { get; }
-        /// <summary> The resync processed bytes. This includes sum of total bytes transferred and matched bytes on all selected disks in source VM. </summary>
+        /// <summary>
+        /// The resync processed bytes. This includes sum of total bytes transferred and matched bytes on all selected disks in source VM.
+        /// Serialized Name: InMageRcmReplicationDetails.resyncProcessedBytes
+        /// </summary>
         public long? ResyncProcessedBytes { get; }
-        /// <summary> The resync transferred bytes from source VM to azure for all selected disks on source VM. </summary>
+        /// <summary>
+        /// The resync transferred bytes from source VM to azure for all selected disks on source VM.
+        /// Serialized Name: InMageRcmReplicationDetails.resyncTransferredBytes
+        /// </summary>
         public long? ResyncTransferredBytes { get; }
-        /// <summary> The resync progress health. </summary>
+        /// <summary>
+        /// The resync progress health.
+        /// Serialized Name: InMageRcmReplicationDetails.resyncProgressHealth
+        /// </summary>
         public VmReplicationProgressHealth? ResyncProgressHealth { get; }
-        /// <summary> A value indicating whether resync is required. </summary>
+        /// <summary>
+        /// A value indicating whether resync is required.
+        /// Serialized Name: InMageRcmReplicationDetails.resyncRequired
+        /// </summary>
         public string ResyncRequired { get; }
-        /// <summary> The resync state. </summary>
+        /// <summary>
+        /// The resync state.
+        /// Serialized Name: InMageRcmReplicationDetails.resyncState
+        /// </summary>
         public ResyncState? ResyncState { get; }
-        /// <summary> The agent auto upgrade state. </summary>
+        /// <summary>
+        /// The agent auto upgrade state.
+        /// Serialized Name: InMageRcmReplicationDetails.agentUpgradeState
+        /// </summary>
         public MobilityAgentUpgradeState? AgentUpgradeState { get; }
-        /// <summary> The last agent upgrade type. </summary>
+        /// <summary>
+        /// The last agent upgrade type.
+        /// Serialized Name: InMageRcmReplicationDetails.lastAgentUpgradeType
+        /// </summary>
         public string LastAgentUpgradeType { get; }
-        /// <summary> The agent upgrade job Id. </summary>
+        /// <summary>
+        /// The agent upgrade job Id.
+        /// Serialized Name: InMageRcmReplicationDetails.agentUpgradeJobId
+        /// </summary>
         public string AgentUpgradeJobId { get; }
-        /// <summary> The agent version to which last agent upgrade was attempted. </summary>
+        /// <summary>
+        /// The agent version to which last agent upgrade was attempted.
+        /// Serialized Name: InMageRcmReplicationDetails.agentUpgradeAttemptToVersion
+        /// </summary>
         public string AgentUpgradeAttemptToVersion { get; }
-        /// <summary> The list of protected disks. </summary>
+        /// <summary>
+        /// The list of protected disks.
+        /// Serialized Name: InMageRcmReplicationDetails.protectedDisks
+        /// </summary>
         public IReadOnlyList<InMageRcmProtectedDiskDetails> ProtectedDisks { get; }
-        /// <summary> A value indicating whether last agent upgrade was successful or not. </summary>
+        /// <summary>
+        /// A value indicating whether last agent upgrade was successful or not.
+        /// Serialized Name: InMageRcmReplicationDetails.isLastUpgradeSuccessful
+        /// </summary>
         public string IsLastUpgradeSuccessful { get; }
-        /// <summary> A value indicating whether agent registration was successful after failover. </summary>
+        /// <summary>
+        /// A value indicating whether agent registration was successful after failover.
+        /// Serialized Name: InMageRcmReplicationDetails.isAgentRegistrationSuccessfulAfterFailover
+        /// </summary>
         public bool? IsAgentRegistrationSuccessfulAfterFailover { get; }
-        /// <summary> The mobility agent information. </summary>
+        /// <summary>
+        /// The mobility agent information.
+        /// Serialized Name: InMageRcmReplicationDetails.mobilityAgentDetails
+        /// </summary>
         public InMageRcmMobilityAgentDetails MobilityAgentDetails { get; }
-        /// <summary> The last agent upgrade error information. </summary>
+        /// <summary>
+        /// The last agent upgrade error information.
+        /// Serialized Name: InMageRcmReplicationDetails.lastAgentUpgradeErrorDetails
+        /// </summary>
         public IReadOnlyList<InMageRcmLastAgentUpgradeErrorDetails> LastAgentUpgradeErrorDetails { get; }
-        /// <summary> The agent upgrade blocking error information. </summary>
+        /// <summary>
+        /// The agent upgrade blocking error information.
+        /// Serialized Name: InMageRcmReplicationDetails.agentUpgradeBlockingErrorDetails
+        /// </summary>
         public IReadOnlyList<InMageRcmAgentUpgradeBlockingErrorDetails> AgentUpgradeBlockingErrorDetails { get; }
-        /// <summary> The network details. </summary>
+        /// <summary>
+        /// The network details.
+        /// Serialized Name: InMageRcmReplicationDetails.vmNics
+        /// </summary>
         public IReadOnlyList<InMageRcmNicDetails> VmNics { get; }
-        /// <summary> The discovered VM details. </summary>
+        /// <summary>
+        /// The discovered VM details.
+        /// Serialized Name: InMageRcmReplicationDetails.discoveredVmDetails
+        /// </summary>
         public InMageRcmDiscoveredProtectedVmDetails DiscoveredVmDetails { get; }
     }
 }

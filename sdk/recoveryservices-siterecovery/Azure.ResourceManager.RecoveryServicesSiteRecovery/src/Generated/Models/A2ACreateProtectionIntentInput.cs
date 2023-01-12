@@ -11,16 +11,37 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary> A2A create protection intent input. </summary>
+    /// <summary>
+    /// A2A create protection intent input.
+    /// Serialized Name: A2ACreateProtectionIntentInput
+    /// </summary>
     public partial class A2ACreateProtectionIntentInput : CreateProtectionIntentProviderSpecificDetails
     {
         /// <summary> Initializes a new instance of A2ACreateProtectionIntentInput. </summary>
-        /// <param name="fabricObjectId"> The fabric specific object Id of the virtual machine. </param>
-        /// <param name="primaryLocation"> The primary location for the virtual machine. </param>
-        /// <param name="recoveryLocation"> The recovery location for the virtual machine. </param>
-        /// <param name="recoverySubscriptionId"> The recovery subscription Id of the virtual machine. </param>
-        /// <param name="recoveryAvailabilityType"> The recovery availability type of the virtual machine. </param>
-        /// <param name="recoveryResourceGroupId"> The recovery resource group Id. Valid for V2 scenarios. </param>
+        /// <param name="fabricObjectId">
+        /// The fabric specific object Id of the virtual machine.
+        /// Serialized Name: A2ACreateProtectionIntentInput.fabricObjectId
+        /// </param>
+        /// <param name="primaryLocation">
+        /// The primary location for the virtual machine.
+        /// Serialized Name: A2ACreateProtectionIntentInput.primaryLocation
+        /// </param>
+        /// <param name="recoveryLocation">
+        /// The recovery location for the virtual machine.
+        /// Serialized Name: A2ACreateProtectionIntentInput.recoveryLocation
+        /// </param>
+        /// <param name="recoverySubscriptionId">
+        /// The recovery subscription Id of the virtual machine.
+        /// Serialized Name: A2ACreateProtectionIntentInput.recoverySubscriptionId
+        /// </param>
+        /// <param name="recoveryAvailabilityType">
+        /// The recovery availability type of the virtual machine.
+        /// Serialized Name: A2ACreateProtectionIntentInput.recoveryAvailabilityType
+        /// </param>
+        /// <param name="recoveryResourceGroupId">
+        /// The recovery resource group Id. Valid for V2 scenarios.
+        /// Serialized Name: A2ACreateProtectionIntentInput.recoveryResourceGroupId
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="fabricObjectId"/>, <paramref name="primaryLocation"/>, <paramref name="recoveryLocation"/>, <paramref name="recoverySubscriptionId"/> or <paramref name="recoveryResourceGroupId"/> is null. </exception>
         public A2ACreateProtectionIntentInput(string fabricObjectId, string primaryLocation, string recoveryLocation, string recoverySubscriptionId, A2ARecoveryAvailabilityType recoveryAvailabilityType, string recoveryResourceGroupId)
         {
@@ -41,73 +62,127 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             InstanceType = "A2A";
         }
 
-        /// <summary> The fabric specific object Id of the virtual machine. </summary>
+        /// <summary>
+        /// The fabric specific object Id of the virtual machine.
+        /// Serialized Name: A2ACreateProtectionIntentInput.fabricObjectId
+        /// </summary>
         public string FabricObjectId { get; }
-        /// <summary> The primary location for the virtual machine. </summary>
+        /// <summary>
+        /// The primary location for the virtual machine.
+        /// Serialized Name: A2ACreateProtectionIntentInput.primaryLocation
+        /// </summary>
         public string PrimaryLocation { get; }
-        /// <summary> The recovery location for the virtual machine. </summary>
+        /// <summary>
+        /// The recovery location for the virtual machine.
+        /// Serialized Name: A2ACreateProtectionIntentInput.recoveryLocation
+        /// </summary>
         public string RecoveryLocation { get; }
-        /// <summary> The recovery subscription Id of the virtual machine. </summary>
+        /// <summary>
+        /// The recovery subscription Id of the virtual machine.
+        /// Serialized Name: A2ACreateProtectionIntentInput.recoverySubscriptionId
+        /// </summary>
         public string RecoverySubscriptionId { get; }
-        /// <summary> The recovery availability type of the virtual machine. </summary>
+        /// <summary>
+        /// The recovery availability type of the virtual machine.
+        /// Serialized Name: A2ACreateProtectionIntentInput.recoveryAvailabilityType
+        /// </summary>
         public A2ARecoveryAvailabilityType RecoveryAvailabilityType { get; }
         /// <summary>
         /// The protection profile custom inputs.
+        /// Serialized Name: A2ACreateProtectionIntentInput.protectionProfileCustomInput
         /// Please note <see cref="ProtectionProfileCustomDetails"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="ExistingProtectionProfile"/> and <see cref="NewProtectionProfile"/>.
         /// </summary>
         public ProtectionProfileCustomDetails ProtectionProfileCustomInput { get; set; }
-        /// <summary> The recovery resource group Id. Valid for V2 scenarios. </summary>
+        /// <summary>
+        /// The recovery resource group Id. Valid for V2 scenarios.
+        /// Serialized Name: A2ACreateProtectionIntentInput.recoveryResourceGroupId
+        /// </summary>
         public string RecoveryResourceGroupId { get; }
         /// <summary>
         /// The primary staging storage account input.
+        /// Serialized Name: A2ACreateProtectionIntentInput.primaryStagingStorageAccountCustomInput
         /// Please note <see cref="StorageAccountCustomDetails"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="ExistingStorageAccount"/>.
         /// </summary>
         public StorageAccountCustomDetails PrimaryStagingStorageAccountCustomInput { get; set; }
         /// <summary>
         /// The recovery availability set input.
+        /// Serialized Name: A2ACreateProtectionIntentInput.recoveryAvailabilitySetCustomInput
         /// Please note <see cref="RecoveryAvailabilitySetCustomDetails"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="ExistingRecoveryAvailabilitySet"/>.
         /// </summary>
         public RecoveryAvailabilitySetCustomDetails RecoveryAvailabilitySetCustomInput { get; set; }
         /// <summary>
         /// The recovery virtual network input.
+        /// Serialized Name: A2ACreateProtectionIntentInput.recoveryVirtualNetworkCustomInput
         /// Please note <see cref="RecoveryVirtualNetworkCustomDetails"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="ExistingRecoveryVirtualNetwork"/> and <see cref="NewRecoveryVirtualNetwork"/>.
         /// </summary>
         public RecoveryVirtualNetworkCustomDetails RecoveryVirtualNetworkCustomInput { get; set; }
         /// <summary>
         /// The recovery proximity placement group custom input.
+        /// Serialized Name: A2ACreateProtectionIntentInput.recoveryProximityPlacementGroupCustomInput
         /// Please note <see cref="RecoveryProximityPlacementGroupCustomDetails"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="ExistingRecoveryProximityPlacementGroup"/>.
         /// </summary>
         public RecoveryProximityPlacementGroupCustomDetails RecoveryProximityPlacementGroupCustomInput { get; set; }
-        /// <summary> A value indicating whether the auto protection is enabled. </summary>
+        /// <summary>
+        /// A value indicating whether the auto protection is enabled.
+        /// Serialized Name: A2ACreateProtectionIntentInput.autoProtectionOfDataDisk
+        /// </summary>
         public AutoProtectionOfDataDisk? AutoProtectionOfDataDisk { get; set; }
-        /// <summary> The list of vm disk inputs. </summary>
+        /// <summary>
+        /// The list of vm disk inputs.
+        /// Serialized Name: A2ACreateProtectionIntentInput.vmDisks
+        /// </summary>
         public IList<A2AProtectionIntentDiskInputDetails> VmDisks { get; }
-        /// <summary> The list of vm managed disk inputs. </summary>
+        /// <summary>
+        /// The list of vm managed disk inputs.
+        /// Serialized Name: A2ACreateProtectionIntentInput.vmManagedDisks
+        /// </summary>
         public IList<A2AProtectionIntentManagedDiskInputDetails> VmManagedDisks { get; }
-        /// <summary> The multi vm group name. </summary>
+        /// <summary>
+        /// The multi vm group name.
+        /// Serialized Name: A2ACreateProtectionIntentInput.multiVmGroupName
+        /// </summary>
         public string MultiVmGroupName { get; set; }
-        /// <summary> The multi vm group id. </summary>
+        /// <summary>
+        /// The multi vm group id.
+        /// Serialized Name: A2ACreateProtectionIntentInput.multiVmGroupId
+        /// </summary>
         public string MultiVmGroupId { get; set; }
         /// <summary>
         /// The boot diagnostic storage account.
+        /// Serialized Name: A2ACreateProtectionIntentInput.recoveryBootDiagStorageAccount
         /// Please note <see cref="StorageAccountCustomDetails"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="ExistingStorageAccount"/>.
         /// </summary>
         public StorageAccountCustomDetails RecoveryBootDiagStorageAccount { get; set; }
-        /// <summary> The recovery disk encryption information (for two pass flows). </summary>
+        /// <summary>
+        /// The recovery disk encryption information (for two pass flows).
+        /// Serialized Name: A2ACreateProtectionIntentInput.diskEncryptionInfo
+        /// </summary>
         public DiskEncryptionInfo DiskEncryptionInfo { get; set; }
-        /// <summary> The recovery availability zone. </summary>
+        /// <summary>
+        /// The recovery availability zone.
+        /// Serialized Name: A2ACreateProtectionIntentInput.recoveryAvailabilityZone
+        /// </summary>
         public string RecoveryAvailabilityZone { get; set; }
-        /// <summary> A value indicating whether the auto update is enabled. </summary>
+        /// <summary>
+        /// A value indicating whether the auto update is enabled.
+        /// Serialized Name: A2ACreateProtectionIntentInput.agentAutoUpdateStatus
+        /// </summary>
         public AgentAutoUpdateStatus? AgentAutoUpdateStatus { get; set; }
-        /// <summary> A value indicating the authentication type for automation account. The default value is &quot;RunAsAccount&quot;. </summary>
+        /// <summary>
+        /// A value indicating the authentication type for automation account. The default value is &quot;RunAsAccount&quot;.
+        /// Serialized Name: A2ACreateProtectionIntentInput.automationAccountAuthenticationType
+        /// </summary>
         public AutomationAccountAuthenticationType? AutomationAccountAuthenticationType { get; set; }
-        /// <summary> The automation account arm id. </summary>
+        /// <summary>
+        /// The automation account arm id.
+        /// Serialized Name: A2ACreateProtectionIntentInput.automationAccountArmId
+        /// </summary>
         public string AutomationAccountArmId { get; set; }
     }
 }

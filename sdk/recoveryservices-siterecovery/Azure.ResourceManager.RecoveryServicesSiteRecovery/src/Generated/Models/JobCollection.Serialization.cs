@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     {
         internal static JobCollection DeserializeJobCollection(JsonElement element)
         {
-            Optional<IReadOnlyList<JobData>> value = default;
+            Optional<IReadOnlyList<SiteRecoveryJobData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -27,10 +27,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<JobData> array = new List<JobData>();
+                    List<SiteRecoveryJobData> array = new List<SiteRecoveryJobData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(JobData.DeserializeJobData(item));
+                        array.Add(SiteRecoveryJobData.DeserializeSiteRecoveryJobData(item));
                     }
                     value = array;
                     continue;

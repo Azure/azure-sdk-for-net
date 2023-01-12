@@ -11,7 +11,10 @@ using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary> Replication protection intent objects collection. </summary>
+    /// <summary>
+    /// Replication protection intent objects collection.
+    /// Serialized Name: ReplicationProtectionIntentCollection
+    /// </summary>
     internal partial class ReplicationProtectionIntentCollection
     {
         /// <summary> Initializes a new instance of ReplicationProtectionIntentCollection. </summary>
@@ -21,17 +24,29 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> Initializes a new instance of ReplicationProtectionIntentCollection. </summary>
-        /// <param name="value"> The Replication protection intent details. </param>
-        /// <param name="nextLink"> The value of next link. </param>
+        /// <param name="value">
+        /// The Replication protection intent details.
+        /// Serialized Name: ReplicationProtectionIntentCollection.value
+        /// </param>
+        /// <param name="nextLink">
+        /// The value of next link.
+        /// Serialized Name: ReplicationProtectionIntentCollection.nextLink
+        /// </param>
         internal ReplicationProtectionIntentCollection(IReadOnlyList<ReplicationProtectionIntentData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
-        /// <summary> The Replication protection intent details. </summary>
+        /// <summary>
+        /// The Replication protection intent details.
+        /// Serialized Name: ReplicationProtectionIntentCollection.value
+        /// </summary>
         public IReadOnlyList<ReplicationProtectionIntentData> Value { get; }
-        /// <summary> The value of next link. </summary>
+        /// <summary>
+        /// The value of next link.
+        /// Serialized Name: ReplicationProtectionIntentCollection.nextLink
+        /// </summary>
         public string NextLink { get; }
     }
 }

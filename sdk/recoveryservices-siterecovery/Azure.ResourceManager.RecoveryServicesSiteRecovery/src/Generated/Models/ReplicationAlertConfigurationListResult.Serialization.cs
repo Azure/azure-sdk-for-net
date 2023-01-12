@@ -12,11 +12,11 @@ using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    internal partial class AlertCollection
+    internal partial class ReplicationAlertConfigurationListResult
     {
-        internal static AlertCollection DeserializeAlertCollection(JsonElement element)
+        internal static ReplicationAlertConfigurationListResult DeserializeReplicationAlertConfigurationListResult(JsonElement element)
         {
-            Optional<IReadOnlyList<AlertData>> value = default;
+            Optional<IReadOnlyList<ReplicationAlertConfigurationData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -27,10 +27,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<AlertData> array = new List<AlertData>();
+                    List<ReplicationAlertConfigurationData> array = new List<ReplicationAlertConfigurationData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AlertData.DeserializeAlertData(item));
+                        array.Add(ReplicationAlertConfigurationData.DeserializeReplicationAlertConfigurationData(item));
                     }
                     value = array;
                     continue;
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     continue;
                 }
             }
-            return new AlertCollection(Optional.ToList(value), nextLink.Value);
+            return new ReplicationAlertConfigurationListResult(Optional.ToList(value), nextLink.Value);
         }
     }
 }

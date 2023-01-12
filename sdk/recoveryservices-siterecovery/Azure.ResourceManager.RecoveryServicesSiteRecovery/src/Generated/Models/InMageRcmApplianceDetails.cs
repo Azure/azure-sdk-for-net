@@ -10,7 +10,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary> InMageRcm appliance details. </summary>
+    /// <summary>
+    /// InMageRcm appliance details.
+    /// Serialized Name: InMageRcmApplianceDetails
+    /// </summary>
     public partial class InMageRcmApplianceDetails
     {
         /// <summary> Initializes a new instance of InMageRcmApplianceDetails. </summary>
@@ -20,17 +23,50 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> Initializes a new instance of InMageRcmApplianceDetails. </summary>
-        /// <param name="id"> The appliance Id. </param>
-        /// <param name="name"> The appliance name. </param>
-        /// <param name="fabricArmId"> The fabric ARM Id. </param>
-        /// <param name="processServer"> The process server. </param>
-        /// <param name="rcmProxy"> The of RCM proxy. </param>
-        /// <param name="pushInstaller"> The push installer. </param>
-        /// <param name="replicationAgent"> The replication agent. </param>
-        /// <param name="reprotectAgent"> The reprotect agent. </param>
-        /// <param name="marsAgent"> The Mars agent. </param>
-        /// <param name="dra"> The DRA. </param>
-        /// <param name="switchProviderBlockingErrorDetails"> The switch provider blocking error information. </param>
+        /// <param name="id">
+        /// The appliance Id.
+        /// Serialized Name: InMageRcmApplianceDetails.id
+        /// </param>
+        /// <param name="name">
+        /// The appliance name.
+        /// Serialized Name: InMageRcmApplianceDetails.name
+        /// </param>
+        /// <param name="fabricArmId">
+        /// The fabric ARM Id.
+        /// Serialized Name: InMageRcmApplianceDetails.fabricArmId
+        /// </param>
+        /// <param name="processServer">
+        /// The process server.
+        /// Serialized Name: InMageRcmApplianceDetails.processServer
+        /// </param>
+        /// <param name="rcmProxy">
+        /// The of RCM proxy.
+        /// Serialized Name: InMageRcmApplianceDetails.rcmProxy
+        /// </param>
+        /// <param name="pushInstaller">
+        /// The push installer.
+        /// Serialized Name: InMageRcmApplianceDetails.pushInstaller
+        /// </param>
+        /// <param name="replicationAgent">
+        /// The replication agent.
+        /// Serialized Name: InMageRcmApplianceDetails.replicationAgent
+        /// </param>
+        /// <param name="reprotectAgent">
+        /// The reprotect agent.
+        /// Serialized Name: InMageRcmApplianceDetails.reprotectAgent
+        /// </param>
+        /// <param name="marsAgent">
+        /// The Mars agent.
+        /// Serialized Name: InMageRcmApplianceDetails.marsAgent
+        /// </param>
+        /// <param name="dra">
+        /// The DRA.
+        /// Serialized Name: InMageRcmApplianceDetails.dra
+        /// </param>
+        /// <param name="switchProviderBlockingErrorDetails">
+        /// The switch provider blocking error information.
+        /// Serialized Name: InMageRcmApplianceDetails.switchProviderBlockingErrorDetails
+        /// </param>
         internal InMageRcmApplianceDetails(string id, string name, string fabricArmId, ProcessServerDetails processServer, RcmProxyDetails rcmProxy, PushInstallerDetails pushInstaller, ReplicationAgentDetails replicationAgent, ReprotectAgentDetails reprotectAgent, MarsAgentDetails marsAgent, DraDetails dra, IReadOnlyList<InMageRcmFabricSwitchProviderBlockingErrorDetails> switchProviderBlockingErrorDetails)
         {
             Id = id;
@@ -46,27 +82,60 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             SwitchProviderBlockingErrorDetails = switchProviderBlockingErrorDetails;
         }
 
-        /// <summary> The appliance Id. </summary>
+        /// <summary>
+        /// The appliance Id.
+        /// Serialized Name: InMageRcmApplianceDetails.id
+        /// </summary>
         public string Id { get; }
-        /// <summary> The appliance name. </summary>
+        /// <summary>
+        /// The appliance name.
+        /// Serialized Name: InMageRcmApplianceDetails.name
+        /// </summary>
         public string Name { get; }
-        /// <summary> The fabric ARM Id. </summary>
+        /// <summary>
+        /// The fabric ARM Id.
+        /// Serialized Name: InMageRcmApplianceDetails.fabricArmId
+        /// </summary>
         public string FabricArmId { get; }
-        /// <summary> The process server. </summary>
+        /// <summary>
+        /// The process server.
+        /// Serialized Name: InMageRcmApplianceDetails.processServer
+        /// </summary>
         public ProcessServerDetails ProcessServer { get; }
-        /// <summary> The of RCM proxy. </summary>
+        /// <summary>
+        /// The of RCM proxy.
+        /// Serialized Name: InMageRcmApplianceDetails.rcmProxy
+        /// </summary>
         public RcmProxyDetails RcmProxy { get; }
-        /// <summary> The push installer. </summary>
+        /// <summary>
+        /// The push installer.
+        /// Serialized Name: InMageRcmApplianceDetails.pushInstaller
+        /// </summary>
         public PushInstallerDetails PushInstaller { get; }
-        /// <summary> The replication agent. </summary>
+        /// <summary>
+        /// The replication agent.
+        /// Serialized Name: InMageRcmApplianceDetails.replicationAgent
+        /// </summary>
         public ReplicationAgentDetails ReplicationAgent { get; }
-        /// <summary> The reprotect agent. </summary>
+        /// <summary>
+        /// The reprotect agent.
+        /// Serialized Name: InMageRcmApplianceDetails.reprotectAgent
+        /// </summary>
         public ReprotectAgentDetails ReprotectAgent { get; }
-        /// <summary> The Mars agent. </summary>
+        /// <summary>
+        /// The Mars agent.
+        /// Serialized Name: InMageRcmApplianceDetails.marsAgent
+        /// </summary>
         public MarsAgentDetails MarsAgent { get; }
-        /// <summary> The DRA. </summary>
+        /// <summary>
+        /// The DRA.
+        /// Serialized Name: InMageRcmApplianceDetails.dra
+        /// </summary>
         public DraDetails Dra { get; }
-        /// <summary> The switch provider blocking error information. </summary>
+        /// <summary>
+        /// The switch provider blocking error information.
+        /// Serialized Name: InMageRcmApplianceDetails.switchProviderBlockingErrorDetails
+        /// </summary>
         public IReadOnlyList<InMageRcmFabricSwitchProviderBlockingErrorDetails> SwitchProviderBlockingErrorDetails { get; }
     }
 }

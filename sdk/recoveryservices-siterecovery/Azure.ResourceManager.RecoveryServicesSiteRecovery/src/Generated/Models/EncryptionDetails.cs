@@ -9,7 +9,10 @@ using System;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary> Encryption details for the fabric. </summary>
+    /// <summary>
+    /// Encryption details for the fabric.
+    /// Serialized Name: EncryptionDetails
+    /// </summary>
     public partial class EncryptionDetails
     {
         /// <summary> Initializes a new instance of EncryptionDetails. </summary>
@@ -18,9 +21,18 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> Initializes a new instance of EncryptionDetails. </summary>
-        /// <param name="kekState"> The key encryption key state for the Vmm. </param>
-        /// <param name="kekCertThumbprint"> The key encryption key certificate thumbprint. </param>
-        /// <param name="kekCertExpiryOn"> The key encryption key certificate expiry date. </param>
+        /// <param name="kekState">
+        /// The key encryption key state for the Vmm.
+        /// Serialized Name: EncryptionDetails.kekState
+        /// </param>
+        /// <param name="kekCertThumbprint">
+        /// The key encryption key certificate thumbprint.
+        /// Serialized Name: EncryptionDetails.kekCertThumbprint
+        /// </param>
+        /// <param name="kekCertExpiryOn">
+        /// The key encryption key certificate expiry date.
+        /// Serialized Name: EncryptionDetails.kekCertExpiryDate
+        /// </param>
         internal EncryptionDetails(string kekState, string kekCertThumbprint, DateTimeOffset? kekCertExpiryOn)
         {
             KekState = kekState;
@@ -28,11 +40,20 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             KekCertExpiryOn = kekCertExpiryOn;
         }
 
-        /// <summary> The key encryption key state for the Vmm. </summary>
+        /// <summary>
+        /// The key encryption key state for the Vmm.
+        /// Serialized Name: EncryptionDetails.kekState
+        /// </summary>
         public string KekState { get; }
-        /// <summary> The key encryption key certificate thumbprint. </summary>
+        /// <summary>
+        /// The key encryption key certificate thumbprint.
+        /// Serialized Name: EncryptionDetails.kekCertThumbprint
+        /// </summary>
         public string KekCertThumbprint { get; }
-        /// <summary> The key encryption key certificate expiry date. </summary>
+        /// <summary>
+        /// The key encryption key certificate expiry date.
+        /// Serialized Name: EncryptionDetails.kekCertExpiryDate
+        /// </summary>
         public DateTimeOffset? KekCertExpiryOn { get; }
     }
 }

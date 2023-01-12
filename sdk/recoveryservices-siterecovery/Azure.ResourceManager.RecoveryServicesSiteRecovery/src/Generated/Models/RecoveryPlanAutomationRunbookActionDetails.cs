@@ -7,11 +7,17 @@
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary> Recovery plan Automation runbook action details. </summary>
+    /// <summary>
+    /// Recovery plan Automation runbook action details.
+    /// Serialized Name: RecoveryPlanAutomationRunbookActionDetails
+    /// </summary>
     public partial class RecoveryPlanAutomationRunbookActionDetails : RecoveryPlanActionDetails
     {
         /// <summary> Initializes a new instance of RecoveryPlanAutomationRunbookActionDetails. </summary>
-        /// <param name="fabricLocation"> The fabric location. </param>
+        /// <param name="fabricLocation">
+        /// The fabric location.
+        /// Serialized Name: RecoveryPlanAutomationRunbookActionDetails.fabricLocation
+        /// </param>
         public RecoveryPlanAutomationRunbookActionDetails(RecoveryPlanActionLocation fabricLocation)
         {
             FabricLocation = fabricLocation;
@@ -19,10 +25,22 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> Initializes a new instance of RecoveryPlanAutomationRunbookActionDetails. </summary>
-        /// <param name="instanceType"> Gets the type of action details (see RecoveryPlanActionDetailsTypes enum for possible values). </param>
-        /// <param name="runbookId"> The runbook ARM Id. </param>
-        /// <param name="timeout"> The runbook timeout. </param>
-        /// <param name="fabricLocation"> The fabric location. </param>
+        /// <param name="instanceType">
+        /// Gets the type of action details (see RecoveryPlanActionDetailsTypes enum for possible values).
+        /// Serialized Name: RecoveryPlanActionDetails.instanceType
+        /// </param>
+        /// <param name="runbookId">
+        /// The runbook ARM Id.
+        /// Serialized Name: RecoveryPlanAutomationRunbookActionDetails.runbookId
+        /// </param>
+        /// <param name="timeout">
+        /// The runbook timeout.
+        /// Serialized Name: RecoveryPlanAutomationRunbookActionDetails.timeout
+        /// </param>
+        /// <param name="fabricLocation">
+        /// The fabric location.
+        /// Serialized Name: RecoveryPlanAutomationRunbookActionDetails.fabricLocation
+        /// </param>
         internal RecoveryPlanAutomationRunbookActionDetails(string instanceType, string runbookId, string timeout, RecoveryPlanActionLocation fabricLocation) : base(instanceType)
         {
             RunbookId = runbookId;
@@ -31,11 +49,20 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             InstanceType = instanceType ?? "AutomationRunbookActionDetails";
         }
 
-        /// <summary> The runbook ARM Id. </summary>
+        /// <summary>
+        /// The runbook ARM Id.
+        /// Serialized Name: RecoveryPlanAutomationRunbookActionDetails.runbookId
+        /// </summary>
         public string RunbookId { get; set; }
-        /// <summary> The runbook timeout. </summary>
+        /// <summary>
+        /// The runbook timeout.
+        /// Serialized Name: RecoveryPlanAutomationRunbookActionDetails.timeout
+        /// </summary>
         public string Timeout { get; set; }
-        /// <summary> The fabric location. </summary>
+        /// <summary>
+        /// The fabric location.
+        /// Serialized Name: RecoveryPlanAutomationRunbookActionDetails.fabricLocation
+        /// </summary>
         public RecoveryPlanActionLocation FabricLocation { get; set; }
     }
 }

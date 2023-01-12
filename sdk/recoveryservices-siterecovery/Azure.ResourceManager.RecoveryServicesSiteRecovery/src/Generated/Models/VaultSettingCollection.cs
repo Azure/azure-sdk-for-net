@@ -11,7 +11,10 @@ using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary> Vault setting collection. </summary>
+    /// <summary>
+    /// Vault setting collection.
+    /// Serialized Name: VaultSettingCollection
+    /// </summary>
     internal partial class VaultSettingCollection
     {
         /// <summary> Initializes a new instance of VaultSettingCollection. </summary>
@@ -21,17 +24,29 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> Initializes a new instance of VaultSettingCollection. </summary>
-        /// <param name="value"> The list of vault setting. </param>
-        /// <param name="nextLink"> The value of next link. </param>
+        /// <param name="value">
+        /// The list of vault setting.
+        /// Serialized Name: VaultSettingCollection.value
+        /// </param>
+        /// <param name="nextLink">
+        /// The value of next link.
+        /// Serialized Name: VaultSettingCollection.nextLink
+        /// </param>
         internal VaultSettingCollection(IReadOnlyList<VaultSettingData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
-        /// <summary> The list of vault setting. </summary>
+        /// <summary>
+        /// The list of vault setting.
+        /// Serialized Name: VaultSettingCollection.value
+        /// </summary>
         public IReadOnlyList<VaultSettingData> Value { get; }
-        /// <summary> The value of next link. </summary>
+        /// <summary>
+        /// The value of next link.
+        /// Serialized Name: VaultSettingCollection.nextLink
+        /// </summary>
         public string NextLink { get; }
     }
 }

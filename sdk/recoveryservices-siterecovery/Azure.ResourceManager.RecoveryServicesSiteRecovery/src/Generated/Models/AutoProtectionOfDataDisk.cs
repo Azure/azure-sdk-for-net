@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary> A value indicating whether the auto protection is enabled. </summary>
+    /// <summary>
+    /// A value indicating whether the auto protection is enabled.
+    /// Serialized Name: AutoProtectionOfDataDisk
+    /// </summary>
     public readonly partial struct AutoProtectionOfDataDisk : IEquatable<AutoProtectionOfDataDisk>
     {
         private readonly string _value;
@@ -25,9 +28,15 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         private const string DisabledValue = "Disabled";
         private const string EnabledValue = "Enabled";
 
-        /// <summary> Disabled. </summary>
+        /// <summary>
+        /// Disabled
+        /// Serialized Name: AutoProtectionOfDataDisk.Disabled
+        /// </summary>
         public static AutoProtectionOfDataDisk Disabled { get; } = new AutoProtectionOfDataDisk(DisabledValue);
-        /// <summary> Enabled. </summary>
+        /// <summary>
+        /// Enabled
+        /// Serialized Name: AutoProtectionOfDataDisk.Enabled
+        /// </summary>
         public static AutoProtectionOfDataDisk Enabled { get; } = new AutoProtectionOfDataDisk(EnabledValue);
         /// <summary> Determines if two <see cref="AutoProtectionOfDataDisk"/> values are the same. </summary>
         public static bool operator ==(AutoProtectionOfDataDisk left, AutoProtectionOfDataDisk right) => left.Equals(right);

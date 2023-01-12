@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary> License type. </summary>
+    /// <summary>
+    /// License type.
+    /// Serialized Name: LicenseType
+    /// </summary>
     public readonly partial struct LicenseType : IEquatable<LicenseType>
     {
         private readonly string _value;
@@ -26,11 +29,20 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         private const string NoLicenseTypeValue = "NoLicenseType";
         private const string WindowsServerValue = "WindowsServer";
 
-        /// <summary> NotSpecified. </summary>
+        /// <summary>
+        /// NotSpecified
+        /// Serialized Name: LicenseType.NotSpecified
+        /// </summary>
         public static LicenseType NotSpecified { get; } = new LicenseType(NotSpecifiedValue);
-        /// <summary> NoLicenseType. </summary>
+        /// <summary>
+        /// NoLicenseType
+        /// Serialized Name: LicenseType.NoLicenseType
+        /// </summary>
         public static LicenseType NoLicenseType { get; } = new LicenseType(NoLicenseTypeValue);
-        /// <summary> WindowsServer. </summary>
+        /// <summary>
+        /// WindowsServer
+        /// Serialized Name: LicenseType.WindowsServer
+        /// </summary>
         public static LicenseType WindowsServer { get; } = new LicenseType(WindowsServerValue);
         /// <summary> Determines if two <see cref="LicenseType"/> values are the same. </summary>
         public static bool operator ==(LicenseType left, LicenseType right) => left.Equals(right);

@@ -9,7 +9,10 @@ using System;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary> Failover details for a replication protected item. </summary>
+    /// <summary>
+    /// Failover details for a replication protected item.
+    /// Serialized Name: FailoverReplicationProtectedItemDetails
+    /// </summary>
     public partial class FailoverReplicationProtectedItemDetails
     {
         /// <summary> Initializes a new instance of FailoverReplicationProtectedItemDetails. </summary>
@@ -18,15 +21,42 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> Initializes a new instance of FailoverReplicationProtectedItemDetails. </summary>
-        /// <param name="name"> The name. </param>
-        /// <param name="friendlyName"> The friendly name. </param>
-        /// <param name="testVmName"> The test Vm name. </param>
-        /// <param name="testVmFriendlyName"> The test Vm friendly name. </param>
-        /// <param name="networkConnectionStatus"> The network connection status. </param>
-        /// <param name="networkFriendlyName"> The network friendly name. </param>
-        /// <param name="subnet"> The network subnet. </param>
-        /// <param name="recoveryPointId"> The recovery point Id. </param>
-        /// <param name="recoveryPointOn"> The recovery point time. </param>
+        /// <param name="name">
+        /// The name.
+        /// Serialized Name: FailoverReplicationProtectedItemDetails.name
+        /// </param>
+        /// <param name="friendlyName">
+        /// The friendly name.
+        /// Serialized Name: FailoverReplicationProtectedItemDetails.friendlyName
+        /// </param>
+        /// <param name="testVmName">
+        /// The test Vm name.
+        /// Serialized Name: FailoverReplicationProtectedItemDetails.testVmName
+        /// </param>
+        /// <param name="testVmFriendlyName">
+        /// The test Vm friendly name.
+        /// Serialized Name: FailoverReplicationProtectedItemDetails.testVmFriendlyName
+        /// </param>
+        /// <param name="networkConnectionStatus">
+        /// The network connection status.
+        /// Serialized Name: FailoverReplicationProtectedItemDetails.networkConnectionStatus
+        /// </param>
+        /// <param name="networkFriendlyName">
+        /// The network friendly name.
+        /// Serialized Name: FailoverReplicationProtectedItemDetails.networkFriendlyName
+        /// </param>
+        /// <param name="subnet">
+        /// The network subnet.
+        /// Serialized Name: FailoverReplicationProtectedItemDetails.subnet
+        /// </param>
+        /// <param name="recoveryPointId">
+        /// The recovery point Id.
+        /// Serialized Name: FailoverReplicationProtectedItemDetails.recoveryPointId
+        /// </param>
+        /// <param name="recoveryPointOn">
+        /// The recovery point time.
+        /// Serialized Name: FailoverReplicationProtectedItemDetails.recoveryPointTime
+        /// </param>
         internal FailoverReplicationProtectedItemDetails(string name, string friendlyName, string testVmName, string testVmFriendlyName, string networkConnectionStatus, string networkFriendlyName, string subnet, string recoveryPointId, DateTimeOffset? recoveryPointOn)
         {
             Name = name;
@@ -40,23 +70,50 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             RecoveryPointOn = recoveryPointOn;
         }
 
-        /// <summary> The name. </summary>
+        /// <summary>
+        /// The name.
+        /// Serialized Name: FailoverReplicationProtectedItemDetails.name
+        /// </summary>
         public string Name { get; }
-        /// <summary> The friendly name. </summary>
+        /// <summary>
+        /// The friendly name.
+        /// Serialized Name: FailoverReplicationProtectedItemDetails.friendlyName
+        /// </summary>
         public string FriendlyName { get; }
-        /// <summary> The test Vm name. </summary>
+        /// <summary>
+        /// The test Vm name.
+        /// Serialized Name: FailoverReplicationProtectedItemDetails.testVmName
+        /// </summary>
         public string TestVmName { get; }
-        /// <summary> The test Vm friendly name. </summary>
+        /// <summary>
+        /// The test Vm friendly name.
+        /// Serialized Name: FailoverReplicationProtectedItemDetails.testVmFriendlyName
+        /// </summary>
         public string TestVmFriendlyName { get; }
-        /// <summary> The network connection status. </summary>
+        /// <summary>
+        /// The network connection status.
+        /// Serialized Name: FailoverReplicationProtectedItemDetails.networkConnectionStatus
+        /// </summary>
         public string NetworkConnectionStatus { get; }
-        /// <summary> The network friendly name. </summary>
+        /// <summary>
+        /// The network friendly name.
+        /// Serialized Name: FailoverReplicationProtectedItemDetails.networkFriendlyName
+        /// </summary>
         public string NetworkFriendlyName { get; }
-        /// <summary> The network subnet. </summary>
+        /// <summary>
+        /// The network subnet.
+        /// Serialized Name: FailoverReplicationProtectedItemDetails.subnet
+        /// </summary>
         public string Subnet { get; }
-        /// <summary> The recovery point Id. </summary>
+        /// <summary>
+        /// The recovery point Id.
+        /// Serialized Name: FailoverReplicationProtectedItemDetails.recoveryPointId
+        /// </summary>
         public string RecoveryPointId { get; }
-        /// <summary> The recovery point time. </summary>
+        /// <summary>
+        /// The recovery point time.
+        /// Serialized Name: FailoverReplicationProtectedItemDetails.recoveryPointTime
+        /// </summary>
         public DateTimeOffset? RecoveryPointOn { get; }
     }
 }

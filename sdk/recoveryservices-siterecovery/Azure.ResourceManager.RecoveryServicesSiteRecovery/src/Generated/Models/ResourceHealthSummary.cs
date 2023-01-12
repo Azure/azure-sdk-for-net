@@ -10,7 +10,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary> Base class to define the health summary of the resources contained under an Arm resource. </summary>
+    /// <summary>
+    /// Base class to define the health summary of the resources contained under an Arm resource.
+    /// Serialized Name: ResourceHealthSummary
+    /// </summary>
     public partial class ResourceHealthSummary
     {
         /// <summary> Initializes a new instance of ResourceHealthSummary. </summary>
@@ -21,9 +24,18 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> Initializes a new instance of ResourceHealthSummary. </summary>
-        /// <param name="resourceCount"> The count of total resources under the container. </param>
-        /// <param name="issues"> The list of summary of health errors across the resources under the container. </param>
-        /// <param name="categorizedResourceCounts"> The categorized resource counts. </param>
+        /// <param name="resourceCount">
+        /// The count of total resources under the container.
+        /// Serialized Name: ResourceHealthSummary.resourceCount
+        /// </param>
+        /// <param name="issues">
+        /// The list of summary of health errors across the resources under the container.
+        /// Serialized Name: ResourceHealthSummary.issues
+        /// </param>
+        /// <param name="categorizedResourceCounts">
+        /// The categorized resource counts.
+        /// Serialized Name: ResourceHealthSummary.categorizedResourceCounts
+        /// </param>
         internal ResourceHealthSummary(int? resourceCount, IReadOnlyList<HealthErrorSummary> issues, IReadOnlyDictionary<string, int> categorizedResourceCounts)
         {
             ResourceCount = resourceCount;
@@ -31,11 +43,20 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             CategorizedResourceCounts = categorizedResourceCounts;
         }
 
-        /// <summary> The count of total resources under the container. </summary>
+        /// <summary>
+        /// The count of total resources under the container.
+        /// Serialized Name: ResourceHealthSummary.resourceCount
+        /// </summary>
         public int? ResourceCount { get; }
-        /// <summary> The list of summary of health errors across the resources under the container. </summary>
+        /// <summary>
+        /// The list of summary of health errors across the resources under the container.
+        /// Serialized Name: ResourceHealthSummary.issues
+        /// </summary>
         public IReadOnlyList<HealthErrorSummary> Issues { get; }
-        /// <summary> The categorized resource counts. </summary>
+        /// <summary>
+        /// The categorized resource counts.
+        /// Serialized Name: ResourceHealthSummary.categorizedResourceCounts
+        /// </summary>
         public IReadOnlyDictionary<string, int> CategorizedResourceCounts { get; }
     }
 }

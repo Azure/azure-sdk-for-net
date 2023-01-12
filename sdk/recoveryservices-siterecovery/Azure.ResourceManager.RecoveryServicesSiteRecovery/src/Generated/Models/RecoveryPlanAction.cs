@@ -12,15 +12,28 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary> Recovery plan action details. </summary>
+    /// <summary>
+    /// Recovery plan action details.
+    /// Serialized Name: RecoveryPlanAction
+    /// </summary>
     public partial class RecoveryPlanAction
     {
         /// <summary> Initializes a new instance of RecoveryPlanAction. </summary>
-        /// <param name="actionName"> The action name. </param>
-        /// <param name="failoverTypes"> The list of failover types. </param>
-        /// <param name="failoverDirections"> The list of failover directions. </param>
+        /// <param name="actionName">
+        /// The action name.
+        /// Serialized Name: RecoveryPlanAction.actionName
+        /// </param>
+        /// <param name="failoverTypes">
+        /// The list of failover types.
+        /// Serialized Name: RecoveryPlanAction.failoverTypes
+        /// </param>
+        /// <param name="failoverDirections">
+        /// The list of failover directions.
+        /// Serialized Name: RecoveryPlanAction.failoverDirections
+        /// </param>
         /// <param name="customDetails">
         /// The custom details.
+        /// Serialized Name: RecoveryPlanAction.customDetails
         /// Please note <see cref="RecoveryPlanActionDetails"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="RecoveryPlanAutomationRunbookActionDetails"/>, <see cref="RecoveryPlanManualActionDetails"/> and <see cref="RecoveryPlanScriptActionDetails"/>.
         /// </param>
@@ -39,11 +52,21 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> Initializes a new instance of RecoveryPlanAction. </summary>
-        /// <param name="actionName"> The action name. </param>
-        /// <param name="failoverTypes"> The list of failover types. </param>
-        /// <param name="failoverDirections"> The list of failover directions. </param>
+        /// <param name="actionName">
+        /// The action name.
+        /// Serialized Name: RecoveryPlanAction.actionName
+        /// </param>
+        /// <param name="failoverTypes">
+        /// The list of failover types.
+        /// Serialized Name: RecoveryPlanAction.failoverTypes
+        /// </param>
+        /// <param name="failoverDirections">
+        /// The list of failover directions.
+        /// Serialized Name: RecoveryPlanAction.failoverDirections
+        /// </param>
         /// <param name="customDetails">
         /// The custom details.
+        /// Serialized Name: RecoveryPlanAction.customDetails
         /// Please note <see cref="RecoveryPlanActionDetails"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="RecoveryPlanAutomationRunbookActionDetails"/>, <see cref="RecoveryPlanManualActionDetails"/> and <see cref="RecoveryPlanScriptActionDetails"/>.
         /// </param>
@@ -55,14 +78,24 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             CustomDetails = customDetails;
         }
 
-        /// <summary> The action name. </summary>
+        /// <summary>
+        /// The action name.
+        /// Serialized Name: RecoveryPlanAction.actionName
+        /// </summary>
         public string ActionName { get; set; }
-        /// <summary> The list of failover types. </summary>
+        /// <summary>
+        /// The list of failover types.
+        /// Serialized Name: RecoveryPlanAction.failoverTypes
+        /// </summary>
         public IList<ReplicationProtectedItemOperation> FailoverTypes { get; }
-        /// <summary> The list of failover directions. </summary>
+        /// <summary>
+        /// The list of failover directions.
+        /// Serialized Name: RecoveryPlanAction.failoverDirections
+        /// </summary>
         public IList<PossibleOperationsDirection> FailoverDirections { get; }
         /// <summary>
         /// The custom details.
+        /// Serialized Name: RecoveryPlanAction.customDetails
         /// Please note <see cref="RecoveryPlanActionDetails"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="RecoveryPlanAutomationRunbookActionDetails"/>, <see cref="RecoveryPlanManualActionDetails"/> and <see cref="RecoveryPlanScriptActionDetails"/>.
         /// </summary>

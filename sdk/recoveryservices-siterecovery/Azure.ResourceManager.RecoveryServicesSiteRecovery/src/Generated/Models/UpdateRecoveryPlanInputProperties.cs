@@ -10,7 +10,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary> Recovery plan update properties. </summary>
+    /// <summary>
+    /// Recovery plan update properties.
+    /// Serialized Name: UpdateRecoveryPlanInputProperties
+    /// </summary>
     internal partial class UpdateRecoveryPlanInputProperties
     {
         /// <summary> Initializes a new instance of UpdateRecoveryPlanInputProperties. </summary>
@@ -19,7 +22,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             Groups = new ChangeTrackingList<RecoveryPlanGroup>();
         }
 
-        /// <summary> The recovery plan groups. </summary>
+        /// <summary>
+        /// The recovery plan groups.
+        /// Serialized Name: UpdateRecoveryPlanInputProperties.groups
+        /// </summary>
         public IList<RecoveryPlanGroup> Groups { get; }
     }
 }

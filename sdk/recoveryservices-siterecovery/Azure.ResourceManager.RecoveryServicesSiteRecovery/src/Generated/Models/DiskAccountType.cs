@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary> The DiskType. </summary>
+    /// <summary>
+    /// The DiskType.
+    /// Serialized Name: DiskAccountType
+    /// </summary>
     public readonly partial struct DiskAccountType : IEquatable<DiskAccountType>
     {
         private readonly string _value;
@@ -26,11 +29,20 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         private const string PremiumLrsValue = "Premium_LRS";
         private const string StandardSsdLrsValue = "StandardSSD_LRS";
 
-        /// <summary> Standard_LRS. </summary>
+        /// <summary>
+        /// Standard_LRS
+        /// Serialized Name: DiskAccountType.Standard_LRS
+        /// </summary>
         public static DiskAccountType StandardLrs { get; } = new DiskAccountType(StandardLrsValue);
-        /// <summary> Premium_LRS. </summary>
+        /// <summary>
+        /// Premium_LRS
+        /// Serialized Name: DiskAccountType.Premium_LRS
+        /// </summary>
         public static DiskAccountType PremiumLrs { get; } = new DiskAccountType(PremiumLrsValue);
-        /// <summary> StandardSSD_LRS. </summary>
+        /// <summary>
+        /// StandardSSD_LRS
+        /// Serialized Name: DiskAccountType.StandardSSD_LRS
+        /// </summary>
         public static DiskAccountType StandardSsdLrs { get; } = new DiskAccountType(StandardSsdLrsValue);
         /// <summary> Determines if two <see cref="DiskAccountType"/> values are the same. </summary>
         public static bool operator ==(DiskAccountType left, DiskAccountType right) => left.Equals(right);

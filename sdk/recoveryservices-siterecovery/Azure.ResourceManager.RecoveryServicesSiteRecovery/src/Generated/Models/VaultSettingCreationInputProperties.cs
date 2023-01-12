@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary> Input to create vault setting. </summary>
+    /// <summary>
+    /// Input to create vault setting.
+    /// Serialized Name: VaultSettingCreationInputProperties
+    /// </summary>
     public partial class VaultSettingCreationInputProperties
     {
         /// <summary> Initializes a new instance of VaultSettingCreationInputProperties. </summary>
@@ -15,9 +18,15 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         {
         }
 
-        /// <summary> The migration solution Id. </summary>
+        /// <summary>
+        /// The migration solution Id.
+        /// Serialized Name: VaultSettingCreationInputProperties.migrationSolutionId
+        /// </summary>
         public string MigrationSolutionId { get; set; }
-        /// <summary> VMware to Azure provider type. </summary>
+        /// <summary>
+        /// VMware to Azure provider type.
+        /// Serialized Name: VaultSettingCreationInputProperties.vmwareToAzureProviderType
+        /// </summary>
         public string VMwareToAzureProviderType { get; set; }
     }
 }

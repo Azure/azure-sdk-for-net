@@ -9,7 +9,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary> This class represents details for switch protection job. </summary>
+    /// <summary>
+    /// This class represents details for switch protection job.
+    /// Serialized Name: SwitchProtectionJobDetails
+    /// </summary>
     public partial class SwitchProtectionJobDetails : JobDetails
     {
         /// <summary> Initializes a new instance of SwitchProtectionJobDetails. </summary>
@@ -19,16 +22,28 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> Initializes a new instance of SwitchProtectionJobDetails. </summary>
-        /// <param name="instanceType"> Gets the type of job details (see JobDetailsTypes enum for possible values). </param>
-        /// <param name="affectedObjectDetails"> The affected object properties like source server, source cloud, target server, target cloud etc. based on the workflow object details. </param>
-        /// <param name="newReplicationProtectedItemId"> ARM Id of the new replication protected item. </param>
+        /// <param name="instanceType">
+        /// Gets the type of job details (see JobDetailsTypes enum for possible values).
+        /// Serialized Name: JobDetails.instanceType
+        /// </param>
+        /// <param name="affectedObjectDetails">
+        /// The affected object properties like source server, source cloud, target server, target cloud etc. based on the workflow object details.
+        /// Serialized Name: JobDetails.affectedObjectDetails
+        /// </param>
+        /// <param name="newReplicationProtectedItemId">
+        /// ARM Id of the new replication protected item.
+        /// Serialized Name: SwitchProtectionJobDetails.newReplicationProtectedItemId
+        /// </param>
         internal SwitchProtectionJobDetails(string instanceType, IReadOnlyDictionary<string, string> affectedObjectDetails, string newReplicationProtectedItemId) : base(instanceType, affectedObjectDetails)
         {
             NewReplicationProtectedItemId = newReplicationProtectedItemId;
             InstanceType = instanceType ?? "SwitchProtectionJobDetails";
         }
 
-        /// <summary> ARM Id of the new replication protected item. </summary>
+        /// <summary>
+        /// ARM Id of the new replication protected item.
+        /// Serialized Name: SwitchProtectionJobDetails.newReplicationProtectedItemId
+        /// </summary>
         public string NewReplicationProtectedItemId { get; }
     }
 }

@@ -7,24 +7,42 @@
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary> VMWare Azure specific protection profile Input. </summary>
+    /// <summary>
+    /// VMWare Azure specific protection profile Input.
+    /// Serialized Name: InMagePolicyInput
+    /// </summary>
     public partial class InMagePolicyInput : PolicyProviderSpecificInput
     {
         /// <summary> Initializes a new instance of InMagePolicyInput. </summary>
-        /// <param name="multiVmSyncStatus"> A value indicating whether multi-VM sync has to be enabled. Value should be &apos;Enabled&apos; or &apos;Disabled&apos;. </param>
+        /// <param name="multiVmSyncStatus">
+        /// A value indicating whether multi-VM sync has to be enabled. Value should be &apos;Enabled&apos; or &apos;Disabled&apos;.
+        /// Serialized Name: InMagePolicyInput.multiVmSyncStatus
+        /// </param>
         public InMagePolicyInput(SetMultiVmSyncStatus multiVmSyncStatus)
         {
             MultiVmSyncStatus = multiVmSyncStatus;
             InstanceType = "InMage";
         }
 
-        /// <summary> The recovery point threshold in minutes. </summary>
+        /// <summary>
+        /// The recovery point threshold in minutes.
+        /// Serialized Name: InMagePolicyInput.recoveryPointThresholdInMinutes
+        /// </summary>
         public int? RecoveryPointThresholdInMinutes { get; set; }
-        /// <summary> The duration in minutes until which the recovery points need to be stored. </summary>
+        /// <summary>
+        /// The duration in minutes until which the recovery points need to be stored.
+        /// Serialized Name: InMagePolicyInput.recoveryPointHistory
+        /// </summary>
         public int? RecoveryPointHistory { get; set; }
-        /// <summary> The app consistent snapshot frequency (in minutes). </summary>
+        /// <summary>
+        /// The app consistent snapshot frequency (in minutes).
+        /// Serialized Name: InMagePolicyInput.appConsistentFrequencyInMinutes
+        /// </summary>
         public int? AppConsistentFrequencyInMinutes { get; set; }
-        /// <summary> A value indicating whether multi-VM sync has to be enabled. Value should be &apos;Enabled&apos; or &apos;Disabled&apos;. </summary>
+        /// <summary>
+        /// A value indicating whether multi-VM sync has to be enabled. Value should be &apos;Enabled&apos; or &apos;Disabled&apos;.
+        /// Serialized Name: InMagePolicyInput.multiVmSyncStatus
+        /// </summary>
         public SetMultiVmSyncStatus MultiVmSyncStatus { get; }
     }
 }

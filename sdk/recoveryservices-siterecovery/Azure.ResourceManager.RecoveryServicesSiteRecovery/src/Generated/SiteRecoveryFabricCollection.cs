@@ -21,33 +21,33 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
 {
     /// <summary>
-    /// A class representing a collection of <see cref="FabricResource" /> and their operations.
-    /// Each <see cref="FabricResource" /> in the collection will belong to the same instance of <see cref="ResourceGroupResource" />.
-    /// To get a <see cref="FabricCollection" /> instance call the GetFabrics method from an instance of <see cref="ResourceGroupResource" />.
+    /// A class representing a collection of <see cref="SiteRecoveryFabricResource" /> and their operations.
+    /// Each <see cref="SiteRecoveryFabricResource" /> in the collection will belong to the same instance of <see cref="ResourceGroupResource" />.
+    /// To get a <see cref="SiteRecoveryFabricCollection" /> instance call the GetSiteRecoveryFabrics method from an instance of <see cref="ResourceGroupResource" />.
     /// </summary>
-    public partial class FabricCollection : ArmCollection, IEnumerable<FabricResource>, IAsyncEnumerable<FabricResource>
+    public partial class SiteRecoveryFabricCollection : ArmCollection, IEnumerable<SiteRecoveryFabricResource>, IAsyncEnumerable<SiteRecoveryFabricResource>
     {
-        private readonly ClientDiagnostics _fabricReplicationFabricsClientDiagnostics;
-        private readonly ReplicationFabricsRestOperations _fabricReplicationFabricsRestClient;
+        private readonly ClientDiagnostics _siteRecoveryFabricReplicationFabricsClientDiagnostics;
+        private readonly ReplicationFabricsRestOperations _siteRecoveryFabricReplicationFabricsRestClient;
         private readonly string _resourceName;
 
-        /// <summary> Initializes a new instance of the <see cref="FabricCollection"/> class for mocking. </summary>
-        protected FabricCollection()
+        /// <summary> Initializes a new instance of the <see cref="SiteRecoveryFabricCollection"/> class for mocking. </summary>
+        protected SiteRecoveryFabricCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="FabricCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="SiteRecoveryFabricCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         /// <param name="resourceName"> The name of the recovery services vault. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        internal FabricCollection(ArmClient client, ResourceIdentifier id, string resourceName) : base(client, id)
+        internal SiteRecoveryFabricCollection(ArmClient client, ResourceIdentifier id, string resourceName) : base(client, id)
         {
             _resourceName = resourceName;
-            _fabricReplicationFabricsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.RecoveryServicesSiteRecovery", FabricResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(FabricResource.ResourceType, out string fabricReplicationFabricsApiVersion);
-            _fabricReplicationFabricsRestClient = new ReplicationFabricsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, fabricReplicationFabricsApiVersion);
+            _siteRecoveryFabricReplicationFabricsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.RecoveryServicesSiteRecovery", SiteRecoveryFabricResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(SiteRecoveryFabricResource.ResourceType, out string siteRecoveryFabricReplicationFabricsApiVersion);
+            _siteRecoveryFabricReplicationFabricsRestClient = new ReplicationFabricsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, siteRecoveryFabricReplicationFabricsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -70,17 +70,17 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="fabricName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="fabricName"/> or <paramref name="content"/> is null. </exception>
-        public virtual async Task<ArmOperation<FabricResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string fabricName, FabricCreateOrUpdateContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<SiteRecoveryFabricResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string fabricName, SiteRecoveryFabricCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(fabricName, nameof(fabricName));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _fabricReplicationFabricsClientDiagnostics.CreateScope("FabricCollection.CreateOrUpdate");
+            using var scope = _siteRecoveryFabricReplicationFabricsClientDiagnostics.CreateScope("SiteRecoveryFabricCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _fabricReplicationFabricsRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, _resourceName, fabricName, content, cancellationToken).ConfigureAwait(false);
-                var operation = new RecoveryServicesSiteRecoveryArmOperation<FabricResource>(new FabricOperationSource(Client), _fabricReplicationFabricsClientDiagnostics, Pipeline, _fabricReplicationFabricsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, _resourceName, fabricName, content).Request, response, OperationFinalStateVia.Location);
+                var response = await _siteRecoveryFabricReplicationFabricsRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, _resourceName, fabricName, content, cancellationToken).ConfigureAwait(false);
+                var operation = new RecoveryServicesSiteRecoveryArmOperation<SiteRecoveryFabricResource>(new SiteRecoveryFabricOperationSource(Client), _siteRecoveryFabricReplicationFabricsClientDiagnostics, Pipeline, _siteRecoveryFabricReplicationFabricsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, _resourceName, fabricName, content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -103,17 +103,17 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="fabricName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="fabricName"/> or <paramref name="content"/> is null. </exception>
-        public virtual ArmOperation<FabricResource> CreateOrUpdate(WaitUntil waitUntil, string fabricName, FabricCreateOrUpdateContent content, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<SiteRecoveryFabricResource> CreateOrUpdate(WaitUntil waitUntil, string fabricName, SiteRecoveryFabricCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(fabricName, nameof(fabricName));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _fabricReplicationFabricsClientDiagnostics.CreateScope("FabricCollection.CreateOrUpdate");
+            using var scope = _siteRecoveryFabricReplicationFabricsClientDiagnostics.CreateScope("SiteRecoveryFabricCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _fabricReplicationFabricsRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, _resourceName, fabricName, content, cancellationToken);
-                var operation = new RecoveryServicesSiteRecoveryArmOperation<FabricResource>(new FabricOperationSource(Client), _fabricReplicationFabricsClientDiagnostics, Pipeline, _fabricReplicationFabricsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, _resourceName, fabricName, content).Request, response, OperationFinalStateVia.Location);
+                var response = _siteRecoveryFabricReplicationFabricsRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, _resourceName, fabricName, content, cancellationToken);
+                var operation = new RecoveryServicesSiteRecoveryArmOperation<SiteRecoveryFabricResource>(new SiteRecoveryFabricOperationSource(Client), _siteRecoveryFabricReplicationFabricsClientDiagnostics, Pipeline, _siteRecoveryFabricReplicationFabricsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, _resourceName, fabricName, content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -135,18 +135,18 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="fabricName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="fabricName"/> is null. </exception>
-        public virtual async Task<Response<FabricResource>> GetAsync(string fabricName, string filter = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SiteRecoveryFabricResource>> GetAsync(string fabricName, string filter = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(fabricName, nameof(fabricName));
 
-            using var scope = _fabricReplicationFabricsClientDiagnostics.CreateScope("FabricCollection.Get");
+            using var scope = _siteRecoveryFabricReplicationFabricsClientDiagnostics.CreateScope("SiteRecoveryFabricCollection.Get");
             scope.Start();
             try
             {
-                var response = await _fabricReplicationFabricsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, _resourceName, fabricName, filter, cancellationToken).ConfigureAwait(false);
+                var response = await _siteRecoveryFabricReplicationFabricsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, _resourceName, fabricName, filter, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new FabricResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SiteRecoveryFabricResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -165,18 +165,18 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="fabricName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="fabricName"/> is null. </exception>
-        public virtual Response<FabricResource> Get(string fabricName, string filter = null, CancellationToken cancellationToken = default)
+        public virtual Response<SiteRecoveryFabricResource> Get(string fabricName, string filter = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(fabricName, nameof(fabricName));
 
-            using var scope = _fabricReplicationFabricsClientDiagnostics.CreateScope("FabricCollection.Get");
+            using var scope = _siteRecoveryFabricReplicationFabricsClientDiagnostics.CreateScope("SiteRecoveryFabricCollection.Get");
             scope.Start();
             try
             {
-                var response = _fabricReplicationFabricsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, _resourceName, fabricName, filter, cancellationToken);
+                var response = _siteRecoveryFabricReplicationFabricsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, _resourceName, fabricName, filter, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new FabricResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SiteRecoveryFabricResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -191,12 +191,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// Operation Id: ReplicationFabrics_List
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="FabricResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<FabricResource> GetAllAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="SiteRecoveryFabricResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<SiteRecoveryFabricResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _fabricReplicationFabricsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, _resourceName);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _fabricReplicationFabricsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, _resourceName);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new FabricResource(Client, FabricData.DeserializeFabricData(e)), _fabricReplicationFabricsClientDiagnostics, Pipeline, "FabricCollection.GetAll", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _siteRecoveryFabricReplicationFabricsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, _resourceName);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _siteRecoveryFabricReplicationFabricsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, _resourceName);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SiteRecoveryFabricResource(Client, SiteRecoveryFabricData.DeserializeSiteRecoveryFabricData(e)), _siteRecoveryFabricReplicationFabricsClientDiagnostics, Pipeline, "SiteRecoveryFabricCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -205,12 +205,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// Operation Id: ReplicationFabrics_List
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="FabricResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<FabricResource> GetAll(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="SiteRecoveryFabricResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<SiteRecoveryFabricResource> GetAll(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _fabricReplicationFabricsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, _resourceName);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _fabricReplicationFabricsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, _resourceName);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new FabricResource(Client, FabricData.DeserializeFabricData(e)), _fabricReplicationFabricsClientDiagnostics, Pipeline, "FabricCollection.GetAll", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _siteRecoveryFabricReplicationFabricsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, _resourceName);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _siteRecoveryFabricReplicationFabricsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, _resourceName);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SiteRecoveryFabricResource(Client, SiteRecoveryFabricData.DeserializeSiteRecoveryFabricData(e)), _siteRecoveryFabricReplicationFabricsClientDiagnostics, Pipeline, "SiteRecoveryFabricCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -227,11 +227,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         {
             Argument.AssertNotNullOrEmpty(fabricName, nameof(fabricName));
 
-            using var scope = _fabricReplicationFabricsClientDiagnostics.CreateScope("FabricCollection.Exists");
+            using var scope = _siteRecoveryFabricReplicationFabricsClientDiagnostics.CreateScope("SiteRecoveryFabricCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _fabricReplicationFabricsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, _resourceName, fabricName, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _siteRecoveryFabricReplicationFabricsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, _resourceName, fabricName, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -255,11 +255,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         {
             Argument.AssertNotNullOrEmpty(fabricName, nameof(fabricName));
 
-            using var scope = _fabricReplicationFabricsClientDiagnostics.CreateScope("FabricCollection.Exists");
+            using var scope = _siteRecoveryFabricReplicationFabricsClientDiagnostics.CreateScope("SiteRecoveryFabricCollection.Exists");
             scope.Start();
             try
             {
-                var response = _fabricReplicationFabricsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, _resourceName, fabricName, filter, cancellationToken: cancellationToken);
+                var response = _siteRecoveryFabricReplicationFabricsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, _resourceName, fabricName, filter, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -269,7 +269,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
             }
         }
 
-        IEnumerator<FabricResource> IEnumerable<FabricResource>.GetEnumerator()
+        IEnumerator<SiteRecoveryFabricResource> IEnumerable<SiteRecoveryFabricResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -279,7 +279,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
             return GetAll().GetEnumerator();
         }
 
-        IAsyncEnumerator<FabricResource> IAsyncEnumerable<FabricResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<SiteRecoveryFabricResource> IAsyncEnumerable<SiteRecoveryFabricResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }

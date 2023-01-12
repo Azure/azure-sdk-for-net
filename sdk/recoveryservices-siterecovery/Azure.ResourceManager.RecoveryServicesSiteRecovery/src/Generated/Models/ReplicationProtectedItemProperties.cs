@@ -11,7 +11,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary> Replication protected item custom data details. </summary>
+    /// <summary>
+    /// Replication protected item custom data details.
+    /// Serialized Name: ReplicationProtectedItemProperties
+    /// </summary>
     public partial class ReplicationProtectedItemProperties
     {
         /// <summary> Initializes a new instance of ReplicationProtectedItemProperties. </summary>
@@ -22,40 +25,128 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> Initializes a new instance of ReplicationProtectedItemProperties. </summary>
-        /// <param name="friendlyName"> The name. </param>
-        /// <param name="protectedItemType"> The type of protected item type. </param>
-        /// <param name="protectableItemId"> The protected item ARM Id. </param>
-        /// <param name="recoveryServicesProviderId"> The recovery provider ARM Id. </param>
-        /// <param name="primaryFabricFriendlyName"> The friendly name of the primary fabric. </param>
-        /// <param name="primaryFabricProvider"> The fabric provider of the primary fabric. </param>
-        /// <param name="recoveryFabricFriendlyName"> The friendly name of recovery fabric. </param>
-        /// <param name="recoveryFabricId"> The Arm Id of recovery fabric. </param>
-        /// <param name="primaryProtectionContainerFriendlyName"> The name of primary protection container friendly name. </param>
-        /// <param name="recoveryProtectionContainerFriendlyName"> The name of recovery container friendly name. </param>
-        /// <param name="protectionState"> The protection status. </param>
-        /// <param name="protectionStateDescription"> The protection state description. </param>
-        /// <param name="activeLocation"> The Current active location of the PE. </param>
-        /// <param name="testFailoverState"> The Test failover state. </param>
-        /// <param name="testFailoverStateDescription"> The Test failover state description. </param>
-        /// <param name="switchProviderState"> The switch provider state. </param>
-        /// <param name="switchProviderStateDescription"> The switch provider state description. </param>
-        /// <param name="allowedOperations"> The allowed operations on the Replication protected item. </param>
-        /// <param name="replicationHealth"> The consolidated protection health for the VM taking any issues with SRS as well as all the replication units associated with the VM&apos;s replication group into account. This is a string representation of the ProtectionHealth enumeration. </param>
-        /// <param name="failoverHealth"> The consolidated failover health for the VM. </param>
-        /// <param name="healthErrors"> List of health errors. </param>
-        /// <param name="policyId"> The ID of Policy governing this PE. </param>
-        /// <param name="policyFriendlyName"> The name of Policy governing this PE. </param>
-        /// <param name="lastSuccessfulFailoverOn"> The Last successful failover time. </param>
-        /// <param name="lastSuccessfulTestFailoverOn"> The Last successful test failover time. </param>
-        /// <param name="currentScenario"> The current scenario. </param>
-        /// <param name="failoverRecoveryPointId"> The recovery point ARM Id to which the Vm was failed over. </param>
+        /// <param name="friendlyName">
+        /// The name.
+        /// Serialized Name: ReplicationProtectedItemProperties.friendlyName
+        /// </param>
+        /// <param name="protectedItemType">
+        /// The type of protected item type.
+        /// Serialized Name: ReplicationProtectedItemProperties.protectedItemType
+        /// </param>
+        /// <param name="protectableItemId">
+        /// The protected item ARM Id.
+        /// Serialized Name: ReplicationProtectedItemProperties.protectableItemId
+        /// </param>
+        /// <param name="recoveryServicesProviderId">
+        /// The recovery provider ARM Id.
+        /// Serialized Name: ReplicationProtectedItemProperties.recoveryServicesProviderId
+        /// </param>
+        /// <param name="primaryFabricFriendlyName">
+        /// The friendly name of the primary fabric.
+        /// Serialized Name: ReplicationProtectedItemProperties.primaryFabricFriendlyName
+        /// </param>
+        /// <param name="primaryFabricProvider">
+        /// The fabric provider of the primary fabric.
+        /// Serialized Name: ReplicationProtectedItemProperties.primaryFabricProvider
+        /// </param>
+        /// <param name="recoveryFabricFriendlyName">
+        /// The friendly name of recovery fabric.
+        /// Serialized Name: ReplicationProtectedItemProperties.recoveryFabricFriendlyName
+        /// </param>
+        /// <param name="recoveryFabricId">
+        /// The Arm Id of recovery fabric.
+        /// Serialized Name: ReplicationProtectedItemProperties.recoveryFabricId
+        /// </param>
+        /// <param name="primaryProtectionContainerFriendlyName">
+        /// The name of primary protection container friendly name.
+        /// Serialized Name: ReplicationProtectedItemProperties.primaryProtectionContainerFriendlyName
+        /// </param>
+        /// <param name="recoveryProtectionContainerFriendlyName">
+        /// The name of recovery container friendly name.
+        /// Serialized Name: ReplicationProtectedItemProperties.recoveryProtectionContainerFriendlyName
+        /// </param>
+        /// <param name="protectionState">
+        /// The protection status.
+        /// Serialized Name: ReplicationProtectedItemProperties.protectionState
+        /// </param>
+        /// <param name="protectionStateDescription">
+        /// The protection state description.
+        /// Serialized Name: ReplicationProtectedItemProperties.protectionStateDescription
+        /// </param>
+        /// <param name="activeLocation">
+        /// The Current active location of the PE.
+        /// Serialized Name: ReplicationProtectedItemProperties.activeLocation
+        /// </param>
+        /// <param name="testFailoverState">
+        /// The Test failover state.
+        /// Serialized Name: ReplicationProtectedItemProperties.testFailoverState
+        /// </param>
+        /// <param name="testFailoverStateDescription">
+        /// The Test failover state description.
+        /// Serialized Name: ReplicationProtectedItemProperties.testFailoverStateDescription
+        /// </param>
+        /// <param name="switchProviderState">
+        /// The switch provider state.
+        /// Serialized Name: ReplicationProtectedItemProperties.switchProviderState
+        /// </param>
+        /// <param name="switchProviderStateDescription">
+        /// The switch provider state description.
+        /// Serialized Name: ReplicationProtectedItemProperties.switchProviderStateDescription
+        /// </param>
+        /// <param name="allowedOperations">
+        /// The allowed operations on the Replication protected item.
+        /// Serialized Name: ReplicationProtectedItemProperties.allowedOperations
+        /// </param>
+        /// <param name="replicationHealth">
+        /// The consolidated protection health for the VM taking any issues with SRS as well as all the replication units associated with the VM&apos;s replication group into account. This is a string representation of the ProtectionHealth enumeration.
+        /// Serialized Name: ReplicationProtectedItemProperties.replicationHealth
+        /// </param>
+        /// <param name="failoverHealth">
+        /// The consolidated failover health for the VM.
+        /// Serialized Name: ReplicationProtectedItemProperties.failoverHealth
+        /// </param>
+        /// <param name="healthErrors">
+        /// List of health errors.
+        /// Serialized Name: ReplicationProtectedItemProperties.healthErrors
+        /// </param>
+        /// <param name="policyId">
+        /// The ID of Policy governing this PE.
+        /// Serialized Name: ReplicationProtectedItemProperties.policyId
+        /// </param>
+        /// <param name="policyFriendlyName">
+        /// The name of Policy governing this PE.
+        /// Serialized Name: ReplicationProtectedItemProperties.policyFriendlyName
+        /// </param>
+        /// <param name="lastSuccessfulFailoverOn">
+        /// The Last successful failover time.
+        /// Serialized Name: ReplicationProtectedItemProperties.lastSuccessfulFailoverTime
+        /// </param>
+        /// <param name="lastSuccessfulTestFailoverOn">
+        /// The Last successful test failover time.
+        /// Serialized Name: ReplicationProtectedItemProperties.lastSuccessfulTestFailoverTime
+        /// </param>
+        /// <param name="currentScenario">
+        /// The current scenario.
+        /// Serialized Name: ReplicationProtectedItemProperties.currentScenario
+        /// </param>
+        /// <param name="failoverRecoveryPointId">
+        /// The recovery point ARM Id to which the Vm was failed over.
+        /// Serialized Name: ReplicationProtectedItemProperties.failoverRecoveryPointId
+        /// </param>
         /// <param name="providerSpecificDetails">
         /// The Replication provider custom settings.
+        /// Serialized Name: ReplicationProtectedItemProperties.providerSpecificDetails
         /// Please note <see cref="ReplicationProviderSpecificSettings"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="A2AReplicationDetails"/>, <see cref="A2ACrossClusterMigrationReplicationDetails"/>, <see cref="HyperVReplicaReplicationDetails"/>, <see cref="HyperVReplicaBlueReplicationDetails"/>, <see cref="HyperVReplicaAzureReplicationDetails"/>, <see cref="HyperVReplicaBaseReplicationDetails"/>, <see cref="InMageReplicationDetails"/>, <see cref="InMageAzureV2ReplicationDetails"/>, <see cref="InMageRcmReplicationDetails"/> and <see cref="InMageRcmFailbackReplicationDetails"/>.
         /// </param>
-        /// <param name="recoveryContainerId"> The recovery container Id. </param>
-        /// <param name="eventCorrelationId"> The correlation Id for events associated with this protected item. </param>
+        /// <param name="recoveryContainerId">
+        /// The recovery container Id.
+        /// Serialized Name: ReplicationProtectedItemProperties.recoveryContainerId
+        /// </param>
+        /// <param name="eventCorrelationId">
+        /// The correlation Id for events associated with this protected item.
+        /// Serialized Name: ReplicationProtectedItemProperties.eventCorrelationId
+        /// </param>
         internal ReplicationProtectedItemProperties(string friendlyName, string protectedItemType, string protectableItemId, string recoveryServicesProviderId, string primaryFabricFriendlyName, string primaryFabricProvider, string recoveryFabricFriendlyName, string recoveryFabricId, string primaryProtectionContainerFriendlyName, string recoveryProtectionContainerFriendlyName, string protectionState, string protectionStateDescription, string activeLocation, string testFailoverState, string testFailoverStateDescription, string switchProviderState, string switchProviderStateDescription, IReadOnlyList<string> allowedOperations, string replicationHealth, string failoverHealth, IReadOnlyList<HealthError> healthErrors, string policyId, string policyFriendlyName, DateTimeOffset? lastSuccessfulFailoverOn, DateTimeOffset? lastSuccessfulTestFailoverOn, CurrentScenarioDetails currentScenario, string failoverRecoveryPointId, ReplicationProviderSpecificSettings providerSpecificDetails, string recoveryContainerId, string eventCorrelationId)
         {
             FriendlyName = friendlyName;
@@ -90,69 +181,157 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             EventCorrelationId = eventCorrelationId;
         }
 
-        /// <summary> The name. </summary>
+        /// <summary>
+        /// The name.
+        /// Serialized Name: ReplicationProtectedItemProperties.friendlyName
+        /// </summary>
         public string FriendlyName { get; }
-        /// <summary> The type of protected item type. </summary>
+        /// <summary>
+        /// The type of protected item type.
+        /// Serialized Name: ReplicationProtectedItemProperties.protectedItemType
+        /// </summary>
         public string ProtectedItemType { get; }
-        /// <summary> The protected item ARM Id. </summary>
+        /// <summary>
+        /// The protected item ARM Id.
+        /// Serialized Name: ReplicationProtectedItemProperties.protectableItemId
+        /// </summary>
         public string ProtectableItemId { get; }
-        /// <summary> The recovery provider ARM Id. </summary>
+        /// <summary>
+        /// The recovery provider ARM Id.
+        /// Serialized Name: ReplicationProtectedItemProperties.recoveryServicesProviderId
+        /// </summary>
         public string RecoveryServicesProviderId { get; }
-        /// <summary> The friendly name of the primary fabric. </summary>
+        /// <summary>
+        /// The friendly name of the primary fabric.
+        /// Serialized Name: ReplicationProtectedItemProperties.primaryFabricFriendlyName
+        /// </summary>
         public string PrimaryFabricFriendlyName { get; }
-        /// <summary> The fabric provider of the primary fabric. </summary>
+        /// <summary>
+        /// The fabric provider of the primary fabric.
+        /// Serialized Name: ReplicationProtectedItemProperties.primaryFabricProvider
+        /// </summary>
         public string PrimaryFabricProvider { get; }
-        /// <summary> The friendly name of recovery fabric. </summary>
+        /// <summary>
+        /// The friendly name of recovery fabric.
+        /// Serialized Name: ReplicationProtectedItemProperties.recoveryFabricFriendlyName
+        /// </summary>
         public string RecoveryFabricFriendlyName { get; }
-        /// <summary> The Arm Id of recovery fabric. </summary>
+        /// <summary>
+        /// The Arm Id of recovery fabric.
+        /// Serialized Name: ReplicationProtectedItemProperties.recoveryFabricId
+        /// </summary>
         public string RecoveryFabricId { get; }
-        /// <summary> The name of primary protection container friendly name. </summary>
+        /// <summary>
+        /// The name of primary protection container friendly name.
+        /// Serialized Name: ReplicationProtectedItemProperties.primaryProtectionContainerFriendlyName
+        /// </summary>
         public string PrimaryProtectionContainerFriendlyName { get; }
-        /// <summary> The name of recovery container friendly name. </summary>
+        /// <summary>
+        /// The name of recovery container friendly name.
+        /// Serialized Name: ReplicationProtectedItemProperties.recoveryProtectionContainerFriendlyName
+        /// </summary>
         public string RecoveryProtectionContainerFriendlyName { get; }
-        /// <summary> The protection status. </summary>
+        /// <summary>
+        /// The protection status.
+        /// Serialized Name: ReplicationProtectedItemProperties.protectionState
+        /// </summary>
         public string ProtectionState { get; }
-        /// <summary> The protection state description. </summary>
+        /// <summary>
+        /// The protection state description.
+        /// Serialized Name: ReplicationProtectedItemProperties.protectionStateDescription
+        /// </summary>
         public string ProtectionStateDescription { get; }
-        /// <summary> The Current active location of the PE. </summary>
+        /// <summary>
+        /// The Current active location of the PE.
+        /// Serialized Name: ReplicationProtectedItemProperties.activeLocation
+        /// </summary>
         public string ActiveLocation { get; }
-        /// <summary> The Test failover state. </summary>
+        /// <summary>
+        /// The Test failover state.
+        /// Serialized Name: ReplicationProtectedItemProperties.testFailoverState
+        /// </summary>
         public string TestFailoverState { get; }
-        /// <summary> The Test failover state description. </summary>
+        /// <summary>
+        /// The Test failover state description.
+        /// Serialized Name: ReplicationProtectedItemProperties.testFailoverStateDescription
+        /// </summary>
         public string TestFailoverStateDescription { get; }
-        /// <summary> The switch provider state. </summary>
+        /// <summary>
+        /// The switch provider state.
+        /// Serialized Name: ReplicationProtectedItemProperties.switchProviderState
+        /// </summary>
         public string SwitchProviderState { get; }
-        /// <summary> The switch provider state description. </summary>
+        /// <summary>
+        /// The switch provider state description.
+        /// Serialized Name: ReplicationProtectedItemProperties.switchProviderStateDescription
+        /// </summary>
         public string SwitchProviderStateDescription { get; }
-        /// <summary> The allowed operations on the Replication protected item. </summary>
+        /// <summary>
+        /// The allowed operations on the Replication protected item.
+        /// Serialized Name: ReplicationProtectedItemProperties.allowedOperations
+        /// </summary>
         public IReadOnlyList<string> AllowedOperations { get; }
-        /// <summary> The consolidated protection health for the VM taking any issues with SRS as well as all the replication units associated with the VM&apos;s replication group into account. This is a string representation of the ProtectionHealth enumeration. </summary>
+        /// <summary>
+        /// The consolidated protection health for the VM taking any issues with SRS as well as all the replication units associated with the VM&apos;s replication group into account. This is a string representation of the ProtectionHealth enumeration.
+        /// Serialized Name: ReplicationProtectedItemProperties.replicationHealth
+        /// </summary>
         public string ReplicationHealth { get; }
-        /// <summary> The consolidated failover health for the VM. </summary>
+        /// <summary>
+        /// The consolidated failover health for the VM.
+        /// Serialized Name: ReplicationProtectedItemProperties.failoverHealth
+        /// </summary>
         public string FailoverHealth { get; }
-        /// <summary> List of health errors. </summary>
+        /// <summary>
+        /// List of health errors.
+        /// Serialized Name: ReplicationProtectedItemProperties.healthErrors
+        /// </summary>
         public IReadOnlyList<HealthError> HealthErrors { get; }
-        /// <summary> The ID of Policy governing this PE. </summary>
+        /// <summary>
+        /// The ID of Policy governing this PE.
+        /// Serialized Name: ReplicationProtectedItemProperties.policyId
+        /// </summary>
         public string PolicyId { get; }
-        /// <summary> The name of Policy governing this PE. </summary>
+        /// <summary>
+        /// The name of Policy governing this PE.
+        /// Serialized Name: ReplicationProtectedItemProperties.policyFriendlyName
+        /// </summary>
         public string PolicyFriendlyName { get; }
-        /// <summary> The Last successful failover time. </summary>
+        /// <summary>
+        /// The Last successful failover time.
+        /// Serialized Name: ReplicationProtectedItemProperties.lastSuccessfulFailoverTime
+        /// </summary>
         public DateTimeOffset? LastSuccessfulFailoverOn { get; }
-        /// <summary> The Last successful test failover time. </summary>
+        /// <summary>
+        /// The Last successful test failover time.
+        /// Serialized Name: ReplicationProtectedItemProperties.lastSuccessfulTestFailoverTime
+        /// </summary>
         public DateTimeOffset? LastSuccessfulTestFailoverOn { get; }
-        /// <summary> The current scenario. </summary>
+        /// <summary>
+        /// The current scenario.
+        /// Serialized Name: ReplicationProtectedItemProperties.currentScenario
+        /// </summary>
         public CurrentScenarioDetails CurrentScenario { get; }
-        /// <summary> The recovery point ARM Id to which the Vm was failed over. </summary>
+        /// <summary>
+        /// The recovery point ARM Id to which the Vm was failed over.
+        /// Serialized Name: ReplicationProtectedItemProperties.failoverRecoveryPointId
+        /// </summary>
         public string FailoverRecoveryPointId { get; }
         /// <summary>
         /// The Replication provider custom settings.
+        /// Serialized Name: ReplicationProtectedItemProperties.providerSpecificDetails
         /// Please note <see cref="ReplicationProviderSpecificSettings"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="A2AReplicationDetails"/>, <see cref="A2ACrossClusterMigrationReplicationDetails"/>, <see cref="HyperVReplicaReplicationDetails"/>, <see cref="HyperVReplicaBlueReplicationDetails"/>, <see cref="HyperVReplicaAzureReplicationDetails"/>, <see cref="HyperVReplicaBaseReplicationDetails"/>, <see cref="InMageReplicationDetails"/>, <see cref="InMageAzureV2ReplicationDetails"/>, <see cref="InMageRcmReplicationDetails"/> and <see cref="InMageRcmFailbackReplicationDetails"/>.
         /// </summary>
         public ReplicationProviderSpecificSettings ProviderSpecificDetails { get; }
-        /// <summary> The recovery container Id. </summary>
+        /// <summary>
+        /// The recovery container Id.
+        /// Serialized Name: ReplicationProtectedItemProperties.recoveryContainerId
+        /// </summary>
         public string RecoveryContainerId { get; }
-        /// <summary> The correlation Id for events associated with this protected item. </summary>
+        /// <summary>
+        /// The correlation Id for events associated with this protected item.
+        /// Serialized Name: ReplicationProtectedItemProperties.eventCorrelationId
+        /// </summary>
         public string EventCorrelationId { get; }
     }
 }

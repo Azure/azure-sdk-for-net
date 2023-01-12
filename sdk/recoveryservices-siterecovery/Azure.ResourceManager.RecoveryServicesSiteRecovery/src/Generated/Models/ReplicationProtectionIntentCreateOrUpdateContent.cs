@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary> Create protection intent input. </summary>
+    /// <summary>
+    /// Create protection intent input.
+    /// Serialized Name: CreateProtectionIntentInput
+    /// </summary>
     public partial class ReplicationProtectionIntentCreateOrUpdateContent
     {
         /// <summary> Initializes a new instance of ReplicationProtectionIntentCreateOrUpdateContent. </summary>
@@ -15,10 +18,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         {
         }
 
-        /// <summary> Create protection intent input properties. </summary>
+        /// <summary>
+        /// Create protection intent input properties.
+        /// Serialized Name: CreateProtectionIntentInput.properties
+        /// </summary>
         internal CreateProtectionIntentProperties Properties { get; set; }
         /// <summary>
         /// The ReplicationProviderInput. For A2A provider, it will be A2ACreateProtectionIntentInput object.
+        /// Serialized Name: CreateProtectionIntentProperties.providerSpecificDetails
         /// Please note <see cref="CreateProtectionIntentProviderSpecificDetails"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="A2ACreateProtectionIntentInput"/>.
         /// Please note <see cref="CreateProtectionIntentProviderSpecificDetails"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.

@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary> Whether Multi VM group is auto created or specified by user. </summary>
+    /// <summary>
+    /// Whether Multi VM group is auto created or specified by user.
+    /// Serialized Name: MultiVmGroupCreateOption
+    /// </summary>
     public readonly partial struct MultiVmGroupCreateOption : IEquatable<MultiVmGroupCreateOption>
     {
         private readonly string _value;
@@ -25,9 +28,15 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         private const string AutoCreatedValue = "AutoCreated";
         private const string UserSpecifiedValue = "UserSpecified";
 
-        /// <summary> AutoCreated. </summary>
+        /// <summary>
+        /// AutoCreated
+        /// Serialized Name: MultiVmGroupCreateOption.AutoCreated
+        /// </summary>
         public static MultiVmGroupCreateOption AutoCreated { get; } = new MultiVmGroupCreateOption(AutoCreatedValue);
-        /// <summary> UserSpecified. </summary>
+        /// <summary>
+        /// UserSpecified
+        /// Serialized Name: MultiVmGroupCreateOption.UserSpecified
+        /// </summary>
         public static MultiVmGroupCreateOption UserSpecified { get; } = new MultiVmGroupCreateOption(UserSpecifiedValue);
         /// <summary> Determines if two <see cref="MultiVmGroupCreateOption"/> values are the same. </summary>
         public static bool operator ==(MultiVmGroupCreateOption left, MultiVmGroupCreateOption right) => left.Equals(right);

@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary> Recovery plan test failover cleanup input properties. </summary>
+    /// <summary>
+    /// Recovery plan test failover cleanup input properties.
+    /// Serialized Name: RecoveryPlanTestFailoverCleanupInputProperties
+    /// </summary>
     public partial class RecoveryPlanTestFailoverCleanupInputProperties
     {
         /// <summary> Initializes a new instance of RecoveryPlanTestFailoverCleanupInputProperties. </summary>
@@ -15,7 +18,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         {
         }
 
-        /// <summary> The test failover cleanup comments. </summary>
+        /// <summary>
+        /// The test failover cleanup comments.
+        /// Serialized Name: RecoveryPlanTestFailoverCleanupInputProperties.comments
+        /// </summary>
         public string Comments { get; set; }
     }
 }

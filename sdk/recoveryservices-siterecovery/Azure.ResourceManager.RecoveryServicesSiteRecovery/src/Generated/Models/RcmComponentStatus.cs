@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary> The throughput status. </summary>
+    /// <summary>
+    /// The throughput status.
+    /// Serialized Name: RcmComponentStatus
+    /// </summary>
     public readonly partial struct RcmComponentStatus : IEquatable<RcmComponentStatus>
     {
         private readonly string _value;
@@ -27,13 +30,25 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         private const string CriticalValue = "Critical";
         private const string UnknownValue = "Unknown";
 
-        /// <summary> Healthy. </summary>
+        /// <summary>
+        /// Healthy
+        /// Serialized Name: RcmComponentStatus.Healthy
+        /// </summary>
         public static RcmComponentStatus Healthy { get; } = new RcmComponentStatus(HealthyValue);
-        /// <summary> Warning. </summary>
+        /// <summary>
+        /// Warning
+        /// Serialized Name: RcmComponentStatus.Warning
+        /// </summary>
         public static RcmComponentStatus Warning { get; } = new RcmComponentStatus(WarningValue);
-        /// <summary> Critical. </summary>
+        /// <summary>
+        /// Critical
+        /// Serialized Name: RcmComponentStatus.Critical
+        /// </summary>
         public static RcmComponentStatus Critical { get; } = new RcmComponentStatus(CriticalValue);
-        /// <summary> Unknown. </summary>
+        /// <summary>
+        /// Unknown
+        /// Serialized Name: RcmComponentStatus.Unknown
+        /// </summary>
         public static RcmComponentStatus Unknown { get; } = new RcmComponentStatus(UnknownValue);
         /// <summary> Determines if two <see cref="RcmComponentStatus"/> values are the same. </summary>
         public static bool operator ==(RcmComponentStatus left, RcmComponentStatus right) => left.Equals(right);

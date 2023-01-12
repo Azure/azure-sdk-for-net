@@ -10,11 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary> VMwareCbt disk input for update. </summary>
+    /// <summary>
+    /// VMwareCbt disk input for update.
+    /// Serialized Name: VMwareCbtUpdateDiskInput
+    /// </summary>
     public partial class VMwareCbtUpdateDiskInput
     {
         /// <summary> Initializes a new instance of VMwareCbtUpdateDiskInput. </summary>
-        /// <param name="diskId"> The disk Id. </param>
+        /// <param name="diskId">
+        /// The disk Id.
+        /// Serialized Name: VMwareCbtUpdateDiskInput.diskId
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="diskId"/> is null. </exception>
         public VMwareCbtUpdateDiskInput(string diskId)
         {
@@ -23,11 +29,20 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             DiskId = diskId;
         }
 
-        /// <summary> The disk Id. </summary>
+        /// <summary>
+        /// The disk Id.
+        /// Serialized Name: VMwareCbtUpdateDiskInput.diskId
+        /// </summary>
         public string DiskId { get; }
-        /// <summary> The target disk name. </summary>
+        /// <summary>
+        /// The target disk name.
+        /// Serialized Name: VMwareCbtUpdateDiskInput.targetDiskName
+        /// </summary>
         public string TargetDiskName { get; set; }
-        /// <summary> A value indicating whether the disk is the OS disk. </summary>
+        /// <summary>
+        /// A value indicating whether the disk is the OS disk.
+        /// Serialized Name: VMwareCbtUpdateDiskInput.isOSDisk
+        /// </summary>
         public string IsOSDisk { get; set; }
     }
 }

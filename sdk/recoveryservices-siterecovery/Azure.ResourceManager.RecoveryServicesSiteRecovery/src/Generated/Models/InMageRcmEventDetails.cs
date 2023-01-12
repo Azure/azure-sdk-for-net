@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary> Event details for InMageRcm provider. </summary>
+    /// <summary>
+    /// Event details for InMageRcm provider.
+    /// Serialized Name: InMageRcmEventDetails
+    /// </summary>
     public partial class InMageRcmEventDetails : EventProviderSpecificDetails
     {
         /// <summary> Initializes a new instance of InMageRcmEventDetails. </summary>
@@ -17,15 +20,42 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> Initializes a new instance of InMageRcmEventDetails. </summary>
-        /// <param name="instanceType"> Gets the class type. Overridden in derived classes. </param>
-        /// <param name="protectedItemName"> The protected item name. </param>
-        /// <param name="vmName"> The protected item name. </param>
-        /// <param name="latestAgentVersion"> The latest agent version. </param>
-        /// <param name="jobId"> The job Id. </param>
-        /// <param name="fabricName"> The fabric name. </param>
-        /// <param name="applianceName"> The appliance name. </param>
-        /// <param name="serverType"> The server type. </param>
-        /// <param name="componentDisplayName"> The component display name. </param>
+        /// <param name="instanceType">
+        /// Gets the class type. Overridden in derived classes.
+        /// Serialized Name: EventProviderSpecificDetails.instanceType
+        /// </param>
+        /// <param name="protectedItemName">
+        /// The protected item name.
+        /// Serialized Name: InMageRcmEventDetails.protectedItemName
+        /// </param>
+        /// <param name="vmName">
+        /// The protected item name.
+        /// Serialized Name: InMageRcmEventDetails.vmName
+        /// </param>
+        /// <param name="latestAgentVersion">
+        /// The latest agent version.
+        /// Serialized Name: InMageRcmEventDetails.latestAgentVersion
+        /// </param>
+        /// <param name="jobId">
+        /// The job Id.
+        /// Serialized Name: InMageRcmEventDetails.jobId
+        /// </param>
+        /// <param name="fabricName">
+        /// The fabric name.
+        /// Serialized Name: InMageRcmEventDetails.fabricName
+        /// </param>
+        /// <param name="applianceName">
+        /// The appliance name.
+        /// Serialized Name: InMageRcmEventDetails.applianceName
+        /// </param>
+        /// <param name="serverType">
+        /// The server type.
+        /// Serialized Name: InMageRcmEventDetails.serverType
+        /// </param>
+        /// <param name="componentDisplayName">
+        /// The component display name.
+        /// Serialized Name: InMageRcmEventDetails.componentDisplayName
+        /// </param>
         internal InMageRcmEventDetails(string instanceType, string protectedItemName, string vmName, string latestAgentVersion, string jobId, string fabricName, string applianceName, string serverType, string componentDisplayName) : base(instanceType)
         {
             ProtectedItemName = protectedItemName;
@@ -39,21 +69,45 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             InstanceType = instanceType ?? "InMageRcm";
         }
 
-        /// <summary> The protected item name. </summary>
+        /// <summary>
+        /// The protected item name.
+        /// Serialized Name: InMageRcmEventDetails.protectedItemName
+        /// </summary>
         public string ProtectedItemName { get; }
-        /// <summary> The protected item name. </summary>
+        /// <summary>
+        /// The protected item name.
+        /// Serialized Name: InMageRcmEventDetails.vmName
+        /// </summary>
         public string VmName { get; }
-        /// <summary> The latest agent version. </summary>
+        /// <summary>
+        /// The latest agent version.
+        /// Serialized Name: InMageRcmEventDetails.latestAgentVersion
+        /// </summary>
         public string LatestAgentVersion { get; }
-        /// <summary> The job Id. </summary>
+        /// <summary>
+        /// The job Id.
+        /// Serialized Name: InMageRcmEventDetails.jobId
+        /// </summary>
         public string JobId { get; }
-        /// <summary> The fabric name. </summary>
+        /// <summary>
+        /// The fabric name.
+        /// Serialized Name: InMageRcmEventDetails.fabricName
+        /// </summary>
         public string FabricName { get; }
-        /// <summary> The appliance name. </summary>
+        /// <summary>
+        /// The appliance name.
+        /// Serialized Name: InMageRcmEventDetails.applianceName
+        /// </summary>
         public string ApplianceName { get; }
-        /// <summary> The server type. </summary>
+        /// <summary>
+        /// The server type.
+        /// Serialized Name: InMageRcmEventDetails.serverType
+        /// </summary>
         public string ServerType { get; }
-        /// <summary> The component display name. </summary>
+        /// <summary>
+        /// The component display name.
+        /// Serialized Name: InMageRcmEventDetails.componentDisplayName
+        /// </summary>
         public string ComponentDisplayName { get; }
     }
 }

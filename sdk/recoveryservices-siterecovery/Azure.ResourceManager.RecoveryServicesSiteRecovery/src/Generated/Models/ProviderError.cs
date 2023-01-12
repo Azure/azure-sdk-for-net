@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary> This class contains the error details per object. </summary>
+    /// <summary>
+    /// This class contains the error details per object.
+    /// Serialized Name: ProviderError
+    /// </summary>
     public partial class ProviderError
     {
         /// <summary> Initializes a new instance of ProviderError. </summary>
@@ -16,11 +19,26 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> Initializes a new instance of ProviderError. </summary>
-        /// <param name="errorCode"> The Error code. </param>
-        /// <param name="errorMessage"> The Error message. </param>
-        /// <param name="errorId"> The Provider error Id. </param>
-        /// <param name="possibleCauses"> The possible causes for the error. </param>
-        /// <param name="recommendedAction"> The recommended action to resolve the error. </param>
+        /// <param name="errorCode">
+        /// The Error code.
+        /// Serialized Name: ProviderError.errorCode
+        /// </param>
+        /// <param name="errorMessage">
+        /// The Error message.
+        /// Serialized Name: ProviderError.errorMessage
+        /// </param>
+        /// <param name="errorId">
+        /// The Provider error Id.
+        /// Serialized Name: ProviderError.errorId
+        /// </param>
+        /// <param name="possibleCauses">
+        /// The possible causes for the error.
+        /// Serialized Name: ProviderError.possibleCauses
+        /// </param>
+        /// <param name="recommendedAction">
+        /// The recommended action to resolve the error.
+        /// Serialized Name: ProviderError.recommendedAction
+        /// </param>
         internal ProviderError(int? errorCode, string errorMessage, string errorId, string possibleCauses, string recommendedAction)
         {
             ErrorCode = errorCode;
@@ -30,15 +48,30 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             RecommendedAction = recommendedAction;
         }
 
-        /// <summary> The Error code. </summary>
+        /// <summary>
+        /// The Error code.
+        /// Serialized Name: ProviderError.errorCode
+        /// </summary>
         public int? ErrorCode { get; }
-        /// <summary> The Error message. </summary>
+        /// <summary>
+        /// The Error message.
+        /// Serialized Name: ProviderError.errorMessage
+        /// </summary>
         public string ErrorMessage { get; }
-        /// <summary> The Provider error Id. </summary>
+        /// <summary>
+        /// The Provider error Id.
+        /// Serialized Name: ProviderError.errorId
+        /// </summary>
         public string ErrorId { get; }
-        /// <summary> The possible causes for the error. </summary>
+        /// <summary>
+        /// The possible causes for the error.
+        /// Serialized Name: ProviderError.possibleCauses
+        /// </summary>
         public string PossibleCauses { get; }
-        /// <summary> The recommended action to resolve the error. </summary>
+        /// <summary>
+        /// The recommended action to resolve the error.
+        /// Serialized Name: ProviderError.recommendedAction
+        /// </summary>
         public string RecommendedAction { get; }
     }
 }

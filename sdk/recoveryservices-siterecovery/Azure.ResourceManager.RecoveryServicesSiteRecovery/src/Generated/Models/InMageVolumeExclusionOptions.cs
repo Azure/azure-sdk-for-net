@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary> Guest disk signature based disk exclusion option when doing enable protection of virtual machine in InMage provider. </summary>
+    /// <summary>
+    /// Guest disk signature based disk exclusion option when doing enable protection of virtual machine in InMage provider.
+    /// Serialized Name: InMageVolumeExclusionOptions
+    /// </summary>
     public partial class InMageVolumeExclusionOptions
     {
         /// <summary> Initializes a new instance of InMageVolumeExclusionOptions. </summary>
@@ -15,9 +18,15 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         {
         }
 
-        /// <summary> The volume label. The disk having any volume with this label will be excluded from replication. </summary>
+        /// <summary>
+        /// The volume label. The disk having any volume with this label will be excluded from replication.
+        /// Serialized Name: InMageVolumeExclusionOptions.volumeLabel
+        /// </summary>
         public string VolumeLabel { get; set; }
-        /// <summary> The value indicating whether to exclude multi volume disk or not. If a disk has multiple volumes and one of the volume has label matching with VolumeLabel this disk will be excluded from replication if OnlyExcludeIfSingleVolume is false. </summary>
+        /// <summary>
+        /// The value indicating whether to exclude multi volume disk or not. If a disk has multiple volumes and one of the volume has label matching with VolumeLabel this disk will be excluded from replication if OnlyExcludeIfSingleVolume is false.
+        /// Serialized Name: InMageVolumeExclusionOptions.onlyExcludeIfSingleVolume
+        /// </summary>
         public string OnlyExcludeIfSingleVolume { get; set; }
     }
 }

@@ -7,11 +7,17 @@
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary> The UnknownReplicationProviderSpecificSettings. </summary>
+    /// <summary>
+    /// The UnknownReplicationProviderSpecificSettings.
+    /// Serialized Name: UnknownReplicationProviderSpecificSettings
+    /// </summary>
     internal partial class UnknownReplicationProviderSpecificSettings : ReplicationProviderSpecificSettings
     {
         /// <summary> Initializes a new instance of UnknownReplicationProviderSpecificSettings. </summary>
-        /// <param name="instanceType"> Gets the Instance type. </param>
+        /// <param name="instanceType">
+        /// Gets the Instance type.
+        /// Serialized Name: ReplicationProviderSpecificSettings.instanceType
+        /// </param>
         internal UnknownReplicationProviderSpecificSettings(string instanceType) : base(instanceType)
         {
             InstanceType = instanceType ?? "Unknown";

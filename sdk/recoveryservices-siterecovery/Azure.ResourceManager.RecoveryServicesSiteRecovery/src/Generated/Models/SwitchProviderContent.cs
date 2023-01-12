@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary> Input definition for switch provider. </summary>
+    /// <summary>
+    /// Input definition for switch provider.
+    /// Serialized Name: SwitchProviderInput
+    /// </summary>
     public partial class SwitchProviderContent
     {
         /// <summary> Initializes a new instance of SwitchProviderContent. </summary>
@@ -15,7 +18,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         {
         }
 
-        /// <summary> Switch provider input properties. </summary>
+        /// <summary>
+        /// Switch provider input properties.
+        /// Serialized Name: SwitchProviderInput.properties
+        /// </summary>
         public SwitchProviderInputProperties Properties { get; set; }
     }
 }

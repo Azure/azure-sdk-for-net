@@ -7,11 +7,17 @@
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary> The UnknownMigrationProviderSpecificSettings. </summary>
+    /// <summary>
+    /// The UnknownMigrationProviderSpecificSettings.
+    /// Serialized Name: UnknownMigrationProviderSpecificSettings
+    /// </summary>
     internal partial class UnknownMigrationProviderSpecificSettings : MigrationProviderSpecificSettings
     {
         /// <summary> Initializes a new instance of UnknownMigrationProviderSpecificSettings. </summary>
-        /// <param name="instanceType"> Gets the instance type. </param>
+        /// <param name="instanceType">
+        /// Gets the instance type.
+        /// Serialized Name: MigrationProviderSpecificSettings.instanceType
+        /// </param>
         internal UnknownMigrationProviderSpecificSettings(string instanceType) : base(instanceType)
         {
             InstanceType = instanceType ?? "Unknown";

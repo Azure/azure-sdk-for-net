@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary> VMM fabric specific details. </summary>
+    /// <summary>
+    /// VMM fabric specific details.
+    /// Serialized Name: VmmDetails
+    /// </summary>
     public partial class VmmDetails : FabricSpecificDetails
     {
         /// <summary> Initializes a new instance of VmmDetails. </summary>
@@ -17,7 +20,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> Initializes a new instance of VmmDetails. </summary>
-        /// <param name="instanceType"> Gets the class type. Overridden in derived classes. </param>
+        /// <param name="instanceType">
+        /// Gets the class type. Overridden in derived classes.
+        /// Serialized Name: FabricSpecificDetails.instanceType
+        /// </param>
         internal VmmDetails(string instanceType) : base(instanceType)
         {
             InstanceType = instanceType ?? "VMM";

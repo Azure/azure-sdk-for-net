@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary> ASR error model. </summary>
+    /// <summary>
+    /// ASR error model.
+    /// Serialized Name: ServiceError
+    /// </summary>
     public partial class ServiceError
     {
         /// <summary> Initializes a new instance of ServiceError. </summary>
@@ -16,11 +19,26 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> Initializes a new instance of ServiceError. </summary>
-        /// <param name="code"> Error code. </param>
-        /// <param name="message"> Error message. </param>
-        /// <param name="possibleCauses"> Possible causes of error. </param>
-        /// <param name="recommendedAction"> Recommended action to resolve error. </param>
-        /// <param name="activityId"> Activity Id. </param>
+        /// <param name="code">
+        /// Error code.
+        /// Serialized Name: ServiceError.code
+        /// </param>
+        /// <param name="message">
+        /// Error message.
+        /// Serialized Name: ServiceError.message
+        /// </param>
+        /// <param name="possibleCauses">
+        /// Possible causes of error.
+        /// Serialized Name: ServiceError.possibleCauses
+        /// </param>
+        /// <param name="recommendedAction">
+        /// Recommended action to resolve error.
+        /// Serialized Name: ServiceError.recommendedAction
+        /// </param>
+        /// <param name="activityId">
+        /// Activity Id.
+        /// Serialized Name: ServiceError.activityId
+        /// </param>
         internal ServiceError(string code, string message, string possibleCauses, string recommendedAction, string activityId)
         {
             Code = code;
@@ -30,15 +48,30 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             ActivityId = activityId;
         }
 
-        /// <summary> Error code. </summary>
+        /// <summary>
+        /// Error code.
+        /// Serialized Name: ServiceError.code
+        /// </summary>
         public string Code { get; }
-        /// <summary> Error message. </summary>
+        /// <summary>
+        /// Error message.
+        /// Serialized Name: ServiceError.message
+        /// </summary>
         public string Message { get; }
-        /// <summary> Possible causes of error. </summary>
+        /// <summary>
+        /// Possible causes of error.
+        /// Serialized Name: ServiceError.possibleCauses
+        /// </summary>
         public string PossibleCauses { get; }
-        /// <summary> Recommended action to resolve error. </summary>
+        /// <summary>
+        /// Recommended action to resolve error.
+        /// Serialized Name: ServiceError.recommendedAction
+        /// </summary>
         public string RecommendedAction { get; }
-        /// <summary> Activity Id. </summary>
+        /// <summary>
+        /// Activity Id.
+        /// Serialized Name: ServiceError.activityId
+        /// </summary>
         public string ActivityId { get; }
     }
 }

@@ -11,7 +11,10 @@ using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary> Replication protected item collection. </summary>
+    /// <summary>
+    /// Replication protected item collection.
+    /// Serialized Name: ReplicationProtectedItemCollection
+    /// </summary>
     internal partial class ReplicationProtectedItemCollection
     {
         /// <summary> Initializes a new instance of ReplicationProtectedItemCollection. </summary>
@@ -21,17 +24,29 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> Initializes a new instance of ReplicationProtectedItemCollection. </summary>
-        /// <param name="value"> The Replication protected item details. </param>
-        /// <param name="nextLink"> The value of next link. </param>
+        /// <param name="value">
+        /// The Replication protected item details.
+        /// Serialized Name: ReplicationProtectedItemCollection.value
+        /// </param>
+        /// <param name="nextLink">
+        /// The value of next link.
+        /// Serialized Name: ReplicationProtectedItemCollection.nextLink
+        /// </param>
         internal ReplicationProtectedItemCollection(IReadOnlyList<ReplicationProtectedItemData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
-        /// <summary> The Replication protected item details. </summary>
+        /// <summary>
+        /// The Replication protected item details.
+        /// Serialized Name: ReplicationProtectedItemCollection.value
+        /// </summary>
         public IReadOnlyList<ReplicationProtectedItemData> Value { get; }
-        /// <summary> The value of next link. </summary>
+        /// <summary>
+        /// The value of next link.
+        /// Serialized Name: ReplicationProtectedItemCollection.nextLink
+        /// </summary>
         public string NextLink { get; }
     }
 }

@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary> Wrapper model for OSVersion to include version and service pack info. </summary>
+    /// <summary>
+    /// Wrapper model for OSVersion to include version and service pack info.
+    /// Serialized Name: OSVersionWrapper
+    /// </summary>
     public partial class OSVersionWrapper
     {
         /// <summary> Initializes a new instance of OSVersionWrapper. </summary>
@@ -16,17 +19,29 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> Initializes a new instance of OSVersionWrapper. </summary>
-        /// <param name="version"> The version. </param>
-        /// <param name="servicePack"> The service pack. </param>
+        /// <param name="version">
+        /// The version.
+        /// Serialized Name: OSVersionWrapper.version
+        /// </param>
+        /// <param name="servicePack">
+        /// The service pack.
+        /// Serialized Name: OSVersionWrapper.servicePack
+        /// </param>
         internal OSVersionWrapper(string version, string servicePack)
         {
             Version = version;
             ServicePack = servicePack;
         }
 
-        /// <summary> The version. </summary>
+        /// <summary>
+        /// The version.
+        /// Serialized Name: OSVersionWrapper.version
+        /// </summary>
         public string Version { get; }
-        /// <summary> The service pack. </summary>
+        /// <summary>
+        /// The service pack.
+        /// Serialized Name: OSVersionWrapper.servicePack
+        /// </summary>
         public string ServicePack { get; }
     }
 }

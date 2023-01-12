@@ -10,7 +10,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary> Azure Fabric Specific Details. </summary>
+    /// <summary>
+    /// Azure Fabric Specific Details.
+    /// Serialized Name: AzureFabricSpecificDetails
+    /// </summary>
     public partial class AzureFabricSpecificDetails : FabricSpecificDetails
     {
         /// <summary> Initializes a new instance of AzureFabricSpecificDetails. </summary>
@@ -23,11 +26,26 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> Initializes a new instance of AzureFabricSpecificDetails. </summary>
-        /// <param name="instanceType"> Gets the class type. Overridden in derived classes. </param>
-        /// <param name="location"> The Location for the Azure fabric. </param>
-        /// <param name="containerIds"> The container Ids for the Azure fabric. </param>
-        /// <param name="zones"> The zones. </param>
-        /// <param name="extendedLocations"> The ExtendedLocations. </param>
+        /// <param name="instanceType">
+        /// Gets the class type. Overridden in derived classes.
+        /// Serialized Name: FabricSpecificDetails.instanceType
+        /// </param>
+        /// <param name="location">
+        /// The Location for the Azure fabric.
+        /// Serialized Name: AzureFabricSpecificDetails.location
+        /// </param>
+        /// <param name="containerIds">
+        /// The container Ids for the Azure fabric.
+        /// Serialized Name: AzureFabricSpecificDetails.containerIds
+        /// </param>
+        /// <param name="zones">
+        /// The zones.
+        /// Serialized Name: AzureFabricSpecificDetails.zones
+        /// </param>
+        /// <param name="extendedLocations">
+        /// The ExtendedLocations.
+        /// Serialized Name: AzureFabricSpecificDetails.extendedLocations
+        /// </param>
         internal AzureFabricSpecificDetails(string instanceType, AzureLocation? location, IReadOnlyList<string> containerIds, IReadOnlyList<A2AZoneDetails> zones, IReadOnlyList<A2AExtendedLocationDetails> extendedLocations) : base(instanceType)
         {
             Location = location;
@@ -37,13 +55,25 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             InstanceType = instanceType ?? "Azure";
         }
 
-        /// <summary> The Location for the Azure fabric. </summary>
+        /// <summary>
+        /// The Location for the Azure fabric.
+        /// Serialized Name: AzureFabricSpecificDetails.location
+        /// </summary>
         public AzureLocation? Location { get; }
-        /// <summary> The container Ids for the Azure fabric. </summary>
+        /// <summary>
+        /// The container Ids for the Azure fabric.
+        /// Serialized Name: AzureFabricSpecificDetails.containerIds
+        /// </summary>
         public IReadOnlyList<string> ContainerIds { get; }
-        /// <summary> The zones. </summary>
+        /// <summary>
+        /// The zones.
+        /// Serialized Name: AzureFabricSpecificDetails.zones
+        /// </summary>
         public IReadOnlyList<A2AZoneDetails> Zones { get; }
-        /// <summary> The ExtendedLocations. </summary>
+        /// <summary>
+        /// The ExtendedLocations.
+        /// Serialized Name: AzureFabricSpecificDetails.extendedLocations
+        /// </summary>
         public IReadOnlyList<A2AExtendedLocationDetails> ExtendedLocations { get; }
     }
 }

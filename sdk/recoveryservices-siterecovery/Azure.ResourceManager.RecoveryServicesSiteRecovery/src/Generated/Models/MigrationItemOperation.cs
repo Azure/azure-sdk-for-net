@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary> The MigrationItemOperation. </summary>
+    /// <summary>
+    /// The MigrationItemOperation.
+    /// Serialized Name: MigrationItemOperation
+    /// </summary>
     public readonly partial struct MigrationItemOperation : IEquatable<MigrationItemOperation>
     {
         private readonly string _value;
@@ -30,19 +33,40 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         private const string PauseReplicationValue = "PauseReplication";
         private const string ResumeReplicationValue = "ResumeReplication";
 
-        /// <summary> DisableMigration. </summary>
+        /// <summary>
+        /// DisableMigration
+        /// Serialized Name: MigrationItemOperation.DisableMigration
+        /// </summary>
         public static MigrationItemOperation DisableMigration { get; } = new MigrationItemOperation(DisableMigrationValue);
-        /// <summary> TestMigrate. </summary>
+        /// <summary>
+        /// TestMigrate
+        /// Serialized Name: MigrationItemOperation.TestMigrate
+        /// </summary>
         public static MigrationItemOperation TestMigrate { get; } = new MigrationItemOperation(TestMigrateValue);
-        /// <summary> TestMigrateCleanup. </summary>
+        /// <summary>
+        /// TestMigrateCleanup
+        /// Serialized Name: MigrationItemOperation.TestMigrateCleanup
+        /// </summary>
         public static MigrationItemOperation TestMigrateCleanup { get; } = new MigrationItemOperation(TestMigrateCleanupValue);
-        /// <summary> Migrate. </summary>
+        /// <summary>
+        /// Migrate
+        /// Serialized Name: MigrationItemOperation.Migrate
+        /// </summary>
         public static MigrationItemOperation Migrate { get; } = new MigrationItemOperation(MigrateValue);
-        /// <summary> StartResync. </summary>
+        /// <summary>
+        /// StartResync
+        /// Serialized Name: MigrationItemOperation.StartResync
+        /// </summary>
         public static MigrationItemOperation StartResync { get; } = new MigrationItemOperation(StartResyncValue);
-        /// <summary> PauseReplication. </summary>
+        /// <summary>
+        /// PauseReplication
+        /// Serialized Name: MigrationItemOperation.PauseReplication
+        /// </summary>
         public static MigrationItemOperation PauseReplication { get; } = new MigrationItemOperation(PauseReplicationValue);
-        /// <summary> ResumeReplication. </summary>
+        /// <summary>
+        /// ResumeReplication
+        /// Serialized Name: MigrationItemOperation.ResumeReplication
+        /// </summary>
         public static MigrationItemOperation ResumeReplication { get; } = new MigrationItemOperation(ResumeReplicationValue);
         /// <summary> Determines if two <see cref="MigrationItemOperation"/> values are the same. </summary>
         public static bool operator ==(MigrationItemOperation left, MigrationItemOperation right) => left.Equals(right);

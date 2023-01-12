@@ -7,24 +7,42 @@
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary> A2A Policy creation input. </summary>
+    /// <summary>
+    /// A2A Policy creation input.
+    /// Serialized Name: A2APolicyCreationInput
+    /// </summary>
     public partial class A2APolicyCreationInput : PolicyProviderSpecificInput
     {
         /// <summary> Initializes a new instance of A2APolicyCreationInput. </summary>
-        /// <param name="multiVmSyncStatus"> A value indicating whether multi-VM sync has to be enabled. Value should be &apos;Enabled&apos; or &apos;Disabled&apos;. </param>
+        /// <param name="multiVmSyncStatus">
+        /// A value indicating whether multi-VM sync has to be enabled. Value should be &apos;Enabled&apos; or &apos;Disabled&apos;.
+        /// Serialized Name: A2APolicyCreationInput.multiVmSyncStatus
+        /// </param>
         public A2APolicyCreationInput(SetMultiVmSyncStatus multiVmSyncStatus)
         {
             MultiVmSyncStatus = multiVmSyncStatus;
             InstanceType = "A2A";
         }
 
-        /// <summary> The duration in minutes until which the recovery points need to be stored. </summary>
+        /// <summary>
+        /// The duration in minutes until which the recovery points need to be stored.
+        /// Serialized Name: A2APolicyCreationInput.recoveryPointHistory
+        /// </summary>
         public int? RecoveryPointHistory { get; set; }
-        /// <summary> The crash consistent snapshot frequency (in minutes). </summary>
+        /// <summary>
+        /// The crash consistent snapshot frequency (in minutes).
+        /// Serialized Name: A2APolicyCreationInput.crashConsistentFrequencyInMinutes
+        /// </summary>
         public int? CrashConsistentFrequencyInMinutes { get; set; }
-        /// <summary> The app consistent snapshot frequency (in minutes). </summary>
+        /// <summary>
+        /// The app consistent snapshot frequency (in minutes).
+        /// Serialized Name: A2APolicyCreationInput.appConsistentFrequencyInMinutes
+        /// </summary>
         public int? AppConsistentFrequencyInMinutes { get; set; }
-        /// <summary> A value indicating whether multi-VM sync has to be enabled. Value should be &apos;Enabled&apos; or &apos;Disabled&apos;. </summary>
+        /// <summary>
+        /// A value indicating whether multi-VM sync has to be enabled. Value should be &apos;Enabled&apos; or &apos;Disabled&apos;.
+        /// Serialized Name: A2APolicyCreationInput.multiVmSyncStatus
+        /// </summary>
         public SetMultiVmSyncStatus MultiVmSyncStatus { get; }
     }
 }

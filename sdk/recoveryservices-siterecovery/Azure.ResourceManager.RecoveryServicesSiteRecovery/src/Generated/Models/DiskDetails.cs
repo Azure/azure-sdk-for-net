@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary> Onprem disk details data. </summary>
+    /// <summary>
+    /// Onprem disk details data.
+    /// Serialized Name: DiskDetails
+    /// </summary>
     public partial class DiskDetails
     {
         /// <summary> Initializes a new instance of DiskDetails. </summary>
@@ -16,10 +19,22 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> Initializes a new instance of DiskDetails. </summary>
-        /// <param name="maxSizeMB"> The hard disk max size in MB. </param>
-        /// <param name="vhdType"> The type of the volume. </param>
-        /// <param name="vhdId"> The VHD Id. </param>
-        /// <param name="vhdName"> The VHD name. </param>
+        /// <param name="maxSizeMB">
+        /// The hard disk max size in MB.
+        /// Serialized Name: DiskDetails.maxSizeMB
+        /// </param>
+        /// <param name="vhdType">
+        /// The type of the volume.
+        /// Serialized Name: DiskDetails.vhdType
+        /// </param>
+        /// <param name="vhdId">
+        /// The VHD Id.
+        /// Serialized Name: DiskDetails.vhdId
+        /// </param>
+        /// <param name="vhdName">
+        /// The VHD name.
+        /// Serialized Name: DiskDetails.vhdName
+        /// </param>
         internal DiskDetails(long? maxSizeMB, string vhdType, string vhdId, string vhdName)
         {
             MaxSizeMB = maxSizeMB;
@@ -28,13 +43,25 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             VhdName = vhdName;
         }
 
-        /// <summary> The hard disk max size in MB. </summary>
+        /// <summary>
+        /// The hard disk max size in MB.
+        /// Serialized Name: DiskDetails.maxSizeMB
+        /// </summary>
         public long? MaxSizeMB { get; }
-        /// <summary> The type of the volume. </summary>
+        /// <summary>
+        /// The type of the volume.
+        /// Serialized Name: DiskDetails.vhdType
+        /// </summary>
         public string VhdType { get; }
-        /// <summary> The VHD Id. </summary>
+        /// <summary>
+        /// The VHD Id.
+        /// Serialized Name: DiskDetails.vhdId
+        /// </summary>
         public string VhdId { get; }
-        /// <summary> The VHD name. </summary>
+        /// <summary>
+        /// The VHD name.
+        /// Serialized Name: DiskDetails.vhdName
+        /// </summary>
         public string VhdName { get; }
     }
 }

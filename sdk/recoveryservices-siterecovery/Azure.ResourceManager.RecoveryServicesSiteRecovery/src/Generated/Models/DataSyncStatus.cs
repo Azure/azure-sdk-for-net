@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary> The data sync option. </summary>
+    /// <summary>
+    /// The data sync option.
+    /// Serialized Name: DataSyncStatus
+    /// </summary>
     public readonly partial struct DataSyncStatus : IEquatable<DataSyncStatus>
     {
         private readonly string _value;
@@ -25,9 +28,15 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         private const string ForDownTimeValue = "ForDownTime";
         private const string ForSynchronizationValue = "ForSynchronization";
 
-        /// <summary> ForDownTime. </summary>
+        /// <summary>
+        /// ForDownTime
+        /// Serialized Name: DataSyncStatus.ForDownTime
+        /// </summary>
         public static DataSyncStatus ForDownTime { get; } = new DataSyncStatus(ForDownTimeValue);
-        /// <summary> ForSynchronization. </summary>
+        /// <summary>
+        /// ForSynchronization
+        /// Serialized Name: DataSyncStatus.ForSynchronization
+        /// </summary>
         public static DataSyncStatus ForSynchronization { get; } = new DataSyncStatus(ForSynchronizationValue);
         /// <summary> Determines if two <see cref="DataSyncStatus"/> values are the same. </summary>
         public static bool operator ==(DataSyncStatus left, DataSyncStatus right) => left.Equals(right);

@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary> Disk Details. </summary>
+    /// <summary>
+    /// Disk Details.
+    /// Serialized Name: OSDetails
+    /// </summary>
     public partial class OSDetails
     {
         /// <summary> Initializes a new instance of OSDetails. </summary>
@@ -16,12 +19,30 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> Initializes a new instance of OSDetails. </summary>
-        /// <param name="osType"> VM Disk details. </param>
-        /// <param name="productType"> Product type. </param>
-        /// <param name="osEdition"> The OSEdition. </param>
-        /// <param name="osVersion"> The OS Version. </param>
-        /// <param name="osMajorVersion"> The OS Major Version. </param>
-        /// <param name="osMinorVersion"> The OS Minor Version. </param>
+        /// <param name="osType">
+        /// VM Disk details.
+        /// Serialized Name: OSDetails.osType
+        /// </param>
+        /// <param name="productType">
+        /// Product type.
+        /// Serialized Name: OSDetails.productType
+        /// </param>
+        /// <param name="osEdition">
+        /// The OSEdition.
+        /// Serialized Name: OSDetails.osEdition
+        /// </param>
+        /// <param name="osVersion">
+        /// The OS Version.
+        /// Serialized Name: OSDetails.oSVersion
+        /// </param>
+        /// <param name="osMajorVersion">
+        /// The OS Major Version.
+        /// Serialized Name: OSDetails.oSMajorVersion
+        /// </param>
+        /// <param name="osMinorVersion">
+        /// The OS Minor Version.
+        /// Serialized Name: OSDetails.oSMinorVersion
+        /// </param>
         internal OSDetails(string osType, string productType, string osEdition, string osVersion, string osMajorVersion, string osMinorVersion)
         {
             OSType = osType;
@@ -32,17 +53,35 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             OSMinorVersion = osMinorVersion;
         }
 
-        /// <summary> VM Disk details. </summary>
+        /// <summary>
+        /// VM Disk details.
+        /// Serialized Name: OSDetails.osType
+        /// </summary>
         public string OSType { get; }
-        /// <summary> Product type. </summary>
+        /// <summary>
+        /// Product type.
+        /// Serialized Name: OSDetails.productType
+        /// </summary>
         public string ProductType { get; }
-        /// <summary> The OSEdition. </summary>
+        /// <summary>
+        /// The OSEdition.
+        /// Serialized Name: OSDetails.osEdition
+        /// </summary>
         public string OSEdition { get; }
-        /// <summary> The OS Version. </summary>
+        /// <summary>
+        /// The OS Version.
+        /// Serialized Name: OSDetails.oSVersion
+        /// </summary>
         public string OSVersion { get; }
-        /// <summary> The OS Major Version. </summary>
+        /// <summary>
+        /// The OS Major Version.
+        /// Serialized Name: OSDetails.oSMajorVersion
+        /// </summary>
         public string OSMajorVersion { get; }
-        /// <summary> The OS Minor Version. </summary>
+        /// <summary>
+        /// The OS Minor Version.
+        /// Serialized Name: OSDetails.oSMinorVersion
+        /// </summary>
         public string OSMinorVersion { get; }
     }
 }

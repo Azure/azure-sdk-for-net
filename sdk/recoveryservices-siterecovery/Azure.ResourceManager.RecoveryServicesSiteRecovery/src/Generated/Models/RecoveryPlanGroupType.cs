@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary> The group type. </summary>
+    /// <summary>
+    /// The group type.
+    /// Serialized Name: RecoveryPlanGroupType
+    /// </summary>
     public readonly partial struct RecoveryPlanGroupType : IEquatable<RecoveryPlanGroupType>
     {
         private readonly string _value;
@@ -26,11 +29,20 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         private const string BootValue = "Boot";
         private const string FailoverValue = "Failover";
 
-        /// <summary> Shutdown. </summary>
+        /// <summary>
+        /// Shutdown
+        /// Serialized Name: RecoveryPlanGroupType.Shutdown
+        /// </summary>
         public static RecoveryPlanGroupType Shutdown { get; } = new RecoveryPlanGroupType(ShutdownValue);
-        /// <summary> Boot. </summary>
+        /// <summary>
+        /// Boot
+        /// Serialized Name: RecoveryPlanGroupType.Boot
+        /// </summary>
         public static RecoveryPlanGroupType Boot { get; } = new RecoveryPlanGroupType(BootValue);
-        /// <summary> Failover. </summary>
+        /// <summary>
+        /// Failover
+        /// Serialized Name: RecoveryPlanGroupType.Failover
+        /// </summary>
         public static RecoveryPlanGroupType Failover { get; } = new RecoveryPlanGroupType(FailoverValue);
         /// <summary> Determines if two <see cref="RecoveryPlanGroupType"/> values are the same. </summary>
         public static bool operator ==(RecoveryPlanGroupType left, RecoveryPlanGroupType right) => left.Equals(right);

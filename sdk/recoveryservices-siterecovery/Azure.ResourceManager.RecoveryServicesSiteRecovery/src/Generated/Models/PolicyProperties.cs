@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary> Protection profile custom data details. </summary>
+    /// <summary>
+    /// Protection profile custom data details.
+    /// Serialized Name: PolicyProperties
+    /// </summary>
     public partial class PolicyProperties
     {
         /// <summary> Initializes a new instance of PolicyProperties. </summary>
@@ -16,9 +19,13 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> Initializes a new instance of PolicyProperties. </summary>
-        /// <param name="friendlyName"> The FriendlyName. </param>
+        /// <param name="friendlyName">
+        /// The FriendlyName.
+        /// Serialized Name: PolicyProperties.friendlyName
+        /// </param>
         /// <param name="providerSpecificDetails">
         /// The ReplicationChannelSetting.
+        /// Serialized Name: PolicyProperties.providerSpecificDetails
         /// Please note <see cref="PolicyProviderSpecificDetails"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="A2APolicyDetails"/>, <see cref="HyperVReplicaPolicyDetails"/>, <see cref="HyperVReplicaBluePolicyDetails"/>, <see cref="HyperVReplicaAzurePolicyDetails"/>, <see cref="HyperVReplicaBasePolicyDetails"/>, <see cref="InMagePolicyDetails"/>, <see cref="InMageAzureV2PolicyDetails"/>, <see cref="InMageBasePolicyDetails"/>, <see cref="InMageRcmPolicyDetails"/>, <see cref="InMageRcmFailbackPolicyDetails"/> and <see cref="VMwareCbtPolicyDetails"/>.
         /// </param>
@@ -28,10 +35,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             ProviderSpecificDetails = providerSpecificDetails;
         }
 
-        /// <summary> The FriendlyName. </summary>
+        /// <summary>
+        /// The FriendlyName.
+        /// Serialized Name: PolicyProperties.friendlyName
+        /// </summary>
         public string FriendlyName { get; }
         /// <summary>
         /// The ReplicationChannelSetting.
+        /// Serialized Name: PolicyProperties.providerSpecificDetails
         /// Please note <see cref="PolicyProviderSpecificDetails"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="A2APolicyDetails"/>, <see cref="HyperVReplicaPolicyDetails"/>, <see cref="HyperVReplicaBluePolicyDetails"/>, <see cref="HyperVReplicaAzurePolicyDetails"/>, <see cref="HyperVReplicaBasePolicyDetails"/>, <see cref="InMagePolicyDetails"/>, <see cref="InMageAzureV2PolicyDetails"/>, <see cref="InMageBasePolicyDetails"/>, <see cref="InMageRcmPolicyDetails"/>, <see cref="InMageRcmFailbackPolicyDetails"/> and <see cref="VMwareCbtPolicyDetails"/>.
         /// </summary>

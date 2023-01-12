@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary> Protection profile custom data details. </summary>
+    /// <summary>
+    /// Protection profile custom data details.
+    /// Serialized Name: ProtectionContainerProperties
+    /// </summary>
     public partial class ProtectionContainerProperties
     {
         /// <summary> Initializes a new instance of ProtectionContainerProperties. </summary>
@@ -16,13 +19,34 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> Initializes a new instance of ProtectionContainerProperties. </summary>
-        /// <param name="fabricFriendlyName"> Fabric friendly name. </param>
-        /// <param name="friendlyName"> The name. </param>
-        /// <param name="fabricType"> The fabric type. </param>
-        /// <param name="protectedItemCount"> Number of protected PEs. </param>
-        /// <param name="pairingStatus"> The pairing status of this cloud. </param>
-        /// <param name="role"> The role of this cloud. </param>
-        /// <param name="fabricSpecificDetails"> Fabric specific details. </param>
+        /// <param name="fabricFriendlyName">
+        /// Fabric friendly name.
+        /// Serialized Name: ProtectionContainerProperties.fabricFriendlyName
+        /// </param>
+        /// <param name="friendlyName">
+        /// The name.
+        /// Serialized Name: ProtectionContainerProperties.friendlyName
+        /// </param>
+        /// <param name="fabricType">
+        /// The fabric type.
+        /// Serialized Name: ProtectionContainerProperties.fabricType
+        /// </param>
+        /// <param name="protectedItemCount">
+        /// Number of protected PEs.
+        /// Serialized Name: ProtectionContainerProperties.protectedItemCount
+        /// </param>
+        /// <param name="pairingStatus">
+        /// The pairing status of this cloud.
+        /// Serialized Name: ProtectionContainerProperties.pairingStatus
+        /// </param>
+        /// <param name="role">
+        /// The role of this cloud.
+        /// Serialized Name: ProtectionContainerProperties.role
+        /// </param>
+        /// <param name="fabricSpecificDetails">
+        /// Fabric specific details.
+        /// Serialized Name: ProtectionContainerProperties.fabricSpecificDetails
+        /// </param>
         internal ProtectionContainerProperties(string fabricFriendlyName, string friendlyName, string fabricType, int? protectedItemCount, string pairingStatus, string role, ProtectionContainerFabricSpecificDetails fabricSpecificDetails)
         {
             FabricFriendlyName = fabricFriendlyName;
@@ -34,21 +58,45 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             FabricSpecificDetails = fabricSpecificDetails;
         }
 
-        /// <summary> Fabric friendly name. </summary>
+        /// <summary>
+        /// Fabric friendly name.
+        /// Serialized Name: ProtectionContainerProperties.fabricFriendlyName
+        /// </summary>
         public string FabricFriendlyName { get; }
-        /// <summary> The name. </summary>
+        /// <summary>
+        /// The name.
+        /// Serialized Name: ProtectionContainerProperties.friendlyName
+        /// </summary>
         public string FriendlyName { get; }
-        /// <summary> The fabric type. </summary>
+        /// <summary>
+        /// The fabric type.
+        /// Serialized Name: ProtectionContainerProperties.fabricType
+        /// </summary>
         public string FabricType { get; }
-        /// <summary> Number of protected PEs. </summary>
+        /// <summary>
+        /// Number of protected PEs.
+        /// Serialized Name: ProtectionContainerProperties.protectedItemCount
+        /// </summary>
         public int? ProtectedItemCount { get; }
-        /// <summary> The pairing status of this cloud. </summary>
+        /// <summary>
+        /// The pairing status of this cloud.
+        /// Serialized Name: ProtectionContainerProperties.pairingStatus
+        /// </summary>
         public string PairingStatus { get; }
-        /// <summary> The role of this cloud. </summary>
+        /// <summary>
+        /// The role of this cloud.
+        /// Serialized Name: ProtectionContainerProperties.role
+        /// </summary>
         public string Role { get; }
-        /// <summary> Fabric specific details. </summary>
+        /// <summary>
+        /// Fabric specific details.
+        /// Serialized Name: ProtectionContainerProperties.fabricSpecificDetails
+        /// </summary>
         internal ProtectionContainerFabricSpecificDetails FabricSpecificDetails { get; }
-        /// <summary> Gets the class type. Overridden in derived classes. </summary>
+        /// <summary>
+        /// Gets the class type. Overridden in derived classes.
+        /// Serialized Name: ProtectionContainerFabricSpecificDetails.instanceType
+        /// </summary>
         public string FabricSpecificDetailsInstanceType
         {
             get => FabricSpecificDetails?.InstanceType;

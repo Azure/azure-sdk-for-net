@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary> Test migrate cleanup input properties. </summary>
+    /// <summary>
+    /// Test migrate cleanup input properties.
+    /// Serialized Name: TestMigrateCleanupInputProperties
+    /// </summary>
     public partial class TestMigrateCleanupInputProperties
     {
         /// <summary> Initializes a new instance of TestMigrateCleanupInputProperties. </summary>
@@ -15,7 +18,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         {
         }
 
-        /// <summary> Test migrate cleanup comments. </summary>
+        /// <summary>
+        /// Test migrate cleanup comments.
+        /// Serialized Name: TestMigrateCleanupInputProperties.comments
+        /// </summary>
         public string Comments { get; set; }
     }
 }

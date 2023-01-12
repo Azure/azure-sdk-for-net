@@ -10,7 +10,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary> InMageRcm provider specific input to update replication protected item. </summary>
+    /// <summary>
+    /// InMageRcm provider specific input to update replication protected item.
+    /// Serialized Name: InMageRcmUpdateReplicationProtectedItemInput
+    /// </summary>
     public partial class InMageRcmUpdateReplicationProtectedItemInput : UpdateReplicationProtectedItemProviderInput
     {
         /// <summary> Initializes a new instance of InMageRcmUpdateReplicationProtectedItemInput. </summary>
@@ -20,27 +23,60 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             InstanceType = "InMageRcm";
         }
 
-        /// <summary> The target VM name. </summary>
+        /// <summary>
+        /// The target VM name.
+        /// Serialized Name: InMageRcmUpdateReplicationProtectedItemInput.targetVmName
+        /// </summary>
         public string TargetVmName { get; set; }
-        /// <summary> The target VM size. </summary>
+        /// <summary>
+        /// The target VM size.
+        /// Serialized Name: InMageRcmUpdateReplicationProtectedItemInput.targetVmSize
+        /// </summary>
         public string TargetVmSize { get; set; }
-        /// <summary> The target resource group ARM Id. </summary>
+        /// <summary>
+        /// The target resource group ARM Id.
+        /// Serialized Name: InMageRcmUpdateReplicationProtectedItemInput.targetResourceGroupId
+        /// </summary>
         public string TargetResourceGroupId { get; set; }
-        /// <summary> The target availability set ARM Id. </summary>
+        /// <summary>
+        /// The target availability set ARM Id.
+        /// Serialized Name: InMageRcmUpdateReplicationProtectedItemInput.targetAvailabilitySetId
+        /// </summary>
         public string TargetAvailabilitySetId { get; set; }
-        /// <summary> The target availability zone. </summary>
+        /// <summary>
+        /// The target availability zone.
+        /// Serialized Name: InMageRcmUpdateReplicationProtectedItemInput.targetAvailabilityZone
+        /// </summary>
         public string TargetAvailabilityZone { get; set; }
-        /// <summary> The target proximity placement group Id. </summary>
+        /// <summary>
+        /// The target proximity placement group Id.
+        /// Serialized Name: InMageRcmUpdateReplicationProtectedItemInput.targetProximityPlacementGroupId
+        /// </summary>
         public string TargetProximityPlacementGroupId { get; set; }
-        /// <summary> The target boot diagnostics storage account ARM Id. </summary>
+        /// <summary>
+        /// The target boot diagnostics storage account ARM Id.
+        /// Serialized Name: InMageRcmUpdateReplicationProtectedItemInput.targetBootDiagnosticsStorageAccountId
+        /// </summary>
         public string TargetBootDiagnosticsStorageAccountId { get; set; }
-        /// <summary> The target network ARM Id. </summary>
+        /// <summary>
+        /// The target network ARM Id.
+        /// Serialized Name: InMageRcmUpdateReplicationProtectedItemInput.targetNetworkId
+        /// </summary>
         public string TargetNetworkId { get; set; }
-        /// <summary> The test network ARM Id. </summary>
+        /// <summary>
+        /// The test network ARM Id.
+        /// Serialized Name: InMageRcmUpdateReplicationProtectedItemInput.testNetworkId
+        /// </summary>
         public string TestNetworkId { get; set; }
-        /// <summary> The list of NIC details. </summary>
+        /// <summary>
+        /// The list of NIC details.
+        /// Serialized Name: InMageRcmUpdateReplicationProtectedItemInput.vmNics
+        /// </summary>
         public IList<InMageRcmNicInput> VmNics { get; }
-        /// <summary> The license type. </summary>
+        /// <summary>
+        /// The license type.
+        /// Serialized Name: InMageRcmUpdateReplicationProtectedItemInput.licenseType
+        /// </summary>
         public LicenseType? LicenseType { get; set; }
     }
 }

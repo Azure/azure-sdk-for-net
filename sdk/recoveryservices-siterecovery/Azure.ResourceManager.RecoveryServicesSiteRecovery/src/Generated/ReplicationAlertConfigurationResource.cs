@@ -19,46 +19,46 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
 {
     /// <summary>
-    /// A Class representing an Alert along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="AlertResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetAlertResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetAlert method.
+    /// A Class representing a ReplicationAlertConfiguration along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="ReplicationAlertConfigurationResource" />
+    /// from an instance of <see cref="ArmClient" /> using the GetReplicationAlertConfigurationResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetReplicationAlertConfiguration method.
     /// </summary>
-    public partial class AlertResource : ArmResource
+    public partial class ReplicationAlertConfigurationResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="AlertResource"/> instance. </summary>
+        /// <summary> Generate the resource identifier of a <see cref="ReplicationAlertConfigurationResource"/> instance. </summary>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string resourceName, string alertSettingName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationAlertSettings/{alertSettingName}";
             return new ResourceIdentifier(resourceId);
         }
 
-        private readonly ClientDiagnostics _alertReplicationAlertSettingsClientDiagnostics;
-        private readonly ReplicationAlertSettingsRestOperations _alertReplicationAlertSettingsRestClient;
-        private readonly AlertData _data;
+        private readonly ClientDiagnostics _replicationAlertConfigurationReplicationAlertSettingsClientDiagnostics;
+        private readonly ReplicationAlertSettingsRestOperations _replicationAlertConfigurationReplicationAlertSettingsRestClient;
+        private readonly ReplicationAlertConfigurationData _data;
 
-        /// <summary> Initializes a new instance of the <see cref="AlertResource"/> class for mocking. </summary>
-        protected AlertResource()
+        /// <summary> Initializes a new instance of the <see cref="ReplicationAlertConfigurationResource"/> class for mocking. </summary>
+        protected ReplicationAlertConfigurationResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "AlertResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref = "ReplicationAlertConfigurationResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal AlertResource(ArmClient client, AlertData data) : this(client, data.Id)
+        internal ReplicationAlertConfigurationResource(ArmClient client, ReplicationAlertConfigurationData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="AlertResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ReplicationAlertConfigurationResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal AlertResource(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal ReplicationAlertConfigurationResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _alertReplicationAlertSettingsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.RecoveryServicesSiteRecovery", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string alertReplicationAlertSettingsApiVersion);
-            _alertReplicationAlertSettingsRestClient = new ReplicationAlertSettingsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, alertReplicationAlertSettingsApiVersion);
+            _replicationAlertConfigurationReplicationAlertSettingsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.RecoveryServicesSiteRecovery", ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ResourceType, out string replicationAlertConfigurationReplicationAlertSettingsApiVersion);
+            _replicationAlertConfigurationReplicationAlertSettingsRestClient = new ReplicationAlertSettingsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, replicationAlertConfigurationReplicationAlertSettingsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
 
         /// <summary> Gets the data representing this Feature. </summary>
         /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
-        public virtual AlertData Data
+        public virtual ReplicationAlertConfigurationData Data
         {
             get
             {
@@ -94,16 +94,16 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// Operation Id: ReplicationAlertSettings_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<AlertResource>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ReplicationAlertConfigurationResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _alertReplicationAlertSettingsClientDiagnostics.CreateScope("AlertResource.Get");
+            using var scope = _replicationAlertConfigurationReplicationAlertSettingsClientDiagnostics.CreateScope("ReplicationAlertConfigurationResource.Get");
             scope.Start();
             try
             {
-                var response = await _alertReplicationAlertSettingsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _replicationAlertConfigurationReplicationAlertSettingsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new AlertResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ReplicationAlertConfigurationResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -118,16 +118,16 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// Operation Id: ReplicationAlertSettings_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<AlertResource> Get(CancellationToken cancellationToken = default)
+        public virtual Response<ReplicationAlertConfigurationResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _alertReplicationAlertSettingsClientDiagnostics.CreateScope("AlertResource.Get");
+            using var scope = _replicationAlertConfigurationReplicationAlertSettingsClientDiagnostics.CreateScope("ReplicationAlertConfigurationResource.Get");
             scope.Start();
             try
             {
-                var response = _alertReplicationAlertSettingsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var response = _replicationAlertConfigurationReplicationAlertSettingsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new AlertResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ReplicationAlertConfigurationResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -145,16 +145,16 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <param name="content"> The input to configure the email notification(alert). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<ArmOperation<AlertResource>> UpdateAsync(WaitUntil waitUntil, AlertCreateOrUpdateContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<ReplicationAlertConfigurationResource>> UpdateAsync(WaitUntil waitUntil, ReplicationAlertConfigurationCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _alertReplicationAlertSettingsClientDiagnostics.CreateScope("AlertResource.Update");
+            using var scope = _replicationAlertConfigurationReplicationAlertSettingsClientDiagnostics.CreateScope("ReplicationAlertConfigurationResource.Update");
             scope.Start();
             try
             {
-                var response = await _alertReplicationAlertSettingsRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content, cancellationToken).ConfigureAwait(false);
-                var operation = new RecoveryServicesSiteRecoveryArmOperation<AlertResource>(Response.FromValue(new AlertResource(Client, response), response.GetRawResponse()));
+                var response = await _replicationAlertConfigurationReplicationAlertSettingsRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content, cancellationToken).ConfigureAwait(false);
+                var operation = new RecoveryServicesSiteRecoveryArmOperation<ReplicationAlertConfigurationResource>(Response.FromValue(new ReplicationAlertConfigurationResource(Client, response), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -175,16 +175,16 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <param name="content"> The input to configure the email notification(alert). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual ArmOperation<AlertResource> Update(WaitUntil waitUntil, AlertCreateOrUpdateContent content, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<ReplicationAlertConfigurationResource> Update(WaitUntil waitUntil, ReplicationAlertConfigurationCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _alertReplicationAlertSettingsClientDiagnostics.CreateScope("AlertResource.Update");
+            using var scope = _replicationAlertConfigurationReplicationAlertSettingsClientDiagnostics.CreateScope("ReplicationAlertConfigurationResource.Update");
             scope.Start();
             try
             {
-                var response = _alertReplicationAlertSettingsRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content, cancellationToken);
-                var operation = new RecoveryServicesSiteRecoveryArmOperation<AlertResource>(Response.FromValue(new AlertResource(Client, response), response.GetRawResponse()));
+                var response = _replicationAlertConfigurationReplicationAlertSettingsRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content, cancellationToken);
+                var operation = new RecoveryServicesSiteRecoveryArmOperation<ReplicationAlertConfigurationResource>(Response.FromValue(new ReplicationAlertConfigurationResource(Client, response), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

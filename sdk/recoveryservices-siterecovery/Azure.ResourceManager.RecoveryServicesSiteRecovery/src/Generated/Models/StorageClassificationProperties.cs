@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary> Storage object properties. </summary>
+    /// <summary>
+    /// Storage object properties.
+    /// Serialized Name: StorageClassificationProperties
+    /// </summary>
     internal partial class StorageClassificationProperties
     {
         /// <summary> Initializes a new instance of StorageClassificationProperties. </summary>
@@ -16,13 +19,19 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> Initializes a new instance of StorageClassificationProperties. </summary>
-        /// <param name="friendlyName"> Friendly name of the Storage classification. </param>
+        /// <param name="friendlyName">
+        /// Friendly name of the Storage classification.
+        /// Serialized Name: StorageClassificationProperties.friendlyName
+        /// </param>
         internal StorageClassificationProperties(string friendlyName)
         {
             FriendlyName = friendlyName;
         }
 
-        /// <summary> Friendly name of the Storage classification. </summary>
+        /// <summary>
+        /// Friendly name of the Storage classification.
+        /// Serialized Name: StorageClassificationProperties.friendlyName
+        /// </summary>
         public string FriendlyName { get; }
     }
 }

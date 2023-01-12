@@ -10,14 +10,29 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary> VMwareCbt disk input. </summary>
+    /// <summary>
+    /// VMwareCbt disk input.
+    /// Serialized Name: VMwareCbtDiskInput
+    /// </summary>
     public partial class VMwareCbtDiskInput
     {
         /// <summary> Initializes a new instance of VMwareCbtDiskInput. </summary>
-        /// <param name="diskId"> The disk Id. </param>
-        /// <param name="isOSDisk"> A value indicating whether the disk is the OS disk. </param>
-        /// <param name="logStorageAccountId"> The log storage account ARM Id. </param>
-        /// <param name="logStorageAccountSasSecretName"> The key vault secret name of the log storage account. </param>
+        /// <param name="diskId">
+        /// The disk Id.
+        /// Serialized Name: VMwareCbtDiskInput.diskId
+        /// </param>
+        /// <param name="isOSDisk">
+        /// A value indicating whether the disk is the OS disk.
+        /// Serialized Name: VMwareCbtDiskInput.isOSDisk
+        /// </param>
+        /// <param name="logStorageAccountId">
+        /// The log storage account ARM Id.
+        /// Serialized Name: VMwareCbtDiskInput.logStorageAccountId
+        /// </param>
+        /// <param name="logStorageAccountSasSecretName">
+        /// The key vault secret name of the log storage account.
+        /// Serialized Name: VMwareCbtDiskInput.logStorageAccountSasSecretName
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="diskId"/>, <paramref name="isOSDisk"/>, <paramref name="logStorageAccountId"/> or <paramref name="logStorageAccountSasSecretName"/> is null. </exception>
         public VMwareCbtDiskInput(string diskId, string isOSDisk, string logStorageAccountId, string logStorageAccountSasSecretName)
         {
@@ -32,17 +47,35 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             LogStorageAccountSasSecretName = logStorageAccountSasSecretName;
         }
 
-        /// <summary> The disk Id. </summary>
+        /// <summary>
+        /// The disk Id.
+        /// Serialized Name: VMwareCbtDiskInput.diskId
+        /// </summary>
         public string DiskId { get; }
-        /// <summary> The disk type. </summary>
+        /// <summary>
+        /// The disk type.
+        /// Serialized Name: VMwareCbtDiskInput.diskType
+        /// </summary>
         public DiskAccountType? DiskType { get; set; }
-        /// <summary> A value indicating whether the disk is the OS disk. </summary>
+        /// <summary>
+        /// A value indicating whether the disk is the OS disk.
+        /// Serialized Name: VMwareCbtDiskInput.isOSDisk
+        /// </summary>
         public string IsOSDisk { get; }
-        /// <summary> The log storage account ARM Id. </summary>
+        /// <summary>
+        /// The log storage account ARM Id.
+        /// Serialized Name: VMwareCbtDiskInput.logStorageAccountId
+        /// </summary>
         public string LogStorageAccountId { get; }
-        /// <summary> The key vault secret name of the log storage account. </summary>
+        /// <summary>
+        /// The key vault secret name of the log storage account.
+        /// Serialized Name: VMwareCbtDiskInput.logStorageAccountSasSecretName
+        /// </summary>
         public string LogStorageAccountSasSecretName { get; }
-        /// <summary> The DiskEncryptionSet ARM Id. </summary>
+        /// <summary>
+        /// The DiskEncryptionSet ARM Id.
+        /// Serialized Name: VMwareCbtDiskInput.diskEncryptionSetId
+        /// </summary>
         public string DiskEncryptionSetId { get; set; }
     }
 }

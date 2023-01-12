@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary> This class represents the virtual machine task details. </summary>
+    /// <summary>
+    /// This class represents the virtual machine task details.
+    /// Serialized Name: VirtualMachineTaskDetails
+    /// </summary>
     public partial class VirtualMachineTaskDetails : JobTaskDetails
     {
         /// <summary> Initializes a new instance of VirtualMachineTaskDetails. </summary>
@@ -17,10 +20,22 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> Initializes a new instance of VirtualMachineTaskDetails. </summary>
-        /// <param name="instanceType"> The type of task details. </param>
-        /// <param name="jobTask"> The job entity. </param>
-        /// <param name="skippedReason"> The skipped reason. </param>
-        /// <param name="skippedReasonString"> The skipped reason string. </param>
+        /// <param name="instanceType">
+        /// The type of task details.
+        /// Serialized Name: TaskTypeDetails.instanceType
+        /// </param>
+        /// <param name="jobTask">
+        /// The job entity.
+        /// Serialized Name: JobTaskDetails.jobTask
+        /// </param>
+        /// <param name="skippedReason">
+        /// The skipped reason.
+        /// Serialized Name: VirtualMachineTaskDetails.skippedReason
+        /// </param>
+        /// <param name="skippedReasonString">
+        /// The skipped reason string.
+        /// Serialized Name: VirtualMachineTaskDetails.skippedReasonString
+        /// </param>
         internal VirtualMachineTaskDetails(string instanceType, JobEntity jobTask, string skippedReason, string skippedReasonString) : base(instanceType, jobTask)
         {
             SkippedReason = skippedReason;
@@ -28,9 +43,15 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             InstanceType = instanceType ?? "VirtualMachineTaskDetails";
         }
 
-        /// <summary> The skipped reason. </summary>
+        /// <summary>
+        /// The skipped reason.
+        /// Serialized Name: VirtualMachineTaskDetails.skippedReason
+        /// </summary>
         public string SkippedReason { get; }
-        /// <summary> The skipped reason string. </summary>
+        /// <summary>
+        /// The skipped reason string.
+        /// Serialized Name: VirtualMachineTaskDetails.skippedReasonString
+        /// </summary>
         public string SkippedReasonString { get; }
     }
 }

@@ -10,12 +10,21 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary> Recovery plan unplanned failover input properties. </summary>
+    /// <summary>
+    /// Recovery plan unplanned failover input properties.
+    /// Serialized Name: RecoveryPlanUnplannedFailoverInputProperties
+    /// </summary>
     public partial class RecoveryPlanUnplannedFailoverInputProperties
     {
         /// <summary> Initializes a new instance of RecoveryPlanUnplannedFailoverInputProperties. </summary>
-        /// <param name="failoverDirection"> The failover direction. </param>
-        /// <param name="sourceSiteOperations"> A value indicating whether source site operations are required. </param>
+        /// <param name="failoverDirection">
+        /// The failover direction.
+        /// Serialized Name: RecoveryPlanUnplannedFailoverInputProperties.failoverDirection
+        /// </param>
+        /// <param name="sourceSiteOperations">
+        /// A value indicating whether source site operations are required.
+        /// Serialized Name: RecoveryPlanUnplannedFailoverInputProperties.sourceSiteOperations
+        /// </param>
         public RecoveryPlanUnplannedFailoverInputProperties(PossibleOperationsDirection failoverDirection, SourceSiteOperation sourceSiteOperations)
         {
             FailoverDirection = failoverDirection;
@@ -23,12 +32,19 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             ProviderSpecificDetails = new ChangeTrackingList<RecoveryPlanProviderSpecificFailoverInput>();
         }
 
-        /// <summary> The failover direction. </summary>
+        /// <summary>
+        /// The failover direction.
+        /// Serialized Name: RecoveryPlanUnplannedFailoverInputProperties.failoverDirection
+        /// </summary>
         public PossibleOperationsDirection FailoverDirection { get; }
-        /// <summary> A value indicating whether source site operations are required. </summary>
+        /// <summary>
+        /// A value indicating whether source site operations are required.
+        /// Serialized Name: RecoveryPlanUnplannedFailoverInputProperties.sourceSiteOperations
+        /// </summary>
         public SourceSiteOperation SourceSiteOperations { get; }
         /// <summary>
         /// The provider specific properties.
+        /// Serialized Name: RecoveryPlanUnplannedFailoverInputProperties.providerSpecificDetails
         /// Please note <see cref="RecoveryPlanProviderSpecificFailoverInput"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="RecoveryPlanA2AFailoverInput"/>, <see cref="RecoveryPlanHyperVReplicaAzureFailoverInput"/>, <see cref="RecoveryPlanHyperVReplicaAzureFailbackInput"/>, <see cref="RecoveryPlanInMageFailoverInput"/>, <see cref="RecoveryPlanInMageAzureV2FailoverInput"/>, <see cref="RecoveryPlanInMageRcmFailoverInput"/> and <see cref="RecoveryPlanInMageRcmFailbackFailoverInput"/>.
         /// </summary>

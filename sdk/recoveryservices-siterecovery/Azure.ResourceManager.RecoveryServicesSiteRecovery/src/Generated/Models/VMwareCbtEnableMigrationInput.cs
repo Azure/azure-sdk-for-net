@@ -12,16 +12,37 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary> VMwareCbt specific enable migration input. </summary>
+    /// <summary>
+    /// VMwareCbt specific enable migration input.
+    /// Serialized Name: VMwareCbtEnableMigrationInput
+    /// </summary>
     public partial class VMwareCbtEnableMigrationInput : EnableMigrationProviderSpecificInput
     {
         /// <summary> Initializes a new instance of VMwareCbtEnableMigrationInput. </summary>
-        /// <param name="vmwareMachineId"> The ARM Id of the VM discovered in VMware. </param>
-        /// <param name="disksToInclude"> The disks to include list. </param>
-        /// <param name="dataMoverRunAsAccountId"> The data mover run as account Id. </param>
-        /// <param name="snapshotRunAsAccountId"> The snapshot run as account Id. </param>
-        /// <param name="targetResourceGroupId"> The target resource group ARM Id. </param>
-        /// <param name="targetNetworkId"> The target network ARM Id. </param>
+        /// <param name="vmwareMachineId">
+        /// The ARM Id of the VM discovered in VMware.
+        /// Serialized Name: VMwareCbtEnableMigrationInput.vmwareMachineId
+        /// </param>
+        /// <param name="disksToInclude">
+        /// The disks to include list.
+        /// Serialized Name: VMwareCbtEnableMigrationInput.disksToInclude
+        /// </param>
+        /// <param name="dataMoverRunAsAccountId">
+        /// The data mover run as account Id.
+        /// Serialized Name: VMwareCbtEnableMigrationInput.dataMoverRunAsAccountId
+        /// </param>
+        /// <param name="snapshotRunAsAccountId">
+        /// The snapshot run as account Id.
+        /// Serialized Name: VMwareCbtEnableMigrationInput.snapshotRunAsAccountId
+        /// </param>
+        /// <param name="targetResourceGroupId">
+        /// The target resource group ARM Id.
+        /// Serialized Name: VMwareCbtEnableMigrationInput.targetResourceGroupId
+        /// </param>
+        /// <param name="targetNetworkId">
+        /// The target network ARM Id.
+        /// Serialized Name: VMwareCbtEnableMigrationInput.targetNetworkId
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="vmwareMachineId"/>, <paramref name="disksToInclude"/>, <paramref name="dataMoverRunAsAccountId"/>, <paramref name="snapshotRunAsAccountId"/>, <paramref name="targetResourceGroupId"/> or <paramref name="targetNetworkId"/> is null. </exception>
         public VMwareCbtEnableMigrationInput(string vmwareMachineId, IEnumerable<VMwareCbtDiskInput> disksToInclude, string dataMoverRunAsAccountId, string snapshotRunAsAccountId, string targetResourceGroupId, string targetNetworkId)
         {
@@ -45,51 +66,120 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             InstanceType = "VMwareCbt";
         }
 
-        /// <summary> The ARM Id of the VM discovered in VMware. </summary>
+        /// <summary>
+        /// The ARM Id of the VM discovered in VMware.
+        /// Serialized Name: VMwareCbtEnableMigrationInput.vmwareMachineId
+        /// </summary>
         public string VMwareMachineId { get; }
-        /// <summary> The disks to include list. </summary>
+        /// <summary>
+        /// The disks to include list.
+        /// Serialized Name: VMwareCbtEnableMigrationInput.disksToInclude
+        /// </summary>
         public IList<VMwareCbtDiskInput> DisksToInclude { get; }
-        /// <summary> License type. </summary>
+        /// <summary>
+        /// License type.
+        /// Serialized Name: VMwareCbtEnableMigrationInput.licenseType
+        /// </summary>
         public LicenseType? LicenseType { get; set; }
-        /// <summary> The SQL Server license type. </summary>
+        /// <summary>
+        /// The SQL Server license type.
+        /// Serialized Name: VMwareCbtEnableMigrationInput.sqlServerLicenseType
+        /// </summary>
         public SqlServerLicenseType? SqlServerLicenseType { get; set; }
-        /// <summary> A value indicating whether bulk SQL RP registration to be done. </summary>
+        /// <summary>
+        /// A value indicating whether bulk SQL RP registration to be done.
+        /// Serialized Name: VMwareCbtEnableMigrationInput.performSqlBulkRegistration
+        /// </summary>
         public string PerformSqlBulkRegistration { get; set; }
-        /// <summary> The data mover run as account Id. </summary>
+        /// <summary>
+        /// The data mover run as account Id.
+        /// Serialized Name: VMwareCbtEnableMigrationInput.dataMoverRunAsAccountId
+        /// </summary>
         public string DataMoverRunAsAccountId { get; }
-        /// <summary> The snapshot run as account Id. </summary>
+        /// <summary>
+        /// The snapshot run as account Id.
+        /// Serialized Name: VMwareCbtEnableMigrationInput.snapshotRunAsAccountId
+        /// </summary>
         public string SnapshotRunAsAccountId { get; }
-        /// <summary> The target VM name. </summary>
+        /// <summary>
+        /// The target VM name.
+        /// Serialized Name: VMwareCbtEnableMigrationInput.targetVmName
+        /// </summary>
         public string TargetVmName { get; set; }
-        /// <summary> The target VM size. </summary>
+        /// <summary>
+        /// The target VM size.
+        /// Serialized Name: VMwareCbtEnableMigrationInput.targetVmSize
+        /// </summary>
         public string TargetVmSize { get; set; }
-        /// <summary> The target resource group ARM Id. </summary>
+        /// <summary>
+        /// The target resource group ARM Id.
+        /// Serialized Name: VMwareCbtEnableMigrationInput.targetResourceGroupId
+        /// </summary>
         public string TargetResourceGroupId { get; }
-        /// <summary> The target network ARM Id. </summary>
+        /// <summary>
+        /// The target network ARM Id.
+        /// Serialized Name: VMwareCbtEnableMigrationInput.targetNetworkId
+        /// </summary>
         public string TargetNetworkId { get; }
-        /// <summary> The selected test network ARM Id. </summary>
+        /// <summary>
+        /// The selected test network ARM Id.
+        /// Serialized Name: VMwareCbtEnableMigrationInput.testNetworkId
+        /// </summary>
         public string TestNetworkId { get; set; }
-        /// <summary> The target subnet name. </summary>
+        /// <summary>
+        /// The target subnet name.
+        /// Serialized Name: VMwareCbtEnableMigrationInput.targetSubnetName
+        /// </summary>
         public string TargetSubnetName { get; set; }
-        /// <summary> The selected test subnet name. </summary>
+        /// <summary>
+        /// The selected test subnet name.
+        /// Serialized Name: VMwareCbtEnableMigrationInput.testSubnetName
+        /// </summary>
         public string TestSubnetName { get; set; }
-        /// <summary> The target availability set ARM Id. </summary>
+        /// <summary>
+        /// The target availability set ARM Id.
+        /// Serialized Name: VMwareCbtEnableMigrationInput.targetAvailabilitySetId
+        /// </summary>
         public string TargetAvailabilitySetId { get; set; }
-        /// <summary> The target availability zone. </summary>
+        /// <summary>
+        /// The target availability zone.
+        /// Serialized Name: VMwareCbtEnableMigrationInput.targetAvailabilityZone
+        /// </summary>
         public string TargetAvailabilityZone { get; set; }
-        /// <summary> The target proximity placement group ARM Id. </summary>
+        /// <summary>
+        /// The target proximity placement group ARM Id.
+        /// Serialized Name: VMwareCbtEnableMigrationInput.targetProximityPlacementGroupId
+        /// </summary>
         public string TargetProximityPlacementGroupId { get; set; }
-        /// <summary> The target boot diagnostics storage account ARM Id. </summary>
+        /// <summary>
+        /// The target boot diagnostics storage account ARM Id.
+        /// Serialized Name: VMwareCbtEnableMigrationInput.targetBootDiagnosticsStorageAccountId
+        /// </summary>
         public string TargetBootDiagnosticsStorageAccountId { get; set; }
-        /// <summary> A value indicating whether auto resync is to be done. </summary>
+        /// <summary>
+        /// A value indicating whether auto resync is to be done.
+        /// Serialized Name: VMwareCbtEnableMigrationInput.performAutoResync
+        /// </summary>
         public string PerformAutoResync { get; set; }
-        /// <summary> The target VM tags. </summary>
+        /// <summary>
+        /// The target VM tags.
+        /// Serialized Name: VMwareCbtEnableMigrationInput.targetVmTags
+        /// </summary>
         public IDictionary<string, string> TargetVmTags { get; }
-        /// <summary> The tags for the seed disks. </summary>
+        /// <summary>
+        /// The tags for the seed disks.
+        /// Serialized Name: VMwareCbtEnableMigrationInput.seedDiskTags
+        /// </summary>
         public IDictionary<string, string> SeedDiskTags { get; }
-        /// <summary> The tags for the target disks. </summary>
+        /// <summary>
+        /// The tags for the target disks.
+        /// Serialized Name: VMwareCbtEnableMigrationInput.targetDiskTags
+        /// </summary>
         public IDictionary<string, string> TargetDiskTags { get; }
-        /// <summary> The tags for the target NICs. </summary>
+        /// <summary>
+        /// The tags for the target NICs.
+        /// Serialized Name: VMwareCbtEnableMigrationInput.targetNicTags
+        /// </summary>
         public IDictionary<string, string> TargetNicTags { get; }
     }
 }

@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary> Azure specific reprotect input. </summary>
+    /// <summary>
+    /// Azure specific reprotect input.
+    /// Serialized Name: HyperVReplicaAzureReprotectInput
+    /// </summary>
     public partial class HyperVReplicaAzureReprotectInput : ReverseReplicationProviderSpecificInput
     {
         /// <summary> Initializes a new instance of HyperVReplicaAzureReprotectInput. </summary>
@@ -16,17 +19,35 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             InstanceType = "HyperVReplicaAzure";
         }
 
-        /// <summary> The Hyper-V host Vm Id. </summary>
+        /// <summary>
+        /// The Hyper-V host Vm Id.
+        /// Serialized Name: HyperVReplicaAzureReprotectInput.hvHostVmId
+        /// </summary>
         public string HvHostVmId { get; set; }
-        /// <summary> The Vm Name. </summary>
+        /// <summary>
+        /// The Vm Name.
+        /// Serialized Name: HyperVReplicaAzureReprotectInput.vmName
+        /// </summary>
         public string VmName { get; set; }
-        /// <summary> The OS type associated with vm. </summary>
+        /// <summary>
+        /// The OS type associated with vm.
+        /// Serialized Name: HyperVReplicaAzureReprotectInput.osType
+        /// </summary>
         public string OSType { get; set; }
-        /// <summary> The OS disk VHD id associated with vm. </summary>
+        /// <summary>
+        /// The OS disk VHD id associated with vm.
+        /// Serialized Name: HyperVReplicaAzureReprotectInput.vHDId
+        /// </summary>
         public string VHDId { get; set; }
-        /// <summary> The storage account name. </summary>
+        /// <summary>
+        /// The storage account name.
+        /// Serialized Name: HyperVReplicaAzureReprotectInput.storageAccountId
+        /// </summary>
         public string StorageAccountId { get; set; }
-        /// <summary> The storage account to be used for logging during replication. </summary>
+        /// <summary>
+        /// The storage account to be used for logging during replication.
+        /// Serialized Name: HyperVReplicaAzureReprotectInput.logStorageAccountId
+        /// </summary>
         public string LogStorageAccountId { get; set; }
     }
 }

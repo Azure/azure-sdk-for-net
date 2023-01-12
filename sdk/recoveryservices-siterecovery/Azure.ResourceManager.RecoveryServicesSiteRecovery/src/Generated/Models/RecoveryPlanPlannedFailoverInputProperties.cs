@@ -10,21 +10,31 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary> Recovery plan planned failover input properties. </summary>
+    /// <summary>
+    /// Recovery plan planned failover input properties.
+    /// Serialized Name: RecoveryPlanPlannedFailoverInputProperties
+    /// </summary>
     public partial class RecoveryPlanPlannedFailoverInputProperties
     {
         /// <summary> Initializes a new instance of RecoveryPlanPlannedFailoverInputProperties. </summary>
-        /// <param name="failoverDirection"> The failover direction. </param>
+        /// <param name="failoverDirection">
+        /// The failover direction.
+        /// Serialized Name: RecoveryPlanPlannedFailoverInputProperties.failoverDirection
+        /// </param>
         public RecoveryPlanPlannedFailoverInputProperties(PossibleOperationsDirection failoverDirection)
         {
             FailoverDirection = failoverDirection;
             ProviderSpecificDetails = new ChangeTrackingList<RecoveryPlanProviderSpecificFailoverInput>();
         }
 
-        /// <summary> The failover direction. </summary>
+        /// <summary>
+        /// The failover direction.
+        /// Serialized Name: RecoveryPlanPlannedFailoverInputProperties.failoverDirection
+        /// </summary>
         public PossibleOperationsDirection FailoverDirection { get; }
         /// <summary>
         /// The provider specific properties.
+        /// Serialized Name: RecoveryPlanPlannedFailoverInputProperties.providerSpecificDetails
         /// Please note <see cref="RecoveryPlanProviderSpecificFailoverInput"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="RecoveryPlanA2AFailoverInput"/>, <see cref="RecoveryPlanHyperVReplicaAzureFailoverInput"/>, <see cref="RecoveryPlanHyperVReplicaAzureFailbackInput"/>, <see cref="RecoveryPlanInMageFailoverInput"/>, <see cref="RecoveryPlanInMageAzureV2FailoverInput"/>, <see cref="RecoveryPlanInMageRcmFailoverInput"/> and <see cref="RecoveryPlanInMageRcmFailbackFailoverInput"/>.
         /// </summary>

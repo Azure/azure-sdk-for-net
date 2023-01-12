@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary> Input definition for test failover input properties. </summary>
+    /// <summary>
+    /// Input definition for test failover input properties.
+    /// Serialized Name: TestFailoverInputProperties
+    /// </summary>
     public partial class TestFailoverInputProperties
     {
         /// <summary> Initializes a new instance of TestFailoverInputProperties. </summary>
@@ -15,14 +18,24 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         {
         }
 
-        /// <summary> Test failover direction. </summary>
+        /// <summary>
+        /// Test failover direction.
+        /// Serialized Name: TestFailoverInputProperties.failoverDirection
+        /// </summary>
         public string FailoverDirection { get; set; }
-        /// <summary> Network type to be used for test failover. </summary>
+        /// <summary>
+        /// Network type to be used for test failover.
+        /// Serialized Name: TestFailoverInputProperties.networkType
+        /// </summary>
         public string NetworkType { get; set; }
-        /// <summary> The id of the network to be used for test failover. </summary>
+        /// <summary>
+        /// The id of the network to be used for test failover.
+        /// Serialized Name: TestFailoverInputProperties.networkId
+        /// </summary>
         public string NetworkId { get; set; }
         /// <summary>
         /// Provider specific settings.
+        /// Serialized Name: TestFailoverInputProperties.providerSpecificDetails
         /// Please note <see cref="TestFailoverProviderSpecificInput"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="A2ATestFailoverInput"/>, <see cref="HyperVReplicaAzureTestFailoverInput"/>, <see cref="InMageTestFailoverInput"/>, <see cref="InMageAzureV2TestFailoverInput"/> and <see cref="InMageRcmTestFailoverInput"/>.
         /// </summary>

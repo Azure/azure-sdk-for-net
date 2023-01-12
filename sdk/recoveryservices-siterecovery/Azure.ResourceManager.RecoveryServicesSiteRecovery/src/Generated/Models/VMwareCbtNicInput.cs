@@ -10,12 +10,21 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary> VMwareCbt NIC input. </summary>
+    /// <summary>
+    /// VMwareCbt NIC input.
+    /// Serialized Name: VMwareCbtNicInput
+    /// </summary>
     public partial class VMwareCbtNicInput
     {
         /// <summary> Initializes a new instance of VMwareCbtNicInput. </summary>
-        /// <param name="nicId"> The NIC Id. </param>
-        /// <param name="isPrimaryNic"> A value indicating whether this is the primary NIC. </param>
+        /// <param name="nicId">
+        /// The NIC Id.
+        /// Serialized Name: VMwareCbtNicInput.nicId
+        /// </param>
+        /// <param name="isPrimaryNic">
+        /// A value indicating whether this is the primary NIC.
+        /// Serialized Name: VMwareCbtNicInput.isPrimaryNic
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nicId"/> or <paramref name="isPrimaryNic"/> is null. </exception>
         public VMwareCbtNicInput(string nicId, string isPrimaryNic)
         {
@@ -26,21 +35,45 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             IsPrimaryNic = isPrimaryNic;
         }
 
-        /// <summary> The NIC Id. </summary>
+        /// <summary>
+        /// The NIC Id.
+        /// Serialized Name: VMwareCbtNicInput.nicId
+        /// </summary>
         public string NicId { get; }
-        /// <summary> A value indicating whether this is the primary NIC. </summary>
+        /// <summary>
+        /// A value indicating whether this is the primary NIC.
+        /// Serialized Name: VMwareCbtNicInput.isPrimaryNic
+        /// </summary>
         public string IsPrimaryNic { get; }
-        /// <summary> Target subnet name. </summary>
+        /// <summary>
+        /// Target subnet name.
+        /// Serialized Name: VMwareCbtNicInput.targetSubnetName
+        /// </summary>
         public string TargetSubnetName { get; set; }
-        /// <summary> The static IP address. </summary>
+        /// <summary>
+        /// The static IP address.
+        /// Serialized Name: VMwareCbtNicInput.targetStaticIPAddress
+        /// </summary>
         public string TargetStaticIPAddress { get; set; }
-        /// <summary> A value indicating whether this NIC is selected for migration. </summary>
+        /// <summary>
+        /// A value indicating whether this NIC is selected for migration.
+        /// Serialized Name: VMwareCbtNicInput.isSelectedForMigration
+        /// </summary>
         public string IsSelectedForMigration { get; set; }
-        /// <summary> Target NIC name. </summary>
+        /// <summary>
+        /// Target NIC name.
+        /// Serialized Name: VMwareCbtNicInput.targetNicName
+        /// </summary>
         public string TargetNicName { get; set; }
-        /// <summary> The test subnet name. </summary>
+        /// <summary>
+        /// The test subnet name.
+        /// Serialized Name: VMwareCbtNicInput.testSubnetName
+        /// </summary>
         public string TestSubnetName { get; set; }
-        /// <summary> The test static IP address. </summary>
+        /// <summary>
+        /// The test static IP address.
+        /// Serialized Name: VMwareCbtNicInput.testStaticIPAddress
+        /// </summary>
         public string TestStaticIPAddress { get; set; }
     }
 }

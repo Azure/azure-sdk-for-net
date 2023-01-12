@@ -9,6 +9,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
     /// <summary>
     /// Migration provider specific settings.
+    /// Serialized Name: MigrationProviderSpecificSettings
     /// Please note <see cref="MigrationProviderSpecificSettings"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="VMwareCbtMigrationDetails"/>.
     /// </summary>
@@ -20,13 +21,19 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> Initializes a new instance of MigrationProviderSpecificSettings. </summary>
-        /// <param name="instanceType"> Gets the instance type. </param>
+        /// <param name="instanceType">
+        /// Gets the instance type.
+        /// Serialized Name: MigrationProviderSpecificSettings.instanceType
+        /// </param>
         internal MigrationProviderSpecificSettings(string instanceType)
         {
             InstanceType = instanceType;
         }
 
-        /// <summary> Gets the instance type. </summary>
+        /// <summary>
+        /// Gets the instance type.
+        /// Serialized Name: MigrationProviderSpecificSettings.instanceType
+        /// </summary>
         internal string InstanceType { get; set; }
     }
 }

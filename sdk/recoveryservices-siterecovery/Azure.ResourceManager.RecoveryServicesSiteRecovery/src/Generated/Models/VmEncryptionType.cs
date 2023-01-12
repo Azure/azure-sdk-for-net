@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary> The encryption type of the VM. </summary>
+    /// <summary>
+    /// The encryption type of the VM.
+    /// Serialized Name: VmEncryptionType
+    /// </summary>
     public readonly partial struct VmEncryptionType : IEquatable<VmEncryptionType>
     {
         private readonly string _value;
@@ -26,11 +29,20 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         private const string OnePassEncryptedValue = "OnePassEncrypted";
         private const string TwoPassEncryptedValue = "TwoPassEncrypted";
 
-        /// <summary> NotEncrypted. </summary>
+        /// <summary>
+        /// NotEncrypted
+        /// Serialized Name: VmEncryptionType.NotEncrypted
+        /// </summary>
         public static VmEncryptionType NotEncrypted { get; } = new VmEncryptionType(NotEncryptedValue);
-        /// <summary> OnePassEncrypted. </summary>
+        /// <summary>
+        /// OnePassEncrypted
+        /// Serialized Name: VmEncryptionType.OnePassEncrypted
+        /// </summary>
         public static VmEncryptionType OnePassEncrypted { get; } = new VmEncryptionType(OnePassEncryptedValue);
-        /// <summary> TwoPassEncrypted. </summary>
+        /// <summary>
+        /// TwoPassEncrypted
+        /// Serialized Name: VmEncryptionType.TwoPassEncrypted
+        /// </summary>
         public static VmEncryptionType TwoPassEncrypted { get; } = new VmEncryptionType(TwoPassEncryptedValue);
         /// <summary> Determines if two <see cref="VmEncryptionType"/> values are the same. </summary>
         public static bool operator ==(VmEncryptionType left, VmEncryptionType right) => left.Equals(right);

@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary> E2A Network Mapping fabric specific settings. </summary>
+    /// <summary>
+    /// E2A Network Mapping fabric specific settings.
+    /// Serialized Name: VmmToAzureNetworkMappingSettings
+    /// </summary>
     public partial class VmmToAzureNetworkMappingSettings : NetworkMappingFabricSpecificSettings
     {
         /// <summary> Initializes a new instance of VmmToAzureNetworkMappingSettings. </summary>
@@ -17,7 +20,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> Initializes a new instance of VmmToAzureNetworkMappingSettings. </summary>
-        /// <param name="instanceType"> Gets the Instance type. </param>
+        /// <param name="instanceType">
+        /// Gets the Instance type.
+        /// Serialized Name: NetworkMappingFabricSpecificSettings.instanceType
+        /// </param>
         internal VmmToAzureNetworkMappingSettings(string instanceType) : base(instanceType)
         {
             InstanceType = instanceType ?? "VmmToAzure";

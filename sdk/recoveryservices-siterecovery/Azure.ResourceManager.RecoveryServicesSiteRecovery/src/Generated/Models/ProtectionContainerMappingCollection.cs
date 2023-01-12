@@ -11,7 +11,10 @@ using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary> Protection container mapping collection class. </summary>
+    /// <summary>
+    /// Protection container mapping collection class.
+    /// Serialized Name: ProtectionContainerMappingCollection
+    /// </summary>
     internal partial class ProtectionContainerMappingCollection
     {
         /// <summary> Initializes a new instance of ProtectionContainerMappingCollection. </summary>
@@ -21,17 +24,29 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> Initializes a new instance of ProtectionContainerMappingCollection. </summary>
-        /// <param name="value"> List of container mappings. </param>
-        /// <param name="nextLink"> Link to fetch rest of the data. </param>
+        /// <param name="value">
+        /// List of container mappings.
+        /// Serialized Name: ProtectionContainerMappingCollection.value
+        /// </param>
+        /// <param name="nextLink">
+        /// Link to fetch rest of the data.
+        /// Serialized Name: ProtectionContainerMappingCollection.nextLink
+        /// </param>
         internal ProtectionContainerMappingCollection(IReadOnlyList<ProtectionContainerMappingData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
-        /// <summary> List of container mappings. </summary>
+        /// <summary>
+        /// List of container mappings.
+        /// Serialized Name: ProtectionContainerMappingCollection.value
+        /// </summary>
         public IReadOnlyList<ProtectionContainerMappingData> Value { get; }
-        /// <summary> Link to fetch rest of the data. </summary>
+        /// <summary>
+        /// Link to fetch rest of the data.
+        /// Serialized Name: ProtectionContainerMappingCollection.nextLink
+        /// </summary>
         public string NextLink { get; }
     }
 }

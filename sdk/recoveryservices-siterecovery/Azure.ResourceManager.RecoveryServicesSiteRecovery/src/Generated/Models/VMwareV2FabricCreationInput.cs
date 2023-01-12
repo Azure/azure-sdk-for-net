@@ -10,11 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary> VMwareV2 fabric provider specific settings. </summary>
+    /// <summary>
+    /// VMwareV2 fabric provider specific settings.
+    /// Serialized Name: VMwareV2FabricCreationInput
+    /// </summary>
     public partial class VMwareV2FabricCreationInput : FabricSpecificCreationInput
     {
         /// <summary> Initializes a new instance of VMwareV2FabricCreationInput. </summary>
-        /// <param name="migrationSolutionId"> The ARM Id of the migration solution. </param>
+        /// <param name="migrationSolutionId">
+        /// The ARM Id of the migration solution.
+        /// Serialized Name: VMwareV2FabricCreationInput.migrationSolutionId
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="migrationSolutionId"/> is null. </exception>
         public VMwareV2FabricCreationInput(string migrationSolutionId)
         {
@@ -24,11 +30,20 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             InstanceType = "VMwareV2";
         }
 
-        /// <summary> The ARM Id of the VMware site. </summary>
+        /// <summary>
+        /// The ARM Id of the VMware site.
+        /// Serialized Name: VMwareV2FabricCreationInput.vmwareSiteId
+        /// </summary>
         public string VMwareSiteId { get; set; }
-        /// <summary> The ARM Id of the physical site. </summary>
+        /// <summary>
+        /// The ARM Id of the physical site.
+        /// Serialized Name: VMwareV2FabricCreationInput.physicalSiteId
+        /// </summary>
         public string PhysicalSiteId { get; set; }
-        /// <summary> The ARM Id of the migration solution. </summary>
+        /// <summary>
+        /// The ARM Id of the migration solution.
+        /// Serialized Name: VMwareV2FabricCreationInput.migrationSolutionId
+        /// </summary>
         public string MigrationSolutionId { get; }
     }
 }

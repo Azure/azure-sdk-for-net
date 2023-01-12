@@ -10,7 +10,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary> This class contains monitoring details of all the inconsistent Protected Entities in Vmm. </summary>
+    /// <summary>
+    /// This class contains monitoring details of all the inconsistent Protected Entities in Vmm.
+    /// Serialized Name: ConsistencyCheckTaskDetails
+    /// </summary>
     public partial class ConsistencyCheckTaskDetails : TaskTypeDetails
     {
         /// <summary> Initializes a new instance of ConsistencyCheckTaskDetails. </summary>
@@ -21,15 +24,24 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> Initializes a new instance of ConsistencyCheckTaskDetails. </summary>
-        /// <param name="instanceType"> The type of task details. </param>
-        /// <param name="vmDetails"> The list of inconsistent Vm details. </param>
+        /// <param name="instanceType">
+        /// The type of task details.
+        /// Serialized Name: TaskTypeDetails.instanceType
+        /// </param>
+        /// <param name="vmDetails">
+        /// The list of inconsistent Vm details.
+        /// Serialized Name: ConsistencyCheckTaskDetails.vmDetails
+        /// </param>
         internal ConsistencyCheckTaskDetails(string instanceType, IReadOnlyList<InconsistentVmDetails> vmDetails) : base(instanceType)
         {
             VmDetails = vmDetails;
             InstanceType = instanceType ?? "ConsistencyCheckTaskDetails";
         }
 
-        /// <summary> The list of inconsistent Vm details. </summary>
+        /// <summary>
+        /// The list of inconsistent Vm details.
+        /// Serialized Name: ConsistencyCheckTaskDetails.vmDetails
+        /// </summary>
         public IReadOnlyList<InconsistentVmDetails> VmDetails { get; }
     }
 }

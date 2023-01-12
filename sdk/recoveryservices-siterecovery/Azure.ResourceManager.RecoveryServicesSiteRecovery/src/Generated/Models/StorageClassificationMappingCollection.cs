@@ -11,7 +11,10 @@ using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary> Collection of storage mapping details. </summary>
+    /// <summary>
+    /// Collection of storage mapping details.
+    /// Serialized Name: StorageClassificationMappingCollection
+    /// </summary>
     internal partial class StorageClassificationMappingCollection
     {
         /// <summary> Initializes a new instance of StorageClassificationMappingCollection. </summary>
@@ -21,17 +24,29 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> Initializes a new instance of StorageClassificationMappingCollection. </summary>
-        /// <param name="value"> The storage details. </param>
-        /// <param name="nextLink"> The value of next link. </param>
+        /// <param name="value">
+        /// The storage details.
+        /// Serialized Name: StorageClassificationMappingCollection.value
+        /// </param>
+        /// <param name="nextLink">
+        /// The value of next link.
+        /// Serialized Name: StorageClassificationMappingCollection.nextLink
+        /// </param>
         internal StorageClassificationMappingCollection(IReadOnlyList<StorageClassificationMappingData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
-        /// <summary> The storage details. </summary>
+        /// <summary>
+        /// The storage details.
+        /// Serialized Name: StorageClassificationMappingCollection.value
+        /// </summary>
         public IReadOnlyList<StorageClassificationMappingData> Value { get; }
-        /// <summary> The value of next link. </summary>
+        /// <summary>
+        /// The value of next link.
+        /// Serialized Name: StorageClassificationMappingCollection.nextLink
+        /// </summary>
         public string NextLink { get; }
     }
 }

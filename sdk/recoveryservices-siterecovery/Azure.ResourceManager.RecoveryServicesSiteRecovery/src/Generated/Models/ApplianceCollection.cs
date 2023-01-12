@@ -10,7 +10,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary> Collection of appliance details. </summary>
+    /// <summary>
+    /// Collection of appliance details.
+    /// Serialized Name: ApplianceCollection
+    /// </summary>
     internal partial class ApplianceCollection
     {
         /// <summary> Initializes a new instance of ApplianceCollection. </summary>
@@ -20,17 +23,29 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> Initializes a new instance of ApplianceCollection. </summary>
-        /// <param name="value"> The appliance details. </param>
-        /// <param name="nextLink"> The value of next link. </param>
+        /// <param name="value">
+        /// The appliance details.
+        /// Serialized Name: ApplianceCollection.value
+        /// </param>
+        /// <param name="nextLink">
+        /// The value of next link.
+        /// Serialized Name: ApplianceCollection.nextLink
+        /// </param>
         internal ApplianceCollection(IReadOnlyList<ReplicationAppliance> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
-        /// <summary> The appliance details. </summary>
+        /// <summary>
+        /// The appliance details.
+        /// Serialized Name: ApplianceCollection.value
+        /// </summary>
         public IReadOnlyList<ReplicationAppliance> Value { get; }
-        /// <summary> The value of next link. </summary>
+        /// <summary>
+        /// The value of next link.
+        /// Serialized Name: ApplianceCollection.nextLink
+        /// </summary>
         public string NextLink { get; }
     }
 }

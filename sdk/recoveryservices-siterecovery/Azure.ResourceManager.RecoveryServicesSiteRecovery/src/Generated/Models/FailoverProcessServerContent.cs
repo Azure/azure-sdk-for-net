@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary> Request to failover a process server. </summary>
+    /// <summary>
+    /// Request to failover a process server.
+    /// Serialized Name: FailoverProcessServerRequest
+    /// </summary>
     public partial class FailoverProcessServerContent
     {
         /// <summary> Initializes a new instance of FailoverProcessServerContent. </summary>
@@ -15,7 +18,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         {
         }
 
-        /// <summary> The properties of the PS Failover request. </summary>
+        /// <summary>
+        /// The properties of the PS Failover request.
+        /// Serialized Name: FailoverProcessServerRequest.properties
+        /// </summary>
         public FailoverProcessServerRequestProperties Properties { get; set; }
     }
 }

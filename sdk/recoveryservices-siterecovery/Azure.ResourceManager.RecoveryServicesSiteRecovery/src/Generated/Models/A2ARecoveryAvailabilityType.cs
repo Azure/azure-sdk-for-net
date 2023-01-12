@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary> The recovery availability type of the virtual machine. </summary>
+    /// <summary>
+    /// The recovery availability type of the virtual machine.
+    /// Serialized Name: A2ARecoveryAvailabilityType
+    /// </summary>
     public readonly partial struct A2ARecoveryAvailabilityType : IEquatable<A2ARecoveryAvailabilityType>
     {
         private readonly string _value;
@@ -26,11 +29,20 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         private const string AvailabilitySetValue = "AvailabilitySet";
         private const string AvailabilityZoneValue = "AvailabilityZone";
 
-        /// <summary> Single. </summary>
+        /// <summary>
+        /// Single
+        /// Serialized Name: A2ARecoveryAvailabilityType.Single
+        /// </summary>
         public static A2ARecoveryAvailabilityType Single { get; } = new A2ARecoveryAvailabilityType(SingleValue);
-        /// <summary> AvailabilitySet. </summary>
+        /// <summary>
+        /// AvailabilitySet
+        /// Serialized Name: A2ARecoveryAvailabilityType.AvailabilitySet
+        /// </summary>
         public static A2ARecoveryAvailabilityType AvailabilitySet { get; } = new A2ARecoveryAvailabilityType(AvailabilitySetValue);
-        /// <summary> AvailabilityZone. </summary>
+        /// <summary>
+        /// AvailabilityZone
+        /// Serialized Name: A2ARecoveryAvailabilityType.AvailabilityZone
+        /// </summary>
         public static A2ARecoveryAvailabilityType AvailabilityZone { get; } = new A2ARecoveryAvailabilityType(AvailabilityZoneValue);
         /// <summary> Determines if two <see cref="A2ARecoveryAvailabilityType"/> values are the same. </summary>
         public static bool operator ==(A2ARecoveryAvailabilityType left, A2ARecoveryAvailabilityType right) => left.Equals(right);

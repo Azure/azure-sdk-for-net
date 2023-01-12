@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary> The migration status. </summary>
+    /// <summary>
+    /// The migration status.
+    /// Serialized Name: MigrationState
+    /// </summary>
     public readonly partial struct MigrationState : IEquatable<MigrationState>
     {
         private readonly string _value;
@@ -40,39 +43,90 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         private const string MigrationCompletedWithInformationValue = "MigrationCompletedWithInformation";
         private const string MigrationPartiallySucceededValue = "MigrationPartiallySucceeded";
 
-        /// <summary> None. </summary>
+        /// <summary>
+        /// None
+        /// Serialized Name: MigrationState.None
+        /// </summary>
         public static MigrationState None { get; } = new MigrationState(NoneValue);
-        /// <summary> EnableMigrationInProgress. </summary>
+        /// <summary>
+        /// EnableMigrationInProgress
+        /// Serialized Name: MigrationState.EnableMigrationInProgress
+        /// </summary>
         public static MigrationState EnableMigrationInProgress { get; } = new MigrationState(EnableMigrationInProgressValue);
-        /// <summary> EnableMigrationFailed. </summary>
+        /// <summary>
+        /// EnableMigrationFailed
+        /// Serialized Name: MigrationState.EnableMigrationFailed
+        /// </summary>
         public static MigrationState EnableMigrationFailed { get; } = new MigrationState(EnableMigrationFailedValue);
-        /// <summary> DisableMigrationInProgress. </summary>
+        /// <summary>
+        /// DisableMigrationInProgress
+        /// Serialized Name: MigrationState.DisableMigrationInProgress
+        /// </summary>
         public static MigrationState DisableMigrationInProgress { get; } = new MigrationState(DisableMigrationInProgressValue);
-        /// <summary> DisableMigrationFailed. </summary>
+        /// <summary>
+        /// DisableMigrationFailed
+        /// Serialized Name: MigrationState.DisableMigrationFailed
+        /// </summary>
         public static MigrationState DisableMigrationFailed { get; } = new MigrationState(DisableMigrationFailedValue);
-        /// <summary> InitialSeedingInProgress. </summary>
+        /// <summary>
+        /// InitialSeedingInProgress
+        /// Serialized Name: MigrationState.InitialSeedingInProgress
+        /// </summary>
         public static MigrationState InitialSeedingInProgress { get; } = new MigrationState(InitialSeedingInProgressValue);
-        /// <summary> InitialSeedingFailed. </summary>
+        /// <summary>
+        /// InitialSeedingFailed
+        /// Serialized Name: MigrationState.InitialSeedingFailed
+        /// </summary>
         public static MigrationState InitialSeedingFailed { get; } = new MigrationState(InitialSeedingFailedValue);
-        /// <summary> Replicating. </summary>
+        /// <summary>
+        /// Replicating
+        /// Serialized Name: MigrationState.Replicating
+        /// </summary>
         public static MigrationState Replicating { get; } = new MigrationState(ReplicatingValue);
-        /// <summary> MigrationInProgress. </summary>
+        /// <summary>
+        /// MigrationInProgress
+        /// Serialized Name: MigrationState.MigrationInProgress
+        /// </summary>
         public static MigrationState MigrationInProgress { get; } = new MigrationState(MigrationInProgressValue);
-        /// <summary> MigrationSucceeded. </summary>
+        /// <summary>
+        /// MigrationSucceeded
+        /// Serialized Name: MigrationState.MigrationSucceeded
+        /// </summary>
         public static MigrationState MigrationSucceeded { get; } = new MigrationState(MigrationSucceededValue);
-        /// <summary> MigrationFailed. </summary>
+        /// <summary>
+        /// MigrationFailed
+        /// Serialized Name: MigrationState.MigrationFailed
+        /// </summary>
         public static MigrationState MigrationFailed { get; } = new MigrationState(MigrationFailedValue);
-        /// <summary> ResumeInProgress. </summary>
+        /// <summary>
+        /// ResumeInProgress
+        /// Serialized Name: MigrationState.ResumeInProgress
+        /// </summary>
         public static MigrationState ResumeInProgress { get; } = new MigrationState(ResumeInProgressValue);
-        /// <summary> ResumeInitiated. </summary>
+        /// <summary>
+        /// ResumeInitiated
+        /// Serialized Name: MigrationState.ResumeInitiated
+        /// </summary>
         public static MigrationState ResumeInitiated { get; } = new MigrationState(ResumeInitiatedValue);
-        /// <summary> SuspendingProtection. </summary>
+        /// <summary>
+        /// SuspendingProtection
+        /// Serialized Name: MigrationState.SuspendingProtection
+        /// </summary>
         public static MigrationState SuspendingProtection { get; } = new MigrationState(SuspendingProtectionValue);
-        /// <summary> ProtectionSuspended. </summary>
+        /// <summary>
+        /// ProtectionSuspended
+        /// Serialized Name: MigrationState.ProtectionSuspended
+        /// </summary>
         public static MigrationState ProtectionSuspended { get; } = new MigrationState(ProtectionSuspendedValue);
-        /// <summary> MigrationCompletedWithInformation. </summary>
+        /// <summary>
+        /// MigrationCompletedWithInformation
+        /// Serialized Name: MigrationState.MigrationCompletedWithInformation
+        /// </summary>
         public static MigrationState MigrationCompletedWithInformation { get; } = new MigrationState(MigrationCompletedWithInformationValue);
-        /// <summary> MigrationPartiallySucceeded. </summary>
+        /// <summary>
+        /// MigrationPartiallySucceeded
+        /// Serialized Name: MigrationState.MigrationPartiallySucceeded
+        /// </summary>
         public static MigrationState MigrationPartiallySucceeded { get; } = new MigrationState(MigrationPartiallySucceededValue);
         /// <summary> Determines if two <see cref="MigrationState"/> values are the same. </summary>
         public static bool operator ==(MigrationState left, MigrationState right) => left.Equals(right);

@@ -10,11 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary> VMwareCbt specific migrate input. </summary>
+    /// <summary>
+    /// VMwareCbt specific migrate input.
+    /// Serialized Name: VMwareCbtMigrateInput
+    /// </summary>
     public partial class VMwareCbtMigrateInput : MigrateProviderSpecificInput
     {
         /// <summary> Initializes a new instance of VMwareCbtMigrateInput. </summary>
-        /// <param name="performShutdown"> A value indicating whether VM is to be shutdown. </param>
+        /// <param name="performShutdown">
+        /// A value indicating whether VM is to be shutdown.
+        /// Serialized Name: VMwareCbtMigrateInput.performShutdown
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="performShutdown"/> is null. </exception>
         public VMwareCbtMigrateInput(string performShutdown)
         {
@@ -24,7 +30,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             InstanceType = "VMwareCbt";
         }
 
-        /// <summary> A value indicating whether VM is to be shutdown. </summary>
+        /// <summary>
+        /// A value indicating whether VM is to be shutdown.
+        /// Serialized Name: VMwareCbtMigrateInput.performShutdown
+        /// </summary>
         public string PerformShutdown { get; }
     }
 }

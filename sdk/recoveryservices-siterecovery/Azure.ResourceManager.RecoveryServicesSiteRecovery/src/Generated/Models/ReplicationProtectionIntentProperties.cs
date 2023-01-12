@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary> Replication protection intent custom data details. </summary>
+    /// <summary>
+    /// Replication protection intent custom data details.
+    /// Serialized Name: ReplicationProtectionIntentProperties
+    /// </summary>
     public partial class ReplicationProtectionIntentProperties
     {
         /// <summary> Initializes a new instance of ReplicationProtectionIntentProperties. </summary>
@@ -16,13 +19,29 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> Initializes a new instance of ReplicationProtectionIntentProperties. </summary>
-        /// <param name="friendlyName"> The name. </param>
-        /// <param name="jobId"> The job Id. </param>
-        /// <param name="jobState"> The job state. </param>
-        /// <param name="isActive"> A value indicating whether the intent object is active. </param>
-        /// <param name="creationTimeUTC"> The creation time in UTC. </param>
+        /// <param name="friendlyName">
+        /// The name.
+        /// Serialized Name: ReplicationProtectionIntentProperties.friendlyName
+        /// </param>
+        /// <param name="jobId">
+        /// The job Id.
+        /// Serialized Name: ReplicationProtectionIntentProperties.jobId
+        /// </param>
+        /// <param name="jobState">
+        /// The job state.
+        /// Serialized Name: ReplicationProtectionIntentProperties.jobState
+        /// </param>
+        /// <param name="isActive">
+        /// A value indicating whether the intent object is active.
+        /// Serialized Name: ReplicationProtectionIntentProperties.isActive
+        /// </param>
+        /// <param name="creationTimeUTC">
+        /// The creation time in UTC.
+        /// Serialized Name: ReplicationProtectionIntentProperties.creationTimeUTC
+        /// </param>
         /// <param name="providerSpecificDetails">
         /// The Replication provider custom settings.
+        /// Serialized Name: ReplicationProtectionIntentProperties.providerSpecificDetails
         /// Please note <see cref="ReplicationProtectionIntentProviderSpecificSettings"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="A2AReplicationIntentDetails"/>.
         /// </param>
@@ -36,18 +55,34 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             ProviderSpecificDetails = providerSpecificDetails;
         }
 
-        /// <summary> The name. </summary>
+        /// <summary>
+        /// The name.
+        /// Serialized Name: ReplicationProtectionIntentProperties.friendlyName
+        /// </summary>
         public string FriendlyName { get; }
-        /// <summary> The job Id. </summary>
+        /// <summary>
+        /// The job Id.
+        /// Serialized Name: ReplicationProtectionIntentProperties.jobId
+        /// </summary>
         public string JobId { get; }
-        /// <summary> The job state. </summary>
+        /// <summary>
+        /// The job state.
+        /// Serialized Name: ReplicationProtectionIntentProperties.jobState
+        /// </summary>
         public string JobState { get; }
-        /// <summary> A value indicating whether the intent object is active. </summary>
+        /// <summary>
+        /// A value indicating whether the intent object is active.
+        /// Serialized Name: ReplicationProtectionIntentProperties.isActive
+        /// </summary>
         public bool? IsActive { get; }
-        /// <summary> The creation time in UTC. </summary>
+        /// <summary>
+        /// The creation time in UTC.
+        /// Serialized Name: ReplicationProtectionIntentProperties.creationTimeUTC
+        /// </summary>
         public string CreationTimeUTC { get; }
         /// <summary>
         /// The Replication provider custom settings.
+        /// Serialized Name: ReplicationProtectionIntentProperties.providerSpecificDetails
         /// Please note <see cref="ReplicationProtectionIntentProviderSpecificSettings"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="A2AReplicationIntentDetails"/>.
         /// </summary>

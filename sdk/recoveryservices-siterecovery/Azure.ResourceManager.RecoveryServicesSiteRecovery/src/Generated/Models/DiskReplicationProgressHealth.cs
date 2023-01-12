@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary> The progress health. </summary>
+    /// <summary>
+    /// The progress health.
+    /// Serialized Name: DiskReplicationProgressHealth
+    /// </summary>
     public readonly partial struct DiskReplicationProgressHealth : IEquatable<DiskReplicationProgressHealth>
     {
         private readonly string _value;
@@ -28,15 +31,30 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         private const string NoProgressValue = "NoProgress";
         private const string QueuedValue = "Queued";
 
-        /// <summary> None. </summary>
+        /// <summary>
+        /// None
+        /// Serialized Name: DiskReplicationProgressHealth.None
+        /// </summary>
         public static DiskReplicationProgressHealth None { get; } = new DiskReplicationProgressHealth(NoneValue);
-        /// <summary> InProgress. </summary>
+        /// <summary>
+        /// InProgress
+        /// Serialized Name: DiskReplicationProgressHealth.InProgress
+        /// </summary>
         public static DiskReplicationProgressHealth InProgress { get; } = new DiskReplicationProgressHealth(InProgressValue);
-        /// <summary> SlowProgress. </summary>
+        /// <summary>
+        /// SlowProgress
+        /// Serialized Name: DiskReplicationProgressHealth.SlowProgress
+        /// </summary>
         public static DiskReplicationProgressHealth SlowProgress { get; } = new DiskReplicationProgressHealth(SlowProgressValue);
-        /// <summary> NoProgress. </summary>
+        /// <summary>
+        /// NoProgress
+        /// Serialized Name: DiskReplicationProgressHealth.NoProgress
+        /// </summary>
         public static DiskReplicationProgressHealth NoProgress { get; } = new DiskReplicationProgressHealth(NoProgressValue);
-        /// <summary> Queued. </summary>
+        /// <summary>
+        /// Queued
+        /// Serialized Name: DiskReplicationProgressHealth.Queued
+        /// </summary>
         public static DiskReplicationProgressHealth Queued { get; } = new DiskReplicationProgressHealth(QueuedValue);
         /// <summary> Determines if two <see cref="DiskReplicationProgressHealth"/> values are the same. </summary>
         public static bool operator ==(DiskReplicationProgressHealth left, DiskReplicationProgressHealth right) => left.Equals(right);

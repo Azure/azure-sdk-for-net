@@ -12,6 +12,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
     /// <summary>
     /// Job details based on specific job type.
+    /// Serialized Name: JobDetails
     /// Please note <see cref="JobDetails"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="AsrJobDetails"/>, <see cref="ExportJobDetails"/>, <see cref="FailoverJobDetails"/>, <see cref="SwitchProtectionJobDetails"/> and <see cref="TestFailoverJobDetails"/>.
     /// </summary>
@@ -24,17 +25,29 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> Initializes a new instance of JobDetails. </summary>
-        /// <param name="instanceType"> Gets the type of job details (see JobDetailsTypes enum for possible values). </param>
-        /// <param name="affectedObjectDetails"> The affected object properties like source server, source cloud, target server, target cloud etc. based on the workflow object details. </param>
+        /// <param name="instanceType">
+        /// Gets the type of job details (see JobDetailsTypes enum for possible values).
+        /// Serialized Name: JobDetails.instanceType
+        /// </param>
+        /// <param name="affectedObjectDetails">
+        /// The affected object properties like source server, source cloud, target server, target cloud etc. based on the workflow object details.
+        /// Serialized Name: JobDetails.affectedObjectDetails
+        /// </param>
         internal JobDetails(string instanceType, IReadOnlyDictionary<string, string> affectedObjectDetails)
         {
             InstanceType = instanceType;
             AffectedObjectDetails = affectedObjectDetails;
         }
 
-        /// <summary> Gets the type of job details (see JobDetailsTypes enum for possible values). </summary>
+        /// <summary>
+        /// Gets the type of job details (see JobDetailsTypes enum for possible values).
+        /// Serialized Name: JobDetails.instanceType
+        /// </summary>
         internal string InstanceType { get; set; }
-        /// <summary> The affected object properties like source server, source cloud, target server, target cloud etc. based on the workflow object details. </summary>
+        /// <summary>
+        /// The affected object properties like source server, source cloud, target server, target cloud etc. based on the workflow object details.
+        /// Serialized Name: JobDetails.affectedObjectDetails
+        /// </summary>
         public IReadOnlyDictionary<string, string> AffectedObjectDetails { get; }
     }
 }

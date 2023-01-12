@@ -9,6 +9,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
     /// <summary>
     /// Fabric provider specific settings.
+    /// Serialized Name: FabricSpecificCreationInput
     /// Please note <see cref="FabricSpecificCreationInput"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="AzureFabricCreationInput"/>, <see cref="InMageRcmFabricCreationInput"/> and <see cref="VMwareV2FabricCreationInput"/>.
     /// </summary>
@@ -19,7 +20,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         {
         }
 
-        /// <summary> Gets the class type. </summary>
+        /// <summary>
+        /// Gets the class type.
+        /// Serialized Name: FabricSpecificCreationInput.instanceType
+        /// </summary>
         internal string InstanceType { get; set; }
     }
 }

@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary> InMageRcmFailback disk level sync details. </summary>
+    /// <summary>
+    /// InMageRcmFailback disk level sync details.
+    /// Serialized Name: InMageRcmFailbackSyncDetails
+    /// </summary>
     public partial class InMageRcmFailbackSyncDetails
     {
         /// <summary> Initializes a new instance of InMageRcmFailbackSyncDetails. </summary>
@@ -16,14 +19,38 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> Initializes a new instance of InMageRcmFailbackSyncDetails. </summary>
-        /// <param name="progressHealth"> The progress health. </param>
-        /// <param name="transferredBytes"> The transferred bytes from source VM to azure for the disk. </param>
-        /// <param name="last15MinutesTransferredBytes"> The bytes transferred in last 15 minutes from source VM to target. </param>
-        /// <param name="lastDataTransferTimeUtc"> The time of the last data transfer from source VM to target. </param>
-        /// <param name="processedBytes"> The total processed bytes. This includes bytes that are transferred from source VM to target and matched bytes. </param>
-        /// <param name="startTime"> The start time. </param>
-        /// <param name="lastRefreshTime"> The last refresh time. </param>
-        /// <param name="progressPercentage"> Progress in percentage. Progress percentage is calculated based on processed bytes. </param>
+        /// <param name="progressHealth">
+        /// The progress health.
+        /// Serialized Name: InMageRcmFailbackSyncDetails.progressHealth
+        /// </param>
+        /// <param name="transferredBytes">
+        /// The transferred bytes from source VM to azure for the disk.
+        /// Serialized Name: InMageRcmFailbackSyncDetails.transferredBytes
+        /// </param>
+        /// <param name="last15MinutesTransferredBytes">
+        /// The bytes transferred in last 15 minutes from source VM to target.
+        /// Serialized Name: InMageRcmFailbackSyncDetails.last15MinutesTransferredBytes
+        /// </param>
+        /// <param name="lastDataTransferTimeUtc">
+        /// The time of the last data transfer from source VM to target.
+        /// Serialized Name: InMageRcmFailbackSyncDetails.lastDataTransferTimeUtc
+        /// </param>
+        /// <param name="processedBytes">
+        /// The total processed bytes. This includes bytes that are transferred from source VM to target and matched bytes.
+        /// Serialized Name: InMageRcmFailbackSyncDetails.processedBytes
+        /// </param>
+        /// <param name="startTime">
+        /// The start time.
+        /// Serialized Name: InMageRcmFailbackSyncDetails.startTime
+        /// </param>
+        /// <param name="lastRefreshTime">
+        /// The last refresh time.
+        /// Serialized Name: InMageRcmFailbackSyncDetails.lastRefreshTime
+        /// </param>
+        /// <param name="progressPercentage">
+        /// Progress in percentage. Progress percentage is calculated based on processed bytes.
+        /// Serialized Name: InMageRcmFailbackSyncDetails.progressPercentage
+        /// </param>
         internal InMageRcmFailbackSyncDetails(DiskReplicationProgressHealth? progressHealth, long? transferredBytes, long? last15MinutesTransferredBytes, string lastDataTransferTimeUtc, long? processedBytes, string startTime, string lastRefreshTime, int? progressPercentage)
         {
             ProgressHealth = progressHealth;
@@ -36,21 +63,45 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             ProgressPercentage = progressPercentage;
         }
 
-        /// <summary> The progress health. </summary>
+        /// <summary>
+        /// The progress health.
+        /// Serialized Name: InMageRcmFailbackSyncDetails.progressHealth
+        /// </summary>
         public DiskReplicationProgressHealth? ProgressHealth { get; }
-        /// <summary> The transferred bytes from source VM to azure for the disk. </summary>
+        /// <summary>
+        /// The transferred bytes from source VM to azure for the disk.
+        /// Serialized Name: InMageRcmFailbackSyncDetails.transferredBytes
+        /// </summary>
         public long? TransferredBytes { get; }
-        /// <summary> The bytes transferred in last 15 minutes from source VM to target. </summary>
+        /// <summary>
+        /// The bytes transferred in last 15 minutes from source VM to target.
+        /// Serialized Name: InMageRcmFailbackSyncDetails.last15MinutesTransferredBytes
+        /// </summary>
         public long? Last15MinutesTransferredBytes { get; }
-        /// <summary> The time of the last data transfer from source VM to target. </summary>
+        /// <summary>
+        /// The time of the last data transfer from source VM to target.
+        /// Serialized Name: InMageRcmFailbackSyncDetails.lastDataTransferTimeUtc
+        /// </summary>
         public string LastDataTransferTimeUtc { get; }
-        /// <summary> The total processed bytes. This includes bytes that are transferred from source VM to target and matched bytes. </summary>
+        /// <summary>
+        /// The total processed bytes. This includes bytes that are transferred from source VM to target and matched bytes.
+        /// Serialized Name: InMageRcmFailbackSyncDetails.processedBytes
+        /// </summary>
         public long? ProcessedBytes { get; }
-        /// <summary> The start time. </summary>
+        /// <summary>
+        /// The start time.
+        /// Serialized Name: InMageRcmFailbackSyncDetails.startTime
+        /// </summary>
         public string StartTime { get; }
-        /// <summary> The last refresh time. </summary>
+        /// <summary>
+        /// The last refresh time.
+        /// Serialized Name: InMageRcmFailbackSyncDetails.lastRefreshTime
+        /// </summary>
         public string LastRefreshTime { get; }
-        /// <summary> Progress in percentage. Progress percentage is calculated based on processed bytes. </summary>
+        /// <summary>
+        /// Progress in percentage. Progress percentage is calculated based on processed bytes.
+        /// Serialized Name: InMageRcmFailbackSyncDetails.progressPercentage
+        /// </summary>
         public int? ProgressPercentage { get; }
     }
 }

@@ -11,7 +11,10 @@ using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary> Protection Profile Collection details. </summary>
+    /// <summary>
+    /// Protection Profile Collection details.
+    /// Serialized Name: PolicyCollection
+    /// </summary>
     internal partial class PolicyCollection
     {
         /// <summary> Initializes a new instance of PolicyCollection. </summary>
@@ -21,17 +24,29 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> Initializes a new instance of PolicyCollection. </summary>
-        /// <param name="value"> The policy details. </param>
-        /// <param name="nextLink"> The value of next link. </param>
+        /// <param name="value">
+        /// The policy details.
+        /// Serialized Name: PolicyCollection.value
+        /// </param>
+        /// <param name="nextLink">
+        /// The value of next link.
+        /// Serialized Name: PolicyCollection.nextLink
+        /// </param>
         internal PolicyCollection(IReadOnlyList<PolicyData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
-        /// <summary> The policy details. </summary>
+        /// <summary>
+        /// The policy details.
+        /// Serialized Name: PolicyCollection.value
+        /// </summary>
         public IReadOnlyList<PolicyData> Value { get; }
-        /// <summary> The value of next link. </summary>
+        /// <summary>
+        /// The value of next link.
+        /// Serialized Name: PolicyCollection.nextLink
+        /// </summary>
         public string NextLink { get; }
     }
 }

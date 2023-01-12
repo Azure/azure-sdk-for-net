@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary> Value indicating whether the health error is customer resolvable. </summary>
+    /// <summary>
+    /// Value indicating whether the health error is customer resolvable.
+    /// Serialized Name: HealthErrorCustomerResolvability
+    /// </summary>
     public readonly partial struct HealthErrorCustomerResolvability : IEquatable<HealthErrorCustomerResolvability>
     {
         private readonly string _value;
@@ -25,9 +28,15 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         private const string AllowedValue = "Allowed";
         private const string NotAllowedValue = "NotAllowed";
 
-        /// <summary> Allowed. </summary>
+        /// <summary>
+        /// Allowed
+        /// Serialized Name: HealthErrorCustomerResolvability.Allowed
+        /// </summary>
         public static HealthErrorCustomerResolvability Allowed { get; } = new HealthErrorCustomerResolvability(AllowedValue);
-        /// <summary> NotAllowed. </summary>
+        /// <summary>
+        /// NotAllowed
+        /// Serialized Name: HealthErrorCustomerResolvability.NotAllowed
+        /// </summary>
         public static HealthErrorCustomerResolvability NotAllowed { get; } = new HealthErrorCustomerResolvability(NotAllowedValue);
         /// <summary> Determines if two <see cref="HealthErrorCustomerResolvability"/> values are the same. </summary>
         public static bool operator ==(HealthErrorCustomerResolvability left, HealthErrorCustomerResolvability right) => left.Equals(right);

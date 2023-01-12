@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary> A value indicating the type authentication to use for automation Account. </summary>
+    /// <summary>
+    /// A value indicating the type authentication to use for automation Account.
+    /// Serialized Name: AutomationAccountAuthenticationType
+    /// </summary>
     public readonly partial struct AutomationAccountAuthenticationType : IEquatable<AutomationAccountAuthenticationType>
     {
         private readonly string _value;
@@ -25,9 +28,15 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         private const string RunAsAccountValue = "RunAsAccount";
         private const string SystemAssignedIdentityValue = "SystemAssignedIdentity";
 
-        /// <summary> RunAsAccount. </summary>
+        /// <summary>
+        /// RunAsAccount
+        /// Serialized Name: AutomationAccountAuthenticationType.RunAsAccount
+        /// </summary>
         public static AutomationAccountAuthenticationType RunAsAccount { get; } = new AutomationAccountAuthenticationType(RunAsAccountValue);
-        /// <summary> SystemAssignedIdentity. </summary>
+        /// <summary>
+        /// SystemAssignedIdentity
+        /// Serialized Name: AutomationAccountAuthenticationType.SystemAssignedIdentity
+        /// </summary>
         public static AutomationAccountAuthenticationType SystemAssignedIdentity { get; } = new AutomationAccountAuthenticationType(SystemAssignedIdentityValue);
         /// <summary> Determines if two <see cref="AutomationAccountAuthenticationType"/> values are the same. </summary>
         public static bool operator ==(AutomationAccountAuthenticationType left, AutomationAccountAuthenticationType right) => left.Equals(right);

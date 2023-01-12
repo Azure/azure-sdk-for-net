@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary> Common input details for network mapping operation. </summary>
+    /// <summary>
+    /// Common input details for network mapping operation.
+    /// Serialized Name: UpdateNetworkMappingInputProperties
+    /// </summary>
     public partial class UpdateNetworkMappingInputProperties
     {
         /// <summary> Initializes a new instance of UpdateNetworkMappingInputProperties. </summary>
@@ -15,12 +18,19 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         {
         }
 
-        /// <summary> Recovery fabric name. </summary>
+        /// <summary>
+        /// Recovery fabric name.
+        /// Serialized Name: UpdateNetworkMappingInputProperties.recoveryFabricName
+        /// </summary>
         public string RecoveryFabricName { get; set; }
-        /// <summary> Recovery network Id. </summary>
+        /// <summary>
+        /// Recovery network Id.
+        /// Serialized Name: UpdateNetworkMappingInputProperties.recoveryNetworkId
+        /// </summary>
         public string RecoveryNetworkId { get; set; }
         /// <summary>
         /// Fabrics specific input network Id.
+        /// Serialized Name: UpdateNetworkMappingInputProperties.fabricSpecificDetails
         /// Please note <see cref="FabricSpecificUpdateNetworkMappingInput"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="AzureToAzureUpdateNetworkMappingInput"/>, <see cref="VmmToAzureUpdateNetworkMappingInput"/> and <see cref="VmmToVmmUpdateNetworkMappingInput"/>.
         /// </summary>

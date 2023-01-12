@@ -11,7 +11,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary> Push installer details. </summary>
+    /// <summary>
+    /// Push installer details.
+    /// Serialized Name: PushInstallerDetails
+    /// </summary>
     public partial class PushInstallerDetails
     {
         /// <summary> Initializes a new instance of PushInstallerDetails. </summary>
@@ -21,15 +24,42 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> Initializes a new instance of PushInstallerDetails. </summary>
-        /// <param name="id"> The push installer Id. </param>
-        /// <param name="name"> The push installer name. </param>
-        /// <param name="biosId"> The push installer Bios Id. </param>
-        /// <param name="fabricObjectId"> The fabric object Id. </param>
-        /// <param name="fqdn"> The push installer Fqdn. </param>
-        /// <param name="version"> The version. </param>
-        /// <param name="lastHeartbeatUtc"> The last heartbeat received from the push installer. </param>
-        /// <param name="health"> The health of the push installer. </param>
-        /// <param name="healthErrors"> The health errors. </param>
+        /// <param name="id">
+        /// The push installer Id.
+        /// Serialized Name: PushInstallerDetails.id
+        /// </param>
+        /// <param name="name">
+        /// The push installer name.
+        /// Serialized Name: PushInstallerDetails.name
+        /// </param>
+        /// <param name="biosId">
+        /// The push installer Bios Id.
+        /// Serialized Name: PushInstallerDetails.biosId
+        /// </param>
+        /// <param name="fabricObjectId">
+        /// The fabric object Id.
+        /// Serialized Name: PushInstallerDetails.fabricObjectId
+        /// </param>
+        /// <param name="fqdn">
+        /// The push installer Fqdn.
+        /// Serialized Name: PushInstallerDetails.fqdn
+        /// </param>
+        /// <param name="version">
+        /// The version.
+        /// Serialized Name: PushInstallerDetails.version
+        /// </param>
+        /// <param name="lastHeartbeatUtc">
+        /// The last heartbeat received from the push installer.
+        /// Serialized Name: PushInstallerDetails.lastHeartbeatUtc
+        /// </param>
+        /// <param name="health">
+        /// The health of the push installer.
+        /// Serialized Name: PushInstallerDetails.health
+        /// </param>
+        /// <param name="healthErrors">
+        /// The health errors.
+        /// Serialized Name: PushInstallerDetails.healthErrors
+        /// </param>
         internal PushInstallerDetails(string id, string name, string biosId, string fabricObjectId, string fqdn, string version, DateTimeOffset? lastHeartbeatUtc, ProtectionHealth? health, IReadOnlyList<HealthError> healthErrors)
         {
             Id = id;
@@ -43,23 +73,50 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             HealthErrors = healthErrors;
         }
 
-        /// <summary> The push installer Id. </summary>
+        /// <summary>
+        /// The push installer Id.
+        /// Serialized Name: PushInstallerDetails.id
+        /// </summary>
         public string Id { get; }
-        /// <summary> The push installer name. </summary>
+        /// <summary>
+        /// The push installer name.
+        /// Serialized Name: PushInstallerDetails.name
+        /// </summary>
         public string Name { get; }
-        /// <summary> The push installer Bios Id. </summary>
+        /// <summary>
+        /// The push installer Bios Id.
+        /// Serialized Name: PushInstallerDetails.biosId
+        /// </summary>
         public string BiosId { get; }
-        /// <summary> The fabric object Id. </summary>
+        /// <summary>
+        /// The fabric object Id.
+        /// Serialized Name: PushInstallerDetails.fabricObjectId
+        /// </summary>
         public string FabricObjectId { get; }
-        /// <summary> The push installer Fqdn. </summary>
+        /// <summary>
+        /// The push installer Fqdn.
+        /// Serialized Name: PushInstallerDetails.fqdn
+        /// </summary>
         public string Fqdn { get; }
-        /// <summary> The version. </summary>
+        /// <summary>
+        /// The version.
+        /// Serialized Name: PushInstallerDetails.version
+        /// </summary>
         public string Version { get; }
-        /// <summary> The last heartbeat received from the push installer. </summary>
+        /// <summary>
+        /// The last heartbeat received from the push installer.
+        /// Serialized Name: PushInstallerDetails.lastHeartbeatUtc
+        /// </summary>
         public DateTimeOffset? LastHeartbeatUtc { get; }
-        /// <summary> The health of the push installer. </summary>
+        /// <summary>
+        /// The health of the push installer.
+        /// Serialized Name: PushInstallerDetails.health
+        /// </summary>
         public ProtectionHealth? Health { get; }
-        /// <summary> The health errors. </summary>
+        /// <summary>
+        /// The health errors.
+        /// Serialized Name: PushInstallerDetails.healthErrors
+        /// </summary>
         public IReadOnlyList<HealthError> HealthErrors { get; }
     }
 }

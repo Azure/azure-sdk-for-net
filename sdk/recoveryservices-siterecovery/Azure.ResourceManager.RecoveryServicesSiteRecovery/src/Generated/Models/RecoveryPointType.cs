@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary> The recovery point type. Values from LatestTime, LatestTag or Custom. In the case of custom, the recovery point provided by RecoveryPointId will be used. In the other two cases, recovery point id will be ignored. </summary>
+    /// <summary>
+    /// The recovery point type. Values from LatestTime, LatestTag or Custom. In the case of custom, the recovery point provided by RecoveryPointId will be used. In the other two cases, recovery point id will be ignored.
+    /// Serialized Name: RecoveryPointType
+    /// </summary>
     public readonly partial struct RecoveryPointType : IEquatable<RecoveryPointType>
     {
         private readonly string _value;
@@ -26,11 +29,20 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         private const string LatestTagValue = "LatestTag";
         private const string CustomValue = "Custom";
 
-        /// <summary> LatestTime. </summary>
+        /// <summary>
+        /// LatestTime
+        /// Serialized Name: RecoveryPointType.LatestTime
+        /// </summary>
         public static RecoveryPointType LatestTime { get; } = new RecoveryPointType(LatestTimeValue);
-        /// <summary> LatestTag. </summary>
+        /// <summary>
+        /// LatestTag
+        /// Serialized Name: RecoveryPointType.LatestTag
+        /// </summary>
         public static RecoveryPointType LatestTag { get; } = new RecoveryPointType(LatestTagValue);
-        /// <summary> Custom. </summary>
+        /// <summary>
+        /// Custom
+        /// Serialized Name: RecoveryPointType.Custom
+        /// </summary>
         public static RecoveryPointType Custom { get; } = new RecoveryPointType(CustomValue);
         /// <summary> Determines if two <see cref="RecoveryPointType"/> values are the same. </summary>
         public static bool operator ==(RecoveryPointType left, RecoveryPointType right) => left.Equals(right);

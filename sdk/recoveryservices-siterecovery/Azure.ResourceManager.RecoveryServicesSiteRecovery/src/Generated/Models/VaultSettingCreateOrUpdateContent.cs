@@ -10,11 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary> Input to create vault setting. </summary>
+    /// <summary>
+    /// Input to create vault setting.
+    /// Serialized Name: VaultSettingCreationInput
+    /// </summary>
     public partial class VaultSettingCreateOrUpdateContent
     {
         /// <summary> Initializes a new instance of VaultSettingCreateOrUpdateContent. </summary>
-        /// <param name="properties"> Vault setting creation input properties. </param>
+        /// <param name="properties">
+        /// Vault setting creation input properties.
+        /// Serialized Name: VaultSettingCreationInput.properties
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
         public VaultSettingCreateOrUpdateContent(VaultSettingCreationInputProperties properties)
         {
@@ -23,7 +29,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             Properties = properties;
         }
 
-        /// <summary> Vault setting creation input properties. </summary>
+        /// <summary>
+        /// Vault setting creation input properties.
+        /// Serialized Name: VaultSettingCreationInput.properties
+        /// </summary>
         public VaultSettingCreationInputProperties Properties { get; }
     }
 }

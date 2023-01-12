@@ -10,7 +10,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary> The IPConfigDetails. </summary>
+    /// <summary>
+    /// The IPConfigDetails.
+    /// Serialized Name: IPConfigDetails
+    /// </summary>
     public partial class IPConfigDetails
     {
         /// <summary> Initializes a new instance of IPConfigDetails. </summary>
@@ -21,21 +24,21 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> Initializes a new instance of IPConfigDetails. </summary>
-        /// <param name="name"></param>
-        /// <param name="isPrimary"></param>
-        /// <param name="subnetName"></param>
-        /// <param name="staticIPAddress"></param>
-        /// <param name="ipAddressType"></param>
-        /// <param name="isSeletedForFailover"></param>
-        /// <param name="recoverySubnetName"></param>
-        /// <param name="recoveryStaticIPAddress"></param>
-        /// <param name="recoveryIPAddressType"></param>
-        /// <param name="recoveryPublicIPAddressId"></param>
-        /// <param name="recoveryLBBackendAddressPoolIds"></param>
-        /// <param name="tfoSubnetName"></param>
-        /// <param name="tfoStaticIPAddress"></param>
-        /// <param name="tfoPublicIPAddressId"></param>
-        /// <param name="tfoLBBackendAddressPoolIds"></param>
+        /// <param name="name"> Serialized Name: IPConfigDetails.name. </param>
+        /// <param name="isPrimary"> Serialized Name: IPConfigDetails.isPrimary. </param>
+        /// <param name="subnetName"> Serialized Name: IPConfigDetails.subnetName. </param>
+        /// <param name="staticIPAddress"> Serialized Name: IPConfigDetails.staticIPAddress. </param>
+        /// <param name="ipAddressType"> Serialized Name: IPConfigDetails.ipAddressType. </param>
+        /// <param name="isSeletedForFailover"> Serialized Name: IPConfigDetails.isSeletedForFailover. </param>
+        /// <param name="recoverySubnetName"> Serialized Name: IPConfigDetails.recoverySubnetName. </param>
+        /// <param name="recoveryStaticIPAddress"> Serialized Name: IPConfigDetails.recoveryStaticIPAddress. </param>
+        /// <param name="recoveryIPAddressType"> Serialized Name: IPConfigDetails.recoveryIPAddressType. </param>
+        /// <param name="recoveryPublicIPAddressId"> Serialized Name: IPConfigDetails.recoveryPublicIPAddressId. </param>
+        /// <param name="recoveryLBBackendAddressPoolIds"> Serialized Name: IPConfigDetails.recoveryLBBackendAddressPoolIds. </param>
+        /// <param name="tfoSubnetName"> Serialized Name: IPConfigDetails.tfoSubnetName. </param>
+        /// <param name="tfoStaticIPAddress"> Serialized Name: IPConfigDetails.tfoStaticIPAddress. </param>
+        /// <param name="tfoPublicIPAddressId"> Serialized Name: IPConfigDetails.tfoPublicIPAddressId. </param>
+        /// <param name="tfoLBBackendAddressPoolIds"> Serialized Name: IPConfigDetails.tfoLBBackendAddressPoolIds. </param>
         internal IPConfigDetails(string name, bool? isPrimary, string subnetName, string staticIPAddress, string ipAddressType, bool? isSeletedForFailover, string recoverySubnetName, string recoveryStaticIPAddress, string recoveryIPAddressType, string recoveryPublicIPAddressId, IReadOnlyList<string> recoveryLBBackendAddressPoolIds, string tfoSubnetName, string tfoStaticIPAddress, string tfoPublicIPAddressId, IReadOnlyList<string> tfoLBBackendAddressPoolIds)
         {
             Name = name;
@@ -55,35 +58,35 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             TfoLBBackendAddressPoolIds = tfoLBBackendAddressPoolIds;
         }
 
-        /// <summary> Gets the name. </summary>
+        /// <summary> Serialized Name: IPConfigDetails.name. </summary>
         public string Name { get; }
-        /// <summary> Gets the is primary. </summary>
+        /// <summary> Serialized Name: IPConfigDetails.isPrimary. </summary>
         public bool? IsPrimary { get; }
-        /// <summary> Gets the subnet name. </summary>
+        /// <summary> Serialized Name: IPConfigDetails.subnetName. </summary>
         public string SubnetName { get; }
-        /// <summary> Gets the static ip address. </summary>
+        /// <summary> Serialized Name: IPConfigDetails.staticIPAddress. </summary>
         public string StaticIPAddress { get; }
-        /// <summary> Gets the ip address type. </summary>
+        /// <summary> Serialized Name: IPConfigDetails.ipAddressType. </summary>
         public string IPAddressType { get; }
-        /// <summary> Gets the is seleted for failover. </summary>
+        /// <summary> Serialized Name: IPConfigDetails.isSeletedForFailover. </summary>
         public bool? IsSeletedForFailover { get; }
-        /// <summary> Gets the recovery subnet name. </summary>
+        /// <summary> Serialized Name: IPConfigDetails.recoverySubnetName. </summary>
         public string RecoverySubnetName { get; }
-        /// <summary> Gets the recovery static ip address. </summary>
+        /// <summary> Serialized Name: IPConfigDetails.recoveryStaticIPAddress. </summary>
         public string RecoveryStaticIPAddress { get; }
-        /// <summary> Gets the recovery ip address type. </summary>
+        /// <summary> Serialized Name: IPConfigDetails.recoveryIPAddressType. </summary>
         public string RecoveryIPAddressType { get; }
-        /// <summary> Gets the recovery public ip address id. </summary>
+        /// <summary> Serialized Name: IPConfigDetails.recoveryPublicIPAddressId. </summary>
         public string RecoveryPublicIPAddressId { get; }
-        /// <summary> Gets the recovery lb backend address pool ids. </summary>
+        /// <summary> Serialized Name: IPConfigDetails.recoveryLBBackendAddressPoolIds. </summary>
         public IReadOnlyList<string> RecoveryLBBackendAddressPoolIds { get; }
-        /// <summary> Gets the tfo subnet name. </summary>
+        /// <summary> Serialized Name: IPConfigDetails.tfoSubnetName. </summary>
         public string TfoSubnetName { get; }
-        /// <summary> Gets the tfo static ip address. </summary>
+        /// <summary> Serialized Name: IPConfigDetails.tfoStaticIPAddress. </summary>
         public string TfoStaticIPAddress { get; }
-        /// <summary> Gets the tfo public ip address id. </summary>
+        /// <summary> Serialized Name: IPConfigDetails.tfoPublicIPAddressId. </summary>
         public string TfoPublicIPAddressId { get; }
-        /// <summary> Gets the tfo lb backend address pool ids. </summary>
+        /// <summary> Serialized Name: IPConfigDetails.tfoLBBackendAddressPoolIds. </summary>
         public IReadOnlyList<string> TfoLBBackendAddressPoolIds { get; }
     }
 }

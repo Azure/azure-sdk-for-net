@@ -10,7 +10,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary> Subnets of the network. </summary>
+    /// <summary>
+    /// Subnets of the network.
+    /// Serialized Name: Subnet
+    /// </summary>
     public partial class Subnet
     {
         /// <summary> Initializes a new instance of Subnet. </summary>
@@ -20,9 +23,18 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> Initializes a new instance of Subnet. </summary>
-        /// <param name="name"> The subnet name. </param>
-        /// <param name="friendlyName"> The subnet friendly name. </param>
-        /// <param name="addressList"> The list of addresses for the subnet. </param>
+        /// <param name="name">
+        /// The subnet name.
+        /// Serialized Name: Subnet.name
+        /// </param>
+        /// <param name="friendlyName">
+        /// The subnet friendly name.
+        /// Serialized Name: Subnet.friendlyName
+        /// </param>
+        /// <param name="addressList">
+        /// The list of addresses for the subnet.
+        /// Serialized Name: Subnet.addressList
+        /// </param>
         internal Subnet(string name, string friendlyName, IReadOnlyList<string> addressList)
         {
             Name = name;
@@ -30,11 +42,20 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             AddressList = addressList;
         }
 
-        /// <summary> The subnet name. </summary>
+        /// <summary>
+        /// The subnet name.
+        /// Serialized Name: Subnet.name
+        /// </summary>
         public string Name { get; }
-        /// <summary> The subnet friendly name. </summary>
+        /// <summary>
+        /// The subnet friendly name.
+        /// Serialized Name: Subnet.friendlyName
+        /// </summary>
         public string FriendlyName { get; }
-        /// <summary> The list of addresses for the subnet. </summary>
+        /// <summary>
+        /// The list of addresses for the subnet.
+        /// Serialized Name: Subnet.addressList
+        /// </summary>
         public IReadOnlyList<string> AddressList { get; }
     }
 }

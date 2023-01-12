@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary> The failover deployment model. </summary>
+    /// <summary>
+    /// The failover deployment model.
+    /// Serialized Name: FailoverDeploymentModel
+    /// </summary>
     public readonly partial struct FailoverDeploymentModel : IEquatable<FailoverDeploymentModel>
     {
         private readonly string _value;
@@ -26,11 +29,20 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         private const string ClassicValue = "Classic";
         private const string ResourceManagerValue = "ResourceManager";
 
-        /// <summary> NotApplicable. </summary>
+        /// <summary>
+        /// NotApplicable
+        /// Serialized Name: FailoverDeploymentModel.NotApplicable
+        /// </summary>
         public static FailoverDeploymentModel NotApplicable { get; } = new FailoverDeploymentModel(NotApplicableValue);
-        /// <summary> Classic. </summary>
+        /// <summary>
+        /// Classic
+        /// Serialized Name: FailoverDeploymentModel.Classic
+        /// </summary>
         public static FailoverDeploymentModel Classic { get; } = new FailoverDeploymentModel(ClassicValue);
-        /// <summary> ResourceManager. </summary>
+        /// <summary>
+        /// ResourceManager
+        /// Serialized Name: FailoverDeploymentModel.ResourceManager
+        /// </summary>
         public static FailoverDeploymentModel ResourceManager { get; } = new FailoverDeploymentModel(ResourceManagerValue);
         /// <summary> Determines if two <see cref="FailoverDeploymentModel"/> values are the same. </summary>
         public static bool operator ==(FailoverDeploymentModel left, FailoverDeploymentModel right) => left.Equals(right);

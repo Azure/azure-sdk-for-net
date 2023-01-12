@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary> HyperV Replica Blue policy input. </summary>
+    /// <summary>
+    /// HyperV Replica Blue policy input.
+    /// Serialized Name: HyperVReplicaBluePolicyInput
+    /// </summary>
     public partial class HyperVReplicaBluePolicyInput : HyperVReplicaPolicyInput
     {
         /// <summary> Initializes a new instance of HyperVReplicaBluePolicyInput. </summary>
@@ -16,7 +19,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             InstanceType = "HyperVReplica2012R2";
         }
 
-        /// <summary> A value indicating the replication interval. </summary>
+        /// <summary>
+        /// A value indicating the replication interval.
+        /// Serialized Name: HyperVReplicaBluePolicyInput.replicationFrequencyInSeconds
+        /// </summary>
         public int? ReplicationFrequencyInSeconds { get; set; }
     }
 }

@@ -11,7 +11,10 @@ using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary> Collection of migration recovery points. </summary>
+    /// <summary>
+    /// Collection of migration recovery points.
+    /// Serialized Name: MigrationRecoveryPointCollection
+    /// </summary>
     internal partial class MigrationRecoveryPointCollection
     {
         /// <summary> Initializes a new instance of MigrationRecoveryPointCollection. </summary>
@@ -21,17 +24,29 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> Initializes a new instance of MigrationRecoveryPointCollection. </summary>
-        /// <param name="value"> The migration recovery point details. </param>
-        /// <param name="nextLink"> The value of next link. </param>
+        /// <param name="value">
+        /// The migration recovery point details.
+        /// Serialized Name: MigrationRecoveryPointCollection.value
+        /// </param>
+        /// <param name="nextLink">
+        /// The value of next link.
+        /// Serialized Name: MigrationRecoveryPointCollection.nextLink
+        /// </param>
         internal MigrationRecoveryPointCollection(IReadOnlyList<MigrationRecoveryPointData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
-        /// <summary> The migration recovery point details. </summary>
+        /// <summary>
+        /// The migration recovery point details.
+        /// Serialized Name: MigrationRecoveryPointCollection.value
+        /// </summary>
         public IReadOnlyList<MigrationRecoveryPointData> Value { get; }
-        /// <summary> The value of next link. </summary>
+        /// <summary>
+        /// The value of next link.
+        /// Serialized Name: MigrationRecoveryPointCollection.nextLink
+        /// </summary>
         public string NextLink { get; }
     }
 }

@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary> Model class for event details of a HyperVReplica E2A event. </summary>
+    /// <summary>
+    /// Model class for event details of a HyperVReplica E2A event.
+    /// Serialized Name: HyperVReplicaAzureEventDetails
+    /// </summary>
     public partial class HyperVReplicaAzureEventDetails : EventProviderSpecificDetails
     {
         /// <summary> Initializes a new instance of HyperVReplicaAzureEventDetails. </summary>
@@ -17,10 +20,22 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> Initializes a new instance of HyperVReplicaAzureEventDetails. </summary>
-        /// <param name="instanceType"> Gets the class type. Overridden in derived classes. </param>
-        /// <param name="containerName"> The container friendly name. </param>
-        /// <param name="fabricName"> The fabric friendly name. </param>
-        /// <param name="remoteContainerName"> The remote container name. </param>
+        /// <param name="instanceType">
+        /// Gets the class type. Overridden in derived classes.
+        /// Serialized Name: EventProviderSpecificDetails.instanceType
+        /// </param>
+        /// <param name="containerName">
+        /// The container friendly name.
+        /// Serialized Name: HyperVReplicaAzureEventDetails.containerName
+        /// </param>
+        /// <param name="fabricName">
+        /// The fabric friendly name.
+        /// Serialized Name: HyperVReplicaAzureEventDetails.fabricName
+        /// </param>
+        /// <param name="remoteContainerName">
+        /// The remote container name.
+        /// Serialized Name: HyperVReplicaAzureEventDetails.remoteContainerName
+        /// </param>
         internal HyperVReplicaAzureEventDetails(string instanceType, string containerName, string fabricName, string remoteContainerName) : base(instanceType)
         {
             ContainerName = containerName;
@@ -29,11 +44,20 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             InstanceType = instanceType ?? "HyperVReplicaAzure";
         }
 
-        /// <summary> The container friendly name. </summary>
+        /// <summary>
+        /// The container friendly name.
+        /// Serialized Name: HyperVReplicaAzureEventDetails.containerName
+        /// </summary>
         public string ContainerName { get; }
-        /// <summary> The fabric friendly name. </summary>
+        /// <summary>
+        /// The fabric friendly name.
+        /// Serialized Name: HyperVReplicaAzureEventDetails.fabricName
+        /// </summary>
         public string FabricName { get; }
-        /// <summary> The remote container name. </summary>
+        /// <summary>
+        /// The remote container name.
+        /// Serialized Name: HyperVReplicaAzureEventDetails.remoteContainerName
+        /// </summary>
         public string RemoteContainerName { get; }
     }
 }
