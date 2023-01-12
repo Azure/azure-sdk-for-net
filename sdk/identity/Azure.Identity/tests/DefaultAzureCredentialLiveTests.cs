@@ -188,7 +188,6 @@ namespace Azure.Identity.Tests
                 scopesAzd = diagnosticListener.Scopes;
             }
 
-            
             Assert.AreEqual(token.Token, expectedToken);
             Assert.AreEqual(token.ExpiresOn, expectedExpiresOn);
 

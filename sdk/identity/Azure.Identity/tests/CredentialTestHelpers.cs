@@ -41,7 +41,7 @@ namespace Azure.Identity.Tests
 
         public static (string Token, DateTimeOffset ExpiresOn, string Json) CreateTokenForAzureDeveloperCli(TimeSpan expiresOffset)
         {
-            const string expiresOnStringFormat = "%Y-%m-%dT%H:%M:%SZ";
+            const string expiresOnStringFormat = "yyyy-MM-ddTHH:mm:ssZ";
 
             var expiresOnString = DateTimeOffset.Now.Add(expiresOffset).ToString(expiresOnStringFormat);
             var expiresOn = DateTimeOffset.ParseExact(expiresOnString, expiresOnStringFormat, CultureInfo.InvariantCulture, DateTimeStyles.AdjustToUniversal | DateTimeStyles.AssumeLocal);

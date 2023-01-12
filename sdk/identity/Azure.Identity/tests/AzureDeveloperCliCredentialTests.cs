@@ -103,10 +103,10 @@ namespace Azure.Identity.Tests
         public static IEnumerable<object[]> AzureDeveloperCliExceptionScenarios()
         {
             // params
-            // az thrown Exception message, expected message, expected  exception
+            // azd thrown Exception message, expected message, expected  exception
             yield return new object[] { AzureDeveloperCliCredential.WinAzdCliError, AzureDeveloperCliCredential.AzdCliNotInstalled, typeof(CredentialUnavailableException) };
-            yield return new object[] { "az: command not found", AzureDeveloperCliCredential.AzdCliNotInstalled, typeof(CredentialUnavailableException) };
-            yield return new object[] { "az: not found", AzureDeveloperCliCredential.AzdCliNotInstalled, typeof(CredentialUnavailableException) };
+            yield return new object[] { "azd: command not found", AzureDeveloperCliCredential.AzdCliNotInstalled, typeof(CredentialUnavailableException) };
+            yield return new object[] { "azd: not found", AzureDeveloperCliCredential.AzdCliNotInstalled, typeof(CredentialUnavailableException) };
             yield return new object[] { AzureDeveloperCliCredential.AzdNotLogIn, AzureDeveloperCliCredential.AzdNotLogIn, typeof(CredentialUnavailableException) };
             yield return new object[] { RefreshTokenExpiredError, AzureDeveloperCliCredential.InteractiveLoginRequired, typeof(CredentialUnavailableException) };
             yield return new object[] { AzureDeveloperCliCredential.AzdCLIInternalError, AzureDeveloperCliCredential.InteractiveLoginRequired, typeof(CredentialUnavailableException) };

@@ -2,9 +2,11 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
 using System.IO;
+using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text.Json;
 using System.Text.RegularExpressions;
@@ -20,15 +22,13 @@ namespace Azure.Identity
     /// </summary>
     public class AzureDeveloperCliCredential : TokenCredential
     {
-        internal const string AzdCliNotInstalled = $"Azure Developer CLI could not be found. {Troubleshoot}";
+        internal const string AzdCliNotInstalled = "Azure Developer CLI could not be found.";
         internal const string AzdNotLogIn = "Please run 'azd login' from a command prompt to authenticate before using this credential.";
         internal const string WinAzdCliError = "'azd is not recognized";
         internal const string AzdCliTimeoutError = "Azure Developer CLI authentication timed out.";
         internal const string AzdCliFailedError = "Azure Developer CLI authentication failed due to an unknown error.";
         internal const string Troubleshoot = "Please visit https://aka.ms/azure-dev for installation instructions and then, once installed, authenticate to your Azure account using 'azd login'.";
         internal const string InteractiveLoginRequired = "Azure Developer CLI could not login. Interactive login is required.";
-        private const string RefreshTokeExpired = "The provided authorization code or refresh token has expired due to inactivity. Send a new interactive authorization request for this user and resource.";
-
         internal const string AzdCLIInternalError = "AzdCLIInternalError: The command failed with an unexpected error. Here is the traceback:";
         internal TimeSpan AzdCliProcessTimeout { get; private set; }
 
@@ -118,12 +118,9 @@ namespace Azure.Identity
 
         private async ValueTask<AccessToken> RequestCliAccessTokenAsync(bool async, TokenRequestContext context, CancellationToken cancellationToken)
         {
-            string resource = ScopeUtilities.ScopesToResource(context.Scopes);
             string tenantId = TenantIdResolver.Resolve(TenantId, context, AdditionallyAllowedTenantIds);
 
-            ScopeUtilities.ValidateScope(resource);
-
-            GetFileNameAndArguments(resource, tenantId, out string fileName, out string argument);
+            GetFileNameAndArguments(context.Scopes, tenantId, out string fileName, out string argument);
             ProcessStartInfo processStartInfo = GetAzureDeveloperCliProcessStartInfo(fileName, argument);
             using var processRunner = new ProcessRunner(_processService.Create(processStartInfo), AzdCliProcessTimeout, _logPII, cancellationToken);
 
@@ -147,7 +144,6 @@ namespace Azure.Identity
                     throw new CredentialUnavailableException(AzdCliNotInstalled);
                 }
 
-                /// TODO AADSTS
                 bool isAADSTSError = exception.Message.Contains("AADSTS");
                 bool isLoginError = exception.Message.IndexOf("azd login", StringComparison.OrdinalIgnoreCase) != -1 ||
                                     exception.Message.IndexOf("azd account set", StringComparison.OrdinalIgnoreCase) != -1;
@@ -193,7 +189,7 @@ namespace Azure.Identity
 
         private static void GetFileNameAndArguments(string[] scopes, string tenantId, out string fileName, out string argument)
         {
-            string scopeArgs = string.Join(" ", scopes.Select(scope => string.Format($"--scope {scope}")));
+            string scopeArgs = string.Join(" ", scopes.Select(scope => $"--scope {scope}"));
             string command = tenantId switch
             {
                 null => $"azd auth token --output json {scopeArgs}",
@@ -218,10 +214,7 @@ namespace Azure.Identity
 
             JsonElement root = document.RootElement;
             string accessToken = root.GetProperty("token").GetString();
-            DateTimeOffset expiresOn = root.TryGetProperty("expiresIn", out JsonElement expiresIn)
-                ? DateTimeOffset.UtcNow + TimeSpan.FromSeconds(expiresIn.GetInt64())
-                : DateTimeOffset.ParseExact(root.GetProperty("expiresOn").GetString(), "%Y-%m-%dT%H:%M:%SZ", CultureInfo.InvariantCulture, DateTimeStyles.AdjustToUniversal | DateTimeStyles.AssumeLocal);
-
+            DateTimeOffset expiresOn = root.GetProperty("expiresOn").GetDateTimeOffset();
             return new AccessToken(accessToken, expiresOn);
         }
     }
