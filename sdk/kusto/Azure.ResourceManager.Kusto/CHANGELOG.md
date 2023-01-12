@@ -1,12 +1,22 @@
 # Release History
 
-## 1.2.0 (2023-01-17)
+## 1.3.0-beta.1 (Unreleased)
 
 ### Features Added
 
-- New data connection cosmosdb
-- Ability to create cluster with LanguageExtension
-- Get available skus by location
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
+## 1.2.0 (2023-01-10)
+
+### Features Added
+
+- Supported CosmosDB data connection.
+- Supported cluster creation with LanguageExtensionImage.
+- Added method `GetSkus` to get available skus by location.
 
 ### Other Changes
 
