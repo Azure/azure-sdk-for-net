@@ -22,16 +22,9 @@ namespace Azure.ResourceManager.ServiceBus.Models
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        private const string One0Value = "1.0";
-        private const string One1Value = "1.1";
-        private const string One2Value = "1.2";
-
-        /// <summary> 1.0. </summary>
-        public static ServiceBusMinimumTlsVersion One0 { get; } = new ServiceBusMinimumTlsVersion(One0Value);
-        /// <summary> 1.1. </summary>
-        public static ServiceBusMinimumTlsVersion One1 { get; } = new ServiceBusMinimumTlsVersion(One1Value);
-        /// <summary> 1.2. </summary>
-        public static ServiceBusMinimumTlsVersion One2 { get; } = new ServiceBusMinimumTlsVersion(One2Value);
+        private const string Tls1_0Value = "1.0";
+        private const string Tls1_1Value = "1.1";
+        private const string Tls1_2Value = "1.2";
         /// <summary> Determines if two <see cref="ServiceBusMinimumTlsVersion"/> values are the same. </summary>
         public static bool operator ==(ServiceBusMinimumTlsVersion left, ServiceBusMinimumTlsVersion right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ServiceBusMinimumTlsVersion"/> values are not the same. </summary>
