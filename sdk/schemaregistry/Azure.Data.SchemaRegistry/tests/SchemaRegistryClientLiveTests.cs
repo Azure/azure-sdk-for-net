@@ -28,13 +28,13 @@ namespace Azure.Data.SchemaRegistry.Tests
             string endpoint;
             switch (format)
             {
-                case "JSON":
+                case Json:
                     endpoint = TestEnvironment.SchemaRegistryEndpointJson;
                     break;
-                case "Avro":
+                case Avro:
                     endpoint = TestEnvironment.SchemaRegistryEndpointAvro;
                     break;
-                case "Custom":
+                case Custom:
                     endpoint = TestEnvironment.SchemaRegistryEndpointCustom;
                     break;
                 default:
@@ -58,7 +58,7 @@ namespace Azure.Data.SchemaRegistry.Tests
         private const string Custom_SchemaContent_V2 = "Hello_V2";
 
         private const string Avro = "Avro";
-        private const string Json = "JSON";
+        private const string Json = "Json";
         private const string Custom = "Custom";
 
         [RecordedTest]
