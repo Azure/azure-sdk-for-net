@@ -658,6 +658,20 @@ directive:
     where: $.definitions.ProviderExtendedLocation.properties.location
     transform: >
       $["x-ms-format"] = "azure-location"
+  - from: resources.json
+    where: $.paths
+    transform: >
+      let topParameter =
+      {
+        "name": "$top",
+        "in": "query",
+        "required": false,
+        "type": "integer",
+        "format": "int32",
+        "description": "[This parameter is no longer supported.] The number of results to return. If null is passed returns all deployments."
+      };
+      $['/subscriptions/{subscriptionId}/providers'].get.parameters.unshift(topParameter);
+      $['/providers'].get.parameters.unshift(topParameter);
 ```
 
 ### Tag: package-management-2022-04

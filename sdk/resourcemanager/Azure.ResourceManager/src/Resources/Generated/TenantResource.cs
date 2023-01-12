@@ -268,10 +268,11 @@ namespace Azure.ResourceManager.Resources
         /// Request Path: /providers
         /// Operation Id: Providers_ListAtTenantScope
         /// </summary>
+        /// <param name="top"> [This parameter is no longer supported.] The number of results to return. If null is passed returns all deployments. </param>
         /// <param name="expand"> The properties to include in the results. For example, use &amp;$expand=metadata in the query string to retrieve resource provider metadata. To include property aliases in response, use $expand=resourceTypes/aliases. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="TenantResourceProvider" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<TenantResourceProvider> GetTenantResourceProvidersAsync(string expand = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<TenantResourceProvider> GetTenantResourceProvidersAsync(int? top = null, string expand = null, CancellationToken cancellationToken = default)
         {
             async Task<Page<TenantResourceProvider>> FirstPageFunc(int? pageSizeHint)
             {
@@ -279,7 +280,7 @@ namespace Azure.ResourceManager.Resources
                 scope.Start();
                 try
                 {
-                    var response = await _resourceProviderProvidersRestClient.ListAtTenantScopeAsync(expand, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _resourceProviderProvidersRestClient.ListAtTenantScopeAsync(top, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -294,7 +295,7 @@ namespace Azure.ResourceManager.Resources
                 scope.Start();
                 try
                 {
-                    var response = await _resourceProviderProvidersRestClient.ListAtTenantScopeNextPageAsync(nextLink, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _resourceProviderProvidersRestClient.ListAtTenantScopeNextPageAsync(nextLink, top, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -311,10 +312,11 @@ namespace Azure.ResourceManager.Resources
         /// Request Path: /providers
         /// Operation Id: Providers_ListAtTenantScope
         /// </summary>
+        /// <param name="top"> [This parameter is no longer supported.] The number of results to return. If null is passed returns all deployments. </param>
         /// <param name="expand"> The properties to include in the results. For example, use &amp;$expand=metadata in the query string to retrieve resource provider metadata. To include property aliases in response, use $expand=resourceTypes/aliases. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="TenantResourceProvider" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<TenantResourceProvider> GetTenantResourceProviders(string expand = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<TenantResourceProvider> GetTenantResourceProviders(int? top = null, string expand = null, CancellationToken cancellationToken = default)
         {
             Page<TenantResourceProvider> FirstPageFunc(int? pageSizeHint)
             {
@@ -322,7 +324,7 @@ namespace Azure.ResourceManager.Resources
                 scope.Start();
                 try
                 {
-                    var response = _resourceProviderProvidersRestClient.ListAtTenantScope(expand, cancellationToken: cancellationToken);
+                    var response = _resourceProviderProvidersRestClient.ListAtTenantScope(top, expand, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -337,7 +339,7 @@ namespace Azure.ResourceManager.Resources
                 scope.Start();
                 try
                 {
-                    var response = _resourceProviderProvidersRestClient.ListAtTenantScopeNextPage(nextLink, expand, cancellationToken: cancellationToken);
+                    var response = _resourceProviderProvidersRestClient.ListAtTenantScopeNextPage(nextLink, top, expand, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
