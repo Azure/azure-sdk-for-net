@@ -16,8 +16,8 @@ namespace Azure.Data.SchemaRegistry
         private const string JsonValue = "JSON";
         private const string CustomValue = "Custom";
 
-        private const string AvroContentType = "application/json; serialization=Avro";
-        private const string JsonContentType = "application/json; serialization=json";
+        private const string AvroContentType = "Avro";
+        private const string JsonContentType = "Json";
 
         /// <summary> Initializes a new instance of <see cref="SchemaFormat"/>. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
@@ -69,12 +69,8 @@ namespace Azure.Data.SchemaRegistry
 
         internal static SchemaFormat FromContentType(string contentTypeValue)
         {
-            var isJsonTemp = contentTypeValue.Contains("+json");
-            if (isJsonTemp)
-            {
-                return SchemaFormat.Json;
-            }
-            switch (contentTypeValue)
+            var contentEquals = contentTypeValue.Split('=');
+            switch (contentEquals[1])
             {
                 case AvroContentType:
                     return SchemaFormat.Avro;

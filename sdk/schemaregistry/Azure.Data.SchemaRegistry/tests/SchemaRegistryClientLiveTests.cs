@@ -3,10 +3,13 @@
 
 using System;
 using System.Text.RegularExpressions;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
+using System.Collections.Generic;
 
 namespace Azure.Data.SchemaRegistry.Tests
 {
@@ -14,7 +17,7 @@ namespace Azure.Data.SchemaRegistry.Tests
     public class SchemaRegistryClientLiveTests : RecordedTestBase<SchemaRegistryClientTestEnvironment>
     {
         private readonly SchemaRegistryClientOptions.ServiceVersion _serviceVersion;
-        public SchemaRegistryClientLiveTests(bool isAsync, SchemaRegistryClientOptions.ServiceVersion version) : base(isAsync)
+        public SchemaRegistryClientLiveTests(bool isAsync, SchemaRegistryClientOptions.ServiceVersion version) : base(isAsync, RecordedTestMode.Record)
         {
             TestDiagnostics = false;
             _serviceVersion = version;
@@ -181,8 +184,8 @@ namespace Azure.Data.SchemaRegistry.Tests
             var format = new SchemaFormat("NOTJSON");
             Assert.That(
                 async () => await client.RegisterSchemaAsync(groupName, schemaName, SchemaContent, format),
-                Throws.InstanceOf<RequestFailedException>().And.Property(nameof(RequestFailedException.Status)).EqualTo(415)
-                    .And.Property(nameof(RequestFailedException.ErrorCode)).EqualTo("InvalidSchemaType"));
+                Throws.InstanceOf<RequestFailedException>().And.Property(nameof(RequestFailedException.Status)).EqualTo(403)
+                    .And.Property(nameof(RequestFailedException.ErrorCode)).EqualTo("NotAvaliable"));
         }
 
         [RecordedTest]
@@ -194,8 +197,8 @@ namespace Azure.Data.SchemaRegistry.Tests
             var format = new SchemaFormat("NOTJSON");
             Assert.That(
                 async () => await client.GetSchemaPropertiesAsync(groupName, schemaName, SchemaContent, format),
-                Throws.InstanceOf<RequestFailedException>().And.Property(nameof(RequestFailedException.Status)).EqualTo(415)
-                    .And.Property(nameof(RequestFailedException.ErrorCode)).EqualTo("InvalidSchemaType"));
+                Throws.InstanceOf<RequestFailedException>().And.Property(nameof(RequestFailedException.Status)).EqualTo(404)
+                    .And.Property(nameof(RequestFailedException.ErrorCode)).EqualTo("ItemNotFound"));
         }
 
         [RecordedTest]

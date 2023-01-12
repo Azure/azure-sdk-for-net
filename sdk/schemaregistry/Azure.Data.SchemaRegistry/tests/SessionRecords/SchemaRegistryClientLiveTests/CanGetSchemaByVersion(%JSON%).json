@@ -1,15 +1,15 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://mreddingschemaregistry-json.servicebus.windows.net/$schemaGroups/azsdk_net_test_group/schemas/test-20615?api-version=2021-10",
+      "RequestUri": "https://mreddingschemaregistry-json.servicebus.windows.net/$schemaGroups/azsdk_net_test_group/schemas/test-14392?api-version=2022-10",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
         "Content-Length": "460",
         "Content-Type": "application/json; serialization=json",
-        "User-Agent": "azsdk-net-Data.SchemaRegistry/1.3.0-alpha.20221104.1 (.NET 6.0.10; Microsoft Windows 10.0.22621)",
-        "x-ms-client-request-id": "014dded52939f3efb89c9daa0af3935e",
+        "User-Agent": "azsdk-net-Data.SchemaRegistry/1.4.0-alpha.20230111.1 (.NET 6.0.13; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "2e06a66ef6f640b4c8be8377ef1caf23",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -36,29 +36,29 @@
       "StatusCode": 204,
       "ResponseHeaders": {
         "Content-Length": "0",
-        "Date": "Fri, 04 Nov 2022 22:46:30 GMT",
-        "Location": "https://mreddingschemaregistry-json.servicebus.windows.net/$schemagroups/azsdk_net_test_group/schemas/test-20615/versions/1?api-version=2021-10",
+        "Date": "Thu, 12 Jan 2023 00:09:15 GMT",
+        "Location": "https://mreddingschemaregistry-json.servicebus.windows.net/$schemagroups/azsdk_net_test_group/schemas/test-14392/versions/1?api-version=2022-10",
         "Schema-Group-Name": "azsdk_net_test_group",
-        "Schema-Id": "0c0855549a5d40edac6cb264ddfcdfb1",
-        "Schema-Id-Location": "https://mreddingschemaregistry-json.servicebus.windows.net:443/$schemagroups/$schemas/0c0855549a5d40edac6cb264ddfcdfb1?api-version=2021-10",
-        "Schema-Name": "test-20615",
+        "Schema-Id": "0de5775b47484b1b9717b1285960a5df",
+        "Schema-Id-Location": "https://mreddingschemaregistry-json.servicebus.windows.net:443/$schemagroups/$schemas/0de5775b47484b1b9717b1285960a5df?api-version=2022-10",
+        "Schema-Name": "test-14392",
         "Schema-Version": "1",
-        "Schema-Versions-Location": "https://mreddingschemaregistry-json.servicebus.windows.net:443/$schemagroups/azsdk_net_test_group/schemas/test-20615/versions?api-version=2021-10",
+        "Schema-Versions-Location": "https://mreddingschemaregistry-json.servicebus.windows.net:443/$schemagroups/azsdk_net_test_group/schemas/test-14392/versions?api-version=2022-10",
         "Server": "Microsoft-HTTPAPI/2.0",
         "Strict-Transport-Security": "max-age=31536000"
       },
       "ResponseBody": null
     },
     {
-      "RequestUri": "https://mreddingschemaregistry-json.servicebus.windows.net/$schemaGroups/azsdk_net_test_group/schemas/test-20615?api-version=2021-10",
+      "RequestUri": "https://mreddingschemaregistry-json.servicebus.windows.net/$schemaGroups/azsdk_net_test_group/schemas/test-14392?api-version=2022-10",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
         "Content-Length": "463",
         "Content-Type": "application/json; serialization=json",
-        "User-Agent": "azsdk-net-Data.SchemaRegistry/1.3.0-alpha.20221104.1 (.NET 6.0.10; Microsoft Windows 10.0.22621)",
-        "x-ms-client-request-id": "abfebb19f28adab3ae1e417cf07e4e67",
+        "User-Agent": "azsdk-net-Data.SchemaRegistry/1.4.0-alpha.20230111.1 (.NET 6.0.13; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "ab0a4208ece6b4b83b3fb35e84bacaf8",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -85,41 +85,41 @@
       "StatusCode": 204,
       "ResponseHeaders": {
         "Content-Length": "0",
-        "Date": "Fri, 04 Nov 2022 22:46:31 GMT",
-        "Location": "https://mreddingschemaregistry-json.servicebus.windows.net/$schemagroups/azsdk_net_test_group/schemas/test-20615/versions/2?api-version=2021-10",
+        "Date": "Thu, 12 Jan 2023 00:09:16 GMT",
+        "Location": "https://mreddingschemaregistry-json.servicebus.windows.net/$schemagroups/azsdk_net_test_group/schemas/test-14392/versions/2?api-version=2022-10",
         "Schema-Group-Name": "azsdk_net_test_group",
-        "Schema-Id": "413a25baa0c94c1bb8dd7acf082ebcf7",
-        "Schema-Id-Location": "https://mreddingschemaregistry-json.servicebus.windows.net:443/$schemagroups/$schemas/413a25baa0c94c1bb8dd7acf082ebcf7?api-version=2021-10",
-        "Schema-Name": "test-20615",
+        "Schema-Id": "24bf7d0ca6c8469e83c2cee9f58f8cbb",
+        "Schema-Id-Location": "https://mreddingschemaregistry-json.servicebus.windows.net:443/$schemagroups/$schemas/24bf7d0ca6c8469e83c2cee9f58f8cbb?api-version=2022-10",
+        "Schema-Name": "test-14392",
         "Schema-Version": "2",
-        "Schema-Versions-Location": "https://mreddingschemaregistry-json.servicebus.windows.net:443/$schemagroups/azsdk_net_test_group/schemas/test-20615/versions?api-version=2021-10",
+        "Schema-Versions-Location": "https://mreddingschemaregistry-json.servicebus.windows.net:443/$schemagroups/azsdk_net_test_group/schemas/test-14392/versions?api-version=2022-10",
         "Server": "Microsoft-HTTPAPI/2.0",
         "Strict-Transport-Security": "max-age=31536000"
       },
       "ResponseBody": null
     },
     {
-      "RequestUri": "https://mreddingschemaregistry-json.servicebus.windows.net/$schemaGroups/azsdk_net_test_group/schemas/test-20615/versions/1?api-version=2021-10",
+      "RequestUri": "https://mreddingschemaregistry-json.servicebus.windows.net/$schemaGroups/azsdk_net_test_group/schemas/test-14392/versions/1?api-version=2022-10",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json; serialization=Avro, application/json; serialization=json, application/octet-stream",
         "Authorization": "Sanitized",
-        "User-Agent": "azsdk-net-Data.SchemaRegistry/1.3.0-alpha.20221104.1 (.NET 6.0.10; Microsoft Windows 10.0.22621)",
-        "x-ms-client-request-id": "f757a465d33328f08c5750bd4f1f0b61",
+        "User-Agent": "azsdk-net-Data.SchemaRegistry/1.4.0-alpha.20230111.1 (.NET 6.0.13; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "1b4e8639c4e4e53e75f9bfcc7d3031d0",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "Content-Type": "application/schema\u002Bjson",
-        "Date": "Fri, 04 Nov 2022 22:46:31 GMT",
-        "Location": "https://mreddingschemaregistry-json.servicebus.windows.net/$schemagroups/azsdk_net_test_group/schemas/test-20615/versions/1?api-version=2021-10",
+        "Content-Type": "application/json; serialization=Json",
+        "Date": "Thu, 12 Jan 2023 00:09:17 GMT",
+        "Location": "https://mreddingschemaregistry-json.servicebus.windows.net/$schemagroups/azsdk_net_test_group/schemas/test-14392/versions/1?api-version=2022-10",
         "Schema-Group-Name": "azsdk_net_test_group",
-        "Schema-Id": "0c0855549a5d40edac6cb264ddfcdfb1",
-        "Schema-Id-Location": "https://mreddingschemaregistry-json.servicebus.windows.net:443/$schemagroups/$schemas/0c0855549a5d40edac6cb264ddfcdfb1?api-version=2021-10",
-        "Schema-Name": "test-20615",
+        "Schema-Id": "0de5775b47484b1b9717b1285960a5df",
+        "Schema-Id-Location": "https://mreddingschemaregistry-json.servicebus.windows.net:443/$schemagroups/$schemas/0de5775b47484b1b9717b1285960a5df?api-version=2022-10",
+        "Schema-Name": "test-14392",
         "Schema-Version": "1",
-        "Schema-Versions-Location": "https://mreddingschemaregistry-json.servicebus.windows.net:443/$schemagroups/azsdk_net_test_group/schemas/test-20615/versions?api-version=2021-10",
+        "Schema-Versions-Location": "https://mreddingschemaregistry-json.servicebus.windows.net:443/$schemagroups/azsdk_net_test_group/schemas/test-14392/versions?api-version=2022-10",
         "Server": "Microsoft-HTTPAPI/2.0",
         "Strict-Transport-Security": "max-age=31536000",
         "Transfer-Encoding": "chunked"
@@ -147,27 +147,27 @@
       }
     },
     {
-      "RequestUri": "https://mreddingschemaregistry-json.servicebus.windows.net/$schemaGroups/azsdk_net_test_group/schemas/test-20615/versions/2?api-version=2021-10",
+      "RequestUri": "https://mreddingschemaregistry-json.servicebus.windows.net/$schemaGroups/azsdk_net_test_group/schemas/test-14392/versions/2?api-version=2022-10",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json; serialization=Avro, application/json; serialization=json, application/octet-stream",
         "Authorization": "Sanitized",
-        "User-Agent": "azsdk-net-Data.SchemaRegistry/1.3.0-alpha.20221104.1 (.NET 6.0.10; Microsoft Windows 10.0.22621)",
-        "x-ms-client-request-id": "7cd8118859b7e2702a72521ae7730239",
+        "User-Agent": "azsdk-net-Data.SchemaRegistry/1.4.0-alpha.20230111.1 (.NET 6.0.13; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "36ee5d0c199882adee51f2b74355bb0e",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "Content-Type": "application/schema\u002Bjson",
-        "Date": "Fri, 04 Nov 2022 22:46:32 GMT",
-        "Location": "https://mreddingschemaregistry-json.servicebus.windows.net/$schemagroups/azsdk_net_test_group/schemas/test-20615/versions/2?api-version=2021-10",
+        "Content-Type": "application/json; serialization=Json",
+        "Date": "Thu, 12 Jan 2023 00:09:17 GMT",
+        "Location": "https://mreddingschemaregistry-json.servicebus.windows.net/$schemagroups/azsdk_net_test_group/schemas/test-14392/versions/2?api-version=2022-10",
         "Schema-Group-Name": "azsdk_net_test_group",
-        "Schema-Id": "413a25baa0c94c1bb8dd7acf082ebcf7",
-        "Schema-Id-Location": "https://mreddingschemaregistry-json.servicebus.windows.net:443/$schemagroups/$schemas/413a25baa0c94c1bb8dd7acf082ebcf7?api-version=2021-10",
-        "Schema-Name": "test-20615",
+        "Schema-Id": "24bf7d0ca6c8469e83c2cee9f58f8cbb",
+        "Schema-Id-Location": "https://mreddingschemaregistry-json.servicebus.windows.net:443/$schemagroups/$schemas/24bf7d0ca6c8469e83c2cee9f58f8cbb?api-version=2022-10",
+        "Schema-Name": "test-14392",
         "Schema-Version": "2",
-        "Schema-Versions-Location": "https://mreddingschemaregistry-json.servicebus.windows.net:443/$schemagroups/azsdk_net_test_group/schemas/test-20615/versions?api-version=2021-10",
+        "Schema-Versions-Location": "https://mreddingschemaregistry-json.servicebus.windows.net:443/$schemagroups/azsdk_net_test_group/schemas/test-14392/versions?api-version=2022-10",
         "Server": "Microsoft-HTTPAPI/2.0",
         "Strict-Transport-Security": "max-age=31536000",
         "Transfer-Encoding": "chunked"
@@ -197,7 +197,7 @@
   ],
   "Variables": {
     "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com/",
-    "RandomSeed": "1956287072",
+    "RandomSeed": "1558402355",
     "SCHEMAREGISTRY_ENDPOINT_JSON": "mreddingschemaregistry-json.servicebus.windows.net",
     "SCHEMAREGISTRY_GROUP": "azsdk_net_test_group"
   }
