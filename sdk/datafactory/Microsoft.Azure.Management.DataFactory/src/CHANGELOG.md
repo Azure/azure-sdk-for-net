@@ -1,5 +1,11 @@
 # Changelog for the Azure Data Factory V2 .NET SDK
 
+## Version 9.0.0
+###  Feature Additions
+### Breaking Changes
+- Added support Credential operations in DataFactory
+- Added exportsettings required in Snowflake source
+
 ## Version 8.0.0
 ###  Feature Additions
 ### Breaking Changes
