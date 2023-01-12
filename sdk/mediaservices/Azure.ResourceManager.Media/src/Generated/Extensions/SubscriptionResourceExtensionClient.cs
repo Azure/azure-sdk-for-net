@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -57,37 +56,9 @@ namespace Azure.ResourceManager.Media
         /// <returns> An async collection of <see cref="MediaServicesAccountResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<MediaServicesAccountResource> GetMediaServicesAccountsAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<MediaServicesAccountResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = MediaServicesAccountMediaservicesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetMediaServicesAccounts");
-                scope.Start();
-                try
-                {
-                    var response = await MediaServicesAccountMediaservicesRestClient.ListBySubscriptionAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new MediaServicesAccountResource(Client, value)), response.Value.OdataNextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<MediaServicesAccountResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = MediaServicesAccountMediaservicesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetMediaServicesAccounts");
-                scope.Start();
-                try
-                {
-                    var response = await MediaServicesAccountMediaservicesRestClient.ListBySubscriptionNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new MediaServicesAccountResource(Client, value)), response.Value.OdataNextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => MediaServicesAccountMediaservicesRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => MediaServicesAccountMediaservicesRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new MediaServicesAccountResource(Client, MediaServicesAccountData.DeserializeMediaServicesAccountData(e)), MediaServicesAccountMediaservicesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetMediaServicesAccounts", "value", "@odata.nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -99,37 +70,9 @@ namespace Azure.ResourceManager.Media
         /// <returns> A collection of <see cref="MediaServicesAccountResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<MediaServicesAccountResource> GetMediaServicesAccounts(CancellationToken cancellationToken = default)
         {
-            Page<MediaServicesAccountResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = MediaServicesAccountMediaservicesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetMediaServicesAccounts");
-                scope.Start();
-                try
-                {
-                    var response = MediaServicesAccountMediaservicesRestClient.ListBySubscription(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new MediaServicesAccountResource(Client, value)), response.Value.OdataNextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<MediaServicesAccountResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = MediaServicesAccountMediaservicesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetMediaServicesAccounts");
-                scope.Start();
-                try
-                {
-                    var response = MediaServicesAccountMediaservicesRestClient.ListBySubscriptionNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new MediaServicesAccountResource(Client, value)), response.Value.OdataNextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => MediaServicesAccountMediaservicesRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => MediaServicesAccountMediaservicesRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new MediaServicesAccountResource(Client, MediaServicesAccountData.DeserializeMediaServicesAccountData(e)), MediaServicesAccountMediaservicesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetMediaServicesAccounts", "value", "@odata.nextLink", cancellationToken);
         }
 
         /// <summary>

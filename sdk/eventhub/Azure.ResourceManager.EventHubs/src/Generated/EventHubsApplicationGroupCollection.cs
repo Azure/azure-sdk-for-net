@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -186,37 +185,9 @@ namespace Azure.ResourceManager.EventHubs
         /// <returns> An async collection of <see cref="EventHubsApplicationGroupResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<EventHubsApplicationGroupResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<EventHubsApplicationGroupResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _eventHubsApplicationGroupApplicationGroupClientDiagnostics.CreateScope("EventHubsApplicationGroupCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _eventHubsApplicationGroupApplicationGroupRestClient.ListByNamespaceAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new EventHubsApplicationGroupResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<EventHubsApplicationGroupResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _eventHubsApplicationGroupApplicationGroupClientDiagnostics.CreateScope("EventHubsApplicationGroupCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _eventHubsApplicationGroupApplicationGroupRestClient.ListByNamespaceNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new EventHubsApplicationGroupResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _eventHubsApplicationGroupApplicationGroupRestClient.CreateListByNamespaceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _eventHubsApplicationGroupApplicationGroupRestClient.CreateListByNamespaceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new EventHubsApplicationGroupResource(Client, EventHubsApplicationGroupData.DeserializeEventHubsApplicationGroupData(e)), _eventHubsApplicationGroupApplicationGroupClientDiagnostics, Pipeline, "EventHubsApplicationGroupCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -228,37 +199,9 @@ namespace Azure.ResourceManager.EventHubs
         /// <returns> A collection of <see cref="EventHubsApplicationGroupResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<EventHubsApplicationGroupResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<EventHubsApplicationGroupResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _eventHubsApplicationGroupApplicationGroupClientDiagnostics.CreateScope("EventHubsApplicationGroupCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _eventHubsApplicationGroupApplicationGroupRestClient.ListByNamespace(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new EventHubsApplicationGroupResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<EventHubsApplicationGroupResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _eventHubsApplicationGroupApplicationGroupClientDiagnostics.CreateScope("EventHubsApplicationGroupCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _eventHubsApplicationGroupApplicationGroupRestClient.ListByNamespaceNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new EventHubsApplicationGroupResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _eventHubsApplicationGroupApplicationGroupRestClient.CreateListByNamespaceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _eventHubsApplicationGroupApplicationGroupRestClient.CreateListByNamespaceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new EventHubsApplicationGroupResource(Client, EventHubsApplicationGroupData.DeserializeEventHubsApplicationGroupData(e)), _eventHubsApplicationGroupApplicationGroupClientDiagnostics, Pipeline, "EventHubsApplicationGroupCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

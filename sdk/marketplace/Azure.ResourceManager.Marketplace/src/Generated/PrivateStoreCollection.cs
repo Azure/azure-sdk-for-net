@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -176,37 +175,9 @@ namespace Azure.ResourceManager.Marketplace
         /// <returns> An async collection of <see cref="PrivateStoreResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<PrivateStoreResource> GetAllAsync(string useCache = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<PrivateStoreResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _privateStoreClientDiagnostics.CreateScope("PrivateStoreCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _privateStoreRestClient.ListAsync(useCache, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new PrivateStoreResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<PrivateStoreResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _privateStoreClientDiagnostics.CreateScope("PrivateStoreCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _privateStoreRestClient.ListNextPageAsync(nextLink, useCache, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new PrivateStoreResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _privateStoreRestClient.CreateListRequest(useCache);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _privateStoreRestClient.CreateListNextPageRequest(nextLink, useCache);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new PrivateStoreResource(Client, PrivateStoreData.DeserializePrivateStoreData(e)), _privateStoreClientDiagnostics, Pipeline, "PrivateStoreCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -219,37 +190,9 @@ namespace Azure.ResourceManager.Marketplace
         /// <returns> A collection of <see cref="PrivateStoreResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<PrivateStoreResource> GetAll(string useCache = null, CancellationToken cancellationToken = default)
         {
-            Page<PrivateStoreResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _privateStoreClientDiagnostics.CreateScope("PrivateStoreCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _privateStoreRestClient.List(useCache, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new PrivateStoreResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<PrivateStoreResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _privateStoreClientDiagnostics.CreateScope("PrivateStoreCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _privateStoreRestClient.ListNextPage(nextLink, useCache, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new PrivateStoreResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _privateStoreRestClient.CreateListRequest(useCache);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _privateStoreRestClient.CreateListNextPageRequest(nextLink, useCache);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new PrivateStoreResource(Client, PrivateStoreData.DeserializePrivateStoreData(e)), _privateStoreClientDiagnostics, Pipeline, "PrivateStoreCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -57,37 +56,9 @@ namespace Azure.ResourceManager.Batch
         /// <returns> An async collection of <see cref="BatchAccountResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<BatchAccountResource> GetBatchAccountsAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<BatchAccountResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = BatchAccountClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetBatchAccounts");
-                scope.Start();
-                try
-                {
-                    var response = await BatchAccountRestClient.ListAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new BatchAccountResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<BatchAccountResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = BatchAccountClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetBatchAccounts");
-                scope.Start();
-                try
-                {
-                    var response = await BatchAccountRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new BatchAccountResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => BatchAccountRestClient.CreateListRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => BatchAccountRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new BatchAccountResource(Client, BatchAccountData.DeserializeBatchAccountData(e)), BatchAccountClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetBatchAccounts", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -99,37 +70,9 @@ namespace Azure.ResourceManager.Batch
         /// <returns> A collection of <see cref="BatchAccountResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<BatchAccountResource> GetBatchAccounts(CancellationToken cancellationToken = default)
         {
-            Page<BatchAccountResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = BatchAccountClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetBatchAccounts");
-                scope.Start();
-                try
-                {
-                    var response = BatchAccountRestClient.List(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new BatchAccountResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<BatchAccountResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = BatchAccountClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetBatchAccounts");
-                scope.Start();
-                try
-                {
-                    var response = BatchAccountRestClient.ListNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new BatchAccountResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => BatchAccountRestClient.CreateListRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => BatchAccountRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new BatchAccountResource(Client, BatchAccountData.DeserializeBatchAccountData(e)), BatchAccountClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetBatchAccounts", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -190,37 +133,9 @@ namespace Azure.ResourceManager.Batch
         /// <returns> An async collection of <see cref="BatchSupportedSku" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<BatchSupportedSku> GetBatchSupportedVirtualMachineSkusAsync(AzureLocation locationName, int? maxresults = null, string filter = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<BatchSupportedSku>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = LocationClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetBatchSupportedVirtualMachineSkus");
-                scope.Start();
-                try
-                {
-                    var response = await LocationRestClient.ListSupportedVirtualMachineSkusAsync(Id.SubscriptionId, locationName, maxresults, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<BatchSupportedSku>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = LocationClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetBatchSupportedVirtualMachineSkus");
-                scope.Start();
-                try
-                {
-                    var response = await LocationRestClient.ListSupportedVirtualMachineSkusNextPageAsync(nextLink, Id.SubscriptionId, locationName, maxresults, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => LocationRestClient.CreateListSupportedVirtualMachineSkusRequest(Id.SubscriptionId, locationName, maxresults, filter);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => LocationRestClient.CreateListSupportedVirtualMachineSkusNextPageRequest(nextLink, Id.SubscriptionId, locationName, maxresults, filter);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, BatchSupportedSku.DeserializeBatchSupportedSku, LocationClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetBatchSupportedVirtualMachineSkus", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -235,37 +150,9 @@ namespace Azure.ResourceManager.Batch
         /// <returns> A collection of <see cref="BatchSupportedSku" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<BatchSupportedSku> GetBatchSupportedVirtualMachineSkus(AzureLocation locationName, int? maxresults = null, string filter = null, CancellationToken cancellationToken = default)
         {
-            Page<BatchSupportedSku> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = LocationClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetBatchSupportedVirtualMachineSkus");
-                scope.Start();
-                try
-                {
-                    var response = LocationRestClient.ListSupportedVirtualMachineSkus(Id.SubscriptionId, locationName, maxresults, filter, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<BatchSupportedSku> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = LocationClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetBatchSupportedVirtualMachineSkus");
-                scope.Start();
-                try
-                {
-                    var response = LocationRestClient.ListSupportedVirtualMachineSkusNextPage(nextLink, Id.SubscriptionId, locationName, maxresults, filter, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => LocationRestClient.CreateListSupportedVirtualMachineSkusRequest(Id.SubscriptionId, locationName, maxresults, filter);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => LocationRestClient.CreateListSupportedVirtualMachineSkusNextPageRequest(nextLink, Id.SubscriptionId, locationName, maxresults, filter);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, BatchSupportedSku.DeserializeBatchSupportedSku, LocationClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetBatchSupportedVirtualMachineSkus", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -280,37 +167,9 @@ namespace Azure.ResourceManager.Batch
         /// <returns> An async collection of <see cref="BatchSupportedSku" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<BatchSupportedSku> GetBatchSupportedCloudServiceSkusAsync(AzureLocation locationName, int? maxresults = null, string filter = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<BatchSupportedSku>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = LocationClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetBatchSupportedCloudServiceSkus");
-                scope.Start();
-                try
-                {
-                    var response = await LocationRestClient.ListSupportedCloudServiceSkusAsync(Id.SubscriptionId, locationName, maxresults, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<BatchSupportedSku>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = LocationClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetBatchSupportedCloudServiceSkus");
-                scope.Start();
-                try
-                {
-                    var response = await LocationRestClient.ListSupportedCloudServiceSkusNextPageAsync(nextLink, Id.SubscriptionId, locationName, maxresults, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => LocationRestClient.CreateListSupportedCloudServiceSkusRequest(Id.SubscriptionId, locationName, maxresults, filter);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => LocationRestClient.CreateListSupportedCloudServiceSkusNextPageRequest(nextLink, Id.SubscriptionId, locationName, maxresults, filter);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, BatchSupportedSku.DeserializeBatchSupportedSku, LocationClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetBatchSupportedCloudServiceSkus", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -325,37 +184,9 @@ namespace Azure.ResourceManager.Batch
         /// <returns> A collection of <see cref="BatchSupportedSku" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<BatchSupportedSku> GetBatchSupportedCloudServiceSkus(AzureLocation locationName, int? maxresults = null, string filter = null, CancellationToken cancellationToken = default)
         {
-            Page<BatchSupportedSku> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = LocationClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetBatchSupportedCloudServiceSkus");
-                scope.Start();
-                try
-                {
-                    var response = LocationRestClient.ListSupportedCloudServiceSkus(Id.SubscriptionId, locationName, maxresults, filter, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<BatchSupportedSku> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = LocationClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetBatchSupportedCloudServiceSkus");
-                scope.Start();
-                try
-                {
-                    var response = LocationRestClient.ListSupportedCloudServiceSkusNextPage(nextLink, Id.SubscriptionId, locationName, maxresults, filter, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => LocationRestClient.CreateListSupportedCloudServiceSkusRequest(Id.SubscriptionId, locationName, maxresults, filter);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => LocationRestClient.CreateListSupportedCloudServiceSkusNextPageRequest(nextLink, Id.SubscriptionId, locationName, maxresults, filter);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, BatchSupportedSku.DeserializeBatchSupportedSku, LocationClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetBatchSupportedCloudServiceSkus", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

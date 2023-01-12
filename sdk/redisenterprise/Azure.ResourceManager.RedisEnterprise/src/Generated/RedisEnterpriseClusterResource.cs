@@ -336,22 +336,8 @@ namespace Azure.ResourceManager.RedisEnterprise
         /// <returns> An async collection of <see cref="RedisEnterprisePrivateLinkResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<RedisEnterprisePrivateLinkResource> GetPrivateLinkResourcesByClusterAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<RedisEnterprisePrivateLinkResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _privateLinkResourcesClientDiagnostics.CreateScope("RedisEnterpriseClusterResource.GetPrivateLinkResourcesByCluster");
-                scope.Start();
-                try
-                {
-                    var response = await _privateLinkResourcesRestClient.ListByClusterAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _privateLinkResourcesRestClient.CreateListByClusterRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, RedisEnterprisePrivateLinkResource.DeserializeRedisEnterprisePrivateLinkResource, _privateLinkResourcesClientDiagnostics, Pipeline, "RedisEnterpriseClusterResource.GetPrivateLinkResourcesByCluster", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -363,22 +349,8 @@ namespace Azure.ResourceManager.RedisEnterprise
         /// <returns> A collection of <see cref="RedisEnterprisePrivateLinkResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<RedisEnterprisePrivateLinkResource> GetPrivateLinkResourcesByCluster(CancellationToken cancellationToken = default)
         {
-            Page<RedisEnterprisePrivateLinkResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _privateLinkResourcesClientDiagnostics.CreateScope("RedisEnterpriseClusterResource.GetPrivateLinkResourcesByCluster");
-                scope.Start();
-                try
-                {
-                    var response = _privateLinkResourcesRestClient.ListByCluster(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _privateLinkResourcesRestClient.CreateListByClusterRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, RedisEnterprisePrivateLinkResource.DeserializeRedisEnterprisePrivateLinkResource, _privateLinkResourcesClientDiagnostics, Pipeline, "RedisEnterpriseClusterResource.GetPrivateLinkResourcesByCluster", "value", null, cancellationToken);
         }
 
         /// <summary>

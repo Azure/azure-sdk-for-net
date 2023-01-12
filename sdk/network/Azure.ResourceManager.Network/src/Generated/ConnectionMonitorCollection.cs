@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -189,22 +188,8 @@ namespace Azure.ResourceManager.Network
         /// <returns> An async collection of <see cref="ConnectionMonitorResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ConnectionMonitorResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<ConnectionMonitorResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _connectionMonitorClientDiagnostics.CreateScope("ConnectionMonitorCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _connectionMonitorRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ConnectionMonitorResource(Client, value)), null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _connectionMonitorRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new ConnectionMonitorResource(Client, ConnectionMonitorData.DeserializeConnectionMonitorData(e)), _connectionMonitorClientDiagnostics, Pipeline, "ConnectionMonitorCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -216,22 +201,8 @@ namespace Azure.ResourceManager.Network
         /// <returns> A collection of <see cref="ConnectionMonitorResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ConnectionMonitorResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<ConnectionMonitorResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _connectionMonitorClientDiagnostics.CreateScope("ConnectionMonitorCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _connectionMonitorRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ConnectionMonitorResource(Client, value)), null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _connectionMonitorRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new ConnectionMonitorResource(Client, ConnectionMonitorData.DeserializeConnectionMonitorData(e)), _connectionMonitorClientDiagnostics, Pipeline, "ConnectionMonitorCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>

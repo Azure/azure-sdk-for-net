@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -341,37 +340,9 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <returns> An async collection of <see cref="ScalingPlanResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ScalingPlanResource> GetScalingPlansAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<ScalingPlanResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _scalingPlanClientDiagnostics.CreateScope("HostPoolResource.GetScalingPlans");
-                scope.Start();
-                try
-                {
-                    var response = await _scalingPlanRestClient.ListByHostPoolAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ScalingPlanResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<ScalingPlanResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _scalingPlanClientDiagnostics.CreateScope("HostPoolResource.GetScalingPlans");
-                scope.Start();
-                try
-                {
-                    var response = await _scalingPlanRestClient.ListByHostPoolNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ScalingPlanResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _scalingPlanRestClient.CreateListByHostPoolRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _scalingPlanRestClient.CreateListByHostPoolNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ScalingPlanResource(Client, ScalingPlanData.DeserializeScalingPlanData(e)), _scalingPlanClientDiagnostics, Pipeline, "HostPoolResource.GetScalingPlans", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -383,37 +354,9 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <returns> A collection of <see cref="ScalingPlanResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ScalingPlanResource> GetScalingPlans(CancellationToken cancellationToken = default)
         {
-            Page<ScalingPlanResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _scalingPlanClientDiagnostics.CreateScope("HostPoolResource.GetScalingPlans");
-                scope.Start();
-                try
-                {
-                    var response = _scalingPlanRestClient.ListByHostPool(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ScalingPlanResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<ScalingPlanResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _scalingPlanClientDiagnostics.CreateScope("HostPoolResource.GetScalingPlans");
-                scope.Start();
-                try
-                {
-                    var response = _scalingPlanRestClient.ListByHostPoolNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ScalingPlanResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _scalingPlanRestClient.CreateListByHostPoolRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _scalingPlanRestClient.CreateListByHostPoolNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ScalingPlanResource(Client, ScalingPlanData.DeserializeScalingPlanData(e)), _scalingPlanClientDiagnostics, Pipeline, "HostPoolResource.GetScalingPlans", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -470,37 +413,9 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <returns> An async collection of <see cref="UserSessionResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<UserSessionResource> GetUserSessionsAsync(string filter = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<UserSessionResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _userSessionClientDiagnostics.CreateScope("HostPoolResource.GetUserSessions");
-                scope.Start();
-                try
-                {
-                    var response = await _userSessionRestClient.ListByHostPoolAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new UserSessionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<UserSessionResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _userSessionClientDiagnostics.CreateScope("HostPoolResource.GetUserSessions");
-                scope.Start();
-                try
-                {
-                    var response = await _userSessionRestClient.ListByHostPoolNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new UserSessionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _userSessionRestClient.CreateListByHostPoolRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _userSessionRestClient.CreateListByHostPoolNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new UserSessionResource(Client, UserSessionData.DeserializeUserSessionData(e)), _userSessionClientDiagnostics, Pipeline, "HostPoolResource.GetUserSessions", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -513,37 +428,9 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <returns> A collection of <see cref="UserSessionResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<UserSessionResource> GetUserSessions(string filter = null, CancellationToken cancellationToken = default)
         {
-            Page<UserSessionResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _userSessionClientDiagnostics.CreateScope("HostPoolResource.GetUserSessions");
-                scope.Start();
-                try
-                {
-                    var response = _userSessionRestClient.ListByHostPool(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new UserSessionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<UserSessionResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _userSessionClientDiagnostics.CreateScope("HostPoolResource.GetUserSessions");
-                scope.Start();
-                try
-                {
-                    var response = _userSessionRestClient.ListByHostPoolNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new UserSessionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _userSessionRestClient.CreateListByHostPoolRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _userSessionRestClient.CreateListByHostPoolNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new UserSessionResource(Client, UserSessionData.DeserializeUserSessionData(e)), _userSessionClientDiagnostics, Pipeline, "HostPoolResource.GetUserSessions", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -559,37 +446,9 @@ namespace Azure.ResourceManager.DesktopVirtualization
         {
             Argument.AssertNotNull(msixImageUri, nameof(msixImageUri));
 
-            async Task<Page<ExpandMsixImage>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _msixImagesClientDiagnostics.CreateScope("HostPoolResource.ExpandMsixImages");
-                scope.Start();
-                try
-                {
-                    var response = await _msixImagesRestClient.ExpandAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, msixImageUri, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<ExpandMsixImage>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _msixImagesClientDiagnostics.CreateScope("HostPoolResource.ExpandMsixImages");
-                scope.Start();
-                try
-                {
-                    var response = await _msixImagesRestClient.ExpandNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, msixImageUri, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _msixImagesRestClient.CreateExpandRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, msixImageUri);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _msixImagesRestClient.CreateExpandNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, msixImageUri);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, ExpandMsixImage.DeserializeExpandMsixImage, _msixImagesClientDiagnostics, Pipeline, "HostPoolResource.ExpandMsixImages", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -605,37 +464,9 @@ namespace Azure.ResourceManager.DesktopVirtualization
         {
             Argument.AssertNotNull(msixImageUri, nameof(msixImageUri));
 
-            Page<ExpandMsixImage> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _msixImagesClientDiagnostics.CreateScope("HostPoolResource.ExpandMsixImages");
-                scope.Start();
-                try
-                {
-                    var response = _msixImagesRestClient.Expand(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, msixImageUri, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<ExpandMsixImage> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _msixImagesClientDiagnostics.CreateScope("HostPoolResource.ExpandMsixImages");
-                scope.Start();
-                try
-                {
-                    var response = _msixImagesRestClient.ExpandNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, msixImageUri, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _msixImagesRestClient.CreateExpandRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, msixImageUri);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _msixImagesRestClient.CreateExpandNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, msixImageUri);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, ExpandMsixImage.DeserializeExpandMsixImage, _msixImagesClientDiagnostics, Pipeline, "HostPoolResource.ExpandMsixImages", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

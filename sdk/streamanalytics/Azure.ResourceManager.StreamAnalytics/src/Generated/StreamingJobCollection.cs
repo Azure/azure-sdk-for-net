@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -194,37 +193,9 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// <returns> An async collection of <see cref="StreamingJobResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<StreamingJobResource> GetAllAsync(string expand = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<StreamingJobResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _streamingJobClientDiagnostics.CreateScope("StreamingJobCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _streamingJobRestClient.ListByResourceGroupAsync(Id.SubscriptionId, Id.ResourceGroupName, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new StreamingJobResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<StreamingJobResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _streamingJobClientDiagnostics.CreateScope("StreamingJobCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _streamingJobRestClient.ListByResourceGroupNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new StreamingJobResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _streamingJobRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, expand);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _streamingJobRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, expand);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new StreamingJobResource(Client, StreamingJobData.DeserializeStreamingJobData(e)), _streamingJobClientDiagnostics, Pipeline, "StreamingJobCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -237,37 +208,9 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// <returns> A collection of <see cref="StreamingJobResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<StreamingJobResource> GetAll(string expand = null, CancellationToken cancellationToken = default)
         {
-            Page<StreamingJobResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _streamingJobClientDiagnostics.CreateScope("StreamingJobCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _streamingJobRestClient.ListByResourceGroup(Id.SubscriptionId, Id.ResourceGroupName, expand, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new StreamingJobResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<StreamingJobResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _streamingJobClientDiagnostics.CreateScope("StreamingJobCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _streamingJobRestClient.ListByResourceGroupNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, expand, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new StreamingJobResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _streamingJobRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, expand);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _streamingJobRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, expand);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new StreamingJobResource(Client, StreamingJobData.DeserializeStreamingJobData(e)), _streamingJobClientDiagnostics, Pipeline, "StreamingJobCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

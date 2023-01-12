@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -187,22 +186,8 @@ namespace Azure.ResourceManager.CosmosDB
         /// <returns> An async collection of <see cref="CosmosDBSqlContainerResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<CosmosDBSqlContainerResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<CosmosDBSqlContainerResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _cosmosDBSqlContainerSqlResourcesClientDiagnostics.CreateScope("CosmosDBSqlContainerCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _cosmosDBSqlContainerSqlResourcesRestClient.ListSqlContainersAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new CosmosDBSqlContainerResource(Client, value)), null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _cosmosDBSqlContainerSqlResourcesRestClient.CreateListSqlContainersRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new CosmosDBSqlContainerResource(Client, CosmosDBSqlContainerData.DeserializeCosmosDBSqlContainerData(e)), _cosmosDBSqlContainerSqlResourcesClientDiagnostics, Pipeline, "CosmosDBSqlContainerCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -214,22 +199,8 @@ namespace Azure.ResourceManager.CosmosDB
         /// <returns> A collection of <see cref="CosmosDBSqlContainerResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<CosmosDBSqlContainerResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<CosmosDBSqlContainerResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _cosmosDBSqlContainerSqlResourcesClientDiagnostics.CreateScope("CosmosDBSqlContainerCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _cosmosDBSqlContainerSqlResourcesRestClient.ListSqlContainers(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new CosmosDBSqlContainerResource(Client, value)), null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _cosmosDBSqlContainerSqlResourcesRestClient.CreateListSqlContainersRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new CosmosDBSqlContainerResource(Client, CosmosDBSqlContainerData.DeserializeCosmosDBSqlContainerData(e)), _cosmosDBSqlContainerSqlResourcesClientDiagnostics, Pipeline, "CosmosDBSqlContainerCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>

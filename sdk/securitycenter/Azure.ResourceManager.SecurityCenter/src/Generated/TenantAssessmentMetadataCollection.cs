@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -121,37 +120,9 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <returns> An async collection of <see cref="TenantAssessmentMetadataResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<TenantAssessmentMetadataResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<TenantAssessmentMetadataResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _tenantAssessmentMetadataAssessmentsMetadataClientDiagnostics.CreateScope("TenantAssessmentMetadataCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _tenantAssessmentMetadataAssessmentsMetadataRestClient.ListAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new TenantAssessmentMetadataResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<TenantAssessmentMetadataResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _tenantAssessmentMetadataAssessmentsMetadataClientDiagnostics.CreateScope("TenantAssessmentMetadataCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _tenantAssessmentMetadataAssessmentsMetadataRestClient.ListNextPageAsync(nextLink, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new TenantAssessmentMetadataResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _tenantAssessmentMetadataAssessmentsMetadataRestClient.CreateListRequest();
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _tenantAssessmentMetadataAssessmentsMetadataRestClient.CreateListNextPageRequest(nextLink);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new TenantAssessmentMetadataResource(Client, SecurityAssessmentMetadataData.DeserializeSecurityAssessmentMetadataData(e)), _tenantAssessmentMetadataAssessmentsMetadataClientDiagnostics, Pipeline, "TenantAssessmentMetadataCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -163,37 +134,9 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <returns> A collection of <see cref="TenantAssessmentMetadataResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<TenantAssessmentMetadataResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<TenantAssessmentMetadataResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _tenantAssessmentMetadataAssessmentsMetadataClientDiagnostics.CreateScope("TenantAssessmentMetadataCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _tenantAssessmentMetadataAssessmentsMetadataRestClient.List(cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new TenantAssessmentMetadataResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<TenantAssessmentMetadataResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _tenantAssessmentMetadataAssessmentsMetadataClientDiagnostics.CreateScope("TenantAssessmentMetadataCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _tenantAssessmentMetadataAssessmentsMetadataRestClient.ListNextPage(nextLink, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new TenantAssessmentMetadataResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _tenantAssessmentMetadataAssessmentsMetadataRestClient.CreateListRequest();
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _tenantAssessmentMetadataAssessmentsMetadataRestClient.CreateListNextPageRequest(nextLink);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new TenantAssessmentMetadataResource(Client, SecurityAssessmentMetadataData.DeserializeSecurityAssessmentMetadataData(e)), _tenantAssessmentMetadataAssessmentsMetadataClientDiagnostics, Pipeline, "TenantAssessmentMetadataCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

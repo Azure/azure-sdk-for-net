@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -121,22 +120,8 @@ namespace Azure.ResourceManager.Support
         /// <returns> An async collection of <see cref="SupportAzureServiceResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SupportAzureServiceResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<SupportAzureServiceResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _supportAzureServiceServicesClientDiagnostics.CreateScope("SupportAzureServiceCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _supportAzureServiceServicesRestClient.ListAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new SupportAzureServiceResource(Client, value)), null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _supportAzureServiceServicesRestClient.CreateListRequest();
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new SupportAzureServiceResource(Client, SupportAzureServiceData.DeserializeSupportAzureServiceData(e)), _supportAzureServiceServicesClientDiagnostics, Pipeline, "SupportAzureServiceCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -148,22 +133,8 @@ namespace Azure.ResourceManager.Support
         /// <returns> A collection of <see cref="SupportAzureServiceResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SupportAzureServiceResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<SupportAzureServiceResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _supportAzureServiceServicesClientDiagnostics.CreateScope("SupportAzureServiceCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _supportAzureServiceServicesRestClient.List(cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new SupportAzureServiceResource(Client, value)), null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _supportAzureServiceServicesRestClient.CreateListRequest();
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new SupportAzureServiceResource(Client, SupportAzureServiceData.DeserializeSupportAzureServiceData(e)), _supportAzureServiceServicesClientDiagnostics, Pipeline, "SupportAzureServiceCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>

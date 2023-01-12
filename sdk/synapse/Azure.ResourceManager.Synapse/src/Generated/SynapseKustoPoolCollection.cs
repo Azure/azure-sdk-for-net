@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -190,22 +189,8 @@ namespace Azure.ResourceManager.Synapse
         /// <returns> An async collection of <see cref="SynapseKustoPoolResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SynapseKustoPoolResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<SynapseKustoPoolResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _synapseKustoPoolKustoPoolsClientDiagnostics.CreateScope("SynapseKustoPoolCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _synapseKustoPoolKustoPoolsRestClient.ListByWorkspaceAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new SynapseKustoPoolResource(Client, value)), null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _synapseKustoPoolKustoPoolsRestClient.CreateListByWorkspaceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new SynapseKustoPoolResource(Client, SynapseKustoPoolData.DeserializeSynapseKustoPoolData(e)), _synapseKustoPoolKustoPoolsClientDiagnostics, Pipeline, "SynapseKustoPoolCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -217,22 +202,8 @@ namespace Azure.ResourceManager.Synapse
         /// <returns> A collection of <see cref="SynapseKustoPoolResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SynapseKustoPoolResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<SynapseKustoPoolResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _synapseKustoPoolKustoPoolsClientDiagnostics.CreateScope("SynapseKustoPoolCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _synapseKustoPoolKustoPoolsRestClient.ListByWorkspace(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new SynapseKustoPoolResource(Client, value)), null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _synapseKustoPoolKustoPoolsRestClient.CreateListByWorkspaceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new SynapseKustoPoolResource(Client, SynapseKustoPoolData.DeserializeSynapseKustoPoolData(e)), _synapseKustoPoolKustoPoolsClientDiagnostics, Pipeline, "SynapseKustoPoolCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>

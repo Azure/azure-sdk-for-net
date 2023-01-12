@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -186,37 +185,9 @@ namespace Azure.ResourceManager.AppContainers
         /// <returns> An async collection of <see cref="ContainerAppAuthConfigResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ContainerAppAuthConfigResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<ContainerAppAuthConfigResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _containerAppAuthConfigContainerAppsAuthConfigsClientDiagnostics.CreateScope("ContainerAppAuthConfigCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _containerAppAuthConfigContainerAppsAuthConfigsRestClient.ListByContainerAppAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ContainerAppAuthConfigResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<ContainerAppAuthConfigResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _containerAppAuthConfigContainerAppsAuthConfigsClientDiagnostics.CreateScope("ContainerAppAuthConfigCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _containerAppAuthConfigContainerAppsAuthConfigsRestClient.ListByContainerAppNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ContainerAppAuthConfigResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _containerAppAuthConfigContainerAppsAuthConfigsRestClient.CreateListByContainerAppRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _containerAppAuthConfigContainerAppsAuthConfigsRestClient.CreateListByContainerAppNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ContainerAppAuthConfigResource(Client, ContainerAppAuthConfigData.DeserializeContainerAppAuthConfigData(e)), _containerAppAuthConfigContainerAppsAuthConfigsClientDiagnostics, Pipeline, "ContainerAppAuthConfigCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -228,37 +199,9 @@ namespace Azure.ResourceManager.AppContainers
         /// <returns> A collection of <see cref="ContainerAppAuthConfigResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ContainerAppAuthConfigResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<ContainerAppAuthConfigResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _containerAppAuthConfigContainerAppsAuthConfigsClientDiagnostics.CreateScope("ContainerAppAuthConfigCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _containerAppAuthConfigContainerAppsAuthConfigsRestClient.ListByContainerApp(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ContainerAppAuthConfigResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<ContainerAppAuthConfigResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _containerAppAuthConfigContainerAppsAuthConfigsClientDiagnostics.CreateScope("ContainerAppAuthConfigCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _containerAppAuthConfigContainerAppsAuthConfigsRestClient.ListByContainerAppNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ContainerAppAuthConfigResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _containerAppAuthConfigContainerAppsAuthConfigsRestClient.CreateListByContainerAppRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _containerAppAuthConfigContainerAppsAuthConfigsRestClient.CreateListByContainerAppNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ContainerAppAuthConfigResource(Client, ContainerAppAuthConfigData.DeserializeContainerAppAuthConfigData(e)), _containerAppAuthConfigContainerAppsAuthConfigsClientDiagnostics, Pipeline, "ContainerAppAuthConfigCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

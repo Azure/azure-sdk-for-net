@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -186,37 +185,9 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// <returns> An async collection of <see cref="PostgreSqlFlexibleServerConfigurationResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<PostgreSqlFlexibleServerConfigurationResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<PostgreSqlFlexibleServerConfigurationResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _postgreSqlFlexibleServerConfigurationConfigurationsClientDiagnostics.CreateScope("PostgreSqlFlexibleServerConfigurationCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _postgreSqlFlexibleServerConfigurationConfigurationsRestClient.ListByServerAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new PostgreSqlFlexibleServerConfigurationResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<PostgreSqlFlexibleServerConfigurationResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _postgreSqlFlexibleServerConfigurationConfigurationsClientDiagnostics.CreateScope("PostgreSqlFlexibleServerConfigurationCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _postgreSqlFlexibleServerConfigurationConfigurationsRestClient.ListByServerNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new PostgreSqlFlexibleServerConfigurationResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _postgreSqlFlexibleServerConfigurationConfigurationsRestClient.CreateListByServerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _postgreSqlFlexibleServerConfigurationConfigurationsRestClient.CreateListByServerNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new PostgreSqlFlexibleServerConfigurationResource(Client, PostgreSqlFlexibleServerConfigurationData.DeserializePostgreSqlFlexibleServerConfigurationData(e)), _postgreSqlFlexibleServerConfigurationConfigurationsClientDiagnostics, Pipeline, "PostgreSqlFlexibleServerConfigurationCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -228,37 +199,9 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// <returns> A collection of <see cref="PostgreSqlFlexibleServerConfigurationResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<PostgreSqlFlexibleServerConfigurationResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<PostgreSqlFlexibleServerConfigurationResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _postgreSqlFlexibleServerConfigurationConfigurationsClientDiagnostics.CreateScope("PostgreSqlFlexibleServerConfigurationCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _postgreSqlFlexibleServerConfigurationConfigurationsRestClient.ListByServer(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new PostgreSqlFlexibleServerConfigurationResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<PostgreSqlFlexibleServerConfigurationResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _postgreSqlFlexibleServerConfigurationConfigurationsClientDiagnostics.CreateScope("PostgreSqlFlexibleServerConfigurationCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _postgreSqlFlexibleServerConfigurationConfigurationsRestClient.ListByServerNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new PostgreSqlFlexibleServerConfigurationResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _postgreSqlFlexibleServerConfigurationConfigurationsRestClient.CreateListByServerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _postgreSqlFlexibleServerConfigurationConfigurationsRestClient.CreateListByServerNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new PostgreSqlFlexibleServerConfigurationResource(Client, PostgreSqlFlexibleServerConfigurationData.DeserializePostgreSqlFlexibleServerConfigurationData(e)), _postgreSqlFlexibleServerConfigurationConfigurationsClientDiagnostics, Pipeline, "PostgreSqlFlexibleServerConfigurationCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

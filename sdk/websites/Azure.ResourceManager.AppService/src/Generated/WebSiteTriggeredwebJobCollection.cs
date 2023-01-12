@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -120,37 +119,9 @@ namespace Azure.ResourceManager.AppService
         /// <returns> An async collection of <see cref="WebSiteTriggeredwebJobResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<WebSiteTriggeredwebJobResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<WebSiteTriggeredwebJobResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _webSiteTriggeredwebJobWebAppsClientDiagnostics.CreateScope("WebSiteTriggeredwebJobCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _webSiteTriggeredwebJobWebAppsRestClient.ListTriggeredWebJobsSlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new WebSiteTriggeredwebJobResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<WebSiteTriggeredwebJobResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _webSiteTriggeredwebJobWebAppsClientDiagnostics.CreateScope("WebSiteTriggeredwebJobCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _webSiteTriggeredwebJobWebAppsRestClient.ListTriggeredWebJobsSlotNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new WebSiteTriggeredwebJobResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _webSiteTriggeredwebJobWebAppsRestClient.CreateListTriggeredWebJobsSlotRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _webSiteTriggeredwebJobWebAppsRestClient.CreateListTriggeredWebJobsSlotNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new WebSiteTriggeredwebJobResource(Client, TriggeredWebJobData.DeserializeTriggeredWebJobData(e)), _webSiteTriggeredwebJobWebAppsClientDiagnostics, Pipeline, "WebSiteTriggeredwebJobCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -162,37 +133,9 @@ namespace Azure.ResourceManager.AppService
         /// <returns> A collection of <see cref="WebSiteTriggeredwebJobResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<WebSiteTriggeredwebJobResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<WebSiteTriggeredwebJobResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _webSiteTriggeredwebJobWebAppsClientDiagnostics.CreateScope("WebSiteTriggeredwebJobCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _webSiteTriggeredwebJobWebAppsRestClient.ListTriggeredWebJobsSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new WebSiteTriggeredwebJobResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<WebSiteTriggeredwebJobResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _webSiteTriggeredwebJobWebAppsClientDiagnostics.CreateScope("WebSiteTriggeredwebJobCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _webSiteTriggeredwebJobWebAppsRestClient.ListTriggeredWebJobsSlotNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new WebSiteTriggeredwebJobResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _webSiteTriggeredwebJobWebAppsRestClient.CreateListTriggeredWebJobsSlotRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _webSiteTriggeredwebJobWebAppsRestClient.CreateListTriggeredWebJobsSlotNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new WebSiteTriggeredwebJobResource(Client, TriggeredWebJobData.DeserializeTriggeredWebJobData(e)), _webSiteTriggeredwebJobWebAppsClientDiagnostics, Pipeline, "WebSiteTriggeredwebJobCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

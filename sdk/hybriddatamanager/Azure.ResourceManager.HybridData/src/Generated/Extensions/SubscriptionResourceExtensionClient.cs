@@ -6,9 +6,7 @@
 #nullable disable
 
 using System;
-using System.Linq;
 using System.Threading;
-using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -52,22 +50,8 @@ namespace Azure.ResourceManager.HybridData
         /// <returns> An async collection of <see cref="HybridDataManagerResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<HybridDataManagerResource> GetHybridDataManagersAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<HybridDataManagerResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = HybridDataManagerDataManagersClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetHybridDataManagers");
-                scope.Start();
-                try
-                {
-                    var response = await HybridDataManagerDataManagersRestClient.ListAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new HybridDataManagerResource(Client, value)), null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => HybridDataManagerDataManagersRestClient.CreateListRequest(Id.SubscriptionId);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new HybridDataManagerResource(Client, HybridDataManagerData.DeserializeHybridDataManagerData(e)), HybridDataManagerDataManagersClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetHybridDataManagers", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -79,22 +63,8 @@ namespace Azure.ResourceManager.HybridData
         /// <returns> A collection of <see cref="HybridDataManagerResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<HybridDataManagerResource> GetHybridDataManagers(CancellationToken cancellationToken = default)
         {
-            Page<HybridDataManagerResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = HybridDataManagerDataManagersClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetHybridDataManagers");
-                scope.Start();
-                try
-                {
-                    var response = HybridDataManagerDataManagersRestClient.List(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new HybridDataManagerResource(Client, value)), null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => HybridDataManagerDataManagersRestClient.CreateListRequest(Id.SubscriptionId);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new HybridDataManagerResource(Client, HybridDataManagerData.DeserializeHybridDataManagerData(e)), HybridDataManagerDataManagersClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetHybridDataManagers", "value", null, cancellationToken);
         }
     }
 }

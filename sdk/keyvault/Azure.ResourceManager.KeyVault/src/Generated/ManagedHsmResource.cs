@@ -299,22 +299,8 @@ namespace Azure.ResourceManager.KeyVault
         /// <returns> An async collection of <see cref="ManagedHsmPrivateLinkResourceData" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ManagedHsmPrivateLinkResourceData> GetMHSMPrivateLinkResourcesByManagedHsmResourceAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<ManagedHsmPrivateLinkResourceData>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _mhsmPrivateLinkResourcesClientDiagnostics.CreateScope("ManagedHsmResource.GetMHSMPrivateLinkResourcesByManagedHsmResource");
-                scope.Start();
-                try
-                {
-                    var response = await _mhsmPrivateLinkResourcesRestClient.ListByManagedHsmResourceAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _mhsmPrivateLinkResourcesRestClient.CreateListByManagedHsmResourceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, ManagedHsmPrivateLinkResourceData.DeserializeManagedHsmPrivateLinkResourceData, _mhsmPrivateLinkResourcesClientDiagnostics, Pipeline, "ManagedHsmResource.GetMHSMPrivateLinkResourcesByManagedHsmResource", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -326,22 +312,8 @@ namespace Azure.ResourceManager.KeyVault
         /// <returns> A collection of <see cref="ManagedHsmPrivateLinkResourceData" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ManagedHsmPrivateLinkResourceData> GetMHSMPrivateLinkResourcesByManagedHsmResource(CancellationToken cancellationToken = default)
         {
-            Page<ManagedHsmPrivateLinkResourceData> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _mhsmPrivateLinkResourcesClientDiagnostics.CreateScope("ManagedHsmResource.GetMHSMPrivateLinkResourcesByManagedHsmResource");
-                scope.Start();
-                try
-                {
-                    var response = _mhsmPrivateLinkResourcesRestClient.ListByManagedHsmResource(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _mhsmPrivateLinkResourcesRestClient.CreateListByManagedHsmResourceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, ManagedHsmPrivateLinkResourceData.DeserializeManagedHsmPrivateLinkResourceData, _mhsmPrivateLinkResourcesClientDiagnostics, Pipeline, "ManagedHsmResource.GetMHSMPrivateLinkResourcesByManagedHsmResource", "value", null, cancellationToken);
         }
 
         /// <summary>

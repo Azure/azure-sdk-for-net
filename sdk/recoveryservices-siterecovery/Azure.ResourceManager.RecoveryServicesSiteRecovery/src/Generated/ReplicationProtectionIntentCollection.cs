@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -195,37 +194,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <returns> An async collection of <see cref="ReplicationProtectionIntentResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ReplicationProtectionIntentResource> GetAllAsync(string skipToken = null, string takeToken = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<ReplicationProtectionIntentResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _replicationProtectionIntentClientDiagnostics.CreateScope("ReplicationProtectionIntentCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _replicationProtectionIntentRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, _resourceName, skipToken, takeToken, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ReplicationProtectionIntentResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<ReplicationProtectionIntentResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _replicationProtectionIntentClientDiagnostics.CreateScope("ReplicationProtectionIntentCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _replicationProtectionIntentRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, _resourceName, skipToken, takeToken, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ReplicationProtectionIntentResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _replicationProtectionIntentRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, _resourceName, skipToken, takeToken);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _replicationProtectionIntentRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, _resourceName, skipToken, takeToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ReplicationProtectionIntentResource(Client, ReplicationProtectionIntentData.DeserializeReplicationProtectionIntentData(e)), _replicationProtectionIntentClientDiagnostics, Pipeline, "ReplicationProtectionIntentCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -239,37 +210,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <returns> A collection of <see cref="ReplicationProtectionIntentResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ReplicationProtectionIntentResource> GetAll(string skipToken = null, string takeToken = null, CancellationToken cancellationToken = default)
         {
-            Page<ReplicationProtectionIntentResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _replicationProtectionIntentClientDiagnostics.CreateScope("ReplicationProtectionIntentCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _replicationProtectionIntentRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, _resourceName, skipToken, takeToken, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ReplicationProtectionIntentResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<ReplicationProtectionIntentResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _replicationProtectionIntentClientDiagnostics.CreateScope("ReplicationProtectionIntentCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _replicationProtectionIntentRestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, _resourceName, skipToken, takeToken, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ReplicationProtectionIntentResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _replicationProtectionIntentRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, _resourceName, skipToken, takeToken);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _replicationProtectionIntentRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, _resourceName, skipToken, takeToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ReplicationProtectionIntentResource(Client, ReplicationProtectionIntentData.DeserializeReplicationProtectionIntentData(e)), _replicationProtectionIntentClientDiagnostics, Pipeline, "ReplicationProtectionIntentCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

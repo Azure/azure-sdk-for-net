@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -191,37 +190,9 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// <returns> An async collection of <see cref="StreamAnalyticsClusterResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<StreamAnalyticsClusterResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<StreamAnalyticsClusterResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _streamAnalyticsClusterClustersClientDiagnostics.CreateScope("StreamAnalyticsClusterCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _streamAnalyticsClusterClustersRestClient.ListByResourceGroupAsync(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new StreamAnalyticsClusterResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<StreamAnalyticsClusterResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _streamAnalyticsClusterClustersClientDiagnostics.CreateScope("StreamAnalyticsClusterCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _streamAnalyticsClusterClustersRestClient.ListByResourceGroupNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new StreamAnalyticsClusterResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _streamAnalyticsClusterClustersRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _streamAnalyticsClusterClustersRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new StreamAnalyticsClusterResource(Client, StreamAnalyticsClusterData.DeserializeStreamAnalyticsClusterData(e)), _streamAnalyticsClusterClustersClientDiagnostics, Pipeline, "StreamAnalyticsClusterCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -233,37 +204,9 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// <returns> A collection of <see cref="StreamAnalyticsClusterResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<StreamAnalyticsClusterResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<StreamAnalyticsClusterResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _streamAnalyticsClusterClustersClientDiagnostics.CreateScope("StreamAnalyticsClusterCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _streamAnalyticsClusterClustersRestClient.ListByResourceGroup(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new StreamAnalyticsClusterResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<StreamAnalyticsClusterResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _streamAnalyticsClusterClustersClientDiagnostics.CreateScope("StreamAnalyticsClusterCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _streamAnalyticsClusterClustersRestClient.ListByResourceGroupNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new StreamAnalyticsClusterResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _streamAnalyticsClusterClustersRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _streamAnalyticsClusterClustersRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new StreamAnalyticsClusterResource(Client, StreamAnalyticsClusterData.DeserializeStreamAnalyticsClusterData(e)), _streamAnalyticsClusterClustersClientDiagnostics, Pipeline, "StreamAnalyticsClusterCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

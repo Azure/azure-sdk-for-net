@@ -63,6 +63,7 @@ try {
         Write-Host("npx cadl compile $mainCadlFile --emit `"`@azure-tools/cadl-csharp`" --option `"@azure-tools/cadl-csharp.emitter-output-dir=$resolvedProjectDirectory`"")
         npx cadl compile $mainCadlFile --emit "@azure-tools/cadl-csharp" --option @azure-tools/cadl-csharp.emitter-output-dir=$resolvedProjectDirectory
     }
+    if ($LASTEXITCODE) { exit $LASTEXITCODE }
 }
 finally {
     Pop-Location
