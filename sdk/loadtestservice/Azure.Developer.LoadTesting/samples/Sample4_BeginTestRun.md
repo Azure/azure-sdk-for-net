@@ -2,7 +2,7 @@
 
 To use these samples, you'll first need to set up resources. See [getting started](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/loadtestservice/Azure.Developer.LoadTesting/README.md#getting-started) for details.
 
-You can create a LoadTestclient and call the `CreateAndUpdateTest` method from client `LoadTestRunClient`
+The sample below demonstrates how to run a load test using `LoadTestRunClient`.
 
 ## Create TestRunClient
 ```C# Snippet:Azure_Developer_LoadTesting_CreateTestRunClient
