@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -188,37 +187,9 @@ namespace Azure.ResourceManager.Batch
         /// <returns> An async collection of <see cref="BatchAccountResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<BatchAccountResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<BatchAccountResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _batchAccountClientDiagnostics.CreateScope("BatchAccountCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _batchAccountRestClient.ListByResourceGroupAsync(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new BatchAccountResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<BatchAccountResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _batchAccountClientDiagnostics.CreateScope("BatchAccountCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _batchAccountRestClient.ListByResourceGroupNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new BatchAccountResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _batchAccountRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _batchAccountRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new BatchAccountResource(Client, BatchAccountData.DeserializeBatchAccountData(e)), _batchAccountClientDiagnostics, Pipeline, "BatchAccountCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -230,37 +201,9 @@ namespace Azure.ResourceManager.Batch
         /// <returns> A collection of <see cref="BatchAccountResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<BatchAccountResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<BatchAccountResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _batchAccountClientDiagnostics.CreateScope("BatchAccountCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _batchAccountRestClient.ListByResourceGroup(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new BatchAccountResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<BatchAccountResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _batchAccountClientDiagnostics.CreateScope("BatchAccountCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _batchAccountRestClient.ListByResourceGroupNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new BatchAccountResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _batchAccountRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _batchAccountRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new BatchAccountResource(Client, BatchAccountData.DeserializeBatchAccountData(e)), _batchAccountClientDiagnostics, Pipeline, "BatchAccountCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -175,37 +174,9 @@ namespace Azure.ResourceManager.Synapse
         /// <returns> An async collection of <see cref="SynapseTransparentDataEncryptionResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SynapseTransparentDataEncryptionResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<SynapseTransparentDataEncryptionResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _synapseTransparentDataEncryptionSqlPoolTransparentDataEncryptionsClientDiagnostics.CreateScope("SynapseTransparentDataEncryptionCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _synapseTransparentDataEncryptionSqlPoolTransparentDataEncryptionsRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new SynapseTransparentDataEncryptionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<SynapseTransparentDataEncryptionResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _synapseTransparentDataEncryptionSqlPoolTransparentDataEncryptionsClientDiagnostics.CreateScope("SynapseTransparentDataEncryptionCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _synapseTransparentDataEncryptionSqlPoolTransparentDataEncryptionsRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new SynapseTransparentDataEncryptionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _synapseTransparentDataEncryptionSqlPoolTransparentDataEncryptionsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _synapseTransparentDataEncryptionSqlPoolTransparentDataEncryptionsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SynapseTransparentDataEncryptionResource(Client, SynapseTransparentDataEncryptionData.DeserializeSynapseTransparentDataEncryptionData(e)), _synapseTransparentDataEncryptionSqlPoolTransparentDataEncryptionsClientDiagnostics, Pipeline, "SynapseTransparentDataEncryptionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -217,37 +188,9 @@ namespace Azure.ResourceManager.Synapse
         /// <returns> A collection of <see cref="SynapseTransparentDataEncryptionResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SynapseTransparentDataEncryptionResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<SynapseTransparentDataEncryptionResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _synapseTransparentDataEncryptionSqlPoolTransparentDataEncryptionsClientDiagnostics.CreateScope("SynapseTransparentDataEncryptionCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _synapseTransparentDataEncryptionSqlPoolTransparentDataEncryptionsRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new SynapseTransparentDataEncryptionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<SynapseTransparentDataEncryptionResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _synapseTransparentDataEncryptionSqlPoolTransparentDataEncryptionsClientDiagnostics.CreateScope("SynapseTransparentDataEncryptionCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _synapseTransparentDataEncryptionSqlPoolTransparentDataEncryptionsRestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new SynapseTransparentDataEncryptionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _synapseTransparentDataEncryptionSqlPoolTransparentDataEncryptionsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _synapseTransparentDataEncryptionSqlPoolTransparentDataEncryptionsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SynapseTransparentDataEncryptionResource(Client, SynapseTransparentDataEncryptionData.DeserializeSynapseTransparentDataEncryptionData(e)), _synapseTransparentDataEncryptionSqlPoolTransparentDataEncryptionsClientDiagnostics, Pipeline, "SynapseTransparentDataEncryptionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -193,37 +192,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <returns> An async collection of <see cref="AlertResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<AlertResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<AlertResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _alertReplicationAlertSettingsClientDiagnostics.CreateScope("AlertCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _alertReplicationAlertSettingsRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, _resourceName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new AlertResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<AlertResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _alertReplicationAlertSettingsClientDiagnostics.CreateScope("AlertCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _alertReplicationAlertSettingsRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, _resourceName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new AlertResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _alertReplicationAlertSettingsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, _resourceName);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _alertReplicationAlertSettingsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, _resourceName);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new AlertResource(Client, AlertData.DeserializeAlertData(e)), _alertReplicationAlertSettingsClientDiagnostics, Pipeline, "AlertCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -235,37 +206,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <returns> A collection of <see cref="AlertResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<AlertResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<AlertResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _alertReplicationAlertSettingsClientDiagnostics.CreateScope("AlertCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _alertReplicationAlertSettingsRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, _resourceName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new AlertResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<AlertResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _alertReplicationAlertSettingsClientDiagnostics.CreateScope("AlertCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _alertReplicationAlertSettingsRestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, _resourceName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new AlertResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _alertReplicationAlertSettingsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, _resourceName);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _alertReplicationAlertSettingsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, _resourceName);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new AlertResource(Client, AlertData.DeserializeAlertData(e)), _alertReplicationAlertSettingsClientDiagnostics, Pipeline, "AlertCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

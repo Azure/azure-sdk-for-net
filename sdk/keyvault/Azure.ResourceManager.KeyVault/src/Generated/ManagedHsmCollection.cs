@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -188,37 +187,9 @@ namespace Azure.ResourceManager.KeyVault
         /// <returns> An async collection of <see cref="ManagedHsmResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ManagedHsmResource> GetAllAsync(int? top = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<ManagedHsmResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _managedHsmClientDiagnostics.CreateScope("ManagedHsmCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _managedHsmRestClient.ListByResourceGroupAsync(Id.SubscriptionId, Id.ResourceGroupName, top, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ManagedHsmResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<ManagedHsmResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _managedHsmClientDiagnostics.CreateScope("ManagedHsmCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _managedHsmRestClient.ListByResourceGroupNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, top, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ManagedHsmResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _managedHsmRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, top);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _managedHsmRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, top);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ManagedHsmResource(Client, ManagedHsmData.DeserializeManagedHsmData(e)), _managedHsmClientDiagnostics, Pipeline, "ManagedHsmCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -231,37 +202,9 @@ namespace Azure.ResourceManager.KeyVault
         /// <returns> A collection of <see cref="ManagedHsmResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ManagedHsmResource> GetAll(int? top = null, CancellationToken cancellationToken = default)
         {
-            Page<ManagedHsmResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _managedHsmClientDiagnostics.CreateScope("ManagedHsmCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _managedHsmRestClient.ListByResourceGroup(Id.SubscriptionId, Id.ResourceGroupName, top, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ManagedHsmResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<ManagedHsmResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _managedHsmClientDiagnostics.CreateScope("ManagedHsmCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _managedHsmRestClient.ListByResourceGroupNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, top, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ManagedHsmResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _managedHsmRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, top);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _managedHsmRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, top);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ManagedHsmResource(Client, ManagedHsmData.DeserializeManagedHsmData(e)), _managedHsmClientDiagnostics, Pipeline, "ManagedHsmCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

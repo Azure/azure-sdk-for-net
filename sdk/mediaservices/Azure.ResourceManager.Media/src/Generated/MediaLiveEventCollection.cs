@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -188,37 +187,9 @@ namespace Azure.ResourceManager.Media
         /// <returns> An async collection of <see cref="MediaLiveEventResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<MediaLiveEventResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<MediaLiveEventResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _mediaLiveEventLiveEventsClientDiagnostics.CreateScope("MediaLiveEventCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _mediaLiveEventLiveEventsRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new MediaLiveEventResource(Client, value)), response.Value.OdataNextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<MediaLiveEventResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _mediaLiveEventLiveEventsClientDiagnostics.CreateScope("MediaLiveEventCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _mediaLiveEventLiveEventsRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new MediaLiveEventResource(Client, value)), response.Value.OdataNextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _mediaLiveEventLiveEventsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _mediaLiveEventLiveEventsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new MediaLiveEventResource(Client, MediaLiveEventData.DeserializeMediaLiveEventData(e)), _mediaLiveEventLiveEventsClientDiagnostics, Pipeline, "MediaLiveEventCollection.GetAll", "value", "@odata.nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -230,37 +201,9 @@ namespace Azure.ResourceManager.Media
         /// <returns> A collection of <see cref="MediaLiveEventResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<MediaLiveEventResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<MediaLiveEventResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _mediaLiveEventLiveEventsClientDiagnostics.CreateScope("MediaLiveEventCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _mediaLiveEventLiveEventsRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new MediaLiveEventResource(Client, value)), response.Value.OdataNextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<MediaLiveEventResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _mediaLiveEventLiveEventsClientDiagnostics.CreateScope("MediaLiveEventCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _mediaLiveEventLiveEventsRestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new MediaLiveEventResource(Client, value)), response.Value.OdataNextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _mediaLiveEventLiveEventsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _mediaLiveEventLiveEventsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new MediaLiveEventResource(Client, MediaLiveEventData.DeserializeMediaLiveEventData(e)), _mediaLiveEventLiveEventsClientDiagnostics, Pipeline, "MediaLiveEventCollection.GetAll", "value", "@odata.nextLink", cancellationToken);
         }
 
         /// <summary>

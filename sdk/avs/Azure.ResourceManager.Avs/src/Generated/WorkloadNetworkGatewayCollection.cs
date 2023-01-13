@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -120,37 +119,9 @@ namespace Azure.ResourceManager.Avs
         /// <returns> An async collection of <see cref="WorkloadNetworkGatewayResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<WorkloadNetworkGatewayResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<WorkloadNetworkGatewayResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _workloadNetworkGatewayWorkloadNetworksClientDiagnostics.CreateScope("WorkloadNetworkGatewayCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _workloadNetworkGatewayWorkloadNetworksRestClient.ListGatewaysAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new WorkloadNetworkGatewayResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<WorkloadNetworkGatewayResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _workloadNetworkGatewayWorkloadNetworksClientDiagnostics.CreateScope("WorkloadNetworkGatewayCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _workloadNetworkGatewayWorkloadNetworksRestClient.ListGatewaysNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new WorkloadNetworkGatewayResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _workloadNetworkGatewayWorkloadNetworksRestClient.CreateListGatewaysRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _workloadNetworkGatewayWorkloadNetworksRestClient.CreateListGatewaysNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new WorkloadNetworkGatewayResource(Client, WorkloadNetworkGatewayData.DeserializeWorkloadNetworkGatewayData(e)), _workloadNetworkGatewayWorkloadNetworksClientDiagnostics, Pipeline, "WorkloadNetworkGatewayCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -162,37 +133,9 @@ namespace Azure.ResourceManager.Avs
         /// <returns> A collection of <see cref="WorkloadNetworkGatewayResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<WorkloadNetworkGatewayResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<WorkloadNetworkGatewayResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _workloadNetworkGatewayWorkloadNetworksClientDiagnostics.CreateScope("WorkloadNetworkGatewayCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _workloadNetworkGatewayWorkloadNetworksRestClient.ListGateways(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new WorkloadNetworkGatewayResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<WorkloadNetworkGatewayResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _workloadNetworkGatewayWorkloadNetworksClientDiagnostics.CreateScope("WorkloadNetworkGatewayCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _workloadNetworkGatewayWorkloadNetworksRestClient.ListGatewaysNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new WorkloadNetworkGatewayResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _workloadNetworkGatewayWorkloadNetworksRestClient.CreateListGatewaysRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _workloadNetworkGatewayWorkloadNetworksRestClient.CreateListGatewaysNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new WorkloadNetworkGatewayResource(Client, WorkloadNetworkGatewayData.DeserializeWorkloadNetworkGatewayData(e)), _workloadNetworkGatewayWorkloadNetworksClientDiagnostics, Pipeline, "WorkloadNetworkGatewayCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

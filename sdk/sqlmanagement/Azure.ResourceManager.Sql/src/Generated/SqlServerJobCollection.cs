@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -186,37 +185,9 @@ namespace Azure.ResourceManager.Sql
         /// <returns> An async collection of <see cref="SqlServerJobResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SqlServerJobResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<SqlServerJobResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _sqlServerJobJobsClientDiagnostics.CreateScope("SqlServerJobCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _sqlServerJobJobsRestClient.ListByAgentAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new SqlServerJobResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<SqlServerJobResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _sqlServerJobJobsClientDiagnostics.CreateScope("SqlServerJobCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _sqlServerJobJobsRestClient.ListByAgentNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new SqlServerJobResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _sqlServerJobJobsRestClient.CreateListByAgentRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _sqlServerJobJobsRestClient.CreateListByAgentNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SqlServerJobResource(Client, SqlServerJobData.DeserializeSqlServerJobData(e)), _sqlServerJobJobsClientDiagnostics, Pipeline, "SqlServerJobCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -228,37 +199,9 @@ namespace Azure.ResourceManager.Sql
         /// <returns> A collection of <see cref="SqlServerJobResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SqlServerJobResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<SqlServerJobResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _sqlServerJobJobsClientDiagnostics.CreateScope("SqlServerJobCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _sqlServerJobJobsRestClient.ListByAgent(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new SqlServerJobResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<SqlServerJobResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _sqlServerJobJobsClientDiagnostics.CreateScope("SqlServerJobCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _sqlServerJobJobsRestClient.ListByAgentNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new SqlServerJobResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _sqlServerJobJobsRestClient.CreateListByAgentRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _sqlServerJobJobsRestClient.CreateListByAgentNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SqlServerJobResource(Client, SqlServerJobData.DeserializeSqlServerJobData(e)), _sqlServerJobJobsClientDiagnostics, Pipeline, "SqlServerJobCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

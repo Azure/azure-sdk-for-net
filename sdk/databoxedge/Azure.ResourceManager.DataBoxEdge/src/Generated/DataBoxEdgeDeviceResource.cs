@@ -1222,37 +1222,9 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// <returns> An async collection of <see cref="DataBoxEdgeNode" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DataBoxEdgeNode> GetEdgeNodesAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<DataBoxEdgeNode>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _nodesClientDiagnostics.CreateScope("DataBoxEdgeDeviceResource.GetEdgeNodes");
-                scope.Start();
-                try
-                {
-                    var response = await _nodesRestClient.ListByDataBoxEdgeDeviceAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<DataBoxEdgeNode>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _nodesClientDiagnostics.CreateScope("DataBoxEdgeDeviceResource.GetEdgeNodes");
-                scope.Start();
-                try
-                {
-                    var response = await _nodesRestClient.ListByDataBoxEdgeDeviceNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _nodesRestClient.CreateListByDataBoxEdgeDeviceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _nodesRestClient.CreateListByDataBoxEdgeDeviceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, DataBoxEdgeNode.DeserializeDataBoxEdgeNode, _nodesClientDiagnostics, Pipeline, "DataBoxEdgeDeviceResource.GetEdgeNodes", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -1264,37 +1236,9 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// <returns> A collection of <see cref="DataBoxEdgeNode" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DataBoxEdgeNode> GetEdgeNodes(CancellationToken cancellationToken = default)
         {
-            Page<DataBoxEdgeNode> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _nodesClientDiagnostics.CreateScope("DataBoxEdgeDeviceResource.GetEdgeNodes");
-                scope.Start();
-                try
-                {
-                    var response = _nodesRestClient.ListByDataBoxEdgeDevice(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<DataBoxEdgeNode> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _nodesClientDiagnostics.CreateScope("DataBoxEdgeDeviceResource.GetEdgeNodes");
-                scope.Start();
-                try
-                {
-                    var response = _nodesRestClient.ListByDataBoxEdgeDeviceNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _nodesRestClient.CreateListByDataBoxEdgeDeviceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _nodesRestClient.CreateListByDataBoxEdgeDeviceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, DataBoxEdgeNode.DeserializeDataBoxEdgeNode, _nodesClientDiagnostics, Pipeline, "DataBoxEdgeDeviceResource.GetEdgeNodes", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

@@ -102,7 +102,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus
         ///   The specified sequence number does not correspond to a message that has been deferred.
         ///   The <see cref="ServiceBusException.Reason" /> will be set to <see cref="ServiceBusFailureReason.MessageNotFound"/> in this case.
         /// </exception>
-       public virtual async Task<IReadOnlyList<ServiceBusReceivedMessage>> ReceiveDeferredMessagesAsync(
+        public virtual async Task<IReadOnlyList<ServiceBusReceivedMessage>> ReceiveDeferredMessagesAsync(
             IEnumerable<long> sequenceNumbers,
             CancellationToken cancellationToken = default)
         {

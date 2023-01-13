@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -189,37 +188,9 @@ namespace Azure.ResourceManager.AgFoodPlatform
         /// <returns> An async collection of <see cref="ExtensionResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ExtensionResource> GetAllAsync(IEnumerable<string> extensionIds = null, IEnumerable<string> extensionCategories = null, int? maxPageSize = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<ExtensionResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _extensionClientDiagnostics.CreateScope("ExtensionCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _extensionRestClient.ListByFarmBeatsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, extensionIds, extensionCategories, pageSizeHint, skipToken, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ExtensionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<ExtensionResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _extensionClientDiagnostics.CreateScope("ExtensionCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _extensionRestClient.ListByFarmBeatsNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, extensionIds, extensionCategories, pageSizeHint, skipToken, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ExtensionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _extensionRestClient.CreateListByFarmBeatsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, extensionIds, extensionCategories, pageSizeHint, skipToken);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _extensionRestClient.CreateListByFarmBeatsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, extensionIds, extensionCategories, pageSizeHint, skipToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ExtensionResource(Client, ExtensionData.DeserializeExtensionData(e)), _extensionClientDiagnostics, Pipeline, "ExtensionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -238,37 +209,9 @@ namespace Azure.ResourceManager.AgFoodPlatform
         /// <returns> A collection of <see cref="ExtensionResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ExtensionResource> GetAll(IEnumerable<string> extensionIds = null, IEnumerable<string> extensionCategories = null, int? maxPageSize = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            Page<ExtensionResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _extensionClientDiagnostics.CreateScope("ExtensionCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _extensionRestClient.ListByFarmBeats(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, extensionIds, extensionCategories, pageSizeHint, skipToken, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ExtensionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<ExtensionResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _extensionClientDiagnostics.CreateScope("ExtensionCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _extensionRestClient.ListByFarmBeatsNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, extensionIds, extensionCategories, pageSizeHint, skipToken, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ExtensionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _extensionRestClient.CreateListByFarmBeatsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, extensionIds, extensionCategories, pageSizeHint, skipToken);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _extensionRestClient.CreateListByFarmBeatsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, extensionIds, extensionCategories, pageSizeHint, skipToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ExtensionResource(Client, ExtensionData.DeserializeExtensionData(e)), _extensionClientDiagnostics, Pipeline, "ExtensionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

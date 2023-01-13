@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -186,37 +185,9 @@ namespace Azure.ResourceManager.Cdn
         /// <returns> An async collection of <see cref="CdnOriginResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<CdnOriginResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<CdnOriginResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _cdnOriginClientDiagnostics.CreateScope("CdnOriginCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _cdnOriginRestClient.ListByEndpointAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new CdnOriginResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<CdnOriginResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _cdnOriginClientDiagnostics.CreateScope("CdnOriginCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _cdnOriginRestClient.ListByEndpointNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new CdnOriginResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _cdnOriginRestClient.CreateListByEndpointRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _cdnOriginRestClient.CreateListByEndpointNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new CdnOriginResource(Client, CdnOriginData.DeserializeCdnOriginData(e)), _cdnOriginClientDiagnostics, Pipeline, "CdnOriginCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -228,37 +199,9 @@ namespace Azure.ResourceManager.Cdn
         /// <returns> A collection of <see cref="CdnOriginResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<CdnOriginResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<CdnOriginResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _cdnOriginClientDiagnostics.CreateScope("CdnOriginCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _cdnOriginRestClient.ListByEndpoint(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new CdnOriginResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<CdnOriginResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _cdnOriginClientDiagnostics.CreateScope("CdnOriginCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _cdnOriginRestClient.ListByEndpointNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new CdnOriginResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _cdnOriginRestClient.CreateListByEndpointRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _cdnOriginRestClient.CreateListByEndpointNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new CdnOriginResource(Client, CdnOriginData.DeserializeCdnOriginData(e)), _cdnOriginClientDiagnostics, Pipeline, "CdnOriginCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

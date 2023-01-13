@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -125,37 +124,9 @@ namespace Azure.ResourceManager.Synapse
         /// <returns> An async collection of <see cref="SynapseLibraryResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SynapseLibraryResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<SynapseLibraryResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _synapseLibraryLibrariesClientDiagnostics.CreateScope("SynapseLibraryCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _synapseLibraryLibrariesRestClient.ListByWorkspaceAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new SynapseLibraryResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<SynapseLibraryResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _synapseLibraryLibrariesClientDiagnostics.CreateScope("SynapseLibraryCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _synapseLibraryLibrariesRestClient.ListByWorkspaceNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new SynapseLibraryResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _synapseLibraryLibrariesRestClient.CreateListByWorkspaceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _synapseLibraryLibrariesRestClient.CreateListByWorkspaceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SynapseLibraryResource(Client, SynapseLibraryData.DeserializeSynapseLibraryData(e)), _synapseLibraryLibrariesClientDiagnostics, Pipeline, "SynapseLibraryCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -167,37 +138,9 @@ namespace Azure.ResourceManager.Synapse
         /// <returns> A collection of <see cref="SynapseLibraryResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SynapseLibraryResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<SynapseLibraryResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _synapseLibraryLibrariesClientDiagnostics.CreateScope("SynapseLibraryCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _synapseLibraryLibrariesRestClient.ListByWorkspace(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new SynapseLibraryResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<SynapseLibraryResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _synapseLibraryLibrariesClientDiagnostics.CreateScope("SynapseLibraryCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _synapseLibraryLibrariesRestClient.ListByWorkspaceNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new SynapseLibraryResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _synapseLibraryLibrariesRestClient.CreateListByWorkspaceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _synapseLibraryLibrariesRestClient.CreateListByWorkspaceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SynapseLibraryResource(Client, SynapseLibraryData.DeserializeSynapseLibraryData(e)), _synapseLibraryLibrariesClientDiagnostics, Pipeline, "SynapseLibraryCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
