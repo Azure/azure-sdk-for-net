@@ -430,7 +430,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         public string Endpoint { get { throw null; } }
         public System.Collections.Generic.IReadOnlyDictionary<string, string> Endpoints { get { throw null; } }
         public bool? IsMigrated { get { throw null; } }
-        public Azure.ResourceManager.CognitiveServices.Models.MultiRegionSettings Locations { get { throw null; } set { } }
+        public Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesMultiRegionSettings Locations { get { throw null; } set { } }
         public string MigrationToken { get { throw null; } set { } }
         public Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesNetworkRuleSet NetworkAcls { get { throw null; } set { } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.CognitiveServices.CognitiveServicesPrivateEndpointConnectionData> PrivateEndpointConnections { get { throw null; } }
@@ -449,7 +449,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         public Azure.Core.ResourceType? ResourceType { get { throw null; } }
         public Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesSku Sku { get { throw null; } }
     }
-    public partial class CognitiveServicesCommitmentPlanPatch : Azure.ResourceManager.CognitiveServices.Models.PatchResourceTags
+    public partial class CognitiveServicesCommitmentPlanPatch : Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesPatchResourceTags
     {
         public CognitiveServicesCommitmentPlanPatch() { }
         public Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesSku Sku { get { throw null; } set { } }
@@ -475,6 +475,12 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         public CognitiveServicesIPRule(string value) { }
         public string Value { get { throw null; } set { } }
     }
+    public partial class CognitiveServicesMultiRegionSettings
+    {
+        public CognitiveServicesMultiRegionSettings() { }
+        public System.Collections.Generic.IList<Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesRegionSetting> Regions { get { throw null; } }
+        public Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesRoutingMethod? RoutingMethod { get { throw null; } set { } }
+    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct CognitiveServicesNetworkRuleAction : System.IEquatable<Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesNetworkRuleAction>
     {
@@ -499,6 +505,11 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         public Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesNetworkRuleAction? DefaultAction { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesIPRule> IPRules { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesVirtualNetworkRule> VirtualNetworkRules { get { throw null; } }
+    }
+    public partial class CognitiveServicesPatchResourceTags
+    {
+        public CognitiveServicesPatchResourceTags() { }
+        public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct CognitiveServicesPrivateEndpointConnectionProvisioningState : System.IEquatable<Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesPrivateEndpointConnectionProvisioningState>
@@ -558,6 +569,32 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         public string ActionsRequired { get { throw null; } set { } }
         public string Description { get { throw null; } set { } }
         public Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesPrivateEndpointServiceConnectionStatus? Status { get { throw null; } set { } }
+    }
+    public partial class CognitiveServicesRegionSetting
+    {
+        public CognitiveServicesRegionSetting() { }
+        public string Customsubdomain { get { throw null; } set { } }
+        public string Name { get { throw null; } set { } }
+        public float? Value { get { throw null; } set { } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct CognitiveServicesRoutingMethod : System.IEquatable<Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesRoutingMethod>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public CognitiveServicesRoutingMethod(string value) { throw null; }
+        public static Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesRoutingMethod Performance { get { throw null; } }
+        public static Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesRoutingMethod Priority { get { throw null; } }
+        public static Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesRoutingMethod Weighted { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesRoutingMethod other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesRoutingMethod left, Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesRoutingMethod right) { throw null; }
+        public static implicit operator Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesRoutingMethod (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesRoutingMethod left, Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesRoutingMethod right) { throw null; }
+        public override string ToString() { throw null; }
     }
     public partial class CognitiveServicesSku
     {
@@ -681,14 +718,14 @@ namespace Azure.ResourceManager.CognitiveServices.Models
     public partial class CommitmentPlanAssociation
     {
         internal CommitmentPlanAssociation() { }
-        public string CommitmentPlanId { get { throw null; } }
+        public Azure.Core.ResourceIdentifier CommitmentPlanId { get { throw null; } }
         public string CommitmentPlanLocation { get { throw null; } }
     }
     public partial class CommitmentPlanProperties
     {
         public CommitmentPlanProperties() { }
         public bool? AutoRenew { get { throw null; } set { } }
-        public string CommitmentPlanGuid { get { throw null; } set { } }
+        public System.Guid? CommitmentPlanGuid { get { throw null; } set { } }
         public Azure.ResourceManager.CognitiveServices.Models.CommitmentPeriod Current { get { throw null; } set { } }
         public Azure.ResourceManager.CognitiveServices.Models.ServiceAccountHostingModel? HostingModel { get { throw null; } set { } }
         public Azure.ResourceManager.CognitiveServices.Models.CommitmentPeriod Last { get { throw null; } }
@@ -755,47 +792,10 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         public static bool operator !=(Azure.ResourceManager.CognitiveServices.Models.ModelLifecycleStatus left, Azure.ResourceManager.CognitiveServices.Models.ModelLifecycleStatus right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class MultiRegionSettings
-    {
-        public MultiRegionSettings() { }
-        public System.Collections.Generic.IList<Azure.ResourceManager.CognitiveServices.Models.RegionSetting> Regions { get { throw null; } }
-        public Azure.ResourceManager.CognitiveServices.Models.RoutingMethod? RoutingMethod { get { throw null; } set { } }
-    }
-    public partial class PatchResourceTags
-    {
-        public PatchResourceTags() { }
-        public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
-    }
     public partial class RegenerateServiceAccountKeyContent
     {
         public RegenerateServiceAccountKeyContent(Azure.ResourceManager.CognitiveServices.Models.ServiceAccountKeyName keyName) { }
         public Azure.ResourceManager.CognitiveServices.Models.ServiceAccountKeyName KeyName { get { throw null; } }
-    }
-    public partial class RegionSetting
-    {
-        public RegionSetting() { }
-        public string Customsubdomain { get { throw null; } set { } }
-        public string Name { get { throw null; } set { } }
-        public float? Value { get { throw null; } set { } }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct RoutingMethod : System.IEquatable<Azure.ResourceManager.CognitiveServices.Models.RoutingMethod>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public RoutingMethod(string value) { throw null; }
-        public static Azure.ResourceManager.CognitiveServices.Models.RoutingMethod Performance { get { throw null; } }
-        public static Azure.ResourceManager.CognitiveServices.Models.RoutingMethod Priority { get { throw null; } }
-        public static Azure.ResourceManager.CognitiveServices.Models.RoutingMethod Weighted { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.CognitiveServices.Models.RoutingMethod other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.CognitiveServices.Models.RoutingMethod left, Azure.ResourceManager.CognitiveServices.Models.RoutingMethod right) { throw null; }
-        public static implicit operator Azure.ResourceManager.CognitiveServices.Models.RoutingMethod (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.CognitiveServices.Models.RoutingMethod left, Azure.ResourceManager.CognitiveServices.Models.RoutingMethod right) { throw null; }
-        public override string ToString() { throw null; }
     }
     public partial class ServiceAccountApiKeys
     {
