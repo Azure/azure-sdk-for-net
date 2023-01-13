@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -189,37 +188,9 @@ namespace Azure.ResourceManager.Media
         /// <returns> An async collection of <see cref="StreamingPolicyResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<StreamingPolicyResource> GetAllAsync(string filter = null, int? top = null, string orderby = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<StreamingPolicyResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _streamingPolicyClientDiagnostics.CreateScope("StreamingPolicyCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _streamingPolicyRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, orderby, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new StreamingPolicyResource(Client, value)), response.Value.OdataNextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<StreamingPolicyResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _streamingPolicyClientDiagnostics.CreateScope("StreamingPolicyCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _streamingPolicyRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, orderby, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new StreamingPolicyResource(Client, value)), response.Value.OdataNextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _streamingPolicyRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, orderby);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _streamingPolicyRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, orderby);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new StreamingPolicyResource(Client, StreamingPolicyData.DeserializeStreamingPolicyData(e)), _streamingPolicyClientDiagnostics, Pipeline, "StreamingPolicyCollection.GetAll", "value", "@odata.nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -234,37 +205,9 @@ namespace Azure.ResourceManager.Media
         /// <returns> A collection of <see cref="StreamingPolicyResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<StreamingPolicyResource> GetAll(string filter = null, int? top = null, string orderby = null, CancellationToken cancellationToken = default)
         {
-            Page<StreamingPolicyResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _streamingPolicyClientDiagnostics.CreateScope("StreamingPolicyCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _streamingPolicyRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, orderby, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new StreamingPolicyResource(Client, value)), response.Value.OdataNextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<StreamingPolicyResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _streamingPolicyClientDiagnostics.CreateScope("StreamingPolicyCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _streamingPolicyRestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, orderby, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new StreamingPolicyResource(Client, value)), response.Value.OdataNextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _streamingPolicyRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, orderby);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _streamingPolicyRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, orderby);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new StreamingPolicyResource(Client, StreamingPolicyData.DeserializeStreamingPolicyData(e)), _streamingPolicyClientDiagnostics, Pipeline, "StreamingPolicyCollection.GetAll", "value", "@odata.nextLink", cancellationToken);
         }
 
         /// <summary>

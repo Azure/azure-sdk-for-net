@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -188,37 +187,9 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <returns> An async collection of <see cref="IotSecuritySolutionResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<IotSecuritySolutionResource> GetAllAsync(string filter = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<IotSecuritySolutionResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _iotSecuritySolutionClientDiagnostics.CreateScope("IotSecuritySolutionCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _iotSecuritySolutionRestClient.ListByResourceGroupAsync(Id.SubscriptionId, Id.ResourceGroupName, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new IotSecuritySolutionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<IotSecuritySolutionResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _iotSecuritySolutionClientDiagnostics.CreateScope("IotSecuritySolutionCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _iotSecuritySolutionRestClient.ListByResourceGroupNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new IotSecuritySolutionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _iotSecuritySolutionRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, filter);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _iotSecuritySolutionRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, filter);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new IotSecuritySolutionResource(Client, IotSecuritySolutionData.DeserializeIotSecuritySolutionData(e)), _iotSecuritySolutionClientDiagnostics, Pipeline, "IotSecuritySolutionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -231,37 +202,9 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <returns> A collection of <see cref="IotSecuritySolutionResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<IotSecuritySolutionResource> GetAll(string filter = null, CancellationToken cancellationToken = default)
         {
-            Page<IotSecuritySolutionResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _iotSecuritySolutionClientDiagnostics.CreateScope("IotSecuritySolutionCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _iotSecuritySolutionRestClient.ListByResourceGroup(Id.SubscriptionId, Id.ResourceGroupName, filter, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new IotSecuritySolutionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<IotSecuritySolutionResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _iotSecuritySolutionClientDiagnostics.CreateScope("IotSecuritySolutionCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _iotSecuritySolutionRestClient.ListByResourceGroupNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, filter, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new IotSecuritySolutionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _iotSecuritySolutionRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, filter);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _iotSecuritySolutionRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, filter);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new IotSecuritySolutionResource(Client, IotSecuritySolutionData.DeserializeIotSecuritySolutionData(e)), _iotSecuritySolutionClientDiagnostics, Pipeline, "IotSecuritySolutionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

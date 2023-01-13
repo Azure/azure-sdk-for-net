@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -175,37 +174,9 @@ namespace Azure.ResourceManager.Sql
         /// <returns> An async collection of <see cref="ManagedInstanceAzureADOnlyAuthenticationResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ManagedInstanceAzureADOnlyAuthenticationResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<ManagedInstanceAzureADOnlyAuthenticationResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _managedInstanceAzureADOnlyAuthenticationClientDiagnostics.CreateScope("ManagedInstanceAzureADOnlyAuthenticationCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _managedInstanceAzureADOnlyAuthenticationRestClient.ListByInstanceAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ManagedInstanceAzureADOnlyAuthenticationResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<ManagedInstanceAzureADOnlyAuthenticationResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _managedInstanceAzureADOnlyAuthenticationClientDiagnostics.CreateScope("ManagedInstanceAzureADOnlyAuthenticationCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _managedInstanceAzureADOnlyAuthenticationRestClient.ListByInstanceNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ManagedInstanceAzureADOnlyAuthenticationResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _managedInstanceAzureADOnlyAuthenticationRestClient.CreateListByInstanceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _managedInstanceAzureADOnlyAuthenticationRestClient.CreateListByInstanceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ManagedInstanceAzureADOnlyAuthenticationResource(Client, ManagedInstanceAzureADOnlyAuthenticationData.DeserializeManagedInstanceAzureADOnlyAuthenticationData(e)), _managedInstanceAzureADOnlyAuthenticationClientDiagnostics, Pipeline, "ManagedInstanceAzureADOnlyAuthenticationCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -217,37 +188,9 @@ namespace Azure.ResourceManager.Sql
         /// <returns> A collection of <see cref="ManagedInstanceAzureADOnlyAuthenticationResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ManagedInstanceAzureADOnlyAuthenticationResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<ManagedInstanceAzureADOnlyAuthenticationResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _managedInstanceAzureADOnlyAuthenticationClientDiagnostics.CreateScope("ManagedInstanceAzureADOnlyAuthenticationCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _managedInstanceAzureADOnlyAuthenticationRestClient.ListByInstance(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ManagedInstanceAzureADOnlyAuthenticationResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<ManagedInstanceAzureADOnlyAuthenticationResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _managedInstanceAzureADOnlyAuthenticationClientDiagnostics.CreateScope("ManagedInstanceAzureADOnlyAuthenticationCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _managedInstanceAzureADOnlyAuthenticationRestClient.ListByInstanceNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ManagedInstanceAzureADOnlyAuthenticationResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _managedInstanceAzureADOnlyAuthenticationRestClient.CreateListByInstanceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _managedInstanceAzureADOnlyAuthenticationRestClient.CreateListByInstanceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ManagedInstanceAzureADOnlyAuthenticationResource(Client, ManagedInstanceAzureADOnlyAuthenticationData.DeserializeManagedInstanceAzureADOnlyAuthenticationData(e)), _managedInstanceAzureADOnlyAuthenticationClientDiagnostics, Pipeline, "ManagedInstanceAzureADOnlyAuthenticationCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

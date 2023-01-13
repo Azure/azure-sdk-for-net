@@ -300,22 +300,8 @@ namespace Azure.ResourceManager.EventGrid
         /// <returns> An async collection of <see cref="DeliveryAttributeMapping" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DeliveryAttributeMapping> GetDeliveryAttributesAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<DeliveryAttributeMapping>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _eventSubscriptionClientDiagnostics.CreateScope("EventSubscriptionResource.GetDeliveryAttributes");
-                scope.Start();
-                try
-                {
-                    var response = await _eventSubscriptionRestClient.GetDeliveryAttributesAsync(Id.Parent, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _eventSubscriptionRestClient.CreateGetDeliveryAttributesRequest(Id.Parent, Id.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, DeliveryAttributeMapping.DeserializeDeliveryAttributeMapping, _eventSubscriptionClientDiagnostics, Pipeline, "EventSubscriptionResource.GetDeliveryAttributes", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -327,22 +313,8 @@ namespace Azure.ResourceManager.EventGrid
         /// <returns> A collection of <see cref="DeliveryAttributeMapping" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DeliveryAttributeMapping> GetDeliveryAttributes(CancellationToken cancellationToken = default)
         {
-            Page<DeliveryAttributeMapping> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _eventSubscriptionClientDiagnostics.CreateScope("EventSubscriptionResource.GetDeliveryAttributes");
-                scope.Start();
-                try
-                {
-                    var response = _eventSubscriptionRestClient.GetDeliveryAttributes(Id.Parent, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _eventSubscriptionRestClient.CreateGetDeliveryAttributesRequest(Id.Parent, Id.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, DeliveryAttributeMapping.DeserializeDeliveryAttributeMapping, _eventSubscriptionClientDiagnostics, Pipeline, "EventSubscriptionResource.GetDeliveryAttributes", "value", null, cancellationToken);
         }
     }
 }

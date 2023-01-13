@@ -1,6 +1,6 @@
 # Release History
 
-## 1.0.0-beta.6 (Unreleased)
+## 1.0.0-beta.7 (Unreleased)
 
 ### Features Added
 
@@ -10,8 +10,17 @@
 
 ### Other Changes
 
-* Update OpenTelemetry dependencies ([#32345](https://github.com/Azure/azure-sdk-for-net/pull/32345))
-  - OpenTelemetry v1.4.0-beta.3
+## 1.0.0-beta.6 (2023-01-10)
+
+### Features Added
+
+* AAD Support ([#32986](https://github.com/Azure/azure-sdk-for-net/pull/32986))
+
+### Other Changes
+
+* Update OpenTelemetry dependencies
+  ([#33152](https://github.com/Azure/azure-sdk-for-net/pull/33152))
+  - OpenTelemetry 1.4.0-rc.1
 
 ## 1.0.0-beta.5 (2022-11-08)
 

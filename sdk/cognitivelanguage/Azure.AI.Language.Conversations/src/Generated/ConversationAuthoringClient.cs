@@ -6,9 +6,6 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
-using System.Runtime.CompilerServices;
-using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.AI.Language.Conversations;
@@ -945,24 +942,9 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <include file="Docs/ConversationAuthoringClient.xml" path="doc/members/member[@name='GetProjectsAsync(RequestContext)']/*" />
         public virtual AsyncPageable<BinaryData> GetProjectsAsync(RequestContext context = null)
         {
-            return GetProjectsImplementationAsync("ConversationAuthoringClient.GetProjects", context);
-        }
-
-        private AsyncPageable<BinaryData> GetProjectsImplementationAsync(string diagnosticsScopeName, RequestContext context)
-        {
-            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, ClientDiagnostics, diagnosticsScopeName);
-            async IAsyncEnumerable<Page<BinaryData>> CreateEnumerableAsync(string nextLink, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken = default)
-            {
-                do
-                {
-                    var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetProjectsRequest(context)
-                        : CreateGetProjectsNextPageRequest(nextLink, context);
-                    var page = await LowLevelPageableHelpers.ProcessMessageAsync(_pipeline, message, context, "value", "nextLink", cancellationToken).ConfigureAwait(false);
-                    nextLink = page.ContinuationToken;
-                    yield return page;
-                } while (!string.IsNullOrEmpty(nextLink));
-            }
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetProjectsRequest(context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetProjectsNextPageRequest(nextLink, context);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "ConversationAuthoringClient.GetProjects", "value", "nextLink", context);
         }
 
         /// <summary> Lists the existing projects. </summary>
@@ -972,24 +954,9 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <include file="Docs/ConversationAuthoringClient.xml" path="doc/members/member[@name='GetProjects(RequestContext)']/*" />
         public virtual Pageable<BinaryData> GetProjects(RequestContext context = null)
         {
-            return GetProjectsImplementation("ConversationAuthoringClient.GetProjects", context);
-        }
-
-        private Pageable<BinaryData> GetProjectsImplementation(string diagnosticsScopeName, RequestContext context)
-        {
-            return PageableHelpers.CreatePageable(CreateEnumerable, ClientDiagnostics, diagnosticsScopeName);
-            IEnumerable<Page<BinaryData>> CreateEnumerable(string nextLink, int? pageSizeHint)
-            {
-                do
-                {
-                    var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetProjectsRequest(context)
-                        : CreateGetProjectsNextPageRequest(nextLink, context);
-                    var page = LowLevelPageableHelpers.ProcessMessage(_pipeline, message, context, "value", "nextLink");
-                    nextLink = page.ContinuationToken;
-                    yield return page;
-                } while (!string.IsNullOrEmpty(nextLink));
-            }
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetProjectsRequest(context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetProjectsNextPageRequest(nextLink, context);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "ConversationAuthoringClient.GetProjects", "value", "nextLink", context);
         }
 
         /// <summary> Lists the deployments belonging to a project. </summary>
@@ -1004,24 +971,9 @@ namespace Azure.AI.Language.Conversations.Authoring
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
-            return GetDeploymentsImplementationAsync("ConversationAuthoringClient.GetDeployments", projectName, context);
-        }
-
-        private AsyncPageable<BinaryData> GetDeploymentsImplementationAsync(string diagnosticsScopeName, string projectName, RequestContext context)
-        {
-            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, ClientDiagnostics, diagnosticsScopeName);
-            async IAsyncEnumerable<Page<BinaryData>> CreateEnumerableAsync(string nextLink, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken = default)
-            {
-                do
-                {
-                    var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetDeploymentsRequest(projectName, context)
-                        : CreateGetDeploymentsNextPageRequest(nextLink, projectName, context);
-                    var page = await LowLevelPageableHelpers.ProcessMessageAsync(_pipeline, message, context, "value", "nextLink", cancellationToken).ConfigureAwait(false);
-                    nextLink = page.ContinuationToken;
-                    yield return page;
-                } while (!string.IsNullOrEmpty(nextLink));
-            }
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetDeploymentsRequest(projectName, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetDeploymentsNextPageRequest(nextLink, projectName, context);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "ConversationAuthoringClient.GetDeployments", "value", "nextLink", context);
         }
 
         /// <summary> Lists the deployments belonging to a project. </summary>
@@ -1036,24 +988,9 @@ namespace Azure.AI.Language.Conversations.Authoring
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
-            return GetDeploymentsImplementation("ConversationAuthoringClient.GetDeployments", projectName, context);
-        }
-
-        private Pageable<BinaryData> GetDeploymentsImplementation(string diagnosticsScopeName, string projectName, RequestContext context)
-        {
-            return PageableHelpers.CreatePageable(CreateEnumerable, ClientDiagnostics, diagnosticsScopeName);
-            IEnumerable<Page<BinaryData>> CreateEnumerable(string nextLink, int? pageSizeHint)
-            {
-                do
-                {
-                    var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetDeploymentsRequest(projectName, context)
-                        : CreateGetDeploymentsNextPageRequest(nextLink, projectName, context);
-                    var page = LowLevelPageableHelpers.ProcessMessage(_pipeline, message, context, "value", "nextLink");
-                    nextLink = page.ContinuationToken;
-                    yield return page;
-                } while (!string.IsNullOrEmpty(nextLink));
-            }
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetDeploymentsRequest(projectName, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetDeploymentsNextPageRequest(nextLink, projectName, context);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "ConversationAuthoringClient.GetDeployments", "value", "nextLink", context);
         }
 
         /// <summary> Lists the trained models belonging to a project. </summary>
@@ -1068,24 +1005,9 @@ namespace Azure.AI.Language.Conversations.Authoring
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
-            return GetTrainedModelsImplementationAsync("ConversationAuthoringClient.GetTrainedModels", projectName, context);
-        }
-
-        private AsyncPageable<BinaryData> GetTrainedModelsImplementationAsync(string diagnosticsScopeName, string projectName, RequestContext context)
-        {
-            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, ClientDiagnostics, diagnosticsScopeName);
-            async IAsyncEnumerable<Page<BinaryData>> CreateEnumerableAsync(string nextLink, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken = default)
-            {
-                do
-                {
-                    var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetTrainedModelsRequest(projectName, context)
-                        : CreateGetTrainedModelsNextPageRequest(nextLink, projectName, context);
-                    var page = await LowLevelPageableHelpers.ProcessMessageAsync(_pipeline, message, context, "value", "nextLink", cancellationToken).ConfigureAwait(false);
-                    nextLink = page.ContinuationToken;
-                    yield return page;
-                } while (!string.IsNullOrEmpty(nextLink));
-            }
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetTrainedModelsRequest(projectName, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetTrainedModelsNextPageRequest(nextLink, projectName, context);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "ConversationAuthoringClient.GetTrainedModels", "value", "nextLink", context);
         }
 
         /// <summary> Lists the trained models belonging to a project. </summary>
@@ -1100,24 +1022,9 @@ namespace Azure.AI.Language.Conversations.Authoring
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
-            return GetTrainedModelsImplementation("ConversationAuthoringClient.GetTrainedModels", projectName, context);
-        }
-
-        private Pageable<BinaryData> GetTrainedModelsImplementation(string diagnosticsScopeName, string projectName, RequestContext context)
-        {
-            return PageableHelpers.CreatePageable(CreateEnumerable, ClientDiagnostics, diagnosticsScopeName);
-            IEnumerable<Page<BinaryData>> CreateEnumerable(string nextLink, int? pageSizeHint)
-            {
-                do
-                {
-                    var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetTrainedModelsRequest(projectName, context)
-                        : CreateGetTrainedModelsNextPageRequest(nextLink, projectName, context);
-                    var page = LowLevelPageableHelpers.ProcessMessage(_pipeline, message, context, "value", "nextLink");
-                    nextLink = page.ContinuationToken;
-                    yield return page;
-                } while (!string.IsNullOrEmpty(nextLink));
-            }
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetTrainedModelsRequest(projectName, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetTrainedModelsNextPageRequest(nextLink, projectName, context);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "ConversationAuthoringClient.GetTrainedModels", "value", "nextLink", context);
         }
 
         /// <summary> Gets the detailed results of the evaluation for a trained model. This includes the raw inference results for the data included in the evaluation process. </summary>
@@ -1136,24 +1043,9 @@ namespace Azure.AI.Language.Conversations.Authoring
             Argument.AssertNotNullOrEmpty(trainedModelLabel, nameof(trainedModelLabel));
             Argument.AssertNotNull(stringIndexType, nameof(stringIndexType));
 
-            return GetModelEvaluationResultsImplementationAsync("ConversationAuthoringClient.GetModelEvaluationResults", projectName, trainedModelLabel, stringIndexType, context);
-        }
-
-        private AsyncPageable<BinaryData> GetModelEvaluationResultsImplementationAsync(string diagnosticsScopeName, string projectName, string trainedModelLabel, string stringIndexType, RequestContext context)
-        {
-            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, ClientDiagnostics, diagnosticsScopeName);
-            async IAsyncEnumerable<Page<BinaryData>> CreateEnumerableAsync(string nextLink, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken = default)
-            {
-                do
-                {
-                    var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetModelEvaluationResultsRequest(projectName, trainedModelLabel, stringIndexType, context)
-                        : CreateGetModelEvaluationResultsNextPageRequest(nextLink, projectName, trainedModelLabel, stringIndexType, context);
-                    var page = await LowLevelPageableHelpers.ProcessMessageAsync(_pipeline, message, context, "value", "nextLink", cancellationToken).ConfigureAwait(false);
-                    nextLink = page.ContinuationToken;
-                    yield return page;
-                } while (!string.IsNullOrEmpty(nextLink));
-            }
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetModelEvaluationResultsRequest(projectName, trainedModelLabel, stringIndexType, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetModelEvaluationResultsNextPageRequest(nextLink, projectName, trainedModelLabel, stringIndexType, context);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "ConversationAuthoringClient.GetModelEvaluationResults", "value", "nextLink", context);
         }
 
         /// <summary> Gets the detailed results of the evaluation for a trained model. This includes the raw inference results for the data included in the evaluation process. </summary>
@@ -1172,24 +1064,9 @@ namespace Azure.AI.Language.Conversations.Authoring
             Argument.AssertNotNullOrEmpty(trainedModelLabel, nameof(trainedModelLabel));
             Argument.AssertNotNull(stringIndexType, nameof(stringIndexType));
 
-            return GetModelEvaluationResultsImplementation("ConversationAuthoringClient.GetModelEvaluationResults", projectName, trainedModelLabel, stringIndexType, context);
-        }
-
-        private Pageable<BinaryData> GetModelEvaluationResultsImplementation(string diagnosticsScopeName, string projectName, string trainedModelLabel, string stringIndexType, RequestContext context)
-        {
-            return PageableHelpers.CreatePageable(CreateEnumerable, ClientDiagnostics, diagnosticsScopeName);
-            IEnumerable<Page<BinaryData>> CreateEnumerable(string nextLink, int? pageSizeHint)
-            {
-                do
-                {
-                    var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetModelEvaluationResultsRequest(projectName, trainedModelLabel, stringIndexType, context)
-                        : CreateGetModelEvaluationResultsNextPageRequest(nextLink, projectName, trainedModelLabel, stringIndexType, context);
-                    var page = LowLevelPageableHelpers.ProcessMessage(_pipeline, message, context, "value", "nextLink");
-                    nextLink = page.ContinuationToken;
-                    yield return page;
-                } while (!string.IsNullOrEmpty(nextLink));
-            }
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetModelEvaluationResultsRequest(projectName, trainedModelLabel, stringIndexType, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetModelEvaluationResultsNextPageRequest(nextLink, projectName, trainedModelLabel, stringIndexType, context);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "ConversationAuthoringClient.GetModelEvaluationResults", "value", "nextLink", context);
         }
 
         /// <summary> Lists the deployments resources assigned to the project. </summary>
@@ -1207,24 +1084,9 @@ namespace Azure.AI.Language.Conversations.Authoring
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
-            return GetDeploymentResourcesImplementationAsync("ConversationAuthoringClient.GetDeploymentResources", projectName, maxCount, skip, maxpagesize, context);
-        }
-
-        private AsyncPageable<BinaryData> GetDeploymentResourcesImplementationAsync(string diagnosticsScopeName, string projectName, int? maxCount, int? skip, int? maxpagesize, RequestContext context)
-        {
-            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, ClientDiagnostics, diagnosticsScopeName);
-            async IAsyncEnumerable<Page<BinaryData>> CreateEnumerableAsync(string nextLink, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken = default)
-            {
-                do
-                {
-                    var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetDeploymentResourcesRequest(projectName, maxCount, skip, maxpagesize, context)
-                        : CreateGetDeploymentResourcesNextPageRequest(nextLink, projectName, maxCount, skip, maxpagesize, context);
-                    var page = await LowLevelPageableHelpers.ProcessMessageAsync(_pipeline, message, context, "value", "nextLink", cancellationToken).ConfigureAwait(false);
-                    nextLink = page.ContinuationToken;
-                    yield return page;
-                } while (!string.IsNullOrEmpty(nextLink));
-            }
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetDeploymentResourcesRequest(projectName, maxCount, skip, maxpagesize, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetDeploymentResourcesNextPageRequest(nextLink, projectName, maxCount, skip, maxpagesize, context);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "ConversationAuthoringClient.GetDeploymentResources", "value", "nextLink", context);
         }
 
         /// <summary> Lists the deployments resources assigned to the project. </summary>
@@ -1242,24 +1104,9 @@ namespace Azure.AI.Language.Conversations.Authoring
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
-            return GetDeploymentResourcesImplementation("ConversationAuthoringClient.GetDeploymentResources", projectName, maxCount, skip, maxpagesize, context);
-        }
-
-        private Pageable<BinaryData> GetDeploymentResourcesImplementation(string diagnosticsScopeName, string projectName, int? maxCount, int? skip, int? maxpagesize, RequestContext context)
-        {
-            return PageableHelpers.CreatePageable(CreateEnumerable, ClientDiagnostics, diagnosticsScopeName);
-            IEnumerable<Page<BinaryData>> CreateEnumerable(string nextLink, int? pageSizeHint)
-            {
-                do
-                {
-                    var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetDeploymentResourcesRequest(projectName, maxCount, skip, maxpagesize, context)
-                        : CreateGetDeploymentResourcesNextPageRequest(nextLink, projectName, maxCount, skip, maxpagesize, context);
-                    var page = LowLevelPageableHelpers.ProcessMessage(_pipeline, message, context, "value", "nextLink");
-                    nextLink = page.ContinuationToken;
-                    yield return page;
-                } while (!string.IsNullOrEmpty(nextLink));
-            }
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetDeploymentResourcesRequest(projectName, maxCount, skip, maxpagesize, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetDeploymentResourcesNextPageRequest(nextLink, projectName, maxCount, skip, maxpagesize, context);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "ConversationAuthoringClient.GetDeploymentResources", "value", "nextLink", context);
         }
 
         /// <summary> Lists the non-expired training jobs created for a project. </summary>
@@ -1274,24 +1121,9 @@ namespace Azure.AI.Language.Conversations.Authoring
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
-            return GetTrainingJobsImplementationAsync("ConversationAuthoringClient.GetTrainingJobs", projectName, context);
-        }
-
-        private AsyncPageable<BinaryData> GetTrainingJobsImplementationAsync(string diagnosticsScopeName, string projectName, RequestContext context)
-        {
-            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, ClientDiagnostics, diagnosticsScopeName);
-            async IAsyncEnumerable<Page<BinaryData>> CreateEnumerableAsync(string nextLink, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken = default)
-            {
-                do
-                {
-                    var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetTrainingJobsRequest(projectName, context)
-                        : CreateGetTrainingJobsNextPageRequest(nextLink, projectName, context);
-                    var page = await LowLevelPageableHelpers.ProcessMessageAsync(_pipeline, message, context, "value", "nextLink", cancellationToken).ConfigureAwait(false);
-                    nextLink = page.ContinuationToken;
-                    yield return page;
-                } while (!string.IsNullOrEmpty(nextLink));
-            }
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetTrainingJobsRequest(projectName, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetTrainingJobsNextPageRequest(nextLink, projectName, context);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "ConversationAuthoringClient.GetTrainingJobs", "value", "nextLink", context);
         }
 
         /// <summary> Lists the non-expired training jobs created for a project. </summary>
@@ -1306,24 +1138,9 @@ namespace Azure.AI.Language.Conversations.Authoring
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
-            return GetTrainingJobsImplementation("ConversationAuthoringClient.GetTrainingJobs", projectName, context);
-        }
-
-        private Pageable<BinaryData> GetTrainingJobsImplementation(string diagnosticsScopeName, string projectName, RequestContext context)
-        {
-            return PageableHelpers.CreatePageable(CreateEnumerable, ClientDiagnostics, diagnosticsScopeName);
-            IEnumerable<Page<BinaryData>> CreateEnumerable(string nextLink, int? pageSizeHint)
-            {
-                do
-                {
-                    var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetTrainingJobsRequest(projectName, context)
-                        : CreateGetTrainingJobsNextPageRequest(nextLink, projectName, context);
-                    var page = LowLevelPageableHelpers.ProcessMessage(_pipeline, message, context, "value", "nextLink");
-                    nextLink = page.ContinuationToken;
-                    yield return page;
-                } while (!string.IsNullOrEmpty(nextLink));
-            }
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetTrainingJobsRequest(projectName, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetTrainingJobsNextPageRequest(nextLink, projectName, context);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "ConversationAuthoringClient.GetTrainingJobs", "value", "nextLink", context);
         }
 
         /// <summary> Lists the deployments to which an Azure resource is assigned. This doesn&apos;t return deployments belonging to projects owned by this resource. It only returns deployments belonging to projects owned by other resources. </summary>
@@ -1336,24 +1153,9 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <include file="Docs/ConversationAuthoringClient.xml" path="doc/members/member[@name='GetAssignedResourceDeploymentsAsync(Int32,Int32,Int32,RequestContext)']/*" />
         public virtual AsyncPageable<BinaryData> GetAssignedResourceDeploymentsAsync(int? maxCount = null, int? skip = null, int? maxpagesize = null, RequestContext context = null)
         {
-            return GetAssignedResourceDeploymentsImplementationAsync("ConversationAuthoringClient.GetAssignedResourceDeployments", maxCount, skip, maxpagesize, context);
-        }
-
-        private AsyncPageable<BinaryData> GetAssignedResourceDeploymentsImplementationAsync(string diagnosticsScopeName, int? maxCount, int? skip, int? maxpagesize, RequestContext context)
-        {
-            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, ClientDiagnostics, diagnosticsScopeName);
-            async IAsyncEnumerable<Page<BinaryData>> CreateEnumerableAsync(string nextLink, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken = default)
-            {
-                do
-                {
-                    var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetAssignedResourceDeploymentsRequest(maxCount, skip, maxpagesize, context)
-                        : CreateGetAssignedResourceDeploymentsNextPageRequest(nextLink, maxCount, skip, maxpagesize, context);
-                    var page = await LowLevelPageableHelpers.ProcessMessageAsync(_pipeline, message, context, "value", "nextLink", cancellationToken).ConfigureAwait(false);
-                    nextLink = page.ContinuationToken;
-                    yield return page;
-                } while (!string.IsNullOrEmpty(nextLink));
-            }
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetAssignedResourceDeploymentsRequest(maxCount, skip, maxpagesize, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetAssignedResourceDeploymentsNextPageRequest(nextLink, maxCount, skip, maxpagesize, context);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "ConversationAuthoringClient.GetAssignedResourceDeployments", "value", "nextLink", context);
         }
 
         /// <summary> Lists the deployments to which an Azure resource is assigned. This doesn&apos;t return deployments belonging to projects owned by this resource. It only returns deployments belonging to projects owned by other resources. </summary>
@@ -1366,24 +1168,9 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <include file="Docs/ConversationAuthoringClient.xml" path="doc/members/member[@name='GetAssignedResourceDeployments(Int32,Int32,Int32,RequestContext)']/*" />
         public virtual Pageable<BinaryData> GetAssignedResourceDeployments(int? maxCount = null, int? skip = null, int? maxpagesize = null, RequestContext context = null)
         {
-            return GetAssignedResourceDeploymentsImplementation("ConversationAuthoringClient.GetAssignedResourceDeployments", maxCount, skip, maxpagesize, context);
-        }
-
-        private Pageable<BinaryData> GetAssignedResourceDeploymentsImplementation(string diagnosticsScopeName, int? maxCount, int? skip, int? maxpagesize, RequestContext context)
-        {
-            return PageableHelpers.CreatePageable(CreateEnumerable, ClientDiagnostics, diagnosticsScopeName);
-            IEnumerable<Page<BinaryData>> CreateEnumerable(string nextLink, int? pageSizeHint)
-            {
-                do
-                {
-                    var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetAssignedResourceDeploymentsRequest(maxCount, skip, maxpagesize, context)
-                        : CreateGetAssignedResourceDeploymentsNextPageRequest(nextLink, maxCount, skip, maxpagesize, context);
-                    var page = LowLevelPageableHelpers.ProcessMessage(_pipeline, message, context, "value", "nextLink");
-                    nextLink = page.ContinuationToken;
-                    yield return page;
-                } while (!string.IsNullOrEmpty(nextLink));
-            }
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetAssignedResourceDeploymentsRequest(maxCount, skip, maxpagesize, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetAssignedResourceDeploymentsNextPageRequest(nextLink, maxCount, skip, maxpagesize, context);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "ConversationAuthoringClient.GetAssignedResourceDeployments", "value", "nextLink", context);
         }
 
         /// <summary> Lists the supported languages for the given project type. </summary>
@@ -1397,24 +1184,9 @@ namespace Azure.AI.Language.Conversations.Authoring
         {
             Argument.AssertNotNull(projectKind, nameof(projectKind));
 
-            return GetSupportedLanguagesImplementationAsync("ConversationAuthoringClient.GetSupportedLanguages", projectKind, context);
-        }
-
-        private AsyncPageable<BinaryData> GetSupportedLanguagesImplementationAsync(string diagnosticsScopeName, string projectKind, RequestContext context)
-        {
-            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, ClientDiagnostics, diagnosticsScopeName);
-            async IAsyncEnumerable<Page<BinaryData>> CreateEnumerableAsync(string nextLink, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken = default)
-            {
-                do
-                {
-                    var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetSupportedLanguagesRequest(projectKind, context)
-                        : CreateGetSupportedLanguagesNextPageRequest(nextLink, projectKind, context);
-                    var page = await LowLevelPageableHelpers.ProcessMessageAsync(_pipeline, message, context, "value", "nextLink", cancellationToken).ConfigureAwait(false);
-                    nextLink = page.ContinuationToken;
-                    yield return page;
-                } while (!string.IsNullOrEmpty(nextLink));
-            }
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetSupportedLanguagesRequest(projectKind, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetSupportedLanguagesNextPageRequest(nextLink, projectKind, context);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "ConversationAuthoringClient.GetSupportedLanguages", "value", "nextLink", context);
         }
 
         /// <summary> Lists the supported languages for the given project type. </summary>
@@ -1428,24 +1200,9 @@ namespace Azure.AI.Language.Conversations.Authoring
         {
             Argument.AssertNotNull(projectKind, nameof(projectKind));
 
-            return GetSupportedLanguagesImplementation("ConversationAuthoringClient.GetSupportedLanguages", projectKind, context);
-        }
-
-        private Pageable<BinaryData> GetSupportedLanguagesImplementation(string diagnosticsScopeName, string projectKind, RequestContext context)
-        {
-            return PageableHelpers.CreatePageable(CreateEnumerable, ClientDiagnostics, diagnosticsScopeName);
-            IEnumerable<Page<BinaryData>> CreateEnumerable(string nextLink, int? pageSizeHint)
-            {
-                do
-                {
-                    var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetSupportedLanguagesRequest(projectKind, context)
-                        : CreateGetSupportedLanguagesNextPageRequest(nextLink, projectKind, context);
-                    var page = LowLevelPageableHelpers.ProcessMessage(_pipeline, message, context, "value", "nextLink");
-                    nextLink = page.ContinuationToken;
-                    yield return page;
-                } while (!string.IsNullOrEmpty(nextLink));
-            }
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetSupportedLanguagesRequest(projectKind, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetSupportedLanguagesNextPageRequest(nextLink, projectKind, context);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "ConversationAuthoringClient.GetSupportedLanguages", "value", "nextLink", context);
         }
 
         /// <summary> Lists the supported prebuilt entities that can be used while creating composed entities. </summary>
@@ -1457,24 +1214,9 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <include file="Docs/ConversationAuthoringClient.xml" path="doc/members/member[@name='GetSupportedPrebuiltEntitiesAsync(String,Boolean,RequestContext)']/*" />
         public virtual AsyncPageable<BinaryData> GetSupportedPrebuiltEntitiesAsync(string language = null, bool? multilingual = null, RequestContext context = null)
         {
-            return GetSupportedPrebuiltEntitiesImplementationAsync("ConversationAuthoringClient.GetSupportedPrebuiltEntities", language, multilingual, context);
-        }
-
-        private AsyncPageable<BinaryData> GetSupportedPrebuiltEntitiesImplementationAsync(string diagnosticsScopeName, string language, bool? multilingual, RequestContext context)
-        {
-            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, ClientDiagnostics, diagnosticsScopeName);
-            async IAsyncEnumerable<Page<BinaryData>> CreateEnumerableAsync(string nextLink, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken = default)
-            {
-                do
-                {
-                    var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetSupportedPrebuiltEntitiesRequest(language, multilingual, context)
-                        : CreateGetSupportedPrebuiltEntitiesNextPageRequest(nextLink, language, multilingual, context);
-                    var page = await LowLevelPageableHelpers.ProcessMessageAsync(_pipeline, message, context, "value", "nextLink", cancellationToken).ConfigureAwait(false);
-                    nextLink = page.ContinuationToken;
-                    yield return page;
-                } while (!string.IsNullOrEmpty(nextLink));
-            }
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetSupportedPrebuiltEntitiesRequest(language, multilingual, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetSupportedPrebuiltEntitiesNextPageRequest(nextLink, language, multilingual, context);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "ConversationAuthoringClient.GetSupportedPrebuiltEntities", "value", "nextLink", context);
         }
 
         /// <summary> Lists the supported prebuilt entities that can be used while creating composed entities. </summary>
@@ -1486,24 +1228,9 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <include file="Docs/ConversationAuthoringClient.xml" path="doc/members/member[@name='GetSupportedPrebuiltEntities(String,Boolean,RequestContext)']/*" />
         public virtual Pageable<BinaryData> GetSupportedPrebuiltEntities(string language = null, bool? multilingual = null, RequestContext context = null)
         {
-            return GetSupportedPrebuiltEntitiesImplementation("ConversationAuthoringClient.GetSupportedPrebuiltEntities", language, multilingual, context);
-        }
-
-        private Pageable<BinaryData> GetSupportedPrebuiltEntitiesImplementation(string diagnosticsScopeName, string language, bool? multilingual, RequestContext context)
-        {
-            return PageableHelpers.CreatePageable(CreateEnumerable, ClientDiagnostics, diagnosticsScopeName);
-            IEnumerable<Page<BinaryData>> CreateEnumerable(string nextLink, int? pageSizeHint)
-            {
-                do
-                {
-                    var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetSupportedPrebuiltEntitiesRequest(language, multilingual, context)
-                        : CreateGetSupportedPrebuiltEntitiesNextPageRequest(nextLink, language, multilingual, context);
-                    var page = LowLevelPageableHelpers.ProcessMessage(_pipeline, message, context, "value", "nextLink");
-                    nextLink = page.ContinuationToken;
-                    yield return page;
-                } while (!string.IsNullOrEmpty(nextLink));
-            }
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetSupportedPrebuiltEntitiesRequest(language, multilingual, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetSupportedPrebuiltEntitiesNextPageRequest(nextLink, language, multilingual, context);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "ConversationAuthoringClient.GetSupportedPrebuiltEntities", "value", "nextLink", context);
         }
 
         /// <summary> Lists the support training config version for a given project type. </summary>
@@ -1517,24 +1244,9 @@ namespace Azure.AI.Language.Conversations.Authoring
         {
             Argument.AssertNotNull(projectKind, nameof(projectKind));
 
-            return GetTrainingConfigVersionsImplementationAsync("ConversationAuthoringClient.GetTrainingConfigVersions", projectKind, context);
-        }
-
-        private AsyncPageable<BinaryData> GetTrainingConfigVersionsImplementationAsync(string diagnosticsScopeName, string projectKind, RequestContext context)
-        {
-            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, ClientDiagnostics, diagnosticsScopeName);
-            async IAsyncEnumerable<Page<BinaryData>> CreateEnumerableAsync(string nextLink, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken = default)
-            {
-                do
-                {
-                    var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetTrainingConfigVersionsRequest(projectKind, context)
-                        : CreateGetTrainingConfigVersionsNextPageRequest(nextLink, projectKind, context);
-                    var page = await LowLevelPageableHelpers.ProcessMessageAsync(_pipeline, message, context, "value", "nextLink", cancellationToken).ConfigureAwait(false);
-                    nextLink = page.ContinuationToken;
-                    yield return page;
-                } while (!string.IsNullOrEmpty(nextLink));
-            }
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetTrainingConfigVersionsRequest(projectKind, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetTrainingConfigVersionsNextPageRequest(nextLink, projectKind, context);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "ConversationAuthoringClient.GetTrainingConfigVersions", "value", "nextLink", context);
         }
 
         /// <summary> Lists the support training config version for a given project type. </summary>
@@ -1548,24 +1260,9 @@ namespace Azure.AI.Language.Conversations.Authoring
         {
             Argument.AssertNotNull(projectKind, nameof(projectKind));
 
-            return GetTrainingConfigVersionsImplementation("ConversationAuthoringClient.GetTrainingConfigVersions", projectKind, context);
-        }
-
-        private Pageable<BinaryData> GetTrainingConfigVersionsImplementation(string diagnosticsScopeName, string projectKind, RequestContext context)
-        {
-            return PageableHelpers.CreatePageable(CreateEnumerable, ClientDiagnostics, diagnosticsScopeName);
-            IEnumerable<Page<BinaryData>> CreateEnumerable(string nextLink, int? pageSizeHint)
-            {
-                do
-                {
-                    var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetTrainingConfigVersionsRequest(projectKind, context)
-                        : CreateGetTrainingConfigVersionsNextPageRequest(nextLink, projectKind, context);
-                    var page = LowLevelPageableHelpers.ProcessMessage(_pipeline, message, context, "value", "nextLink");
-                    nextLink = page.ContinuationToken;
-                    yield return page;
-                } while (!string.IsNullOrEmpty(nextLink));
-            }
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetTrainingConfigVersionsRequest(projectKind, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetTrainingConfigVersionsNextPageRequest(nextLink, projectKind, context);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "ConversationAuthoringClient.GetTrainingConfigVersions", "value", "nextLink", context);
         }
 
         /// <summary> Deletes a project. </summary>

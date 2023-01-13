@@ -612,37 +612,9 @@ namespace Azure.ResourceManager.Batch
         /// <returns> An async collection of <see cref="BatchAccountOutboundEnvironmentEndpoint" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<BatchAccountOutboundEnvironmentEndpoint> GetOutboundNetworkDependenciesEndpointsAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<BatchAccountOutboundEnvironmentEndpoint>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _batchAccountClientDiagnostics.CreateScope("BatchAccountResource.GetOutboundNetworkDependenciesEndpoints");
-                scope.Start();
-                try
-                {
-                    var response = await _batchAccountRestClient.ListOutboundNetworkDependenciesEndpointsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<BatchAccountOutboundEnvironmentEndpoint>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _batchAccountClientDiagnostics.CreateScope("BatchAccountResource.GetOutboundNetworkDependenciesEndpoints");
-                scope.Start();
-                try
-                {
-                    var response = await _batchAccountRestClient.ListOutboundNetworkDependenciesEndpointsNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _batchAccountRestClient.CreateListOutboundNetworkDependenciesEndpointsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _batchAccountRestClient.CreateListOutboundNetworkDependenciesEndpointsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, BatchAccountOutboundEnvironmentEndpoint.DeserializeBatchAccountOutboundEnvironmentEndpoint, _batchAccountClientDiagnostics, Pipeline, "BatchAccountResource.GetOutboundNetworkDependenciesEndpoints", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -654,37 +626,9 @@ namespace Azure.ResourceManager.Batch
         /// <returns> A collection of <see cref="BatchAccountOutboundEnvironmentEndpoint" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<BatchAccountOutboundEnvironmentEndpoint> GetOutboundNetworkDependenciesEndpoints(CancellationToken cancellationToken = default)
         {
-            Page<BatchAccountOutboundEnvironmentEndpoint> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _batchAccountClientDiagnostics.CreateScope("BatchAccountResource.GetOutboundNetworkDependenciesEndpoints");
-                scope.Start();
-                try
-                {
-                    var response = _batchAccountRestClient.ListOutboundNetworkDependenciesEndpoints(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<BatchAccountOutboundEnvironmentEndpoint> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _batchAccountClientDiagnostics.CreateScope("BatchAccountResource.GetOutboundNetworkDependenciesEndpoints");
-                scope.Start();
-                try
-                {
-                    var response = _batchAccountRestClient.ListOutboundNetworkDependenciesEndpointsNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _batchAccountRestClient.CreateListOutboundNetworkDependenciesEndpointsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _batchAccountRestClient.CreateListOutboundNetworkDependenciesEndpointsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, BatchAccountOutboundEnvironmentEndpoint.DeserializeBatchAccountOutboundEnvironmentEndpoint, _batchAccountClientDiagnostics, Pipeline, "BatchAccountResource.GetOutboundNetworkDependenciesEndpoints", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

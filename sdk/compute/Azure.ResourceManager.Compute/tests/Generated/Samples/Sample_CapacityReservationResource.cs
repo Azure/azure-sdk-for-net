@@ -11,9 +11,10 @@ using Azure;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager;
+using Azure.ResourceManager.Compute;
 using Azure.ResourceManager.Compute.Models;
 
-namespace Azure.ResourceManager.Compute
+namespace Azure.ResourceManager.Compute.Samples
 {
     public partial class Sample_CapacityReservationResource
     {
@@ -22,11 +23,13 @@ namespace Azure.ResourceManager.Compute
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Update_CapacityReservationsUpdateMaximumSetGen()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2022-03-01/examples/capacityReservationExamples/CapacityReservation_Update_MaximumSet_Gen.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2022-08-01/examples/capacityReservationExamples/CapacityReservation_Update_MaximumSet_Gen.json
             // this example is just showing the usage of "CapacityReservations_Update" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this CapacityReservationResource created on azure
             // for more information of creating CapacityReservationResource, please refer to the document of CapacityReservationResource
@@ -42,7 +45,7 @@ namespace Azure.ResourceManager.Compute
             {
                 Sku = new ComputeSku()
                 {
-                    Name = "DSv3-Type1",
+                    Name = "Standard_DS1_v2",
                     Tier = "aaa",
                     Capacity = 7,
                 },
@@ -66,11 +69,13 @@ namespace Azure.ResourceManager.Compute
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Update_CapacityReservationsUpdateMinimumSetGen()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2022-03-01/examples/capacityReservationExamples/CapacityReservation_Update_MinimumSet_Gen.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2022-08-01/examples/capacityReservationExamples/CapacityReservation_Update_MinimumSet_Gen.json
             // this example is just showing the usage of "CapacityReservations_Update" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this CapacityReservationResource created on azure
             // for more information of creating CapacityReservationResource, please refer to the document of CapacityReservationResource
@@ -98,11 +103,13 @@ namespace Azure.ResourceManager.Compute
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Delete_CapacityReservationsDeleteMaximumSetGen()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2022-03-01/examples/capacityReservationExamples/CapacityReservation_Delete_MaximumSet_Gen.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2022-08-01/examples/capacityReservationExamples/CapacityReservation_Delete_MaximumSet_Gen.json
             // this example is just showing the usage of "CapacityReservations_Delete" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this CapacityReservationResource created on azure
             // for more information of creating CapacityReservationResource, please refer to the document of CapacityReservationResource
@@ -124,11 +131,13 @@ namespace Azure.ResourceManager.Compute
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Delete_CapacityReservationsDeleteMinimumSetGen()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2022-03-01/examples/capacityReservationExamples/CapacityReservation_Delete_MinimumSet_Gen.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2022-08-01/examples/capacityReservationExamples/CapacityReservation_Delete_MinimumSet_Gen.json
             // this example is just showing the usage of "CapacityReservations_Delete" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this CapacityReservationResource created on azure
             // for more information of creating CapacityReservationResource, please refer to the document of CapacityReservationResource
@@ -150,11 +159,13 @@ namespace Azure.ResourceManager.Compute
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_GetACapacityReservation()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2022-03-01/examples/capacityReservationExamples/CapacityReservation_Get.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2022-08-01/examples/capacityReservationExamples/CapacityReservation_Get.json
             // this example is just showing the usage of "CapacityReservations_Get" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this CapacityReservationResource created on azure
             // for more information of creating CapacityReservationResource, please refer to the document of CapacityReservationResource
@@ -166,7 +177,8 @@ namespace Azure.ResourceManager.Compute
             CapacityReservationResource capacityReservation = client.GetCapacityReservationResource(capacityReservationResourceId);
 
             // invoke the operation
-            CapacityReservationResource result = await capacityReservation.GetAsync();
+            CapacityReservationInstanceViewType? expand = CapacityReservationInstanceViewType.InstanceView;
+            CapacityReservationResource result = await capacityReservation.GetAsync(expand: expand);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance

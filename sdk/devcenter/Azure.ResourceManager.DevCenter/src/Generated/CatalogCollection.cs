@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -187,37 +186,9 @@ namespace Azure.ResourceManager.DevCenter
         /// <returns> An async collection of <see cref="CatalogResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<CatalogResource> GetAllAsync(int? top = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<CatalogResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _catalogClientDiagnostics.CreateScope("CatalogCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _catalogRestClient.ListByDevCenterAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new CatalogResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<CatalogResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _catalogClientDiagnostics.CreateScope("CatalogCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _catalogRestClient.ListByDevCenterNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new CatalogResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _catalogRestClient.CreateListByDevCenterRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _catalogRestClient.CreateListByDevCenterNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new CatalogResource(Client, CatalogData.DeserializeCatalogData(e)), _catalogClientDiagnostics, Pipeline, "CatalogCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -230,37 +201,9 @@ namespace Azure.ResourceManager.DevCenter
         /// <returns> A collection of <see cref="CatalogResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<CatalogResource> GetAll(int? top = null, CancellationToken cancellationToken = default)
         {
-            Page<CatalogResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _catalogClientDiagnostics.CreateScope("CatalogCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _catalogRestClient.ListByDevCenter(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new CatalogResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<CatalogResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _catalogClientDiagnostics.CreateScope("CatalogCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _catalogRestClient.ListByDevCenterNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new CatalogResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _catalogRestClient.CreateListByDevCenterRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _catalogRestClient.CreateListByDevCenterNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new CatalogResource(Client, CatalogData.DeserializeCatalogData(e)), _catalogClientDiagnostics, Pipeline, "CatalogCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

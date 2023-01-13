@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -186,22 +185,8 @@ namespace Azure.ResourceManager.Monitor
         /// <returns> An async collection of <see cref="MonitorPrivateEndpointConnectionResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<MonitorPrivateEndpointConnectionResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<MonitorPrivateEndpointConnectionResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _monitorPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics.CreateScope("MonitorPrivateEndpointConnectionCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _monitorPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.ListByPrivateLinkScopeAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new MonitorPrivateEndpointConnectionResource(Client, value)), null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _monitorPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateListByPrivateLinkScopeRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new MonitorPrivateEndpointConnectionResource(Client, MonitorPrivateEndpointConnectionData.DeserializeMonitorPrivateEndpointConnectionData(e)), _monitorPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics, Pipeline, "MonitorPrivateEndpointConnectionCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -213,22 +198,8 @@ namespace Azure.ResourceManager.Monitor
         /// <returns> A collection of <see cref="MonitorPrivateEndpointConnectionResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<MonitorPrivateEndpointConnectionResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<MonitorPrivateEndpointConnectionResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _monitorPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics.CreateScope("MonitorPrivateEndpointConnectionCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _monitorPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.ListByPrivateLinkScope(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new MonitorPrivateEndpointConnectionResource(Client, value)), null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _monitorPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateListByPrivateLinkScopeRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new MonitorPrivateEndpointConnectionResource(Client, MonitorPrivateEndpointConnectionData.DeserializeMonitorPrivateEndpointConnectionData(e)), _monitorPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics, Pipeline, "MonitorPrivateEndpointConnectionCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>

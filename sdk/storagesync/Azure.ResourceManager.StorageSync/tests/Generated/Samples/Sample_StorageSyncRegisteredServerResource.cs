@@ -11,9 +11,10 @@ using Azure;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager;
+using Azure.ResourceManager.StorageSync;
 using Azure.ResourceManager.StorageSync.Models;
 
-namespace Azure.ResourceManager.StorageSync
+namespace Azure.ResourceManager.StorageSync.Samples
 {
     public partial class Sample_StorageSyncRegisteredServerResource
     {
@@ -25,8 +26,10 @@ namespace Azure.ResourceManager.StorageSync
             // Generated from example definition: specification/storagesync/resource-manager/Microsoft.StorageSync/stable/2022-06-01/examples/RegisteredServers_Get.json
             // this example is just showing the usage of "RegisteredServers_Get" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this StorageSyncRegisteredServerResource created on azure
             // for more information of creating StorageSyncRegisteredServerResource, please refer to the document of StorageSyncRegisteredServerResource
@@ -55,8 +58,10 @@ namespace Azure.ResourceManager.StorageSync
             // Generated from example definition: specification/storagesync/resource-manager/Microsoft.StorageSync/stable/2022-06-01/examples/RegisteredServers_Create.json
             // this example is just showing the usage of "RegisteredServers_Create" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this StorageSyncRegisteredServerResource created on azure
             // for more information of creating StorageSyncRegisteredServerResource, please refer to the document of StorageSyncRegisteredServerResource
@@ -95,8 +100,10 @@ namespace Azure.ResourceManager.StorageSync
             // Generated from example definition: specification/storagesync/resource-manager/Microsoft.StorageSync/stable/2022-06-01/examples/RegisteredServers_Delete.json
             // this example is just showing the usage of "RegisteredServers_Delete" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this StorageSyncRegisteredServerResource created on azure
             // for more information of creating StorageSyncRegisteredServerResource, please refer to the document of StorageSyncRegisteredServerResource
@@ -121,8 +128,10 @@ namespace Azure.ResourceManager.StorageSync
             // Generated from example definition: specification/storagesync/resource-manager/Microsoft.StorageSync/stable/2022-06-01/examples/RegisteredServers_TriggerRollover.json
             // this example is just showing the usage of "RegisteredServers_triggerRollover" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this StorageSyncRegisteredServerResource created on azure
             // for more information of creating StorageSyncRegisteredServerResource, please refer to the document of StorageSyncRegisteredServerResource

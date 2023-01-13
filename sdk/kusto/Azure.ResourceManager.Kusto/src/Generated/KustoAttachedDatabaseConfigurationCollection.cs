@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -186,22 +185,8 @@ namespace Azure.ResourceManager.Kusto
         /// <returns> An async collection of <see cref="KustoAttachedDatabaseConfigurationResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<KustoAttachedDatabaseConfigurationResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<KustoAttachedDatabaseConfigurationResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _kustoAttachedDatabaseConfigurationAttachedDatabaseConfigurationsClientDiagnostics.CreateScope("KustoAttachedDatabaseConfigurationCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _kustoAttachedDatabaseConfigurationAttachedDatabaseConfigurationsRestClient.ListByClusterAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new KustoAttachedDatabaseConfigurationResource(Client, value)), null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _kustoAttachedDatabaseConfigurationAttachedDatabaseConfigurationsRestClient.CreateListByClusterRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new KustoAttachedDatabaseConfigurationResource(Client, KustoAttachedDatabaseConfigurationData.DeserializeKustoAttachedDatabaseConfigurationData(e)), _kustoAttachedDatabaseConfigurationAttachedDatabaseConfigurationsClientDiagnostics, Pipeline, "KustoAttachedDatabaseConfigurationCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -213,22 +198,8 @@ namespace Azure.ResourceManager.Kusto
         /// <returns> A collection of <see cref="KustoAttachedDatabaseConfigurationResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<KustoAttachedDatabaseConfigurationResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<KustoAttachedDatabaseConfigurationResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _kustoAttachedDatabaseConfigurationAttachedDatabaseConfigurationsClientDiagnostics.CreateScope("KustoAttachedDatabaseConfigurationCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _kustoAttachedDatabaseConfigurationAttachedDatabaseConfigurationsRestClient.ListByCluster(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new KustoAttachedDatabaseConfigurationResource(Client, value)), null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _kustoAttachedDatabaseConfigurationAttachedDatabaseConfigurationsRestClient.CreateListByClusterRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new KustoAttachedDatabaseConfigurationResource(Client, KustoAttachedDatabaseConfigurationData.DeserializeKustoAttachedDatabaseConfigurationData(e)), _kustoAttachedDatabaseConfigurationAttachedDatabaseConfigurationsClientDiagnostics, Pipeline, "KustoAttachedDatabaseConfigurationCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>

@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -186,37 +185,9 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// <returns> An async collection of <see cref="ServiceFabricManagedServiceResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ServiceFabricManagedServiceResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<ServiceFabricManagedServiceResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _serviceFabricManagedServiceServicesClientDiagnostics.CreateScope("ServiceFabricManagedServiceCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _serviceFabricManagedServiceServicesRestClient.ListByApplicationsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ServiceFabricManagedServiceResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<ServiceFabricManagedServiceResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _serviceFabricManagedServiceServicesClientDiagnostics.CreateScope("ServiceFabricManagedServiceCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _serviceFabricManagedServiceServicesRestClient.ListByApplicationsNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ServiceFabricManagedServiceResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _serviceFabricManagedServiceServicesRestClient.CreateListByApplicationsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _serviceFabricManagedServiceServicesRestClient.CreateListByApplicationsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ServiceFabricManagedServiceResource(Client, ServiceFabricManagedServiceData.DeserializeServiceFabricManagedServiceData(e)), _serviceFabricManagedServiceServicesClientDiagnostics, Pipeline, "ServiceFabricManagedServiceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -228,37 +199,9 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// <returns> A collection of <see cref="ServiceFabricManagedServiceResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ServiceFabricManagedServiceResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<ServiceFabricManagedServiceResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _serviceFabricManagedServiceServicesClientDiagnostics.CreateScope("ServiceFabricManagedServiceCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _serviceFabricManagedServiceServicesRestClient.ListByApplications(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ServiceFabricManagedServiceResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<ServiceFabricManagedServiceResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _serviceFabricManagedServiceServicesClientDiagnostics.CreateScope("ServiceFabricManagedServiceCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _serviceFabricManagedServiceServicesRestClient.ListByApplicationsNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ServiceFabricManagedServiceResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _serviceFabricManagedServiceServicesRestClient.CreateListByApplicationsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _serviceFabricManagedServiceServicesRestClient.CreateListByApplicationsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ServiceFabricManagedServiceResource(Client, ServiceFabricManagedServiceData.DeserializeServiceFabricManagedServiceData(e)), _serviceFabricManagedServiceServicesClientDiagnostics, Pipeline, "ServiceFabricManagedServiceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

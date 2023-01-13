@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -53,22 +52,8 @@ namespace Azure.ResourceManager.Analysis
         /// <returns> An async collection of <see cref="AnalysisServerResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<AnalysisServerResource> GetAnalysisServersAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<AnalysisServerResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = AnalysisServerServersClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetAnalysisServers");
-                scope.Start();
-                try
-                {
-                    var response = await AnalysisServerServersRestClient.ListAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.AnalysisResources.Select(value => new AnalysisServerResource(Client, value)), null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => AnalysisServerServersRestClient.CreateListRequest(Id.SubscriptionId);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new AnalysisServerResource(Client, AnalysisServerData.DeserializeAnalysisServerData(e)), AnalysisServerServersClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetAnalysisServers", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -80,22 +65,8 @@ namespace Azure.ResourceManager.Analysis
         /// <returns> A collection of <see cref="AnalysisServerResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<AnalysisServerResource> GetAnalysisServers(CancellationToken cancellationToken = default)
         {
-            Page<AnalysisServerResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = AnalysisServerServersClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetAnalysisServers");
-                scope.Start();
-                try
-                {
-                    var response = AnalysisServerServersRestClient.List(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.AnalysisResources.Select(value => new AnalysisServerResource(Client, value)), null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => AnalysisServerServersRestClient.CreateListRequest(Id.SubscriptionId);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new AnalysisServerResource(Client, AnalysisServerData.DeserializeAnalysisServerData(e)), AnalysisServerServersClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetAnalysisServers", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -107,22 +78,8 @@ namespace Azure.ResourceManager.Analysis
         /// <returns> An async collection of <see cref="AnalysisResourceSku" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<AnalysisResourceSku> GetEligibleSkusAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<AnalysisResourceSku>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = AnalysisServerServersClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetEligibleSkus");
-                scope.Start();
-                try
-                {
-                    var response = await AnalysisServerServersRestClient.ListSkusForNewAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => AnalysisServerServersRestClient.CreateListSkusForNewRequest(Id.SubscriptionId);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, AnalysisResourceSku.DeserializeAnalysisResourceSku, AnalysisServerServersClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetEligibleSkus", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -134,22 +91,8 @@ namespace Azure.ResourceManager.Analysis
         /// <returns> A collection of <see cref="AnalysisResourceSku" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<AnalysisResourceSku> GetEligibleSkus(CancellationToken cancellationToken = default)
         {
-            Page<AnalysisResourceSku> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = AnalysisServerServersClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetEligibleSkus");
-                scope.Start();
-                try
-                {
-                    var response = AnalysisServerServersRestClient.ListSkusForNew(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => AnalysisServerServersRestClient.CreateListSkusForNewRequest(Id.SubscriptionId);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, AnalysisResourceSku.DeserializeAnalysisResourceSku, AnalysisServerServersClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetEligibleSkus", "value", null, cancellationToken);
         }
 
         /// <summary>

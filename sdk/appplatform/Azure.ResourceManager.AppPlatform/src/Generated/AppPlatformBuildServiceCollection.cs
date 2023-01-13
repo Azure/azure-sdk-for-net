@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -120,37 +119,9 @@ namespace Azure.ResourceManager.AppPlatform
         /// <returns> An async collection of <see cref="AppPlatformBuildServiceResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<AppPlatformBuildServiceResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<AppPlatformBuildServiceResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _appPlatformBuildServiceBuildServiceClientDiagnostics.CreateScope("AppPlatformBuildServiceCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _appPlatformBuildServiceBuildServiceRestClient.ListBuildServicesAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new AppPlatformBuildServiceResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<AppPlatformBuildServiceResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _appPlatformBuildServiceBuildServiceClientDiagnostics.CreateScope("AppPlatformBuildServiceCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _appPlatformBuildServiceBuildServiceRestClient.ListBuildServicesNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new AppPlatformBuildServiceResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _appPlatformBuildServiceBuildServiceRestClient.CreateListBuildServicesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _appPlatformBuildServiceBuildServiceRestClient.CreateListBuildServicesNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new AppPlatformBuildServiceResource(Client, AppPlatformBuildServiceData.DeserializeAppPlatformBuildServiceData(e)), _appPlatformBuildServiceBuildServiceClientDiagnostics, Pipeline, "AppPlatformBuildServiceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -162,37 +133,9 @@ namespace Azure.ResourceManager.AppPlatform
         /// <returns> A collection of <see cref="AppPlatformBuildServiceResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<AppPlatformBuildServiceResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<AppPlatformBuildServiceResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _appPlatformBuildServiceBuildServiceClientDiagnostics.CreateScope("AppPlatformBuildServiceCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _appPlatformBuildServiceBuildServiceRestClient.ListBuildServices(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new AppPlatformBuildServiceResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<AppPlatformBuildServiceResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _appPlatformBuildServiceBuildServiceClientDiagnostics.CreateScope("AppPlatformBuildServiceCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _appPlatformBuildServiceBuildServiceRestClient.ListBuildServicesNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new AppPlatformBuildServiceResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _appPlatformBuildServiceBuildServiceRestClient.CreateListBuildServicesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _appPlatformBuildServiceBuildServiceRestClient.CreateListBuildServicesNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new AppPlatformBuildServiceResource(Client, AppPlatformBuildServiceData.DeserializeAppPlatformBuildServiceData(e)), _appPlatformBuildServiceBuildServiceClientDiagnostics, Pipeline, "AppPlatformBuildServiceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

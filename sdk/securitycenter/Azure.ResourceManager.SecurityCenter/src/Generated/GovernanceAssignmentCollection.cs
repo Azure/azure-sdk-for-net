@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -186,37 +185,9 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <returns> An async collection of <see cref="GovernanceAssignmentResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<GovernanceAssignmentResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<GovernanceAssignmentResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _governanceAssignmentClientDiagnostics.CreateScope("GovernanceAssignmentCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _governanceAssignmentRestClient.ListAsync(Id.Parent, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new GovernanceAssignmentResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<GovernanceAssignmentResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _governanceAssignmentClientDiagnostics.CreateScope("GovernanceAssignmentCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _governanceAssignmentRestClient.ListNextPageAsync(nextLink, Id.Parent, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new GovernanceAssignmentResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _governanceAssignmentRestClient.CreateListRequest(Id.Parent, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _governanceAssignmentRestClient.CreateListNextPageRequest(nextLink, Id.Parent, Id.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new GovernanceAssignmentResource(Client, GovernanceAssignmentData.DeserializeGovernanceAssignmentData(e)), _governanceAssignmentClientDiagnostics, Pipeline, "GovernanceAssignmentCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -228,37 +199,9 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <returns> A collection of <see cref="GovernanceAssignmentResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<GovernanceAssignmentResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<GovernanceAssignmentResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _governanceAssignmentClientDiagnostics.CreateScope("GovernanceAssignmentCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _governanceAssignmentRestClient.List(Id.Parent, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new GovernanceAssignmentResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<GovernanceAssignmentResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _governanceAssignmentClientDiagnostics.CreateScope("GovernanceAssignmentCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _governanceAssignmentRestClient.ListNextPage(nextLink, Id.Parent, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new GovernanceAssignmentResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _governanceAssignmentRestClient.CreateListRequest(Id.Parent, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _governanceAssignmentRestClient.CreateListNextPageRequest(nextLink, Id.Parent, Id.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new GovernanceAssignmentResource(Client, GovernanceAssignmentData.DeserializeGovernanceAssignmentData(e)), _governanceAssignmentClientDiagnostics, Pipeline, "GovernanceAssignmentCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
