@@ -15,38 +15,9 @@ using NUnit.Framework;
 
 namespace Azure.Developer.LoadTesting.Tests
 {
-    internal class LoadTestRunClientTest: RecordedTestBase<LoadTestingClientTestEnvironment>
+    internal class LoadTestRunClientTest: LoadTestTestsBase
     {
-        private string _testId;
-        private string _testRunId;
-        private string _fileName;
-        private string _resourceId;
-        private TestHelper _testHelper;
-        private LoadTestAdministrationClient _loadTestAdministrationClient;
-
-        public LoadTestRunClientTest(bool isAsync) : base(isAsync)
-        {
-            _testId = "test-from-csharp-sdk-testing-framework";
-            _fileName = "sample.jmx";
-            _testRunId = "test-run-from-csharp-sdk-testing-framework";
-            _testHelper = new TestHelper();
-
-            BodyRegexSanitizers.Add(new BodyRegexSanitizer(@"sig=(?<group>.*?)(?=\s+)", SanitizeValue)
-            {
-                GroupForReplace = "group"
-            });
-        }
-
-        /* please refer to https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/template/Azure.Template/tests/TemplateClientLiveTests.cs to write tests. */
-        private LoadTestRunClient CreateRunClient()
-        {
-            return InstrumentClient(new LoadTestRunClient(new Uri("https://" + TestEnvironment.Endpoint), TestEnvironment.Credential, InstrumentClientOptions(new LoadTestingClientOptions())));
-        }
-
-        private LoadTestAdministrationClient CreateAdministrationClient()
-        {
-            return InstrumentClient(new LoadTestAdministrationClient(new Uri("https://" + TestEnvironment.Endpoint), TestEnvironment.Credential, InstrumentClientOptions(new LoadTestingClientOptions())));
-        }
+        public LoadTestRunClientTest(bool isAsync): base(isAsync) { }
 
         [Test]
         public async Task BeginCreateOrUpdateTestRun()

@@ -27,7 +27,7 @@ namespace Azure.Developer.LoadTesting.Tests.Samples
 #endif
 
             // creating LoadTesting Administration Client
-            LoadTestAdministrationClient loadTestAdministrationClient = new LoadTestAdministrationClient(enpointUrl, credential);
+            LoadTestAdministrationClient loadTestAdministrationClient = new LoadTestAdministrationClient(endpointUrl, credential);
 
             #region Snippet:Azure_Developer_LoadTesting_CreateOrUpdateAppComponentAsync
 

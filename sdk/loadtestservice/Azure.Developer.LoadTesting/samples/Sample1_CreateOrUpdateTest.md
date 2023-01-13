@@ -7,16 +7,17 @@ The sample below demonstrates how to create a new load test using the `LoadTestA
 ## Create LoadTestAdministrationClient
 ```C# Snippet:Azure_Developer_LoadTesting_CreateAdminClient
 string endpoint = TestEnvironment.Endpoint;
-Uri enpointUrl = new Uri("https://"+endpoint);
+Uri endpointUrl = new Uri("https://" + endpoint);
 TokenCredential credential = TestEnvironment.Credential;
 
 // creating LoadTesting Administration Client
-LoadTestAdministrationClient loadTestAdministrationClient = new LoadTestAdministrationClient(enpointUrl, credential);
+LoadTestAdministrationClient loadTestAdministrationClient = new LoadTestAdministrationClient(endpointUrl, credential);
 ```
 
 ## Calling CreateOrUpdateTest
 ```C# Snippet:Azure_Developer_LoadTesting_CreateOrUpdateTest
 string testId = "my-test-id";
+Uri keyVaultSecretUrl = new Uri("https://sdk-testing-keyvault.vault.azure.net/secrets/sdk-secret");
 
 // all data needs to be passed while creating a loadtest
 var data = new
@@ -32,7 +33,7 @@ var data = new
     {
         secret1 = new
         {
-            value = "https://sdk-testing-keyvault.vault.azure.net/secrets/sdk-secret",
+            value = keyVaultSecretUrl.ToString(),
             type = "AKV_SECRET_URI"
         }
     },

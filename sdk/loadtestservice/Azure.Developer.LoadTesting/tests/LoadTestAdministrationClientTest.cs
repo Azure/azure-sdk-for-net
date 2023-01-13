@@ -14,30 +14,9 @@ using NUnit.Framework;
 
 namespace Azure.Developer.LoadTesting.Tests
 {
-    public class LoadTestAdministrationClientTest: RecordedTestBase<LoadTestingClientTestEnvironment>
+    public class LoadTestAdministrationClientTest: LoadTestTestsBase
     {
-        private string _testId;
-        private string _fileName;
-        private string resourceId;
-        private TestHelper _testHelper;
-
-        public LoadTestAdministrationClientTest(bool isAsync) : base(isAsync) {
-            _testId = "test-from-csharp-sdk-testing-framework";
-            _fileName = "sample.jmx";
-
-            _testHelper = new TestHelper();
-
-            BodyRegexSanitizers.Add(new BodyRegexSanitizer(@"sig=(?<group>.*?)(?=\s+)", SanitizeValue)
-            {
-                GroupForReplace = "group"
-            });
-        }
-
-        /* please refer to https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/template/Azure.Template/tests/TemplateClientLiveTests.cs to write tests. */
-        private LoadTestAdministrationClient CreateAdministrationClient()
-        {
-            return InstrumentClient(new LoadTestAdministrationClient(new Uri("https://" + TestEnvironment.Endpoint), TestEnvironment.Credential, InstrumentClientOptions(new LoadTestingClientOptions())));
-        }
+        public LoadTestAdministrationClientTest(bool isAsync) : base(isAsync) { }
 
         [Test]
         public async Task CreateOrUpdateTest()

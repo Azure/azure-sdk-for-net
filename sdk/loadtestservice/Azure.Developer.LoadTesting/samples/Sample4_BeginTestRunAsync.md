@@ -8,11 +8,11 @@ The sample below demonstrates how to run a load test using `LoadTestRunClient`.
 ## Create TestRunClient
 ```C# Snippet:Azure_Developer_LoadTesting_CreateTestRunClient
 string endpoint = TestEnvironment.Endpoint;
-Uri enpointUrl = new Uri("https://" + endpoint);
+Uri endpointUrl = new Uri("https://" + endpoint);
 TokenCredential credential = TestEnvironment.Credential;
 
 // creating LoadTesting TestRun Client
-LoadTestRunClient loadTestRunClient = new LoadTestRunClient(enpointUrl, credential);
+LoadTestRunClient loadTestRunClient = new LoadTestRunClient(endpointUrl, credential);
 ```
 
 ## Calling BeginTestRun

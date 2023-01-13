@@ -26,7 +26,7 @@ namespace Azure.Developer.LoadTesting.Tests.Samples
 #endif
 
             // creating LoadTesting TestRun Client
-            LoadTestRunClient loadTestRunClient = new LoadTestRunClient(enpointUrl, credential);
+            LoadTestRunClient loadTestRunClient = new LoadTestRunClient(endpointUrl, credential);
 
             #region Snippet:Azure_Developer_LoadTesting_BeginTestRunAsync
 

@@ -30,7 +30,7 @@ namespace Azure.Developer.LoadTesting.Tests.Samples
             TokenCredential credential = TestEnvironment.Credential;
 #endif
             // creating LoadTesting Administration Client
-            LoadTestAdministrationClient loadTestAdministrationClient = new LoadTestAdministrationClient(enpointUrl, credential);
+            LoadTestAdministrationClient loadTestAdministrationClient = new LoadTestAdministrationClient(endpointUrl, credential);
 
             #region Snippet:Azure_Developer_LoadTesting_BeginUploadTestFile
 
