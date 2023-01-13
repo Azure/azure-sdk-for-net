@@ -11,9 +11,10 @@ using Azure;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager;
+using Azure.ResourceManager.AppService;
 using Azure.ResourceManager.Resources;
 
-namespace Azure.ResourceManager.AppService
+namespace Azure.ResourceManager.AppService.Samples
 {
     public partial class Sample_KubeEnvironmentCollection
     {
@@ -25,8 +26,10 @@ namespace Azure.ResourceManager.AppService
             // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2021-02-01/examples/KubeEnvironments_ListByResourceGroup.json
             // this example is just showing the usage of "KubeEnvironments_ListByResourceGroup" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this ResourceGroupResource created on azure
             // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
@@ -59,8 +62,10 @@ namespace Azure.ResourceManager.AppService
             // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2021-02-01/examples/KubeEnvironments_Get.json
             // this example is just showing the usage of "KubeEnvironments_Get" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this ResourceGroupResource created on azure
             // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
@@ -91,8 +96,10 @@ namespace Azure.ResourceManager.AppService
             // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2021-02-01/examples/KubeEnvironments_Get.json
             // this example is just showing the usage of "KubeEnvironments_Get" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this ResourceGroupResource created on azure
             // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
@@ -119,8 +126,10 @@ namespace Azure.ResourceManager.AppService
             // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2021-02-01/examples/KubeEnvironments_CreateOrUpdate.json
             // this example is just showing the usage of "KubeEnvironments_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this ResourceGroupResource created on azure
             // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource

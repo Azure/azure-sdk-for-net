@@ -11,10 +11,11 @@ using Azure;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager;
+using Azure.ResourceManager.AppService;
 using Azure.ResourceManager.AppService.Models;
 using Azure.ResourceManager.Resources;
 
-namespace Azure.ResourceManager.AppService
+namespace Azure.ResourceManager.AppService.Samples
 {
     public partial class Sample_AppServicePlanResource
     {
@@ -26,8 +27,10 @@ namespace Azure.ResourceManager.AppService
             // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2021-02-01/examples/ListAppServicePlans.json
             // this example is just showing the usage of "AppServicePlans_List" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this SubscriptionResource created on azure
             // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
@@ -56,8 +59,10 @@ namespace Azure.ResourceManager.AppService
             // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2021-02-01/examples/GetAppServicePlan.json
             // this example is just showing the usage of "AppServicePlans_Get" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this AppServicePlanResource created on azure
             // for more information of creating AppServicePlanResource, please refer to the document of AppServicePlanResource
@@ -85,8 +90,10 @@ namespace Azure.ResourceManager.AppService
             // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2021-02-01/examples/DeleteAppServicePlan.json
             // this example is just showing the usage of "AppServicePlans_Delete" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this AppServicePlanResource created on azure
             // for more information of creating AppServicePlanResource, please refer to the document of AppServicePlanResource
@@ -110,8 +117,10 @@ namespace Azure.ResourceManager.AppService
             // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2021-02-01/examples/PatchAppServicePlan.json
             // this example is just showing the usage of "AppServicePlans_Update" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this AppServicePlanResource created on azure
             // for more information of creating AppServicePlanResource, please refer to the document of AppServicePlanResource

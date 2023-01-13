@@ -11,9 +11,10 @@ using Azure;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager;
+using Azure.ResourceManager.AppService;
 using Azure.ResourceManager.AppService.Models;
 
-namespace Azure.ResourceManager.AppService
+namespace Azure.ResourceManager.AppService.Samples
 {
     public partial class Sample_StaticSiteBuildResource
     {
@@ -25,8 +26,10 @@ namespace Azure.ResourceManager.AppService
             // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2021-02-01/examples/GetStaticSiteBuild.json
             // this example is just showing the usage of "StaticSites_GetStaticSiteBuild" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this StaticSiteBuildResource created on azure
             // for more information of creating StaticSiteBuildResource, please refer to the document of StaticSiteBuildResource
@@ -55,8 +58,10 @@ namespace Azure.ResourceManager.AppService
             // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2021-02-01/examples/DeleteStaticSiteBuild.json
             // this example is just showing the usage of "StaticSites_DeleteStaticSiteBuild" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this StaticSiteBuildResource created on azure
             // for more information of creating StaticSiteBuildResource, please refer to the document of StaticSiteBuildResource
@@ -81,8 +86,10 @@ namespace Azure.ResourceManager.AppService
             // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2021-02-01/examples/CreateOrUpdateStaticSiteBuildAppSettings.json
             // this example is just showing the usage of "StaticSites_CreateOrUpdateStaticSiteBuildAppSettings" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this StaticSiteBuildResource created on azure
             // for more information of creating StaticSiteBuildResource, please refer to the document of StaticSiteBuildResource
@@ -115,8 +122,10 @@ namespace Azure.ResourceManager.AppService
             // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2021-02-01/examples/CreateOrUpdateStaticSiteBuildFunctionAppSettings.json
             // this example is just showing the usage of "StaticSites_CreateOrUpdateStaticSiteBuildFunctionAppSettings" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this StaticSiteBuildResource created on azure
             // for more information of creating StaticSiteBuildResource, please refer to the document of StaticSiteBuildResource
@@ -149,8 +158,10 @@ namespace Azure.ResourceManager.AppService
             // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2021-02-01/examples/ListStaticSiteBuildFunctions.json
             // this example is just showing the usage of "StaticSites_ListStaticSiteBuildFunctions" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this StaticSiteBuildResource created on azure
             // for more information of creating StaticSiteBuildResource, please refer to the document of StaticSiteBuildResource
@@ -178,8 +189,10 @@ namespace Azure.ResourceManager.AppService
             // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2021-02-01/examples/ListStaticSiteBuildAppSettings.json
             // this example is just showing the usage of "StaticSites_ListStaticSiteBuildAppSettings" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this StaticSiteBuildResource created on azure
             // for more information of creating StaticSiteBuildResource, please refer to the document of StaticSiteBuildResource
@@ -204,8 +217,10 @@ namespace Azure.ResourceManager.AppService
             // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2021-02-01/examples/ListStaticSiteBuildFunctionAppSettings.json
             // this example is just showing the usage of "StaticSites_ListStaticSiteBuildFunctionAppSettings" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this StaticSiteBuildResource created on azure
             // for more information of creating StaticSiteBuildResource, please refer to the document of StaticSiteBuildResource
@@ -230,8 +245,10 @@ namespace Azure.ResourceManager.AppService
             // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2021-02-01/examples/StaticSiteBuildZipDeploy.json
             // this example is just showing the usage of "StaticSites_CreateZipDeploymentForStaticSiteBuild" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this StaticSiteBuildResource created on azure
             // for more information of creating StaticSiteBuildResource, please refer to the document of StaticSiteBuildResource

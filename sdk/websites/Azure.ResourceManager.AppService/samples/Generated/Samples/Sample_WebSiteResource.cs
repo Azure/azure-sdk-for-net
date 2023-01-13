@@ -12,9 +12,10 @@ using Azure;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager;
+using Azure.ResourceManager.AppService;
 using Azure.ResourceManager.AppService.Models;
 
-namespace Azure.ResourceManager.AppService
+namespace Azure.ResourceManager.AppService.Samples
 {
     public partial class Sample_WebSiteResource
     {
@@ -26,8 +27,10 @@ namespace Azure.ResourceManager.AppService
             // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2021-02-01/examples/ListSlotBackups.json
             // this example is just showing the usage of "WebApps_ListSiteBackups" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this WebSiteResource created on azure
             // for more information of creating WebSiteResource, please refer to the document of WebSiteResource
@@ -55,8 +58,10 @@ namespace Azure.ResourceManager.AppService
             // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2021-02-01/examples/GetWebSiteNetworkTraceOperation.json
             // this example is just showing the usage of "WebApps_GetNetworkTraceOperation" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this WebSiteResource created on azure
             // for more information of creating WebSiteResource, please refer to the document of WebSiteResource
@@ -84,8 +89,10 @@ namespace Azure.ResourceManager.AppService
             // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2021-02-01/examples/StartWebSiteNetworkTraceOperation.json
             // this example is just showing the usage of "WebApps_StartWebSiteNetworkTraceOperation" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this WebSiteResource created on azure
             // for more information of creating WebSiteResource, please refer to the document of WebSiteResource
@@ -111,8 +118,10 @@ namespace Azure.ResourceManager.AppService
             // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2021-02-01/examples/StopWebSiteNetworkTrace.json
             // this example is just showing the usage of "WebApps_StopWebSiteNetworkTrace" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this WebSiteResource created on azure
             // for more information of creating WebSiteResource, please refer to the document of WebSiteResource
@@ -136,8 +145,10 @@ namespace Azure.ResourceManager.AppService
             // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2021-02-01/examples/GetWebSiteNetworkTraces.json
             // this example is just showing the usage of "WebApps_GetNetworkTraces" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this WebSiteResource created on azure
             // for more information of creating WebSiteResource, please refer to the document of WebSiteResource
@@ -165,8 +176,10 @@ namespace Azure.ResourceManager.AppService
             // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2021-02-01/examples/GetWebSiteNetworkTraceOperation.json
             // this example is just showing the usage of "WebApps_GetNetworkTraceOperationV2" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this WebSiteResource created on azure
             // for more information of creating WebSiteResource, please refer to the document of WebSiteResource
@@ -194,8 +207,10 @@ namespace Azure.ResourceManager.AppService
             // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2021-02-01/examples/GetWebSiteNetworkTraces.json
             // this example is just showing the usage of "WebApps_GetNetworkTracesV2" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this WebSiteResource created on azure
             // for more information of creating WebSiteResource, please refer to the document of WebSiteResource
@@ -223,8 +238,10 @@ namespace Azure.ResourceManager.AppService
             // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2021-02-01/examples/GetSitePrivateLinkResources.json
             // this example is just showing the usage of "WebApps_GetPrivateLinkResources" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this WebSiteResource created on azure
             // for more information of creating WebSiteResource, please refer to the document of WebSiteResource
@@ -251,8 +268,10 @@ namespace Azure.ResourceManager.AppService
             // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2021-02-01/examples/StartWebSiteNetworkTraceOperation.json
             // this example is just showing the usage of "WebApps_StartNetworkTrace" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this WebSiteResource created on azure
             // for more information of creating WebSiteResource, please refer to the document of WebSiteResource
@@ -278,8 +297,10 @@ namespace Azure.ResourceManager.AppService
             // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2021-02-01/examples/StopWebSiteNetworkTrace.json
             // this example is just showing the usage of "WebApps_StopNetworkTrace" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this WebSiteResource created on azure
             // for more information of creating WebSiteResource, please refer to the document of WebSiteResource

@@ -10,8 +10,9 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager;
+using Azure.ResourceManager.AppService;
 
-namespace Azure.ResourceManager.AppService
+namespace Azure.ResourceManager.AppService.Samples
 {
     public partial class Sample_SiteSlotDiagnosticAnalysisCollection
     {
@@ -23,8 +24,10 @@ namespace Azure.ResourceManager.AppService
             // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2021-02-01/examples/Diagnostics_ListSiteAnalyses.json
             // this example is just showing the usage of "Diagnostics_ListSiteAnalysesSlot" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this SiteSlotDiagnosticResource created on azure
             // for more information of creating SiteSlotDiagnosticResource, please refer to the document of SiteSlotDiagnosticResource
@@ -60,8 +63,10 @@ namespace Azure.ResourceManager.AppService
             // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2021-02-01/examples/Diagnostics_ListSiteAnalysesSlot.json
             // this example is just showing the usage of "Diagnostics_ListSiteAnalysesSlot" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this SiteSlotDiagnosticResource created on azure
             // for more information of creating SiteSlotDiagnosticResource, please refer to the document of SiteSlotDiagnosticResource
@@ -97,8 +102,10 @@ namespace Azure.ResourceManager.AppService
             // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2021-02-01/examples/Diagnostics_GetSiteAnalysis.json
             // this example is just showing the usage of "Diagnostics_GetSiteAnalysisSlot" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this SiteSlotDiagnosticResource created on azure
             // for more information of creating SiteSlotDiagnosticResource, please refer to the document of SiteSlotDiagnosticResource
@@ -132,8 +139,10 @@ namespace Azure.ResourceManager.AppService
             // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2021-02-01/examples/Diagnostics_GetSiteAnalysis.json
             // this example is just showing the usage of "Diagnostics_GetSiteAnalysisSlot" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this SiteSlotDiagnosticResource created on azure
             // for more information of creating SiteSlotDiagnosticResource, please refer to the document of SiteSlotDiagnosticResource
@@ -163,8 +172,10 @@ namespace Azure.ResourceManager.AppService
             // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2021-02-01/examples/Diagnostics_GetSiteAnalysisSlot.json
             // this example is just showing the usage of "Diagnostics_GetSiteAnalysisSlot" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this SiteSlotDiagnosticResource created on azure
             // for more information of creating SiteSlotDiagnosticResource, please refer to the document of SiteSlotDiagnosticResource
@@ -198,8 +209,10 @@ namespace Azure.ResourceManager.AppService
             // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2021-02-01/examples/Diagnostics_GetSiteAnalysisSlot.json
             // this example is just showing the usage of "Diagnostics_GetSiteAnalysisSlot" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this SiteSlotDiagnosticResource created on azure
             // for more information of creating SiteSlotDiagnosticResource, please refer to the document of SiteSlotDiagnosticResource
