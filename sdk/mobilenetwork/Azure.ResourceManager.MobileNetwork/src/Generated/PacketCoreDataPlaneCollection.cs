@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -186,37 +185,9 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <returns> An async collection of <see cref="PacketCoreDataPlaneResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<PacketCoreDataPlaneResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<PacketCoreDataPlaneResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _packetCoreDataPlaneClientDiagnostics.CreateScope("PacketCoreDataPlaneCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _packetCoreDataPlaneRestClient.ListByPacketCoreControlPlaneAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new PacketCoreDataPlaneResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<PacketCoreDataPlaneResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _packetCoreDataPlaneClientDiagnostics.CreateScope("PacketCoreDataPlaneCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _packetCoreDataPlaneRestClient.ListByPacketCoreControlPlaneNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new PacketCoreDataPlaneResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _packetCoreDataPlaneRestClient.CreateListByPacketCoreControlPlaneRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _packetCoreDataPlaneRestClient.CreateListByPacketCoreControlPlaneNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new PacketCoreDataPlaneResource(Client, PacketCoreDataPlaneData.DeserializePacketCoreDataPlaneData(e)), _packetCoreDataPlaneClientDiagnostics, Pipeline, "PacketCoreDataPlaneCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -228,37 +199,9 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <returns> A collection of <see cref="PacketCoreDataPlaneResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<PacketCoreDataPlaneResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<PacketCoreDataPlaneResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _packetCoreDataPlaneClientDiagnostics.CreateScope("PacketCoreDataPlaneCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _packetCoreDataPlaneRestClient.ListByPacketCoreControlPlane(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new PacketCoreDataPlaneResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<PacketCoreDataPlaneResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _packetCoreDataPlaneClientDiagnostics.CreateScope("PacketCoreDataPlaneCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _packetCoreDataPlaneRestClient.ListByPacketCoreControlPlaneNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new PacketCoreDataPlaneResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _packetCoreDataPlaneRestClient.CreateListByPacketCoreControlPlaneRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _packetCoreDataPlaneRestClient.CreateListByPacketCoreControlPlaneNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new PacketCoreDataPlaneResource(Client, PacketCoreDataPlaneData.DeserializePacketCoreDataPlaneData(e)), _packetCoreDataPlaneClientDiagnostics, Pipeline, "PacketCoreDataPlaneCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

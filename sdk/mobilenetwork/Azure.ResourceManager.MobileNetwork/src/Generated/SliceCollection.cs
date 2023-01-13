@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -186,37 +185,9 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <returns> An async collection of <see cref="SliceResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SliceResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<SliceResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _sliceClientDiagnostics.CreateScope("SliceCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _sliceRestClient.ListByMobileNetworkAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new SliceResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<SliceResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _sliceClientDiagnostics.CreateScope("SliceCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _sliceRestClient.ListByMobileNetworkNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new SliceResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _sliceRestClient.CreateListByMobileNetworkRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _sliceRestClient.CreateListByMobileNetworkNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SliceResource(Client, SliceData.DeserializeSliceData(e)), _sliceClientDiagnostics, Pipeline, "SliceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -228,37 +199,9 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <returns> A collection of <see cref="SliceResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SliceResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<SliceResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _sliceClientDiagnostics.CreateScope("SliceCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _sliceRestClient.ListByMobileNetwork(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new SliceResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<SliceResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _sliceClientDiagnostics.CreateScope("SliceCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _sliceRestClient.ListByMobileNetworkNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new SliceResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _sliceRestClient.CreateListByMobileNetworkRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _sliceRestClient.CreateListByMobileNetworkNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SliceResource(Client, SliceData.DeserializeSliceData(e)), _sliceClientDiagnostics, Pipeline, "SliceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

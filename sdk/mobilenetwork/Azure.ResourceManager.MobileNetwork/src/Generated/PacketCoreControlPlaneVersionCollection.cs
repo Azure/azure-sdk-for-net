@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -121,37 +120,9 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <returns> An async collection of <see cref="PacketCoreControlPlaneVersionResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<PacketCoreControlPlaneVersionResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<PacketCoreControlPlaneVersionResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _packetCoreControlPlaneVersionClientDiagnostics.CreateScope("PacketCoreControlPlaneVersionCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _packetCoreControlPlaneVersionRestClient.ListAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new PacketCoreControlPlaneVersionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<PacketCoreControlPlaneVersionResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _packetCoreControlPlaneVersionClientDiagnostics.CreateScope("PacketCoreControlPlaneVersionCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _packetCoreControlPlaneVersionRestClient.ListNextPageAsync(nextLink, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new PacketCoreControlPlaneVersionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _packetCoreControlPlaneVersionRestClient.CreateListRequest();
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _packetCoreControlPlaneVersionRestClient.CreateListNextPageRequest(nextLink);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new PacketCoreControlPlaneVersionResource(Client, PacketCoreControlPlaneVersionData.DeserializePacketCoreControlPlaneVersionData(e)), _packetCoreControlPlaneVersionClientDiagnostics, Pipeline, "PacketCoreControlPlaneVersionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -163,37 +134,9 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <returns> A collection of <see cref="PacketCoreControlPlaneVersionResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<PacketCoreControlPlaneVersionResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<PacketCoreControlPlaneVersionResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _packetCoreControlPlaneVersionClientDiagnostics.CreateScope("PacketCoreControlPlaneVersionCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _packetCoreControlPlaneVersionRestClient.List(cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new PacketCoreControlPlaneVersionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<PacketCoreControlPlaneVersionResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _packetCoreControlPlaneVersionClientDiagnostics.CreateScope("PacketCoreControlPlaneVersionCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _packetCoreControlPlaneVersionRestClient.ListNextPage(nextLink, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new PacketCoreControlPlaneVersionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _packetCoreControlPlaneVersionRestClient.CreateListRequest();
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _packetCoreControlPlaneVersionRestClient.CreateListNextPageRequest(nextLink);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new PacketCoreControlPlaneVersionResource(Client, PacketCoreControlPlaneVersionData.DeserializePacketCoreControlPlaneVersionData(e)), _packetCoreControlPlaneVersionClientDiagnostics, Pipeline, "PacketCoreControlPlaneVersionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

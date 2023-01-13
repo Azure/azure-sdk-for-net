@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -186,37 +185,9 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <returns> An async collection of <see cref="DataNetworkResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DataNetworkResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<DataNetworkResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _dataNetworkClientDiagnostics.CreateScope("DataNetworkCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _dataNetworkRestClient.ListByMobileNetworkAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new DataNetworkResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<DataNetworkResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _dataNetworkClientDiagnostics.CreateScope("DataNetworkCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _dataNetworkRestClient.ListByMobileNetworkNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new DataNetworkResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _dataNetworkRestClient.CreateListByMobileNetworkRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _dataNetworkRestClient.CreateListByMobileNetworkNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DataNetworkResource(Client, DataNetworkData.DeserializeDataNetworkData(e)), _dataNetworkClientDiagnostics, Pipeline, "DataNetworkCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -228,37 +199,9 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <returns> A collection of <see cref="DataNetworkResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DataNetworkResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<DataNetworkResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _dataNetworkClientDiagnostics.CreateScope("DataNetworkCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _dataNetworkRestClient.ListByMobileNetwork(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new DataNetworkResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<DataNetworkResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _dataNetworkClientDiagnostics.CreateScope("DataNetworkCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _dataNetworkRestClient.ListByMobileNetworkNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new DataNetworkResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _dataNetworkRestClient.CreateListByMobileNetworkRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _dataNetworkRestClient.CreateListByMobileNetworkNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DataNetworkResource(Client, DataNetworkData.DeserializeDataNetworkData(e)), _dataNetworkClientDiagnostics, Pipeline, "DataNetworkCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -186,37 +185,9 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <returns> An async collection of <see cref="SimResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SimResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<SimResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _simClientDiagnostics.CreateScope("SimCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _simRestClient.ListByGroupAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new SimResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<SimResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _simClientDiagnostics.CreateScope("SimCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _simRestClient.ListByGroupNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new SimResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _simRestClient.CreateListByGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _simRestClient.CreateListByGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SimResource(Client, SimData.DeserializeSimData(e)), _simClientDiagnostics, Pipeline, "SimCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -228,37 +199,9 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <returns> A collection of <see cref="SimResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SimResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<SimResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _simClientDiagnostics.CreateScope("SimCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _simRestClient.ListByGroup(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new SimResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<SimResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _simClientDiagnostics.CreateScope("SimCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _simRestClient.ListByGroupNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new SimResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _simRestClient.CreateListByGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _simRestClient.CreateListByGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SimResource(Client, SimData.DeserializeSimData(e)), _simClientDiagnostics, Pipeline, "SimCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

@@ -6,9 +6,7 @@
 #nullable disable
 
 using System;
-using System.Linq;
 using System.Threading;
-using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -60,37 +58,9 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <returns> An async collection of <see cref="MobileNetworkResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<MobileNetworkResource> GetMobileNetworksAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<MobileNetworkResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = MobileNetworkClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetMobileNetworks");
-                scope.Start();
-                try
-                {
-                    var response = await MobileNetworkRestClient.ListBySubscriptionAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new MobileNetworkResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<MobileNetworkResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = MobileNetworkClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetMobileNetworks");
-                scope.Start();
-                try
-                {
-                    var response = await MobileNetworkRestClient.ListBySubscriptionNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new MobileNetworkResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => MobileNetworkRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => MobileNetworkRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new MobileNetworkResource(Client, MobileNetworkData.DeserializeMobileNetworkData(e)), MobileNetworkClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetMobileNetworks", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -102,37 +72,9 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <returns> A collection of <see cref="MobileNetworkResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<MobileNetworkResource> GetMobileNetworks(CancellationToken cancellationToken = default)
         {
-            Page<MobileNetworkResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = MobileNetworkClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetMobileNetworks");
-                scope.Start();
-                try
-                {
-                    var response = MobileNetworkRestClient.ListBySubscription(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new MobileNetworkResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<MobileNetworkResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = MobileNetworkClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetMobileNetworks");
-                scope.Start();
-                try
-                {
-                    var response = MobileNetworkRestClient.ListBySubscriptionNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new MobileNetworkResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => MobileNetworkRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => MobileNetworkRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new MobileNetworkResource(Client, MobileNetworkData.DeserializeMobileNetworkData(e)), MobileNetworkClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetMobileNetworks", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -144,37 +86,9 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <returns> An async collection of <see cref="PacketCoreControlPlaneResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<PacketCoreControlPlaneResource> GetPacketCoreControlPlanesAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<PacketCoreControlPlaneResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = PacketCoreControlPlaneClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetPacketCoreControlPlanes");
-                scope.Start();
-                try
-                {
-                    var response = await PacketCoreControlPlaneRestClient.ListBySubscriptionAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new PacketCoreControlPlaneResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<PacketCoreControlPlaneResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = PacketCoreControlPlaneClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetPacketCoreControlPlanes");
-                scope.Start();
-                try
-                {
-                    var response = await PacketCoreControlPlaneRestClient.ListBySubscriptionNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new PacketCoreControlPlaneResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => PacketCoreControlPlaneRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => PacketCoreControlPlaneRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new PacketCoreControlPlaneResource(Client, PacketCoreControlPlaneData.DeserializePacketCoreControlPlaneData(e)), PacketCoreControlPlaneClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetPacketCoreControlPlanes", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -186,37 +100,9 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <returns> A collection of <see cref="PacketCoreControlPlaneResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<PacketCoreControlPlaneResource> GetPacketCoreControlPlanes(CancellationToken cancellationToken = default)
         {
-            Page<PacketCoreControlPlaneResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = PacketCoreControlPlaneClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetPacketCoreControlPlanes");
-                scope.Start();
-                try
-                {
-                    var response = PacketCoreControlPlaneRestClient.ListBySubscription(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new PacketCoreControlPlaneResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<PacketCoreControlPlaneResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = PacketCoreControlPlaneClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetPacketCoreControlPlanes");
-                scope.Start();
-                try
-                {
-                    var response = PacketCoreControlPlaneRestClient.ListBySubscriptionNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new PacketCoreControlPlaneResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => PacketCoreControlPlaneRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => PacketCoreControlPlaneRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new PacketCoreControlPlaneResource(Client, PacketCoreControlPlaneData.DeserializePacketCoreControlPlaneData(e)), PacketCoreControlPlaneClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetPacketCoreControlPlanes", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -228,37 +114,9 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <returns> An async collection of <see cref="SimGroupResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SimGroupResource> GetSimGroupsAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<SimGroupResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = SimGroupClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetSimGroups");
-                scope.Start();
-                try
-                {
-                    var response = await SimGroupRestClient.ListBySubscriptionAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new SimGroupResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<SimGroupResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = SimGroupClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetSimGroups");
-                scope.Start();
-                try
-                {
-                    var response = await SimGroupRestClient.ListBySubscriptionNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new SimGroupResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => SimGroupRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => SimGroupRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SimGroupResource(Client, SimGroupData.DeserializeSimGroupData(e)), SimGroupClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetSimGroups", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -270,37 +128,9 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <returns> A collection of <see cref="SimGroupResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SimGroupResource> GetSimGroups(CancellationToken cancellationToken = default)
         {
-            Page<SimGroupResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = SimGroupClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetSimGroups");
-                scope.Start();
-                try
-                {
-                    var response = SimGroupRestClient.ListBySubscription(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new SimGroupResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<SimGroupResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = SimGroupClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetSimGroups");
-                scope.Start();
-                try
-                {
-                    var response = SimGroupRestClient.ListBySubscriptionNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new SimGroupResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => SimGroupRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => SimGroupRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SimGroupResource(Client, SimGroupData.DeserializeSimGroupData(e)), SimGroupClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetSimGroups", "value", "nextLink", cancellationToken);
         }
     }
 }
