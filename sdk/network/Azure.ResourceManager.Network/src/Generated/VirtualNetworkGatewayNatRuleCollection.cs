@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -186,37 +185,9 @@ namespace Azure.ResourceManager.Network
         /// <returns> An async collection of <see cref="VirtualNetworkGatewayNatRuleResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<VirtualNetworkGatewayNatRuleResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<VirtualNetworkGatewayNatRuleResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _virtualNetworkGatewayNatRuleClientDiagnostics.CreateScope("VirtualNetworkGatewayNatRuleCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _virtualNetworkGatewayNatRuleRestClient.ListByVirtualNetworkGatewayAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new VirtualNetworkGatewayNatRuleResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<VirtualNetworkGatewayNatRuleResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _virtualNetworkGatewayNatRuleClientDiagnostics.CreateScope("VirtualNetworkGatewayNatRuleCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _virtualNetworkGatewayNatRuleRestClient.ListByVirtualNetworkGatewayNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new VirtualNetworkGatewayNatRuleResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _virtualNetworkGatewayNatRuleRestClient.CreateListByVirtualNetworkGatewayRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _virtualNetworkGatewayNatRuleRestClient.CreateListByVirtualNetworkGatewayNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new VirtualNetworkGatewayNatRuleResource(Client, VirtualNetworkGatewayNatRuleData.DeserializeVirtualNetworkGatewayNatRuleData(e)), _virtualNetworkGatewayNatRuleClientDiagnostics, Pipeline, "VirtualNetworkGatewayNatRuleCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -228,37 +199,9 @@ namespace Azure.ResourceManager.Network
         /// <returns> A collection of <see cref="VirtualNetworkGatewayNatRuleResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<VirtualNetworkGatewayNatRuleResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<VirtualNetworkGatewayNatRuleResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _virtualNetworkGatewayNatRuleClientDiagnostics.CreateScope("VirtualNetworkGatewayNatRuleCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _virtualNetworkGatewayNatRuleRestClient.ListByVirtualNetworkGateway(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new VirtualNetworkGatewayNatRuleResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<VirtualNetworkGatewayNatRuleResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _virtualNetworkGatewayNatRuleClientDiagnostics.CreateScope("VirtualNetworkGatewayNatRuleCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _virtualNetworkGatewayNatRuleRestClient.ListByVirtualNetworkGatewayNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new VirtualNetworkGatewayNatRuleResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _virtualNetworkGatewayNatRuleRestClient.CreateListByVirtualNetworkGatewayRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _virtualNetworkGatewayNatRuleRestClient.CreateListByVirtualNetworkGatewayNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new VirtualNetworkGatewayNatRuleResource(Client, VirtualNetworkGatewayNatRuleData.DeserializeVirtualNetworkGatewayNatRuleData(e)), _virtualNetworkGatewayNatRuleClientDiagnostics, Pipeline, "VirtualNetworkGatewayNatRuleCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

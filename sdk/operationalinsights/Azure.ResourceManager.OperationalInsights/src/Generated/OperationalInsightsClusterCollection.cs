@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -187,37 +186,9 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <returns> An async collection of <see cref="OperationalInsightsClusterResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<OperationalInsightsClusterResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<OperationalInsightsClusterResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _operationalInsightsClusterClustersClientDiagnostics.CreateScope("OperationalInsightsClusterCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _operationalInsightsClusterClustersRestClient.ListByResourceGroupAsync(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new OperationalInsightsClusterResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<OperationalInsightsClusterResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _operationalInsightsClusterClustersClientDiagnostics.CreateScope("OperationalInsightsClusterCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _operationalInsightsClusterClustersRestClient.ListByResourceGroupNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new OperationalInsightsClusterResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _operationalInsightsClusterClustersRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _operationalInsightsClusterClustersRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new OperationalInsightsClusterResource(Client, OperationalInsightsClusterData.DeserializeOperationalInsightsClusterData(e)), _operationalInsightsClusterClustersClientDiagnostics, Pipeline, "OperationalInsightsClusterCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -229,37 +200,9 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <returns> A collection of <see cref="OperationalInsightsClusterResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<OperationalInsightsClusterResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<OperationalInsightsClusterResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _operationalInsightsClusterClustersClientDiagnostics.CreateScope("OperationalInsightsClusterCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _operationalInsightsClusterClustersRestClient.ListByResourceGroup(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new OperationalInsightsClusterResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<OperationalInsightsClusterResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _operationalInsightsClusterClustersClientDiagnostics.CreateScope("OperationalInsightsClusterCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _operationalInsightsClusterClustersRestClient.ListByResourceGroupNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new OperationalInsightsClusterResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _operationalInsightsClusterClustersRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _operationalInsightsClusterClustersRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new OperationalInsightsClusterResource(Client, OperationalInsightsClusterData.DeserializeOperationalInsightsClusterData(e)), _operationalInsightsClusterClustersClientDiagnostics, Pipeline, "OperationalInsightsClusterCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

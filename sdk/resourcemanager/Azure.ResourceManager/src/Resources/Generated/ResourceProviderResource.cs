@@ -231,22 +231,8 @@ namespace Azure.ResourceManager.Resources
         /// <returns> An async collection of <see cref="ProviderPermission" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ProviderPermission> ProviderPermissionsAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<ProviderPermission>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _resourceProviderProvidersClientDiagnostics.CreateScope("ResourceProviderResource.ProviderPermissions");
-                scope.Start();
-                try
-                {
-                    var response = await _resourceProviderProvidersRestClient.ProviderPermissionsAsync(Id.SubscriptionId, Id.Provider, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _resourceProviderProvidersRestClient.CreateProviderPermissionsRequest(Id.SubscriptionId, Id.Provider);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, ProviderPermission.DeserializeProviderPermission, _resourceProviderProvidersClientDiagnostics, Pipeline, "ResourceProviderResource.ProviderPermissions", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -258,22 +244,8 @@ namespace Azure.ResourceManager.Resources
         /// <returns> A collection of <see cref="ProviderPermission" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ProviderPermission> ProviderPermissions(CancellationToken cancellationToken = default)
         {
-            Page<ProviderPermission> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _resourceProviderProvidersClientDiagnostics.CreateScope("ResourceProviderResource.ProviderPermissions");
-                scope.Start();
-                try
-                {
-                    var response = _resourceProviderProvidersRestClient.ProviderPermissions(Id.SubscriptionId, Id.Provider, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _resourceProviderProvidersRestClient.CreateProviderPermissionsRequest(Id.SubscriptionId, Id.Provider);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, ProviderPermission.DeserializeProviderPermission, _resourceProviderProvidersClientDiagnostics, Pipeline, "ResourceProviderResource.ProviderPermissions", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -332,22 +304,8 @@ namespace Azure.ResourceManager.Resources
         /// <returns> An async collection of <see cref="ProviderResourceType" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ProviderResourceType> GetProviderResourceTypesAsync(string expand = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<ProviderResourceType>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _providerResourceTypesClientDiagnostics.CreateScope("ResourceProviderResource.GetProviderResourceTypes");
-                scope.Start();
-                try
-                {
-                    var response = await _providerResourceTypesRestClient.ListAsync(Id.SubscriptionId, Id.Provider, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _providerResourceTypesRestClient.CreateListRequest(Id.SubscriptionId, Id.Provider, expand);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, ProviderResourceType.DeserializeProviderResourceType, _providerResourceTypesClientDiagnostics, Pipeline, "ResourceProviderResource.GetProviderResourceTypes", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -360,22 +318,8 @@ namespace Azure.ResourceManager.Resources
         /// <returns> A collection of <see cref="ProviderResourceType" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ProviderResourceType> GetProviderResourceTypes(string expand = null, CancellationToken cancellationToken = default)
         {
-            Page<ProviderResourceType> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _providerResourceTypesClientDiagnostics.CreateScope("ResourceProviderResource.GetProviderResourceTypes");
-                scope.Start();
-                try
-                {
-                    var response = _providerResourceTypesRestClient.List(Id.SubscriptionId, Id.Provider, expand, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _providerResourceTypesRestClient.CreateListRequest(Id.SubscriptionId, Id.Provider, expand);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, ProviderResourceType.DeserializeProviderResourceType, _providerResourceTypesClientDiagnostics, Pipeline, "ResourceProviderResource.GetProviderResourceTypes", "value", null, cancellationToken);
         }
     }
 }

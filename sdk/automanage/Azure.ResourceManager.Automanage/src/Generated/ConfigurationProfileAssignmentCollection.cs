@@ -8,7 +8,6 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -187,98 +186,28 @@ namespace Azure.ResourceManager.Automanage
         {
             if (Id.ResourceType == "Microsoft.Compute/virtualMachines")
             {
-                async Task<Page<ConfigurationProfileAssignmentResource>> FirstPageFunc(int? pageSizeHint)
-                {
-                    using var scope = _configurationProfileAssignmentClientDiagnostics.CreateScope("ConfigurationProfileAssignmentCollection.GetAll");
-                    scope.Start();
-                    try
-                    {
-                        var response = await _configurationProfileAssignmentRestClient.ListByVirtualMachinesAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                        return Page.FromValues(response.Value.Value.Select(value => new ConfigurationProfileAssignmentResource(Client, value)), null, response.GetRawResponse());
-                    }
-                    catch (Exception e)
-                    {
-                        scope.Failed(e);
-                        throw;
-                    }
-                }
-                return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
+                HttpMessage FirstPageRequest(int? pageSizeHint) => _configurationProfileAssignmentRestClient.CreateListByVirtualMachinesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+                return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new ConfigurationProfileAssignmentResource(Client, ConfigurationProfileAssignmentData.DeserializeConfigurationProfileAssignmentData(e)), _configurationProfileAssignmentClientDiagnostics, Pipeline, "ConfigurationProfileAssignmentCollection.GetAll", "value", null, cancellationToken);
             }
             else if (Id.ResourceType == ResourceGroupResource.ResourceType)
             {
-                async Task<Page<ConfigurationProfileAssignmentResource>> FirstPageFunc(int? pageSizeHint)
-                {
-                    using var scope = _configurationProfileAssignmentClientDiagnostics.CreateScope("ConfigurationProfileAssignmentCollection.GetAll");
-                    scope.Start();
-                    try
-                    {
-                        var response = await _configurationProfileAssignmentRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                        return Page.FromValues(response.Value.Value.Select(value => new ConfigurationProfileAssignmentResource(Client, value)), null, response.GetRawResponse());
-                    }
-                    catch (Exception e)
-                    {
-                        scope.Failed(e);
-                        throw;
-                    }
-                }
-                return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
+                HttpMessage FirstPageRequest(int? pageSizeHint) => _configurationProfileAssignmentRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName);
+                return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new ConfigurationProfileAssignmentResource(Client, ConfigurationProfileAssignmentData.DeserializeConfigurationProfileAssignmentData(e)), _configurationProfileAssignmentClientDiagnostics, Pipeline, "ConfigurationProfileAssignmentCollection.GetAll", "value", null, cancellationToken);
             }
             else if (Id.ResourceType == SubscriptionResource.ResourceType)
             {
-                async Task<Page<ConfigurationProfileAssignmentResource>> FirstPageFunc(int? pageSizeHint)
-                {
-                    using var scope = _configurationProfileAssignmentClientDiagnostics.CreateScope("ConfigurationProfileAssignmentCollection.GetAll");
-                    scope.Start();
-                    try
-                    {
-                        var response = await _configurationProfileAssignmentRestClient.ListBySubscriptionAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                        return Page.FromValues(response.Value.Value.Select(value => new ConfigurationProfileAssignmentResource(Client, value)), null, response.GetRawResponse());
-                    }
-                    catch (Exception e)
-                    {
-                        scope.Failed(e);
-                        throw;
-                    }
-                }
-                return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
+                HttpMessage FirstPageRequest(int? pageSizeHint) => _configurationProfileAssignmentRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+                return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new ConfigurationProfileAssignmentResource(Client, ConfigurationProfileAssignmentData.DeserializeConfigurationProfileAssignmentData(e)), _configurationProfileAssignmentClientDiagnostics, Pipeline, "ConfigurationProfileAssignmentCollection.GetAll", "value", null, cancellationToken);
             }
             else if (Id.ResourceType == "Microsoft.HybridCompute/machines")
             {
-                async Task<Page<ConfigurationProfileAssignmentResource>> FirstPageFunc(int? pageSizeHint)
-                {
-                    using var scope = _configurationProfileAssignmentClientDiagnostics.CreateScope("ConfigurationProfileAssignmentCollection.GetAll");
-                    scope.Start();
-                    try
-                    {
-                        var response = await _configurationProfileAssignmentRestClient.ListByMachineNameAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                        return Page.FromValues(response.Value.Value.Select(value => new ConfigurationProfileAssignmentResource(Client, value)), null, response.GetRawResponse());
-                    }
-                    catch (Exception e)
-                    {
-                        scope.Failed(e);
-                        throw;
-                    }
-                }
-                return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
+                HttpMessage FirstPageRequest(int? pageSizeHint) => _configurationProfileAssignmentRestClient.CreateListByMachineNameRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+                return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new ConfigurationProfileAssignmentResource(Client, ConfigurationProfileAssignmentData.DeserializeConfigurationProfileAssignmentData(e)), _configurationProfileAssignmentClientDiagnostics, Pipeline, "ConfigurationProfileAssignmentCollection.GetAll", "value", null, cancellationToken);
             }
             else if (Id.ResourceType == "Microsoft.AzureStackHci/clusters")
             {
-                async Task<Page<ConfigurationProfileAssignmentResource>> FirstPageFunc(int? pageSizeHint)
-                {
-                    using var scope = _configurationProfileAssignmentClientDiagnostics.CreateScope("ConfigurationProfileAssignmentCollection.GetAll");
-                    scope.Start();
-                    try
-                    {
-                        var response = await _configurationProfileAssignmentRestClient.ListByClusterNameAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                        return Page.FromValues(response.Value.Value.Select(value => new ConfigurationProfileAssignmentResource(Client, value)), null, response.GetRawResponse());
-                    }
-                    catch (Exception e)
-                    {
-                        scope.Failed(e);
-                        throw;
-                    }
-                }
-                return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
+                HttpMessage FirstPageRequest(int? pageSizeHint) => _configurationProfileAssignmentRestClient.CreateListByClusterNameRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+                return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new ConfigurationProfileAssignmentResource(Client, ConfigurationProfileAssignmentData.DeserializeConfigurationProfileAssignmentData(e)), _configurationProfileAssignmentClientDiagnostics, Pipeline, "ConfigurationProfileAssignmentCollection.GetAll", "value", null, cancellationToken);
             }
             else
             {
@@ -305,98 +234,28 @@ namespace Azure.ResourceManager.Automanage
         {
             if (Id.ResourceType == "Microsoft.Compute/virtualMachines")
             {
-                Page<ConfigurationProfileAssignmentResource> FirstPageFunc(int? pageSizeHint)
-                {
-                    using var scope = _configurationProfileAssignmentClientDiagnostics.CreateScope("ConfigurationProfileAssignmentCollection.GetAll");
-                    scope.Start();
-                    try
-                    {
-                        var response = _configurationProfileAssignmentRestClient.ListByVirtualMachines(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                        return Page.FromValues(response.Value.Value.Select(value => new ConfigurationProfileAssignmentResource(Client, value)), null, response.GetRawResponse());
-                    }
-                    catch (Exception e)
-                    {
-                        scope.Failed(e);
-                        throw;
-                    }
-                }
-                return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
+                HttpMessage FirstPageRequest(int? pageSizeHint) => _configurationProfileAssignmentRestClient.CreateListByVirtualMachinesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+                return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new ConfigurationProfileAssignmentResource(Client, ConfigurationProfileAssignmentData.DeserializeConfigurationProfileAssignmentData(e)), _configurationProfileAssignmentClientDiagnostics, Pipeline, "ConfigurationProfileAssignmentCollection.GetAll", "value", null, cancellationToken);
             }
             else if (Id.ResourceType == ResourceGroupResource.ResourceType)
             {
-                Page<ConfigurationProfileAssignmentResource> FirstPageFunc(int? pageSizeHint)
-                {
-                    using var scope = _configurationProfileAssignmentClientDiagnostics.CreateScope("ConfigurationProfileAssignmentCollection.GetAll");
-                    scope.Start();
-                    try
-                    {
-                        var response = _configurationProfileAssignmentRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
-                        return Page.FromValues(response.Value.Value.Select(value => new ConfigurationProfileAssignmentResource(Client, value)), null, response.GetRawResponse());
-                    }
-                    catch (Exception e)
-                    {
-                        scope.Failed(e);
-                        throw;
-                    }
-                }
-                return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
+                HttpMessage FirstPageRequest(int? pageSizeHint) => _configurationProfileAssignmentRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName);
+                return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new ConfigurationProfileAssignmentResource(Client, ConfigurationProfileAssignmentData.DeserializeConfigurationProfileAssignmentData(e)), _configurationProfileAssignmentClientDiagnostics, Pipeline, "ConfigurationProfileAssignmentCollection.GetAll", "value", null, cancellationToken);
             }
             else if (Id.ResourceType == SubscriptionResource.ResourceType)
             {
-                Page<ConfigurationProfileAssignmentResource> FirstPageFunc(int? pageSizeHint)
-                {
-                    using var scope = _configurationProfileAssignmentClientDiagnostics.CreateScope("ConfigurationProfileAssignmentCollection.GetAll");
-                    scope.Start();
-                    try
-                    {
-                        var response = _configurationProfileAssignmentRestClient.ListBySubscription(Id.SubscriptionId, cancellationToken: cancellationToken);
-                        return Page.FromValues(response.Value.Value.Select(value => new ConfigurationProfileAssignmentResource(Client, value)), null, response.GetRawResponse());
-                    }
-                    catch (Exception e)
-                    {
-                        scope.Failed(e);
-                        throw;
-                    }
-                }
-                return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
+                HttpMessage FirstPageRequest(int? pageSizeHint) => _configurationProfileAssignmentRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+                return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new ConfigurationProfileAssignmentResource(Client, ConfigurationProfileAssignmentData.DeserializeConfigurationProfileAssignmentData(e)), _configurationProfileAssignmentClientDiagnostics, Pipeline, "ConfigurationProfileAssignmentCollection.GetAll", "value", null, cancellationToken);
             }
             else if (Id.ResourceType == "Microsoft.HybridCompute/machines")
             {
-                Page<ConfigurationProfileAssignmentResource> FirstPageFunc(int? pageSizeHint)
-                {
-                    using var scope = _configurationProfileAssignmentClientDiagnostics.CreateScope("ConfigurationProfileAssignmentCollection.GetAll");
-                    scope.Start();
-                    try
-                    {
-                        var response = _configurationProfileAssignmentRestClient.ListByMachineName(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                        return Page.FromValues(response.Value.Value.Select(value => new ConfigurationProfileAssignmentResource(Client, value)), null, response.GetRawResponse());
-                    }
-                    catch (Exception e)
-                    {
-                        scope.Failed(e);
-                        throw;
-                    }
-                }
-                return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
+                HttpMessage FirstPageRequest(int? pageSizeHint) => _configurationProfileAssignmentRestClient.CreateListByMachineNameRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+                return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new ConfigurationProfileAssignmentResource(Client, ConfigurationProfileAssignmentData.DeserializeConfigurationProfileAssignmentData(e)), _configurationProfileAssignmentClientDiagnostics, Pipeline, "ConfigurationProfileAssignmentCollection.GetAll", "value", null, cancellationToken);
             }
             else if (Id.ResourceType == "Microsoft.AzureStackHci/clusters")
             {
-                Page<ConfigurationProfileAssignmentResource> FirstPageFunc(int? pageSizeHint)
-                {
-                    using var scope = _configurationProfileAssignmentClientDiagnostics.CreateScope("ConfigurationProfileAssignmentCollection.GetAll");
-                    scope.Start();
-                    try
-                    {
-                        var response = _configurationProfileAssignmentRestClient.ListByClusterName(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                        return Page.FromValues(response.Value.Value.Select(value => new ConfigurationProfileAssignmentResource(Client, value)), null, response.GetRawResponse());
-                    }
-                    catch (Exception e)
-                    {
-                        scope.Failed(e);
-                        throw;
-                    }
-                }
-                return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
+                HttpMessage FirstPageRequest(int? pageSizeHint) => _configurationProfileAssignmentRestClient.CreateListByClusterNameRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+                return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new ConfigurationProfileAssignmentResource(Client, ConfigurationProfileAssignmentData.DeserializeConfigurationProfileAssignmentData(e)), _configurationProfileAssignmentClientDiagnostics, Pipeline, "ConfigurationProfileAssignmentCollection.GetAll", "value", null, cancellationToken);
             }
             else
             {

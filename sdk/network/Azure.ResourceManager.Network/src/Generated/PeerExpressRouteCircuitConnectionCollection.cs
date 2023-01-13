@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -120,37 +119,9 @@ namespace Azure.ResourceManager.Network
         /// <returns> An async collection of <see cref="PeerExpressRouteCircuitConnectionResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<PeerExpressRouteCircuitConnectionResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<PeerExpressRouteCircuitConnectionResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _peerExpressRouteCircuitConnectionClientDiagnostics.CreateScope("PeerExpressRouteCircuitConnectionCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _peerExpressRouteCircuitConnectionRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new PeerExpressRouteCircuitConnectionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<PeerExpressRouteCircuitConnectionResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _peerExpressRouteCircuitConnectionClientDiagnostics.CreateScope("PeerExpressRouteCircuitConnectionCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _peerExpressRouteCircuitConnectionRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new PeerExpressRouteCircuitConnectionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _peerExpressRouteCircuitConnectionRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _peerExpressRouteCircuitConnectionRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new PeerExpressRouteCircuitConnectionResource(Client, PeerExpressRouteCircuitConnectionData.DeserializePeerExpressRouteCircuitConnectionData(e)), _peerExpressRouteCircuitConnectionClientDiagnostics, Pipeline, "PeerExpressRouteCircuitConnectionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -162,37 +133,9 @@ namespace Azure.ResourceManager.Network
         /// <returns> A collection of <see cref="PeerExpressRouteCircuitConnectionResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<PeerExpressRouteCircuitConnectionResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<PeerExpressRouteCircuitConnectionResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _peerExpressRouteCircuitConnectionClientDiagnostics.CreateScope("PeerExpressRouteCircuitConnectionCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _peerExpressRouteCircuitConnectionRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new PeerExpressRouteCircuitConnectionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<PeerExpressRouteCircuitConnectionResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _peerExpressRouteCircuitConnectionClientDiagnostics.CreateScope("PeerExpressRouteCircuitConnectionCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _peerExpressRouteCircuitConnectionRestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new PeerExpressRouteCircuitConnectionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _peerExpressRouteCircuitConnectionRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _peerExpressRouteCircuitConnectionRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new PeerExpressRouteCircuitConnectionResource(Client, PeerExpressRouteCircuitConnectionData.DeserializePeerExpressRouteCircuitConnectionData(e)), _peerExpressRouteCircuitConnectionClientDiagnostics, Pipeline, "PeerExpressRouteCircuitConnectionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

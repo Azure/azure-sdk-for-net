@@ -308,22 +308,8 @@ namespace Azure.ResourceManager.Monitor
         /// <returns> An async collection of <see cref="MonitorIncident" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<MonitorIncident> GetAlertRuleIncidentsAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<MonitorIncident>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _alertRuleIncidentsClientDiagnostics.CreateScope("AlertRuleResource.GetAlertRuleIncidents");
-                scope.Start();
-                try
-                {
-                    var response = await _alertRuleIncidentsRestClient.ListByAlertRuleAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _alertRuleIncidentsRestClient.CreateListByAlertRuleRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, MonitorIncident.DeserializeMonitorIncident, _alertRuleIncidentsClientDiagnostics, Pipeline, "AlertRuleResource.GetAlertRuleIncidents", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -335,22 +321,8 @@ namespace Azure.ResourceManager.Monitor
         /// <returns> A collection of <see cref="MonitorIncident" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<MonitorIncident> GetAlertRuleIncidents(CancellationToken cancellationToken = default)
         {
-            Page<MonitorIncident> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _alertRuleIncidentsClientDiagnostics.CreateScope("AlertRuleResource.GetAlertRuleIncidents");
-                scope.Start();
-                try
-                {
-                    var response = _alertRuleIncidentsRestClient.ListByAlertRule(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _alertRuleIncidentsRestClient.CreateListByAlertRuleRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, MonitorIncident.DeserializeMonitorIncident, _alertRuleIncidentsClientDiagnostics, Pipeline, "AlertRuleResource.GetAlertRuleIncidents", "value", null, cancellationToken);
         }
 
         /// <summary>

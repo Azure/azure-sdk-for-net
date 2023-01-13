@@ -509,22 +509,8 @@ namespace Azure.ResourceManager.ProviderHub
         /// <returns> An async collection of <see cref="OperationsDefinition" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<OperationsDefinition> GenerateOperationsAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<OperationsDefinition>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _providerRegistrationClientDiagnostics.CreateScope("ProviderRegistrationResource.GenerateOperations");
-                scope.Start();
-                try
-                {
-                    var response = await _providerRegistrationRestClient.GenerateOperationsAsync(Id.SubscriptionId, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value, null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _providerRegistrationRestClient.CreateGenerateOperationsRequest(Id.SubscriptionId, Id.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, OperationsDefinition.DeserializeOperationsDefinition, _providerRegistrationClientDiagnostics, Pipeline, "ProviderRegistrationResource.GenerateOperations", "", null, cancellationToken);
         }
 
         /// <summary>
@@ -536,22 +522,8 @@ namespace Azure.ResourceManager.ProviderHub
         /// <returns> A collection of <see cref="OperationsDefinition" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<OperationsDefinition> GenerateOperations(CancellationToken cancellationToken = default)
         {
-            Page<OperationsDefinition> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _providerRegistrationClientDiagnostics.CreateScope("ProviderRegistrationResource.GenerateOperations");
-                scope.Start();
-                try
-                {
-                    var response = _providerRegistrationRestClient.GenerateOperations(Id.SubscriptionId, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value, null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _providerRegistrationRestClient.CreateGenerateOperationsRequest(Id.SubscriptionId, Id.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, OperationsDefinition.DeserializeOperationsDefinition, _providerRegistrationClientDiagnostics, Pipeline, "ProviderRegistrationResource.GenerateOperations", "", null, cancellationToken);
         }
 
         /// <summary>

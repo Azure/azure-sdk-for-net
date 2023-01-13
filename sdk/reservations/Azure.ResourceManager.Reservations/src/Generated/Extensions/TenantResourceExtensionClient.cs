@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -78,37 +77,9 @@ namespace Azure.ResourceManager.Reservations
         /// <returns> An async collection of <see cref="ReservationDetailResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ReservationDetailResource> GetReservationDetailsAsync(string filter = null, string orderby = null, string refreshSummary = null, float? skiptoken = null, string selectedState = null, float? take = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<ReservationDetailResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = ReservationDetailReservationClientDiagnostics.CreateScope("TenantResourceExtensionClient.GetReservationDetails");
-                scope.Start();
-                try
-                {
-                    var response = await ReservationDetailReservationRestClient.ListAllAsync(filter, orderby, refreshSummary, skiptoken, selectedState, take, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ReservationDetailResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<ReservationDetailResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = ReservationDetailReservationClientDiagnostics.CreateScope("TenantResourceExtensionClient.GetReservationDetails");
-                scope.Start();
-                try
-                {
-                    var response = await ReservationDetailReservationRestClient.ListAllNextPageAsync(nextLink, filter, orderby, refreshSummary, skiptoken, selectedState, take, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ReservationDetailResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => ReservationDetailReservationRestClient.CreateListAllRequest(filter, orderby, refreshSummary, skiptoken, selectedState, take);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ReservationDetailReservationRestClient.CreateListAllNextPageRequest(nextLink, filter, orderby, refreshSummary, skiptoken, selectedState, take);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ReservationDetailResource(Client, ReservationDetailData.DeserializeReservationDetailData(e)), ReservationDetailReservationClientDiagnostics, Pipeline, "TenantResourceExtensionClient.GetReservationDetails", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -126,37 +97,9 @@ namespace Azure.ResourceManager.Reservations
         /// <returns> A collection of <see cref="ReservationDetailResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ReservationDetailResource> GetReservationDetails(string filter = null, string orderby = null, string refreshSummary = null, float? skiptoken = null, string selectedState = null, float? take = null, CancellationToken cancellationToken = default)
         {
-            Page<ReservationDetailResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = ReservationDetailReservationClientDiagnostics.CreateScope("TenantResourceExtensionClient.GetReservationDetails");
-                scope.Start();
-                try
-                {
-                    var response = ReservationDetailReservationRestClient.ListAll(filter, orderby, refreshSummary, skiptoken, selectedState, take, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ReservationDetailResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<ReservationDetailResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = ReservationDetailReservationClientDiagnostics.CreateScope("TenantResourceExtensionClient.GetReservationDetails");
-                scope.Start();
-                try
-                {
-                    var response = ReservationDetailReservationRestClient.ListAllNextPage(nextLink, filter, orderby, refreshSummary, skiptoken, selectedState, take, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ReservationDetailResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => ReservationDetailReservationRestClient.CreateListAllRequest(filter, orderby, refreshSummary, skiptoken, selectedState, take);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ReservationDetailReservationRestClient.CreateListAllNextPageRequest(nextLink, filter, orderby, refreshSummary, skiptoken, selectedState, take);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ReservationDetailResource(Client, ReservationDetailData.DeserializeReservationDetailData(e)), ReservationDetailReservationClientDiagnostics, Pipeline, "TenantResourceExtensionClient.GetReservationDetails", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

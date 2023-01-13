@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -187,37 +186,9 @@ namespace Azure.ResourceManager.Network
         /// <returns> An async collection of <see cref="VpnSiteResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<VpnSiteResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<VpnSiteResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _vpnSiteClientDiagnostics.CreateScope("VpnSiteCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _vpnSiteRestClient.ListByResourceGroupAsync(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new VpnSiteResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<VpnSiteResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _vpnSiteClientDiagnostics.CreateScope("VpnSiteCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _vpnSiteRestClient.ListByResourceGroupNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new VpnSiteResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _vpnSiteRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _vpnSiteRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new VpnSiteResource(Client, VpnSiteData.DeserializeVpnSiteData(e)), _vpnSiteClientDiagnostics, Pipeline, "VpnSiteCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -229,37 +200,9 @@ namespace Azure.ResourceManager.Network
         /// <returns> A collection of <see cref="VpnSiteResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<VpnSiteResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<VpnSiteResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _vpnSiteClientDiagnostics.CreateScope("VpnSiteCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _vpnSiteRestClient.ListByResourceGroup(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new VpnSiteResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<VpnSiteResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _vpnSiteClientDiagnostics.CreateScope("VpnSiteCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _vpnSiteRestClient.ListByResourceGroupNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new VpnSiteResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _vpnSiteRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _vpnSiteRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new VpnSiteResource(Client, VpnSiteData.DeserializeVpnSiteData(e)), _vpnSiteClientDiagnostics, Pipeline, "VpnSiteCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

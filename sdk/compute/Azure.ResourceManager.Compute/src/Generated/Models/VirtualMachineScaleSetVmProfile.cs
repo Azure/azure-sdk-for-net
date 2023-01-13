@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="userData"> UserData for the virtual machines in the scale set, which must be base-64 encoded. Customer should not pass any secrets in here. &lt;br&gt;&lt;br&gt;Minimum api-version: 2021-03-01. </param>
         /// <param name="capacityReservation"> Specifies the capacity reservation related details of a scale set. &lt;br&gt;&lt;br&gt;Minimum api-version: 2021-04-01. </param>
         /// <param name="applicationProfile"> Specifies the gallery applications that should be made available to the VM/VMSS. </param>
-        /// <param name="hardwareProfile"> Specifies the hardware profile related details of a scale set. &lt;br&gt;&lt;br&gt;Minimum api-version: 2022-03-01. </param>
+        /// <param name="hardwareProfile"> Specifies the hardware profile related details of a scale set. &lt;br&gt;&lt;br&gt;Minimum api-version: 2021-11-01. </param>
         internal VirtualMachineScaleSetVmProfile(VirtualMachineScaleSetOSProfile osProfile, VirtualMachineScaleSetStorageProfile storageProfile, VirtualMachineScaleSetNetworkProfile networkProfile, SecurityProfile securityProfile, DiagnosticsProfile diagnosticsProfile, VirtualMachineScaleSetExtensionProfile extensionProfile, string licenseType, VirtualMachinePriorityType? priority, VirtualMachineEvictionPolicyType? evictionPolicy, BillingProfile billingProfile, ScheduledEventsProfile scheduledEventsProfile, string userData, CapacityReservationProfile capacityReservation, ApplicationProfile applicationProfile, VirtualMachineScaleSetHardwareProfile hardwareProfile)
         {
             OSProfile = osProfile;
@@ -140,9 +140,9 @@ namespace Azure.ResourceManager.Compute.Models
             }
         }
 
-        /// <summary> Specifies the hardware profile related details of a scale set. &lt;br&gt;&lt;br&gt;Minimum api-version: 2022-03-01. </summary>
+        /// <summary> Specifies the hardware profile related details of a scale set. &lt;br&gt;&lt;br&gt;Minimum api-version: 2021-11-01. </summary>
         internal VirtualMachineScaleSetHardwareProfile HardwareProfile { get; set; }
-        /// <summary> Specifies the properties for customizing the size of the virtual machine. Minimum api-version: 2022-03-01. &lt;br&gt;&lt;br&gt; Please follow the instructions in [VM Customization](https://aka.ms/vmcustomization) for more details. </summary>
+        /// <summary> Specifies the properties for customizing the size of the virtual machine. Minimum api-version: 2021-11-01. &lt;br&gt;&lt;br&gt; Please follow the instructions in [VM Customization](https://aka.ms/vmcustomization) for more details. </summary>
         public VirtualMachineSizeProperties HardwareVmSizeProperties
         {
             get => HardwareProfile is null ? default : HardwareProfile.VmSizeProperties;

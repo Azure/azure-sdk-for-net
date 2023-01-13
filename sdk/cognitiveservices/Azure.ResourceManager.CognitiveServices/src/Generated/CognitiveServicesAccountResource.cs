@@ -469,22 +469,8 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <returns> An async collection of <see cref="CognitiveServicesAccountSku" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<CognitiveServicesAccountSku> GetSkusAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<CognitiveServicesAccountSku>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _cognitiveServicesAccountAccountsClientDiagnostics.CreateScope("CognitiveServicesAccountResource.GetSkus");
-                scope.Start();
-                try
-                {
-                    var response = await _cognitiveServicesAccountAccountsRestClient.ListSkusAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _cognitiveServicesAccountAccountsRestClient.CreateListSkusRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, CognitiveServicesAccountSku.DeserializeCognitiveServicesAccountSku, _cognitiveServicesAccountAccountsClientDiagnostics, Pipeline, "CognitiveServicesAccountResource.GetSkus", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -496,22 +482,8 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <returns> A collection of <see cref="CognitiveServicesAccountSku" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<CognitiveServicesAccountSku> GetSkus(CancellationToken cancellationToken = default)
         {
-            Page<CognitiveServicesAccountSku> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _cognitiveServicesAccountAccountsClientDiagnostics.CreateScope("CognitiveServicesAccountResource.GetSkus");
-                scope.Start();
-                try
-                {
-                    var response = _cognitiveServicesAccountAccountsRestClient.ListSkus(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _cognitiveServicesAccountAccountsRestClient.CreateListSkusRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, CognitiveServicesAccountSku.DeserializeCognitiveServicesAccountSku, _cognitiveServicesAccountAccountsClientDiagnostics, Pipeline, "CognitiveServicesAccountResource.GetSkus", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -524,22 +496,8 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <returns> An async collection of <see cref="ServiceAccountUsage" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ServiceAccountUsage> GetUsagesAsync(string filter = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<ServiceAccountUsage>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _cognitiveServicesAccountAccountsClientDiagnostics.CreateScope("CognitiveServicesAccountResource.GetUsages");
-                scope.Start();
-                try
-                {
-                    var response = await _cognitiveServicesAccountAccountsRestClient.ListUsagesAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _cognitiveServicesAccountAccountsRestClient.CreateListUsagesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, ServiceAccountUsage.DeserializeServiceAccountUsage, _cognitiveServicesAccountAccountsClientDiagnostics, Pipeline, "CognitiveServicesAccountResource.GetUsages", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -552,22 +510,8 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <returns> A collection of <see cref="ServiceAccountUsage" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ServiceAccountUsage> GetUsages(string filter = null, CancellationToken cancellationToken = default)
         {
-            Page<ServiceAccountUsage> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _cognitiveServicesAccountAccountsClientDiagnostics.CreateScope("CognitiveServicesAccountResource.GetUsages");
-                scope.Start();
-                try
-                {
-                    var response = _cognitiveServicesAccountAccountsRestClient.ListUsages(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _cognitiveServicesAccountAccountsRestClient.CreateListUsagesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, ServiceAccountUsage.DeserializeServiceAccountUsage, _cognitiveServicesAccountAccountsClientDiagnostics, Pipeline, "CognitiveServicesAccountResource.GetUsages", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -579,37 +523,9 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <returns> An async collection of <see cref="CognitiveServicesAccountModel" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<CognitiveServicesAccountModel> GetModelsAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<CognitiveServicesAccountModel>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _cognitiveServicesAccountAccountsClientDiagnostics.CreateScope("CognitiveServicesAccountResource.GetModels");
-                scope.Start();
-                try
-                {
-                    var response = await _cognitiveServicesAccountAccountsRestClient.ListModelsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<CognitiveServicesAccountModel>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _cognitiveServicesAccountAccountsClientDiagnostics.CreateScope("CognitiveServicesAccountResource.GetModels");
-                scope.Start();
-                try
-                {
-                    var response = await _cognitiveServicesAccountAccountsRestClient.ListModelsNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _cognitiveServicesAccountAccountsRestClient.CreateListModelsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _cognitiveServicesAccountAccountsRestClient.CreateListModelsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, CognitiveServicesAccountModel.DeserializeCognitiveServicesAccountModel, _cognitiveServicesAccountAccountsClientDiagnostics, Pipeline, "CognitiveServicesAccountResource.GetModels", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -621,37 +537,9 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <returns> A collection of <see cref="CognitiveServicesAccountModel" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<CognitiveServicesAccountModel> GetModels(CancellationToken cancellationToken = default)
         {
-            Page<CognitiveServicesAccountModel> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _cognitiveServicesAccountAccountsClientDiagnostics.CreateScope("CognitiveServicesAccountResource.GetModels");
-                scope.Start();
-                try
-                {
-                    var response = _cognitiveServicesAccountAccountsRestClient.ListModels(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<CognitiveServicesAccountModel> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _cognitiveServicesAccountAccountsClientDiagnostics.CreateScope("CognitiveServicesAccountResource.GetModels");
-                scope.Start();
-                try
-                {
-                    var response = _cognitiveServicesAccountAccountsRestClient.ListModelsNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _cognitiveServicesAccountAccountsRestClient.CreateListModelsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _cognitiveServicesAccountAccountsRestClient.CreateListModelsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, CognitiveServicesAccountModel.DeserializeCognitiveServicesAccountModel, _cognitiveServicesAccountAccountsClientDiagnostics, Pipeline, "CognitiveServicesAccountResource.GetModels", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -663,22 +551,8 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <returns> An async collection of <see cref="CognitiveServicesPrivateLinkResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<CognitiveServicesPrivateLinkResource> GetPrivateLinkResourcesAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<CognitiveServicesPrivateLinkResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _privateLinkResourcesClientDiagnostics.CreateScope("CognitiveServicesAccountResource.GetPrivateLinkResources");
-                scope.Start();
-                try
-                {
-                    var response = await _privateLinkResourcesRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _privateLinkResourcesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, CognitiveServicesPrivateLinkResource.DeserializeCognitiveServicesPrivateLinkResource, _privateLinkResourcesClientDiagnostics, Pipeline, "CognitiveServicesAccountResource.GetPrivateLinkResources", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -690,22 +564,8 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <returns> A collection of <see cref="CognitiveServicesPrivateLinkResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<CognitiveServicesPrivateLinkResource> GetPrivateLinkResources(CancellationToken cancellationToken = default)
         {
-            Page<CognitiveServicesPrivateLinkResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _privateLinkResourcesClientDiagnostics.CreateScope("CognitiveServicesAccountResource.GetPrivateLinkResources");
-                scope.Start();
-                try
-                {
-                    var response = _privateLinkResourcesRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _privateLinkResourcesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, CognitiveServicesPrivateLinkResource.DeserializeCognitiveServicesPrivateLinkResource, _privateLinkResourcesClientDiagnostics, Pipeline, "CognitiveServicesAccountResource.GetPrivateLinkResources", "value", null, cancellationToken);
         }
 
         /// <summary>

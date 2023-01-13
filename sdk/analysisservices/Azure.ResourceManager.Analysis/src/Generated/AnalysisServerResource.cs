@@ -362,22 +362,8 @@ namespace Azure.ResourceManager.Analysis
         /// <returns> An async collection of <see cref="AnalysisExistingSku" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<AnalysisExistingSku> GetExistingSkusAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<AnalysisExistingSku>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _analysisServerServersClientDiagnostics.CreateScope("AnalysisServerResource.GetExistingSkus");
-                scope.Start();
-                try
-                {
-                    var response = await _analysisServerServersRestClient.ListSkusForExistingAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _analysisServerServersRestClient.CreateListSkusForExistingRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, AnalysisExistingSku.DeserializeAnalysisExistingSku, _analysisServerServersClientDiagnostics, Pipeline, "AnalysisServerResource.GetExistingSkus", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -389,22 +375,8 @@ namespace Azure.ResourceManager.Analysis
         /// <returns> A collection of <see cref="AnalysisExistingSku" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<AnalysisExistingSku> GetExistingSkus(CancellationToken cancellationToken = default)
         {
-            Page<AnalysisExistingSku> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _analysisServerServersClientDiagnostics.CreateScope("AnalysisServerResource.GetExistingSkus");
-                scope.Start();
-                try
-                {
-                    var response = _analysisServerServersRestClient.ListSkusForExisting(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _analysisServerServersRestClient.CreateListSkusForExistingRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, AnalysisExistingSku.DeserializeAnalysisExistingSku, _analysisServerServersClientDiagnostics, Pipeline, "AnalysisServerResource.GetExistingSkus", "value", null, cancellationToken);
         }
 
         /// <summary>

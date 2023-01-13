@@ -43,7 +43,10 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <param name="securityProfile">Gets the security profile.</param>
         /// <param name="location">Location of the VM from which the restore
         /// point was created.</param>
-        public RestorePointSourceMetadata(HardwareProfile hardwareProfile = default(HardwareProfile), RestorePointSourceVMStorageProfile storageProfile = default(RestorePointSourceVMStorageProfile), OSProfile osProfile = default(OSProfile), DiagnosticsProfile diagnosticsProfile = default(DiagnosticsProfile), string licenseType = default(string), string vmId = default(string), SecurityProfile securityProfile = default(SecurityProfile), string location = default(string))
+        /// <param name="userData">UserData associated with the source VM for
+        /// which restore point is captured, which is a base-64 encoded
+        /// value.</param>
+        public RestorePointSourceMetadata(HardwareProfile hardwareProfile = default(HardwareProfile), RestorePointSourceVMStorageProfile storageProfile = default(RestorePointSourceVMStorageProfile), OSProfile osProfile = default(OSProfile), DiagnosticsProfile diagnosticsProfile = default(DiagnosticsProfile), string licenseType = default(string), string vmId = default(string), SecurityProfile securityProfile = default(SecurityProfile), string location = default(string), string userData = default(string))
         {
             HardwareProfile = hardwareProfile;
             StorageProfile = storageProfile;
@@ -53,6 +56,7 @@ namespace Microsoft.Azure.Management.Compute.Models
             VmId = vmId;
             SecurityProfile = securityProfile;
             Location = location;
+            UserData = userData;
             CustomInit();
         }
 
@@ -110,6 +114,13 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// </summary>
         [JsonProperty(PropertyName = "location")]
         public string Location { get; set; }
+
+        /// <summary>
+        /// Gets or sets userData associated with the source VM for which
+        /// restore point is captured, which is a base-64 encoded value.
+        /// </summary>
+        [JsonProperty(PropertyName = "userData")]
+        public string UserData { get; set; }
 
         /// <summary>
         /// Validate the object.

@@ -599,37 +599,9 @@ namespace Azure.ResourceManager.Resources
         /// <returns> An async collection of <see cref="ArmDeploymentOperation" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ArmDeploymentOperation> GetDeploymentOperationsAsync(int? top = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<ArmDeploymentOperation>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _deploymentOperationsClientDiagnostics.CreateScope("ArmDeploymentResource.GetDeploymentOperations");
-                scope.Start();
-                try
-                {
-                    var response = await _deploymentOperationsRestClient.ListAtScopeAsync(Id.Parent, Id.Name, top, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<ArmDeploymentOperation>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _deploymentOperationsClientDiagnostics.CreateScope("ArmDeploymentResource.GetDeploymentOperations");
-                scope.Start();
-                try
-                {
-                    var response = await _deploymentOperationsRestClient.ListAtScopeNextPageAsync(nextLink, Id.Parent, Id.Name, top, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            Core.HttpMessage FirstPageRequest(int? pageSizeHint) => _deploymentOperationsRestClient.CreateListAtScopeRequest(Id.Parent, Id.Name, top);
+            Core.HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _deploymentOperationsRestClient.CreateListAtScopeNextPageRequest(nextLink, Id.Parent, Id.Name, top);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, ArmDeploymentOperation.DeserializeArmDeploymentOperation, _deploymentOperationsClientDiagnostics, Pipeline, "ArmDeploymentResource.GetDeploymentOperations", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -642,37 +614,9 @@ namespace Azure.ResourceManager.Resources
         /// <returns> A collection of <see cref="ArmDeploymentOperation" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ArmDeploymentOperation> GetDeploymentOperations(int? top = null, CancellationToken cancellationToken = default)
         {
-            Page<ArmDeploymentOperation> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _deploymentOperationsClientDiagnostics.CreateScope("ArmDeploymentResource.GetDeploymentOperations");
-                scope.Start();
-                try
-                {
-                    var response = _deploymentOperationsRestClient.ListAtScope(Id.Parent, Id.Name, top, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<ArmDeploymentOperation> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _deploymentOperationsClientDiagnostics.CreateScope("ArmDeploymentResource.GetDeploymentOperations");
-                scope.Start();
-                try
-                {
-                    var response = _deploymentOperationsRestClient.ListAtScopeNextPage(nextLink, Id.Parent, Id.Name, top, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            Core.HttpMessage FirstPageRequest(int? pageSizeHint) => _deploymentOperationsRestClient.CreateListAtScopeRequest(Id.Parent, Id.Name, top);
+            Core.HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _deploymentOperationsRestClient.CreateListAtScopeNextPageRequest(nextLink, Id.Parent, Id.Name, top);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, ArmDeploymentOperation.DeserializeArmDeploymentOperation, _deploymentOperationsClientDiagnostics, Pipeline, "ArmDeploymentResource.GetDeploymentOperations", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

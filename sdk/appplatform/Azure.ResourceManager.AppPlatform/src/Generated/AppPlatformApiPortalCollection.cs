@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -186,37 +185,9 @@ namespace Azure.ResourceManager.AppPlatform
         /// <returns> An async collection of <see cref="AppPlatformApiPortalResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<AppPlatformApiPortalResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<AppPlatformApiPortalResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _appPlatformApiPortalApiPortalsClientDiagnostics.CreateScope("AppPlatformApiPortalCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _appPlatformApiPortalApiPortalsRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new AppPlatformApiPortalResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<AppPlatformApiPortalResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _appPlatformApiPortalApiPortalsClientDiagnostics.CreateScope("AppPlatformApiPortalCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _appPlatformApiPortalApiPortalsRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new AppPlatformApiPortalResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _appPlatformApiPortalApiPortalsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _appPlatformApiPortalApiPortalsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new AppPlatformApiPortalResource(Client, AppPlatformApiPortalData.DeserializeAppPlatformApiPortalData(e)), _appPlatformApiPortalApiPortalsClientDiagnostics, Pipeline, "AppPlatformApiPortalCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -228,37 +199,9 @@ namespace Azure.ResourceManager.AppPlatform
         /// <returns> A collection of <see cref="AppPlatformApiPortalResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<AppPlatformApiPortalResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<AppPlatformApiPortalResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _appPlatformApiPortalApiPortalsClientDiagnostics.CreateScope("AppPlatformApiPortalCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _appPlatformApiPortalApiPortalsRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new AppPlatformApiPortalResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<AppPlatformApiPortalResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _appPlatformApiPortalApiPortalsClientDiagnostics.CreateScope("AppPlatformApiPortalCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _appPlatformApiPortalApiPortalsRestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new AppPlatformApiPortalResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _appPlatformApiPortalApiPortalsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _appPlatformApiPortalApiPortalsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new AppPlatformApiPortalResource(Client, AppPlatformApiPortalData.DeserializeAppPlatformApiPortalData(e)), _appPlatformApiPortalApiPortalsClientDiagnostics, Pipeline, "AppPlatformApiPortalCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

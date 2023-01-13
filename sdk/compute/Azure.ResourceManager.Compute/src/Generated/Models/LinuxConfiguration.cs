@@ -18,20 +18,22 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> Initializes a new instance of LinuxConfiguration. </summary>
-        /// <param name="disablePasswordAuthentication"> Specifies whether password authentication should be disabled. </param>
+        /// <param name="isPasswordAuthenticationDisabled"> Specifies whether password authentication should be disabled. </param>
         /// <param name="ssh"> Specifies the ssh key configuration for a Linux OS. </param>
         /// <param name="provisionVmAgent"> Indicates whether virtual machine agent should be provisioned on the virtual machine. &lt;br&gt;&lt;br&gt; When this property is not specified in the request body, default behavior is to set it to true.  This will ensure that VM Agent is installed on the VM so that extensions can be added to the VM later. </param>
         /// <param name="patchSettings"> [Preview Feature] Specifies settings related to VM Guest Patching on Linux. </param>
-        internal LinuxConfiguration(bool? disablePasswordAuthentication, SshConfiguration ssh, bool? provisionVmAgent, LinuxPatchSettings patchSettings)
+        /// <param name="isVmAgentPlatformUpdatesEnabled"> Indicates whether VMAgent Platform Updates is enabled for the Linux virtual machine. Default value is false. </param>
+        internal LinuxConfiguration(bool? isPasswordAuthenticationDisabled, SshConfiguration ssh, bool? provisionVmAgent, LinuxPatchSettings patchSettings, bool? isVmAgentPlatformUpdatesEnabled)
         {
-            DisablePasswordAuthentication = disablePasswordAuthentication;
+            IsPasswordAuthenticationDisabled = isPasswordAuthenticationDisabled;
             Ssh = ssh;
             ProvisionVmAgent = provisionVmAgent;
             PatchSettings = patchSettings;
+            IsVmAgentPlatformUpdatesEnabled = isVmAgentPlatformUpdatesEnabled;
         }
 
         /// <summary> Specifies whether password authentication should be disabled. </summary>
-        public bool? DisablePasswordAuthentication { get; set; }
+        public bool? IsPasswordAuthenticationDisabled { get; set; }
         /// <summary> Specifies the ssh key configuration for a Linux OS. </summary>
         internal SshConfiguration Ssh { get; set; }
         /// <summary> The list of SSH public keys used to authenticate with linux based VMs. </summary>
@@ -49,5 +51,7 @@ namespace Azure.ResourceManager.Compute.Models
         public bool? ProvisionVmAgent { get; set; }
         /// <summary> [Preview Feature] Specifies settings related to VM Guest Patching on Linux. </summary>
         public LinuxPatchSettings PatchSettings { get; set; }
+        /// <summary> Indicates whether VMAgent Platform Updates is enabled for the Linux virtual machine. Default value is false. </summary>
+        public bool? IsVmAgentPlatformUpdatesEnabled { get; set; }
     }
 }
