@@ -6,6 +6,8 @@ MinimumVisualStudioVersion = 10.0.40219.1
 Project("{40B78DA9-8E9D-4060-9DB6-C539715F2A52}") = "Azure.ResourceManager.HealthcareApis", "src\Azure.ResourceManager.HealthcareApis.csproj", "{0A3FBC6E-8411-4B10-B763-E18820E6BCA5}"
 EndProject
 Project("{40B78DA9-8E9D-4060-9DB6-C539715F2A52}") = "Azure.ResourceManager.HealthcareApis.Tests", "tests\Azure.ResourceManager.HealthcareApis.Tests.csproj", "{82C11082-A9F4-4A44-AB6A-7A7021104704}"
+EndProject'
+Project("{40B78DA9-8E9D-4060-9DB6-C539715F2A52}") = "Azure.ResourceManager.HealthcareApis.Samples", "samples\Azure.ResourceManager.HealthcareApis.Samples.csproj", "{50439BF2-7177-4335-A90D-E74FF9051C6F}"
 EndProject
 Global
 	GlobalSection(SolutionProperties) = preSolution

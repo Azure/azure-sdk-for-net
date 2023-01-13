@@ -19,7 +19,7 @@ namespace Azure.Data.SchemaRegistry.Tests.Samples
         [OneTimeSetUp]
         public void CreateSchemaRegistryClient()
         {
-            string fullyQualifiedNamespace = TestEnvironment.SchemaRegistryEndpoint;
+            string fullyQualifiedNamespace = TestEnvironment.SchemaRegistryEndpointAvro;
 
             #region Snippet:SchemaRegistryCreateSchemaRegistryClient
             // Create a new SchemaRegistry client using the default credential from Azure.Identity using environment variables previously set,

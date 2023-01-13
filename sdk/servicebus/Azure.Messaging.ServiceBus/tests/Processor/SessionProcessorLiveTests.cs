@@ -2257,7 +2257,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
 
                     if (count == 5)
                     {
-                        processor.UpdatePrefetch(2);
+                        processor.UpdatePrefetchCount(2);
                         Assert.AreEqual(2, processor.PrefetchCount);
                         Assert.AreEqual(1, processor.MaxConcurrentSessions);
                         Assert.AreEqual(1, processor.MaxConcurrentCallsPerSession);
@@ -2272,7 +2272,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                     }
                     if (count == 75)
                     {
-                        processor.UpdatePrefetch(1);
+                        processor.UpdatePrefetchCount(1);
                         Assert.AreEqual(1, processor.PrefetchCount);
                         Assert.AreEqual(1, processor.MaxConcurrentSessions);
                         Assert.AreEqual(1, processor.MaxConcurrentCallsPerSession);

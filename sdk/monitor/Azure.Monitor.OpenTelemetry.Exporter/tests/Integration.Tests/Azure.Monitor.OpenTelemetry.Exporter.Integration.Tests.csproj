@@ -30,7 +30,7 @@
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Testing" VersionOverride="3.1.0" />
   </ItemGroup>
 
-  <ItemGroup Condition="'$(TargetFramework)' == 'net6.0'">
+  <ItemGroup Condition="'$(TargetFrameworkVersion)' != '' and $([MSBuild]::VersionGreaterThanOrEquals('$(TargetFrameworkVersion)', '6.0'))">
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Testing" VersionOverride="5.0.0" />
   </ItemGroup>
 
@@ -43,5 +43,5 @@
   <ItemGroup>
     <Compile Include="..\Azure.Monitor.OpenTelemetry.Exporter.Tests\CommonTestFramework\**" Link="CommonTestFramework\%(Filename)%(Extension)" />
   </ItemGroup>
-  
+
 </Project>

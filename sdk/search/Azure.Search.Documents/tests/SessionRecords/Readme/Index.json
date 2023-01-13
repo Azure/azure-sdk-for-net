@@ -1,15 +1,15 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://azs-net-shrejaazsearch.search.windows.net/indexes(\u0027kltikpql\u0027)/docs/search.index?api-version=2020-06-30",
+      "RequestUri": "https://azs-net-shrejaazsearch.search.windows.net/indexes(\u0027dftosbks\u0027)/docs/search.index?api-version=2020-06-30",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json; odata.metadata=none",
         "api-key": "Sanitized",
         "Content-Length": "220",
         "Content-Type": "application/json",
-        "User-Agent": "azsdk-net-Search.Documents/11.5.0-alpha.20230106.1 (.NET 6.0.12; Microsoft Windows 10.0.22621)",
-        "x-ms-client-request-id": "3620949f1d89dd88c1b7cad58e338614",
+        "User-Agent": "azsdk-net-Search.Documents/11.5.0-alpha.20230107.1 (.NET Framework 4.8.9105.0; Microsoft Windows 10.0.22621 )",
+        "x-ms-client-request-id": "cf34a73b509523839c448ef5dfadfb86",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -33,18 +33,18 @@
       "StatusCode": 403,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "client-request-id": "3620949f-1d89-dd88-c1b7-cad58e338614",
+        "client-request-id": "cf34a73b-5095-2383-9c44-8ef5dfadfb86",
         "Content-Language": "en",
         "Content-Length": "55",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 06 Jan 2023 20:43:58 GMT",
+        "Date": "Mon, 09 Jan 2023 17:58:09 GMT",
         "elapsed-time": "57",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Preference-Applied": "odata.include-annotations=\u0022*\u0022",
-        "request-id": "3620949f-1d89-dd88-c1b7-cad58e338614",
+        "request-id": "cf34a73b-5095-2383-9c44-8ef5dfadfb86",
         "Strict-Transport-Security": "max-age=15724800; includeSubDomains",
-        "x-ms-client-request-id": "3620949f-1d89-dd88-c1b7-cad58e338614"
+        "x-ms-client-request-id": "cf34a73b-5095-2383-9c44-8ef5dfadfb86"
       },
       "ResponseBody": {
         "error": {
@@ -54,35 +54,36 @@
       }
     },
     {
-      "RequestUri": "https://azs-net-shrejaazsearch.search.windows.net/indexes(\u0027kltikpql\u0027)?api-version=2020-06-30",
+      "RequestUri": "https://azs-net-shrejaazsearch.search.windows.net/indexes(\u0027dftosbks\u0027)?api-version=2020-06-30",
       "RequestMethod": "DELETE",
       "RequestHeaders": {
         "Accept": "application/json; odata.metadata=minimal",
         "api-key": "Sanitized",
-        "traceparent": "00-3d64dc375cfe82c81e6537d71683def3-2e6c9267a78d646a-00",
-        "User-Agent": "azsdk-net-Search.Documents/11.5.0-alpha.20230106.1 (.NET 6.0.12; Microsoft Windows 10.0.22621)",
-        "x-ms-client-request-id": "6bc22d7e40ec3d881a44e1c0da28e2c6",
+        "Content-Length": "0",
+        "traceparent": "00-1bd381041e612d4e9c33a2355fb2fe0c-1ab417790223c748-00",
+        "User-Agent": "azsdk-net-Search.Documents/11.5.0-alpha.20230107.1 (.NET Framework 4.8.9105.0; Microsoft Windows 10.0.22621 )",
+        "x-ms-client-request-id": "73467dbdd38ce183d6f1d42e07ff5922",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 204,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "client-request-id": "6bc22d7e-40ec-3d88-1a44-e1c0da28e2c6",
-        "Date": "Fri, 06 Jan 2023 20:43:58 GMT",
-        "elapsed-time": "200",
+        "client-request-id": "73467dbd-d38c-e183-d6f1-d42e07ff5922",
+        "Date": "Mon, 09 Jan 2023 17:58:09 GMT",
+        "elapsed-time": "256",
         "Expires": "-1",
         "Pragma": "no-cache",
-        "request-id": "6bc22d7e-40ec-3d88-1a44-e1c0da28e2c6",
+        "request-id": "73467dbd-d38c-e183-d6f1-d42e07ff5922",
         "Strict-Transport-Security": "max-age=15724800; includeSubDomains",
-        "x-ms-client-request-id": "6bc22d7e-40ec-3d88-1a44-e1c0da28e2c6"
+        "x-ms-client-request-id": "73467dbd-d38c-e183-d6f1-d42e07ff5922"
       },
       "ResponseBody": null
     }
   ],
   "Variables": {
-    "RandomSeed": "2090605161",
-    "SearchIndexName": "kltikpql",
+    "RandomSeed": "543566732",
+    "SearchIndexName": "dftosbks",
     "SEARCH_ADMIN_API_KEY": "Sanitized",
     "SEARCH_ENDPOINT_SUFFIX": "search.windows.net",
     "SEARCH_QUERY_API_KEY": "Sanitized",
