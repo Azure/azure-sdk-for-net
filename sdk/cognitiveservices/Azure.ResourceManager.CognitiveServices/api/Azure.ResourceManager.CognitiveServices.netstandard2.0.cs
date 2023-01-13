@@ -294,13 +294,15 @@ namespace Azure.ResourceManager.CognitiveServices
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.CognitiveServices.CommitmentPlanResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.CognitiveServices.CommitmentPlanResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class CommitmentPlanData : Azure.ResourceManager.Models.TrackedResourceData
+    public partial class CommitmentPlanData : Azure.ResourceManager.Models.ResourceData
     {
-        public CommitmentPlanData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public CommitmentPlanData() { }
         public Azure.ETag? ETag { get { throw null; } }
         public string Kind { get { throw null; } set { } }
+        public Azure.Core.AzureLocation? Location { get { throw null; } set { } }
         public Azure.ResourceManager.CognitiveServices.Models.CommitmentPlanProperties Properties { get { throw null; } set { } }
         public Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesSku Sku { get { throw null; } set { } }
+        public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
     }
     public partial class CommitmentPlanResource : Azure.ResourceManager.ArmResource
     {

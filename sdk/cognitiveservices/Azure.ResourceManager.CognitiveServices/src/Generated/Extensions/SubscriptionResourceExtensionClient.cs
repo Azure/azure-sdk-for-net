@@ -269,37 +269,9 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <returns> An async collection of <see cref="CognitiveServicesCommitmentPlanResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<CognitiveServicesCommitmentPlanResource> GetCognitiveServicesCommitmentPlansAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<CognitiveServicesCommitmentPlanResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = CognitiveServicesCommitmentPlanCommitmentPlansClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetCognitiveServicesCommitmentPlans");
-                scope.Start();
-                try
-                {
-                    var response = await CognitiveServicesCommitmentPlanCommitmentPlansRestClient.ListPlansBySubscriptionAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new CognitiveServicesCommitmentPlanResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<CognitiveServicesCommitmentPlanResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = CognitiveServicesCommitmentPlanCommitmentPlansClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetCognitiveServicesCommitmentPlans");
-                scope.Start();
-                try
-                {
-                    var response = await CognitiveServicesCommitmentPlanCommitmentPlansRestClient.ListPlansBySubscriptionNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new CognitiveServicesCommitmentPlanResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CognitiveServicesCommitmentPlanCommitmentPlansRestClient.CreateListPlansBySubscriptionRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CognitiveServicesCommitmentPlanCommitmentPlansRestClient.CreateListPlansBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new CognitiveServicesCommitmentPlanResource(Client, CommitmentPlanData.DeserializeCommitmentPlanData(e)), CognitiveServicesCommitmentPlanCommitmentPlansClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetCognitiveServicesCommitmentPlans", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -311,37 +283,9 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <returns> A collection of <see cref="CognitiveServicesCommitmentPlanResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<CognitiveServicesCommitmentPlanResource> GetCognitiveServicesCommitmentPlans(CancellationToken cancellationToken = default)
         {
-            Page<CognitiveServicesCommitmentPlanResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = CognitiveServicesCommitmentPlanCommitmentPlansClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetCognitiveServicesCommitmentPlans");
-                scope.Start();
-                try
-                {
-                    var response = CognitiveServicesCommitmentPlanCommitmentPlansRestClient.ListPlansBySubscription(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new CognitiveServicesCommitmentPlanResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<CognitiveServicesCommitmentPlanResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = CognitiveServicesCommitmentPlanCommitmentPlansClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetCognitiveServicesCommitmentPlans");
-                scope.Start();
-                try
-                {
-                    var response = CognitiveServicesCommitmentPlanCommitmentPlansRestClient.ListPlansBySubscriptionNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new CognitiveServicesCommitmentPlanResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CognitiveServicesCommitmentPlanCommitmentPlansRestClient.CreateListPlansBySubscriptionRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CognitiveServicesCommitmentPlanCommitmentPlansRestClient.CreateListPlansBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new CognitiveServicesCommitmentPlanResource(Client, CommitmentPlanData.DeserializeCommitmentPlanData(e)), CognitiveServicesCommitmentPlanCommitmentPlansClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetCognitiveServicesCommitmentPlans", "value", "nextLink", cancellationToken);
         }
     }
 }
