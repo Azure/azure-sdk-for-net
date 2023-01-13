@@ -21,6 +21,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
         {
             var mockTransport = new MockTransport(new MockResponse(307).AddHeader("Location", "http://new.host/"), new MockResponse(200));
 
+            // 307
             AzureMonitorExporterOptions options = new AzureMonitorExporterOptions()
             {
                 Transport = mockTransport,
@@ -32,6 +33,26 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
 
             Assert.Equal("http://new.host/", mockTransport.Requests[1].Uri.ToString());
             Assert.Equal(2, mockTransport.Requests.Count);
+
+            // 308
+            mockTransport = new MockTransport(new MockResponse(308).AddHeader("Location", "http://new.host/"), new MockResponse(200));
+            options = new AzureMonitorExporterOptions() { Transport = mockTransport };
+            pipeline = HttpPipelineBuilder.Build(options, new HttpPipelinePolicy[] { new IngestionRedirectPolicy() });
+            message = new HttpMessage(CreateMockRequest(new Uri("http://host1")), new ResponseClassifier());
+            pipeline.SendAsync(message, CancellationToken.None);
+
+            Assert.Equal("http://new.host/", mockTransport.Requests[1].Uri.ToString());
+            Assert.Equal(2, mockTransport.Requests.Count);
+
+            // Other failure code.
+            mockTransport = new MockTransport(new MockResponse(400).AddHeader("Location", "http://new.host/"), new MockResponse(200));
+            options = new AzureMonitorExporterOptions() { Transport = mockTransport };
+            pipeline = HttpPipelineBuilder.Build(options, new HttpPipelinePolicy[] { new IngestionRedirectPolicy() });
+            message = new HttpMessage(CreateMockRequest(new Uri("http://host1")), new ResponseClassifier());
+            pipeline.SendAsync(message, CancellationToken.None);
+
+            // No redirection.
+            Assert.Single(mockTransport.Requests);
         }
 
         [Fact]
