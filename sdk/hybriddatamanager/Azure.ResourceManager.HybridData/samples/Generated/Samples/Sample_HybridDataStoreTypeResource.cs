@@ -10,8 +10,9 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager;
+using Azure.ResourceManager.HybridData;
 
-namespace Azure.ResourceManager.HybridData
+namespace Azure.ResourceManager.HybridData.Samples
 {
     public partial class Sample_HybridDataStoreTypeResource
     {
@@ -23,8 +24,10 @@ namespace Azure.ResourceManager.HybridData
             // Generated from example definition: specification/hybriddatamanager/resource-manager/Microsoft.HybridData/stable/2019-06-01/examples/DataStoreTypes_Get-GET-example-182.json
             // this example is just showing the usage of "DataStoreTypes_Get" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this HybridDataStoreTypeResource created on azure
             // for more information of creating HybridDataStoreTypeResource, please refer to the document of HybridDataStoreTypeResource
@@ -53,8 +56,10 @@ namespace Azure.ResourceManager.HybridData
             // Generated from example definition: specification/hybriddatamanager/resource-manager/Microsoft.HybridData/stable/2019-06-01/examples/DataStoreTypes_Get-GET-example-183.json
             // this example is just showing the usage of "DataStoreTypes_Get" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this HybridDataStoreTypeResource created on azure
             // for more information of creating HybridDataStoreTypeResource, please refer to the document of HybridDataStoreTypeResource

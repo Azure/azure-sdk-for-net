@@ -11,10 +11,11 @@ using Azure;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager;
+using Azure.ResourceManager.HybridData;
 using Azure.ResourceManager.HybridData.Models;
 using Azure.ResourceManager.Resources;
 
-namespace Azure.ResourceManager.HybridData
+namespace Azure.ResourceManager.HybridData.Samples
 {
     public partial class Sample_HybridDataManagerResource
     {
@@ -26,8 +27,10 @@ namespace Azure.ResourceManager.HybridData
             // Generated from example definition: specification/hybriddatamanager/resource-manager/Microsoft.HybridData/stable/2019-06-01/examples/DataManagers_List-GET-example-21.json
             // this example is just showing the usage of "DataManagers_List" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this SubscriptionResource created on azure
             // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
@@ -56,8 +59,10 @@ namespace Azure.ResourceManager.HybridData
             // Generated from example definition: specification/hybriddatamanager/resource-manager/Microsoft.HybridData/stable/2019-06-01/examples/DataManagers_Get-GET-example-41.json
             // this example is just showing the usage of "DataManagers_Get" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this HybridDataManagerResource created on azure
             // for more information of creating HybridDataManagerResource, please refer to the document of HybridDataManagerResource
@@ -85,8 +90,10 @@ namespace Azure.ResourceManager.HybridData
             // Generated from example definition: specification/hybriddatamanager/resource-manager/Microsoft.HybridData/stable/2019-06-01/examples/DataManagers_Delete-DELETE-example-41.json
             // this example is just showing the usage of "DataManagers_Delete" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this HybridDataManagerResource created on azure
             // for more information of creating HybridDataManagerResource, please refer to the document of HybridDataManagerResource
@@ -110,8 +117,10 @@ namespace Azure.ResourceManager.HybridData
             // Generated from example definition: specification/hybriddatamanager/resource-manager/Microsoft.HybridData/stable/2019-06-01/examples/DataManagers_Update-PATCH-example-43.json
             // this example is just showing the usage of "DataManagers_Update" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this HybridDataManagerResource created on azure
             // for more information of creating HybridDataManagerResource, please refer to the document of HybridDataManagerResource
@@ -152,8 +161,10 @@ namespace Azure.ResourceManager.HybridData
             // Generated from example definition: specification/hybriddatamanager/resource-manager/Microsoft.HybridData/stable/2019-06-01/examples/JobDefinitions_ListByDataManager-GET-example-191.json
             // this example is just showing the usage of "JobDefinitions_ListByDataManager" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this HybridDataManagerResource created on azure
             // for more information of creating HybridDataManagerResource, please refer to the document of HybridDataManagerResource
@@ -184,8 +195,10 @@ namespace Azure.ResourceManager.HybridData
             // Generated from example definition: specification/hybriddatamanager/resource-manager/Microsoft.HybridData/stable/2019-06-01/examples/Jobs_ListByDataManager-GET-example-201.json
             // this example is just showing the usage of "Jobs_ListByDataManager" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this HybridDataManagerResource created on azure
             // for more information of creating HybridDataManagerResource, please refer to the document of HybridDataManagerResource
