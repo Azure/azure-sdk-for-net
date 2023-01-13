@@ -307,37 +307,9 @@ namespace Azure.ResourceManager.Elastic
         /// <returns> An async collection of <see cref="MonitoredResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<MonitoredResource> GetMonitoredResourcesAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<MonitoredResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _monitoredResourcesClientDiagnostics.CreateScope("ElasticMonitorResource.GetMonitoredResources");
-                scope.Start();
-                try
-                {
-                    var response = await _monitoredResourcesRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<MonitoredResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _monitoredResourcesClientDiagnostics.CreateScope("ElasticMonitorResource.GetMonitoredResources");
-                scope.Start();
-                try
-                {
-                    var response = await _monitoredResourcesRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _monitoredResourcesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _monitoredResourcesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, MonitoredResource.DeserializeMonitoredResource, _monitoredResourcesClientDiagnostics, Pipeline, "ElasticMonitorResource.GetMonitoredResources", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -349,37 +321,9 @@ namespace Azure.ResourceManager.Elastic
         /// <returns> A collection of <see cref="MonitoredResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<MonitoredResource> GetMonitoredResources(CancellationToken cancellationToken = default)
         {
-            Page<MonitoredResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _monitoredResourcesClientDiagnostics.CreateScope("ElasticMonitorResource.GetMonitoredResources");
-                scope.Start();
-                try
-                {
-                    var response = _monitoredResourcesRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<MonitoredResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _monitoredResourcesClientDiagnostics.CreateScope("ElasticMonitorResource.GetMonitoredResources");
-                scope.Start();
-                try
-                {
-                    var response = _monitoredResourcesRestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _monitoredResourcesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _monitoredResourcesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, MonitoredResource.DeserializeMonitoredResource, _monitoredResourcesClientDiagnostics, Pipeline, "ElasticMonitorResource.GetMonitoredResources", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -435,37 +379,9 @@ namespace Azure.ResourceManager.Elastic
         /// <returns> An async collection of <see cref="VmResources" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<VmResources> GetVMHostsAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<VmResources>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _vmHostClientDiagnostics.CreateScope("ElasticMonitorResource.GetVMHosts");
-                scope.Start();
-                try
-                {
-                    var response = await _vmHostRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<VmResources>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _vmHostClientDiagnostics.CreateScope("ElasticMonitorResource.GetVMHosts");
-                scope.Start();
-                try
-                {
-                    var response = await _vmHostRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _vmHostRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _vmHostRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, VmResources.DeserializeVmResources, _vmHostClientDiagnostics, Pipeline, "ElasticMonitorResource.GetVMHosts", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -477,37 +393,9 @@ namespace Azure.ResourceManager.Elastic
         /// <returns> A collection of <see cref="VmResources" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<VmResources> GetVMHosts(CancellationToken cancellationToken = default)
         {
-            Page<VmResources> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _vmHostClientDiagnostics.CreateScope("ElasticMonitorResource.GetVMHosts");
-                scope.Start();
-                try
-                {
-                    var response = _vmHostRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<VmResources> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _vmHostClientDiagnostics.CreateScope("ElasticMonitorResource.GetVMHosts");
-                scope.Start();
-                try
-                {
-                    var response = _vmHostRestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _vmHostRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _vmHostRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, VmResources.DeserializeVmResources, _vmHostClientDiagnostics, Pipeline, "ElasticMonitorResource.GetVMHosts", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

@@ -257,37 +257,9 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <returns> An async collection of <see cref="RemediationDeployment" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<RemediationDeployment> GetDeploymentsAsync(PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<RemediationDeployment>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _policyRemediationRemediationsClientDiagnostics.CreateScope("PolicyRemediationResource.GetDeployments");
-                scope.Start();
-                try
-                {
-                    var response = await _policyRemediationRemediationsRestClient.ListDeploymentsAtResourceAsync(Id.Parent, Id.Name, policyQuerySettings, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<RemediationDeployment>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _policyRemediationRemediationsClientDiagnostics.CreateScope("PolicyRemediationResource.GetDeployments");
-                scope.Start();
-                try
-                {
-                    var response = await _policyRemediationRemediationsRestClient.ListDeploymentsAtResourceNextPageAsync(nextLink, Id.Parent, Id.Name, policyQuerySettings, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _policyRemediationRemediationsRestClient.CreateListDeploymentsAtResourceRequest(Id.Parent, Id.Name, policyQuerySettings);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _policyRemediationRemediationsRestClient.CreateListDeploymentsAtResourceNextPageRequest(nextLink, Id.Parent, Id.Name, policyQuerySettings);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, RemediationDeployment.DeserializeRemediationDeployment, _policyRemediationRemediationsClientDiagnostics, Pipeline, "PolicyRemediationResource.GetDeployments", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -300,37 +272,9 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <returns> A collection of <see cref="RemediationDeployment" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<RemediationDeployment> GetDeployments(PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
         {
-            Page<RemediationDeployment> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _policyRemediationRemediationsClientDiagnostics.CreateScope("PolicyRemediationResource.GetDeployments");
-                scope.Start();
-                try
-                {
-                    var response = _policyRemediationRemediationsRestClient.ListDeploymentsAtResource(Id.Parent, Id.Name, policyQuerySettings, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<RemediationDeployment> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _policyRemediationRemediationsClientDiagnostics.CreateScope("PolicyRemediationResource.GetDeployments");
-                scope.Start();
-                try
-                {
-                    var response = _policyRemediationRemediationsRestClient.ListDeploymentsAtResourceNextPage(nextLink, Id.Parent, Id.Name, policyQuerySettings, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _policyRemediationRemediationsRestClient.CreateListDeploymentsAtResourceRequest(Id.Parent, Id.Name, policyQuerySettings);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _policyRemediationRemediationsRestClient.CreateListDeploymentsAtResourceNextPageRequest(nextLink, Id.Parent, Id.Name, policyQuerySettings);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, RemediationDeployment.DeserializeRemediationDeployment, _policyRemediationRemediationsClientDiagnostics, Pipeline, "PolicyRemediationResource.GetDeployments", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

@@ -11,8 +11,9 @@ using Azure;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager;
+using Azure.ResourceManager.ConnectedVMwarevSphere;
 
-namespace Azure.ResourceManager.ConnectedVMwarevSphere
+namespace Azure.ResourceManager.ConnectedVMwarevSphere.Samples
 {
     public partial class Sample_HybridIdentityMetadataResource
     {
@@ -24,8 +25,10 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             // Generated from example definition: specification/connectedvmware/resource-manager/Microsoft.ConnectedVMwarevSphere/preview/2020-10-01-preview/examples/CreateHybridIdentityMetadata.json
             // this example is just showing the usage of "HybridIdentityMetadata_Create" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this HybridIdentityMetadataResource created on azure
             // for more information of creating HybridIdentityMetadataResource, please refer to the document of HybridIdentityMetadataResource
@@ -60,8 +63,10 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             // Generated from example definition: specification/connectedvmware/resource-manager/Microsoft.ConnectedVMwarevSphere/preview/2020-10-01-preview/examples/GetHybridIdentityMetadata.json
             // this example is just showing the usage of "HybridIdentityMetadata_Get" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this HybridIdentityMetadataResource created on azure
             // for more information of creating HybridIdentityMetadataResource, please refer to the document of HybridIdentityMetadataResource
@@ -90,8 +95,10 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             // Generated from example definition: specification/connectedvmware/resource-manager/Microsoft.ConnectedVMwarevSphere/preview/2020-10-01-preview/examples/DeleteHybridIdentityMetadata.json
             // this example is just showing the usage of "HybridIdentityMetadata_Delete" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this HybridIdentityMetadataResource created on azure
             // for more information of creating HybridIdentityMetadataResource, please refer to the document of HybridIdentityMetadataResource

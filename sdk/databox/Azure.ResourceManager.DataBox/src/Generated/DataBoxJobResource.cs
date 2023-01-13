@@ -422,22 +422,8 @@ namespace Azure.ResourceManager.DataBox
         /// <returns> An async collection of <see cref="UnencryptedCredentials" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<UnencryptedCredentials> GetCredentialsAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<UnencryptedCredentials>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _dataBoxJobJobsClientDiagnostics.CreateScope("DataBoxJobResource.GetCredentials");
-                scope.Start();
-                try
-                {
-                    var response = await _dataBoxJobJobsRestClient.ListCredentialsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _dataBoxJobJobsRestClient.CreateListCredentialsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, UnencryptedCredentials.DeserializeUnencryptedCredentials, _dataBoxJobJobsClientDiagnostics, Pipeline, "DataBoxJobResource.GetCredentials", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -449,22 +435,8 @@ namespace Azure.ResourceManager.DataBox
         /// <returns> A collection of <see cref="UnencryptedCredentials" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<UnencryptedCredentials> GetCredentials(CancellationToken cancellationToken = default)
         {
-            Page<UnencryptedCredentials> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _dataBoxJobJobsClientDiagnostics.CreateScope("DataBoxJobResource.GetCredentials");
-                scope.Start();
-                try
-                {
-                    var response = _dataBoxJobJobsRestClient.ListCredentials(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _dataBoxJobJobsRestClient.CreateListCredentialsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, UnencryptedCredentials.DeserializeUnencryptedCredentials, _dataBoxJobJobsClientDiagnostics, Pipeline, "DataBoxJobResource.GetCredentials", "value", null, cancellationToken);
         }
 
         /// <summary>

@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -186,37 +185,9 @@ namespace Azure.ResourceManager.DigitalTwins
         /// <returns> An async collection of <see cref="DigitalTwinsEndpointResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DigitalTwinsEndpointResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<DigitalTwinsEndpointResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _digitalTwinsEndpointResourceDigitalTwinsEndpointClientDiagnostics.CreateScope("DigitalTwinsEndpointResourceCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _digitalTwinsEndpointResourceDigitalTwinsEndpointRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new DigitalTwinsEndpointResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<DigitalTwinsEndpointResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _digitalTwinsEndpointResourceDigitalTwinsEndpointClientDiagnostics.CreateScope("DigitalTwinsEndpointResourceCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _digitalTwinsEndpointResourceDigitalTwinsEndpointRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new DigitalTwinsEndpointResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _digitalTwinsEndpointResourceDigitalTwinsEndpointRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _digitalTwinsEndpointResourceDigitalTwinsEndpointRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DigitalTwinsEndpointResource(Client, DigitalTwinsEndpointResourceData.DeserializeDigitalTwinsEndpointResourceData(e)), _digitalTwinsEndpointResourceDigitalTwinsEndpointClientDiagnostics, Pipeline, "DigitalTwinsEndpointResourceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -228,37 +199,9 @@ namespace Azure.ResourceManager.DigitalTwins
         /// <returns> A collection of <see cref="DigitalTwinsEndpointResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DigitalTwinsEndpointResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<DigitalTwinsEndpointResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _digitalTwinsEndpointResourceDigitalTwinsEndpointClientDiagnostics.CreateScope("DigitalTwinsEndpointResourceCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _digitalTwinsEndpointResourceDigitalTwinsEndpointRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new DigitalTwinsEndpointResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<DigitalTwinsEndpointResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _digitalTwinsEndpointResourceDigitalTwinsEndpointClientDiagnostics.CreateScope("DigitalTwinsEndpointResourceCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _digitalTwinsEndpointResourceDigitalTwinsEndpointRestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new DigitalTwinsEndpointResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _digitalTwinsEndpointResourceDigitalTwinsEndpointRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _digitalTwinsEndpointResourceDigitalTwinsEndpointRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DigitalTwinsEndpointResource(Client, DigitalTwinsEndpointResourceData.DeserializeDigitalTwinsEndpointResourceData(e)), _digitalTwinsEndpointResourceDigitalTwinsEndpointClientDiagnostics, Pipeline, "DigitalTwinsEndpointResourceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -123,37 +122,9 @@ namespace Azure.ResourceManager.EventGrid
         /// <returns> An async collection of <see cref="VerifiedPartnerResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<VerifiedPartnerResource> GetAllAsync(string filter = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<VerifiedPartnerResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _verifiedPartnerClientDiagnostics.CreateScope("VerifiedPartnerCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _verifiedPartnerRestClient.ListAsync(filter, top, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new VerifiedPartnerResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<VerifiedPartnerResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _verifiedPartnerClientDiagnostics.CreateScope("VerifiedPartnerCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _verifiedPartnerRestClient.ListNextPageAsync(nextLink, filter, top, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new VerifiedPartnerResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _verifiedPartnerRestClient.CreateListRequest(filter, top);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _verifiedPartnerRestClient.CreateListNextPageRequest(nextLink, filter, top);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new VerifiedPartnerResource(Client, VerifiedPartnerData.DeserializeVerifiedPartnerData(e)), _verifiedPartnerClientDiagnostics, Pipeline, "VerifiedPartnerCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -167,37 +138,9 @@ namespace Azure.ResourceManager.EventGrid
         /// <returns> A collection of <see cref="VerifiedPartnerResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<VerifiedPartnerResource> GetAll(string filter = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            Page<VerifiedPartnerResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _verifiedPartnerClientDiagnostics.CreateScope("VerifiedPartnerCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _verifiedPartnerRestClient.List(filter, top, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new VerifiedPartnerResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<VerifiedPartnerResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _verifiedPartnerClientDiagnostics.CreateScope("VerifiedPartnerCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _verifiedPartnerRestClient.ListNextPage(nextLink, filter, top, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new VerifiedPartnerResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _verifiedPartnerRestClient.CreateListRequest(filter, top);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _verifiedPartnerRestClient.CreateListNextPageRequest(nextLink, filter, top);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new VerifiedPartnerResource(Client, VerifiedPartnerData.DeserializeVerifiedPartnerData(e)), _verifiedPartnerClientDiagnostics, Pipeline, "VerifiedPartnerCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

@@ -149,37 +149,9 @@ namespace Azure.ResourceManager.AppService
         {
             Argument.AssertNotNull(agreementOption, nameof(agreementOption));
 
-            async Task<Page<TldLegalAgreement>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _topLevelDomainClientDiagnostics.CreateScope("TopLevelDomainResource.GetAgreements");
-                scope.Start();
-                try
-                {
-                    var response = await _topLevelDomainRestClient.ListAgreementsAsync(Id.SubscriptionId, Id.Name, agreementOption, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<TldLegalAgreement>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _topLevelDomainClientDiagnostics.CreateScope("TopLevelDomainResource.GetAgreements");
-                scope.Start();
-                try
-                {
-                    var response = await _topLevelDomainRestClient.ListAgreementsNextPageAsync(nextLink, Id.SubscriptionId, Id.Name, agreementOption, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _topLevelDomainRestClient.CreateListAgreementsRequest(Id.SubscriptionId, Id.Name, agreementOption);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _topLevelDomainRestClient.CreateListAgreementsNextPageRequest(nextLink, Id.SubscriptionId, Id.Name, agreementOption);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, TldLegalAgreement.DeserializeTldLegalAgreement, _topLevelDomainClientDiagnostics, Pipeline, "TopLevelDomainResource.GetAgreements", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -195,37 +167,9 @@ namespace Azure.ResourceManager.AppService
         {
             Argument.AssertNotNull(agreementOption, nameof(agreementOption));
 
-            Page<TldLegalAgreement> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _topLevelDomainClientDiagnostics.CreateScope("TopLevelDomainResource.GetAgreements");
-                scope.Start();
-                try
-                {
-                    var response = _topLevelDomainRestClient.ListAgreements(Id.SubscriptionId, Id.Name, agreementOption, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<TldLegalAgreement> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _topLevelDomainClientDiagnostics.CreateScope("TopLevelDomainResource.GetAgreements");
-                scope.Start();
-                try
-                {
-                    var response = _topLevelDomainRestClient.ListAgreementsNextPage(nextLink, Id.SubscriptionId, Id.Name, agreementOption, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _topLevelDomainRestClient.CreateListAgreementsRequest(Id.SubscriptionId, Id.Name, agreementOption);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _topLevelDomainRestClient.CreateListAgreementsNextPageRequest(nextLink, Id.SubscriptionId, Id.Name, agreementOption);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, TldLegalAgreement.DeserializeTldLegalAgreement, _topLevelDomainClientDiagnostics, Pipeline, "TopLevelDomainResource.GetAgreements", "value", "nextLink", cancellationToken);
         }
     }
 }

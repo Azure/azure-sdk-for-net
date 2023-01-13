@@ -62,6 +62,7 @@ namespace Azure.ResourceManager.Compute
             ResourceType type = default;
             Optional<SystemData> systemData = default;
             Optional<string> reservationId = default;
+            Optional<int> platformFaultDomainCount = default;
             Optional<IReadOnlyList<SubResource>> virtualMachinesAssociated = default;
             Optional<DateTimeOffset> provisioningTime = default;
             Optional<string> provisioningState = default;
@@ -148,6 +149,16 @@ namespace Azure.ResourceManager.Compute
                             reservationId = property0.Value.GetString();
                             continue;
                         }
+                        if (property0.NameEquals("platformFaultDomainCount"))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            platformFaultDomainCount = property0.Value.GetInt32();
+                            continue;
+                        }
                         if (property0.NameEquals("virtualMachinesAssociated"))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -202,7 +213,7 @@ namespace Azure.ResourceManager.Compute
                     continue;
                 }
             }
-            return new CapacityReservationData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, sku, Optional.ToList(zones), reservationId.Value, Optional.ToList(virtualMachinesAssociated), Optional.ToNullable(provisioningTime), provisioningState.Value, instanceView.Value, Optional.ToNullable(timeCreated));
+            return new CapacityReservationData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, sku, Optional.ToList(zones), reservationId.Value, Optional.ToNullable(platformFaultDomainCount), Optional.ToList(virtualMachinesAssociated), Optional.ToNullable(provisioningTime), provisioningState.Value, instanceView.Value, Optional.ToNullable(timeCreated));
         }
     }
 }

@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -120,22 +119,8 @@ namespace Azure.ResourceManager.Sql
         /// <returns> An async collection of <see cref="ServiceObjectiveResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ServiceObjectiveResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<ServiceObjectiveResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _serviceObjectiveClientDiagnostics.CreateScope("ServiceObjectiveCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _serviceObjectiveRestClient.ListByServerAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ServiceObjectiveResource(Client, value)), null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _serviceObjectiveRestClient.CreateListByServerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new ServiceObjectiveResource(Client, ServiceObjectiveData.DeserializeServiceObjectiveData(e)), _serviceObjectiveClientDiagnostics, Pipeline, "ServiceObjectiveCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -147,22 +132,8 @@ namespace Azure.ResourceManager.Sql
         /// <returns> A collection of <see cref="ServiceObjectiveResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ServiceObjectiveResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<ServiceObjectiveResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _serviceObjectiveClientDiagnostics.CreateScope("ServiceObjectiveCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _serviceObjectiveRestClient.ListByServer(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ServiceObjectiveResource(Client, value)), null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _serviceObjectiveRestClient.CreateListByServerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new ServiceObjectiveResource(Client, ServiceObjectiveData.DeserializeServiceObjectiveData(e)), _serviceObjectiveClientDiagnostics, Pipeline, "ServiceObjectiveCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
