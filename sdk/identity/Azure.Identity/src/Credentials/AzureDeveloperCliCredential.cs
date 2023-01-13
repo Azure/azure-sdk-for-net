@@ -24,7 +24,7 @@ namespace Azure.Identity
     {
         internal const string AzdCliNotInstalled = "Azure Developer CLI could not be found.";
         internal const string AzdNotLogIn = "Please run 'azd login' from a command prompt to authenticate before using this credential.";
-        internal const string WinAzdCliError = "'azd is not recognized";
+        internal const string WinAzdCliError = "'azd' is not recognized";
         internal const string AzdCliTimeoutError = "Azure Developer CLI authentication timed out.";
         internal const string AzdCliFailedError = "Azure Developer CLI authentication failed due to an unknown error.";
         internal const string Troubleshoot = "Please visit https://aka.ms/azure-dev for installation instructions and then, once installed, authenticate to your Azure account using 'azd login'.";

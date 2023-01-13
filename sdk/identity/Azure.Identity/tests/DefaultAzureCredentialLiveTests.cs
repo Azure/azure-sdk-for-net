@@ -269,7 +269,6 @@ namespace Azure.Identity.Tests
                 ExcludeInteractiveBrowserCredential = true,
                 ExcludeManagedIdentityCredential = true,
                 ExcludeSharedTokenCacheCredential = true,
-                ExcludeAzureDeveloperCliCredential = true,
                 ExcludeVisualStudioCodeCredential = false,
             });
 
@@ -303,7 +302,6 @@ namespace Azure.Identity.Tests
                 ExcludeInteractiveBrowserCredential = true,
                 ExcludeSharedTokenCacheCredential = true,
                 ExcludeManagedIdentityCredential = true,
-                ExcludeAzureDeveloperCliCredential = true,
                 ExcludeVisualStudioCodeCredential = false,
             });
 
@@ -336,7 +334,6 @@ namespace Azure.Identity.Tests
                 ExcludeInteractiveBrowserCredential = true,
                 ExcludeSharedTokenCacheCredential = true,
                 ExcludeManagedIdentityCredential = true,
-                ExcludeAzureDeveloperCliCredential = true,
                 ExcludeVisualStudioCodeCredential = false,
             });
 
