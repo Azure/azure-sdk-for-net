@@ -430,22 +430,8 @@ namespace Azure.ResourceManager.Synapse
         /// <returns> An async collection of <see cref="SynapseIntegrationRuntimeOutboundNetworkDependenciesCategoryEndpoint" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SynapseIntegrationRuntimeOutboundNetworkDependenciesCategoryEndpoint> GetOutboundNetworkDependenciesEndpointsAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<SynapseIntegrationRuntimeOutboundNetworkDependenciesCategoryEndpoint>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _synapseIntegrationRuntimeIntegrationRuntimesClientDiagnostics.CreateScope("SynapseIntegrationRuntimeResource.GetOutboundNetworkDependenciesEndpoints");
-                scope.Start();
-                try
-                {
-                    var response = await _synapseIntegrationRuntimeIntegrationRuntimesRestClient.ListOutboundNetworkDependenciesEndpointsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _synapseIntegrationRuntimeIntegrationRuntimesRestClient.CreateListOutboundNetworkDependenciesEndpointsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, SynapseIntegrationRuntimeOutboundNetworkDependenciesCategoryEndpoint.DeserializeSynapseIntegrationRuntimeOutboundNetworkDependenciesCategoryEndpoint, _synapseIntegrationRuntimeIntegrationRuntimesClientDiagnostics, Pipeline, "SynapseIntegrationRuntimeResource.GetOutboundNetworkDependenciesEndpoints", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -457,22 +443,8 @@ namespace Azure.ResourceManager.Synapse
         /// <returns> A collection of <see cref="SynapseIntegrationRuntimeOutboundNetworkDependenciesCategoryEndpoint" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SynapseIntegrationRuntimeOutboundNetworkDependenciesCategoryEndpoint> GetOutboundNetworkDependenciesEndpoints(CancellationToken cancellationToken = default)
         {
-            Page<SynapseIntegrationRuntimeOutboundNetworkDependenciesCategoryEndpoint> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _synapseIntegrationRuntimeIntegrationRuntimesClientDiagnostics.CreateScope("SynapseIntegrationRuntimeResource.GetOutboundNetworkDependenciesEndpoints");
-                scope.Start();
-                try
-                {
-                    var response = _synapseIntegrationRuntimeIntegrationRuntimesRestClient.ListOutboundNetworkDependenciesEndpoints(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _synapseIntegrationRuntimeIntegrationRuntimesRestClient.CreateListOutboundNetworkDependenciesEndpointsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, SynapseIntegrationRuntimeOutboundNetworkDependenciesCategoryEndpoint.DeserializeSynapseIntegrationRuntimeOutboundNetworkDependenciesCategoryEndpoint, _synapseIntegrationRuntimeIntegrationRuntimesClientDiagnostics, Pipeline, "SynapseIntegrationRuntimeResource.GetOutboundNetworkDependenciesEndpoints", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -643,22 +615,8 @@ namespace Azure.ResourceManager.Synapse
         /// <returns> An async collection of <see cref="SynapseSsisObjectMetadata" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SynapseSsisObjectMetadata> GetAllIntegrationRuntimeObjectMetadataAsync(SynapseGetSsisObjectMetadataContent content = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<SynapseSsisObjectMetadata>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _integrationRuntimeObjectMetadataClientDiagnostics.CreateScope("SynapseIntegrationRuntimeResource.GetAllIntegrationRuntimeObjectMetadata");
-                scope.Start();
-                try
-                {
-                    var response = await _integrationRuntimeObjectMetadataRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _integrationRuntimeObjectMetadataRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, SynapseSsisObjectMetadata.DeserializeSynapseSsisObjectMetadata, _integrationRuntimeObjectMetadataClientDiagnostics, Pipeline, "SynapseIntegrationRuntimeResource.GetAllIntegrationRuntimeObjectMetadata", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -671,22 +629,8 @@ namespace Azure.ResourceManager.Synapse
         /// <returns> A collection of <see cref="SynapseSsisObjectMetadata" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SynapseSsisObjectMetadata> GetAllIntegrationRuntimeObjectMetadata(SynapseGetSsisObjectMetadataContent content = null, CancellationToken cancellationToken = default)
         {
-            Page<SynapseSsisObjectMetadata> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _integrationRuntimeObjectMetadataClientDiagnostics.CreateScope("SynapseIntegrationRuntimeResource.GetAllIntegrationRuntimeObjectMetadata");
-                scope.Start();
-                try
-                {
-                    var response = _integrationRuntimeObjectMetadataRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _integrationRuntimeObjectMetadataRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, SynapseSsisObjectMetadata.DeserializeSynapseSsisObjectMetadata, _integrationRuntimeObjectMetadataClientDiagnostics, Pipeline, "SynapseIntegrationRuntimeResource.GetAllIntegrationRuntimeObjectMetadata", "value", null, cancellationToken);
         }
 
         /// <summary>

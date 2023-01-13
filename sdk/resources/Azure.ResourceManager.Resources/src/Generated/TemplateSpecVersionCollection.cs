@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -186,37 +185,9 @@ namespace Azure.ResourceManager.Resources
         /// <returns> An async collection of <see cref="TemplateSpecVersionResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<TemplateSpecVersionResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<TemplateSpecVersionResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _templateSpecVersionClientDiagnostics.CreateScope("TemplateSpecVersionCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _templateSpecVersionRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new TemplateSpecVersionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<TemplateSpecVersionResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _templateSpecVersionClientDiagnostics.CreateScope("TemplateSpecVersionCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _templateSpecVersionRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new TemplateSpecVersionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _templateSpecVersionRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _templateSpecVersionRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new TemplateSpecVersionResource(Client, TemplateSpecVersionData.DeserializeTemplateSpecVersionData(e)), _templateSpecVersionClientDiagnostics, Pipeline, "TemplateSpecVersionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -228,37 +199,9 @@ namespace Azure.ResourceManager.Resources
         /// <returns> A collection of <see cref="TemplateSpecVersionResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<TemplateSpecVersionResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<TemplateSpecVersionResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _templateSpecVersionClientDiagnostics.CreateScope("TemplateSpecVersionCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _templateSpecVersionRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new TemplateSpecVersionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<TemplateSpecVersionResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _templateSpecVersionClientDiagnostics.CreateScope("TemplateSpecVersionCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _templateSpecVersionRestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new TemplateSpecVersionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _templateSpecVersionRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _templateSpecVersionRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new TemplateSpecVersionResource(Client, TemplateSpecVersionData.DeserializeTemplateSpecVersionData(e)), _templateSpecVersionClientDiagnostics, Pipeline, "TemplateSpecVersionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

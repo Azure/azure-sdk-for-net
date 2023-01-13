@@ -1,212 +1,232 @@
 {
-    "Entries": [
-        {
-            "RequestUri": "https://smstestapp.communication.azure.com/availablePhoneNumbers/countries/US/:search?api-version=2022-01-11-preview2",
-            "RequestMethod": "POST",
-            "RequestHeaders": {
-                "Accept": "application/json",
-                "Authorization": "Sanitized",
-                "Content-Length": "112",
-                "Content-Type": "application/json",
-                "traceparent": "00-490506723cf12240a6a22b09805cd15a-72da263a78657e45-00",
-                "User-Agent": [
-                    "azsdk-net-Communication.PhoneNumbers/1.1.0-alpha.20210622.1",
-                    "(.NET 5.0.7; Microsoft Windows 10.0.19043)"
-                ],
-                "x-ms-client-request-id": "dcaa53851d56879079118f507ef025bc",
-                "x-ms-content-sha256": "Sanitized",
-                "x-ms-date": "Tue, 22 Jun 2021 22:03:42 GMT",
-                "x-ms-return-client-request-id": "true"
-            },
-            "RequestBody": {
-                "phoneNumberType": "tollFree",
-                "assignmentType": "application",
-                "capabilities": {
-                    "calling": "outbound",
-                    "sms": "none"
-                }
-            },
-            "StatusCode": 202,
-            "ResponseHeaders": {
-                "Access-Control-Expose-Headers": "Location,Operation-Location,operation-id,search-id",
-                "api-supported-versions": "2022-01-11-preview2",
-                "Content-Length": "0",
-                "Date": "Tue, 22 Jun 2021 22:03:44 GMT",
-                "Location": "/availablePhoneNumbers/searchResults/0ada68df-62c7-4a52-b124-331727211a1e?api-version=2022-01-11-preview2",
-                "MS-CV": "dBA1LIcaeUa\u002Bkr9A9myMhg.0",
-                "operation-id": "search_0ada68df-62c7-4a52-b124-331727211a1e",
-                "Operation-Location": "/phoneNumbers/operations/search_0ada68df-62c7-4a52-b124-331727211a1e?api-version=2022-01-11-preview2",
-                "Request-Context": "appId=",
-                "search-id": "0ada68df-62c7-4a52-b124-331727211a1e",
-                "X-Azure-Ref": "0Pl7SYAAAAABJjTB3dEMaSbmnvufReAIZWVZSMzBFREdFMDMxOAA5ZmM3YjUxOS1hOGNjLTRmODktOTM1ZS1jOTE0OGFlMDllODE=",
-                "X-Cache": "CONFIG_NOCACHE",
-                "X-Processing-Time": "1841ms"
-            },
-            "ResponseBody": []
-        },
-        {
-            "RequestUri": "https://smstestapp.communication.azure.com/phoneNumbers/operations/search_0ada68df-62c7-4a52-b124-331727211a1e?api-version=2022-01-11-preview2",
-            "RequestMethod": "GET",
-            "RequestHeaders": {
-                "Authorization": "Sanitized",
-                "User-Agent": [
-                    "azsdk-net-Communication.PhoneNumbers/1.1.0-alpha.20210622.1",
-                    "(.NET 5.0.7; Microsoft Windows 10.0.19043)"
-                ],
-                "x-ms-client-request-id": "a544d01e08346721f59ac23c4856ea01",
-                "x-ms-content-sha256": "Sanitized",
-                "x-ms-date": "Tue, 22 Jun 2021 22:03:44 GMT",
-                "x-ms-return-client-request-id": "true"
-            },
-            "RequestBody": null,
-            "StatusCode": 200,
-            "ResponseHeaders": {
-                "Access-Control-Expose-Headers": "Location",
-                "api-supported-versions": "2022-01-11-preview2",
-                "Content-Type": "application/json; charset=utf-8",
-                "Date": "Tue, 22 Jun 2021 22:03:44 GMT",
-                "Location": "/availablePhoneNumbers/searchResults/0ada68df-62c7-4a52-b124-331727211a1e?api-version=2022-01-11-preview2",
-                "MS-CV": "y\u002BHArC0YHUG1RA05pt06fQ.0",
-                "Request-Context": "appId=",
-                "Transfer-Encoding": "chunked",
-                "X-Azure-Ref": "0QF7SYAAAAACreGvK9s3wT4/b7R0DM2YtWVZSMzBFREdFMDMxOAA5ZmM3YjUxOS1hOGNjLTRmODktOTM1ZS1jOTE0OGFlMDllODE=",
-                "X-Cache": "CONFIG_NOCACHE",
-                "X-Processing-Time": "393ms"
-            },
-            "ResponseBody": {
-                "status": "notStarted",
-                "resourceLocation": "/availablePhoneNumbers/searchResults/0ada68df-62c7-4a52-b124-331727211a1e?api-version=2022-01-11-preview2",
-                "createdDateTime": "2021-06-22T22:03:44.2217951\u002B00:00",
-                "id": "search_0ada68df-62c7-4a52-b124-331727211a1e",
-                "operationType": "search",
-                "lastActionDateTime": "0001-01-01T00:00:00\u002B00:00"
-            }
-        },
-        {
-            "RequestUri": "https://smstestapp.communication.azure.com/phoneNumbers/operations/search_0ada68df-62c7-4a52-b124-331727211a1e?api-version=2022-01-11-preview2",
-            "RequestMethod": "GET",
-            "RequestHeaders": {
-                "Authorization": "Sanitized",
-                "User-Agent": [
-                    "azsdk-net-Communication.PhoneNumbers/1.1.0-alpha.20210622.1",
-                    "(.NET 5.0.7; Microsoft Windows 10.0.19043)"
-                ],
-                "x-ms-client-request-id": "03e21894973ef27c719167803f2781aa",
-                "x-ms-content-sha256": "Sanitized",
-                "x-ms-date": "Tue, 22 Jun 2021 22:03:46 GMT",
-                "x-ms-return-client-request-id": "true"
-            },
-            "RequestBody": null,
-            "StatusCode": 200,
-            "ResponseHeaders": {
-                "Access-Control-Expose-Headers": "Location",
-                "api-supported-versions": "2022-01-11-preview2",
-                "Content-Type": "application/json; charset=utf-8",
-                "Date": "Tue, 22 Jun 2021 22:03:46 GMT",
-                "Location": "/availablePhoneNumbers/searchResults/0ada68df-62c7-4a52-b124-331727211a1e?api-version=2022-01-11-preview2",
-                "MS-CV": "WfduE\u002BijzEGCh4VBJniDqw.0",
-                "Request-Context": "appId=",
-                "Transfer-Encoding": "chunked",
-                "X-Azure-Ref": "0Ql7SYAAAAADMIG\u002BOmCshSbrEUeP67sLhWVZSMzBFREdFMDMxOAA5ZmM3YjUxOS1hOGNjLTRmODktOTM1ZS1jOTE0OGFlMDllODE=",
-                "X-Cache": "CONFIG_NOCACHE",
-                "X-Processing-Time": "398ms"
-            },
-            "ResponseBody": {
-                "status": "notStarted",
-                "resourceLocation": "/availablePhoneNumbers/searchResults/0ada68df-62c7-4a52-b124-331727211a1e?api-version=2022-01-11-preview2",
-                "createdDateTime": "2021-06-22T22:03:44.2217951\u002B00:00",
-                "id": "search_0ada68df-62c7-4a52-b124-331727211a1e",
-                "operationType": "search",
-                "lastActionDateTime": "0001-01-01T00:00:00\u002B00:00"
-            }
-        },
-        {
-            "RequestUri": "https://smstestapp.communication.azure.com/phoneNumbers/operations/search_0ada68df-62c7-4a52-b124-331727211a1e?api-version=2022-01-11-preview2",
-            "RequestMethod": "GET",
-            "RequestHeaders": {
-                "Authorization": "Sanitized",
-                "User-Agent": [
-                    "azsdk-net-Communication.PhoneNumbers/1.1.0-alpha.20210622.1",
-                    "(.NET 5.0.7; Microsoft Windows 10.0.19043)"
-                ],
-                "x-ms-client-request-id": "ae32e84e7fab7e88aba27b9fd0a5d01e",
-                "x-ms-content-sha256": "Sanitized",
-                "x-ms-date": "Tue, 22 Jun 2021 22:03:47 GMT",
-                "x-ms-return-client-request-id": "true"
-            },
-            "RequestBody": null,
-            "StatusCode": 200,
-            "ResponseHeaders": {
-                "Access-Control-Expose-Headers": "Location",
-                "api-supported-versions": "2022-01-11-preview2",
-                "Content-Type": "application/json; charset=utf-8",
-                "Date": "Tue, 22 Jun 2021 22:03:47 GMT",
-                "Location": "/availablePhoneNumbers/searchResults/0ada68df-62c7-4a52-b124-331727211a1e?api-version=2022-01-11-preview2",
-                "MS-CV": "Qdc0HaTOtEK31VIyErAXgQ.0",
-                "Request-Context": "appId=",
-                "Transfer-Encoding": "chunked",
-                "X-Azure-Ref": "0Q17SYAAAAAA69xjhExHFSYyiytkLBsE9WVZSMzBFREdFMDMxOAA5ZmM3YjUxOS1hOGNjLTRmODktOTM1ZS1jOTE0OGFlMDllODE=",
-                "X-Cache": "CONFIG_NOCACHE",
-                "X-Processing-Time": "521ms"
-            },
-            "ResponseBody": {
-                "status": "succeeded",
-                "resourceLocation": "/availablePhoneNumbers/searchResults/0ada68df-62c7-4a52-b124-331727211a1e?api-version=2022-01-11-preview2",
-                "createdDateTime": "2021-06-22T22:03:44.2217951\u002B00:00",
-                "id": "search_0ada68df-62c7-4a52-b124-331727211a1e",
-                "operationType": "search",
-                "lastActionDateTime": "0001-01-01T00:00:00\u002B00:00"
-            }
-        },
-        {
-            "RequestUri": "https://smstestapp.communication.azure.com/availablePhoneNumbers/searchResults/0ada68df-62c7-4a52-b124-331727211a1e?api-version=2022-01-11-preview2",
-            "RequestMethod": "GET",
-            "RequestHeaders": {
-                "Authorization": "Sanitized",
-                "User-Agent": [
-                    "azsdk-net-Communication.PhoneNumbers/1.1.0-alpha.20210622.1",
-                    "(.NET 5.0.7; Microsoft Windows 10.0.19043)"
-                ],
-                "x-ms-client-request-id": "eed3dceac0ec8667535234a3a0a128cd",
-                "x-ms-content-sha256": "Sanitized",
-                "x-ms-date": "Tue, 22 Jun 2021 22:03:48 GMT",
-                "x-ms-return-client-request-id": "true"
-            },
-            "RequestBody": null,
-            "StatusCode": 200,
-            "ResponseHeaders": {
-                "api-supported-versions": "2022-01-11-preview2",
-                "Content-Type": "application/json; charset=utf-8",
-                "Date": "Tue, 22 Jun 2021 22:03:48 GMT",
-                "MS-CV": "Cv\u002Bg0k6snEq0tJYHfPlHPQ.0",
-                "Request-Context": "appId=",
-                "Transfer-Encoding": "chunked",
-                "X-Azure-Ref": "0RF7SYAAAAAB5oMSFoN8YS4GKfDJ7yWVbWVZSMzBFREdFMDMxOAA5ZmM3YjUxOS1hOGNjLTRmODktOTM1ZS1jOTE0OGFlMDllODE=",
-                "X-Cache": "CONFIG_NOCACHE",
-                "X-Processing-Time": "826ms"
-            },
-            "ResponseBody": {
-                "searchId": "0ada68df-62c7-4a52-b124-331727211a1e",
-                "phoneNumbers": [
-                    "Sanitized"
-                ],
-                "phoneNumberType": "tollFree",
-                "assignmentType": "application",
-                "capabilities": {
-                    "calling": "outbound",
-                    "sms": "none"
-                },
-                "cost": {
-                    "amount": 2.0,
-                    "currencyCode": "USD",
-                    "billingFrequency": "monthly"
-                },
-                "searchExpiresBy": "2021-06-22T22:19:46.2710888\u002B00:00"
-            }
+  "Entries": [
+    {
+      "RequestUri": "https://smstestapp.communication.azure.com/availablePhoneNumbers/countries/US/:search?api-version=2022-12-01",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "112",
+        "Content-Type": "application/json",
+        "traceparent": "00-9a940759aa4d2d46b67c29d9fcb9a2be-b585e504c21a6b4a-00",
+        "User-Agent": "azsdk-net-Communication.PhoneNumbers/1.1.0-alpha.20221220.1 (.NET Framework 4.8.9105.0; Microsoft Windows 10.0.22621 )",
+        "x-ms-client-request-id": "507318b49ee8aa26c7b72dffdd225d2e",
+        "x-ms-content-sha256": "Sanitized",
+        "x-ms-date": "Tue, 20 Dec 2022 21:51:14 GMT",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "phoneNumberType": "tollFree",
+        "assignmentType": "application",
+        "capabilities": {
+          "calling": "outbound",
+          "sms": "none"
         }
-    ],
-    "Variables": {
-        "COMMUNICATION_LIVETEST_STATIC_CONNECTION_STRING": "endpoint=https://smstestapp.communication.azure.com/;accesskey=Kg==",
-        "RandomSeed": "617327329"
+      },
+      "StatusCode": 202,
+        "ResponseHeaders": {
+            "Access-Control-Expose-Headers": "Location,Operation-Location,operation-id,search-id",
+            "api-supported-versions": "2021-03-07, 2022-01-11-preview2, 2022-06-01-preview, 2022-12-01",
+            "Content-Length": "0",
+            "Date": "Tue, 20 Dec 2022 21:51:16 GMT",
+            "Location": "/availablePhoneNumbers/searchResults/4db71233-7472-4240-9cd3-17bb77a50321?api-version=2022-12-01",
+            "MS-CV": "xdhWeivEIEKJ64gt0lEzBA.0",
+            "operation-id": "search_4db71233-7472-4240-9cd3-17bb77a50321",
+            "Operation-Location": "/phoneNumbers/operations/search_4db71233-7472-4240-9cd3-17bb77a50321?api-version=2022-12-01",
+            "search-id": "4db71233-7472-4240-9cd3-17bb77a50321",
+            "Strict-Transport-Security": "max-age=2592000",
+            "X-Azure-Ref": "0Ui6iYwAAAAAUa504ssDnSJD3yc2rYud1TUVYMzFFREdFMDMxNwA5ZmM3YjUxOS1hOGNjLTRmODktOTM1ZS1jOTE0OGFlMDllODE=",
+            "X-Cache": "CONFIG_NOCACHE",
+            "X-Processing-Time": "1443ms"
+        },
+      "ResponseBody": null
+    },
+    {
+      "RequestUri": "https://smstestapp.communication.azure.com/phoneNumbers/operations/search_4db71233-7472-4240-9cd3-17bb77a50321?api-version=2022-12-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "User-Agent": "azsdk-net-Communication.PhoneNumbers/1.1.0-alpha.20221220.1 (.NET Framework 4.8.9105.0; Microsoft Windows 10.0.22621 )",
+        "x-ms-client-request-id": "9cc9d39b681cb7cdf91a69f61b350ba8",
+        "x-ms-content-sha256": "Sanitized",
+        "x-ms-date": "Tue, 20 Dec 2022 21:51:15 GMT",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+        "ResponseHeaders": {
+            "Access-Control-Expose-Headers": "Location",
+            "api-supported-versions": "2021-03-07, 2022-01-11-preview2, 2022-06-01-preview, 2022-11-15-preview, 2022-12-01",
+            "Content-Type": "application/json; charset=utf-8",
+            "Date": "Tue, 20 Dec 2022 21:51:16 GMT",
+            "Location": "/availablePhoneNumbers/searchResults/4db71233-7472-4240-9cd3-17bb77a50321?api-version=2022-12-01",
+            "MS-CV": "VGOBO6bo90uJjCj04QUiKQ.0",
+            "Strict-Transport-Security": "max-age=2592000",
+            "Transfer-Encoding": "chunked",
+            "X-Azure-Ref": "0VC6iYwAAAAB5yL\u002B1k3IRSK7\u002Bl96DnyMETUVYMzFFREdFMDMxNwA5ZmM3YjUxOS1hOGNjLTRmODktOTM1ZS1jOTE0OGFlMDllODE=",
+            "X-Cache": "CONFIG_NOCACHE",
+            "X-Processing-Time": "243ms"
+        },
+      "ResponseBody": {
+        "operationType": "search",
+        "status": "notStarted",
+        "resourceLocation": "/availablePhoneNumbers/searchResults/4db71233-7472-4240-9cd3-17bb77a50321?api-version=2022-12-01",
+        "createdDateTime": "2022-12-20T21:51:15.8651833\u002B00:00",
+        "id": "search_4db71233-7472-4240-9cd3-17bb77a50321",
+        "lastActionDateTime": "0001-01-01T00:00:00\u002B00:00"
+      }
+    },
+    {
+      "RequestUri": "https://smstestapp.communication.azure.com/phoneNumbers/operations/search_4db71233-7472-4240-9cd3-17bb77a50321?api-version=2022-12-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "User-Agent": "azsdk-net-Communication.PhoneNumbers/1.1.0-alpha.20221220.1 (.NET Framework 4.8.9105.0; Microsoft Windows 10.0.22621 )",
+        "x-ms-client-request-id": "93f6115af1dc22ff3e4c4b8b41862a3f",
+        "x-ms-content-sha256": "Sanitized",
+        "x-ms-date": "Tue, 20 Dec 2022 21:51:17 GMT",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+        "ResponseHeaders": {
+            "Access-Control-Expose-Headers": "Location",
+            "api-supported-versions": "2021-03-07, 2022-01-11-preview2, 2022-06-01-preview, 2022-11-15-preview, 2022-12-01",
+            "Content-Type": "application/json; charset=utf-8",
+            "Date": "Tue, 20 Dec 2022 21:51:18 GMT",
+            "Location": "/availablePhoneNumbers/searchResults/4db71233-7472-4240-9cd3-17bb77a50321?api-version=2022-12-01",
+            "MS-CV": "1lAUCl\u002BFmUm5jN72\u002B3pe6w.0",
+            "Strict-Transport-Security": "max-age=2592000",
+            "Transfer-Encoding": "chunked",
+            "X-Azure-Ref": "0VS6iYwAAAABCRus6r8y4TZhujo9WbU5lTUVYMzFFREdFMDMxNwA5ZmM3YjUxOS1hOGNjLTRmODktOTM1ZS1jOTE0OGFlMDllODE=",
+            "X-Cache": "CONFIG_NOCACHE",
+            "X-Processing-Time": "277ms"
+        },
+      "ResponseBody": {
+        "operationType": "search",
+        "status": "running",
+        "resourceLocation": "/availablePhoneNumbers/searchResults/4db71233-7472-4240-9cd3-17bb77a50321?api-version=2022-12-01",
+        "createdDateTime": "2022-12-20T21:51:15.8651833\u002B00:00",
+        "id": "search_4db71233-7472-4240-9cd3-17bb77a50321",
+        "lastActionDateTime": "0001-01-01T00:00:00\u002B00:00"
+      }
+    },
+    {
+      "RequestUri": "https://smstestapp.communication.azure.com/phoneNumbers/operations/search_4db71233-7472-4240-9cd3-17bb77a50321?api-version=2022-12-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "User-Agent": "azsdk-net-Communication.PhoneNumbers/1.1.0-alpha.20221220.1 (.NET Framework 4.8.9105.0; Microsoft Windows 10.0.22621 )",
+        "x-ms-client-request-id": "0a633ee4c158f211eb9b269d28e30cd0",
+        "x-ms-content-sha256": "Sanitized",
+        "x-ms-date": "Tue, 20 Dec 2022 21:51:18 GMT",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+        "ResponseHeaders": {
+            "Access-Control-Expose-Headers": "Location",
+            "api-supported-versions": "2021-03-07, 2022-01-11-preview2, 2022-06-01-preview, 2022-11-15-preview, 2022-12-01",
+            "Content-Type": "application/json; charset=utf-8",
+            "Date": "Tue, 20 Dec 2022 21:51:19 GMT",
+            "Location": "/availablePhoneNumbers/searchResults/4db71233-7472-4240-9cd3-17bb77a50321?api-version=2022-12-01",
+            "MS-CV": "AZDTx2cxxE\u002B1SZl0VyEooQ.0",
+            "Strict-Transport-Security": "max-age=2592000",
+            "Transfer-Encoding": "chunked",
+            "X-Azure-Ref": "0Vy6iYwAAAABo91\u002Bh8aytRYOLk6r/CIzCTUVYMzFFREdFMDMxNwA5ZmM3YjUxOS1hOGNjLTRmODktOTM1ZS1jOTE0OGFlMDllODE=",
+            "X-Cache": "CONFIG_NOCACHE",
+            "X-Processing-Time": "265ms"
+        },
+      "ResponseBody": {
+        "operationType": "search",
+        "status": "running",
+        "resourceLocation": "/availablePhoneNumbers/searchResults/4db71233-7472-4240-9cd3-17bb77a50321?api-version=2022-12-01",
+        "createdDateTime": "2022-12-20T21:51:15.8651833\u002B00:00",
+        "id": "search_4db71233-7472-4240-9cd3-17bb77a50321",
+        "lastActionDateTime": "0001-01-01T00:00:00\u002B00:00"
+      }
+    },
+    {
+      "RequestUri": "https://smstestapp.communication.azure.com/phoneNumbers/operations/search_4db71233-7472-4240-9cd3-17bb77a50321?api-version=2022-12-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "User-Agent": "azsdk-net-Communication.PhoneNumbers/1.1.0-alpha.20221220.1 (.NET Framework 4.8.9105.0; Microsoft Windows 10.0.22621 )",
+        "x-ms-client-request-id": "6d45b4513f91aa12d3a65dd01d427573",
+        "x-ms-content-sha256": "Sanitized",
+        "x-ms-date": "Tue, 20 Dec 2022 21:51:19 GMT",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+        "ResponseHeaders": {
+            "Access-Control-Expose-Headers": "Location",
+            "api-supported-versions": "2021-03-07, 2022-01-11-preview2, 2022-06-01-preview, 2022-11-15-preview, 2022-12-01",
+            "Content-Type": "application/json; charset=utf-8",
+            "Date": "Tue, 20 Dec 2022 21:51:20 GMT",
+            "Location": "/availablePhoneNumbers/searchResults/4db71233-7472-4240-9cd3-17bb77a50321?api-version=2022-12-01",
+            "MS-CV": "l4Xci6sUs0ez9mSdtSLKXQ.0",
+            "Strict-Transport-Security": "max-age=2592000",
+            "Transfer-Encoding": "chunked",
+            "X-Azure-Ref": "0WC6iYwAAAACuaaqGavbQR6WaYOx5rOxNTUVYMzFFREdFMDMxNwA5ZmM3YjUxOS1hOGNjLTRmODktOTM1ZS1jOTE0OGFlMDllODE=",
+            "X-Cache": "CONFIG_NOCACHE",
+            "X-Processing-Time": "245ms"
+        },
+      "ResponseBody": {
+        "operationType": "search",
+        "status": "succeeded",
+        "resourceLocation": "/availablePhoneNumbers/searchResults/4db71233-7472-4240-9cd3-17bb77a50321?api-version=2022-12-01",
+        "createdDateTime": "2022-12-20T21:51:15.8651833\u002B00:00",
+        "id": "search_4db71233-7472-4240-9cd3-17bb77a50321",
+        "lastActionDateTime": "0001-01-01T00:00:00\u002B00:00"
+      }
+    },
+    {
+      "RequestUri": "https://smstestapp.communication.azure.com/availablePhoneNumbers/searchResults/4db71233-7472-4240-9cd3-17bb77a50321?api-version=2022-12-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "User-Agent": "azsdk-net-Communication.PhoneNumbers/1.1.0-alpha.20221220.1 (.NET Framework 4.8.9105.0; Microsoft Windows 10.0.22621 )",
+        "x-ms-client-request-id": "dc1129f001d19850ff04a840ca62fa5b",
+        "x-ms-content-sha256": "Sanitized",
+        "x-ms-date": "Tue, 20 Dec 2022 21:51:20 GMT",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "api-supported-versions": "2021-03-07, 2022-01-11-preview2, 2022-06-01-preview, 2022-12-01",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 20 Dec 2022 21:51:21 GMT",
+        "MS-CV": "R2hf4IPQeESrQ\u002B2FVqvkvQ.0",
+        "Strict-Transport-Security": "max-age=2592000",
+        "Transfer-Encoding": "chunked",
+        "X-Azure-Ref": "0WC6iYwAAAADdMFGVul1uTaUiwqwd8V7oTUVYMzFFREdFMDMxNwA5ZmM3YjUxOS1hOGNjLTRmODktOTM1ZS1jOTE0OGFlMDllODE=",
+        "X-Cache": "CONFIG_NOCACHE",
+        "X-Processing-Time": "646ms"
+      },
+      "ResponseBody": {
+        "searchId": "4db71233-7472-4240-9cd3-17bb77a50321",
+        "phoneNumbers": [
+          "Sanitized"
+        ],
+        "phoneNumberType": "tollFree",
+        "assignmentType": "application",
+        "capabilities": {
+          "calling": "outbound",
+          "sms": "none"
+        },
+        "cost": {
+          "amount": 2.0,
+          "currencyCode": "USD",
+          "billingFrequency": "monthly"
+        },
+        "searchExpiresBy": "2022-12-20T22:07:19.4666226\u002B00:00"
+      }
     }
+  ],
+  "Variables": {
+    "COMMUNICATION_LIVETEST_STATIC_CONNECTION_STRING": "endpoint=https://smstestapp.communication.azure.com/;accesskey=Kg==",
+    "RandomSeed": "363547020"
+  }
 }

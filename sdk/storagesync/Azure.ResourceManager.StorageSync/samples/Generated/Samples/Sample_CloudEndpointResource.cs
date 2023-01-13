@@ -11,9 +11,10 @@ using Azure;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager;
+using Azure.ResourceManager.StorageSync;
 using Azure.ResourceManager.StorageSync.Models;
 
-namespace Azure.ResourceManager.StorageSync
+namespace Azure.ResourceManager.StorageSync.Samples
 {
     public partial class Sample_CloudEndpointResource
     {
@@ -25,8 +26,10 @@ namespace Azure.ResourceManager.StorageSync
             // Generated from example definition: specification/storagesync/resource-manager/Microsoft.StorageSync/stable/2022-06-01/examples/CloudEndpoints_Create.json
             // this example is just showing the usage of "CloudEndpoints_Create" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this CloudEndpointResource created on azure
             // for more information of creating CloudEndpointResource, please refer to the document of CloudEndpointResource
@@ -64,8 +67,10 @@ namespace Azure.ResourceManager.StorageSync
             // Generated from example definition: specification/storagesync/resource-manager/Microsoft.StorageSync/stable/2022-06-01/examples/CloudEndpoints_Get.json
             // this example is just showing the usage of "CloudEndpoints_Get" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this CloudEndpointResource created on azure
             // for more information of creating CloudEndpointResource, please refer to the document of CloudEndpointResource
@@ -95,8 +100,10 @@ namespace Azure.ResourceManager.StorageSync
             // Generated from example definition: specification/storagesync/resource-manager/Microsoft.StorageSync/stable/2022-06-01/examples/CloudEndpoints_Delete.json
             // this example is just showing the usage of "CloudEndpoints_Delete" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this CloudEndpointResource created on azure
             // for more information of creating CloudEndpointResource, please refer to the document of CloudEndpointResource
@@ -122,8 +129,10 @@ namespace Azure.ResourceManager.StorageSync
             // Generated from example definition: specification/storagesync/resource-manager/Microsoft.StorageSync/stable/2022-06-01/examples/CloudEndpoints_PreBackup.json
             // this example is just showing the usage of "CloudEndpoints_PreBackup" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this CloudEndpointResource created on azure
             // for more information of creating CloudEndpointResource, please refer to the document of CloudEndpointResource
@@ -153,8 +162,10 @@ namespace Azure.ResourceManager.StorageSync
             // Generated from example definition: specification/storagesync/resource-manager/Microsoft.StorageSync/stable/2022-06-01/examples/CloudEndpoints_PostBackup.json
             // this example is just showing the usage of "CloudEndpoints_PostBackup" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this CloudEndpointResource created on azure
             // for more information of creating CloudEndpointResource, please refer to the document of CloudEndpointResource
@@ -185,8 +196,10 @@ namespace Azure.ResourceManager.StorageSync
             // Generated from example definition: specification/storagesync/resource-manager/Microsoft.StorageSync/stable/2022-06-01/examples/CloudEndpoints_PreRestore.json
             // this example is just showing the usage of "CloudEndpoints_PreRestore" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this CloudEndpointResource created on azure
             // for more information of creating CloudEndpointResource, please refer to the document of CloudEndpointResource
@@ -236,8 +249,10 @@ IsDirectory = false,
             // Generated from example definition: specification/storagesync/resource-manager/Microsoft.StorageSync/stable/2022-06-01/examples/CloudEndpoints_RestoreHeatbeat.json
             // this example is just showing the usage of "CloudEndpoints_restoreheartbeat" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this CloudEndpointResource created on azure
             // for more information of creating CloudEndpointResource, please refer to the document of CloudEndpointResource
@@ -263,8 +278,10 @@ IsDirectory = false,
             // Generated from example definition: specification/storagesync/resource-manager/Microsoft.StorageSync/stable/2022-06-01/examples/CloudEndpoints_PostRestore.json
             // this example is just showing the usage of "CloudEndpoints_PostRestore" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this CloudEndpointResource created on azure
             // for more information of creating CloudEndpointResource, please refer to the document of CloudEndpointResource
@@ -316,8 +333,10 @@ IsDirectory = false,
             // Generated from example definition: specification/storagesync/resource-manager/Microsoft.StorageSync/stable/2022-06-01/examples/CloudEndpoints_TriggerChangeDetection.json
             // this example is just showing the usage of "CloudEndpoints_TriggerChangeDetection" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this CloudEndpointResource created on azure
             // for more information of creating CloudEndpointResource, please refer to the document of CloudEndpointResource
@@ -348,8 +367,10 @@ IsDirectory = false,
             // Generated from example definition: specification/storagesync/resource-manager/Microsoft.StorageSync/stable/2022-06-01/examples/CloudEndpoints_AfsShareMetadataCertificatePublicKeys.json
             // this example is just showing the usage of "CloudEndpoints_AfsShareMetadataCertificatePublicKeys" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this CloudEndpointResource created on azure
             // for more information of creating CloudEndpointResource, please refer to the document of CloudEndpointResource

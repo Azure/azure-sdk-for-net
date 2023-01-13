@@ -1327,37 +1327,9 @@ namespace Azure.ResourceManager.ApiManagement
         /// <returns> An async collection of <see cref="TagResourceContractDetails" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<TagResourceContractDetails> GetApisByTagsAsync(string filter = null, int? top = null, int? skip = null, bool? includeNotTaggedApis = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<TagResourceContractDetails>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _apiClientDiagnostics.CreateScope("ApiManagementServiceResource.GetApisByTags");
-                scope.Start();
-                try
-                {
-                    var response = await _apiRestClient.ListByTagsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, includeNotTaggedApis, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<TagResourceContractDetails>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _apiClientDiagnostics.CreateScope("ApiManagementServiceResource.GetApisByTags");
-                scope.Start();
-                try
-                {
-                    var response = await _apiRestClient.ListByTagsNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, includeNotTaggedApis, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _apiRestClient.CreateListByTagsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, includeNotTaggedApis);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _apiRestClient.CreateListByTagsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, includeNotTaggedApis);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, TagResourceContractDetails.DeserializeTagResourceContractDetails, _apiClientDiagnostics, Pipeline, "ApiManagementServiceResource.GetApisByTags", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -1373,37 +1345,9 @@ namespace Azure.ResourceManager.ApiManagement
         /// <returns> A collection of <see cref="TagResourceContractDetails" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<TagResourceContractDetails> GetApisByTags(string filter = null, int? top = null, int? skip = null, bool? includeNotTaggedApis = null, CancellationToken cancellationToken = default)
         {
-            Page<TagResourceContractDetails> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _apiClientDiagnostics.CreateScope("ApiManagementServiceResource.GetApisByTags");
-                scope.Start();
-                try
-                {
-                    var response = _apiRestClient.ListByTags(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, includeNotTaggedApis, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<TagResourceContractDetails> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _apiClientDiagnostics.CreateScope("ApiManagementServiceResource.GetApisByTags");
-                scope.Start();
-                try
-                {
-                    var response = _apiRestClient.ListByTagsNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, includeNotTaggedApis, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _apiRestClient.CreateListByTagsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, includeNotTaggedApis);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _apiRestClient.CreateListByTagsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, includeNotTaggedApis);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, TagResourceContractDetails.DeserializeTagResourceContractDetails, _apiClientDiagnostics, Pipeline, "ApiManagementServiceResource.GetApisByTags", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -1475,37 +1419,9 @@ namespace Azure.ResourceManager.ApiManagement
         /// <returns> An async collection of <see cref="ApiManagementContentType" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ApiManagementContentType> GetContentTypesAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<ApiManagementContentType>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _contentTypeClientDiagnostics.CreateScope("ApiManagementServiceResource.GetContentTypes");
-                scope.Start();
-                try
-                {
-                    var response = await _contentTypeRestClient.ListByServiceAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<ApiManagementContentType>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _contentTypeClientDiagnostics.CreateScope("ApiManagementServiceResource.GetContentTypes");
-                scope.Start();
-                try
-                {
-                    var response = await _contentTypeRestClient.ListByServiceNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _contentTypeRestClient.CreateListByServiceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _contentTypeRestClient.CreateListByServiceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, ApiManagementContentType.DeserializeApiManagementContentType, _contentTypeClientDiagnostics, Pipeline, "ApiManagementServiceResource.GetContentTypes", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -1517,37 +1433,9 @@ namespace Azure.ResourceManager.ApiManagement
         /// <returns> A collection of <see cref="ApiManagementContentType" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ApiManagementContentType> GetContentTypes(CancellationToken cancellationToken = default)
         {
-            Page<ApiManagementContentType> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _contentTypeClientDiagnostics.CreateScope("ApiManagementServiceResource.GetContentTypes");
-                scope.Start();
-                try
-                {
-                    var response = _contentTypeRestClient.ListByService(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<ApiManagementContentType> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _contentTypeClientDiagnostics.CreateScope("ApiManagementServiceResource.GetContentTypes");
-                scope.Start();
-                try
-                {
-                    var response = _contentTypeRestClient.ListByServiceNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _contentTypeRestClient.CreateListByServiceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _contentTypeRestClient.CreateListByServiceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, ApiManagementContentType.DeserializeApiManagementContentType, _contentTypeClientDiagnostics, Pipeline, "ApiManagementServiceResource.GetContentTypes", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -1730,37 +1618,9 @@ namespace Azure.ResourceManager.ApiManagement
         {
             Argument.AssertNotNullOrEmpty(contentTypeId, nameof(contentTypeId));
 
-            async Task<Page<ApiManagementContentItem>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _contentItemClientDiagnostics.CreateScope("ApiManagementServiceResource.GetContentItems");
-                scope.Start();
-                try
-                {
-                    var response = await _contentItemRestClient.ListByServiceAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, contentTypeId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<ApiManagementContentItem>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _contentItemClientDiagnostics.CreateScope("ApiManagementServiceResource.GetContentItems");
-                scope.Start();
-                try
-                {
-                    var response = await _contentItemRestClient.ListByServiceNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, contentTypeId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _contentItemRestClient.CreateListByServiceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, contentTypeId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _contentItemRestClient.CreateListByServiceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, contentTypeId);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, ApiManagementContentItem.DeserializeApiManagementContentItem, _contentItemClientDiagnostics, Pipeline, "ApiManagementServiceResource.GetContentItems", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -1777,37 +1637,9 @@ namespace Azure.ResourceManager.ApiManagement
         {
             Argument.AssertNotNullOrEmpty(contentTypeId, nameof(contentTypeId));
 
-            Page<ApiManagementContentItem> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _contentItemClientDiagnostics.CreateScope("ApiManagementServiceResource.GetContentItems");
-                scope.Start();
-                try
-                {
-                    var response = _contentItemRestClient.ListByService(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, contentTypeId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<ApiManagementContentItem> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _contentItemClientDiagnostics.CreateScope("ApiManagementServiceResource.GetContentItems");
-                scope.Start();
-                try
-                {
-                    var response = _contentItemRestClient.ListByServiceNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, contentTypeId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _contentItemRestClient.CreateListByServiceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, contentTypeId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _contentItemRestClient.CreateListByServiceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, contentTypeId);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, ApiManagementContentItem.DeserializeApiManagementContentItem, _contentItemClientDiagnostics, Pipeline, "ApiManagementServiceResource.GetContentItems", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -2055,37 +1887,9 @@ namespace Azure.ResourceManager.ApiManagement
         /// <returns> An async collection of <see cref="AvailableApiManagementServiceSkuResult" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<AvailableApiManagementServiceSkuResult> GetAvailableApiManagementServiceSkusAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<AvailableApiManagementServiceSkuResult>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _apiManagementServiceSkusClientDiagnostics.CreateScope("ApiManagementServiceResource.GetAvailableApiManagementServiceSkus");
-                scope.Start();
-                try
-                {
-                    var response = await _apiManagementServiceSkusRestClient.ListAvailableServiceSkusAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<AvailableApiManagementServiceSkuResult>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _apiManagementServiceSkusClientDiagnostics.CreateScope("ApiManagementServiceResource.GetAvailableApiManagementServiceSkus");
-                scope.Start();
-                try
-                {
-                    var response = await _apiManagementServiceSkusRestClient.ListAvailableServiceSkusNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _apiManagementServiceSkusRestClient.CreateListAvailableServiceSkusRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _apiManagementServiceSkusRestClient.CreateListAvailableServiceSkusNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, AvailableApiManagementServiceSkuResult.DeserializeAvailableApiManagementServiceSkuResult, _apiManagementServiceSkusClientDiagnostics, Pipeline, "ApiManagementServiceResource.GetAvailableApiManagementServiceSkus", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -2097,37 +1901,9 @@ namespace Azure.ResourceManager.ApiManagement
         /// <returns> A collection of <see cref="AvailableApiManagementServiceSkuResult" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<AvailableApiManagementServiceSkuResult> GetAvailableApiManagementServiceSkus(CancellationToken cancellationToken = default)
         {
-            Page<AvailableApiManagementServiceSkuResult> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _apiManagementServiceSkusClientDiagnostics.CreateScope("ApiManagementServiceResource.GetAvailableApiManagementServiceSkus");
-                scope.Start();
-                try
-                {
-                    var response = _apiManagementServiceSkusRestClient.ListAvailableServiceSkus(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<AvailableApiManagementServiceSkuResult> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _apiManagementServiceSkusClientDiagnostics.CreateScope("ApiManagementServiceResource.GetAvailableApiManagementServiceSkus");
-                scope.Start();
-                try
-                {
-                    var response = _apiManagementServiceSkusRestClient.ListAvailableServiceSkusNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _apiManagementServiceSkusRestClient.CreateListAvailableServiceSkusRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _apiManagementServiceSkusRestClient.CreateListAvailableServiceSkusNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, AvailableApiManagementServiceSkuResult.DeserializeAvailableApiManagementServiceSkuResult, _apiManagementServiceSkusClientDiagnostics, Pipeline, "ApiManagementServiceResource.GetAvailableApiManagementServiceSkus", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -2357,22 +2133,8 @@ namespace Azure.ResourceManager.ApiManagement
         /// <returns> An async collection of <see cref="NetworkStatusContractWithLocation" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<NetworkStatusContractWithLocation> GetNetworkStatusesAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<NetworkStatusContractWithLocation>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _networkStatusClientDiagnostics.CreateScope("ApiManagementServiceResource.GetNetworkStatuses");
-                scope.Start();
-                try
-                {
-                    var response = await _networkStatusRestClient.ListByServiceAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value, null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _networkStatusRestClient.CreateListByServiceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, NetworkStatusContractWithLocation.DeserializeNetworkStatusContractWithLocation, _networkStatusClientDiagnostics, Pipeline, "ApiManagementServiceResource.GetNetworkStatuses", "", null, cancellationToken);
         }
 
         /// <summary>
@@ -2384,22 +2146,8 @@ namespace Azure.ResourceManager.ApiManagement
         /// <returns> A collection of <see cref="NetworkStatusContractWithLocation" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<NetworkStatusContractWithLocation> GetNetworkStatuses(CancellationToken cancellationToken = default)
         {
-            Page<NetworkStatusContractWithLocation> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _networkStatusClientDiagnostics.CreateScope("ApiManagementServiceResource.GetNetworkStatuses");
-                scope.Start();
-                try
-                {
-                    var response = _networkStatusRestClient.ListByService(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value, null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _networkStatusRestClient.CreateListByServiceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, NetworkStatusContractWithLocation.DeserializeNetworkStatusContractWithLocation, _networkStatusClientDiagnostics, Pipeline, "ApiManagementServiceResource.GetNetworkStatuses", "", null, cancellationToken);
         }
 
         /// <summary>
@@ -2457,22 +2205,8 @@ namespace Azure.ResourceManager.ApiManagement
         /// <returns> An async collection of <see cref="OutboundEnvironmentEndpoint" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<OutboundEnvironmentEndpoint> GetOutboundNetworkDependenciesEndpointsAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<OutboundEnvironmentEndpoint>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _outboundNetworkDependenciesEndpointsClientDiagnostics.CreateScope("ApiManagementServiceResource.GetOutboundNetworkDependenciesEndpoints");
-                scope.Start();
-                try
-                {
-                    var response = await _outboundNetworkDependenciesEndpointsRestClient.ListByServiceAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _outboundNetworkDependenciesEndpointsRestClient.CreateListByServiceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, OutboundEnvironmentEndpoint.DeserializeOutboundEnvironmentEndpoint, _outboundNetworkDependenciesEndpointsClientDiagnostics, Pipeline, "ApiManagementServiceResource.GetOutboundNetworkDependenciesEndpoints", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -2484,22 +2218,8 @@ namespace Azure.ResourceManager.ApiManagement
         /// <returns> A collection of <see cref="OutboundEnvironmentEndpoint" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<OutboundEnvironmentEndpoint> GetOutboundNetworkDependenciesEndpoints(CancellationToken cancellationToken = default)
         {
-            Page<OutboundEnvironmentEndpoint> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _outboundNetworkDependenciesEndpointsClientDiagnostics.CreateScope("ApiManagementServiceResource.GetOutboundNetworkDependenciesEndpoints");
-                scope.Start();
-                try
-                {
-                    var response = _outboundNetworkDependenciesEndpointsRestClient.ListByService(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _outboundNetworkDependenciesEndpointsRestClient.CreateListByServiceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, OutboundEnvironmentEndpoint.DeserializeOutboundEnvironmentEndpoint, _outboundNetworkDependenciesEndpointsClientDiagnostics, Pipeline, "ApiManagementServiceResource.GetOutboundNetworkDependenciesEndpoints", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -2512,22 +2232,8 @@ namespace Azure.ResourceManager.ApiManagement
         /// <returns> An async collection of <see cref="PolicyDescriptionContractData" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<PolicyDescriptionContractData> GetPolicyDescriptionsAsync(PolicyScopeContract? scope = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<PolicyDescriptionContractData>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope0 = _policyDescriptionClientDiagnostics.CreateScope("ApiManagementServiceResource.GetPolicyDescriptions");
-                scope0.Start();
-                try
-                {
-                    var response = await _policyDescriptionRestClient.ListByServiceAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, scope, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope0.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _policyDescriptionRestClient.CreateListByServiceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, scope);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, PolicyDescriptionContractData.DeserializePolicyDescriptionContractData, _policyDescriptionClientDiagnostics, Pipeline, "ApiManagementServiceResource.GetPolicyDescriptions", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -2540,22 +2246,8 @@ namespace Azure.ResourceManager.ApiManagement
         /// <returns> A collection of <see cref="PolicyDescriptionContractData" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<PolicyDescriptionContractData> GetPolicyDescriptions(PolicyScopeContract? scope = null, CancellationToken cancellationToken = default)
         {
-            Page<PolicyDescriptionContractData> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope0 = _policyDescriptionClientDiagnostics.CreateScope("ApiManagementServiceResource.GetPolicyDescriptions");
-                scope0.Start();
-                try
-                {
-                    var response = _policyDescriptionRestClient.ListByService(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, scope, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope0.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _policyDescriptionRestClient.CreateListByServiceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, scope);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, PolicyDescriptionContractData.DeserializePolicyDescriptionContractData, _policyDescriptionClientDiagnostics, Pipeline, "ApiManagementServiceResource.GetPolicyDescriptions", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -2567,22 +2259,8 @@ namespace Azure.ResourceManager.ApiManagement
         /// <returns> An async collection of <see cref="PortalSettingsContractData" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<PortalSettingsContractData> GetPortalSettingsAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<PortalSettingsContractData>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _apiManagementServicePortalSettingsClientDiagnostics.CreateScope("ApiManagementServiceResource.GetPortalSettings");
-                scope.Start();
-                try
-                {
-                    var response = await _apiManagementServicePortalSettingsRestClient.ListByServiceAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _apiManagementServicePortalSettingsRestClient.CreateListByServiceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, PortalSettingsContractData.DeserializePortalSettingsContractData, _apiManagementServicePortalSettingsClientDiagnostics, Pipeline, "ApiManagementServiceResource.GetPortalSettings", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -2594,22 +2272,8 @@ namespace Azure.ResourceManager.ApiManagement
         /// <returns> A collection of <see cref="PortalSettingsContractData" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<PortalSettingsContractData> GetPortalSettings(CancellationToken cancellationToken = default)
         {
-            Page<PortalSettingsContractData> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _apiManagementServicePortalSettingsClientDiagnostics.CreateScope("ApiManagementServiceResource.GetPortalSettings");
-                scope.Start();
-                try
-                {
-                    var response = _apiManagementServicePortalSettingsRestClient.ListByService(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _apiManagementServicePortalSettingsRestClient.CreateListByServiceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, PortalSettingsContractData.DeserializePortalSettingsContractData, _apiManagementServicePortalSettingsClientDiagnostics, Pipeline, "ApiManagementServiceResource.GetPortalSettings", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -2625,37 +2289,9 @@ namespace Azure.ResourceManager.ApiManagement
         /// <returns> An async collection of <see cref="TagResourceContractDetails" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<TagResourceContractDetails> GetProductsByTagsAsync(string filter = null, int? top = null, int? skip = null, bool? includeNotTaggedProducts = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<TagResourceContractDetails>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _apiManagementProductProductClientDiagnostics.CreateScope("ApiManagementServiceResource.GetProductsByTags");
-                scope.Start();
-                try
-                {
-                    var response = await _apiManagementProductProductRestClient.ListByTagsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, includeNotTaggedProducts, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<TagResourceContractDetails>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _apiManagementProductProductClientDiagnostics.CreateScope("ApiManagementServiceResource.GetProductsByTags");
-                scope.Start();
-                try
-                {
-                    var response = await _apiManagementProductProductRestClient.ListByTagsNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, includeNotTaggedProducts, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _apiManagementProductProductRestClient.CreateListByTagsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, includeNotTaggedProducts);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _apiManagementProductProductRestClient.CreateListByTagsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, includeNotTaggedProducts);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, TagResourceContractDetails.DeserializeTagResourceContractDetails, _apiManagementProductProductClientDiagnostics, Pipeline, "ApiManagementServiceResource.GetProductsByTags", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -2671,37 +2307,9 @@ namespace Azure.ResourceManager.ApiManagement
         /// <returns> A collection of <see cref="TagResourceContractDetails" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<TagResourceContractDetails> GetProductsByTags(string filter = null, int? top = null, int? skip = null, bool? includeNotTaggedProducts = null, CancellationToken cancellationToken = default)
         {
-            Page<TagResourceContractDetails> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _apiManagementProductProductClientDiagnostics.CreateScope("ApiManagementServiceResource.GetProductsByTags");
-                scope.Start();
-                try
-                {
-                    var response = _apiManagementProductProductRestClient.ListByTags(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, includeNotTaggedProducts, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<TagResourceContractDetails> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _apiManagementProductProductClientDiagnostics.CreateScope("ApiManagementServiceResource.GetProductsByTags");
-                scope.Start();
-                try
-                {
-                    var response = _apiManagementProductProductRestClient.ListByTagsNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, includeNotTaggedProducts, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _apiManagementProductProductRestClient.CreateListByTagsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, includeNotTaggedProducts);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _apiManagementProductProductRestClient.CreateListByTagsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, includeNotTaggedProducts);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, TagResourceContractDetails.DeserializeTagResourceContractDetails, _apiManagementProductProductClientDiagnostics, Pipeline, "ApiManagementServiceResource.GetProductsByTags", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -2718,22 +2326,8 @@ namespace Azure.ResourceManager.ApiManagement
         {
             Argument.AssertNotNullOrEmpty(quotaCounterKey, nameof(quotaCounterKey));
 
-            async Task<Page<QuotaCounterContract>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _quotaByCounterKeysClientDiagnostics.CreateScope("ApiManagementServiceResource.GetQuotaByCounterKeys");
-                scope.Start();
-                try
-                {
-                    var response = await _quotaByCounterKeysRestClient.ListByServiceAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, quotaCounterKey, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _quotaByCounterKeysRestClient.CreateListByServiceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, quotaCounterKey);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, QuotaCounterContract.DeserializeQuotaCounterContract, _quotaByCounterKeysClientDiagnostics, Pipeline, "ApiManagementServiceResource.GetQuotaByCounterKeys", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -2750,22 +2344,8 @@ namespace Azure.ResourceManager.ApiManagement
         {
             Argument.AssertNotNullOrEmpty(quotaCounterKey, nameof(quotaCounterKey));
 
-            Page<QuotaCounterContract> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _quotaByCounterKeysClientDiagnostics.CreateScope("ApiManagementServiceResource.GetQuotaByCounterKeys");
-                scope.Start();
-                try
-                {
-                    var response = _quotaByCounterKeysRestClient.ListByService(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, quotaCounterKey, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _quotaByCounterKeysRestClient.CreateListByServiceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, quotaCounterKey);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, QuotaCounterContract.DeserializeQuotaCounterContract, _quotaByCounterKeysClientDiagnostics, Pipeline, "ApiManagementServiceResource.GetQuotaByCounterKeys", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -2784,22 +2364,8 @@ namespace Azure.ResourceManager.ApiManagement
             Argument.AssertNotNullOrEmpty(quotaCounterKey, nameof(quotaCounterKey));
             Argument.AssertNotNull(content, nameof(content));
 
-            async Task<Page<QuotaCounterContract>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _quotaByCounterKeysClientDiagnostics.CreateScope("ApiManagementServiceResource.UpdateQuotaByCounterKeys");
-                scope.Start();
-                try
-                {
-                    var response = await _quotaByCounterKeysRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, quotaCounterKey, content, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _quotaByCounterKeysRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, quotaCounterKey, content);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, QuotaCounterContract.DeserializeQuotaCounterContract, _quotaByCounterKeysClientDiagnostics, Pipeline, "ApiManagementServiceResource.UpdateQuotaByCounterKeys", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -2818,22 +2384,8 @@ namespace Azure.ResourceManager.ApiManagement
             Argument.AssertNotNullOrEmpty(quotaCounterKey, nameof(quotaCounterKey));
             Argument.AssertNotNull(content, nameof(content));
 
-            Page<QuotaCounterContract> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _quotaByCounterKeysClientDiagnostics.CreateScope("ApiManagementServiceResource.UpdateQuotaByCounterKeys");
-                scope.Start();
-                try
-                {
-                    var response = _quotaByCounterKeysRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, quotaCounterKey, content, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _quotaByCounterKeysRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, quotaCounterKey, content);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, QuotaCounterContract.DeserializeQuotaCounterContract, _quotaByCounterKeysClientDiagnostics, Pipeline, "ApiManagementServiceResource.UpdateQuotaByCounterKeys", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -2965,37 +2517,9 @@ namespace Azure.ResourceManager.ApiManagement
         /// <returns> An async collection of <see cref="RegionContract" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<RegionContract> GetRegionsAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<RegionContract>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _regionClientDiagnostics.CreateScope("ApiManagementServiceResource.GetRegions");
-                scope.Start();
-                try
-                {
-                    var response = await _regionRestClient.ListByServiceAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<RegionContract>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _regionClientDiagnostics.CreateScope("ApiManagementServiceResource.GetRegions");
-                scope.Start();
-                try
-                {
-                    var response = await _regionRestClient.ListByServiceNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _regionRestClient.CreateListByServiceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _regionRestClient.CreateListByServiceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, RegionContract.DeserializeRegionContract, _regionClientDiagnostics, Pipeline, "ApiManagementServiceResource.GetRegions", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -3007,37 +2531,9 @@ namespace Azure.ResourceManager.ApiManagement
         /// <returns> A collection of <see cref="RegionContract" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<RegionContract> GetRegions(CancellationToken cancellationToken = default)
         {
-            Page<RegionContract> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _regionClientDiagnostics.CreateScope("ApiManagementServiceResource.GetRegions");
-                scope.Start();
-                try
-                {
-                    var response = _regionRestClient.ListByService(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<RegionContract> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _regionClientDiagnostics.CreateScope("ApiManagementServiceResource.GetRegions");
-                scope.Start();
-                try
-                {
-                    var response = _regionRestClient.ListByServiceNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _regionRestClient.CreateListByServiceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _regionRestClient.CreateListByServiceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, RegionContract.DeserializeRegionContract, _regionClientDiagnostics, Pipeline, "ApiManagementServiceResource.GetRegions", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -3056,37 +2552,9 @@ namespace Azure.ResourceManager.ApiManagement
         {
             Argument.AssertNotNull(filter, nameof(filter));
 
-            async Task<Page<ReportRecordContract>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _reportsClientDiagnostics.CreateScope("ApiManagementServiceResource.GetReportsByApi");
-                scope.Start();
-                try
-                {
-                    var response = await _reportsRestClient.ListByApiAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, orderBy, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<ReportRecordContract>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _reportsClientDiagnostics.CreateScope("ApiManagementServiceResource.GetReportsByApi");
-                scope.Start();
-                try
-                {
-                    var response = await _reportsRestClient.ListByApiNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, orderBy, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _reportsRestClient.CreateListByApiRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, orderBy);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _reportsRestClient.CreateListByApiNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, orderBy);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, ReportRecordContract.DeserializeReportRecordContract, _reportsClientDiagnostics, Pipeline, "ApiManagementServiceResource.GetReportsByApi", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -3105,37 +2573,9 @@ namespace Azure.ResourceManager.ApiManagement
         {
             Argument.AssertNotNull(filter, nameof(filter));
 
-            Page<ReportRecordContract> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _reportsClientDiagnostics.CreateScope("ApiManagementServiceResource.GetReportsByApi");
-                scope.Start();
-                try
-                {
-                    var response = _reportsRestClient.ListByApi(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, orderBy, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<ReportRecordContract> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _reportsClientDiagnostics.CreateScope("ApiManagementServiceResource.GetReportsByApi");
-                scope.Start();
-                try
-                {
-                    var response = _reportsRestClient.ListByApiNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, orderBy, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _reportsRestClient.CreateListByApiRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, orderBy);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _reportsRestClient.CreateListByApiNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, orderBy);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, ReportRecordContract.DeserializeReportRecordContract, _reportsClientDiagnostics, Pipeline, "ApiManagementServiceResource.GetReportsByApi", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -3154,37 +2594,9 @@ namespace Azure.ResourceManager.ApiManagement
         {
             Argument.AssertNotNull(filter, nameof(filter));
 
-            async Task<Page<ReportRecordContract>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _reportsClientDiagnostics.CreateScope("ApiManagementServiceResource.GetReportsByUser");
-                scope.Start();
-                try
-                {
-                    var response = await _reportsRestClient.ListByUserAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, orderBy, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<ReportRecordContract>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _reportsClientDiagnostics.CreateScope("ApiManagementServiceResource.GetReportsByUser");
-                scope.Start();
-                try
-                {
-                    var response = await _reportsRestClient.ListByUserNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, orderBy, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _reportsRestClient.CreateListByUserRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, orderBy);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _reportsRestClient.CreateListByUserNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, orderBy);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, ReportRecordContract.DeserializeReportRecordContract, _reportsClientDiagnostics, Pipeline, "ApiManagementServiceResource.GetReportsByUser", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -3203,37 +2615,9 @@ namespace Azure.ResourceManager.ApiManagement
         {
             Argument.AssertNotNull(filter, nameof(filter));
 
-            Page<ReportRecordContract> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _reportsClientDiagnostics.CreateScope("ApiManagementServiceResource.GetReportsByUser");
-                scope.Start();
-                try
-                {
-                    var response = _reportsRestClient.ListByUser(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, orderBy, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<ReportRecordContract> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _reportsClientDiagnostics.CreateScope("ApiManagementServiceResource.GetReportsByUser");
-                scope.Start();
-                try
-                {
-                    var response = _reportsRestClient.ListByUserNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, orderBy, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _reportsRestClient.CreateListByUserRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, orderBy);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _reportsRestClient.CreateListByUserNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, orderBy);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, ReportRecordContract.DeserializeReportRecordContract, _reportsClientDiagnostics, Pipeline, "ApiManagementServiceResource.GetReportsByUser", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -3252,37 +2636,9 @@ namespace Azure.ResourceManager.ApiManagement
         {
             Argument.AssertNotNull(filter, nameof(filter));
 
-            async Task<Page<ReportRecordContract>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _reportsClientDiagnostics.CreateScope("ApiManagementServiceResource.GetReportsByOperation");
-                scope.Start();
-                try
-                {
-                    var response = await _reportsRestClient.ListByOperationAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, orderBy, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<ReportRecordContract>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _reportsClientDiagnostics.CreateScope("ApiManagementServiceResource.GetReportsByOperation");
-                scope.Start();
-                try
-                {
-                    var response = await _reportsRestClient.ListByOperationNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, orderBy, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _reportsRestClient.CreateListByOperationRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, orderBy);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _reportsRestClient.CreateListByOperationNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, orderBy);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, ReportRecordContract.DeserializeReportRecordContract, _reportsClientDiagnostics, Pipeline, "ApiManagementServiceResource.GetReportsByOperation", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -3301,37 +2657,9 @@ namespace Azure.ResourceManager.ApiManagement
         {
             Argument.AssertNotNull(filter, nameof(filter));
 
-            Page<ReportRecordContract> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _reportsClientDiagnostics.CreateScope("ApiManagementServiceResource.GetReportsByOperation");
-                scope.Start();
-                try
-                {
-                    var response = _reportsRestClient.ListByOperation(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, orderBy, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<ReportRecordContract> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _reportsClientDiagnostics.CreateScope("ApiManagementServiceResource.GetReportsByOperation");
-                scope.Start();
-                try
-                {
-                    var response = _reportsRestClient.ListByOperationNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, orderBy, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _reportsRestClient.CreateListByOperationRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, orderBy);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _reportsRestClient.CreateListByOperationNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, orderBy);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, ReportRecordContract.DeserializeReportRecordContract, _reportsClientDiagnostics, Pipeline, "ApiManagementServiceResource.GetReportsByOperation", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -3350,37 +2678,9 @@ namespace Azure.ResourceManager.ApiManagement
         {
             Argument.AssertNotNull(filter, nameof(filter));
 
-            async Task<Page<ReportRecordContract>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _reportsClientDiagnostics.CreateScope("ApiManagementServiceResource.GetReportsByProduct");
-                scope.Start();
-                try
-                {
-                    var response = await _reportsRestClient.ListByProductAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, orderBy, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<ReportRecordContract>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _reportsClientDiagnostics.CreateScope("ApiManagementServiceResource.GetReportsByProduct");
-                scope.Start();
-                try
-                {
-                    var response = await _reportsRestClient.ListByProductNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, orderBy, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _reportsRestClient.CreateListByProductRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, orderBy);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _reportsRestClient.CreateListByProductNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, orderBy);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, ReportRecordContract.DeserializeReportRecordContract, _reportsClientDiagnostics, Pipeline, "ApiManagementServiceResource.GetReportsByProduct", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -3399,37 +2699,9 @@ namespace Azure.ResourceManager.ApiManagement
         {
             Argument.AssertNotNull(filter, nameof(filter));
 
-            Page<ReportRecordContract> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _reportsClientDiagnostics.CreateScope("ApiManagementServiceResource.GetReportsByProduct");
-                scope.Start();
-                try
-                {
-                    var response = _reportsRestClient.ListByProduct(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, orderBy, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<ReportRecordContract> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _reportsClientDiagnostics.CreateScope("ApiManagementServiceResource.GetReportsByProduct");
-                scope.Start();
-                try
-                {
-                    var response = _reportsRestClient.ListByProductNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, orderBy, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _reportsRestClient.CreateListByProductRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, orderBy);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _reportsRestClient.CreateListByProductNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, orderBy);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, ReportRecordContract.DeserializeReportRecordContract, _reportsClientDiagnostics, Pipeline, "ApiManagementServiceResource.GetReportsByProduct", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -3447,37 +2719,9 @@ namespace Azure.ResourceManager.ApiManagement
         {
             Argument.AssertNotNull(filter, nameof(filter));
 
-            async Task<Page<ReportRecordContract>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _reportsClientDiagnostics.CreateScope("ApiManagementServiceResource.GetReportsByGeo");
-                scope.Start();
-                try
-                {
-                    var response = await _reportsRestClient.ListByGeoAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<ReportRecordContract>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _reportsClientDiagnostics.CreateScope("ApiManagementServiceResource.GetReportsByGeo");
-                scope.Start();
-                try
-                {
-                    var response = await _reportsRestClient.ListByGeoNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _reportsRestClient.CreateListByGeoRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _reportsRestClient.CreateListByGeoNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, ReportRecordContract.DeserializeReportRecordContract, _reportsClientDiagnostics, Pipeline, "ApiManagementServiceResource.GetReportsByGeo", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -3495,37 +2739,9 @@ namespace Azure.ResourceManager.ApiManagement
         {
             Argument.AssertNotNull(filter, nameof(filter));
 
-            Page<ReportRecordContract> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _reportsClientDiagnostics.CreateScope("ApiManagementServiceResource.GetReportsByGeo");
-                scope.Start();
-                try
-                {
-                    var response = _reportsRestClient.ListByGeo(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<ReportRecordContract> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _reportsClientDiagnostics.CreateScope("ApiManagementServiceResource.GetReportsByGeo");
-                scope.Start();
-                try
-                {
-                    var response = _reportsRestClient.ListByGeoNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _reportsRestClient.CreateListByGeoRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _reportsRestClient.CreateListByGeoNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, ReportRecordContract.DeserializeReportRecordContract, _reportsClientDiagnostics, Pipeline, "ApiManagementServiceResource.GetReportsByGeo", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -3544,37 +2760,9 @@ namespace Azure.ResourceManager.ApiManagement
         {
             Argument.AssertNotNull(filter, nameof(filter));
 
-            async Task<Page<ReportRecordContract>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _reportsClientDiagnostics.CreateScope("ApiManagementServiceResource.GetReportsBySubscription");
-                scope.Start();
-                try
-                {
-                    var response = await _reportsRestClient.ListBySubscriptionAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, orderBy, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<ReportRecordContract>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _reportsClientDiagnostics.CreateScope("ApiManagementServiceResource.GetReportsBySubscription");
-                scope.Start();
-                try
-                {
-                    var response = await _reportsRestClient.ListBySubscriptionNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, orderBy, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _reportsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, orderBy);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _reportsRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, orderBy);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, ReportRecordContract.DeserializeReportRecordContract, _reportsClientDiagnostics, Pipeline, "ApiManagementServiceResource.GetReportsBySubscription", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -3593,37 +2781,9 @@ namespace Azure.ResourceManager.ApiManagement
         {
             Argument.AssertNotNull(filter, nameof(filter));
 
-            Page<ReportRecordContract> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _reportsClientDiagnostics.CreateScope("ApiManagementServiceResource.GetReportsBySubscription");
-                scope.Start();
-                try
-                {
-                    var response = _reportsRestClient.ListBySubscription(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, orderBy, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<ReportRecordContract> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _reportsClientDiagnostics.CreateScope("ApiManagementServiceResource.GetReportsBySubscription");
-                scope.Start();
-                try
-                {
-                    var response = _reportsRestClient.ListBySubscriptionNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, orderBy, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _reportsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, orderBy);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _reportsRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, orderBy);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, ReportRecordContract.DeserializeReportRecordContract, _reportsClientDiagnostics, Pipeline, "ApiManagementServiceResource.GetReportsBySubscription", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -3643,37 +2803,9 @@ namespace Azure.ResourceManager.ApiManagement
         {
             Argument.AssertNotNull(filter, nameof(filter));
 
-            async Task<Page<ReportRecordContract>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _reportsClientDiagnostics.CreateScope("ApiManagementServiceResource.GetReportsByTime");
-                scope.Start();
-                try
-                {
-                    var response = await _reportsRestClient.ListByTimeAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, interval, top, skip, orderBy, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<ReportRecordContract>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _reportsClientDiagnostics.CreateScope("ApiManagementServiceResource.GetReportsByTime");
-                scope.Start();
-                try
-                {
-                    var response = await _reportsRestClient.ListByTimeNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, interval, top, skip, orderBy, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _reportsRestClient.CreateListByTimeRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, interval, top, skip, orderBy);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _reportsRestClient.CreateListByTimeNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, interval, top, skip, orderBy);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, ReportRecordContract.DeserializeReportRecordContract, _reportsClientDiagnostics, Pipeline, "ApiManagementServiceResource.GetReportsByTime", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -3693,37 +2825,9 @@ namespace Azure.ResourceManager.ApiManagement
         {
             Argument.AssertNotNull(filter, nameof(filter));
 
-            Page<ReportRecordContract> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _reportsClientDiagnostics.CreateScope("ApiManagementServiceResource.GetReportsByTime");
-                scope.Start();
-                try
-                {
-                    var response = _reportsRestClient.ListByTime(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, interval, top, skip, orderBy, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<ReportRecordContract> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _reportsClientDiagnostics.CreateScope("ApiManagementServiceResource.GetReportsByTime");
-                scope.Start();
-                try
-                {
-                    var response = _reportsRestClient.ListByTimeNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, interval, top, skip, orderBy, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _reportsRestClient.CreateListByTimeRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, interval, top, skip, orderBy);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _reportsRestClient.CreateListByTimeNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, interval, top, skip, orderBy);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, ReportRecordContract.DeserializeReportRecordContract, _reportsClientDiagnostics, Pipeline, "ApiManagementServiceResource.GetReportsByTime", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -3741,22 +2845,8 @@ namespace Azure.ResourceManager.ApiManagement
         {
             Argument.AssertNotNull(filter, nameof(filter));
 
-            async Task<Page<RequestReportRecordContract>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _reportsClientDiagnostics.CreateScope("ApiManagementServiceResource.GetReportsByRequest");
-                scope.Start();
-                try
-                {
-                    var response = await _reportsRestClient.ListByRequestAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _reportsRestClient.CreateListByRequestRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, RequestReportRecordContract.DeserializeRequestReportRecordContract, _reportsClientDiagnostics, Pipeline, "ApiManagementServiceResource.GetReportsByRequest", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -3774,22 +2864,8 @@ namespace Azure.ResourceManager.ApiManagement
         {
             Argument.AssertNotNull(filter, nameof(filter));
 
-            Page<RequestReportRecordContract> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _reportsClientDiagnostics.CreateScope("ApiManagementServiceResource.GetReportsByRequest");
-                scope.Start();
-                try
-                {
-                    var response = _reportsRestClient.ListByRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _reportsRestClient.CreateListByRequestRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, RequestReportRecordContract.DeserializeRequestReportRecordContract, _reportsClientDiagnostics, Pipeline, "ApiManagementServiceResource.GetReportsByRequest", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -3804,37 +2880,9 @@ namespace Azure.ResourceManager.ApiManagement
         /// <returns> An async collection of <see cref="TagResourceContractDetails" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<TagResourceContractDetails> GetTagResourcesAsync(string filter = null, int? top = null, int? skip = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<TagResourceContractDetails>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _tagResourceClientDiagnostics.CreateScope("ApiManagementServiceResource.GetTagResources");
-                scope.Start();
-                try
-                {
-                    var response = await _tagResourceRestClient.ListByServiceAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<TagResourceContractDetails>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _tagResourceClientDiagnostics.CreateScope("ApiManagementServiceResource.GetTagResources");
-                scope.Start();
-                try
-                {
-                    var response = await _tagResourceRestClient.ListByServiceNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _tagResourceRestClient.CreateListByServiceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _tagResourceRestClient.CreateListByServiceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, TagResourceContractDetails.DeserializeTagResourceContractDetails, _tagResourceClientDiagnostics, Pipeline, "ApiManagementServiceResource.GetTagResources", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -3849,37 +2897,9 @@ namespace Azure.ResourceManager.ApiManagement
         /// <returns> A collection of <see cref="TagResourceContractDetails" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<TagResourceContractDetails> GetTagResources(string filter = null, int? top = null, int? skip = null, CancellationToken cancellationToken = default)
         {
-            Page<TagResourceContractDetails> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _tagResourceClientDiagnostics.CreateScope("ApiManagementServiceResource.GetTagResources");
-                scope.Start();
-                try
-                {
-                    var response = _tagResourceRestClient.ListByService(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<TagResourceContractDetails> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _tagResourceClientDiagnostics.CreateScope("ApiManagementServiceResource.GetTagResources");
-                scope.Start();
-                try
-                {
-                    var response = _tagResourceRestClient.ListByServiceNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _tagResourceRestClient.CreateListByServiceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _tagResourceRestClient.CreateListByServiceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, TagResourceContractDetails.DeserializeTagResourceContractDetails, _tagResourceClientDiagnostics, Pipeline, "ApiManagementServiceResource.GetTagResources", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -123,37 +122,9 @@ namespace Azure.ResourceManager.MySql
         {
             Argument.AssertNotNull(queryIds, nameof(queryIds));
 
-            async Task<Page<MySqlQueryTextResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _mySqlQueryTextQueryTextsClientDiagnostics.CreateScope("MySqlQueryTextCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _mySqlQueryTextQueryTextsRestClient.ListByServerAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, queryIds, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new MySqlQueryTextResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<MySqlQueryTextResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _mySqlQueryTextQueryTextsClientDiagnostics.CreateScope("MySqlQueryTextCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _mySqlQueryTextQueryTextsRestClient.ListByServerNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, queryIds, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new MySqlQueryTextResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _mySqlQueryTextQueryTextsRestClient.CreateListByServerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, queryIds);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _mySqlQueryTextQueryTextsRestClient.CreateListByServerNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, queryIds);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new MySqlQueryTextResource(Client, MySqlQueryTextData.DeserializeMySqlQueryTextData(e)), _mySqlQueryTextQueryTextsClientDiagnostics, Pipeline, "MySqlQueryTextCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -169,37 +140,9 @@ namespace Azure.ResourceManager.MySql
         {
             Argument.AssertNotNull(queryIds, nameof(queryIds));
 
-            Page<MySqlQueryTextResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _mySqlQueryTextQueryTextsClientDiagnostics.CreateScope("MySqlQueryTextCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _mySqlQueryTextQueryTextsRestClient.ListByServer(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, queryIds, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new MySqlQueryTextResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<MySqlQueryTextResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _mySqlQueryTextQueryTextsClientDiagnostics.CreateScope("MySqlQueryTextCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _mySqlQueryTextQueryTextsRestClient.ListByServerNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, queryIds, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new MySqlQueryTextResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _mySqlQueryTextQueryTextsRestClient.CreateListByServerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, queryIds);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _mySqlQueryTextQueryTextsRestClient.CreateListByServerNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, queryIds);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new MySqlQueryTextResource(Client, MySqlQueryTextData.DeserializeMySqlQueryTextData(e)), _mySqlQueryTextQueryTextsClientDiagnostics, Pipeline, "MySqlQueryTextCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

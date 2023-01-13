@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -120,37 +119,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <returns> An async collection of <see cref="LogicalNetworkResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<LogicalNetworkResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<LogicalNetworkResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _logicalNetworkReplicationLogicalNetworksClientDiagnostics.CreateScope("LogicalNetworkCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _logicalNetworkReplicationLogicalNetworksRestClient.ListByReplicationFabricsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new LogicalNetworkResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<LogicalNetworkResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _logicalNetworkReplicationLogicalNetworksClientDiagnostics.CreateScope("LogicalNetworkCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _logicalNetworkReplicationLogicalNetworksRestClient.ListByReplicationFabricsNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new LogicalNetworkResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _logicalNetworkReplicationLogicalNetworksRestClient.CreateListByReplicationFabricsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _logicalNetworkReplicationLogicalNetworksRestClient.CreateListByReplicationFabricsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new LogicalNetworkResource(Client, LogicalNetworkData.DeserializeLogicalNetworkData(e)), _logicalNetworkReplicationLogicalNetworksClientDiagnostics, Pipeline, "LogicalNetworkCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -162,37 +133,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <returns> A collection of <see cref="LogicalNetworkResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<LogicalNetworkResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<LogicalNetworkResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _logicalNetworkReplicationLogicalNetworksClientDiagnostics.CreateScope("LogicalNetworkCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _logicalNetworkReplicationLogicalNetworksRestClient.ListByReplicationFabrics(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new LogicalNetworkResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<LogicalNetworkResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _logicalNetworkReplicationLogicalNetworksClientDiagnostics.CreateScope("LogicalNetworkCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _logicalNetworkReplicationLogicalNetworksRestClient.ListByReplicationFabricsNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new LogicalNetworkResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _logicalNetworkReplicationLogicalNetworksRestClient.CreateListByReplicationFabricsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _logicalNetworkReplicationLogicalNetworksRestClient.CreateListByReplicationFabricsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new LogicalNetworkResource(Client, LogicalNetworkData.DeserializeLogicalNetworkData(e)), _logicalNetworkReplicationLogicalNetworksClientDiagnostics, Pipeline, "LogicalNetworkCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

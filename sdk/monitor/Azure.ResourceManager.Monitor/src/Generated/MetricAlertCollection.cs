@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -187,22 +186,8 @@ namespace Azure.ResourceManager.Monitor
         /// <returns> An async collection of <see cref="MetricAlertResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<MetricAlertResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<MetricAlertResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _metricAlertClientDiagnostics.CreateScope("MetricAlertCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _metricAlertRestClient.ListByResourceGroupAsync(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new MetricAlertResource(Client, value)), null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _metricAlertRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new MetricAlertResource(Client, MetricAlertData.DeserializeMetricAlertData(e)), _metricAlertClientDiagnostics, Pipeline, "MetricAlertCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -214,22 +199,8 @@ namespace Azure.ResourceManager.Monitor
         /// <returns> A collection of <see cref="MetricAlertResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<MetricAlertResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<MetricAlertResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _metricAlertClientDiagnostics.CreateScope("MetricAlertCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _metricAlertRestClient.ListByResourceGroup(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new MetricAlertResource(Client, value)), null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _metricAlertRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new MetricAlertResource(Client, MetricAlertData.DeserializeMetricAlertData(e)), _metricAlertClientDiagnostics, Pipeline, "MetricAlertCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>

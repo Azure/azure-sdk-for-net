@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -188,37 +187,9 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
         /// <returns> An async collection of <see cref="FederatedIdentityCredentialResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<FederatedIdentityCredentialResource> GetAllAsync(int? top = null, string skiptoken = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<FederatedIdentityCredentialResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _federatedIdentityCredentialClientDiagnostics.CreateScope("FederatedIdentityCredentialCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _federatedIdentityCredentialRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top, skiptoken, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new FederatedIdentityCredentialResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<FederatedIdentityCredentialResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _federatedIdentityCredentialClientDiagnostics.CreateScope("FederatedIdentityCredentialCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _federatedIdentityCredentialRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top, skiptoken, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new FederatedIdentityCredentialResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _federatedIdentityCredentialRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top, skiptoken);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _federatedIdentityCredentialRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top, skiptoken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new FederatedIdentityCredentialResource(Client, FederatedIdentityCredentialData.DeserializeFederatedIdentityCredentialData(e)), _federatedIdentityCredentialClientDiagnostics, Pipeline, "FederatedIdentityCredentialCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -232,37 +203,9 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
         /// <returns> A collection of <see cref="FederatedIdentityCredentialResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<FederatedIdentityCredentialResource> GetAll(int? top = null, string skiptoken = null, CancellationToken cancellationToken = default)
         {
-            Page<FederatedIdentityCredentialResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _federatedIdentityCredentialClientDiagnostics.CreateScope("FederatedIdentityCredentialCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _federatedIdentityCredentialRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top, skiptoken, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new FederatedIdentityCredentialResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<FederatedIdentityCredentialResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _federatedIdentityCredentialClientDiagnostics.CreateScope("FederatedIdentityCredentialCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _federatedIdentityCredentialRestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top, skiptoken, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new FederatedIdentityCredentialResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _federatedIdentityCredentialRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top, skiptoken);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _federatedIdentityCredentialRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top, skiptoken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new FederatedIdentityCredentialResource(Client, FederatedIdentityCredentialData.DeserializeFederatedIdentityCredentialData(e)), _federatedIdentityCredentialClientDiagnostics, Pipeline, "FederatedIdentityCredentialCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

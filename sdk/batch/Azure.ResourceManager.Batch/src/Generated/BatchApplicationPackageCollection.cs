@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -187,37 +186,9 @@ namespace Azure.ResourceManager.Batch
         /// <returns> An async collection of <see cref="BatchApplicationPackageResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<BatchApplicationPackageResource> GetAllAsync(int? maxresults = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<BatchApplicationPackageResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _batchApplicationPackageApplicationPackageClientDiagnostics.CreateScope("BatchApplicationPackageCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _batchApplicationPackageApplicationPackageRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, maxresults, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new BatchApplicationPackageResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<BatchApplicationPackageResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _batchApplicationPackageApplicationPackageClientDiagnostics.CreateScope("BatchApplicationPackageCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _batchApplicationPackageApplicationPackageRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, maxresults, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new BatchApplicationPackageResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _batchApplicationPackageApplicationPackageRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, maxresults);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _batchApplicationPackageApplicationPackageRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, maxresults);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new BatchApplicationPackageResource(Client, BatchApplicationPackageData.DeserializeBatchApplicationPackageData(e)), _batchApplicationPackageApplicationPackageClientDiagnostics, Pipeline, "BatchApplicationPackageCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -230,37 +201,9 @@ namespace Azure.ResourceManager.Batch
         /// <returns> A collection of <see cref="BatchApplicationPackageResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<BatchApplicationPackageResource> GetAll(int? maxresults = null, CancellationToken cancellationToken = default)
         {
-            Page<BatchApplicationPackageResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _batchApplicationPackageApplicationPackageClientDiagnostics.CreateScope("BatchApplicationPackageCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _batchApplicationPackageApplicationPackageRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, maxresults, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new BatchApplicationPackageResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<BatchApplicationPackageResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _batchApplicationPackageApplicationPackageClientDiagnostics.CreateScope("BatchApplicationPackageCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _batchApplicationPackageApplicationPackageRestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, maxresults, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new BatchApplicationPackageResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _batchApplicationPackageApplicationPackageRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, maxresults);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _batchApplicationPackageApplicationPackageRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, maxresults);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new BatchApplicationPackageResource(Client, BatchApplicationPackageData.DeserializeBatchApplicationPackageData(e)), _batchApplicationPackageApplicationPackageClientDiagnostics, Pipeline, "BatchApplicationPackageCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

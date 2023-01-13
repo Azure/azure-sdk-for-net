@@ -602,22 +602,8 @@ namespace Azure.ResourceManager.Logic
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            async Task<Page<IntegrationAccountKeyVaultKey>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _integrationAccountClientDiagnostics.CreateScope("IntegrationAccountResource.GetKeyVaultKeys");
-                scope.Start();
-                try
-                {
-                    var response = await _integrationAccountRestClient.ListKeyVaultKeysAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _integrationAccountRestClient.CreateListKeyVaultKeysRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, IntegrationAccountKeyVaultKey.DeserializeIntegrationAccountKeyVaultKey, _integrationAccountClientDiagnostics, Pipeline, "IntegrationAccountResource.GetKeyVaultKeys", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -633,22 +619,8 @@ namespace Azure.ResourceManager.Logic
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            Page<IntegrationAccountKeyVaultKey> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _integrationAccountClientDiagnostics.CreateScope("IntegrationAccountResource.GetKeyVaultKeys");
-                scope.Start();
-                try
-                {
-                    var response = _integrationAccountRestClient.ListKeyVaultKeys(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _integrationAccountRestClient.CreateListKeyVaultKeysRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, IntegrationAccountKeyVaultKey.DeserializeIntegrationAccountKeyVaultKey, _integrationAccountClientDiagnostics, Pipeline, "IntegrationAccountResource.GetKeyVaultKeys", "value", null, cancellationToken);
         }
 
         /// <summary>

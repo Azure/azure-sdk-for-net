@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -186,37 +185,9 @@ namespace Azure.ResourceManager.Cdn
         /// <returns> An async collection of <see cref="FrontDoorOriginResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<FrontDoorOriginResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<FrontDoorOriginResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _frontDoorOriginClientDiagnostics.CreateScope("FrontDoorOriginCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _frontDoorOriginRestClient.ListByOriginGroupAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new FrontDoorOriginResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<FrontDoorOriginResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _frontDoorOriginClientDiagnostics.CreateScope("FrontDoorOriginCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _frontDoorOriginRestClient.ListByOriginGroupNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new FrontDoorOriginResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _frontDoorOriginRestClient.CreateListByOriginGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _frontDoorOriginRestClient.CreateListByOriginGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new FrontDoorOriginResource(Client, FrontDoorOriginData.DeserializeFrontDoorOriginData(e)), _frontDoorOriginClientDiagnostics, Pipeline, "FrontDoorOriginCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -228,37 +199,9 @@ namespace Azure.ResourceManager.Cdn
         /// <returns> A collection of <see cref="FrontDoorOriginResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<FrontDoorOriginResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<FrontDoorOriginResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _frontDoorOriginClientDiagnostics.CreateScope("FrontDoorOriginCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _frontDoorOriginRestClient.ListByOriginGroup(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new FrontDoorOriginResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<FrontDoorOriginResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _frontDoorOriginClientDiagnostics.CreateScope("FrontDoorOriginCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _frontDoorOriginRestClient.ListByOriginGroupNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new FrontDoorOriginResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _frontDoorOriginRestClient.CreateListByOriginGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _frontDoorOriginRestClient.CreateListByOriginGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new FrontDoorOriginResource(Client, FrontDoorOriginData.DeserializeFrontDoorOriginData(e)), _frontDoorOriginClientDiagnostics, Pipeline, "FrontDoorOriginCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

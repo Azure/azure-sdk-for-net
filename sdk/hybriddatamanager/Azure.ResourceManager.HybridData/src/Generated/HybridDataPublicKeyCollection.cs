@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -120,37 +119,9 @@ namespace Azure.ResourceManager.HybridData
         /// <returns> An async collection of <see cref="HybridDataPublicKeyResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<HybridDataPublicKeyResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<HybridDataPublicKeyResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _hybridDataPublicKeyPublicKeysClientDiagnostics.CreateScope("HybridDataPublicKeyCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _hybridDataPublicKeyPublicKeysRestClient.ListByDataManagerAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new HybridDataPublicKeyResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<HybridDataPublicKeyResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _hybridDataPublicKeyPublicKeysClientDiagnostics.CreateScope("HybridDataPublicKeyCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _hybridDataPublicKeyPublicKeysRestClient.ListByDataManagerNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new HybridDataPublicKeyResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _hybridDataPublicKeyPublicKeysRestClient.CreateListByDataManagerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _hybridDataPublicKeyPublicKeysRestClient.CreateListByDataManagerNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new HybridDataPublicKeyResource(Client, HybridDataPublicKeyData.DeserializeHybridDataPublicKeyData(e)), _hybridDataPublicKeyPublicKeysClientDiagnostics, Pipeline, "HybridDataPublicKeyCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -162,37 +133,9 @@ namespace Azure.ResourceManager.HybridData
         /// <returns> A collection of <see cref="HybridDataPublicKeyResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<HybridDataPublicKeyResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<HybridDataPublicKeyResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _hybridDataPublicKeyPublicKeysClientDiagnostics.CreateScope("HybridDataPublicKeyCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _hybridDataPublicKeyPublicKeysRestClient.ListByDataManager(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new HybridDataPublicKeyResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<HybridDataPublicKeyResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _hybridDataPublicKeyPublicKeysClientDiagnostics.CreateScope("HybridDataPublicKeyCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _hybridDataPublicKeyPublicKeysRestClient.ListByDataManagerNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new HybridDataPublicKeyResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _hybridDataPublicKeyPublicKeysRestClient.CreateListByDataManagerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _hybridDataPublicKeyPublicKeysRestClient.CreateListByDataManagerNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new HybridDataPublicKeyResource(Client, HybridDataPublicKeyData.DeserializeHybridDataPublicKeyData(e)), _hybridDataPublicKeyPublicKeysClientDiagnostics, Pipeline, "HybridDataPublicKeyCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

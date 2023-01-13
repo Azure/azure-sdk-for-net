@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -187,37 +186,9 @@ namespace Azure.ResourceManager.ResourceMover
         /// <returns> An async collection of <see cref="MoverResourceSetResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<MoverResourceSetResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<MoverResourceSetResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _moverResourceSetMoveCollectionsClientDiagnostics.CreateScope("MoverResourceSetCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _moverResourceSetMoveCollectionsRestClient.ListMoveCollectionsByResourceGroupAsync(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new MoverResourceSetResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<MoverResourceSetResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _moverResourceSetMoveCollectionsClientDiagnostics.CreateScope("MoverResourceSetCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _moverResourceSetMoveCollectionsRestClient.ListMoveCollectionsByResourceGroupNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new MoverResourceSetResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _moverResourceSetMoveCollectionsRestClient.CreateListMoveCollectionsByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _moverResourceSetMoveCollectionsRestClient.CreateListMoveCollectionsByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new MoverResourceSetResource(Client, MoverResourceSetData.DeserializeMoverResourceSetData(e)), _moverResourceSetMoveCollectionsClientDiagnostics, Pipeline, "MoverResourceSetCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -229,37 +200,9 @@ namespace Azure.ResourceManager.ResourceMover
         /// <returns> A collection of <see cref="MoverResourceSetResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<MoverResourceSetResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<MoverResourceSetResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _moverResourceSetMoveCollectionsClientDiagnostics.CreateScope("MoverResourceSetCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _moverResourceSetMoveCollectionsRestClient.ListMoveCollectionsByResourceGroup(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new MoverResourceSetResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<MoverResourceSetResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _moverResourceSetMoveCollectionsClientDiagnostics.CreateScope("MoverResourceSetCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _moverResourceSetMoveCollectionsRestClient.ListMoveCollectionsByResourceGroupNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new MoverResourceSetResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _moverResourceSetMoveCollectionsRestClient.CreateListMoveCollectionsByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _moverResourceSetMoveCollectionsRestClient.CreateListMoveCollectionsByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new MoverResourceSetResource(Client, MoverResourceSetData.DeserializeMoverResourceSetData(e)), _moverResourceSetMoveCollectionsClientDiagnostics, Pipeline, "MoverResourceSetCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

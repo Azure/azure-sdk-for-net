@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -187,37 +186,9 @@ namespace Azure.ResourceManager.DataLakeStore
         /// <returns> An async collection of <see cref="DataLakeStoreTrustedIdProviderResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DataLakeStoreTrustedIdProviderResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<DataLakeStoreTrustedIdProviderResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _dataLakeStoreTrustedIdProviderTrustedIdProvidersClientDiagnostics.CreateScope("DataLakeStoreTrustedIdProviderCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _dataLakeStoreTrustedIdProviderTrustedIdProvidersRestClient.ListByAccountAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new DataLakeStoreTrustedIdProviderResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<DataLakeStoreTrustedIdProviderResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _dataLakeStoreTrustedIdProviderTrustedIdProvidersClientDiagnostics.CreateScope("DataLakeStoreTrustedIdProviderCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _dataLakeStoreTrustedIdProviderTrustedIdProvidersRestClient.ListByAccountNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new DataLakeStoreTrustedIdProviderResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _dataLakeStoreTrustedIdProviderTrustedIdProvidersRestClient.CreateListByAccountRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _dataLakeStoreTrustedIdProviderTrustedIdProvidersRestClient.CreateListByAccountNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DataLakeStoreTrustedIdProviderResource(Client, DataLakeStoreTrustedIdProviderData.DeserializeDataLakeStoreTrustedIdProviderData(e)), _dataLakeStoreTrustedIdProviderTrustedIdProvidersClientDiagnostics, Pipeline, "DataLakeStoreTrustedIdProviderCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -229,37 +200,9 @@ namespace Azure.ResourceManager.DataLakeStore
         /// <returns> A collection of <see cref="DataLakeStoreTrustedIdProviderResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DataLakeStoreTrustedIdProviderResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<DataLakeStoreTrustedIdProviderResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _dataLakeStoreTrustedIdProviderTrustedIdProvidersClientDiagnostics.CreateScope("DataLakeStoreTrustedIdProviderCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _dataLakeStoreTrustedIdProviderTrustedIdProvidersRestClient.ListByAccount(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new DataLakeStoreTrustedIdProviderResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<DataLakeStoreTrustedIdProviderResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _dataLakeStoreTrustedIdProviderTrustedIdProvidersClientDiagnostics.CreateScope("DataLakeStoreTrustedIdProviderCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _dataLakeStoreTrustedIdProviderTrustedIdProvidersRestClient.ListByAccountNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new DataLakeStoreTrustedIdProviderResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _dataLakeStoreTrustedIdProviderTrustedIdProvidersRestClient.CreateListByAccountRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _dataLakeStoreTrustedIdProviderTrustedIdProvidersRestClient.CreateListByAccountNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DataLakeStoreTrustedIdProviderResource(Client, DataLakeStoreTrustedIdProviderData.DeserializeDataLakeStoreTrustedIdProviderData(e)), _dataLakeStoreTrustedIdProviderTrustedIdProvidersClientDiagnostics, Pipeline, "DataLakeStoreTrustedIdProviderCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

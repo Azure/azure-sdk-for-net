@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -187,37 +186,9 @@ namespace Azure.ResourceManager.Peering
         /// <returns> An async collection of <see cref="PeerAsnResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<PeerAsnResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<PeerAsnResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _peerAsnClientDiagnostics.CreateScope("PeerAsnCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _peerAsnRestClient.ListBySubscriptionAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new PeerAsnResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<PeerAsnResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _peerAsnClientDiagnostics.CreateScope("PeerAsnCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _peerAsnRestClient.ListBySubscriptionNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new PeerAsnResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _peerAsnRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _peerAsnRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new PeerAsnResource(Client, PeerAsnData.DeserializePeerAsnData(e)), _peerAsnClientDiagnostics, Pipeline, "PeerAsnCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -229,37 +200,9 @@ namespace Azure.ResourceManager.Peering
         /// <returns> A collection of <see cref="PeerAsnResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<PeerAsnResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<PeerAsnResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _peerAsnClientDiagnostics.CreateScope("PeerAsnCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _peerAsnRestClient.ListBySubscription(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new PeerAsnResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<PeerAsnResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _peerAsnClientDiagnostics.CreateScope("PeerAsnCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _peerAsnRestClient.ListBySubscriptionNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new PeerAsnResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _peerAsnRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _peerAsnRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new PeerAsnResource(Client, PeerAsnData.DeserializePeerAsnData(e)), _peerAsnClientDiagnostics, Pipeline, "PeerAsnCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

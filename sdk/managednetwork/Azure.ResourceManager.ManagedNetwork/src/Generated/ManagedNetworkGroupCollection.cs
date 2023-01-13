@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -188,37 +187,9 @@ namespace Azure.ResourceManager.ManagedNetwork
         /// <returns> An async collection of <see cref="ManagedNetworkGroupResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ManagedNetworkGroupResource> GetAllAsync(int? top = null, string skiptoken = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<ManagedNetworkGroupResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _managedNetworkGroupClientDiagnostics.CreateScope("ManagedNetworkGroupCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _managedNetworkGroupRestClient.ListByManagedNetworkAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top, skiptoken, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ManagedNetworkGroupResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<ManagedNetworkGroupResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _managedNetworkGroupClientDiagnostics.CreateScope("ManagedNetworkGroupCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _managedNetworkGroupRestClient.ListByManagedNetworkNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top, skiptoken, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ManagedNetworkGroupResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _managedNetworkGroupRestClient.CreateListByManagedNetworkRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top, skiptoken);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _managedNetworkGroupRestClient.CreateListByManagedNetworkNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top, skiptoken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ManagedNetworkGroupResource(Client, ManagedNetworkGroupData.DeserializeManagedNetworkGroupData(e)), _managedNetworkGroupClientDiagnostics, Pipeline, "ManagedNetworkGroupCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -232,37 +203,9 @@ namespace Azure.ResourceManager.ManagedNetwork
         /// <returns> A collection of <see cref="ManagedNetworkGroupResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ManagedNetworkGroupResource> GetAll(int? top = null, string skiptoken = null, CancellationToken cancellationToken = default)
         {
-            Page<ManagedNetworkGroupResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _managedNetworkGroupClientDiagnostics.CreateScope("ManagedNetworkGroupCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _managedNetworkGroupRestClient.ListByManagedNetwork(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top, skiptoken, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ManagedNetworkGroupResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<ManagedNetworkGroupResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _managedNetworkGroupClientDiagnostics.CreateScope("ManagedNetworkGroupCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _managedNetworkGroupRestClient.ListByManagedNetworkNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top, skiptoken, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ManagedNetworkGroupResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _managedNetworkGroupRestClient.CreateListByManagedNetworkRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top, skiptoken);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _managedNetworkGroupRestClient.CreateListByManagedNetworkNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top, skiptoken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ManagedNetworkGroupResource(Client, ManagedNetworkGroupData.DeserializeManagedNetworkGroupData(e)), _managedNetworkGroupClientDiagnostics, Pipeline, "ManagedNetworkGroupCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
