@@ -4,8 +4,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net.Http;
-using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -712,6 +710,7 @@ namespace Azure.Communication.CallAutomation
             try
             {
                 UnmuteParticipantRequestInternal request = new UnmuteParticipantRequestInternal(CommunicationIdentifierSerializer.Serialize(options.TargetParticipant));
+                options.RepeatabilityHeaders?.GenerateIfRepeatabilityHeadersNotProvided();
                 if (options.OperationContext != null && options.OperationContext.Length > CallAutomationConstants.InputValidation.StringMaxLength)
                 {
                     throw new ArgumentException(CallAutomationErrorMessages.OperationContextExceedsMaxLength);
@@ -766,6 +765,7 @@ namespace Azure.Communication.CallAutomation
             try
             {
                 MuteAllParticipantsRequestInternal request = new MuteAllParticipantsRequestInternal();
+                options.RepeatabilityHeaders?.GenerateIfRepeatabilityHeadersNotProvided();
                 if (options.OperationContext != null && options.OperationContext.Length > CallAutomationConstants.InputValidation.StringMaxLength)
                 {
                     throw new ArgumentException(CallAutomationErrorMessages.OperationContextExceedsMaxLength);
@@ -819,6 +819,7 @@ namespace Azure.Communication.CallAutomation
             try
             {
                 var request = new UnmuteAllParticipantsRequestInternal();
+                options.RepeatabilityHeaders?.GenerateIfRepeatabilityHeadersNotProvided();
                 if (options.OperationContext != null && options.OperationContext.Length > CallAutomationConstants.InputValidation.StringMaxLength)
                 {
                     throw new ArgumentException(CallAutomationErrorMessages.OperationContextExceedsMaxLength);
@@ -849,7 +850,6 @@ namespace Azure.Communication.CallAutomation
         /// <param name="operationalContext"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        /// <exception cref="NotImplementedException"></exception>
         public async virtual Task<Response<MuteParticipantsResponse>> MuteParticipantAsync(CommunicationIdentifier participant, string operationalContext = default, CancellationToken cancellationToken = default)
         {
             var options = new MuteParticipantOptions(participant)
@@ -865,7 +865,6 @@ namespace Azure.Communication.CallAutomation
         /// <param name="options"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        /// <exception cref="NotImplementedException"></exception>
         public async virtual Task<Response<MuteParticipantsResponse>> MuteParticipantAsync(MuteParticipantOptions options, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallConnection)}.{nameof(MuteParticipant)}");
@@ -931,6 +930,7 @@ namespace Azure.Communication.CallAutomation
             try
             {
                 UnmuteParticipantRequestInternal request = new UnmuteParticipantRequestInternal(CommunicationIdentifierSerializer.Serialize(options.TargetParticipant));
+                options.RepeatabilityHeaders?.GenerateIfRepeatabilityHeadersNotProvided();
                 if (options.OperationContext != null && options.OperationContext.Length > CallAutomationConstants.InputValidation.StringMaxLength)
                 {
                     throw new ArgumentException(CallAutomationErrorMessages.OperationContextExceedsMaxLength);
@@ -985,6 +985,7 @@ namespace Azure.Communication.CallAutomation
             try
             {
                 MuteAllParticipantsRequestInternal request = new MuteAllParticipantsRequestInternal();
+                options.RepeatabilityHeaders?.GenerateIfRepeatabilityHeadersNotProvided();
                 if (options.OperationContext != null && options.OperationContext.Length > CallAutomationConstants.InputValidation.StringMaxLength)
                 {
                     throw new ArgumentException(CallAutomationErrorMessages.OperationContextExceedsMaxLength);
@@ -1040,6 +1041,7 @@ namespace Azure.Communication.CallAutomation
             try
             {
                 var request = new UnmuteAllParticipantsRequestInternal();
+                options.RepeatabilityHeaders?.GenerateIfRepeatabilityHeadersNotProvided();
                 if (options.OperationContext != null && options.OperationContext.Length > CallAutomationConstants.InputValidation.StringMaxLength)
                 {
                     throw new ArgumentException(CallAutomationErrorMessages.OperationContextExceedsMaxLength);
