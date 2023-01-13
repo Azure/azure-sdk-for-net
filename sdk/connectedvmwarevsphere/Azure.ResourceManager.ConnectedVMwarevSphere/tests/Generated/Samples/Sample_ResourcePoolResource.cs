@@ -11,10 +11,11 @@ using Azure;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager;
+using Azure.ResourceManager.ConnectedVMwarevSphere;
 using Azure.ResourceManager.ConnectedVMwarevSphere.Models;
 using Azure.ResourceManager.Resources;
 
-namespace Azure.ResourceManager.ConnectedVMwarevSphere
+namespace Azure.ResourceManager.ConnectedVMwarevSphere.Samples
 {
     public partial class Sample_ResourcePoolResource
     {
@@ -26,8 +27,10 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             // Generated from example definition: specification/connectedvmware/resource-manager/Microsoft.ConnectedVMwarevSphere/preview/2020-10-01-preview/examples/GetResourcePool.json
             // this example is just showing the usage of "ResourcePools_Get" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this ResourcePoolResource created on azure
             // for more information of creating ResourcePoolResource, please refer to the document of ResourcePoolResource
@@ -55,8 +58,10 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             // Generated from example definition: specification/connectedvmware/resource-manager/Microsoft.ConnectedVMwarevSphere/preview/2020-10-01-preview/examples/UpdateResourcePool.json
             // this example is just showing the usage of "ResourcePools_Update" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this ResourcePoolResource created on azure
             // for more information of creating ResourcePoolResource, please refer to the document of ResourcePoolResource
@@ -92,8 +97,10 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             // Generated from example definition: specification/connectedvmware/resource-manager/Microsoft.ConnectedVMwarevSphere/preview/2020-10-01-preview/examples/DeleteResourcePool.json
             // this example is just showing the usage of "ResourcePools_Delete" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this ResourcePoolResource created on azure
             // for more information of creating ResourcePoolResource, please refer to the document of ResourcePoolResource
@@ -117,8 +124,10 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             // Generated from example definition: specification/connectedvmware/resource-manager/Microsoft.ConnectedVMwarevSphere/preview/2020-10-01-preview/examples/ListResourcePools.json
             // this example is just showing the usage of "ResourcePools_List" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this SubscriptionResource created on azure
             // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource

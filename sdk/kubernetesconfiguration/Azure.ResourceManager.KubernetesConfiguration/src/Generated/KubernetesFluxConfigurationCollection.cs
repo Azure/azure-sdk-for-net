@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -198,37 +197,9 @@ namespace Azure.ResourceManager.KubernetesConfiguration
         /// <returns> An async collection of <see cref="KubernetesFluxConfigurationResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<KubernetesFluxConfigurationResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<KubernetesFluxConfigurationResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _kubernetesFluxConfigurationFluxConfigurationsClientDiagnostics.CreateScope("KubernetesFluxConfigurationCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _kubernetesFluxConfigurationFluxConfigurationsRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, _clusterRp, _clusterResourceName, _clusterName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new KubernetesFluxConfigurationResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<KubernetesFluxConfigurationResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _kubernetesFluxConfigurationFluxConfigurationsClientDiagnostics.CreateScope("KubernetesFluxConfigurationCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _kubernetesFluxConfigurationFluxConfigurationsRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, _clusterRp, _clusterResourceName, _clusterName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new KubernetesFluxConfigurationResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _kubernetesFluxConfigurationFluxConfigurationsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, _clusterRp, _clusterResourceName, _clusterName);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _kubernetesFluxConfigurationFluxConfigurationsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, _clusterRp, _clusterResourceName, _clusterName);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new KubernetesFluxConfigurationResource(Client, KubernetesFluxConfigurationData.DeserializeKubernetesFluxConfigurationData(e)), _kubernetesFluxConfigurationFluxConfigurationsClientDiagnostics, Pipeline, "KubernetesFluxConfigurationCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -240,37 +211,9 @@ namespace Azure.ResourceManager.KubernetesConfiguration
         /// <returns> A collection of <see cref="KubernetesFluxConfigurationResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<KubernetesFluxConfigurationResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<KubernetesFluxConfigurationResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _kubernetesFluxConfigurationFluxConfigurationsClientDiagnostics.CreateScope("KubernetesFluxConfigurationCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _kubernetesFluxConfigurationFluxConfigurationsRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, _clusterRp, _clusterResourceName, _clusterName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new KubernetesFluxConfigurationResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<KubernetesFluxConfigurationResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _kubernetesFluxConfigurationFluxConfigurationsClientDiagnostics.CreateScope("KubernetesFluxConfigurationCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _kubernetesFluxConfigurationFluxConfigurationsRestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, _clusterRp, _clusterResourceName, _clusterName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new KubernetesFluxConfigurationResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _kubernetesFluxConfigurationFluxConfigurationsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, _clusterRp, _clusterResourceName, _clusterName);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _kubernetesFluxConfigurationFluxConfigurationsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, _clusterRp, _clusterResourceName, _clusterName);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new KubernetesFluxConfigurationResource(Client, KubernetesFluxConfigurationData.DeserializeKubernetesFluxConfigurationData(e)), _kubernetesFluxConfigurationFluxConfigurationsClientDiagnostics, Pipeline, "KubernetesFluxConfigurationCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

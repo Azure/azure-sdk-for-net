@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -186,37 +185,9 @@ namespace Azure.ResourceManager.AppContainers
         /// <returns> An async collection of <see cref="ContainerAppManagedEnvironmentCertificateResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ContainerAppManagedEnvironmentCertificateResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<ContainerAppManagedEnvironmentCertificateResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _containerAppManagedEnvironmentCertificateCertificatesClientDiagnostics.CreateScope("ContainerAppManagedEnvironmentCertificateCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _containerAppManagedEnvironmentCertificateCertificatesRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ContainerAppManagedEnvironmentCertificateResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<ContainerAppManagedEnvironmentCertificateResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _containerAppManagedEnvironmentCertificateCertificatesClientDiagnostics.CreateScope("ContainerAppManagedEnvironmentCertificateCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _containerAppManagedEnvironmentCertificateCertificatesRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ContainerAppManagedEnvironmentCertificateResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _containerAppManagedEnvironmentCertificateCertificatesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _containerAppManagedEnvironmentCertificateCertificatesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ContainerAppManagedEnvironmentCertificateResource(Client, ContainerAppCertificateData.DeserializeContainerAppCertificateData(e)), _containerAppManagedEnvironmentCertificateCertificatesClientDiagnostics, Pipeline, "ContainerAppManagedEnvironmentCertificateCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -228,37 +199,9 @@ namespace Azure.ResourceManager.AppContainers
         /// <returns> A collection of <see cref="ContainerAppManagedEnvironmentCertificateResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ContainerAppManagedEnvironmentCertificateResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<ContainerAppManagedEnvironmentCertificateResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _containerAppManagedEnvironmentCertificateCertificatesClientDiagnostics.CreateScope("ContainerAppManagedEnvironmentCertificateCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _containerAppManagedEnvironmentCertificateCertificatesRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ContainerAppManagedEnvironmentCertificateResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<ContainerAppManagedEnvironmentCertificateResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _containerAppManagedEnvironmentCertificateCertificatesClientDiagnostics.CreateScope("ContainerAppManagedEnvironmentCertificateCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _containerAppManagedEnvironmentCertificateCertificatesRestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ContainerAppManagedEnvironmentCertificateResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _containerAppManagedEnvironmentCertificateCertificatesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _containerAppManagedEnvironmentCertificateCertificatesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ContainerAppManagedEnvironmentCertificateResource(Client, ContainerAppCertificateData.DeserializeContainerAppCertificateData(e)), _containerAppManagedEnvironmentCertificateCertificatesClientDiagnostics, Pipeline, "ContainerAppManagedEnvironmentCertificateCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

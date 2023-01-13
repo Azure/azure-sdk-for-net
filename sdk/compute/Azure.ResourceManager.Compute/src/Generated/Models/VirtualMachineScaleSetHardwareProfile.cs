@@ -16,13 +16,13 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> Initializes a new instance of VirtualMachineScaleSetHardwareProfile. </summary>
-        /// <param name="vmSizeProperties"> Specifies the properties for customizing the size of the virtual machine. Minimum api-version: 2022-03-01. &lt;br&gt;&lt;br&gt; Please follow the instructions in [VM Customization](https://aka.ms/vmcustomization) for more details. </param>
+        /// <param name="vmSizeProperties"> Specifies the properties for customizing the size of the virtual machine. Minimum api-version: 2021-11-01. &lt;br&gt;&lt;br&gt; Please follow the instructions in [VM Customization](https://aka.ms/vmcustomization) for more details. </param>
         internal VirtualMachineScaleSetHardwareProfile(VirtualMachineSizeProperties vmSizeProperties)
         {
             VmSizeProperties = vmSizeProperties;
         }
 
-        /// <summary> Specifies the properties for customizing the size of the virtual machine. Minimum api-version: 2022-03-01. &lt;br&gt;&lt;br&gt; Please follow the instructions in [VM Customization](https://aka.ms/vmcustomization) for more details. </summary>
+        /// <summary> Specifies the properties for customizing the size of the virtual machine. Minimum api-version: 2021-11-01. &lt;br&gt;&lt;br&gt; Please follow the instructions in [VM Customization](https://aka.ms/vmcustomization) for more details. </summary>
         public VirtualMachineSizeProperties VmSizeProperties { get; set; }
     }
 }

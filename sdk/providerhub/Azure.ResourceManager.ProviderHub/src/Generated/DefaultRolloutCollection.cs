@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -186,37 +185,9 @@ namespace Azure.ResourceManager.ProviderHub
         /// <returns> An async collection of <see cref="DefaultRolloutResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DefaultRolloutResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<DefaultRolloutResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _defaultRolloutClientDiagnostics.CreateScope("DefaultRolloutCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _defaultRolloutRestClient.ListByProviderRegistrationAsync(Id.SubscriptionId, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new DefaultRolloutResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<DefaultRolloutResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _defaultRolloutClientDiagnostics.CreateScope("DefaultRolloutCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _defaultRolloutRestClient.ListByProviderRegistrationNextPageAsync(nextLink, Id.SubscriptionId, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new DefaultRolloutResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _defaultRolloutRestClient.CreateListByProviderRegistrationRequest(Id.SubscriptionId, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _defaultRolloutRestClient.CreateListByProviderRegistrationNextPageRequest(nextLink, Id.SubscriptionId, Id.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DefaultRolloutResource(Client, DefaultRolloutData.DeserializeDefaultRolloutData(e)), _defaultRolloutClientDiagnostics, Pipeline, "DefaultRolloutCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -228,37 +199,9 @@ namespace Azure.ResourceManager.ProviderHub
         /// <returns> A collection of <see cref="DefaultRolloutResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DefaultRolloutResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<DefaultRolloutResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _defaultRolloutClientDiagnostics.CreateScope("DefaultRolloutCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _defaultRolloutRestClient.ListByProviderRegistration(Id.SubscriptionId, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new DefaultRolloutResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<DefaultRolloutResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _defaultRolloutClientDiagnostics.CreateScope("DefaultRolloutCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _defaultRolloutRestClient.ListByProviderRegistrationNextPage(nextLink, Id.SubscriptionId, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new DefaultRolloutResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _defaultRolloutRestClient.CreateListByProviderRegistrationRequest(Id.SubscriptionId, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _defaultRolloutRestClient.CreateListByProviderRegistrationNextPageRequest(nextLink, Id.SubscriptionId, Id.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DefaultRolloutResource(Client, DefaultRolloutData.DeserializeDefaultRolloutData(e)), _defaultRolloutClientDiagnostics, Pipeline, "DefaultRolloutCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

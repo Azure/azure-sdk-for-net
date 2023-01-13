@@ -566,22 +566,8 @@ namespace Azure.ResourceManager.SignalR
         /// <returns> An async collection of <see cref="SignalRSku" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SignalRSku> GetSkusAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<SignalRSku>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _signalRClientDiagnostics.CreateScope("SignalRResource.GetSkus");
-                scope.Start();
-                try
-                {
-                    var response = await _signalRRestClient.ListSkusAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _signalRRestClient.CreateListSkusRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, SignalRSku.DeserializeSignalRSku, _signalRClientDiagnostics, Pipeline, "SignalRResource.GetSkus", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -593,22 +579,8 @@ namespace Azure.ResourceManager.SignalR
         /// <returns> A collection of <see cref="SignalRSku" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SignalRSku> GetSkus(CancellationToken cancellationToken = default)
         {
-            Page<SignalRSku> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _signalRClientDiagnostics.CreateScope("SignalRResource.GetSkus");
-                scope.Start();
-                try
-                {
-                    var response = _signalRRestClient.ListSkus(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _signalRRestClient.CreateListSkusRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, SignalRSku.DeserializeSignalRSku, _signalRClientDiagnostics, Pipeline, "SignalRResource.GetSkus", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -620,37 +592,9 @@ namespace Azure.ResourceManager.SignalR
         /// <returns> An async collection of <see cref="SignalRPrivateLinkResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SignalRPrivateLinkResource> GetSignalRPrivateLinkResourcesAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<SignalRPrivateLinkResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _signalRPrivateLinkResourcesClientDiagnostics.CreateScope("SignalRResource.GetSignalRPrivateLinkResources");
-                scope.Start();
-                try
-                {
-                    var response = await _signalRPrivateLinkResourcesRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<SignalRPrivateLinkResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _signalRPrivateLinkResourcesClientDiagnostics.CreateScope("SignalRResource.GetSignalRPrivateLinkResources");
-                scope.Start();
-                try
-                {
-                    var response = await _signalRPrivateLinkResourcesRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _signalRPrivateLinkResourcesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _signalRPrivateLinkResourcesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, SignalRPrivateLinkResource.DeserializeSignalRPrivateLinkResource, _signalRPrivateLinkResourcesClientDiagnostics, Pipeline, "SignalRResource.GetSignalRPrivateLinkResources", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -662,37 +606,9 @@ namespace Azure.ResourceManager.SignalR
         /// <returns> A collection of <see cref="SignalRPrivateLinkResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SignalRPrivateLinkResource> GetSignalRPrivateLinkResources(CancellationToken cancellationToken = default)
         {
-            Page<SignalRPrivateLinkResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _signalRPrivateLinkResourcesClientDiagnostics.CreateScope("SignalRResource.GetSignalRPrivateLinkResources");
-                scope.Start();
-                try
-                {
-                    var response = _signalRPrivateLinkResourcesRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<SignalRPrivateLinkResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _signalRPrivateLinkResourcesClientDiagnostics.CreateScope("SignalRResource.GetSignalRPrivateLinkResources");
-                scope.Start();
-                try
-                {
-                    var response = _signalRPrivateLinkResourcesRestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _signalRPrivateLinkResourcesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _signalRPrivateLinkResourcesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, SignalRPrivateLinkResource.DeserializeSignalRPrivateLinkResource, _signalRPrivateLinkResourcesClientDiagnostics, Pipeline, "SignalRResource.GetSignalRPrivateLinkResources", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

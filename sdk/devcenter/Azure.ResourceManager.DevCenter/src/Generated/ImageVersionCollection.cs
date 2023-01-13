@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -120,37 +119,9 @@ namespace Azure.ResourceManager.DevCenter
         /// <returns> An async collection of <see cref="ImageVersionResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ImageVersionResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<ImageVersionResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _imageVersionClientDiagnostics.CreateScope("ImageVersionCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _imageVersionRestClient.ListByImageAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ImageVersionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<ImageVersionResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _imageVersionClientDiagnostics.CreateScope("ImageVersionCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _imageVersionRestClient.ListByImageNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ImageVersionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _imageVersionRestClient.CreateListByImageRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _imageVersionRestClient.CreateListByImageNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ImageVersionResource(Client, ImageVersionData.DeserializeImageVersionData(e)), _imageVersionClientDiagnostics, Pipeline, "ImageVersionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -162,37 +133,9 @@ namespace Azure.ResourceManager.DevCenter
         /// <returns> A collection of <see cref="ImageVersionResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ImageVersionResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<ImageVersionResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _imageVersionClientDiagnostics.CreateScope("ImageVersionCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _imageVersionRestClient.ListByImage(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ImageVersionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<ImageVersionResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _imageVersionClientDiagnostics.CreateScope("ImageVersionCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _imageVersionRestClient.ListByImageNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ImageVersionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _imageVersionRestClient.CreateListByImageRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _imageVersionRestClient.CreateListByImageNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ImageVersionResource(Client, ImageVersionData.DeserializeImageVersionData(e)), _imageVersionClientDiagnostics, Pipeline, "ImageVersionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

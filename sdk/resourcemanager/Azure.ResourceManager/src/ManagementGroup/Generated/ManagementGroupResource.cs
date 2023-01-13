@@ -276,37 +276,9 @@ namespace Azure.ResourceManager.ManagementGroups
         /// <returns> An async collection of <see cref="DescendantData" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DescendantData> GetDescendantsAsync(string skiptoken = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<DescendantData>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _managementGroupClientDiagnostics.CreateScope("ManagementGroupResource.GetDescendants");
-                scope.Start();
-                try
-                {
-                    var response = await _managementGroupRestClient.GetDescendantsAsync(Id.Name, skiptoken, top, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<DescendantData>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _managementGroupClientDiagnostics.CreateScope("ManagementGroupResource.GetDescendants");
-                scope.Start();
-                try
-                {
-                    var response = await _managementGroupRestClient.GetDescendantsNextPageAsync(nextLink, Id.Name, skiptoken, top, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _managementGroupRestClient.CreateGetDescendantsRequest(Id.Name, skiptoken, top);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _managementGroupRestClient.CreateGetDescendantsNextPageRequest(nextLink, Id.Name, skiptoken, top);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, DescendantData.DeserializeDescendantData, _managementGroupClientDiagnostics, Pipeline, "ManagementGroupResource.GetDescendants", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -325,37 +297,9 @@ namespace Azure.ResourceManager.ManagementGroups
         /// <returns> A collection of <see cref="DescendantData" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DescendantData> GetDescendants(string skiptoken = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            Page<DescendantData> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _managementGroupClientDiagnostics.CreateScope("ManagementGroupResource.GetDescendants");
-                scope.Start();
-                try
-                {
-                    var response = _managementGroupRestClient.GetDescendants(Id.Name, skiptoken, top, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<DescendantData> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _managementGroupClientDiagnostics.CreateScope("ManagementGroupResource.GetDescendants");
-                scope.Start();
-                try
-                {
-                    var response = _managementGroupRestClient.GetDescendantsNextPage(nextLink, Id.Name, skiptoken, top, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _managementGroupRestClient.CreateGetDescendantsRequest(Id.Name, skiptoken, top);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _managementGroupRestClient.CreateGetDescendantsNextPageRequest(nextLink, Id.Name, skiptoken, top);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, DescendantData.DeserializeDescendantData, _managementGroupClientDiagnostics, Pipeline, "ManagementGroupResource.GetDescendants", "value", "nextLink", cancellationToken);
         }
     }
 }

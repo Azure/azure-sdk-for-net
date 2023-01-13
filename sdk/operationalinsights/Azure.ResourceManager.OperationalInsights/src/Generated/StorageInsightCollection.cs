@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -186,37 +185,9 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <returns> An async collection of <see cref="StorageInsightResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<StorageInsightResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<StorageInsightResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _storageInsightStorageInsightConfigsClientDiagnostics.CreateScope("StorageInsightCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _storageInsightStorageInsightConfigsRestClient.ListByWorkspaceAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new StorageInsightResource(Client, value)), response.Value.OdataNextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<StorageInsightResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _storageInsightStorageInsightConfigsClientDiagnostics.CreateScope("StorageInsightCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _storageInsightStorageInsightConfigsRestClient.ListByWorkspaceNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new StorageInsightResource(Client, value)), response.Value.OdataNextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _storageInsightStorageInsightConfigsRestClient.CreateListByWorkspaceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _storageInsightStorageInsightConfigsRestClient.CreateListByWorkspaceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new StorageInsightResource(Client, StorageInsightData.DeserializeStorageInsightData(e)), _storageInsightStorageInsightConfigsClientDiagnostics, Pipeline, "StorageInsightCollection.GetAll", "value", "@odata.nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -228,37 +199,9 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <returns> A collection of <see cref="StorageInsightResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<StorageInsightResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<StorageInsightResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _storageInsightStorageInsightConfigsClientDiagnostics.CreateScope("StorageInsightCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _storageInsightStorageInsightConfigsRestClient.ListByWorkspace(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new StorageInsightResource(Client, value)), response.Value.OdataNextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<StorageInsightResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _storageInsightStorageInsightConfigsClientDiagnostics.CreateScope("StorageInsightCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _storageInsightStorageInsightConfigsRestClient.ListByWorkspaceNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new StorageInsightResource(Client, value)), response.Value.OdataNextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _storageInsightStorageInsightConfigsRestClient.CreateListByWorkspaceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _storageInsightStorageInsightConfigsRestClient.CreateListByWorkspaceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new StorageInsightResource(Client, StorageInsightData.DeserializeStorageInsightData(e)), _storageInsightStorageInsightConfigsClientDiagnostics, Pipeline, "StorageInsightCollection.GetAll", "value", "@odata.nextLink", cancellationToken);
         }
 
         /// <summary>

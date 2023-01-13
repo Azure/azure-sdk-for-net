@@ -844,22 +844,8 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <returns> An async collection of <see cref="ContainerRegistryUsage" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ContainerRegistryUsage> GetUsagesAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<ContainerRegistryUsage>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _containerRegistryRegistriesClientDiagnostics.CreateScope("ContainerRegistryResource.GetUsages");
-                scope.Start();
-                try
-                {
-                    var response = await _containerRegistryRegistriesRestClient.ListUsagesAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _containerRegistryRegistriesRestClient.CreateListUsagesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, ContainerRegistryUsage.DeserializeContainerRegistryUsage, _containerRegistryRegistriesClientDiagnostics, Pipeline, "ContainerRegistryResource.GetUsages", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -871,22 +857,8 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <returns> A collection of <see cref="ContainerRegistryUsage" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ContainerRegistryUsage> GetUsages(CancellationToken cancellationToken = default)
         {
-            Page<ContainerRegistryUsage> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _containerRegistryRegistriesClientDiagnostics.CreateScope("ContainerRegistryResource.GetUsages");
-                scope.Start();
-                try
-                {
-                    var response = _containerRegistryRegistriesRestClient.ListUsages(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _containerRegistryRegistriesRestClient.CreateListUsagesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, ContainerRegistryUsage.DeserializeContainerRegistryUsage, _containerRegistryRegistriesClientDiagnostics, Pipeline, "ContainerRegistryResource.GetUsages", "value", null, cancellationToken);
         }
 
         /// <summary>

@@ -302,22 +302,8 @@ namespace Azure.ResourceManager.DataFactory
         /// <returns> An async collection of <see cref="IntegrationRuntimeOutboundNetworkDependenciesCategoryEndpoint" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<IntegrationRuntimeOutboundNetworkDependenciesCategoryEndpoint> GetOutboundNetworkDependenciesAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<IntegrationRuntimeOutboundNetworkDependenciesCategoryEndpoint>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _factoryIntegrationRuntimeIntegrationRuntimesClientDiagnostics.CreateScope("FactoryIntegrationRuntimeResource.GetOutboundNetworkDependencies");
-                scope.Start();
-                try
-                {
-                    var response = await _factoryIntegrationRuntimeIntegrationRuntimesRestClient.ListOutboundNetworkDependenciesEndpointsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _factoryIntegrationRuntimeIntegrationRuntimesRestClient.CreateListOutboundNetworkDependenciesEndpointsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, IntegrationRuntimeOutboundNetworkDependenciesCategoryEndpoint.DeserializeIntegrationRuntimeOutboundNetworkDependenciesCategoryEndpoint, _factoryIntegrationRuntimeIntegrationRuntimesClientDiagnostics, Pipeline, "FactoryIntegrationRuntimeResource.GetOutboundNetworkDependencies", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -329,22 +315,8 @@ namespace Azure.ResourceManager.DataFactory
         /// <returns> A collection of <see cref="IntegrationRuntimeOutboundNetworkDependenciesCategoryEndpoint" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<IntegrationRuntimeOutboundNetworkDependenciesCategoryEndpoint> GetOutboundNetworkDependencies(CancellationToken cancellationToken = default)
         {
-            Page<IntegrationRuntimeOutboundNetworkDependenciesCategoryEndpoint> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _factoryIntegrationRuntimeIntegrationRuntimesClientDiagnostics.CreateScope("FactoryIntegrationRuntimeResource.GetOutboundNetworkDependencies");
-                scope.Start();
-                try
-                {
-                    var response = _factoryIntegrationRuntimeIntegrationRuntimesRestClient.ListOutboundNetworkDependenciesEndpoints(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _factoryIntegrationRuntimeIntegrationRuntimesRestClient.CreateListOutboundNetworkDependenciesEndpointsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, IntegrationRuntimeOutboundNetworkDependenciesCategoryEndpoint.DeserializeIntegrationRuntimeOutboundNetworkDependenciesCategoryEndpoint, _factoryIntegrationRuntimeIntegrationRuntimesClientDiagnostics, Pipeline, "FactoryIntegrationRuntimeResource.GetOutboundNetworkDependencies", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -889,22 +861,8 @@ namespace Azure.ResourceManager.DataFactory
         /// <returns> An async collection of <see cref="SsisObjectMetadata" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SsisObjectMetadata> GetAllIntegrationRuntimeObjectMetadataAsync(GetSsisObjectMetadataContent content = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<SsisObjectMetadata>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _integrationRuntimeObjectMetadataClientDiagnostics.CreateScope("FactoryIntegrationRuntimeResource.GetAllIntegrationRuntimeObjectMetadata");
-                scope.Start();
-                try
-                {
-                    var response = await _integrationRuntimeObjectMetadataRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _integrationRuntimeObjectMetadataRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, SsisObjectMetadata.DeserializeSsisObjectMetadata, _integrationRuntimeObjectMetadataClientDiagnostics, Pipeline, "FactoryIntegrationRuntimeResource.GetAllIntegrationRuntimeObjectMetadata", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -917,22 +875,8 @@ namespace Azure.ResourceManager.DataFactory
         /// <returns> A collection of <see cref="SsisObjectMetadata" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SsisObjectMetadata> GetAllIntegrationRuntimeObjectMetadata(GetSsisObjectMetadataContent content = null, CancellationToken cancellationToken = default)
         {
-            Page<SsisObjectMetadata> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _integrationRuntimeObjectMetadataClientDiagnostics.CreateScope("FactoryIntegrationRuntimeResource.GetAllIntegrationRuntimeObjectMetadata");
-                scope.Start();
-                try
-                {
-                    var response = _integrationRuntimeObjectMetadataRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _integrationRuntimeObjectMetadataRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, SsisObjectMetadata.DeserializeSsisObjectMetadata, _integrationRuntimeObjectMetadataClientDiagnostics, Pipeline, "FactoryIntegrationRuntimeResource.GetAllIntegrationRuntimeObjectMetadata", "value", null, cancellationToken);
         }
 
         /// <summary>

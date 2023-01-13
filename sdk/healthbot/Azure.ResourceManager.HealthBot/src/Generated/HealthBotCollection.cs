@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -187,37 +186,9 @@ namespace Azure.ResourceManager.HealthBot
         /// <returns> An async collection of <see cref="HealthBotResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<HealthBotResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<HealthBotResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _healthBotBotsClientDiagnostics.CreateScope("HealthBotCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _healthBotBotsRestClient.ListByResourceGroupAsync(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new HealthBotResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<HealthBotResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _healthBotBotsClientDiagnostics.CreateScope("HealthBotCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _healthBotBotsRestClient.ListByResourceGroupNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new HealthBotResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _healthBotBotsRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _healthBotBotsRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new HealthBotResource(Client, HealthBotData.DeserializeHealthBotData(e)), _healthBotBotsClientDiagnostics, Pipeline, "HealthBotCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -229,37 +200,9 @@ namespace Azure.ResourceManager.HealthBot
         /// <returns> A collection of <see cref="HealthBotResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<HealthBotResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<HealthBotResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _healthBotBotsClientDiagnostics.CreateScope("HealthBotCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _healthBotBotsRestClient.ListByResourceGroup(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new HealthBotResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<HealthBotResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _healthBotBotsClientDiagnostics.CreateScope("HealthBotCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _healthBotBotsRestClient.ListByResourceGroupNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new HealthBotResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _healthBotBotsRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _healthBotBotsRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new HealthBotResource(Client, HealthBotData.DeserializeHealthBotData(e)), _healthBotBotsClientDiagnostics, Pipeline, "HealthBotCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

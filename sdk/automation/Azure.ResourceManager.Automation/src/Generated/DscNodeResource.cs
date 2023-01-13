@@ -253,37 +253,9 @@ namespace Azure.ResourceManager.Automation
         /// <returns> An async collection of <see cref="DscNodeReport" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DscNodeReport> GetNodeReportsByNodeAsync(string filter = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<DscNodeReport>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _nodeReportsClientDiagnostics.CreateScope("DscNodeResource.GetNodeReportsByNode");
-                scope.Start();
-                try
-                {
-                    var response = await _nodeReportsRestClient.ListByNodeAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<DscNodeReport>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _nodeReportsClientDiagnostics.CreateScope("DscNodeResource.GetNodeReportsByNode");
-                scope.Start();
-                try
-                {
-                    var response = await _nodeReportsRestClient.ListByNodeNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _nodeReportsRestClient.CreateListByNodeRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _nodeReportsRestClient.CreateListByNodeNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, DscNodeReport.DeserializeDscNodeReport, _nodeReportsClientDiagnostics, Pipeline, "DscNodeResource.GetNodeReportsByNode", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -296,37 +268,9 @@ namespace Azure.ResourceManager.Automation
         /// <returns> A collection of <see cref="DscNodeReport" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DscNodeReport> GetNodeReportsByNode(string filter = null, CancellationToken cancellationToken = default)
         {
-            Page<DscNodeReport> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _nodeReportsClientDiagnostics.CreateScope("DscNodeResource.GetNodeReportsByNode");
-                scope.Start();
-                try
-                {
-                    var response = _nodeReportsRestClient.ListByNode(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<DscNodeReport> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _nodeReportsClientDiagnostics.CreateScope("DscNodeResource.GetNodeReportsByNode");
-                scope.Start();
-                try
-                {
-                    var response = _nodeReportsRestClient.ListByNodeNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _nodeReportsRestClient.CreateListByNodeRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _nodeReportsRestClient.CreateListByNodeNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, DscNodeReport.DeserializeDscNodeReport, _nodeReportsClientDiagnostics, Pipeline, "DscNodeResource.GetNodeReportsByNode", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

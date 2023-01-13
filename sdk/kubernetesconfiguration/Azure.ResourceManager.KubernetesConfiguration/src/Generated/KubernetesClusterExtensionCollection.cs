@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -198,37 +197,9 @@ namespace Azure.ResourceManager.KubernetesConfiguration
         /// <returns> An async collection of <see cref="KubernetesClusterExtensionResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<KubernetesClusterExtensionResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<KubernetesClusterExtensionResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _kubernetesClusterExtensionExtensionsClientDiagnostics.CreateScope("KubernetesClusterExtensionCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _kubernetesClusterExtensionExtensionsRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, _clusterRp, _clusterResourceName, _clusterName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new KubernetesClusterExtensionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<KubernetesClusterExtensionResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _kubernetesClusterExtensionExtensionsClientDiagnostics.CreateScope("KubernetesClusterExtensionCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _kubernetesClusterExtensionExtensionsRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, _clusterRp, _clusterResourceName, _clusterName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new KubernetesClusterExtensionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _kubernetesClusterExtensionExtensionsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, _clusterRp, _clusterResourceName, _clusterName);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _kubernetesClusterExtensionExtensionsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, _clusterRp, _clusterResourceName, _clusterName);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new KubernetesClusterExtensionResource(Client, KubernetesClusterExtensionData.DeserializeKubernetesClusterExtensionData(e)), _kubernetesClusterExtensionExtensionsClientDiagnostics, Pipeline, "KubernetesClusterExtensionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -240,37 +211,9 @@ namespace Azure.ResourceManager.KubernetesConfiguration
         /// <returns> A collection of <see cref="KubernetesClusterExtensionResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<KubernetesClusterExtensionResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<KubernetesClusterExtensionResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _kubernetesClusterExtensionExtensionsClientDiagnostics.CreateScope("KubernetesClusterExtensionCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _kubernetesClusterExtensionExtensionsRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, _clusterRp, _clusterResourceName, _clusterName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new KubernetesClusterExtensionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<KubernetesClusterExtensionResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _kubernetesClusterExtensionExtensionsClientDiagnostics.CreateScope("KubernetesClusterExtensionCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _kubernetesClusterExtensionExtensionsRestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, _clusterRp, _clusterResourceName, _clusterName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new KubernetesClusterExtensionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _kubernetesClusterExtensionExtensionsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, _clusterRp, _clusterResourceName, _clusterName);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _kubernetesClusterExtensionExtensionsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, _clusterRp, _clusterResourceName, _clusterName);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new KubernetesClusterExtensionResource(Client, KubernetesClusterExtensionData.DeserializeKubernetesClusterExtensionData(e)), _kubernetesClusterExtensionExtensionsClientDiagnostics, Pipeline, "KubernetesClusterExtensionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
