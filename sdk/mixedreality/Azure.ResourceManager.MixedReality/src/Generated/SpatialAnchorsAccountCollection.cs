@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -187,37 +186,9 @@ namespace Azure.ResourceManager.MixedReality
         /// <returns> An async collection of <see cref="SpatialAnchorsAccountResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SpatialAnchorsAccountResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<SpatialAnchorsAccountResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _spatialAnchorsAccountClientDiagnostics.CreateScope("SpatialAnchorsAccountCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _spatialAnchorsAccountRestClient.ListByResourceGroupAsync(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new SpatialAnchorsAccountResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<SpatialAnchorsAccountResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _spatialAnchorsAccountClientDiagnostics.CreateScope("SpatialAnchorsAccountCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _spatialAnchorsAccountRestClient.ListByResourceGroupNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new SpatialAnchorsAccountResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _spatialAnchorsAccountRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _spatialAnchorsAccountRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SpatialAnchorsAccountResource(Client, SpatialAnchorsAccountData.DeserializeSpatialAnchorsAccountData(e)), _spatialAnchorsAccountClientDiagnostics, Pipeline, "SpatialAnchorsAccountCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -229,37 +200,9 @@ namespace Azure.ResourceManager.MixedReality
         /// <returns> A collection of <see cref="SpatialAnchorsAccountResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SpatialAnchorsAccountResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<SpatialAnchorsAccountResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _spatialAnchorsAccountClientDiagnostics.CreateScope("SpatialAnchorsAccountCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _spatialAnchorsAccountRestClient.ListByResourceGroup(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new SpatialAnchorsAccountResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<SpatialAnchorsAccountResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _spatialAnchorsAccountClientDiagnostics.CreateScope("SpatialAnchorsAccountCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _spatialAnchorsAccountRestClient.ListByResourceGroupNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new SpatialAnchorsAccountResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _spatialAnchorsAccountRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _spatialAnchorsAccountRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SpatialAnchorsAccountResource(Client, SpatialAnchorsAccountData.DeserializeSpatialAnchorsAccountData(e)), _spatialAnchorsAccountClientDiagnostics, Pipeline, "SpatialAnchorsAccountCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

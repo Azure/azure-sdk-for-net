@@ -58,6 +58,11 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WritePropertyName("securityDataUri");
                 writer.WriteStringValue(SecurityDataUri.AbsoluteUri);
             }
+            if (Optional.IsDefined(IsPerformancePlusEnabled))
+            {
+                writer.WritePropertyName("performancePlus");
+                writer.WriteBooleanValue(IsPerformancePlusEnabled.Value);
+            }
             writer.WriteEndObject();
         }
 
@@ -73,6 +78,7 @@ namespace Azure.ResourceManager.Compute.Models
             Optional<long> uploadSizeBytes = default;
             Optional<int> logicalSectorSize = default;
             Optional<Uri> securityDataUri = default;
+            Optional<bool> performancePlus = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("createOption"))
@@ -165,8 +171,18 @@ namespace Azure.ResourceManager.Compute.Models
                     securityDataUri = new Uri(property.Value.GetString());
                     continue;
                 }
+                if (property.NameEquals("performancePlus"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    performancePlus = property.Value.GetBoolean();
+                    continue;
+                }
             }
-            return new DiskCreationData(createOption, storageAccountId.Value, imageReference.Value, galleryImageReference.Value, sourceUri.Value, sourceResourceId.Value, sourceUniqueId.Value, Optional.ToNullable(uploadSizeBytes), Optional.ToNullable(logicalSectorSize), securityDataUri.Value);
+            return new DiskCreationData(createOption, storageAccountId.Value, imageReference.Value, galleryImageReference.Value, sourceUri.Value, sourceResourceId.Value, sourceUniqueId.Value, Optional.ToNullable(uploadSizeBytes), Optional.ToNullable(logicalSectorSize), securityDataUri.Value, Optional.ToNullable(performancePlus));
         }
     }
 }

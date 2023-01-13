@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -126,37 +125,9 @@ namespace Azure.ResourceManager.Synapse
         /// <returns> An async collection of <see cref="SynapseSqlPoolColumnResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SynapseSqlPoolColumnResource> GetAllAsync(string filter = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<SynapseSqlPoolColumnResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _synapseSqlPoolColumnSqlPoolTableColumnsClientDiagnostics.CreateScope("SynapseSqlPoolColumnCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _synapseSqlPoolColumnSqlPoolTableColumnsRestClient.ListByTableNameAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new SynapseSqlPoolColumnResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<SynapseSqlPoolColumnResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _synapseSqlPoolColumnSqlPoolTableColumnsClientDiagnostics.CreateScope("SynapseSqlPoolColumnCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _synapseSqlPoolColumnSqlPoolTableColumnsRestClient.ListByTableNameNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new SynapseSqlPoolColumnResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _synapseSqlPoolColumnSqlPoolTableColumnsRestClient.CreateListByTableNameRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, filter);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _synapseSqlPoolColumnSqlPoolTableColumnsRestClient.CreateListByTableNameNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, filter);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SynapseSqlPoolColumnResource(Client, SynapseSqlPoolColumnData.DeserializeSynapseSqlPoolColumnData(e)), _synapseSqlPoolColumnSqlPoolTableColumnsClientDiagnostics, Pipeline, "SynapseSqlPoolColumnCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -169,37 +140,9 @@ namespace Azure.ResourceManager.Synapse
         /// <returns> A collection of <see cref="SynapseSqlPoolColumnResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SynapseSqlPoolColumnResource> GetAll(string filter = null, CancellationToken cancellationToken = default)
         {
-            Page<SynapseSqlPoolColumnResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _synapseSqlPoolColumnSqlPoolTableColumnsClientDiagnostics.CreateScope("SynapseSqlPoolColumnCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _synapseSqlPoolColumnSqlPoolTableColumnsRestClient.ListByTableName(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, filter, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new SynapseSqlPoolColumnResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<SynapseSqlPoolColumnResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _synapseSqlPoolColumnSqlPoolTableColumnsClientDiagnostics.CreateScope("SynapseSqlPoolColumnCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _synapseSqlPoolColumnSqlPoolTableColumnsRestClient.ListByTableNameNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, filter, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new SynapseSqlPoolColumnResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _synapseSqlPoolColumnSqlPoolTableColumnsRestClient.CreateListByTableNameRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, filter);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _synapseSqlPoolColumnSqlPoolTableColumnsRestClient.CreateListByTableNameNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, filter);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SynapseSqlPoolColumnResource(Client, SynapseSqlPoolColumnData.DeserializeSynapseSqlPoolColumnData(e)), _synapseSqlPoolColumnSqlPoolTableColumnsClientDiagnostics, Pipeline, "SynapseSqlPoolColumnCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

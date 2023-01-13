@@ -1423,8 +1423,7 @@ var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
 var operation = await client.DeleteProjectAsync(WaitUntil.Completed, "<projectName>");
 
-var response = await operation.WaitForCompletionResponseAsync();
-Console.WriteLine(response.Status)
+Console.WriteLine(operation.GetRawResponse().Status)
 ]]></code>
 </example>
     </member>
@@ -1438,8 +1437,7 @@ var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
 var operation = client.DeleteProject(WaitUntil.Completed, "<projectName>");
 
-var response = operation.WaitForCompletionResponse();
-Console.WriteLine(response.Status)
+Console.WriteLine(operation.GetRawResponse().Status)
 ]]></code>
 </example>
     </member>
@@ -1453,7 +1451,7 @@ var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
 var operation = await client.ExportAsync(WaitUntil.Completed, "<projectName>");
 
-BinaryData data = await operation.WaitForCompletionAsync();
+BinaryData data = operation.Value;
 JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
 Console.WriteLine(result.GetProperty("createdDateTime").ToString());
 Console.WriteLine(result.GetProperty("jobId").ToString());
@@ -1468,7 +1466,7 @@ var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
 var operation = await client.ExportAsync(WaitUntil.Completed, "<projectName>", "<format>", "<assetKind>");
 
-BinaryData data = await operation.WaitForCompletionAsync();
+BinaryData data = operation.Value;
 JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
 Console.WriteLine(result.GetProperty("createdDateTime").ToString());
 Console.WriteLine(result.GetProperty("expirationDateTime").ToString());
@@ -1506,7 +1504,7 @@ var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
 var operation = client.Export(WaitUntil.Completed, "<projectName>");
 
-BinaryData data = operation.WaitForCompletion();
+BinaryData data = operation.Value;
 JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
 Console.WriteLine(result.GetProperty("createdDateTime").ToString());
 Console.WriteLine(result.GetProperty("jobId").ToString());
@@ -1521,7 +1519,7 @@ var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
 var operation = client.Export(WaitUntil.Completed, "<projectName>", "<format>", "<assetKind>");
 
-BinaryData data = operation.WaitForCompletion();
+BinaryData data = operation.Value;
 JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
 Console.WriteLine(result.GetProperty("createdDateTime").ToString());
 Console.WriteLine(result.GetProperty("expirationDateTime").ToString());
@@ -1561,7 +1559,7 @@ var data = new {};
 
 var operation = await client.ImportAsync(WaitUntil.Completed, "<projectName>", RequestContent.Create(data));
 
-BinaryData data = await operation.WaitForCompletionAsync();
+BinaryData data = operation.Value;
 JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
 Console.WriteLine(result.GetProperty("createdDateTime").ToString());
 Console.WriteLine(result.GetProperty("jobId").ToString());
@@ -1655,7 +1653,7 @@ var data = new {
 
 var operation = await client.ImportAsync(WaitUntil.Completed, "<projectName>", RequestContent.Create(data), "<format>", "<assetKind>");
 
-BinaryData data = await operation.WaitForCompletionAsync();
+BinaryData data = operation.Value;
 JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
 Console.WriteLine(result.GetProperty("createdDateTime").ToString());
 Console.WriteLine(result.GetProperty("expirationDateTime").ToString());
@@ -1759,7 +1757,7 @@ var data = new {};
 
 var operation = client.Import(WaitUntil.Completed, "<projectName>", RequestContent.Create(data));
 
-BinaryData data = operation.WaitForCompletion();
+BinaryData data = operation.Value;
 JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
 Console.WriteLine(result.GetProperty("createdDateTime").ToString());
 Console.WriteLine(result.GetProperty("jobId").ToString());
@@ -1853,7 +1851,7 @@ var data = new {
 
 var operation = client.Import(WaitUntil.Completed, "<projectName>", RequestContent.Create(data), "<format>", "<assetKind>");
 
-BinaryData data = operation.WaitForCompletion();
+BinaryData data = operation.Value;
 JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
 Console.WriteLine(result.GetProperty("createdDateTime").ToString());
 Console.WriteLine(result.GetProperty("expirationDateTime").ToString());
@@ -1955,7 +1953,7 @@ var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
 var operation = await client.DeployProjectAsync(WaitUntil.Completed, "<projectName>", "<deploymentName>");
 
-BinaryData data = await operation.WaitForCompletionAsync();
+BinaryData data = operation.Value;
 JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
 Console.WriteLine(result.GetProperty("deploymentName").ToString());
 Console.WriteLine(result.GetProperty("lastDeployedDateTime").ToString());
@@ -1987,7 +1985,7 @@ var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
 var operation = client.DeployProject(WaitUntil.Completed, "<projectName>", "<deploymentName>");
 
-BinaryData data = operation.WaitForCompletion();
+BinaryData data = operation.Value;
 JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
 Console.WriteLine(result.GetProperty("deploymentName").ToString());
 Console.WriteLine(result.GetProperty("lastDeployedDateTime").ToString());
@@ -2032,8 +2030,7 @@ var data = new[] {
 
 var operation = await client.UpdateSourcesAsync(WaitUntil.Completed, "<projectName>", RequestContent.Create(data));
 
-var response = await operation.WaitForCompletionAsync();
-await foreach (var data in response.Value)
+await foreach (var data in operation.Value)
 {
     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("displayName").ToString());
@@ -2101,8 +2098,7 @@ var data = new[] {
 
 var operation = client.UpdateSources(WaitUntil.Completed, "<projectName>", RequestContent.Create(data));
 
-var response = operation.WaitForCompletion();
-foreach (var data in response.Value)
+foreach (var data in operation.Value)
 {
     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("displayName").ToString());
@@ -2196,8 +2192,7 @@ var data = new[] {
 
 var operation = await client.UpdateQnasAsync(WaitUntil.Completed, "<projectName>", RequestContent.Create(data));
 
-var response = await operation.WaitForCompletionAsync();
-await foreach (var data in response.Value)
+await foreach (var data in operation.Value)
 {
     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("id").ToString());
@@ -2362,8 +2357,7 @@ var data = new[] {
 
 var operation = client.UpdateQnas(WaitUntil.Completed, "<projectName>", RequestContent.Create(data));
 
-var response = operation.WaitForCompletion();
-foreach (var data in response.Value)
+foreach (var data in operation.Value)
 {
     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("id").ToString());

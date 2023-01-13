@@ -70,6 +70,10 @@ namespace Azure.ResourceManager.Chaos.Tests
         /// </summary>
         public int CreateVmssId()
         {
+            if (this.Mode == RecordedTestMode.Playback)
+            {
+                return this.IsAsync ? 5 : 4;
+            }
             var framework = RuntimeInformation.FrameworkDescription;
             if (framework.IndexOf(TestConstants.DotNetFrameworkName, StringComparison.OrdinalIgnoreCase) != -1)
             {

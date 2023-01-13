@@ -31,11 +31,31 @@ namespace Azure.Messaging.WebPubSub.Client.Tests
 #endregion
         }
 
+#region Snippet:WebPubSubClient_GenerateClientAccessUri
         public async ValueTask<Uri> FetchClientAccessTokenFromServerAsync(CancellationToken token)
         {
-#region Snippet:WebPubSubClient_GenerateClientAccessUri
             var serviceClient = new WebPubSubServiceClient("<< Connection String >>", "hub");
             return await serviceClient.GetClientAccessUriAsync();
+        }
+        #endregion
+
+        public void ConstructWebPubSubClientWithJsonProtocol()
+        {
+#region Snippet:WebPubSubClient_JsonProtocol
+            var client = new WebPubSubClient(new Uri("<client-access-uri>"), new WebPubSubClientOptions
+            {
+                Protocol = new WebPubSubJsonProtocol()
+            });
+#endregion
+        }
+
+        public void ConstructWebPubSubClientWithJsonReliableProtocol()
+        {
+#region Snippet:WebPubSubClient_JsonReliableProtocol
+            var client = new WebPubSubClient(new Uri("<client-access-uri>"), new WebPubSubClientOptions
+            {
+                Protocol = new WebPubSubJsonReliableProtocol()
+            });
 #endregion
         }
 
@@ -102,6 +122,24 @@ namespace Azure.Messaging.WebPubSub.Client.Tests
                 Console.WriteLine($"Restore group failed");
                 return Task.CompletedTask;
             };
+#endregion
+        }
+
+        public async Task WebPubSubClientJoinGroupAndRetry(WebPubSubClient client)
+        {
+#region Snippet:WebPubSubClient_JoinGroupAndRetry
+            // Send message to group "testGroup"
+            try
+            {
+                await client.JoinGroupAsync("testGroup");
+            }
+            catch (SendMessageFailedException ex)
+            {
+                if (ex.AckId == null)
+                {
+                    await client.JoinGroupAsync("testGroup", ackId: ex.AckId);
+                }
+            }
 #endregion
         }
 

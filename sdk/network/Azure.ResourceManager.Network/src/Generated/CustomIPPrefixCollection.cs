@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -189,37 +188,9 @@ namespace Azure.ResourceManager.Network
         /// <returns> An async collection of <see cref="CustomIPPrefixResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<CustomIPPrefixResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<CustomIPPrefixResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _customIPPrefixClientDiagnostics.CreateScope("CustomIPPrefixCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _customIPPrefixRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new CustomIPPrefixResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<CustomIPPrefixResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _customIPPrefixClientDiagnostics.CreateScope("CustomIPPrefixCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _customIPPrefixRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new CustomIPPrefixResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _customIPPrefixRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _customIPPrefixRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new CustomIPPrefixResource(Client, CustomIPPrefixData.DeserializeCustomIPPrefixData(e)), _customIPPrefixClientDiagnostics, Pipeline, "CustomIPPrefixCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -231,37 +202,9 @@ namespace Azure.ResourceManager.Network
         /// <returns> A collection of <see cref="CustomIPPrefixResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<CustomIPPrefixResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<CustomIPPrefixResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _customIPPrefixClientDiagnostics.CreateScope("CustomIPPrefixCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _customIPPrefixRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new CustomIPPrefixResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<CustomIPPrefixResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _customIPPrefixClientDiagnostics.CreateScope("CustomIPPrefixCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _customIPPrefixRestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new CustomIPPrefixResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _customIPPrefixRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _customIPPrefixRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new CustomIPPrefixResource(Client, CustomIPPrefixData.DeserializeCustomIPPrefixData(e)), _customIPPrefixClientDiagnostics, Pipeline, "CustomIPPrefixCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
