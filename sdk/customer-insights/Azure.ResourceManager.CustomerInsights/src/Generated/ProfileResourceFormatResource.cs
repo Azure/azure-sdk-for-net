@@ -260,22 +260,8 @@ namespace Azure.ResourceManager.CustomerInsights
         /// <returns> An async collection of <see cref="KpiDefinition" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<KpiDefinition> GetEnrichingKpisAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<KpiDefinition>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _profileResourceFormatProfilesClientDiagnostics.CreateScope("ProfileResourceFormatResource.GetEnrichingKpis");
-                scope.Start();
-                try
-                {
-                    var response = await _profileResourceFormatProfilesRestClient.GetEnrichingKpisAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value, null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _profileResourceFormatProfilesRestClient.CreateGetEnrichingKpisRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, KpiDefinition.DeserializeKpiDefinition, _profileResourceFormatProfilesClientDiagnostics, Pipeline, "ProfileResourceFormatResource.GetEnrichingKpis", "", null, cancellationToken);
         }
 
         /// <summary>
@@ -287,22 +273,8 @@ namespace Azure.ResourceManager.CustomerInsights
         /// <returns> A collection of <see cref="KpiDefinition" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<KpiDefinition> GetEnrichingKpis(CancellationToken cancellationToken = default)
         {
-            Page<KpiDefinition> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _profileResourceFormatProfilesClientDiagnostics.CreateScope("ProfileResourceFormatResource.GetEnrichingKpis");
-                scope.Start();
-                try
-                {
-                    var response = _profileResourceFormatProfilesRestClient.GetEnrichingKpis(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value, null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _profileResourceFormatProfilesRestClient.CreateGetEnrichingKpisRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, KpiDefinition.DeserializeKpiDefinition, _profileResourceFormatProfilesClientDiagnostics, Pipeline, "ProfileResourceFormatResource.GetEnrichingKpis", "", null, cancellationToken);
         }
     }
 }

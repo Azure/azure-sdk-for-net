@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -120,37 +119,9 @@ namespace Azure.ResourceManager.Network
         /// <returns> An async collection of <see cref="ProbeResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ProbeResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<ProbeResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _probeLoadBalancerProbesClientDiagnostics.CreateScope("ProbeCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _probeLoadBalancerProbesRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ProbeResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<ProbeResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _probeLoadBalancerProbesClientDiagnostics.CreateScope("ProbeCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _probeLoadBalancerProbesRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ProbeResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _probeLoadBalancerProbesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _probeLoadBalancerProbesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ProbeResource(Client, ProbeData.DeserializeProbeData(e)), _probeLoadBalancerProbesClientDiagnostics, Pipeline, "ProbeCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -162,37 +133,9 @@ namespace Azure.ResourceManager.Network
         /// <returns> A collection of <see cref="ProbeResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ProbeResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<ProbeResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _probeLoadBalancerProbesClientDiagnostics.CreateScope("ProbeCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _probeLoadBalancerProbesRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ProbeResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<ProbeResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _probeLoadBalancerProbesClientDiagnostics.CreateScope("ProbeCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _probeLoadBalancerProbesRestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ProbeResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _probeLoadBalancerProbesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _probeLoadBalancerProbesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ProbeResource(Client, ProbeData.DeserializeProbeData(e)), _probeLoadBalancerProbesClientDiagnostics, Pipeline, "ProbeCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -126,37 +125,9 @@ namespace Azure.ResourceManager.AppService
         /// <returns> An async collection of <see cref="SiteDetectorResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SiteDetectorResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<SiteDetectorResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _siteDetectorDiagnosticsClientDiagnostics.CreateScope("SiteDetectorCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _siteDetectorDiagnosticsRestClient.ListSiteDetectorResponsesAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new SiteDetectorResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<SiteDetectorResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _siteDetectorDiagnosticsClientDiagnostics.CreateScope("SiteDetectorCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _siteDetectorDiagnosticsRestClient.ListSiteDetectorResponsesNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new SiteDetectorResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _siteDetectorDiagnosticsRestClient.CreateListSiteDetectorResponsesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _siteDetectorDiagnosticsRestClient.CreateListSiteDetectorResponsesNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SiteDetectorResource(Client, AppServiceDetectorData.DeserializeAppServiceDetectorData(e)), _siteDetectorDiagnosticsClientDiagnostics, Pipeline, "SiteDetectorCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -168,37 +139,9 @@ namespace Azure.ResourceManager.AppService
         /// <returns> A collection of <see cref="SiteDetectorResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SiteDetectorResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<SiteDetectorResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _siteDetectorDiagnosticsClientDiagnostics.CreateScope("SiteDetectorCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _siteDetectorDiagnosticsRestClient.ListSiteDetectorResponses(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new SiteDetectorResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<SiteDetectorResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _siteDetectorDiagnosticsClientDiagnostics.CreateScope("SiteDetectorCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _siteDetectorDiagnosticsRestClient.ListSiteDetectorResponsesNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new SiteDetectorResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _siteDetectorDiagnosticsRestClient.CreateListSiteDetectorResponsesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _siteDetectorDiagnosticsRestClient.CreateListSiteDetectorResponsesNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SiteDetectorResource(Client, AppServiceDetectorData.DeserializeAppServiceDetectorData(e)), _siteDetectorDiagnosticsClientDiagnostics, Pipeline, "SiteDetectorCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -195,37 +194,9 @@ namespace Azure.ResourceManager.MachineLearning
         /// <returns> An async collection of <see cref="MachineLearningDatastoreResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<MachineLearningDatastoreResource> GetAllAsync(string skip = null, int? count = null, bool? isDefault = null, IEnumerable<string> names = null, string searchText = null, string orderBy = null, bool? orderByAsc = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<MachineLearningDatastoreResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _machineLearningDatastoreDatastoresClientDiagnostics.CreateScope("MachineLearningDatastoreCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _machineLearningDatastoreDatastoresRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, skip, count, isDefault, names, searchText, orderBy, orderByAsc, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new MachineLearningDatastoreResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<MachineLearningDatastoreResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _machineLearningDatastoreDatastoresClientDiagnostics.CreateScope("MachineLearningDatastoreCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _machineLearningDatastoreDatastoresRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, skip, count, isDefault, names, searchText, orderBy, orderByAsc, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new MachineLearningDatastoreResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _machineLearningDatastoreDatastoresRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, skip, count, isDefault, names, searchText, orderBy, orderByAsc);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _machineLearningDatastoreDatastoresRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, skip, count, isDefault, names, searchText, orderBy, orderByAsc);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new MachineLearningDatastoreResource(Client, MachineLearningDatastoreData.DeserializeMachineLearningDatastoreData(e)), _machineLearningDatastoreDatastoresClientDiagnostics, Pipeline, "MachineLearningDatastoreCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -244,37 +215,9 @@ namespace Azure.ResourceManager.MachineLearning
         /// <returns> A collection of <see cref="MachineLearningDatastoreResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<MachineLearningDatastoreResource> GetAll(string skip = null, int? count = null, bool? isDefault = null, IEnumerable<string> names = null, string searchText = null, string orderBy = null, bool? orderByAsc = null, CancellationToken cancellationToken = default)
         {
-            Page<MachineLearningDatastoreResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _machineLearningDatastoreDatastoresClientDiagnostics.CreateScope("MachineLearningDatastoreCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _machineLearningDatastoreDatastoresRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, skip, count, isDefault, names, searchText, orderBy, orderByAsc, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new MachineLearningDatastoreResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<MachineLearningDatastoreResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _machineLearningDatastoreDatastoresClientDiagnostics.CreateScope("MachineLearningDatastoreCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _machineLearningDatastoreDatastoresRestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, skip, count, isDefault, names, searchText, orderBy, orderByAsc, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new MachineLearningDatastoreResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _machineLearningDatastoreDatastoresRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, skip, count, isDefault, names, searchText, orderBy, orderByAsc);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _machineLearningDatastoreDatastoresRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, skip, count, isDefault, names, searchText, orderBy, orderByAsc);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new MachineLearningDatastoreResource(Client, MachineLearningDatastoreData.DeserializeMachineLearningDatastoreData(e)), _machineLearningDatastoreDatastoresClientDiagnostics, Pipeline, "MachineLearningDatastoreCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

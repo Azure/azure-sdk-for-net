@@ -102,37 +102,9 @@ namespace Azure.ResourceManager.Cdn
         /// <returns> An async collection of <see cref="EdgeNode" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<EdgeNode> GetEdgeNodesAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<EdgeNode>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = EdgeNodesClientDiagnostics.CreateScope("TenantResourceExtensionClient.GetEdgeNodes");
-                scope.Start();
-                try
-                {
-                    var response = await EdgeNodesRestClient.ListAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<EdgeNode>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = EdgeNodesClientDiagnostics.CreateScope("TenantResourceExtensionClient.GetEdgeNodes");
-                scope.Start();
-                try
-                {
-                    var response = await EdgeNodesRestClient.ListNextPageAsync(nextLink, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => EdgeNodesRestClient.CreateListRequest();
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => EdgeNodesRestClient.CreateListNextPageRequest(nextLink);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, EdgeNode.DeserializeEdgeNode, EdgeNodesClientDiagnostics, Pipeline, "TenantResourceExtensionClient.GetEdgeNodes", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -144,37 +116,9 @@ namespace Azure.ResourceManager.Cdn
         /// <returns> A collection of <see cref="EdgeNode" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<EdgeNode> GetEdgeNodes(CancellationToken cancellationToken = default)
         {
-            Page<EdgeNode> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = EdgeNodesClientDiagnostics.CreateScope("TenantResourceExtensionClient.GetEdgeNodes");
-                scope.Start();
-                try
-                {
-                    var response = EdgeNodesRestClient.List(cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<EdgeNode> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = EdgeNodesClientDiagnostics.CreateScope("TenantResourceExtensionClient.GetEdgeNodes");
-                scope.Start();
-                try
-                {
-                    var response = EdgeNodesRestClient.ListNextPage(nextLink, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => EdgeNodesRestClient.CreateListRequest();
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => EdgeNodesRestClient.CreateListNextPageRequest(nextLink);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, EdgeNode.DeserializeEdgeNode, EdgeNodesClientDiagnostics, Pipeline, "TenantResourceExtensionClient.GetEdgeNodes", "value", "nextLink", cancellationToken);
         }
     }
 }

@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -211,37 +210,9 @@ namespace Azure.ResourceManager.ManagementGroups
         /// <returns> An async collection of <see cref="ManagementGroupResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ManagementGroupResource> GetAllAsync(string cacheControl = null, string skiptoken = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<ManagementGroupResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _managementGroupClientDiagnostics.CreateScope("ManagementGroupCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _managementGroupRestClient.ListAsync(cacheControl, skiptoken, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ManagementGroupResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<ManagementGroupResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _managementGroupClientDiagnostics.CreateScope("ManagementGroupCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _managementGroupRestClient.ListNextPageAsync(nextLink, cacheControl, skiptoken, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ManagementGroupResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _managementGroupRestClient.CreateListRequest(cacheControl, skiptoken);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _managementGroupRestClient.CreateListNextPageRequest(nextLink, cacheControl, skiptoken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ManagementGroupResource(Client, ManagementGroupData.DeserializeManagementGroupData(e)), _managementGroupClientDiagnostics, Pipeline, "ManagementGroupCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -260,37 +231,9 @@ namespace Azure.ResourceManager.ManagementGroups
         /// <returns> A collection of <see cref="ManagementGroupResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ManagementGroupResource> GetAll(string cacheControl = null, string skiptoken = null, CancellationToken cancellationToken = default)
         {
-            Page<ManagementGroupResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _managementGroupClientDiagnostics.CreateScope("ManagementGroupCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _managementGroupRestClient.List(cacheControl, skiptoken, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ManagementGroupResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<ManagementGroupResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _managementGroupClientDiagnostics.CreateScope("ManagementGroupCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _managementGroupRestClient.ListNextPage(nextLink, cacheControl, skiptoken, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ManagementGroupResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _managementGroupRestClient.CreateListRequest(cacheControl, skiptoken);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _managementGroupRestClient.CreateListNextPageRequest(nextLink, cacheControl, skiptoken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ManagementGroupResource(Client, ManagementGroupData.DeserializeManagementGroupData(e)), _managementGroupClientDiagnostics, Pipeline, "ManagementGroupCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

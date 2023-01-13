@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -132,37 +131,9 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <returns> An async collection of <see cref="SoftwareInventoryResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SoftwareInventoryResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<SoftwareInventoryResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _softwareInventoryClientDiagnostics.CreateScope("SoftwareInventoryCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _softwareInventoryRestClient.ListByExtendedResourceAsync(Id.SubscriptionId, Id.ResourceGroupName, _resourceNamespace, _resourceType, _resourceName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new SoftwareInventoryResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<SoftwareInventoryResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _softwareInventoryClientDiagnostics.CreateScope("SoftwareInventoryCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _softwareInventoryRestClient.ListByExtendedResourceNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, _resourceNamespace, _resourceType, _resourceName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new SoftwareInventoryResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _softwareInventoryRestClient.CreateListByExtendedResourceRequest(Id.SubscriptionId, Id.ResourceGroupName, _resourceNamespace, _resourceType, _resourceName);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _softwareInventoryRestClient.CreateListByExtendedResourceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, _resourceNamespace, _resourceType, _resourceName);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SoftwareInventoryResource(Client, SoftwareInventoryData.DeserializeSoftwareInventoryData(e)), _softwareInventoryClientDiagnostics, Pipeline, "SoftwareInventoryCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -174,37 +145,9 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <returns> A collection of <see cref="SoftwareInventoryResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SoftwareInventoryResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<SoftwareInventoryResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _softwareInventoryClientDiagnostics.CreateScope("SoftwareInventoryCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _softwareInventoryRestClient.ListByExtendedResource(Id.SubscriptionId, Id.ResourceGroupName, _resourceNamespace, _resourceType, _resourceName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new SoftwareInventoryResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<SoftwareInventoryResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _softwareInventoryClientDiagnostics.CreateScope("SoftwareInventoryCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _softwareInventoryRestClient.ListByExtendedResourceNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, _resourceNamespace, _resourceType, _resourceName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new SoftwareInventoryResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _softwareInventoryRestClient.CreateListByExtendedResourceRequest(Id.SubscriptionId, Id.ResourceGroupName, _resourceNamespace, _resourceType, _resourceName);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _softwareInventoryRestClient.CreateListByExtendedResourceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, _resourceNamespace, _resourceType, _resourceName);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SoftwareInventoryResource(Client, SoftwareInventoryData.DeserializeSoftwareInventoryData(e)), _softwareInventoryClientDiagnostics, Pipeline, "SoftwareInventoryCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

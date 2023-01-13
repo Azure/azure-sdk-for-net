@@ -52,22 +52,8 @@ namespace Azure.ResourceManager.Advisor
         /// <returns> An async collection of <see cref="ConfigData" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ConfigData> GetConfigurationsAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<ConfigData>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = ConfigurationsClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetConfigurations");
-                scope.Start();
-                try
-                {
-                    var response = await ConfigurationsRestClient.ListByResourceGroupAsync(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => ConfigurationsRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, ConfigData.DeserializeConfigData, ConfigurationsClientDiagnostics, Pipeline, "ResourceGroupResourceExtensionClient.GetConfigurations", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -79,22 +65,8 @@ namespace Azure.ResourceManager.Advisor
         /// <returns> A collection of <see cref="ConfigData" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ConfigData> GetConfigurations(CancellationToken cancellationToken = default)
         {
-            Page<ConfigData> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = ConfigurationsClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetConfigurations");
-                scope.Start();
-                try
-                {
-                    var response = ConfigurationsRestClient.ListByResourceGroup(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => ConfigurationsRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, ConfigData.DeserializeConfigData, ConfigurationsClientDiagnostics, Pipeline, "ResourceGroupResourceExtensionClient.GetConfigurations", "value", null, cancellationToken);
         }
 
         /// <summary>

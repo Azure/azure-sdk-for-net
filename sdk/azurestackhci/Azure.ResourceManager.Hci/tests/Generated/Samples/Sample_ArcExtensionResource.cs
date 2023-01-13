@@ -12,8 +12,9 @@ using Azure;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager;
+using Azure.ResourceManager.Hci;
 
-namespace Azure.ResourceManager.Hci
+namespace Azure.ResourceManager.Hci.Samples
 {
     public partial class Sample_ArcExtensionResource
     {
@@ -25,8 +26,10 @@ namespace Azure.ResourceManager.Hci
             // Generated from example definition: specification/azurestackhci/resource-manager/Microsoft.AzureStackHCI/stable/2022-05-01/examples/GetExtension.json
             // this example is just showing the usage of "Extensions_Get" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this ArcExtensionResource created on azure
             // for more information of creating ArcExtensionResource, please refer to the document of ArcExtensionResource
@@ -56,8 +59,10 @@ namespace Azure.ResourceManager.Hci
             // Generated from example definition: specification/azurestackhci/resource-manager/Microsoft.AzureStackHCI/stable/2022-05-01/examples/PatchExtension.json
             // this example is just showing the usage of "Extensions_Update" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this ArcExtensionResource created on azure
             // for more information of creating ArcExtensionResource, please refer to the document of ArcExtensionResource
@@ -98,8 +103,10 @@ namespace Azure.ResourceManager.Hci
             // Generated from example definition: specification/azurestackhci/resource-manager/Microsoft.AzureStackHCI/stable/2022-05-01/examples/DeleteExtension.json
             // this example is just showing the usage of "Extensions_Delete" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this ArcExtensionResource created on azure
             // for more information of creating ArcExtensionResource, please refer to the document of ArcExtensionResource

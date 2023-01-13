@@ -12,13 +12,24 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    internal partial class CapacityReservationUtilization
+    public partial class CapacityReservationUtilization
     {
         internal static CapacityReservationUtilization DeserializeCapacityReservationUtilization(JsonElement element)
         {
+            Optional<int> currentCapacity = default;
             Optional<IReadOnlyList<SubResource>> virtualMachinesAllocated = default;
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("currentCapacity"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    currentCapacity = property.Value.GetInt32();
+                    continue;
+                }
                 if (property.NameEquals("virtualMachinesAllocated"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -35,7 +46,7 @@ namespace Azure.ResourceManager.Compute.Models
                     continue;
                 }
             }
-            return new CapacityReservationUtilization(Optional.ToList(virtualMachinesAllocated));
+            return new CapacityReservationUtilization(Optional.ToNullable(currentCapacity), Optional.ToList(virtualMachinesAllocated));
         }
     }
 }

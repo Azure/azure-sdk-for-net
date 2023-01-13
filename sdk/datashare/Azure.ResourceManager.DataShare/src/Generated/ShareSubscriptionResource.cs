@@ -395,37 +395,9 @@ namespace Azure.ResourceManager.DataShare
         /// <returns> An async collection of <see cref="SourceShareSynchronizationSetting" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SourceShareSynchronizationSetting> GetSourceShareSynchronizationSettingsAsync(string skipToken = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<SourceShareSynchronizationSetting>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _shareSubscriptionClientDiagnostics.CreateScope("ShareSubscriptionResource.GetSourceShareSynchronizationSettings");
-                scope.Start();
-                try
-                {
-                    var response = await _shareSubscriptionRestClient.ListSourceShareSynchronizationSettingsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skipToken, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<SourceShareSynchronizationSetting>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _shareSubscriptionClientDiagnostics.CreateScope("ShareSubscriptionResource.GetSourceShareSynchronizationSettings");
-                scope.Start();
-                try
-                {
-                    var response = await _shareSubscriptionRestClient.ListSourceShareSynchronizationSettingsNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skipToken, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _shareSubscriptionRestClient.CreateListSourceShareSynchronizationSettingsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skipToken);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _shareSubscriptionRestClient.CreateListSourceShareSynchronizationSettingsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skipToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, SourceShareSynchronizationSetting.DeserializeSourceShareSynchronizationSetting, _shareSubscriptionClientDiagnostics, Pipeline, "ShareSubscriptionResource.GetSourceShareSynchronizationSettings", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -438,37 +410,9 @@ namespace Azure.ResourceManager.DataShare
         /// <returns> A collection of <see cref="SourceShareSynchronizationSetting" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SourceShareSynchronizationSetting> GetSourceShareSynchronizationSettings(string skipToken = null, CancellationToken cancellationToken = default)
         {
-            Page<SourceShareSynchronizationSetting> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _shareSubscriptionClientDiagnostics.CreateScope("ShareSubscriptionResource.GetSourceShareSynchronizationSettings");
-                scope.Start();
-                try
-                {
-                    var response = _shareSubscriptionRestClient.ListSourceShareSynchronizationSettings(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skipToken, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<SourceShareSynchronizationSetting> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _shareSubscriptionClientDiagnostics.CreateScope("ShareSubscriptionResource.GetSourceShareSynchronizationSettings");
-                scope.Start();
-                try
-                {
-                    var response = _shareSubscriptionRestClient.ListSourceShareSynchronizationSettingsNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skipToken, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _shareSubscriptionRestClient.CreateListSourceShareSynchronizationSettingsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skipToken);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _shareSubscriptionRestClient.CreateListSourceShareSynchronizationSettingsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skipToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, SourceShareSynchronizationSetting.DeserializeSourceShareSynchronizationSetting, _shareSubscriptionClientDiagnostics, Pipeline, "ShareSubscriptionResource.GetSourceShareSynchronizationSettings", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -487,37 +431,9 @@ namespace Azure.ResourceManager.DataShare
         {
             Argument.AssertNotNull(shareSubscriptionSynchronization, nameof(shareSubscriptionSynchronization));
 
-            async Task<Page<SynchronizationDetails>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _shareSubscriptionClientDiagnostics.CreateScope("ShareSubscriptionResource.GetSynchronizationDetails");
-                scope.Start();
-                try
-                {
-                    var response = await _shareSubscriptionRestClient.ListSynchronizationDetailsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, shareSubscriptionSynchronization, skipToken, filter, orderby, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<SynchronizationDetails>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _shareSubscriptionClientDiagnostics.CreateScope("ShareSubscriptionResource.GetSynchronizationDetails");
-                scope.Start();
-                try
-                {
-                    var response = await _shareSubscriptionRestClient.ListSynchronizationDetailsNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, shareSubscriptionSynchronization, skipToken, filter, orderby, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _shareSubscriptionRestClient.CreateListSynchronizationDetailsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, shareSubscriptionSynchronization, skipToken, filter, orderby);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _shareSubscriptionRestClient.CreateListSynchronizationDetailsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, shareSubscriptionSynchronization, skipToken, filter, orderby);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, SynchronizationDetails.DeserializeSynchronizationDetails, _shareSubscriptionClientDiagnostics, Pipeline, "ShareSubscriptionResource.GetSynchronizationDetails", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -536,37 +452,9 @@ namespace Azure.ResourceManager.DataShare
         {
             Argument.AssertNotNull(shareSubscriptionSynchronization, nameof(shareSubscriptionSynchronization));
 
-            Page<SynchronizationDetails> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _shareSubscriptionClientDiagnostics.CreateScope("ShareSubscriptionResource.GetSynchronizationDetails");
-                scope.Start();
-                try
-                {
-                    var response = _shareSubscriptionRestClient.ListSynchronizationDetails(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, shareSubscriptionSynchronization, skipToken, filter, orderby, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<SynchronizationDetails> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _shareSubscriptionClientDiagnostics.CreateScope("ShareSubscriptionResource.GetSynchronizationDetails");
-                scope.Start();
-                try
-                {
-                    var response = _shareSubscriptionRestClient.ListSynchronizationDetailsNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, shareSubscriptionSynchronization, skipToken, filter, orderby, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _shareSubscriptionRestClient.CreateListSynchronizationDetailsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, shareSubscriptionSynchronization, skipToken, filter, orderby);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _shareSubscriptionRestClient.CreateListSynchronizationDetailsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, shareSubscriptionSynchronization, skipToken, filter, orderby);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, SynchronizationDetails.DeserializeSynchronizationDetails, _shareSubscriptionClientDiagnostics, Pipeline, "ShareSubscriptionResource.GetSynchronizationDetails", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -581,37 +469,9 @@ namespace Azure.ResourceManager.DataShare
         /// <returns> An async collection of <see cref="ShareSubscriptionSynchronization" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ShareSubscriptionSynchronization> GetSynchronizationsAsync(string skipToken = null, string filter = null, string orderby = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<ShareSubscriptionSynchronization>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _shareSubscriptionClientDiagnostics.CreateScope("ShareSubscriptionResource.GetSynchronizations");
-                scope.Start();
-                try
-                {
-                    var response = await _shareSubscriptionRestClient.ListSynchronizationsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skipToken, filter, orderby, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<ShareSubscriptionSynchronization>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _shareSubscriptionClientDiagnostics.CreateScope("ShareSubscriptionResource.GetSynchronizations");
-                scope.Start();
-                try
-                {
-                    var response = await _shareSubscriptionRestClient.ListSynchronizationsNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skipToken, filter, orderby, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _shareSubscriptionRestClient.CreateListSynchronizationsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skipToken, filter, orderby);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _shareSubscriptionRestClient.CreateListSynchronizationsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skipToken, filter, orderby);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, ShareSubscriptionSynchronization.DeserializeShareSubscriptionSynchronization, _shareSubscriptionClientDiagnostics, Pipeline, "ShareSubscriptionResource.GetSynchronizations", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -626,37 +486,9 @@ namespace Azure.ResourceManager.DataShare
         /// <returns> A collection of <see cref="ShareSubscriptionSynchronization" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ShareSubscriptionSynchronization> GetSynchronizations(string skipToken = null, string filter = null, string orderby = null, CancellationToken cancellationToken = default)
         {
-            Page<ShareSubscriptionSynchronization> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _shareSubscriptionClientDiagnostics.CreateScope("ShareSubscriptionResource.GetSynchronizations");
-                scope.Start();
-                try
-                {
-                    var response = _shareSubscriptionRestClient.ListSynchronizations(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skipToken, filter, orderby, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<ShareSubscriptionSynchronization> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _shareSubscriptionClientDiagnostics.CreateScope("ShareSubscriptionResource.GetSynchronizations");
-                scope.Start();
-                try
-                {
-                    var response = _shareSubscriptionRestClient.ListSynchronizationsNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skipToken, filter, orderby, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _shareSubscriptionRestClient.CreateListSynchronizationsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skipToken, filter, orderby);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _shareSubscriptionRestClient.CreateListSynchronizationsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skipToken, filter, orderby);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, ShareSubscriptionSynchronization.DeserializeShareSubscriptionSynchronization, _shareSubscriptionClientDiagnostics, Pipeline, "ShareSubscriptionResource.GetSynchronizations", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -729,37 +561,9 @@ namespace Azure.ResourceManager.DataShare
         /// <returns> An async collection of <see cref="ConsumerSourceDataSet" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ConsumerSourceDataSet> GetConsumerSourceDataSetsAsync(string skipToken = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<ConsumerSourceDataSet>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _consumerSourceDataSetsClientDiagnostics.CreateScope("ShareSubscriptionResource.GetConsumerSourceDataSets");
-                scope.Start();
-                try
-                {
-                    var response = await _consumerSourceDataSetsRestClient.ListByShareSubscriptionAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skipToken, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<ConsumerSourceDataSet>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _consumerSourceDataSetsClientDiagnostics.CreateScope("ShareSubscriptionResource.GetConsumerSourceDataSets");
-                scope.Start();
-                try
-                {
-                    var response = await _consumerSourceDataSetsRestClient.ListByShareSubscriptionNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skipToken, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _consumerSourceDataSetsRestClient.CreateListByShareSubscriptionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skipToken);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _consumerSourceDataSetsRestClient.CreateListByShareSubscriptionNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skipToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, ConsumerSourceDataSet.DeserializeConsumerSourceDataSet, _consumerSourceDataSetsClientDiagnostics, Pipeline, "ShareSubscriptionResource.GetConsumerSourceDataSets", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -772,37 +576,9 @@ namespace Azure.ResourceManager.DataShare
         /// <returns> A collection of <see cref="ConsumerSourceDataSet" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ConsumerSourceDataSet> GetConsumerSourceDataSets(string skipToken = null, CancellationToken cancellationToken = default)
         {
-            Page<ConsumerSourceDataSet> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _consumerSourceDataSetsClientDiagnostics.CreateScope("ShareSubscriptionResource.GetConsumerSourceDataSets");
-                scope.Start();
-                try
-                {
-                    var response = _consumerSourceDataSetsRestClient.ListByShareSubscription(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skipToken, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<ConsumerSourceDataSet> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _consumerSourceDataSetsClientDiagnostics.CreateScope("ShareSubscriptionResource.GetConsumerSourceDataSets");
-                scope.Start();
-                try
-                {
-                    var response = _consumerSourceDataSetsRestClient.ListByShareSubscriptionNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skipToken, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _consumerSourceDataSetsRestClient.CreateListByShareSubscriptionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skipToken);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _consumerSourceDataSetsRestClient.CreateListByShareSubscriptionNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skipToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, ConsumerSourceDataSet.DeserializeConsumerSourceDataSet, _consumerSourceDataSetsClientDiagnostics, Pipeline, "ShareSubscriptionResource.GetConsumerSourceDataSets", "value", "nextLink", cancellationToken);
         }
     }
 }

@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -199,37 +198,9 @@ namespace Azure.ResourceManager.Chaos
         /// <returns> An async collection of <see cref="TargetResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<TargetResource> GetAllAsync(string continuationToken = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<TargetResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _targetClientDiagnostics.CreateScope("TargetCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _targetRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, _parentProviderNamespace, _parentResourceType, _parentResourceName, continuationToken, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new TargetResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<TargetResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _targetClientDiagnostics.CreateScope("TargetCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _targetRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, _parentProviderNamespace, _parentResourceType, _parentResourceName, continuationToken, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new TargetResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _targetRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, _parentProviderNamespace, _parentResourceType, _parentResourceName, continuationToken);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _targetRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, _parentProviderNamespace, _parentResourceType, _parentResourceName, continuationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new TargetResource(Client, TargetData.DeserializeTargetData(e)), _targetClientDiagnostics, Pipeline, "TargetCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -242,37 +213,9 @@ namespace Azure.ResourceManager.Chaos
         /// <returns> A collection of <see cref="TargetResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<TargetResource> GetAll(string continuationToken = null, CancellationToken cancellationToken = default)
         {
-            Page<TargetResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _targetClientDiagnostics.CreateScope("TargetCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _targetRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, _parentProviderNamespace, _parentResourceType, _parentResourceName, continuationToken, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new TargetResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<TargetResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _targetClientDiagnostics.CreateScope("TargetCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _targetRestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, _parentProviderNamespace, _parentResourceType, _parentResourceName, continuationToken, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new TargetResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _targetRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, _parentProviderNamespace, _parentResourceType, _parentResourceName, continuationToken);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _targetRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, _parentProviderNamespace, _parentResourceType, _parentResourceName, continuationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new TargetResource(Client, TargetData.DeserializeTargetData(e)), _targetClientDiagnostics, Pipeline, "TargetCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
