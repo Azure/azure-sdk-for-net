@@ -109,7 +109,7 @@ steps:
 
     - template: /eng/common/pipelines/templates/steps/git-push-changes.yml
       parameters:
-        BaseRepoBranch: $(TargetBranchName)
+        BaseRepoBranch: test_metadta
         BaseRepoOwner: ${{ parameters.TargetDocRepoOwner }}
         CommitMsg: "Update docs metadata"
         TargetRepoName: ${{ parameters.TargetDocRepoName }}
