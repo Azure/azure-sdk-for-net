@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -120,22 +119,8 @@ namespace Azure.ResourceManager.DigitalTwins
         /// <returns> An async collection of <see cref="DigitalTwinsPrivateLinkResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DigitalTwinsPrivateLinkResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<DigitalTwinsPrivateLinkResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _digitalTwinsPrivateLinkResourcePrivateLinkResourcesClientDiagnostics.CreateScope("DigitalTwinsPrivateLinkResourceCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _digitalTwinsPrivateLinkResourcePrivateLinkResourcesRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new DigitalTwinsPrivateLinkResource(Client, value)), null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _digitalTwinsPrivateLinkResourcePrivateLinkResourcesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new DigitalTwinsPrivateLinkResource(Client, DigitalTwinsPrivateLinkResourceData.DeserializeDigitalTwinsPrivateLinkResourceData(e)), _digitalTwinsPrivateLinkResourcePrivateLinkResourcesClientDiagnostics, Pipeline, "DigitalTwinsPrivateLinkResourceCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -147,22 +132,8 @@ namespace Azure.ResourceManager.DigitalTwins
         /// <returns> A collection of <see cref="DigitalTwinsPrivateLinkResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DigitalTwinsPrivateLinkResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<DigitalTwinsPrivateLinkResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _digitalTwinsPrivateLinkResourcePrivateLinkResourcesClientDiagnostics.CreateScope("DigitalTwinsPrivateLinkResourceCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _digitalTwinsPrivateLinkResourcePrivateLinkResourcesRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new DigitalTwinsPrivateLinkResource(Client, value)), null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _digitalTwinsPrivateLinkResourcePrivateLinkResourcesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new DigitalTwinsPrivateLinkResource(Client, DigitalTwinsPrivateLinkResourceData.DeserializeDigitalTwinsPrivateLinkResourceData(e)), _digitalTwinsPrivateLinkResourcePrivateLinkResourcesClientDiagnostics, Pipeline, "DigitalTwinsPrivateLinkResourceCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>

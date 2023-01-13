@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -187,37 +186,9 @@ namespace Azure.ResourceManager.DataLakeAnalytics
         /// <returns> An async collection of <see cref="DataLakeAnalyticsComputePolicyResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DataLakeAnalyticsComputePolicyResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<DataLakeAnalyticsComputePolicyResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _dataLakeAnalyticsComputePolicyComputePoliciesClientDiagnostics.CreateScope("DataLakeAnalyticsComputePolicyCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _dataLakeAnalyticsComputePolicyComputePoliciesRestClient.ListByAccountAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new DataLakeAnalyticsComputePolicyResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<DataLakeAnalyticsComputePolicyResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _dataLakeAnalyticsComputePolicyComputePoliciesClientDiagnostics.CreateScope("DataLakeAnalyticsComputePolicyCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _dataLakeAnalyticsComputePolicyComputePoliciesRestClient.ListByAccountNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new DataLakeAnalyticsComputePolicyResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _dataLakeAnalyticsComputePolicyComputePoliciesRestClient.CreateListByAccountRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _dataLakeAnalyticsComputePolicyComputePoliciesRestClient.CreateListByAccountNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DataLakeAnalyticsComputePolicyResource(Client, DataLakeAnalyticsComputePolicyData.DeserializeDataLakeAnalyticsComputePolicyData(e)), _dataLakeAnalyticsComputePolicyComputePoliciesClientDiagnostics, Pipeline, "DataLakeAnalyticsComputePolicyCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -229,37 +200,9 @@ namespace Azure.ResourceManager.DataLakeAnalytics
         /// <returns> A collection of <see cref="DataLakeAnalyticsComputePolicyResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DataLakeAnalyticsComputePolicyResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<DataLakeAnalyticsComputePolicyResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _dataLakeAnalyticsComputePolicyComputePoliciesClientDiagnostics.CreateScope("DataLakeAnalyticsComputePolicyCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _dataLakeAnalyticsComputePolicyComputePoliciesRestClient.ListByAccount(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new DataLakeAnalyticsComputePolicyResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<DataLakeAnalyticsComputePolicyResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _dataLakeAnalyticsComputePolicyComputePoliciesClientDiagnostics.CreateScope("DataLakeAnalyticsComputePolicyCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _dataLakeAnalyticsComputePolicyComputePoliciesRestClient.ListByAccountNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new DataLakeAnalyticsComputePolicyResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _dataLakeAnalyticsComputePolicyComputePoliciesRestClient.CreateListByAccountRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _dataLakeAnalyticsComputePolicyComputePoliciesRestClient.CreateListByAccountNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DataLakeAnalyticsComputePolicyResource(Client, DataLakeAnalyticsComputePolicyData.DeserializeDataLakeAnalyticsComputePolicyData(e)), _dataLakeAnalyticsComputePolicyComputePoliciesClientDiagnostics, Pipeline, "DataLakeAnalyticsComputePolicyCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

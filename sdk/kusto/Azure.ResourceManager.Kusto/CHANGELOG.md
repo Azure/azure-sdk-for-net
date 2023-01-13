@@ -1,6 +1,6 @@
 # Release History
 
-## 1.2.0-beta.1 (Unreleased)
+## 1.3.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,18 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.2.0 (2023-01-10)
+
+### Features Added
+
+- Supported CosmosDB data connection.
+- Supported cluster creation with LanguageExtensionImage.
+- Added method `GetSkus` to get available skus by location.
+
+### Other Changes
+
+- Upgraded API version to 2022-11-11.
 
 ## 1.1.0 (2022-11-17)
 

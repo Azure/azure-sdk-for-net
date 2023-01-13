@@ -6,9 +6,7 @@
 #nullable disable
 
 using System;
-using System.Linq;
 using System.Threading;
-using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -80,37 +78,9 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <returns> An async collection of <see cref="ResourcePoolResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ResourcePoolResource> GetResourcePoolsAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<ResourcePoolResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = ResourcePoolClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetResourcePools");
-                scope.Start();
-                try
-                {
-                    var response = await ResourcePoolRestClient.ListAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ResourcePoolResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<ResourcePoolResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = ResourcePoolClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetResourcePools");
-                scope.Start();
-                try
-                {
-                    var response = await ResourcePoolRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ResourcePoolResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => ResourcePoolRestClient.CreateListRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ResourcePoolRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ResourcePoolResource(Client, ResourcePoolData.DeserializeResourcePoolData(e)), ResourcePoolClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetResourcePools", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -122,37 +92,9 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <returns> A collection of <see cref="ResourcePoolResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ResourcePoolResource> GetResourcePools(CancellationToken cancellationToken = default)
         {
-            Page<ResourcePoolResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = ResourcePoolClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetResourcePools");
-                scope.Start();
-                try
-                {
-                    var response = ResourcePoolRestClient.List(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ResourcePoolResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<ResourcePoolResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = ResourcePoolClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetResourcePools");
-                scope.Start();
-                try
-                {
-                    var response = ResourcePoolRestClient.ListNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ResourcePoolResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => ResourcePoolRestClient.CreateListRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ResourcePoolRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ResourcePoolResource(Client, ResourcePoolData.DeserializeResourcePoolData(e)), ResourcePoolClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetResourcePools", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -164,37 +106,9 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <returns> An async collection of <see cref="VMwareClusterResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<VMwareClusterResource> GetVMwareClustersAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<VMwareClusterResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = VMwareClusterClustersClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetVMwareClusters");
-                scope.Start();
-                try
-                {
-                    var response = await VMwareClusterClustersRestClient.ListAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new VMwareClusterResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<VMwareClusterResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = VMwareClusterClustersClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetVMwareClusters");
-                scope.Start();
-                try
-                {
-                    var response = await VMwareClusterClustersRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new VMwareClusterResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => VMwareClusterClustersRestClient.CreateListRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => VMwareClusterClustersRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new VMwareClusterResource(Client, VMwareClusterData.DeserializeVMwareClusterData(e)), VMwareClusterClustersClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetVMwareClusters", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -206,37 +120,9 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <returns> A collection of <see cref="VMwareClusterResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<VMwareClusterResource> GetVMwareClusters(CancellationToken cancellationToken = default)
         {
-            Page<VMwareClusterResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = VMwareClusterClustersClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetVMwareClusters");
-                scope.Start();
-                try
-                {
-                    var response = VMwareClusterClustersRestClient.List(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new VMwareClusterResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<VMwareClusterResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = VMwareClusterClustersClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetVMwareClusters");
-                scope.Start();
-                try
-                {
-                    var response = VMwareClusterClustersRestClient.ListNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new VMwareClusterResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => VMwareClusterClustersRestClient.CreateListRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => VMwareClusterClustersRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new VMwareClusterResource(Client, VMwareClusterData.DeserializeVMwareClusterData(e)), VMwareClusterClustersClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetVMwareClusters", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -248,37 +134,9 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <returns> An async collection of <see cref="VMwareHostResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<VMwareHostResource> GetVMwareHostsAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<VMwareHostResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = VMwareHostHostsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetVMwareHosts");
-                scope.Start();
-                try
-                {
-                    var response = await VMwareHostHostsRestClient.ListAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new VMwareHostResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<VMwareHostResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = VMwareHostHostsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetVMwareHosts");
-                scope.Start();
-                try
-                {
-                    var response = await VMwareHostHostsRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new VMwareHostResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => VMwareHostHostsRestClient.CreateListRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => VMwareHostHostsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new VMwareHostResource(Client, VMwareHostData.DeserializeVMwareHostData(e)), VMwareHostHostsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetVMwareHosts", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -290,37 +148,9 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <returns> A collection of <see cref="VMwareHostResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<VMwareHostResource> GetVMwareHosts(CancellationToken cancellationToken = default)
         {
-            Page<VMwareHostResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = VMwareHostHostsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetVMwareHosts");
-                scope.Start();
-                try
-                {
-                    var response = VMwareHostHostsRestClient.List(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new VMwareHostResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<VMwareHostResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = VMwareHostHostsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetVMwareHosts");
-                scope.Start();
-                try
-                {
-                    var response = VMwareHostHostsRestClient.ListNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new VMwareHostResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => VMwareHostHostsRestClient.CreateListRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => VMwareHostHostsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new VMwareHostResource(Client, VMwareHostData.DeserializeVMwareHostData(e)), VMwareHostHostsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetVMwareHosts", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -332,37 +162,9 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <returns> An async collection of <see cref="VMwareDatastoreResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<VMwareDatastoreResource> GetVMwareDatastoresAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<VMwareDatastoreResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = VMwareDatastoreDatastoresClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetVMwareDatastores");
-                scope.Start();
-                try
-                {
-                    var response = await VMwareDatastoreDatastoresRestClient.ListAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new VMwareDatastoreResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<VMwareDatastoreResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = VMwareDatastoreDatastoresClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetVMwareDatastores");
-                scope.Start();
-                try
-                {
-                    var response = await VMwareDatastoreDatastoresRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new VMwareDatastoreResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => VMwareDatastoreDatastoresRestClient.CreateListRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => VMwareDatastoreDatastoresRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new VMwareDatastoreResource(Client, VMwareDatastoreData.DeserializeVMwareDatastoreData(e)), VMwareDatastoreDatastoresClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetVMwareDatastores", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -374,37 +176,9 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <returns> A collection of <see cref="VMwareDatastoreResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<VMwareDatastoreResource> GetVMwareDatastores(CancellationToken cancellationToken = default)
         {
-            Page<VMwareDatastoreResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = VMwareDatastoreDatastoresClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetVMwareDatastores");
-                scope.Start();
-                try
-                {
-                    var response = VMwareDatastoreDatastoresRestClient.List(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new VMwareDatastoreResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<VMwareDatastoreResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = VMwareDatastoreDatastoresClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetVMwareDatastores");
-                scope.Start();
-                try
-                {
-                    var response = VMwareDatastoreDatastoresRestClient.ListNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new VMwareDatastoreResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => VMwareDatastoreDatastoresRestClient.CreateListRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => VMwareDatastoreDatastoresRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new VMwareDatastoreResource(Client, VMwareDatastoreData.DeserializeVMwareDatastoreData(e)), VMwareDatastoreDatastoresClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetVMwareDatastores", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -416,37 +190,9 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <returns> An async collection of <see cref="VCenterResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<VCenterResource> GetVCentersAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<VCenterResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = VCenterClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetVCenters");
-                scope.Start();
-                try
-                {
-                    var response = await VCenterRestClient.ListAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new VCenterResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<VCenterResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = VCenterClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetVCenters");
-                scope.Start();
-                try
-                {
-                    var response = await VCenterRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new VCenterResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => VCenterRestClient.CreateListRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => VCenterRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new VCenterResource(Client, VCenterData.DeserializeVCenterData(e)), VCenterClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetVCenters", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -458,37 +204,9 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <returns> A collection of <see cref="VCenterResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<VCenterResource> GetVCenters(CancellationToken cancellationToken = default)
         {
-            Page<VCenterResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = VCenterClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetVCenters");
-                scope.Start();
-                try
-                {
-                    var response = VCenterRestClient.List(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new VCenterResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<VCenterResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = VCenterClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetVCenters");
-                scope.Start();
-                try
-                {
-                    var response = VCenterRestClient.ListNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new VCenterResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => VCenterRestClient.CreateListRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => VCenterRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new VCenterResource(Client, VCenterData.DeserializeVCenterData(e)), VCenterClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetVCenters", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -500,37 +218,9 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <returns> An async collection of <see cref="VirtualMachineResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<VirtualMachineResource> GetVirtualMachinesAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<VirtualMachineResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = VirtualMachineClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetVirtualMachines");
-                scope.Start();
-                try
-                {
-                    var response = await VirtualMachineRestClient.ListAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new VirtualMachineResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<VirtualMachineResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = VirtualMachineClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetVirtualMachines");
-                scope.Start();
-                try
-                {
-                    var response = await VirtualMachineRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new VirtualMachineResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => VirtualMachineRestClient.CreateListRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => VirtualMachineRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new VirtualMachineResource(Client, VirtualMachineData.DeserializeVirtualMachineData(e)), VirtualMachineClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetVirtualMachines", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -542,37 +232,9 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <returns> A collection of <see cref="VirtualMachineResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<VirtualMachineResource> GetVirtualMachines(CancellationToken cancellationToken = default)
         {
-            Page<VirtualMachineResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = VirtualMachineClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetVirtualMachines");
-                scope.Start();
-                try
-                {
-                    var response = VirtualMachineRestClient.List(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new VirtualMachineResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<VirtualMachineResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = VirtualMachineClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetVirtualMachines");
-                scope.Start();
-                try
-                {
-                    var response = VirtualMachineRestClient.ListNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new VirtualMachineResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => VirtualMachineRestClient.CreateListRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => VirtualMachineRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new VirtualMachineResource(Client, VirtualMachineData.DeserializeVirtualMachineData(e)), VirtualMachineClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetVirtualMachines", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -584,37 +246,9 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <returns> An async collection of <see cref="VirtualMachineTemplateResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<VirtualMachineTemplateResource> GetVirtualMachineTemplatesAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<VirtualMachineTemplateResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = VirtualMachineTemplateClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetVirtualMachineTemplates");
-                scope.Start();
-                try
-                {
-                    var response = await VirtualMachineTemplateRestClient.ListAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new VirtualMachineTemplateResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<VirtualMachineTemplateResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = VirtualMachineTemplateClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetVirtualMachineTemplates");
-                scope.Start();
-                try
-                {
-                    var response = await VirtualMachineTemplateRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new VirtualMachineTemplateResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => VirtualMachineTemplateRestClient.CreateListRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => VirtualMachineTemplateRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new VirtualMachineTemplateResource(Client, VirtualMachineTemplateData.DeserializeVirtualMachineTemplateData(e)), VirtualMachineTemplateClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetVirtualMachineTemplates", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -626,37 +260,9 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <returns> A collection of <see cref="VirtualMachineTemplateResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<VirtualMachineTemplateResource> GetVirtualMachineTemplates(CancellationToken cancellationToken = default)
         {
-            Page<VirtualMachineTemplateResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = VirtualMachineTemplateClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetVirtualMachineTemplates");
-                scope.Start();
-                try
-                {
-                    var response = VirtualMachineTemplateRestClient.List(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new VirtualMachineTemplateResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<VirtualMachineTemplateResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = VirtualMachineTemplateClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetVirtualMachineTemplates");
-                scope.Start();
-                try
-                {
-                    var response = VirtualMachineTemplateRestClient.ListNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new VirtualMachineTemplateResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => VirtualMachineTemplateRestClient.CreateListRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => VirtualMachineTemplateRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new VirtualMachineTemplateResource(Client, VirtualMachineTemplateData.DeserializeVirtualMachineTemplateData(e)), VirtualMachineTemplateClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetVirtualMachineTemplates", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -668,37 +274,9 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <returns> An async collection of <see cref="VirtualNetworkResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<VirtualNetworkResource> GetVirtualNetworksAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<VirtualNetworkResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = VirtualNetworkClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetVirtualNetworks");
-                scope.Start();
-                try
-                {
-                    var response = await VirtualNetworkRestClient.ListAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new VirtualNetworkResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<VirtualNetworkResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = VirtualNetworkClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetVirtualNetworks");
-                scope.Start();
-                try
-                {
-                    var response = await VirtualNetworkRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new VirtualNetworkResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => VirtualNetworkRestClient.CreateListRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => VirtualNetworkRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new VirtualNetworkResource(Client, VirtualNetworkData.DeserializeVirtualNetworkData(e)), VirtualNetworkClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetVirtualNetworks", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -710,37 +288,9 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <returns> A collection of <see cref="VirtualNetworkResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<VirtualNetworkResource> GetVirtualNetworks(CancellationToken cancellationToken = default)
         {
-            Page<VirtualNetworkResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = VirtualNetworkClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetVirtualNetworks");
-                scope.Start();
-                try
-                {
-                    var response = VirtualNetworkRestClient.List(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new VirtualNetworkResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<VirtualNetworkResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = VirtualNetworkClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetVirtualNetworks");
-                scope.Start();
-                try
-                {
-                    var response = VirtualNetworkRestClient.ListNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new VirtualNetworkResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => VirtualNetworkRestClient.CreateListRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => VirtualNetworkRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new VirtualNetworkResource(Client, VirtualNetworkData.DeserializeVirtualNetworkData(e)), VirtualNetworkClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetVirtualNetworks", "value", "nextLink", cancellationToken);
         }
     }
 }

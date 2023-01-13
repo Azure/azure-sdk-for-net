@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -120,37 +119,9 @@ namespace Azure.ResourceManager.Network
         /// <returns> An async collection of <see cref="DefaultSecurityRuleResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DefaultSecurityRuleResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<DefaultSecurityRuleResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _defaultSecurityRuleClientDiagnostics.CreateScope("DefaultSecurityRuleCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _defaultSecurityRuleRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new DefaultSecurityRuleResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<DefaultSecurityRuleResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _defaultSecurityRuleClientDiagnostics.CreateScope("DefaultSecurityRuleCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _defaultSecurityRuleRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new DefaultSecurityRuleResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _defaultSecurityRuleRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _defaultSecurityRuleRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DefaultSecurityRuleResource(Client, SecurityRuleData.DeserializeSecurityRuleData(e)), _defaultSecurityRuleClientDiagnostics, Pipeline, "DefaultSecurityRuleCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -162,37 +133,9 @@ namespace Azure.ResourceManager.Network
         /// <returns> A collection of <see cref="DefaultSecurityRuleResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DefaultSecurityRuleResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<DefaultSecurityRuleResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _defaultSecurityRuleClientDiagnostics.CreateScope("DefaultSecurityRuleCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _defaultSecurityRuleRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new DefaultSecurityRuleResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<DefaultSecurityRuleResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _defaultSecurityRuleClientDiagnostics.CreateScope("DefaultSecurityRuleCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _defaultSecurityRuleRestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new DefaultSecurityRuleResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _defaultSecurityRuleRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _defaultSecurityRuleRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DefaultSecurityRuleResource(Client, SecurityRuleData.DeserializeSecurityRuleData(e)), _defaultSecurityRuleClientDiagnostics, Pipeline, "DefaultSecurityRuleCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

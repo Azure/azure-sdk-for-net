@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -187,37 +186,9 @@ namespace Azure.ResourceManager.AppService
         /// <returns> An async collection of <see cref="StaticSiteCustomDomainOverviewResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<StaticSiteCustomDomainOverviewResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<StaticSiteCustomDomainOverviewResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _staticSiteCustomDomainOverviewStaticSitesClientDiagnostics.CreateScope("StaticSiteCustomDomainOverviewCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _staticSiteCustomDomainOverviewStaticSitesRestClient.ListStaticSiteCustomDomainsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new StaticSiteCustomDomainOverviewResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<StaticSiteCustomDomainOverviewResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _staticSiteCustomDomainOverviewStaticSitesClientDiagnostics.CreateScope("StaticSiteCustomDomainOverviewCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _staticSiteCustomDomainOverviewStaticSitesRestClient.ListStaticSiteCustomDomainsNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new StaticSiteCustomDomainOverviewResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _staticSiteCustomDomainOverviewStaticSitesRestClient.CreateListStaticSiteCustomDomainsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _staticSiteCustomDomainOverviewStaticSitesRestClient.CreateListStaticSiteCustomDomainsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new StaticSiteCustomDomainOverviewResource(Client, StaticSiteCustomDomainOverviewData.DeserializeStaticSiteCustomDomainOverviewData(e)), _staticSiteCustomDomainOverviewStaticSitesClientDiagnostics, Pipeline, "StaticSiteCustomDomainOverviewCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -229,37 +200,9 @@ namespace Azure.ResourceManager.AppService
         /// <returns> A collection of <see cref="StaticSiteCustomDomainOverviewResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<StaticSiteCustomDomainOverviewResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<StaticSiteCustomDomainOverviewResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _staticSiteCustomDomainOverviewStaticSitesClientDiagnostics.CreateScope("StaticSiteCustomDomainOverviewCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _staticSiteCustomDomainOverviewStaticSitesRestClient.ListStaticSiteCustomDomains(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new StaticSiteCustomDomainOverviewResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<StaticSiteCustomDomainOverviewResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _staticSiteCustomDomainOverviewStaticSitesClientDiagnostics.CreateScope("StaticSiteCustomDomainOverviewCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _staticSiteCustomDomainOverviewStaticSitesRestClient.ListStaticSiteCustomDomainsNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new StaticSiteCustomDomainOverviewResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _staticSiteCustomDomainOverviewStaticSitesRestClient.CreateListStaticSiteCustomDomainsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _staticSiteCustomDomainOverviewStaticSitesRestClient.CreateListStaticSiteCustomDomainsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new StaticSiteCustomDomainOverviewResource(Client, StaticSiteCustomDomainOverviewData.DeserializeStaticSiteCustomDomainOverviewData(e)), _staticSiteCustomDomainOverviewStaticSitesClientDiagnostics, Pipeline, "StaticSiteCustomDomainOverviewCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

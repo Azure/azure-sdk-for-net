@@ -708,37 +708,9 @@ namespace Azure.ResourceManager.CustomerInsights
         /// <returns> An async collection of <see cref="RoleResourceFormat" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<RoleResourceFormat> GetRolesAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<RoleResourceFormat>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _rolesClientDiagnostics.CreateScope("HubResource.GetRoles");
-                scope.Start();
-                try
-                {
-                    var response = await _rolesRestClient.ListByHubAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<RoleResourceFormat>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _rolesClientDiagnostics.CreateScope("HubResource.GetRoles");
-                scope.Start();
-                try
-                {
-                    var response = await _rolesRestClient.ListByHubNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _rolesRestClient.CreateListByHubRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _rolesRestClient.CreateListByHubNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, RoleResourceFormat.DeserializeRoleResourceFormat, _rolesClientDiagnostics, Pipeline, "HubResource.GetRoles", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -750,37 +722,9 @@ namespace Azure.ResourceManager.CustomerInsights
         /// <returns> A collection of <see cref="RoleResourceFormat" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<RoleResourceFormat> GetRoles(CancellationToken cancellationToken = default)
         {
-            Page<RoleResourceFormat> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _rolesClientDiagnostics.CreateScope("HubResource.GetRoles");
-                scope.Start();
-                try
-                {
-                    var response = _rolesRestClient.ListByHub(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<RoleResourceFormat> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _rolesClientDiagnostics.CreateScope("HubResource.GetRoles");
-                scope.Start();
-                try
-                {
-                    var response = _rolesRestClient.ListByHubNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _rolesRestClient.CreateListByHubRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _rolesRestClient.CreateListByHubNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, RoleResourceFormat.DeserializeRoleResourceFormat, _rolesClientDiagnostics, Pipeline, "HubResource.GetRoles", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

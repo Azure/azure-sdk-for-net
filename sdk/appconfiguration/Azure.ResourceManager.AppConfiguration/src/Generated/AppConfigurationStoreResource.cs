@@ -370,37 +370,9 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <returns> An async collection of <see cref="AppConfigurationStoreApiKey" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<AppConfigurationStoreApiKey> GetKeysAsync(string skipToken = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<AppConfigurationStoreApiKey>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _appConfigurationStoreConfigurationStoresClientDiagnostics.CreateScope("AppConfigurationStoreResource.GetKeys");
-                scope.Start();
-                try
-                {
-                    var response = await _appConfigurationStoreConfigurationStoresRestClient.ListKeysAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, skipToken, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<AppConfigurationStoreApiKey>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _appConfigurationStoreConfigurationStoresClientDiagnostics.CreateScope("AppConfigurationStoreResource.GetKeys");
-                scope.Start();
-                try
-                {
-                    var response = await _appConfigurationStoreConfigurationStoresRestClient.ListKeysNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, skipToken, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _appConfigurationStoreConfigurationStoresRestClient.CreateListKeysRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, skipToken);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _appConfigurationStoreConfigurationStoresRestClient.CreateListKeysNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, skipToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, AppConfigurationStoreApiKey.DeserializeAppConfigurationStoreApiKey, _appConfigurationStoreConfigurationStoresClientDiagnostics, Pipeline, "AppConfigurationStoreResource.GetKeys", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -413,37 +385,9 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <returns> A collection of <see cref="AppConfigurationStoreApiKey" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<AppConfigurationStoreApiKey> GetKeys(string skipToken = null, CancellationToken cancellationToken = default)
         {
-            Page<AppConfigurationStoreApiKey> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _appConfigurationStoreConfigurationStoresClientDiagnostics.CreateScope("AppConfigurationStoreResource.GetKeys");
-                scope.Start();
-                try
-                {
-                    var response = _appConfigurationStoreConfigurationStoresRestClient.ListKeys(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, skipToken, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<AppConfigurationStoreApiKey> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _appConfigurationStoreConfigurationStoresClientDiagnostics.CreateScope("AppConfigurationStoreResource.GetKeys");
-                scope.Start();
-                try
-                {
-                    var response = _appConfigurationStoreConfigurationStoresRestClient.ListKeysNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, skipToken, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _appConfigurationStoreConfigurationStoresRestClient.CreateListKeysRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, skipToken);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _appConfigurationStoreConfigurationStoresRestClient.CreateListKeysNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, skipToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, AppConfigurationStoreApiKey.DeserializeAppConfigurationStoreApiKey, _appConfigurationStoreConfigurationStoresClientDiagnostics, Pipeline, "AppConfigurationStoreResource.GetKeys", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

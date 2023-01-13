@@ -197,7 +197,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.SignalRService
 
         private async Task InvokeAsync(ServiceEndpoint[] endpoints, Func<ServiceHubContext, Task> func)
         {
-            var targetHubContext = endpoints == null ? _serviceHubContext : (_serviceHubContext as IInternalServiceHubContext).WithEndpoints(endpoints);
+            var targetHubContext = endpoints == null ? _serviceHubContext : _serviceHubContext.WithEndpoints(endpoints);
             await func.Invoke(targetHubContext).ConfigureAwait(false);
         }
     }

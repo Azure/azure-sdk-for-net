@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -54,37 +53,9 @@ namespace Azure.ResourceManager.Search
         /// <returns> An async collection of <see cref="SearchServiceResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SearchServiceResource> GetSearchServicesAsync(SearchManagementRequestOptions searchManagementRequestOptions = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<SearchServiceResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = SearchServiceServicesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetSearchServices");
-                scope.Start();
-                try
-                {
-                    var response = await SearchServiceServicesRestClient.ListBySubscriptionAsync(Id.SubscriptionId, searchManagementRequestOptions, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new SearchServiceResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<SearchServiceResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = SearchServiceServicesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetSearchServices");
-                scope.Start();
-                try
-                {
-                    var response = await SearchServiceServicesRestClient.ListBySubscriptionNextPageAsync(nextLink, Id.SubscriptionId, searchManagementRequestOptions, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new SearchServiceResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => SearchServiceServicesRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, searchManagementRequestOptions);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => SearchServiceServicesRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, searchManagementRequestOptions);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SearchServiceResource(Client, SearchServiceData.DeserializeSearchServiceData(e)), SearchServiceServicesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetSearchServices", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -97,37 +68,9 @@ namespace Azure.ResourceManager.Search
         /// <returns> A collection of <see cref="SearchServiceResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SearchServiceResource> GetSearchServices(SearchManagementRequestOptions searchManagementRequestOptions = null, CancellationToken cancellationToken = default)
         {
-            Page<SearchServiceResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = SearchServiceServicesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetSearchServices");
-                scope.Start();
-                try
-                {
-                    var response = SearchServiceServicesRestClient.ListBySubscription(Id.SubscriptionId, searchManagementRequestOptions, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new SearchServiceResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<SearchServiceResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = SearchServiceServicesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetSearchServices");
-                scope.Start();
-                try
-                {
-                    var response = SearchServiceServicesRestClient.ListBySubscriptionNextPage(nextLink, Id.SubscriptionId, searchManagementRequestOptions, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new SearchServiceResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => SearchServiceServicesRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, searchManagementRequestOptions);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => SearchServiceServicesRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, searchManagementRequestOptions);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SearchServiceResource(Client, SearchServiceData.DeserializeSearchServiceData(e)), SearchServiceServicesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetSearchServices", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

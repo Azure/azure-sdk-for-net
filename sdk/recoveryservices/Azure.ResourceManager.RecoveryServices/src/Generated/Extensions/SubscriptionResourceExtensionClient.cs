@@ -6,9 +6,7 @@
 #nullable disable
 
 using System;
-using System.Linq;
 using System.Threading;
-using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -52,37 +50,9 @@ namespace Azure.ResourceManager.RecoveryServices
         /// <returns> An async collection of <see cref="VaultResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<VaultResource> GetVaultsAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<VaultResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = VaultClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetVaults");
-                scope.Start();
-                try
-                {
-                    var response = await VaultRestClient.ListBySubscriptionIdAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new VaultResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<VaultResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = VaultClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetVaults");
-                scope.Start();
-                try
-                {
-                    var response = await VaultRestClient.ListBySubscriptionIdNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new VaultResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => VaultRestClient.CreateListBySubscriptionIdRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => VaultRestClient.CreateListBySubscriptionIdNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new VaultResource(Client, VaultData.DeserializeVaultData(e)), VaultClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetVaults", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -94,37 +64,9 @@ namespace Azure.ResourceManager.RecoveryServices
         /// <returns> A collection of <see cref="VaultResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<VaultResource> GetVaults(CancellationToken cancellationToken = default)
         {
-            Page<VaultResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = VaultClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetVaults");
-                scope.Start();
-                try
-                {
-                    var response = VaultRestClient.ListBySubscriptionId(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new VaultResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<VaultResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = VaultClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetVaults");
-                scope.Start();
-                try
-                {
-                    var response = VaultRestClient.ListBySubscriptionIdNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new VaultResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => VaultRestClient.CreateListBySubscriptionIdRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => VaultRestClient.CreateListBySubscriptionIdNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new VaultResource(Client, VaultData.DeserializeVaultData(e)), VaultClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetVaults", "value", "nextLink", cancellationToken);
         }
     }
 }

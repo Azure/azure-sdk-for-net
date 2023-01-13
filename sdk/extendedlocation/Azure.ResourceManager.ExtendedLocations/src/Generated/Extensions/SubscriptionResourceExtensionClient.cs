@@ -6,9 +6,7 @@
 #nullable disable
 
 using System;
-using System.Linq;
 using System.Threading;
-using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -52,37 +50,9 @@ namespace Azure.ResourceManager.ExtendedLocations
         /// <returns> An async collection of <see cref="CustomLocationResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<CustomLocationResource> GetCustomLocationsAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<CustomLocationResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = CustomLocationClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetCustomLocations");
-                scope.Start();
-                try
-                {
-                    var response = await CustomLocationRestClient.ListBySubscriptionAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new CustomLocationResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<CustomLocationResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = CustomLocationClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetCustomLocations");
-                scope.Start();
-                try
-                {
-                    var response = await CustomLocationRestClient.ListBySubscriptionNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new CustomLocationResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CustomLocationRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CustomLocationRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new CustomLocationResource(Client, CustomLocationData.DeserializeCustomLocationData(e)), CustomLocationClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetCustomLocations", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -94,37 +64,9 @@ namespace Azure.ResourceManager.ExtendedLocations
         /// <returns> A collection of <see cref="CustomLocationResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<CustomLocationResource> GetCustomLocations(CancellationToken cancellationToken = default)
         {
-            Page<CustomLocationResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = CustomLocationClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetCustomLocations");
-                scope.Start();
-                try
-                {
-                    var response = CustomLocationRestClient.ListBySubscription(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new CustomLocationResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<CustomLocationResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = CustomLocationClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetCustomLocations");
-                scope.Start();
-                try
-                {
-                    var response = CustomLocationRestClient.ListBySubscriptionNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new CustomLocationResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CustomLocationRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CustomLocationRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new CustomLocationResource(Client, CustomLocationData.DeserializeCustomLocationData(e)), CustomLocationClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetCustomLocations", "value", "nextLink", cancellationToken);
         }
     }
 }

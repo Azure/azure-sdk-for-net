@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -120,22 +119,8 @@ namespace Azure.ResourceManager.Kusto
         /// <returns> An async collection of <see cref="KustoPrivateLinkResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<KustoPrivateLinkResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<KustoPrivateLinkResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _kustoPrivateLinkResourcePrivateLinkResourcesClientDiagnostics.CreateScope("KustoPrivateLinkResourceCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _kustoPrivateLinkResourcePrivateLinkResourcesRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new KustoPrivateLinkResource(Client, value)), null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _kustoPrivateLinkResourcePrivateLinkResourcesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new KustoPrivateLinkResource(Client, KustoPrivateLinkResourceData.DeserializeKustoPrivateLinkResourceData(e)), _kustoPrivateLinkResourcePrivateLinkResourcesClientDiagnostics, Pipeline, "KustoPrivateLinkResourceCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -147,22 +132,8 @@ namespace Azure.ResourceManager.Kusto
         /// <returns> A collection of <see cref="KustoPrivateLinkResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<KustoPrivateLinkResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<KustoPrivateLinkResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _kustoPrivateLinkResourcePrivateLinkResourcesClientDiagnostics.CreateScope("KustoPrivateLinkResourceCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _kustoPrivateLinkResourcePrivateLinkResourcesRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new KustoPrivateLinkResource(Client, value)), null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _kustoPrivateLinkResourcePrivateLinkResourcesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new KustoPrivateLinkResource(Client, KustoPrivateLinkResourceData.DeserializeKustoPrivateLinkResourceData(e)), _kustoPrivateLinkResourcePrivateLinkResourcesClientDiagnostics, Pipeline, "KustoPrivateLinkResourceCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
