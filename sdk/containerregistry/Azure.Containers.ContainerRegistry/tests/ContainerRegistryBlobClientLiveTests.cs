@@ -75,8 +75,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
 
             // Assert
             DownloadManifestOptions downloadOptions = new DownloadManifestOptions(null, digest);
-            using var downloadResultValue = (await client.DownloadManifestAsync(downloadOptions)).Value;
-            Assert.AreEqual(0, downloadResultValue.ManifestStream.Position);
+            var downloadResultValue = (await client.DownloadManifestAsync(downloadOptions)).Value;
             Assert.AreEqual(digest, downloadResultValue.Digest);
             ValidateManifest((OciManifest)downloadResultValue.Manifest);
 
@@ -119,8 +118,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
 
             // Assert
             DownloadManifestOptions downloadOptions = new DownloadManifestOptions(null, digest);
-            using var downloadResultValue = (await client.DownloadManifestAsync(downloadOptions)).Value;
-            Assert.AreEqual(0, downloadResultValue.ManifestStream.Position);
+            var downloadResultValue = (await client.DownloadManifestAsync(downloadOptions)).Value;
             Assert.AreEqual(digest, downloadResultValue.Digest);
             ValidateManifest((OciManifest)downloadResultValue.Manifest);
 
@@ -163,8 +161,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
 
             // Assert
             DownloadManifestOptions downloadOptions = new DownloadManifestOptions(null, digest);
-            using var downloadResultValue = (await client.DownloadManifestAsync(downloadOptions)).Value;
-            Assert.AreEqual(0, downloadResultValue.ManifestStream.Position);
+            var downloadResultValue = (await client.DownloadManifestAsync(downloadOptions)).Value;
             Assert.AreEqual(digest, downloadResultValue.Digest);
             ValidateManifest((OciManifest)downloadResultValue.Manifest);
 
@@ -190,8 +187,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
 
             // Assert
             DownloadManifestOptions downloadOptions = new DownloadManifestOptions(null, digest);
-            using var downloadResultValue = (await client.DownloadManifestAsync(downloadOptions)).Value;
-            Assert.AreEqual(0, downloadResultValue.ManifestStream.Position);
+            var downloadResultValue = (await client.DownloadManifestAsync(downloadOptions)).Value;
             Assert.AreEqual(digest, downloadResultValue.Digest);
             ValidateManifest((OciManifest)downloadResultValue.Manifest);
 
@@ -243,8 +239,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
 
             // Assert
             DownloadManifestOptions downloadOptions = new DownloadManifestOptions(null, digest);
-            using var downloadResultValue = (await client.DownloadManifestAsync(downloadOptions)).Value;
-            Assert.AreEqual(0, downloadResultValue.ManifestStream.Position);
+            var downloadResultValue = (await client.DownloadManifestAsync(downloadOptions)).Value;
             Assert.AreEqual(digest, downloadResultValue.Digest);
             ValidateManifest((OciManifest)downloadResultValue.Manifest);
 
@@ -256,8 +251,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
             Assert.AreEqual(tag, firstTag.Name);
 
             downloadOptions = new DownloadManifestOptions(tag, null);
-            using var downloadResultValue2 = (await client.DownloadManifestAsync(downloadOptions)).Value;
-            Assert.AreEqual(0, downloadResultValue.ManifestStream.Position);
+            var downloadResultValue2 = (await client.DownloadManifestAsync(downloadOptions)).Value;
             Assert.AreEqual(digest, downloadResultValue.Digest);
             ValidateManifest((OciManifest)downloadResultValue.Manifest);
 
@@ -769,8 +763,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
             string manifestFile = Path.Combine(path, "manifest.json");
             using (FileStream fs = File.Create(manifestFile))
             {
-                Stream stream = manifestResult.Value.ManifestStream;
-                await stream.CopyToAsync(fs);
+                await manifestResult.Value.Content.ToStream().CopyToAsync(fs);
             }
             OciManifest manifest = (OciManifest)manifestResult.Value.Manifest;
 

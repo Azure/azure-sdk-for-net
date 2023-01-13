@@ -56,11 +56,9 @@ namespace Azure.Containers.ContainerRegistry.Tests
         {
             // Get the image manifest
             var manifestResult = await client.DownloadManifestAsync(new DownloadManifestOptions(reference));
-            var stream = manifestResult.Value.ManifestStream;
-            stream.Seek(0, SeekOrigin.Begin);
 
             // Upload the manifest with the new tag
-            await client.UploadManifestAsync(stream, new UploadManifestOptions(tag));
+            await client.UploadManifestAsync(manifestResult.Value.Content.ToStream(), new UploadManifestOptions(tag));
         }
     }
 }

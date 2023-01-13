@@ -503,17 +503,18 @@ namespace Azure.Containers.ContainerRegistry.Specialized
 
                 rawResponse.Headers.TryGetValue("Docker-Content-Digest", out var digest);
 
-                if (!ValidateDigest(rawResponse.ContentStream, digest))
+                var contentDigest = BlobHelper.ComputeDigest(rawResponse.ContentStream);
+                if (!ValidateDigest(contentDigest, digest))
                 {
                     throw new RequestFailedException("The requested digest does not match the digest of the received manifest.");
                 }
 
-                using var document = JsonDocument.Parse(rawResponse.ContentStream);
+                using var document = JsonDocument.Parse(rawResponse.Content);
                 var manifest = OciManifest.DeserializeOciManifest(document.RootElement);
 
                 rawResponse.ContentStream.Position = 0;
 
-                return Response.FromValue(new DownloadManifestResult(digest, manifest, rawResponse.ContentStream), rawResponse);
+                return Response.FromValue(new DownloadManifestResult(digest, manifest, rawResponse.Content), rawResponse);
             }
             catch (Exception e)
             {
@@ -541,40 +542,24 @@ namespace Azure.Containers.ContainerRegistry.Specialized
 
                 rawResponse.Headers.TryGetValue("Docker-Content-Digest", out var digest);
 
-                if (!ValidateDigest(rawResponse.ContentStream, digest))
+                var contentDigest = BlobHelper.ComputeDigest(rawResponse.ContentStream);
+                if (!ValidateDigest(contentDigest, digest))
                 {
                     throw new RequestFailedException("The requested digest does not match the digest of the received manifest.");
                 }
 
-                using var document = JsonDocument.Parse(rawResponse.ContentStream);
+                using var document = JsonDocument.Parse(rawResponse.Content);
                 var manifest = OciManifest.DeserializeOciManifest(document.RootElement);
 
                 rawResponse.ContentStream.Position = 0;
 
-                return Response.FromValue(new DownloadManifestResult(digest, manifest, rawResponse.ContentStream), rawResponse);
+                return Response.FromValue(new DownloadManifestResult(digest, manifest, rawResponse.Content), rawResponse);
             }
             catch (Exception e)
             {
                 scope.Failed(e);
                 throw;
             }
-        }
-
-        /// <summary>
-        /// Validate that the file content did not change in transmission from the registry.
-        /// </summary>
-        /// <param name="content">Stream content.</param>
-        /// <param name="digest">The digest returned from the registry.</param>
-        /// <returns>Whether the digest computed on the passed-in stream and the passed-in digest match.</returns>
-        private static bool ValidateDigest(Stream content, string digest)
-        {
-            // According to https://docs.docker.com/registry/spec/api/#content-digests, compliant
-            // registry implementations use sha256.
-
-            string contentDigest = BlobHelper.ComputeDigest(content);
-            content.Position = 0;
-
-            return ValidateDigest(contentDigest, digest);
         }
 
         private static bool ValidateDigest(string d1, string d2)
@@ -646,7 +631,8 @@ namespace Azure.Containers.ContainerRegistry.Specialized
                 await BinaryData.FromStreamAsync(blobResult.Value, cancellationToken).ConfigureAwait(false) :
                 BinaryData.FromStream(blobResult.Value);
 
-            if (!ValidateDigest(data.ToStream(), digest))
+            var contentDigest = BlobHelper.ComputeDigest(data.ToStream());
+            if (!ValidateDigest(contentDigest, digest))
             {
                 throw new RequestFailedException("The requested digest does not match the digest of the received manifest.");
             }

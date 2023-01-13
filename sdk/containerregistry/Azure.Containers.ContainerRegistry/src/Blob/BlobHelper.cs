@@ -1,8 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
-using System.Diagnostics;
 using System.IO;
 using System.Security.Cryptography;
 using System.Text;
@@ -13,36 +11,21 @@ namespace Azure.Containers.ContainerRegistry.Specialized
     {
         internal static string ComputeDigest(Stream stream)
         {
-            Debug.Assert(stream.CanSeek, "Should only be called on seekable streams.");
+            // According to https://docs.docker.com/registry/spec/api/#content-digests, compliant
+            // registry implementations use sha256.
 
-            using (SHA256 sha256 = SHA256.Create())
+            using SHA256 sha256 = SHA256.Create();
+            var position = stream.Position;
+
+            try
             {
-                var position = stream.Position;
-                string digest = default;
-
-                // Compute and print the hash values for each file in directory.
-                try
-                {
-                    stream.Position = 0;
-                    var hashValue = sha256.ComputeHash(stream);
-                    digest = FormatDigest(hashValue);
-                }
-                catch (IOException e)
-                {
-                    Console.WriteLine($"I/O Exception: {e.Message}");
-                    throw;
-                }
-                catch (UnauthorizedAccessException e)
-                {
-                    Console.WriteLine($"Access Exception: {e.Message}");
-                    throw;
-                }
-                finally
-                {
-                    stream.Position = position;
-                }
-
-                return digest;
+                stream.Position = 0;
+                var hashValue = sha256.ComputeHash(stream);
+                return FormatDigest(hashValue);
+            }
+            finally
+            {
+                stream.Position = position;
             }
         }
 

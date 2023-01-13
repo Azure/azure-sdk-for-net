@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using System.IO;
 using Azure.Containers.ContainerRegistry.Specialized;
 
 namespace Azure.Containers.ContainerRegistry
@@ -20,11 +19,11 @@ namespace Azure.Containers.ContainerRegistry
         /// <summary> Initializes a new instance of <see cref="Specialized.DownloadManifestResult" />. </summary>
         /// <param name="digest"> The manifest's digest, calculated by the registry. </param>
         /// <param name="manifest">The OCI manifest that was downloaded.</param>
-        /// <param name="manifestStream">Manifest stream that was downloaded.</param>
+        /// <param name="content">Manifest content that was downloaded.</param>
         /// <returns> A new <see cref="Specialized.DownloadManifestResult"/> instance for mocking. </returns>
-        public static DownloadManifestResult DownloadManifestResult(string digest = null, OciManifest manifest = null, Stream manifestStream = null)
+        public static DownloadManifestResult DownloadManifestResult(string digest = null, OciManifest manifest = null, BinaryData content = null)
         {
-            return new DownloadManifestResult(digest, manifest, manifestStream);
+            return new DownloadManifestResult(digest, manifest, content);
         }
 
         /// <summary> Initializes a new instance of <see cref="Specialized.UploadBlobResult" />. </summary>
