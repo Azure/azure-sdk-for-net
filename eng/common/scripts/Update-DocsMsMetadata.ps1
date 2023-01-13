@@ -49,10 +49,10 @@ param(
   [Parameter(Mandatory = $true)]
   [string]$DocRepoLocation,
 
-  [Parameter(Mandatory = $true)]
+  [Parameter(Mandatory = $false)]
   [string]$Language,
 
-  [Parameter(Mandatory = $true)]
+  [Parameter(Mandatory = $false)]
   [string]$RepoId,
 
   [Parameter(Mandatory = $false)]
