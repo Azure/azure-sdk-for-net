@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -188,37 +187,9 @@ namespace Azure.ResourceManager.Media
         /// <returns> An async collection of <see cref="MediaTransformResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<MediaTransformResource> GetAllAsync(string filter = null, string orderby = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<MediaTransformResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _mediaTransformTransformsClientDiagnostics.CreateScope("MediaTransformCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _mediaTransformTransformsRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, orderby, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new MediaTransformResource(Client, value)), response.Value.OdataNextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<MediaTransformResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _mediaTransformTransformsClientDiagnostics.CreateScope("MediaTransformCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _mediaTransformTransformsRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, orderby, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new MediaTransformResource(Client, value)), response.Value.OdataNextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _mediaTransformTransformsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, orderby);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _mediaTransformTransformsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, orderby);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new MediaTransformResource(Client, MediaTransformData.DeserializeMediaTransformData(e)), _mediaTransformTransformsClientDiagnostics, Pipeline, "MediaTransformCollection.GetAll", "value", "@odata.nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -232,37 +203,9 @@ namespace Azure.ResourceManager.Media
         /// <returns> A collection of <see cref="MediaTransformResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<MediaTransformResource> GetAll(string filter = null, string orderby = null, CancellationToken cancellationToken = default)
         {
-            Page<MediaTransformResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _mediaTransformTransformsClientDiagnostics.CreateScope("MediaTransformCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _mediaTransformTransformsRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, orderby, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new MediaTransformResource(Client, value)), response.Value.OdataNextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<MediaTransformResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _mediaTransformTransformsClientDiagnostics.CreateScope("MediaTransformCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _mediaTransformTransformsRestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, orderby, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new MediaTransformResource(Client, value)), response.Value.OdataNextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _mediaTransformTransformsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, orderby);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _mediaTransformTransformsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, orderby);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new MediaTransformResource(Client, MediaTransformData.DeserializeMediaTransformData(e)), _mediaTransformTransformsClientDiagnostics, Pipeline, "MediaTransformCollection.GetAll", "value", "@odata.nextLink", cancellationToken);
         }
 
         /// <summary>

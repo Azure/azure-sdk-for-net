@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -186,37 +185,9 @@ namespace Azure.ResourceManager.NetApp
         /// <returns> An async collection of <see cref="CapacityPoolResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<CapacityPoolResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<CapacityPoolResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _capacityPoolPoolsClientDiagnostics.CreateScope("CapacityPoolCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _capacityPoolPoolsRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new CapacityPoolResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<CapacityPoolResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _capacityPoolPoolsClientDiagnostics.CreateScope("CapacityPoolCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _capacityPoolPoolsRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new CapacityPoolResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _capacityPoolPoolsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _capacityPoolPoolsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new CapacityPoolResource(Client, CapacityPoolData.DeserializeCapacityPoolData(e)), _capacityPoolPoolsClientDiagnostics, Pipeline, "CapacityPoolCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -228,37 +199,9 @@ namespace Azure.ResourceManager.NetApp
         /// <returns> A collection of <see cref="CapacityPoolResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<CapacityPoolResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<CapacityPoolResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _capacityPoolPoolsClientDiagnostics.CreateScope("CapacityPoolCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _capacityPoolPoolsRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new CapacityPoolResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<CapacityPoolResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _capacityPoolPoolsClientDiagnostics.CreateScope("CapacityPoolCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _capacityPoolPoolsRestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new CapacityPoolResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _capacityPoolPoolsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _capacityPoolPoolsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new CapacityPoolResource(Client, CapacityPoolData.DeserializeCapacityPoolData(e)), _capacityPoolPoolsClientDiagnostics, Pipeline, "CapacityPoolCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

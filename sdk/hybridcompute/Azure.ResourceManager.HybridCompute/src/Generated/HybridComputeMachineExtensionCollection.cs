@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -187,37 +186,9 @@ namespace Azure.ResourceManager.HybridCompute
         /// <returns> An async collection of <see cref="HybridComputeMachineExtensionResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<HybridComputeMachineExtensionResource> GetAllAsync(string expand = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<HybridComputeMachineExtensionResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _hybridComputeMachineExtensionMachineExtensionsClientDiagnostics.CreateScope("HybridComputeMachineExtensionCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _hybridComputeMachineExtensionMachineExtensionsRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new HybridComputeMachineExtensionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<HybridComputeMachineExtensionResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _hybridComputeMachineExtensionMachineExtensionsClientDiagnostics.CreateScope("HybridComputeMachineExtensionCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _hybridComputeMachineExtensionMachineExtensionsRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new HybridComputeMachineExtensionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _hybridComputeMachineExtensionMachineExtensionsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expand);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _hybridComputeMachineExtensionMachineExtensionsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expand);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new HybridComputeMachineExtensionResource(Client, HybridComputeMachineExtensionData.DeserializeHybridComputeMachineExtensionData(e)), _hybridComputeMachineExtensionMachineExtensionsClientDiagnostics, Pipeline, "HybridComputeMachineExtensionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -230,37 +201,9 @@ namespace Azure.ResourceManager.HybridCompute
         /// <returns> A collection of <see cref="HybridComputeMachineExtensionResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<HybridComputeMachineExtensionResource> GetAll(string expand = null, CancellationToken cancellationToken = default)
         {
-            Page<HybridComputeMachineExtensionResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _hybridComputeMachineExtensionMachineExtensionsClientDiagnostics.CreateScope("HybridComputeMachineExtensionCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _hybridComputeMachineExtensionMachineExtensionsRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expand, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new HybridComputeMachineExtensionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<HybridComputeMachineExtensionResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _hybridComputeMachineExtensionMachineExtensionsClientDiagnostics.CreateScope("HybridComputeMachineExtensionCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _hybridComputeMachineExtensionMachineExtensionsRestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expand, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new HybridComputeMachineExtensionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _hybridComputeMachineExtensionMachineExtensionsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expand);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _hybridComputeMachineExtensionMachineExtensionsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expand);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new HybridComputeMachineExtensionResource(Client, HybridComputeMachineExtensionData.DeserializeHybridComputeMachineExtensionData(e)), _hybridComputeMachineExtensionMachineExtensionsClientDiagnostics, Pipeline, "HybridComputeMachineExtensionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

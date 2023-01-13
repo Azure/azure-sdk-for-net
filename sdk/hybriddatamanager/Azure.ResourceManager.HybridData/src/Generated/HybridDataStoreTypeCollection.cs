@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -120,37 +119,9 @@ namespace Azure.ResourceManager.HybridData
         /// <returns> An async collection of <see cref="HybridDataStoreTypeResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<HybridDataStoreTypeResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<HybridDataStoreTypeResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _hybridDataStoreTypeDataStoreTypesClientDiagnostics.CreateScope("HybridDataStoreTypeCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _hybridDataStoreTypeDataStoreTypesRestClient.ListByDataManagerAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new HybridDataStoreTypeResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<HybridDataStoreTypeResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _hybridDataStoreTypeDataStoreTypesClientDiagnostics.CreateScope("HybridDataStoreTypeCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _hybridDataStoreTypeDataStoreTypesRestClient.ListByDataManagerNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new HybridDataStoreTypeResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _hybridDataStoreTypeDataStoreTypesRestClient.CreateListByDataManagerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _hybridDataStoreTypeDataStoreTypesRestClient.CreateListByDataManagerNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new HybridDataStoreTypeResource(Client, HybridDataStoreTypeData.DeserializeHybridDataStoreTypeData(e)), _hybridDataStoreTypeDataStoreTypesClientDiagnostics, Pipeline, "HybridDataStoreTypeCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -162,37 +133,9 @@ namespace Azure.ResourceManager.HybridData
         /// <returns> A collection of <see cref="HybridDataStoreTypeResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<HybridDataStoreTypeResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<HybridDataStoreTypeResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _hybridDataStoreTypeDataStoreTypesClientDiagnostics.CreateScope("HybridDataStoreTypeCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _hybridDataStoreTypeDataStoreTypesRestClient.ListByDataManager(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new HybridDataStoreTypeResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<HybridDataStoreTypeResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _hybridDataStoreTypeDataStoreTypesClientDiagnostics.CreateScope("HybridDataStoreTypeCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _hybridDataStoreTypeDataStoreTypesRestClient.ListByDataManagerNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new HybridDataStoreTypeResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _hybridDataStoreTypeDataStoreTypesRestClient.CreateListByDataManagerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _hybridDataStoreTypeDataStoreTypesRestClient.CreateListByDataManagerNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new HybridDataStoreTypeResource(Client, HybridDataStoreTypeData.DeserializeHybridDataStoreTypeData(e)), _hybridDataStoreTypeDataStoreTypesClientDiagnostics, Pipeline, "HybridDataStoreTypeCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

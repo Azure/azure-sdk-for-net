@@ -468,8 +468,7 @@ var client = new ReceivedSharesClient("<https://my-service.azure.com>", credenti
 
 var operation = await client.DeleteAsync(WaitUntil.Completed, "<receivedShareName>");
 
-var response = await operation.WaitForCompletionResponseAsync();
-Console.WriteLine(response.Status)
+Console.WriteLine(operation.GetRawResponse().Status)
 ]]></code>
 </example>
 <remarks>
@@ -485,8 +484,7 @@ var client = new ReceivedSharesClient("<https://my-service.azure.com>", credenti
 
 var operation = client.Delete(WaitUntil.Completed, "<receivedShareName>");
 
-var response = operation.WaitForCompletionResponse();
-Console.WriteLine(response.Status)
+Console.WriteLine(operation.GetRawResponse().Status)
 ]]></code>
 </example>
 <remarks>

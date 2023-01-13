@@ -366,37 +366,9 @@ namespace Azure.ResourceManager.Network
         /// <returns> An async collection of <see cref="AvailableDelegation" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<AvailableDelegation> GetAvailableResourceGroupDelegationsAsync(AzureLocation location, CancellationToken cancellationToken = default)
         {
-            async Task<Page<AvailableDelegation>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = AvailableResourceGroupDelegationsClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetAvailableResourceGroupDelegations");
-                scope.Start();
-                try
-                {
-                    var response = await AvailableResourceGroupDelegationsRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, location, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<AvailableDelegation>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = AvailableResourceGroupDelegationsClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetAvailableResourceGroupDelegations");
-                scope.Start();
-                try
-                {
-                    var response = await AvailableResourceGroupDelegationsRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, location, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => AvailableResourceGroupDelegationsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, location);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => AvailableResourceGroupDelegationsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, location);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, AvailableDelegation.DeserializeAvailableDelegation, AvailableResourceGroupDelegationsClientDiagnostics, Pipeline, "ResourceGroupResourceExtensionClient.GetAvailableResourceGroupDelegations", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -409,37 +381,9 @@ namespace Azure.ResourceManager.Network
         /// <returns> A collection of <see cref="AvailableDelegation" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<AvailableDelegation> GetAvailableResourceGroupDelegations(AzureLocation location, CancellationToken cancellationToken = default)
         {
-            Page<AvailableDelegation> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = AvailableResourceGroupDelegationsClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetAvailableResourceGroupDelegations");
-                scope.Start();
-                try
-                {
-                    var response = AvailableResourceGroupDelegationsRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, location, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<AvailableDelegation> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = AvailableResourceGroupDelegationsClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetAvailableResourceGroupDelegations");
-                scope.Start();
-                try
-                {
-                    var response = AvailableResourceGroupDelegationsRestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, location, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => AvailableResourceGroupDelegationsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, location);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => AvailableResourceGroupDelegationsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, location);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, AvailableDelegation.DeserializeAvailableDelegation, AvailableResourceGroupDelegationsClientDiagnostics, Pipeline, "ResourceGroupResourceExtensionClient.GetAvailableResourceGroupDelegations", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -452,37 +396,9 @@ namespace Azure.ResourceManager.Network
         /// <returns> An async collection of <see cref="AvailableServiceAlias" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<AvailableServiceAlias> GetAvailableServiceAliasesByResourceGroupAsync(AzureLocation location, CancellationToken cancellationToken = default)
         {
-            async Task<Page<AvailableServiceAlias>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = AvailableServiceAliasesClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetAvailableServiceAliasesByResourceGroup");
-                scope.Start();
-                try
-                {
-                    var response = await AvailableServiceAliasesRestClient.ListByResourceGroupAsync(Id.SubscriptionId, Id.ResourceGroupName, location, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<AvailableServiceAlias>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = AvailableServiceAliasesClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetAvailableServiceAliasesByResourceGroup");
-                scope.Start();
-                try
-                {
-                    var response = await AvailableServiceAliasesRestClient.ListByResourceGroupNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, location, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => AvailableServiceAliasesRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, location);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => AvailableServiceAliasesRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, location);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, AvailableServiceAlias.DeserializeAvailableServiceAlias, AvailableServiceAliasesClientDiagnostics, Pipeline, "ResourceGroupResourceExtensionClient.GetAvailableServiceAliasesByResourceGroup", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -495,37 +411,9 @@ namespace Azure.ResourceManager.Network
         /// <returns> A collection of <see cref="AvailableServiceAlias" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<AvailableServiceAlias> GetAvailableServiceAliasesByResourceGroup(AzureLocation location, CancellationToken cancellationToken = default)
         {
-            Page<AvailableServiceAlias> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = AvailableServiceAliasesClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetAvailableServiceAliasesByResourceGroup");
-                scope.Start();
-                try
-                {
-                    var response = AvailableServiceAliasesRestClient.ListByResourceGroup(Id.SubscriptionId, Id.ResourceGroupName, location, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<AvailableServiceAlias> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = AvailableServiceAliasesClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetAvailableServiceAliasesByResourceGroup");
-                scope.Start();
-                try
-                {
-                    var response = AvailableServiceAliasesRestClient.ListByResourceGroupNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, location, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => AvailableServiceAliasesRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, location);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => AvailableServiceAliasesRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, location);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, AvailableServiceAlias.DeserializeAvailableServiceAlias, AvailableServiceAliasesClientDiagnostics, Pipeline, "ResourceGroupResourceExtensionClient.GetAvailableServiceAliasesByResourceGroup", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -538,37 +426,9 @@ namespace Azure.ResourceManager.Network
         /// <returns> An async collection of <see cref="AvailablePrivateEndpointType" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<AvailablePrivateEndpointType> GetAvailablePrivateEndpointTypesByResourceGroupAsync(AzureLocation location, CancellationToken cancellationToken = default)
         {
-            async Task<Page<AvailablePrivateEndpointType>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = AvailablePrivateEndpointTypesClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetAvailablePrivateEndpointTypesByResourceGroup");
-                scope.Start();
-                try
-                {
-                    var response = await AvailablePrivateEndpointTypesRestClient.ListByResourceGroupAsync(Id.SubscriptionId, Id.ResourceGroupName, location, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<AvailablePrivateEndpointType>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = AvailablePrivateEndpointTypesClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetAvailablePrivateEndpointTypesByResourceGroup");
-                scope.Start();
-                try
-                {
-                    var response = await AvailablePrivateEndpointTypesRestClient.ListByResourceGroupNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, location, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => AvailablePrivateEndpointTypesRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, location);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => AvailablePrivateEndpointTypesRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, location);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, AvailablePrivateEndpointType.DeserializeAvailablePrivateEndpointType, AvailablePrivateEndpointTypesClientDiagnostics, Pipeline, "ResourceGroupResourceExtensionClient.GetAvailablePrivateEndpointTypesByResourceGroup", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -581,37 +441,9 @@ namespace Azure.ResourceManager.Network
         /// <returns> A collection of <see cref="AvailablePrivateEndpointType" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<AvailablePrivateEndpointType> GetAvailablePrivateEndpointTypesByResourceGroup(AzureLocation location, CancellationToken cancellationToken = default)
         {
-            Page<AvailablePrivateEndpointType> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = AvailablePrivateEndpointTypesClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetAvailablePrivateEndpointTypesByResourceGroup");
-                scope.Start();
-                try
-                {
-                    var response = AvailablePrivateEndpointTypesRestClient.ListByResourceGroup(Id.SubscriptionId, Id.ResourceGroupName, location, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<AvailablePrivateEndpointType> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = AvailablePrivateEndpointTypesClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetAvailablePrivateEndpointTypesByResourceGroup");
-                scope.Start();
-                try
-                {
-                    var response = AvailablePrivateEndpointTypesRestClient.ListByResourceGroupNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, location, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => AvailablePrivateEndpointTypesRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, location);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => AvailablePrivateEndpointTypesRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, location);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, AvailablePrivateEndpointType.DeserializeAvailablePrivateEndpointType, AvailablePrivateEndpointTypesClientDiagnostics, Pipeline, "ResourceGroupResourceExtensionClient.GetAvailablePrivateEndpointTypesByResourceGroup", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -680,37 +512,9 @@ namespace Azure.ResourceManager.Network
         /// <returns> An async collection of <see cref="AutoApprovedPrivateLinkService" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<AutoApprovedPrivateLinkService> GetAutoApprovedPrivateLinkServicesByResourceGroupPrivateLinkServicesAsync(AzureLocation location, CancellationToken cancellationToken = default)
         {
-            async Task<Page<AutoApprovedPrivateLinkService>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = PrivateLinkServicesClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetAutoApprovedPrivateLinkServicesByResourceGroupPrivateLinkServices");
-                scope.Start();
-                try
-                {
-                    var response = await PrivateLinkServicesRestClient.ListAutoApprovedPrivateLinkServicesByResourceGroupAsync(Id.SubscriptionId, Id.ResourceGroupName, location, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<AutoApprovedPrivateLinkService>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = PrivateLinkServicesClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetAutoApprovedPrivateLinkServicesByResourceGroupPrivateLinkServices");
-                scope.Start();
-                try
-                {
-                    var response = await PrivateLinkServicesRestClient.ListAutoApprovedPrivateLinkServicesByResourceGroupNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, location, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => PrivateLinkServicesRestClient.CreateListAutoApprovedPrivateLinkServicesByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, location);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => PrivateLinkServicesRestClient.CreateListAutoApprovedPrivateLinkServicesByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, location);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, AutoApprovedPrivateLinkService.DeserializeAutoApprovedPrivateLinkService, PrivateLinkServicesClientDiagnostics, Pipeline, "ResourceGroupResourceExtensionClient.GetAutoApprovedPrivateLinkServicesByResourceGroupPrivateLinkServices", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -723,37 +527,9 @@ namespace Azure.ResourceManager.Network
         /// <returns> A collection of <see cref="AutoApprovedPrivateLinkService" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<AutoApprovedPrivateLinkService> GetAutoApprovedPrivateLinkServicesByResourceGroupPrivateLinkServices(AzureLocation location, CancellationToken cancellationToken = default)
         {
-            Page<AutoApprovedPrivateLinkService> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = PrivateLinkServicesClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetAutoApprovedPrivateLinkServicesByResourceGroupPrivateLinkServices");
-                scope.Start();
-                try
-                {
-                    var response = PrivateLinkServicesRestClient.ListAutoApprovedPrivateLinkServicesByResourceGroup(Id.SubscriptionId, Id.ResourceGroupName, location, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<AutoApprovedPrivateLinkService> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = PrivateLinkServicesClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetAutoApprovedPrivateLinkServicesByResourceGroupPrivateLinkServices");
-                scope.Start();
-                try
-                {
-                    var response = PrivateLinkServicesRestClient.ListAutoApprovedPrivateLinkServicesByResourceGroupNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, location, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => PrivateLinkServicesRestClient.CreateListAutoApprovedPrivateLinkServicesByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, location);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => PrivateLinkServicesRestClient.CreateListAutoApprovedPrivateLinkServicesByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, location);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, AutoApprovedPrivateLinkService.DeserializeAutoApprovedPrivateLinkService, PrivateLinkServicesClientDiagnostics, Pipeline, "ResourceGroupResourceExtensionClient.GetAutoApprovedPrivateLinkServicesByResourceGroupPrivateLinkServices", "value", "nextLink", cancellationToken);
         }
     }
 }

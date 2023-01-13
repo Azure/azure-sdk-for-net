@@ -278,37 +278,9 @@ namespace Azure.ResourceManager.AppService
         /// <returns> An async collection of <see cref="ProcessThreadInfo" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ProcessThreadInfo> GetProcessThreadsSlotAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<ProcessThreadInfo>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _siteSlotProcessWebAppsClientDiagnostics.CreateScope("SiteSlotProcessResource.GetProcessThreadsSlot");
-                scope.Start();
-                try
-                {
-                    var response = await _siteSlotProcessWebAppsRestClient.ListProcessThreadsSlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<ProcessThreadInfo>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _siteSlotProcessWebAppsClientDiagnostics.CreateScope("SiteSlotProcessResource.GetProcessThreadsSlot");
-                scope.Start();
-                try
-                {
-                    var response = await _siteSlotProcessWebAppsRestClient.ListProcessThreadsSlotNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _siteSlotProcessWebAppsRestClient.CreateListProcessThreadsSlotRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _siteSlotProcessWebAppsRestClient.CreateListProcessThreadsSlotNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, ProcessThreadInfo.DeserializeProcessThreadInfo, _siteSlotProcessWebAppsClientDiagnostics, Pipeline, "SiteSlotProcessResource.GetProcessThreadsSlot", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -320,37 +292,9 @@ namespace Azure.ResourceManager.AppService
         /// <returns> A collection of <see cref="ProcessThreadInfo" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ProcessThreadInfo> GetProcessThreadsSlot(CancellationToken cancellationToken = default)
         {
-            Page<ProcessThreadInfo> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _siteSlotProcessWebAppsClientDiagnostics.CreateScope("SiteSlotProcessResource.GetProcessThreadsSlot");
-                scope.Start();
-                try
-                {
-                    var response = _siteSlotProcessWebAppsRestClient.ListProcessThreadsSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<ProcessThreadInfo> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _siteSlotProcessWebAppsClientDiagnostics.CreateScope("SiteSlotProcessResource.GetProcessThreadsSlot");
-                scope.Start();
-                try
-                {
-                    var response = _siteSlotProcessWebAppsRestClient.ListProcessThreadsSlotNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _siteSlotProcessWebAppsRestClient.CreateListProcessThreadsSlotRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _siteSlotProcessWebAppsRestClient.CreateListProcessThreadsSlotNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, ProcessThreadInfo.DeserializeProcessThreadInfo, _siteSlotProcessWebAppsClientDiagnostics, Pipeline, "SiteSlotProcessResource.GetProcessThreadsSlot", "value", "nextLink", cancellationToken);
         }
     }
 }

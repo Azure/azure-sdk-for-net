@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -194,37 +193,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <returns> An async collection of <see cref="ProtectionIntentResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ProtectionIntentResource> GetProtectionIntentResourcesByBackupProtectionIntentAsync(string vaultName, string filter = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<ProtectionIntentResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = BackupProtectionIntentClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetProtectionIntentResourcesByBackupProtectionIntent");
-                scope.Start();
-                try
-                {
-                    var response = await BackupProtectionIntentRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, vaultName, filter, skipToken, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ProtectionIntentResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<ProtectionIntentResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = BackupProtectionIntentClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetProtectionIntentResourcesByBackupProtectionIntent");
-                scope.Start();
-                try
-                {
-                    var response = await BackupProtectionIntentRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, vaultName, filter, skipToken, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ProtectionIntentResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => BackupProtectionIntentRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, vaultName, filter, skipToken);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => BackupProtectionIntentRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, vaultName, filter, skipToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ProtectionIntentResource(Client, ProtectionIntentResourceData.DeserializeProtectionIntentResourceData(e)), BackupProtectionIntentClientDiagnostics, Pipeline, "ResourceGroupResourceExtensionClient.GetProtectionIntentResourcesByBackupProtectionIntent", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -239,37 +210,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <returns> A collection of <see cref="ProtectionIntentResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ProtectionIntentResource> GetProtectionIntentResourcesByBackupProtectionIntent(string vaultName, string filter = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            Page<ProtectionIntentResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = BackupProtectionIntentClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetProtectionIntentResourcesByBackupProtectionIntent");
-                scope.Start();
-                try
-                {
-                    var response = BackupProtectionIntentRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, vaultName, filter, skipToken, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ProtectionIntentResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<ProtectionIntentResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = BackupProtectionIntentClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetProtectionIntentResourcesByBackupProtectionIntent");
-                scope.Start();
-                try
-                {
-                    var response = BackupProtectionIntentRestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, vaultName, filter, skipToken, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ProtectionIntentResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => BackupProtectionIntentRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, vaultName, filter, skipToken);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => BackupProtectionIntentRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, vaultName, filter, skipToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ProtectionIntentResource(Client, ProtectionIntentResourceData.DeserializeProtectionIntentResourceData(e)), BackupProtectionIntentClientDiagnostics, Pipeline, "ResourceGroupResourceExtensionClient.GetProtectionIntentResourcesByBackupProtectionIntent", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -284,22 +227,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <returns> An async collection of <see cref="BackupManagementUsage" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<BackupManagementUsage> GetBackupUsageSummariesAsync(string vaultName, string filter = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<BackupManagementUsage>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = BackupUsageSummariesClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetBackupUsageSummaries");
-                scope.Start();
-                try
-                {
-                    var response = await BackupUsageSummariesRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, vaultName, filter, skipToken, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => BackupUsageSummariesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, vaultName, filter, skipToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, BackupManagementUsage.DeserializeBackupManagementUsage, BackupUsageSummariesClientDiagnostics, Pipeline, "ResourceGroupResourceExtensionClient.GetBackupUsageSummaries", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -314,22 +243,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <returns> A collection of <see cref="BackupManagementUsage" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<BackupManagementUsage> GetBackupUsageSummaries(string vaultName, string filter = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            Page<BackupManagementUsage> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = BackupUsageSummariesClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetBackupUsageSummaries");
-                scope.Start();
-                try
-                {
-                    var response = BackupUsageSummariesRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, vaultName, filter, skipToken, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => BackupUsageSummariesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, vaultName, filter, skipToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, BackupManagementUsage.DeserializeBackupManagementUsage, BackupUsageSummariesClientDiagnostics, Pipeline, "ResourceGroupResourceExtensionClient.GetBackupUsageSummaries", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -442,37 +357,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <returns> An async collection of <see cref="ProtectedItemResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ProtectedItemResource> GetProtectedItemResourcesByBackupProtectedItemAsync(string vaultName, string filter = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<ProtectedItemResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = BackupProtectedItemsClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetProtectedItemResourcesByBackupProtectedItem");
-                scope.Start();
-                try
-                {
-                    var response = await BackupProtectedItemsRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, vaultName, filter, skipToken, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ProtectedItemResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<ProtectedItemResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = BackupProtectedItemsClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetProtectedItemResourcesByBackupProtectedItem");
-                scope.Start();
-                try
-                {
-                    var response = await BackupProtectedItemsRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, vaultName, filter, skipToken, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ProtectedItemResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => BackupProtectedItemsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, vaultName, filter, skipToken);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => BackupProtectedItemsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, vaultName, filter, skipToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ProtectedItemResource(Client, ProtectedItemResourceData.DeserializeProtectedItemResourceData(e)), BackupProtectedItemsClientDiagnostics, Pipeline, "ResourceGroupResourceExtensionClient.GetProtectedItemResourcesByBackupProtectedItem", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -487,37 +374,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <returns> A collection of <see cref="ProtectedItemResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ProtectedItemResource> GetProtectedItemResourcesByBackupProtectedItem(string vaultName, string filter = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            Page<ProtectedItemResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = BackupProtectedItemsClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetProtectedItemResourcesByBackupProtectedItem");
-                scope.Start();
-                try
-                {
-                    var response = BackupProtectedItemsRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, vaultName, filter, skipToken, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ProtectedItemResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<ProtectedItemResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = BackupProtectedItemsClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetProtectedItemResourcesByBackupProtectedItem");
-                scope.Start();
-                try
-                {
-                    var response = BackupProtectedItemsRestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, vaultName, filter, skipToken, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ProtectedItemResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => BackupProtectedItemsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, vaultName, filter, skipToken);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => BackupProtectedItemsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, vaultName, filter, skipToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ProtectedItemResource(Client, ProtectedItemResourceData.DeserializeProtectedItemResourceData(e)), BackupProtectedItemsClientDiagnostics, Pipeline, "ResourceGroupResourceExtensionClient.GetProtectedItemResourcesByBackupProtectedItem", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -786,37 +645,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <returns> An async collection of <see cref="ProtectableContainerResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ProtectableContainerResource> GetProtectableContainersAsync(string vaultName, string fabricName, string filter = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<ProtectableContainerResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = ProtectableContainersClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetProtectableContainers");
-                scope.Start();
-                try
-                {
-                    var response = await ProtectableContainersRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, vaultName, fabricName, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<ProtectableContainerResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = ProtectableContainersClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetProtectableContainers");
-                scope.Start();
-                try
-                {
-                    var response = await ProtectableContainersRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, vaultName, fabricName, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => ProtectableContainersRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, vaultName, fabricName, filter);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ProtectableContainersRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, vaultName, fabricName, filter);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, ProtectableContainerResource.DeserializeProtectableContainerResource, ProtectableContainersClientDiagnostics, Pipeline, "ResourceGroupResourceExtensionClient.GetProtectableContainers", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -831,37 +662,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <returns> A collection of <see cref="ProtectableContainerResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ProtectableContainerResource> GetProtectableContainers(string vaultName, string fabricName, string filter = null, CancellationToken cancellationToken = default)
         {
-            Page<ProtectableContainerResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = ProtectableContainersClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetProtectableContainers");
-                scope.Start();
-                try
-                {
-                    var response = ProtectableContainersRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, vaultName, fabricName, filter, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<ProtectableContainerResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = ProtectableContainersClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetProtectableContainers");
-                scope.Start();
-                try
-                {
-                    var response = ProtectableContainersRestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, vaultName, fabricName, filter, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => ProtectableContainersRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, vaultName, fabricName, filter);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ProtectableContainersRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, vaultName, fabricName, filter);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, ProtectableContainerResource.DeserializeProtectableContainerResource, ProtectableContainersClientDiagnostics, Pipeline, "ResourceGroupResourceExtensionClient.GetProtectableContainers", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -1035,37 +838,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <returns> An async collection of <see cref="WorkloadProtectableItemResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<WorkloadProtectableItemResource> GetBackupProtectableItemsAsync(string vaultName, string filter = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<WorkloadProtectableItemResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = BackupProtectableItemsClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetBackupProtectableItems");
-                scope.Start();
-                try
-                {
-                    var response = await BackupProtectableItemsRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, vaultName, filter, skipToken, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<WorkloadProtectableItemResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = BackupProtectableItemsClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetBackupProtectableItems");
-                scope.Start();
-                try
-                {
-                    var response = await BackupProtectableItemsRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, vaultName, filter, skipToken, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => BackupProtectableItemsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, vaultName, filter, skipToken);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => BackupProtectableItemsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, vaultName, filter, skipToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, WorkloadProtectableItemResource.DeserializeWorkloadProtectableItemResource, BackupProtectableItemsClientDiagnostics, Pipeline, "ResourceGroupResourceExtensionClient.GetBackupProtectableItems", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -1081,37 +856,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <returns> A collection of <see cref="WorkloadProtectableItemResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<WorkloadProtectableItemResource> GetBackupProtectableItems(string vaultName, string filter = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            Page<WorkloadProtectableItemResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = BackupProtectableItemsClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetBackupProtectableItems");
-                scope.Start();
-                try
-                {
-                    var response = BackupProtectableItemsRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, vaultName, filter, skipToken, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<WorkloadProtectableItemResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = BackupProtectableItemsClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetBackupProtectableItems");
-                scope.Start();
-                try
-                {
-                    var response = BackupProtectableItemsRestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, vaultName, filter, skipToken, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => BackupProtectableItemsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, vaultName, filter, skipToken);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => BackupProtectableItemsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, vaultName, filter, skipToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, WorkloadProtectableItemResource.DeserializeWorkloadProtectableItemResource, BackupProtectableItemsClientDiagnostics, Pipeline, "ResourceGroupResourceExtensionClient.GetBackupProtectableItems", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -1125,37 +872,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <returns> An async collection of <see cref="ProtectionContainerResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ProtectionContainerResource> GetProtectionContainerResourcesByBackupProtectionContainerAsync(string vaultName, string filter = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<ProtectionContainerResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = BackupProtectionContainersClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetProtectionContainerResourcesByBackupProtectionContainer");
-                scope.Start();
-                try
-                {
-                    var response = await BackupProtectionContainersRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, vaultName, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ProtectionContainerResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<ProtectionContainerResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = BackupProtectionContainersClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetProtectionContainerResourcesByBackupProtectionContainer");
-                scope.Start();
-                try
-                {
-                    var response = await BackupProtectionContainersRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, vaultName, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ProtectionContainerResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => BackupProtectionContainersRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, vaultName, filter);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => BackupProtectionContainersRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, vaultName, filter);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ProtectionContainerResource(Client, ProtectionContainerResourceData.DeserializeProtectionContainerResourceData(e)), BackupProtectionContainersClientDiagnostics, Pipeline, "ResourceGroupResourceExtensionClient.GetProtectionContainerResourcesByBackupProtectionContainer", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -1169,37 +888,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <returns> A collection of <see cref="ProtectionContainerResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ProtectionContainerResource> GetProtectionContainerResourcesByBackupProtectionContainer(string vaultName, string filter = null, CancellationToken cancellationToken = default)
         {
-            Page<ProtectionContainerResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = BackupProtectionContainersClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetProtectionContainerResourcesByBackupProtectionContainer");
-                scope.Start();
-                try
-                {
-                    var response = BackupProtectionContainersRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, vaultName, filter, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ProtectionContainerResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<ProtectionContainerResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = BackupProtectionContainersClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetProtectionContainerResourcesByBackupProtectionContainer");
-                scope.Start();
-                try
-                {
-                    var response = BackupProtectionContainersRestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, vaultName, filter, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ProtectionContainerResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => BackupProtectionContainersRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, vaultName, filter);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => BackupProtectionContainersRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, vaultName, filter);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ProtectionContainerResource(Client, ProtectionContainerResourceData.DeserializeProtectionContainerResourceData(e)), BackupProtectionContainersClientDiagnostics, Pipeline, "ResourceGroupResourceExtensionClient.GetProtectionContainerResourcesByBackupProtectionContainer", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

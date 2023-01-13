@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -187,22 +186,8 @@ namespace Azure.ResourceManager.CosmosDB
         /// <returns> An async collection of <see cref="CosmosDBSqlUserDefinedFunctionResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<CosmosDBSqlUserDefinedFunctionResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<CosmosDBSqlUserDefinedFunctionResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _cosmosDBSqlUserDefinedFunctionSqlResourcesClientDiagnostics.CreateScope("CosmosDBSqlUserDefinedFunctionCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _cosmosDBSqlUserDefinedFunctionSqlResourcesRestClient.ListSqlUserDefinedFunctionsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new CosmosDBSqlUserDefinedFunctionResource(Client, value)), null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _cosmosDBSqlUserDefinedFunctionSqlResourcesRestClient.CreateListSqlUserDefinedFunctionsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new CosmosDBSqlUserDefinedFunctionResource(Client, CosmosDBSqlUserDefinedFunctionData.DeserializeCosmosDBSqlUserDefinedFunctionData(e)), _cosmosDBSqlUserDefinedFunctionSqlResourcesClientDiagnostics, Pipeline, "CosmosDBSqlUserDefinedFunctionCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -214,22 +199,8 @@ namespace Azure.ResourceManager.CosmosDB
         /// <returns> A collection of <see cref="CosmosDBSqlUserDefinedFunctionResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<CosmosDBSqlUserDefinedFunctionResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<CosmosDBSqlUserDefinedFunctionResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _cosmosDBSqlUserDefinedFunctionSqlResourcesClientDiagnostics.CreateScope("CosmosDBSqlUserDefinedFunctionCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _cosmosDBSqlUserDefinedFunctionSqlResourcesRestClient.ListSqlUserDefinedFunctions(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new CosmosDBSqlUserDefinedFunctionResource(Client, value)), null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _cosmosDBSqlUserDefinedFunctionSqlResourcesRestClient.CreateListSqlUserDefinedFunctionsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new CosmosDBSqlUserDefinedFunctionResource(Client, CosmosDBSqlUserDefinedFunctionData.DeserializeCosmosDBSqlUserDefinedFunctionData(e)), _cosmosDBSqlUserDefinedFunctionSqlResourcesClientDiagnostics, Pipeline, "CosmosDBSqlUserDefinedFunctionCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
