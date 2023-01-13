@@ -11,10 +11,10 @@ using Azure.Core;
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
     /// <summary> The object being used to update tags of a resource, in general used for PATCH operations. </summary>
-    public partial class PatchResourceTags
+    public partial class CognitiveServicesPatchResourceTags
     {
-        /// <summary> Initializes a new instance of PatchResourceTags. </summary>
-        public PatchResourceTags()
+        /// <summary> Initializes a new instance of CognitiveServicesPatchResourceTags. </summary>
+        public CognitiveServicesPatchResourceTags()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
         }

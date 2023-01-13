@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
     /// <summary> Properties of Cognitive Services account commitment plan. </summary>
@@ -24,7 +26,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <param name="autoRenew"> AutoRenew commitment plan. </param>
         /// <param name="next"> Cognitive Services account commitment period. </param>
         /// <param name="last"> Cognitive Services account commitment period. </param>
-        internal CommitmentPlanProperties(CommitmentPlanProvisioningState? provisioningState, string commitmentPlanGuid, ServiceAccountHostingModel? hostingModel, string planType, CommitmentPeriod current, bool? autoRenew, CommitmentPeriod next, CommitmentPeriod last)
+        internal CommitmentPlanProperties(CommitmentPlanProvisioningState? provisioningState, Guid? commitmentPlanGuid, ServiceAccountHostingModel? hostingModel, string planType, CommitmentPeriod current, bool? autoRenew, CommitmentPeriod next, CommitmentPeriod last)
         {
             ProvisioningState = provisioningState;
             CommitmentPlanGuid = commitmentPlanGuid;
@@ -39,7 +41,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <summary> Gets the status of the resource at the time the operation was called. </summary>
         public CommitmentPlanProvisioningState? ProvisioningState { get; }
         /// <summary> Commitment plan guid. </summary>
-        public string CommitmentPlanGuid { get; set; }
+        public Guid? CommitmentPlanGuid { get; set; }
         /// <summary> Account hosting model. </summary>
         public ServiceAccountHostingModel? HostingModel { get; set; }
         /// <summary> Commitment plan type. </summary>

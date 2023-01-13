@@ -14,13 +14,18 @@ namespace Azure.ResourceManager.CognitiveServices.Models
     {
         internal static CommitmentPlanAssociation DeserializeCommitmentPlanAssociation(JsonElement element)
         {
-            Optional<string> commitmentPlanId = default;
+            Optional<ResourceIdentifier> commitmentPlanId = default;
             Optional<string> commitmentPlanLocation = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("commitmentPlanId"))
                 {
-                    commitmentPlanId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    commitmentPlanId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("commitmentPlanLocation"))

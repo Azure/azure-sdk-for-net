@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using Azure.Core;
+
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
     /// <summary> The commitment plan association. </summary>
@@ -18,14 +20,14 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <summary> Initializes a new instance of CommitmentPlanAssociation. </summary>
         /// <param name="commitmentPlanId"> The Azure resource id of the commitment plan. </param>
         /// <param name="commitmentPlanLocation"> The location of of the commitment plan. </param>
-        internal CommitmentPlanAssociation(string commitmentPlanId, string commitmentPlanLocation)
+        internal CommitmentPlanAssociation(ResourceIdentifier commitmentPlanId, string commitmentPlanLocation)
         {
             CommitmentPlanId = commitmentPlanId;
             CommitmentPlanLocation = commitmentPlanLocation;
         }
 
         /// <summary> The Azure resource id of the commitment plan. </summary>
-        public string CommitmentPlanId { get; }
+        public ResourceIdentifier CommitmentPlanId { get; }
         /// <summary> The location of of the commitment plan. </summary>
         public string CommitmentPlanLocation { get; }
     }

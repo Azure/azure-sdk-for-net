@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             Optional<bool> restore = default;
             Optional<DateTimeOffset> deletionDate = default;
             Optional<string> scheduledPurgeDate = default;
-            Optional<MultiRegionSettings> locations = default;
+            Optional<CognitiveServicesMultiRegionSettings> locations = default;
             Optional<IReadOnlyList<CommitmentPlanAssociation>> commitmentPlanAssociations = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -378,7 +378,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    locations = MultiRegionSettings.DeserializeMultiRegionSettings(property.Value);
+                    locations = CognitiveServicesMultiRegionSettings.DeserializeCognitiveServicesMultiRegionSettings(property.Value);
                     continue;
                 }
                 if (property.NameEquals("commitmentPlanAssociations"))

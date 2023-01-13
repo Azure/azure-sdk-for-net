@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
 
@@ -18,7 +19,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             if (Optional.IsDefined(CommitmentPlanGuid))
             {
                 writer.WritePropertyName("commitmentPlanGuid");
-                writer.WriteStringValue(CommitmentPlanGuid);
+                writer.WriteStringValue(CommitmentPlanGuid.Value);
             }
             if (Optional.IsDefined(HostingModel))
             {
@@ -51,7 +52,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         internal static CommitmentPlanProperties DeserializeCommitmentPlanProperties(JsonElement element)
         {
             Optional<CommitmentPlanProvisioningState> provisioningState = default;
-            Optional<string> commitmentPlanGuid = default;
+            Optional<Guid> commitmentPlanGuid = default;
             Optional<ServiceAccountHostingModel> hostingModel = default;
             Optional<string> planType = default;
             Optional<CommitmentPeriod> current = default;
@@ -72,7 +73,12 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 }
                 if (property.NameEquals("commitmentPlanGuid"))
                 {
-                    commitmentPlanGuid = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    commitmentPlanGuid = property.Value.GetGuid();
                     continue;
                 }
                 if (property.NameEquals("hostingModel"))
@@ -131,7 +137,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     continue;
                 }
             }
-            return new CommitmentPlanProperties(Optional.ToNullable(provisioningState), commitmentPlanGuid.Value, Optional.ToNullable(hostingModel), planType.Value, current.Value, Optional.ToNullable(autoRenew), next.Value, last.Value);
+            return new CommitmentPlanProperties(Optional.ToNullable(provisioningState), Optional.ToNullable(commitmentPlanGuid), Optional.ToNullable(hostingModel), planType.Value, current.Value, Optional.ToNullable(autoRenew), next.Value, last.Value);
         }
     }
 }

@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
     /// <summary> The object being used to update tags and sku of a resource, in general used for PATCH operations. </summary>
-    public partial class CognitiveServicesCommitmentPlanPatch : PatchResourceTags
+    public partial class CognitiveServicesCommitmentPlanPatch : CognitiveServicesPatchResourceTags
     {
         /// <summary> Initializes a new instance of CognitiveServicesCommitmentPlanPatch. </summary>
         public CognitiveServicesCommitmentPlanPatch()

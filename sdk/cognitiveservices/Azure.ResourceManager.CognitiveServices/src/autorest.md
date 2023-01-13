@@ -70,6 +70,12 @@ rename-mapping:
   Usage: ServiceAccountUsage
   UsageListResult: ServiceAccountUsageListResult
   UserOwnedStorage: ServiceAccountUserOwnedStorage
+  RegionSetting: CognitiveServicesRegionSetting
+  RoutingMethods: CognitiveServicesRoutingMethod
+  PatchResourceTags: CognitiveServicesPatchResourceTags
+  MultiRegionSettings: CognitiveServicesMultiRegionSettings
+  CommitmentPlanProperties.commitmentPlanGuid: -|uuid
+  CommitmentPlanAssociation.commitmentPlanId: -|arm-id
 
 prepend-rp-prefix:
   - Account

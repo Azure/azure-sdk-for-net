@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
-    public partial class MultiRegionSettings : IUtf8JsonSerializable
+    public partial class CognitiveServicesMultiRegionSettings : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -34,10 +34,10 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             writer.WriteEndObject();
         }
 
-        internal static MultiRegionSettings DeserializeMultiRegionSettings(JsonElement element)
+        internal static CognitiveServicesMultiRegionSettings DeserializeCognitiveServicesMultiRegionSettings(JsonElement element)
         {
-            Optional<RoutingMethod> routingMethod = default;
-            Optional<IList<RegionSetting>> regions = default;
+            Optional<CognitiveServicesRoutingMethod> routingMethod = default;
+            Optional<IList<CognitiveServicesRegionSetting>> regions = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("routingMethod"))
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    routingMethod = new RoutingMethod(property.Value.GetString());
+                    routingMethod = new CognitiveServicesRoutingMethod(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("regions"))
@@ -57,16 +57,16 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<RegionSetting> array = new List<RegionSetting>();
+                    List<CognitiveServicesRegionSetting> array = new List<CognitiveServicesRegionSetting>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(RegionSetting.DeserializeRegionSetting(item));
+                        array.Add(CognitiveServicesRegionSetting.DeserializeCognitiveServicesRegionSetting(item));
                     }
                     regions = array;
                     continue;
                 }
             }
-            return new MultiRegionSettings(Optional.ToNullable(routingMethod), Optional.ToList(regions));
+            return new CognitiveServicesMultiRegionSettings(Optional.ToNullable(routingMethod), Optional.ToList(regions));
         }
     }
 }

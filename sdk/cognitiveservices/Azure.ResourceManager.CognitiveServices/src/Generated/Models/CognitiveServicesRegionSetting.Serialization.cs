@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
-    public partial class RegionSetting : IUtf8JsonSerializable
+    public partial class CognitiveServicesRegionSetting : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             writer.WriteEndObject();
         }
 
-        internal static RegionSetting DeserializeRegionSetting(JsonElement element)
+        internal static CognitiveServicesRegionSetting DeserializeCognitiveServicesRegionSetting(JsonElement element)
         {
             Optional<string> name = default;
             Optional<float> value = default;
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     continue;
                 }
             }
-            return new RegionSetting(name.Value, Optional.ToNullable(value), customsubdomain.Value);
+            return new CognitiveServicesRegionSetting(name.Value, Optional.ToNullable(value), customsubdomain.Value);
         }
     }
 }

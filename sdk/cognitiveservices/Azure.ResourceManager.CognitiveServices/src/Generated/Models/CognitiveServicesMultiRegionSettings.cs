@@ -11,26 +11,26 @@ using Azure.Core;
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
     /// <summary> The multiregion settings Cognitive Services account. </summary>
-    public partial class MultiRegionSettings
+    public partial class CognitiveServicesMultiRegionSettings
     {
-        /// <summary> Initializes a new instance of MultiRegionSettings. </summary>
-        public MultiRegionSettings()
+        /// <summary> Initializes a new instance of CognitiveServicesMultiRegionSettings. </summary>
+        public CognitiveServicesMultiRegionSettings()
         {
-            Regions = new ChangeTrackingList<RegionSetting>();
+            Regions = new ChangeTrackingList<CognitiveServicesRegionSetting>();
         }
 
-        /// <summary> Initializes a new instance of MultiRegionSettings. </summary>
+        /// <summary> Initializes a new instance of CognitiveServicesMultiRegionSettings. </summary>
         /// <param name="routingMethod"> Multiregion routing methods. </param>
         /// <param name="regions"></param>
-        internal MultiRegionSettings(RoutingMethod? routingMethod, IList<RegionSetting> regions)
+        internal CognitiveServicesMultiRegionSettings(CognitiveServicesRoutingMethod? routingMethod, IList<CognitiveServicesRegionSetting> regions)
         {
             RoutingMethod = routingMethod;
             Regions = regions;
         }
 
         /// <summary> Multiregion routing methods. </summary>
-        public RoutingMethod? RoutingMethod { get; set; }
+        public CognitiveServicesRoutingMethod? RoutingMethod { get; set; }
         /// <summary> Gets the regions. </summary>
-        public IList<RegionSetting> Regions { get; }
+        public IList<CognitiveServicesRegionSetting> Regions { get; }
     }
 }
