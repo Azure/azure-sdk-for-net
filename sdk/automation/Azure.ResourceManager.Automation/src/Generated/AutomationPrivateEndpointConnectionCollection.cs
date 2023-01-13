@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -186,22 +185,8 @@ namespace Azure.ResourceManager.Automation
         /// <returns> An async collection of <see cref="AutomationPrivateEndpointConnectionResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<AutomationPrivateEndpointConnectionResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<AutomationPrivateEndpointConnectionResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _automationPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics.CreateScope("AutomationPrivateEndpointConnectionCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _automationPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.ListByAutomationAccountAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new AutomationPrivateEndpointConnectionResource(Client, value)), null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _automationPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateListByAutomationAccountRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new AutomationPrivateEndpointConnectionResource(Client, AutomationPrivateEndpointConnectionData.DeserializeAutomationPrivateEndpointConnectionData(e)), _automationPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics, Pipeline, "AutomationPrivateEndpointConnectionCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -213,22 +198,8 @@ namespace Azure.ResourceManager.Automation
         /// <returns> A collection of <see cref="AutomationPrivateEndpointConnectionResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<AutomationPrivateEndpointConnectionResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<AutomationPrivateEndpointConnectionResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _automationPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics.CreateScope("AutomationPrivateEndpointConnectionCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _automationPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.ListByAutomationAccount(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new AutomationPrivateEndpointConnectionResource(Client, value)), null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _automationPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateListByAutomationAccountRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new AutomationPrivateEndpointConnectionResource(Client, AutomationPrivateEndpointConnectionData.DeserializeAutomationPrivateEndpointConnectionData(e)), _automationPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics, Pipeline, "AutomationPrivateEndpointConnectionCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>

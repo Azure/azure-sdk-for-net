@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -186,37 +185,9 @@ namespace Azure.ResourceManager.Peering
         /// <returns> An async collection of <see cref="PeeringRegisteredAsnResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<PeeringRegisteredAsnResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<PeeringRegisteredAsnResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _peeringRegisteredAsnRegisteredAsnsClientDiagnostics.CreateScope("PeeringRegisteredAsnCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _peeringRegisteredAsnRegisteredAsnsRestClient.ListByPeeringAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new PeeringRegisteredAsnResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<PeeringRegisteredAsnResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _peeringRegisteredAsnRegisteredAsnsClientDiagnostics.CreateScope("PeeringRegisteredAsnCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _peeringRegisteredAsnRegisteredAsnsRestClient.ListByPeeringNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new PeeringRegisteredAsnResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _peeringRegisteredAsnRegisteredAsnsRestClient.CreateListByPeeringRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _peeringRegisteredAsnRegisteredAsnsRestClient.CreateListByPeeringNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new PeeringRegisteredAsnResource(Client, PeeringRegisteredAsnData.DeserializePeeringRegisteredAsnData(e)), _peeringRegisteredAsnRegisteredAsnsClientDiagnostics, Pipeline, "PeeringRegisteredAsnCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -228,37 +199,9 @@ namespace Azure.ResourceManager.Peering
         /// <returns> A collection of <see cref="PeeringRegisteredAsnResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<PeeringRegisteredAsnResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<PeeringRegisteredAsnResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _peeringRegisteredAsnRegisteredAsnsClientDiagnostics.CreateScope("PeeringRegisteredAsnCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _peeringRegisteredAsnRegisteredAsnsRestClient.ListByPeering(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new PeeringRegisteredAsnResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<PeeringRegisteredAsnResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _peeringRegisteredAsnRegisteredAsnsClientDiagnostics.CreateScope("PeeringRegisteredAsnCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _peeringRegisteredAsnRegisteredAsnsRestClient.ListByPeeringNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new PeeringRegisteredAsnResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _peeringRegisteredAsnRegisteredAsnsRestClient.CreateListByPeeringRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _peeringRegisteredAsnRegisteredAsnsRestClient.CreateListByPeeringNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new PeeringRegisteredAsnResource(Client, PeeringRegisteredAsnData.DeserializePeeringRegisteredAsnData(e)), _peeringRegisteredAsnRegisteredAsnsClientDiagnostics, Pipeline, "PeeringRegisteredAsnCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

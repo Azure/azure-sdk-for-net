@@ -6,9 +6,7 @@
 #nullable disable
 
 using System;
-using System.Linq;
 using System.Threading;
-using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -62,37 +60,9 @@ namespace Azure.ResourceManager.Chaos
         /// <returns> An async collection of <see cref="ExperimentResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ExperimentResource> GetExperimentsAsync(bool? running = null, string continuationToken = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<ExperimentResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = ExperimentClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetExperiments");
-                scope.Start();
-                try
-                {
-                    var response = await ExperimentRestClient.ListAllAsync(Id.SubscriptionId, running, continuationToken, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ExperimentResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<ExperimentResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = ExperimentClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetExperiments");
-                scope.Start();
-                try
-                {
-                    var response = await ExperimentRestClient.ListAllNextPageAsync(nextLink, Id.SubscriptionId, running, continuationToken, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ExperimentResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => ExperimentRestClient.CreateListAllRequest(Id.SubscriptionId, running, continuationToken);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ExperimentRestClient.CreateListAllNextPageRequest(nextLink, Id.SubscriptionId, running, continuationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ExperimentResource(Client, ExperimentData.DeserializeExperimentData(e)), ExperimentClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetExperiments", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -106,37 +76,9 @@ namespace Azure.ResourceManager.Chaos
         /// <returns> A collection of <see cref="ExperimentResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ExperimentResource> GetExperiments(bool? running = null, string continuationToken = null, CancellationToken cancellationToken = default)
         {
-            Page<ExperimentResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = ExperimentClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetExperiments");
-                scope.Start();
-                try
-                {
-                    var response = ExperimentRestClient.ListAll(Id.SubscriptionId, running, continuationToken, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ExperimentResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<ExperimentResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = ExperimentClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetExperiments");
-                scope.Start();
-                try
-                {
-                    var response = ExperimentRestClient.ListAllNextPage(nextLink, Id.SubscriptionId, running, continuationToken, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ExperimentResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => ExperimentRestClient.CreateListAllRequest(Id.SubscriptionId, running, continuationToken);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ExperimentRestClient.CreateListAllNextPageRequest(nextLink, Id.SubscriptionId, running, continuationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ExperimentResource(Client, ExperimentData.DeserializeExperimentData(e)), ExperimentClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetExperiments", "value", "nextLink", cancellationToken);
         }
     }
 }

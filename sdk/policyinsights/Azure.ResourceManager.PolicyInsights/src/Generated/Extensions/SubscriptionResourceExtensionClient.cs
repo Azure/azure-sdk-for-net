@@ -66,37 +66,9 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <returns> An async collection of <see cref="PolicyTrackedResourceRecord" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<PolicyTrackedResourceRecord> GetPolicyTrackedResourceQueryResultsAsync(PolicyTrackedResourceType policyTrackedResourceType, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<PolicyTrackedResourceRecord>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = PolicyTrackedResourcesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetPolicyTrackedResourceQueryResults");
-                scope.Start();
-                try
-                {
-                    var response = await PolicyTrackedResourcesRestClient.ListQueryResultsForSubscriptionAsync(Id.SubscriptionId, policyTrackedResourceType, policyQuerySettings, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<PolicyTrackedResourceRecord>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = PolicyTrackedResourcesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetPolicyTrackedResourceQueryResults");
-                scope.Start();
-                try
-                {
-                    var response = await PolicyTrackedResourcesRestClient.ListQueryResultsForSubscriptionNextPageAsync(nextLink, Id.SubscriptionId, policyTrackedResourceType, policyQuerySettings, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => PolicyTrackedResourcesRestClient.CreateListQueryResultsForSubscriptionRequest(Id.SubscriptionId, policyTrackedResourceType, policyQuerySettings);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => PolicyTrackedResourcesRestClient.CreateListQueryResultsForSubscriptionNextPageRequest(nextLink, Id.SubscriptionId, policyTrackedResourceType, policyQuerySettings);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, PolicyTrackedResourceRecord.DeserializePolicyTrackedResourceRecord, PolicyTrackedResourcesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetPolicyTrackedResourceQueryResults", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -110,37 +82,9 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <returns> A collection of <see cref="PolicyTrackedResourceRecord" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<PolicyTrackedResourceRecord> GetPolicyTrackedResourceQueryResults(PolicyTrackedResourceType policyTrackedResourceType, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
         {
-            Page<PolicyTrackedResourceRecord> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = PolicyTrackedResourcesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetPolicyTrackedResourceQueryResults");
-                scope.Start();
-                try
-                {
-                    var response = PolicyTrackedResourcesRestClient.ListQueryResultsForSubscription(Id.SubscriptionId, policyTrackedResourceType, policyQuerySettings, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<PolicyTrackedResourceRecord> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = PolicyTrackedResourcesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetPolicyTrackedResourceQueryResults");
-                scope.Start();
-                try
-                {
-                    var response = PolicyTrackedResourcesRestClient.ListQueryResultsForSubscriptionNextPage(nextLink, Id.SubscriptionId, policyTrackedResourceType, policyQuerySettings, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => PolicyTrackedResourcesRestClient.CreateListQueryResultsForSubscriptionRequest(Id.SubscriptionId, policyTrackedResourceType, policyQuerySettings);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => PolicyTrackedResourcesRestClient.CreateListQueryResultsForSubscriptionNextPageRequest(nextLink, Id.SubscriptionId, policyTrackedResourceType, policyQuerySettings);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, PolicyTrackedResourceRecord.DeserializePolicyTrackedResourceRecord, PolicyTrackedResourcesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetPolicyTrackedResourceQueryResults", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -154,37 +98,9 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <returns> An async collection of <see cref="PolicyEvent" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<PolicyEvent> GetPolicyEventQueryResultsAsync(PolicyEventType policyEventType, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<PolicyEvent>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = PolicyEventsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetPolicyEventQueryResults");
-                scope.Start();
-                try
-                {
-                    var response = await PolicyEventsRestClient.ListQueryResultsForSubscriptionAsync(Id.SubscriptionId, policyEventType, policyQuerySettings, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.ODataNextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<PolicyEvent>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = PolicyEventsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetPolicyEventQueryResults");
-                scope.Start();
-                try
-                {
-                    var response = await PolicyEventsRestClient.ListQueryResultsForSubscriptionNextPageAsync(nextLink, Id.SubscriptionId, policyEventType, policyQuerySettings, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.ODataNextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => PolicyEventsRestClient.CreateListQueryResultsForSubscriptionRequest(Id.SubscriptionId, policyEventType, policyQuerySettings);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => PolicyEventsRestClient.CreateListQueryResultsForSubscriptionNextPageRequest(nextLink, Id.SubscriptionId, policyEventType, policyQuerySettings);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, PolicyEvent.DeserializePolicyEvent, PolicyEventsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetPolicyEventQueryResults", "value", "@odata.nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -198,37 +114,9 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <returns> A collection of <see cref="PolicyEvent" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<PolicyEvent> GetPolicyEventQueryResults(PolicyEventType policyEventType, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
         {
-            Page<PolicyEvent> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = PolicyEventsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetPolicyEventQueryResults");
-                scope.Start();
-                try
-                {
-                    var response = PolicyEventsRestClient.ListQueryResultsForSubscription(Id.SubscriptionId, policyEventType, policyQuerySettings, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.ODataNextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<PolicyEvent> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = PolicyEventsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetPolicyEventQueryResults");
-                scope.Start();
-                try
-                {
-                    var response = PolicyEventsRestClient.ListQueryResultsForSubscriptionNextPage(nextLink, Id.SubscriptionId, policyEventType, policyQuerySettings, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.ODataNextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => PolicyEventsRestClient.CreateListQueryResultsForSubscriptionRequest(Id.SubscriptionId, policyEventType, policyQuerySettings);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => PolicyEventsRestClient.CreateListQueryResultsForSubscriptionNextPageRequest(nextLink, Id.SubscriptionId, policyEventType, policyQuerySettings);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, PolicyEvent.DeserializePolicyEvent, PolicyEventsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetPolicyEventQueryResults", "value", "@odata.nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -242,37 +130,9 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <returns> An async collection of <see cref="PolicyState" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<PolicyState> GetPolicyStateQueryResultsAsync(PolicyStateType policyStateType, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<PolicyState>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = PolicyStatesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetPolicyStateQueryResults");
-                scope.Start();
-                try
-                {
-                    var response = await PolicyStatesRestClient.ListQueryResultsForSubscriptionAsync(Id.SubscriptionId, policyStateType, policyQuerySettings, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.ODataNextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<PolicyState>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = PolicyStatesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetPolicyStateQueryResults");
-                scope.Start();
-                try
-                {
-                    var response = await PolicyStatesRestClient.ListQueryResultsForSubscriptionNextPageAsync(nextLink, Id.SubscriptionId, policyStateType, policyQuerySettings, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.ODataNextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => PolicyStatesRestClient.CreateListQueryResultsForSubscriptionRequest(Id.SubscriptionId, policyStateType, policyQuerySettings);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => PolicyStatesRestClient.CreateListQueryResultsForSubscriptionNextPageRequest(nextLink, Id.SubscriptionId, policyStateType, policyQuerySettings);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, PolicyState.DeserializePolicyState, PolicyStatesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetPolicyStateQueryResults", "value", "@odata.nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -286,37 +146,9 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <returns> A collection of <see cref="PolicyState" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<PolicyState> GetPolicyStateQueryResults(PolicyStateType policyStateType, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
         {
-            Page<PolicyState> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = PolicyStatesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetPolicyStateQueryResults");
-                scope.Start();
-                try
-                {
-                    var response = PolicyStatesRestClient.ListQueryResultsForSubscription(Id.SubscriptionId, policyStateType, policyQuerySettings, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.ODataNextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<PolicyState> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = PolicyStatesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetPolicyStateQueryResults");
-                scope.Start();
-                try
-                {
-                    var response = PolicyStatesRestClient.ListQueryResultsForSubscriptionNextPage(nextLink, Id.SubscriptionId, policyStateType, policyQuerySettings, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.ODataNextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => PolicyStatesRestClient.CreateListQueryResultsForSubscriptionRequest(Id.SubscriptionId, policyStateType, policyQuerySettings);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => PolicyStatesRestClient.CreateListQueryResultsForSubscriptionNextPageRequest(nextLink, Id.SubscriptionId, policyStateType, policyQuerySettings);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, PolicyState.DeserializePolicyState, PolicyStatesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetPolicyStateQueryResults", "value", "@odata.nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -330,22 +162,8 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <returns> An async collection of <see cref="PolicySummary" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<PolicySummary> SummarizePolicyStatesAsync(PolicyStateSummaryType policyStateSummaryType, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<PolicySummary>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = PolicyStatesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.SummarizePolicyStates");
-                scope.Start();
-                try
-                {
-                    var response = await PolicyStatesRestClient.SummarizeForSubscriptionAsync(Id.SubscriptionId, policyStateSummaryType, policyQuerySettings, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => PolicyStatesRestClient.CreateSummarizeForSubscriptionRequest(Id.SubscriptionId, policyStateSummaryType, policyQuerySettings);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, PolicySummary.DeserializePolicySummary, PolicyStatesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.SummarizePolicyStates", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -359,22 +177,8 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <returns> A collection of <see cref="PolicySummary" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<PolicySummary> SummarizePolicyStates(PolicyStateSummaryType policyStateSummaryType, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
         {
-            Page<PolicySummary> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = PolicyStatesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.SummarizePolicyStates");
-                scope.Start();
-                try
-                {
-                    var response = PolicyStatesRestClient.SummarizeForSubscription(Id.SubscriptionId, policyStateSummaryType, policyQuerySettings, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => PolicyStatesRestClient.CreateSummarizeForSubscriptionRequest(Id.SubscriptionId, policyStateSummaryType, policyQuerySettings);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, PolicySummary.DeserializePolicySummary, PolicyStatesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.SummarizePolicyStates", "value", null, cancellationToken);
         }
 
         /// <summary>

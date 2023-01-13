@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -188,37 +187,9 @@ namespace Azure.ResourceManager.Logic
         /// <returns> An async collection of <see cref="IntegrationAccountResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<IntegrationAccountResource> GetAllAsync(int? top = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<IntegrationAccountResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _integrationAccountClientDiagnostics.CreateScope("IntegrationAccountCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _integrationAccountRestClient.ListByResourceGroupAsync(Id.SubscriptionId, Id.ResourceGroupName, top, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new IntegrationAccountResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<IntegrationAccountResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _integrationAccountClientDiagnostics.CreateScope("IntegrationAccountCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _integrationAccountRestClient.ListByResourceGroupNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, top, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new IntegrationAccountResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _integrationAccountRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, top);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _integrationAccountRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, top);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new IntegrationAccountResource(Client, IntegrationAccountData.DeserializeIntegrationAccountData(e)), _integrationAccountClientDiagnostics, Pipeline, "IntegrationAccountCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -231,37 +202,9 @@ namespace Azure.ResourceManager.Logic
         /// <returns> A collection of <see cref="IntegrationAccountResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<IntegrationAccountResource> GetAll(int? top = null, CancellationToken cancellationToken = default)
         {
-            Page<IntegrationAccountResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _integrationAccountClientDiagnostics.CreateScope("IntegrationAccountCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _integrationAccountRestClient.ListByResourceGroup(Id.SubscriptionId, Id.ResourceGroupName, top, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new IntegrationAccountResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<IntegrationAccountResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _integrationAccountClientDiagnostics.CreateScope("IntegrationAccountCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _integrationAccountRestClient.ListByResourceGroupNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, top, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new IntegrationAccountResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _integrationAccountRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, top);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _integrationAccountRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, top);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new IntegrationAccountResource(Client, IntegrationAccountData.DeserializeIntegrationAccountData(e)), _integrationAccountClientDiagnostics, Pipeline, "IntegrationAccountCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

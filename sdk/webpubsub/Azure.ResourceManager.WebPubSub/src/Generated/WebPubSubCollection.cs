@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -187,37 +186,9 @@ namespace Azure.ResourceManager.WebPubSub
         /// <returns> An async collection of <see cref="WebPubSubResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<WebPubSubResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<WebPubSubResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _webPubSubClientDiagnostics.CreateScope("WebPubSubCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _webPubSubRestClient.ListByResourceGroupAsync(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new WebPubSubResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<WebPubSubResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _webPubSubClientDiagnostics.CreateScope("WebPubSubCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _webPubSubRestClient.ListByResourceGroupNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new WebPubSubResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _webPubSubRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _webPubSubRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new WebPubSubResource(Client, WebPubSubData.DeserializeWebPubSubData(e)), _webPubSubClientDiagnostics, Pipeline, "WebPubSubCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -229,37 +200,9 @@ namespace Azure.ResourceManager.WebPubSub
         /// <returns> A collection of <see cref="WebPubSubResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<WebPubSubResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<WebPubSubResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _webPubSubClientDiagnostics.CreateScope("WebPubSubCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _webPubSubRestClient.ListByResourceGroup(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new WebPubSubResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<WebPubSubResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _webPubSubClientDiagnostics.CreateScope("WebPubSubCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _webPubSubRestClient.ListByResourceGroupNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new WebPubSubResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _webPubSubRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _webPubSubRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new WebPubSubResource(Client, WebPubSubData.DeserializeWebPubSubData(e)), _webPubSubClientDiagnostics, Pipeline, "WebPubSubCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -186,37 +185,9 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <returns> An async collection of <see cref="DataProtectionBackupPolicyResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DataProtectionBackupPolicyResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<DataProtectionBackupPolicyResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _dataProtectionBackupPolicyBackupPoliciesClientDiagnostics.CreateScope("DataProtectionBackupPolicyCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _dataProtectionBackupPolicyBackupPoliciesRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new DataProtectionBackupPolicyResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<DataProtectionBackupPolicyResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _dataProtectionBackupPolicyBackupPoliciesClientDiagnostics.CreateScope("DataProtectionBackupPolicyCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _dataProtectionBackupPolicyBackupPoliciesRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new DataProtectionBackupPolicyResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _dataProtectionBackupPolicyBackupPoliciesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _dataProtectionBackupPolicyBackupPoliciesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DataProtectionBackupPolicyResource(Client, DataProtectionBackupPolicyData.DeserializeDataProtectionBackupPolicyData(e)), _dataProtectionBackupPolicyBackupPoliciesClientDiagnostics, Pipeline, "DataProtectionBackupPolicyCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -228,37 +199,9 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <returns> A collection of <see cref="DataProtectionBackupPolicyResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DataProtectionBackupPolicyResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<DataProtectionBackupPolicyResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _dataProtectionBackupPolicyBackupPoliciesClientDiagnostics.CreateScope("DataProtectionBackupPolicyCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _dataProtectionBackupPolicyBackupPoliciesRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new DataProtectionBackupPolicyResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<DataProtectionBackupPolicyResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _dataProtectionBackupPolicyBackupPoliciesClientDiagnostics.CreateScope("DataProtectionBackupPolicyCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _dataProtectionBackupPolicyBackupPoliciesRestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new DataProtectionBackupPolicyResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _dataProtectionBackupPolicyBackupPoliciesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _dataProtectionBackupPolicyBackupPoliciesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DataProtectionBackupPolicyResource(Client, DataProtectionBackupPolicyData.DeserializeDataProtectionBackupPolicyData(e)), _dataProtectionBackupPolicyBackupPoliciesClientDiagnostics, Pipeline, "DataProtectionBackupPolicyCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

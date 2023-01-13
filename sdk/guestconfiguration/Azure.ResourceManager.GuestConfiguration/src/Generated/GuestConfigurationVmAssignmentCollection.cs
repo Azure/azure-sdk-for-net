@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -192,22 +191,8 @@ namespace Azure.ResourceManager.GuestConfiguration
         /// <returns> An async collection of <see cref="GuestConfigurationVmAssignmentResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<GuestConfigurationVmAssignmentResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<GuestConfigurationVmAssignmentResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _guestConfigurationVmAssignmentGuestConfigurationAssignmentsClientDiagnostics.CreateScope("GuestConfigurationVmAssignmentCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _guestConfigurationVmAssignmentGuestConfigurationAssignmentsRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, _vmName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new GuestConfigurationVmAssignmentResource(Client, value)), null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _guestConfigurationVmAssignmentGuestConfigurationAssignmentsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, _vmName);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new GuestConfigurationVmAssignmentResource(Client, GuestConfigurationAssignmentData.DeserializeGuestConfigurationAssignmentData(e)), _guestConfigurationVmAssignmentGuestConfigurationAssignmentsClientDiagnostics, Pipeline, "GuestConfigurationVmAssignmentCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -219,22 +204,8 @@ namespace Azure.ResourceManager.GuestConfiguration
         /// <returns> A collection of <see cref="GuestConfigurationVmAssignmentResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<GuestConfigurationVmAssignmentResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<GuestConfigurationVmAssignmentResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _guestConfigurationVmAssignmentGuestConfigurationAssignmentsClientDiagnostics.CreateScope("GuestConfigurationVmAssignmentCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _guestConfigurationVmAssignmentGuestConfigurationAssignmentsRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, _vmName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new GuestConfigurationVmAssignmentResource(Client, value)), null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _guestConfigurationVmAssignmentGuestConfigurationAssignmentsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, _vmName);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new GuestConfigurationVmAssignmentResource(Client, GuestConfigurationAssignmentData.DeserializeGuestConfigurationAssignmentData(e)), _guestConfigurationVmAssignmentGuestConfigurationAssignmentsClientDiagnostics, Pipeline, "GuestConfigurationVmAssignmentCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>

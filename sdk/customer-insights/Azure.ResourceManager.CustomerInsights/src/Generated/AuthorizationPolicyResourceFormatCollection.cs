@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -186,37 +185,9 @@ namespace Azure.ResourceManager.CustomerInsights
         /// <returns> An async collection of <see cref="AuthorizationPolicyResourceFormatResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<AuthorizationPolicyResourceFormatResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<AuthorizationPolicyResourceFormatResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _authorizationPolicyResourceFormatAuthorizationPoliciesClientDiagnostics.CreateScope("AuthorizationPolicyResourceFormatCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _authorizationPolicyResourceFormatAuthorizationPoliciesRestClient.ListByHubAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new AuthorizationPolicyResourceFormatResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<AuthorizationPolicyResourceFormatResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _authorizationPolicyResourceFormatAuthorizationPoliciesClientDiagnostics.CreateScope("AuthorizationPolicyResourceFormatCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _authorizationPolicyResourceFormatAuthorizationPoliciesRestClient.ListByHubNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new AuthorizationPolicyResourceFormatResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _authorizationPolicyResourceFormatAuthorizationPoliciesRestClient.CreateListByHubRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _authorizationPolicyResourceFormatAuthorizationPoliciesRestClient.CreateListByHubNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new AuthorizationPolicyResourceFormatResource(Client, AuthorizationPolicyResourceFormatData.DeserializeAuthorizationPolicyResourceFormatData(e)), _authorizationPolicyResourceFormatAuthorizationPoliciesClientDiagnostics, Pipeline, "AuthorizationPolicyResourceFormatCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -228,37 +199,9 @@ namespace Azure.ResourceManager.CustomerInsights
         /// <returns> A collection of <see cref="AuthorizationPolicyResourceFormatResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<AuthorizationPolicyResourceFormatResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<AuthorizationPolicyResourceFormatResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _authorizationPolicyResourceFormatAuthorizationPoliciesClientDiagnostics.CreateScope("AuthorizationPolicyResourceFormatCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _authorizationPolicyResourceFormatAuthorizationPoliciesRestClient.ListByHub(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new AuthorizationPolicyResourceFormatResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<AuthorizationPolicyResourceFormatResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _authorizationPolicyResourceFormatAuthorizationPoliciesClientDiagnostics.CreateScope("AuthorizationPolicyResourceFormatCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _authorizationPolicyResourceFormatAuthorizationPoliciesRestClient.ListByHubNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new AuthorizationPolicyResourceFormatResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _authorizationPolicyResourceFormatAuthorizationPoliciesRestClient.CreateListByHubRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _authorizationPolicyResourceFormatAuthorizationPoliciesRestClient.CreateListByHubNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new AuthorizationPolicyResourceFormatResource(Client, AuthorizationPolicyResourceFormatData.DeserializeAuthorizationPolicyResourceFormatData(e)), _authorizationPolicyResourceFormatAuthorizationPoliciesClientDiagnostics, Pipeline, "AuthorizationPolicyResourceFormatCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

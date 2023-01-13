@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -188,22 +187,8 @@ namespace Azure.ResourceManager.IotHub
         /// <returns> An async collection of <see cref="IotHubCertificateDescriptionResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<IotHubCertificateDescriptionResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<IotHubCertificateDescriptionResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _iotHubCertificateDescriptionCertificatesClientDiagnostics.CreateScope("IotHubCertificateDescriptionCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _iotHubCertificateDescriptionCertificatesRestClient.ListByIotHubAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new IotHubCertificateDescriptionResource(Client, value)), null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _iotHubCertificateDescriptionCertificatesRestClient.CreateListByIotHubRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new IotHubCertificateDescriptionResource(Client, IotHubCertificateDescriptionData.DeserializeIotHubCertificateDescriptionData(e)), _iotHubCertificateDescriptionCertificatesClientDiagnostics, Pipeline, "IotHubCertificateDescriptionCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -215,22 +200,8 @@ namespace Azure.ResourceManager.IotHub
         /// <returns> A collection of <see cref="IotHubCertificateDescriptionResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<IotHubCertificateDescriptionResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<IotHubCertificateDescriptionResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _iotHubCertificateDescriptionCertificatesClientDiagnostics.CreateScope("IotHubCertificateDescriptionCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _iotHubCertificateDescriptionCertificatesRestClient.ListByIotHub(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new IotHubCertificateDescriptionResource(Client, value)), null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _iotHubCertificateDescriptionCertificatesRestClient.CreateListByIotHubRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new IotHubCertificateDescriptionResource(Client, IotHubCertificateDescriptionData.DeserializeIotHubCertificateDescriptionData(e)), _iotHubCertificateDescriptionCertificatesClientDiagnostics, Pipeline, "IotHubCertificateDescriptionCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>

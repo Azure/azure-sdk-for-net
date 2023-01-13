@@ -63,7 +63,7 @@ function generate-markdown-table($readmeFolder, $readmeName, $packageInfos, $mon
     if ($pkg.PSObject.Members.Name -contains "DirectoryPath") {
       $githubLink = "$GithubUri/blob/main/$($pkg.DirectoryPath)"
     }
-    $line = "|$referenceLink|[$($pkg.Package)]($repositoryLink)|[Github]($githubLink)|`r`n"
+    $line = "|$referenceLink|[$($pkg.Package)]($repositoryLink)|[GitHub]($githubLink)|`r`n"
     $tableContent += $line
   }
   $readmePath = Join-Path $readmeFolder -ChildPath $readmeName

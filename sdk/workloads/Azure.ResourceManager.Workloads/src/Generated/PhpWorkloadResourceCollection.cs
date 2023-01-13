@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -187,37 +186,9 @@ namespace Azure.ResourceManager.Workloads
         /// <returns> An async collection of <see cref="PhpWorkloadResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<PhpWorkloadResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<PhpWorkloadResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _phpWorkloadResourcePhpWorkloadsClientDiagnostics.CreateScope("PhpWorkloadResourceCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _phpWorkloadResourcePhpWorkloadsRestClient.ListByResourceGroupAsync(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new PhpWorkloadResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<PhpWorkloadResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _phpWorkloadResourcePhpWorkloadsClientDiagnostics.CreateScope("PhpWorkloadResourceCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _phpWorkloadResourcePhpWorkloadsRestClient.ListByResourceGroupNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new PhpWorkloadResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _phpWorkloadResourcePhpWorkloadsRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _phpWorkloadResourcePhpWorkloadsRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new PhpWorkloadResource(Client, PhpWorkloadResourceData.DeserializePhpWorkloadResourceData(e)), _phpWorkloadResourcePhpWorkloadsClientDiagnostics, Pipeline, "PhpWorkloadResourceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -229,37 +200,9 @@ namespace Azure.ResourceManager.Workloads
         /// <returns> A collection of <see cref="PhpWorkloadResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<PhpWorkloadResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<PhpWorkloadResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _phpWorkloadResourcePhpWorkloadsClientDiagnostics.CreateScope("PhpWorkloadResourceCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _phpWorkloadResourcePhpWorkloadsRestClient.ListByResourceGroup(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new PhpWorkloadResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<PhpWorkloadResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _phpWorkloadResourcePhpWorkloadsClientDiagnostics.CreateScope("PhpWorkloadResourceCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _phpWorkloadResourcePhpWorkloadsRestClient.ListByResourceGroupNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new PhpWorkloadResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _phpWorkloadResourcePhpWorkloadsRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _phpWorkloadResourcePhpWorkloadsRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new PhpWorkloadResource(Client, PhpWorkloadResourceData.DeserializePhpWorkloadResourceData(e)), _phpWorkloadResourcePhpWorkloadsClientDiagnostics, Pipeline, "PhpWorkloadResourceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

@@ -11,9 +11,10 @@ using Azure;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager;
+using Azure.ResourceManager.IotHub;
 using Azure.ResourceManager.IotHub.Models;
 
-namespace Azure.ResourceManager.IotHub
+namespace Azure.ResourceManager.IotHub.Samples
 {
     public partial class Sample_IotHubCertificateDescriptionCollection
     {
@@ -25,8 +26,10 @@ namespace Azure.ResourceManager.IotHub
             // Generated from example definition: specification/iothub/resource-manager/Microsoft.Devices/stable/2021-07-02/examples/iothub_listcertificates.json
             // this example is just showing the usage of "Certificates_ListByIotHub" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this IotHubDescriptionResource created on azure
             // for more information of creating IotHubDescriptionResource, please refer to the document of IotHubDescriptionResource
@@ -60,8 +63,10 @@ namespace Azure.ResourceManager.IotHub
             // Generated from example definition: specification/iothub/resource-manager/Microsoft.Devices/stable/2021-07-02/examples/iothub_getcertificate.json
             // this example is just showing the usage of "Certificates_Get" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this IotHubDescriptionResource created on azure
             // for more information of creating IotHubDescriptionResource, please refer to the document of IotHubDescriptionResource
@@ -93,8 +98,10 @@ namespace Azure.ResourceManager.IotHub
             // Generated from example definition: specification/iothub/resource-manager/Microsoft.Devices/stable/2021-07-02/examples/iothub_getcertificate.json
             // this example is just showing the usage of "Certificates_Get" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this IotHubDescriptionResource created on azure
             // for more information of creating IotHubDescriptionResource, please refer to the document of IotHubDescriptionResource
@@ -122,8 +129,10 @@ namespace Azure.ResourceManager.IotHub
             // Generated from example definition: specification/iothub/resource-manager/Microsoft.Devices/stable/2021-07-02/examples/iothub_certificatescreateorupdate.json
             // this example is just showing the usage of "Certificates_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this IotHubDescriptionResource created on azure
             // for more information of creating IotHubDescriptionResource, please refer to the document of IotHubDescriptionResource

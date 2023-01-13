@@ -65,6 +65,11 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WritePropertyName("userData");
                 writer.WriteStringValue(UserData);
             }
+            if (Optional.IsDefined(HardwareProfile))
+            {
+                writer.WritePropertyName("hardwareProfile");
+                writer.WriteObjectValue(HardwareProfile);
+            }
             writer.WriteEndObject();
         }
     }
