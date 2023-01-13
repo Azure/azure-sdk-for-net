@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -188,37 +187,9 @@ namespace Azure.ResourceManager.Automation
         /// <returns> An async collection of <see cref="HybridRunbookWorkerResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<HybridRunbookWorkerResource> GetAllAsync(string filter = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<HybridRunbookWorkerResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _hybridRunbookWorkerClientDiagnostics.CreateScope("HybridRunbookWorkerCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _hybridRunbookWorkerRestClient.ListByHybridRunbookWorkerGroupAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new HybridRunbookWorkerResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<HybridRunbookWorkerResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _hybridRunbookWorkerClientDiagnostics.CreateScope("HybridRunbookWorkerCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _hybridRunbookWorkerRestClient.ListByHybridRunbookWorkerGroupNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new HybridRunbookWorkerResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _hybridRunbookWorkerRestClient.CreateListByHybridRunbookWorkerGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _hybridRunbookWorkerRestClient.CreateListByHybridRunbookWorkerGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new HybridRunbookWorkerResource(Client, HybridRunbookWorkerData.DeserializeHybridRunbookWorkerData(e)), _hybridRunbookWorkerClientDiagnostics, Pipeline, "HybridRunbookWorkerCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -231,37 +202,9 @@ namespace Azure.ResourceManager.Automation
         /// <returns> A collection of <see cref="HybridRunbookWorkerResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<HybridRunbookWorkerResource> GetAll(string filter = null, CancellationToken cancellationToken = default)
         {
-            Page<HybridRunbookWorkerResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _hybridRunbookWorkerClientDiagnostics.CreateScope("HybridRunbookWorkerCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _hybridRunbookWorkerRestClient.ListByHybridRunbookWorkerGroup(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new HybridRunbookWorkerResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<HybridRunbookWorkerResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _hybridRunbookWorkerClientDiagnostics.CreateScope("HybridRunbookWorkerCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _hybridRunbookWorkerRestClient.ListByHybridRunbookWorkerGroupNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new HybridRunbookWorkerResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _hybridRunbookWorkerRestClient.CreateListByHybridRunbookWorkerGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _hybridRunbookWorkerRestClient.CreateListByHybridRunbookWorkerGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new HybridRunbookWorkerResource(Client, HybridRunbookWorkerData.DeserializeHybridRunbookWorkerData(e)), _hybridRunbookWorkerClientDiagnostics, Pipeline, "HybridRunbookWorkerCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

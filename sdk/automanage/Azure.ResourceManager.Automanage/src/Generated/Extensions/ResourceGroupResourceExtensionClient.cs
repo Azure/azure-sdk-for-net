@@ -7,7 +7,6 @@
 
 using System;
 using System.Threading;
-using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -69,22 +68,8 @@ namespace Azure.ResourceManager.Automanage
         /// <returns> An async collection of <see cref="Report" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<Report> GetReportsByConfigurationProfileAssignmentsAsync(string vmName, string configurationProfileAssignmentName, CancellationToken cancellationToken = default)
         {
-            async Task<Page<Report>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = reportsClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetReportsByConfigurationProfileAssignments");
-                scope.Start();
-                try
-                {
-                    var response = await reportsRestClient.ListByConfigurationProfileAssignmentsAsync(Id.SubscriptionId, Id.ResourceGroupName, vmName, configurationProfileAssignmentName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => reportsRestClient.CreateListByConfigurationProfileAssignmentsRequest(Id.SubscriptionId, Id.ResourceGroupName, vmName, configurationProfileAssignmentName);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, Report.DeserializeReport, reportsClientDiagnostics, Pipeline, "ResourceGroupResourceExtensionClient.GetReportsByConfigurationProfileAssignments", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -98,22 +83,8 @@ namespace Azure.ResourceManager.Automanage
         /// <returns> A collection of <see cref="Report" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<Report> GetReportsByConfigurationProfileAssignments(string vmName, string configurationProfileAssignmentName, CancellationToken cancellationToken = default)
         {
-            Page<Report> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = reportsClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetReportsByConfigurationProfileAssignments");
-                scope.Start();
-                try
-                {
-                    var response = reportsRestClient.ListByConfigurationProfileAssignments(Id.SubscriptionId, Id.ResourceGroupName, vmName, configurationProfileAssignmentName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => reportsRestClient.CreateListByConfigurationProfileAssignmentsRequest(Id.SubscriptionId, Id.ResourceGroupName, vmName, configurationProfileAssignmentName);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, Report.DeserializeReport, reportsClientDiagnostics, Pipeline, "ResourceGroupResourceExtensionClient.GetReportsByConfigurationProfileAssignments", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -127,22 +98,8 @@ namespace Azure.ResourceManager.Automanage
         /// <returns> An async collection of <see cref="Report" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<Report> GetHCRPReportsByConfigurationProfileAssignmentsAsync(string machineName, string configurationProfileAssignmentName, CancellationToken cancellationToken = default)
         {
-            async Task<Page<Report>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = HCRPReportsClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetHCRPReportsByConfigurationProfileAssignments");
-                scope.Start();
-                try
-                {
-                    var response = await HCRPReportsRestClient.ListByConfigurationProfileAssignmentsAsync(Id.SubscriptionId, Id.ResourceGroupName, machineName, configurationProfileAssignmentName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => HCRPReportsRestClient.CreateListByConfigurationProfileAssignmentsRequest(Id.SubscriptionId, Id.ResourceGroupName, machineName, configurationProfileAssignmentName);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, Report.DeserializeReport, HCRPReportsClientDiagnostics, Pipeline, "ResourceGroupResourceExtensionClient.GetHCRPReportsByConfigurationProfileAssignments", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -156,22 +113,8 @@ namespace Azure.ResourceManager.Automanage
         /// <returns> A collection of <see cref="Report" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<Report> GetHCRPReportsByConfigurationProfileAssignments(string machineName, string configurationProfileAssignmentName, CancellationToken cancellationToken = default)
         {
-            Page<Report> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = HCRPReportsClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetHCRPReportsByConfigurationProfileAssignments");
-                scope.Start();
-                try
-                {
-                    var response = HCRPReportsRestClient.ListByConfigurationProfileAssignments(Id.SubscriptionId, Id.ResourceGroupName, machineName, configurationProfileAssignmentName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => HCRPReportsRestClient.CreateListByConfigurationProfileAssignmentsRequest(Id.SubscriptionId, Id.ResourceGroupName, machineName, configurationProfileAssignmentName);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, Report.DeserializeReport, HCRPReportsClientDiagnostics, Pipeline, "ResourceGroupResourceExtensionClient.GetHCRPReportsByConfigurationProfileAssignments", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -185,22 +128,8 @@ namespace Azure.ResourceManager.Automanage
         /// <returns> An async collection of <see cref="Report" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<Report> GetHCIReportsByConfigurationProfileAssignmentsAsync(string clusterName, string configurationProfileAssignmentName, CancellationToken cancellationToken = default)
         {
-            async Task<Page<Report>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = HCIReportsClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetHCIReportsByConfigurationProfileAssignments");
-                scope.Start();
-                try
-                {
-                    var response = await HCIReportsRestClient.ListByConfigurationProfileAssignmentsAsync(Id.SubscriptionId, Id.ResourceGroupName, clusterName, configurationProfileAssignmentName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => HCIReportsRestClient.CreateListByConfigurationProfileAssignmentsRequest(Id.SubscriptionId, Id.ResourceGroupName, clusterName, configurationProfileAssignmentName);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, Report.DeserializeReport, HCIReportsClientDiagnostics, Pipeline, "ResourceGroupResourceExtensionClient.GetHCIReportsByConfigurationProfileAssignments", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -214,22 +143,8 @@ namespace Azure.ResourceManager.Automanage
         /// <returns> A collection of <see cref="Report" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<Report> GetHCIReportsByConfigurationProfileAssignments(string clusterName, string configurationProfileAssignmentName, CancellationToken cancellationToken = default)
         {
-            Page<Report> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = HCIReportsClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetHCIReportsByConfigurationProfileAssignments");
-                scope.Start();
-                try
-                {
-                    var response = HCIReportsRestClient.ListByConfigurationProfileAssignments(Id.SubscriptionId, Id.ResourceGroupName, clusterName, configurationProfileAssignmentName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => HCIReportsRestClient.CreateListByConfigurationProfileAssignmentsRequest(Id.SubscriptionId, Id.ResourceGroupName, clusterName, configurationProfileAssignmentName);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, Report.DeserializeReport, HCIReportsClientDiagnostics, Pipeline, "ResourceGroupResourceExtensionClient.GetHCIReportsByConfigurationProfileAssignments", "value", null, cancellationToken);
         }
     }
 }

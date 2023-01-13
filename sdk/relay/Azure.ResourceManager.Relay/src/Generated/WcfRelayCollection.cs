@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -186,37 +185,9 @@ namespace Azure.ResourceManager.Relay
         /// <returns> An async collection of <see cref="WcfRelayResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<WcfRelayResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<WcfRelayResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _wcfRelayWCFRelaysClientDiagnostics.CreateScope("WcfRelayCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _wcfRelayWCFRelaysRestClient.ListByNamespaceAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new WcfRelayResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<WcfRelayResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _wcfRelayWCFRelaysClientDiagnostics.CreateScope("WcfRelayCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _wcfRelayWCFRelaysRestClient.ListByNamespaceNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new WcfRelayResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _wcfRelayWCFRelaysRestClient.CreateListByNamespaceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _wcfRelayWCFRelaysRestClient.CreateListByNamespaceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new WcfRelayResource(Client, WcfRelayData.DeserializeWcfRelayData(e)), _wcfRelayWCFRelaysClientDiagnostics, Pipeline, "WcfRelayCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -228,37 +199,9 @@ namespace Azure.ResourceManager.Relay
         /// <returns> A collection of <see cref="WcfRelayResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<WcfRelayResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<WcfRelayResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _wcfRelayWCFRelaysClientDiagnostics.CreateScope("WcfRelayCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _wcfRelayWCFRelaysRestClient.ListByNamespace(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new WcfRelayResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<WcfRelayResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _wcfRelayWCFRelaysClientDiagnostics.CreateScope("WcfRelayCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _wcfRelayWCFRelaysRestClient.ListByNamespaceNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new WcfRelayResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _wcfRelayWCFRelaysRestClient.CreateListByNamespaceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _wcfRelayWCFRelaysRestClient.CreateListByNamespaceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new WcfRelayResource(Client, WcfRelayData.DeserializeWcfRelayData(e)), _wcfRelayWCFRelaysClientDiagnostics, Pipeline, "WcfRelayCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

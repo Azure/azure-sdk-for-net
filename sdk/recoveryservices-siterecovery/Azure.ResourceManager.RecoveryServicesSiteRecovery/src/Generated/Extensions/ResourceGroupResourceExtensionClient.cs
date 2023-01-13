@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -175,37 +174,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <returns> An async collection of <see cref="ReplicationAppliance" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ReplicationAppliance> GetReplicationAppliancesAsync(string resourceName, string filter = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<ReplicationAppliance>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = ReplicationAppliancesClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetReplicationAppliances");
-                scope.Start();
-                try
-                {
-                    var response = await ReplicationAppliancesRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, resourceName, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<ReplicationAppliance>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = ReplicationAppliancesClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetReplicationAppliances");
-                scope.Start();
-                try
-                {
-                    var response = await ReplicationAppliancesRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, resourceName, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => ReplicationAppliancesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, resourceName, filter);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ReplicationAppliancesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, resourceName, filter);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, ReplicationAppliance.DeserializeReplicationAppliance, ReplicationAppliancesClientDiagnostics, Pipeline, "ResourceGroupResourceExtensionClient.GetReplicationAppliances", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -219,37 +190,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <returns> A collection of <see cref="ReplicationAppliance" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ReplicationAppliance> GetReplicationAppliances(string resourceName, string filter = null, CancellationToken cancellationToken = default)
         {
-            Page<ReplicationAppliance> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = ReplicationAppliancesClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetReplicationAppliances");
-                scope.Start();
-                try
-                {
-                    var response = ReplicationAppliancesRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, resourceName, filter, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<ReplicationAppliance> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = ReplicationAppliancesClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetReplicationAppliances");
-                scope.Start();
-                try
-                {
-                    var response = ReplicationAppliancesRestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, resourceName, filter, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => ReplicationAppliancesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, resourceName, filter);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ReplicationAppliancesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, resourceName, filter);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, ReplicationAppliance.DeserializeReplicationAppliance, ReplicationAppliancesClientDiagnostics, Pipeline, "ResourceGroupResourceExtensionClient.GetReplicationAppliances", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -262,37 +205,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <returns> An async collection of <see cref="NetworkResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<NetworkResource> GetNetworksAsync(string resourceName, CancellationToken cancellationToken = default)
         {
-            async Task<Page<NetworkResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = NetworkReplicationNetworksClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetNetworks");
-                scope.Start();
-                try
-                {
-                    var response = await NetworkReplicationNetworksRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, resourceName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new NetworkResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<NetworkResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = NetworkReplicationNetworksClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetNetworks");
-                scope.Start();
-                try
-                {
-                    var response = await NetworkReplicationNetworksRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, resourceName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new NetworkResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => NetworkReplicationNetworksRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, resourceName);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => NetworkReplicationNetworksRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, resourceName);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new NetworkResource(Client, NetworkData.DeserializeNetworkData(e)), NetworkReplicationNetworksClientDiagnostics, Pipeline, "ResourceGroupResourceExtensionClient.GetNetworks", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -305,37 +220,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <returns> A collection of <see cref="NetworkResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<NetworkResource> GetNetworks(string resourceName, CancellationToken cancellationToken = default)
         {
-            Page<NetworkResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = NetworkReplicationNetworksClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetNetworks");
-                scope.Start();
-                try
-                {
-                    var response = NetworkReplicationNetworksRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, resourceName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new NetworkResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<NetworkResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = NetworkReplicationNetworksClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetNetworks");
-                scope.Start();
-                try
-                {
-                    var response = NetworkReplicationNetworksRestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, resourceName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new NetworkResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => NetworkReplicationNetworksRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, resourceName);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => NetworkReplicationNetworksRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, resourceName);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new NetworkResource(Client, NetworkData.DeserializeNetworkData(e)), NetworkReplicationNetworksClientDiagnostics, Pipeline, "ResourceGroupResourceExtensionClient.GetNetworks", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -348,37 +235,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <returns> An async collection of <see cref="NetworkMappingResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<NetworkMappingResource> GetNetworkMappingsAsync(string resourceName, CancellationToken cancellationToken = default)
         {
-            async Task<Page<NetworkMappingResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = NetworkMappingReplicationNetworkMappingsClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetNetworkMappings");
-                scope.Start();
-                try
-                {
-                    var response = await NetworkMappingReplicationNetworkMappingsRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, resourceName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new NetworkMappingResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<NetworkMappingResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = NetworkMappingReplicationNetworkMappingsClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetNetworkMappings");
-                scope.Start();
-                try
-                {
-                    var response = await NetworkMappingReplicationNetworkMappingsRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, resourceName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new NetworkMappingResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => NetworkMappingReplicationNetworkMappingsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, resourceName);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => NetworkMappingReplicationNetworkMappingsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, resourceName);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new NetworkMappingResource(Client, NetworkMappingData.DeserializeNetworkMappingData(e)), NetworkMappingReplicationNetworkMappingsClientDiagnostics, Pipeline, "ResourceGroupResourceExtensionClient.GetNetworkMappings", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -391,37 +250,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <returns> A collection of <see cref="NetworkMappingResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<NetworkMappingResource> GetNetworkMappings(string resourceName, CancellationToken cancellationToken = default)
         {
-            Page<NetworkMappingResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = NetworkMappingReplicationNetworkMappingsClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetNetworkMappings");
-                scope.Start();
-                try
-                {
-                    var response = NetworkMappingReplicationNetworkMappingsRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, resourceName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new NetworkMappingResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<NetworkMappingResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = NetworkMappingReplicationNetworkMappingsClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetNetworkMappings");
-                scope.Start();
-                try
-                {
-                    var response = NetworkMappingReplicationNetworkMappingsRestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, resourceName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new NetworkMappingResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => NetworkMappingReplicationNetworkMappingsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, resourceName);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => NetworkMappingReplicationNetworkMappingsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, resourceName);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new NetworkMappingResource(Client, NetworkMappingData.DeserializeNetworkMappingData(e)), NetworkMappingReplicationNetworkMappingsClientDiagnostics, Pipeline, "ResourceGroupResourceExtensionClient.GetNetworkMappings", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -434,37 +265,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <returns> An async collection of <see cref="ProtectionContainerResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ProtectionContainerResource> GetProtectionContainersAsync(string resourceName, CancellationToken cancellationToken = default)
         {
-            async Task<Page<ProtectionContainerResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = ProtectionContainerReplicationProtectionContainersClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetProtectionContainers");
-                scope.Start();
-                try
-                {
-                    var response = await ProtectionContainerReplicationProtectionContainersRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, resourceName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ProtectionContainerResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<ProtectionContainerResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = ProtectionContainerReplicationProtectionContainersClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetProtectionContainers");
-                scope.Start();
-                try
-                {
-                    var response = await ProtectionContainerReplicationProtectionContainersRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, resourceName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ProtectionContainerResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => ProtectionContainerReplicationProtectionContainersRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, resourceName);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ProtectionContainerReplicationProtectionContainersRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, resourceName);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ProtectionContainerResource(Client, ProtectionContainerData.DeserializeProtectionContainerData(e)), ProtectionContainerReplicationProtectionContainersClientDiagnostics, Pipeline, "ResourceGroupResourceExtensionClient.GetProtectionContainers", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -477,37 +280,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <returns> A collection of <see cref="ProtectionContainerResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ProtectionContainerResource> GetProtectionContainers(string resourceName, CancellationToken cancellationToken = default)
         {
-            Page<ProtectionContainerResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = ProtectionContainerReplicationProtectionContainersClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetProtectionContainers");
-                scope.Start();
-                try
-                {
-                    var response = ProtectionContainerReplicationProtectionContainersRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, resourceName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ProtectionContainerResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<ProtectionContainerResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = ProtectionContainerReplicationProtectionContainersClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetProtectionContainers");
-                scope.Start();
-                try
-                {
-                    var response = ProtectionContainerReplicationProtectionContainersRestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, resourceName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ProtectionContainerResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => ProtectionContainerReplicationProtectionContainersRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, resourceName);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ProtectionContainerReplicationProtectionContainersRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, resourceName);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ProtectionContainerResource(Client, ProtectionContainerData.DeserializeProtectionContainerData(e)), ProtectionContainerReplicationProtectionContainersClientDiagnostics, Pipeline, "ResourceGroupResourceExtensionClient.GetProtectionContainers", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -523,37 +298,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <returns> An async collection of <see cref="MigrationItemResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<MigrationItemResource> GetMigrationItemsAsync(string resourceName, string skipToken = null, string takeToken = null, string filter = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<MigrationItemResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = MigrationItemReplicationMigrationItemsClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetMigrationItems");
-                scope.Start();
-                try
-                {
-                    var response = await MigrationItemReplicationMigrationItemsRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, resourceName, skipToken, takeToken, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new MigrationItemResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<MigrationItemResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = MigrationItemReplicationMigrationItemsClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetMigrationItems");
-                scope.Start();
-                try
-                {
-                    var response = await MigrationItemReplicationMigrationItemsRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, resourceName, skipToken, takeToken, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new MigrationItemResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => MigrationItemReplicationMigrationItemsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, resourceName, skipToken, takeToken, filter);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => MigrationItemReplicationMigrationItemsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, resourceName, skipToken, takeToken, filter);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new MigrationItemResource(Client, MigrationItemData.DeserializeMigrationItemData(e)), MigrationItemReplicationMigrationItemsClientDiagnostics, Pipeline, "ResourceGroupResourceExtensionClient.GetMigrationItems", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -569,37 +316,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <returns> A collection of <see cref="MigrationItemResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<MigrationItemResource> GetMigrationItems(string resourceName, string skipToken = null, string takeToken = null, string filter = null, CancellationToken cancellationToken = default)
         {
-            Page<MigrationItemResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = MigrationItemReplicationMigrationItemsClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetMigrationItems");
-                scope.Start();
-                try
-                {
-                    var response = MigrationItemReplicationMigrationItemsRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, resourceName, skipToken, takeToken, filter, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new MigrationItemResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<MigrationItemResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = MigrationItemReplicationMigrationItemsClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetMigrationItems");
-                scope.Start();
-                try
-                {
-                    var response = MigrationItemReplicationMigrationItemsRestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, resourceName, skipToken, takeToken, filter, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new MigrationItemResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => MigrationItemReplicationMigrationItemsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, resourceName, skipToken, takeToken, filter);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => MigrationItemReplicationMigrationItemsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, resourceName, skipToken, takeToken, filter);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new MigrationItemResource(Client, MigrationItemData.DeserializeMigrationItemData(e)), MigrationItemReplicationMigrationItemsClientDiagnostics, Pipeline, "ResourceGroupResourceExtensionClient.GetMigrationItems", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -614,37 +333,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <returns> An async collection of <see cref="ReplicationProtectedItemResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ReplicationProtectedItemResource> GetReplicationProtectedItemsAsync(string resourceName, string skipToken = null, string filter = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<ReplicationProtectedItemResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = ReplicationProtectedItemClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetReplicationProtectedItems");
-                scope.Start();
-                try
-                {
-                    var response = await ReplicationProtectedItemRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, resourceName, skipToken, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ReplicationProtectedItemResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<ReplicationProtectedItemResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = ReplicationProtectedItemClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetReplicationProtectedItems");
-                scope.Start();
-                try
-                {
-                    var response = await ReplicationProtectedItemRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, resourceName, skipToken, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ReplicationProtectedItemResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => ReplicationProtectedItemRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, resourceName, skipToken, filter);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ReplicationProtectedItemRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, resourceName, skipToken, filter);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ReplicationProtectedItemResource(Client, ReplicationProtectedItemData.DeserializeReplicationProtectedItemData(e)), ReplicationProtectedItemClientDiagnostics, Pipeline, "ResourceGroupResourceExtensionClient.GetReplicationProtectedItems", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -659,37 +350,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <returns> A collection of <see cref="ReplicationProtectedItemResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ReplicationProtectedItemResource> GetReplicationProtectedItems(string resourceName, string skipToken = null, string filter = null, CancellationToken cancellationToken = default)
         {
-            Page<ReplicationProtectedItemResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = ReplicationProtectedItemClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetReplicationProtectedItems");
-                scope.Start();
-                try
-                {
-                    var response = ReplicationProtectedItemRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, resourceName, skipToken, filter, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ReplicationProtectedItemResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<ReplicationProtectedItemResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = ReplicationProtectedItemClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetReplicationProtectedItems");
-                scope.Start();
-                try
-                {
-                    var response = ReplicationProtectedItemRestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, resourceName, skipToken, filter, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ReplicationProtectedItemResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => ReplicationProtectedItemRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, resourceName, skipToken, filter);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ReplicationProtectedItemRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, resourceName, skipToken, filter);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ReplicationProtectedItemResource(Client, ReplicationProtectedItemData.DeserializeReplicationProtectedItemData(e)), ReplicationProtectedItemClientDiagnostics, Pipeline, "ResourceGroupResourceExtensionClient.GetReplicationProtectedItems", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -702,37 +365,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <returns> An async collection of <see cref="ProtectionContainerMappingResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ProtectionContainerMappingResource> GetProtectionContainerMappingsAsync(string resourceName, CancellationToken cancellationToken = default)
         {
-            async Task<Page<ProtectionContainerMappingResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = ProtectionContainerMappingReplicationProtectionContainerMappingsClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetProtectionContainerMappings");
-                scope.Start();
-                try
-                {
-                    var response = await ProtectionContainerMappingReplicationProtectionContainerMappingsRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, resourceName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ProtectionContainerMappingResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<ProtectionContainerMappingResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = ProtectionContainerMappingReplicationProtectionContainerMappingsClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetProtectionContainerMappings");
-                scope.Start();
-                try
-                {
-                    var response = await ProtectionContainerMappingReplicationProtectionContainerMappingsRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, resourceName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ProtectionContainerMappingResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => ProtectionContainerMappingReplicationProtectionContainerMappingsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, resourceName);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ProtectionContainerMappingReplicationProtectionContainerMappingsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, resourceName);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ProtectionContainerMappingResource(Client, ProtectionContainerMappingData.DeserializeProtectionContainerMappingData(e)), ProtectionContainerMappingReplicationProtectionContainerMappingsClientDiagnostics, Pipeline, "ResourceGroupResourceExtensionClient.GetProtectionContainerMappings", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -745,37 +380,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <returns> A collection of <see cref="ProtectionContainerMappingResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ProtectionContainerMappingResource> GetProtectionContainerMappings(string resourceName, CancellationToken cancellationToken = default)
         {
-            Page<ProtectionContainerMappingResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = ProtectionContainerMappingReplicationProtectionContainerMappingsClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetProtectionContainerMappings");
-                scope.Start();
-                try
-                {
-                    var response = ProtectionContainerMappingReplicationProtectionContainerMappingsRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, resourceName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ProtectionContainerMappingResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<ProtectionContainerMappingResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = ProtectionContainerMappingReplicationProtectionContainerMappingsClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetProtectionContainerMappings");
-                scope.Start();
-                try
-                {
-                    var response = ProtectionContainerMappingReplicationProtectionContainerMappingsRestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, resourceName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ProtectionContainerMappingResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => ProtectionContainerMappingReplicationProtectionContainerMappingsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, resourceName);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ProtectionContainerMappingReplicationProtectionContainerMappingsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, resourceName);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ProtectionContainerMappingResource(Client, ProtectionContainerMappingData.DeserializeProtectionContainerMappingData(e)), ProtectionContainerMappingReplicationProtectionContainerMappingsClientDiagnostics, Pipeline, "ResourceGroupResourceExtensionClient.GetProtectionContainerMappings", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -788,37 +395,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <returns> An async collection of <see cref="RecoveryServicesProviderResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<RecoveryServicesProviderResource> GetRecoveryServicesProvidersAsync(string resourceName, CancellationToken cancellationToken = default)
         {
-            async Task<Page<RecoveryServicesProviderResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = RecoveryServicesProviderReplicationRecoveryServicesProvidersClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetRecoveryServicesProviders");
-                scope.Start();
-                try
-                {
-                    var response = await RecoveryServicesProviderReplicationRecoveryServicesProvidersRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, resourceName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new RecoveryServicesProviderResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<RecoveryServicesProviderResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = RecoveryServicesProviderReplicationRecoveryServicesProvidersClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetRecoveryServicesProviders");
-                scope.Start();
-                try
-                {
-                    var response = await RecoveryServicesProviderReplicationRecoveryServicesProvidersRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, resourceName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new RecoveryServicesProviderResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => RecoveryServicesProviderReplicationRecoveryServicesProvidersRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, resourceName);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => RecoveryServicesProviderReplicationRecoveryServicesProvidersRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, resourceName);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new RecoveryServicesProviderResource(Client, RecoveryServicesProviderData.DeserializeRecoveryServicesProviderData(e)), RecoveryServicesProviderReplicationRecoveryServicesProvidersClientDiagnostics, Pipeline, "ResourceGroupResourceExtensionClient.GetRecoveryServicesProviders", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -831,37 +410,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <returns> A collection of <see cref="RecoveryServicesProviderResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<RecoveryServicesProviderResource> GetRecoveryServicesProviders(string resourceName, CancellationToken cancellationToken = default)
         {
-            Page<RecoveryServicesProviderResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = RecoveryServicesProviderReplicationRecoveryServicesProvidersClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetRecoveryServicesProviders");
-                scope.Start();
-                try
-                {
-                    var response = RecoveryServicesProviderReplicationRecoveryServicesProvidersRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, resourceName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new RecoveryServicesProviderResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<RecoveryServicesProviderResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = RecoveryServicesProviderReplicationRecoveryServicesProvidersClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetRecoveryServicesProviders");
-                scope.Start();
-                try
-                {
-                    var response = RecoveryServicesProviderReplicationRecoveryServicesProvidersRestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, resourceName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new RecoveryServicesProviderResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => RecoveryServicesProviderReplicationRecoveryServicesProvidersRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, resourceName);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => RecoveryServicesProviderReplicationRecoveryServicesProvidersRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, resourceName);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new RecoveryServicesProviderResource(Client, RecoveryServicesProviderData.DeserializeRecoveryServicesProviderData(e)), RecoveryServicesProviderReplicationRecoveryServicesProvidersClientDiagnostics, Pipeline, "ResourceGroupResourceExtensionClient.GetRecoveryServicesProviders", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -874,37 +425,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <returns> An async collection of <see cref="StorageClassificationResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<StorageClassificationResource> GetStorageClassificationsAsync(string resourceName, CancellationToken cancellationToken = default)
         {
-            async Task<Page<StorageClassificationResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = StorageClassificationReplicationStorageClassificationsClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetStorageClassifications");
-                scope.Start();
-                try
-                {
-                    var response = await StorageClassificationReplicationStorageClassificationsRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, resourceName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new StorageClassificationResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<StorageClassificationResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = StorageClassificationReplicationStorageClassificationsClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetStorageClassifications");
-                scope.Start();
-                try
-                {
-                    var response = await StorageClassificationReplicationStorageClassificationsRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, resourceName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new StorageClassificationResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => StorageClassificationReplicationStorageClassificationsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, resourceName);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => StorageClassificationReplicationStorageClassificationsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, resourceName);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new StorageClassificationResource(Client, StorageClassificationData.DeserializeStorageClassificationData(e)), StorageClassificationReplicationStorageClassificationsClientDiagnostics, Pipeline, "ResourceGroupResourceExtensionClient.GetStorageClassifications", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -917,37 +440,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <returns> A collection of <see cref="StorageClassificationResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<StorageClassificationResource> GetStorageClassifications(string resourceName, CancellationToken cancellationToken = default)
         {
-            Page<StorageClassificationResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = StorageClassificationReplicationStorageClassificationsClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetStorageClassifications");
-                scope.Start();
-                try
-                {
-                    var response = StorageClassificationReplicationStorageClassificationsRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, resourceName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new StorageClassificationResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<StorageClassificationResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = StorageClassificationReplicationStorageClassificationsClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetStorageClassifications");
-                scope.Start();
-                try
-                {
-                    var response = StorageClassificationReplicationStorageClassificationsRestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, resourceName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new StorageClassificationResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => StorageClassificationReplicationStorageClassificationsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, resourceName);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => StorageClassificationReplicationStorageClassificationsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, resourceName);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new StorageClassificationResource(Client, StorageClassificationData.DeserializeStorageClassificationData(e)), StorageClassificationReplicationStorageClassificationsClientDiagnostics, Pipeline, "ResourceGroupResourceExtensionClient.GetStorageClassifications", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -960,37 +455,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <returns> An async collection of <see cref="StorageClassificationMappingResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<StorageClassificationMappingResource> GetStorageClassificationMappingsAsync(string resourceName, CancellationToken cancellationToken = default)
         {
-            async Task<Page<StorageClassificationMappingResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = StorageClassificationMappingReplicationStorageClassificationMappingsClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetStorageClassificationMappings");
-                scope.Start();
-                try
-                {
-                    var response = await StorageClassificationMappingReplicationStorageClassificationMappingsRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, resourceName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new StorageClassificationMappingResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<StorageClassificationMappingResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = StorageClassificationMappingReplicationStorageClassificationMappingsClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetStorageClassificationMappings");
-                scope.Start();
-                try
-                {
-                    var response = await StorageClassificationMappingReplicationStorageClassificationMappingsRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, resourceName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new StorageClassificationMappingResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => StorageClassificationMappingReplicationStorageClassificationMappingsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, resourceName);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => StorageClassificationMappingReplicationStorageClassificationMappingsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, resourceName);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new StorageClassificationMappingResource(Client, StorageClassificationMappingData.DeserializeStorageClassificationMappingData(e)), StorageClassificationMappingReplicationStorageClassificationMappingsClientDiagnostics, Pipeline, "ResourceGroupResourceExtensionClient.GetStorageClassificationMappings", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -1003,37 +470,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <returns> A collection of <see cref="StorageClassificationMappingResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<StorageClassificationMappingResource> GetStorageClassificationMappings(string resourceName, CancellationToken cancellationToken = default)
         {
-            Page<StorageClassificationMappingResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = StorageClassificationMappingReplicationStorageClassificationMappingsClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetStorageClassificationMappings");
-                scope.Start();
-                try
-                {
-                    var response = StorageClassificationMappingReplicationStorageClassificationMappingsRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, resourceName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new StorageClassificationMappingResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<StorageClassificationMappingResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = StorageClassificationMappingReplicationStorageClassificationMappingsClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetStorageClassificationMappings");
-                scope.Start();
-                try
-                {
-                    var response = StorageClassificationMappingReplicationStorageClassificationMappingsRestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, resourceName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new StorageClassificationMappingResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => StorageClassificationMappingReplicationStorageClassificationMappingsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, resourceName);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => StorageClassificationMappingReplicationStorageClassificationMappingsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, resourceName);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new StorageClassificationMappingResource(Client, StorageClassificationMappingData.DeserializeStorageClassificationMappingData(e)), StorageClassificationMappingReplicationStorageClassificationMappingsClientDiagnostics, Pipeline, "ResourceGroupResourceExtensionClient.GetStorageClassificationMappings", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -1046,37 +485,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <returns> An async collection of <see cref="VCenterResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<VCenterResource> GetVCentersAsync(string resourceName, CancellationToken cancellationToken = default)
         {
-            async Task<Page<VCenterResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = VCenterReplicationvCentersClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetVCenters");
-                scope.Start();
-                try
-                {
-                    var response = await VCenterReplicationvCentersRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, resourceName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new VCenterResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<VCenterResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = VCenterReplicationvCentersClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetVCenters");
-                scope.Start();
-                try
-                {
-                    var response = await VCenterReplicationvCentersRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, resourceName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new VCenterResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => VCenterReplicationvCentersRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, resourceName);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => VCenterReplicationvCentersRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, resourceName);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new VCenterResource(Client, VCenterData.DeserializeVCenterData(e)), VCenterReplicationvCentersClientDiagnostics, Pipeline, "ResourceGroupResourceExtensionClient.GetVCenters", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -1089,37 +500,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <returns> A collection of <see cref="VCenterResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<VCenterResource> GetVCenters(string resourceName, CancellationToken cancellationToken = default)
         {
-            Page<VCenterResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = VCenterReplicationvCentersClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetVCenters");
-                scope.Start();
-                try
-                {
-                    var response = VCenterReplicationvCentersRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, resourceName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new VCenterResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<VCenterResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = VCenterReplicationvCentersClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetVCenters");
-                scope.Start();
-                try
-                {
-                    var response = VCenterReplicationvCentersRestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, resourceName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new VCenterResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => VCenterReplicationvCentersRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, resourceName);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => VCenterReplicationvCentersRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, resourceName);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new VCenterResource(Client, VCenterData.DeserializeVCenterData(e)), VCenterReplicationvCentersClientDiagnostics, Pipeline, "ResourceGroupResourceExtensionClient.GetVCenters", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

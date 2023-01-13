@@ -11,9 +11,10 @@ using Azure;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager;
+using Azure.ResourceManager.Compute;
 using Azure.ResourceManager.Compute.Models;
 
-namespace Azure.ResourceManager.Compute
+namespace Azure.ResourceManager.Compute.Samples
 {
     public partial class Sample_GalleryApplicationVersionCollection
     {
@@ -22,11 +23,13 @@ namespace Azure.ResourceManager.Compute
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task CreateOrUpdate_CreateOrUpdateASimpleGalleryApplicationVersion()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/GalleryRP/stable/2022-01-03/examples/galleryExamples/GalleryApplicationVersion_Create.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/GalleryRP/stable/2022-03-03/examples/galleryExamples/GalleryApplicationVersion_Create.json
             // this example is just showing the usage of "GalleryApplicationVersions_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this GalleryApplicationResource created on azure
             // for more information of creating GalleryApplicationResource, please refer to the document of GalleryApplicationResource
@@ -47,18 +50,37 @@ namespace Azure.ResourceManager.Compute
                 PublishingProfile = new GalleryApplicationVersionPublishingProfile(new UserArtifactSource("https://mystorageaccount.blob.core.windows.net/mycontainer/package.zip?{sasKey}"))
                 {
                     ManageActions = new UserArtifactManagement("powershell -command \"Expand-Archive -Path package.zip -DestinationPath C:\\package\"", "del C:\\package "),
+                    CustomActions =
+{
+new GalleryApplicationCustomAction("myCustomAction","myCustomActionScript")
+{
+Description = "This is the custom action description.",
+Parameters =
+{
+new GalleryApplicationCustomActionParameter("myCustomActionParameter")
+{
+IsRequired = false,
+ParameterType = GalleryApplicationCustomActionParameterType.String,
+DefaultValue = "default value of parameter.",
+Description = "This is the description of the parameter",
+}
+},
+}
+},
                     TargetRegions =
 {
 new TargetRegion("West US")
 {
 RegionalReplicaCount = 1,
 StorageAccountType = ImageStorageAccountType.StandardLrs,
+IsExcludedFromLatest = false,
 }
 },
                     ReplicaCount = 1,
                     EndOfLifeOn = DateTimeOffset.Parse("2019-07-01T07:00:00Z"),
                     StorageAccountType = ImageStorageAccountType.StandardLrs,
                 },
+                AllowDeletionOfReplicatedLocations = false,
             };
             ArmOperation<GalleryApplicationVersionResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, galleryApplicationVersionName, data);
             GalleryApplicationVersionResource result = lro.Value;
@@ -75,11 +97,13 @@ StorageAccountType = ImageStorageAccountType.StandardLrs,
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_GetAGalleryApplicationVersionWithReplicationStatus()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/GalleryRP/stable/2022-01-03/examples/galleryExamples/GalleryApplicationVersion_Get_WithReplicationStatus.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/GalleryRP/stable/2022-03-03/examples/galleryExamples/GalleryApplicationVersion_Get_WithReplicationStatus.json
             // this example is just showing the usage of "GalleryApplicationVersions_Get" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this GalleryApplicationResource created on azure
             // for more information of creating GalleryApplicationResource, please refer to the document of GalleryApplicationResource
@@ -110,11 +134,13 @@ StorageAccountType = ImageStorageAccountType.StandardLrs,
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Exists_GetAGalleryApplicationVersionWithReplicationStatus()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/GalleryRP/stable/2022-01-03/examples/galleryExamples/GalleryApplicationVersion_Get_WithReplicationStatus.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/GalleryRP/stable/2022-03-03/examples/galleryExamples/GalleryApplicationVersion_Get_WithReplicationStatus.json
             // this example is just showing the usage of "GalleryApplicationVersions_Get" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this GalleryApplicationResource created on azure
             // for more information of creating GalleryApplicationResource, please refer to the document of GalleryApplicationResource
@@ -141,11 +167,13 @@ StorageAccountType = ImageStorageAccountType.StandardLrs,
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_GetAGalleryApplicationVersion()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/GalleryRP/stable/2022-01-03/examples/galleryExamples/GalleryApplicationVersion_Get.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/GalleryRP/stable/2022-03-03/examples/galleryExamples/GalleryApplicationVersion_Get.json
             // this example is just showing the usage of "GalleryApplicationVersions_Get" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this GalleryApplicationResource created on azure
             // for more information of creating GalleryApplicationResource, please refer to the document of GalleryApplicationResource
@@ -175,11 +203,13 @@ StorageAccountType = ImageStorageAccountType.StandardLrs,
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Exists_GetAGalleryApplicationVersion()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/GalleryRP/stable/2022-01-03/examples/galleryExamples/GalleryApplicationVersion_Get.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/GalleryRP/stable/2022-03-03/examples/galleryExamples/GalleryApplicationVersion_Get.json
             // this example is just showing the usage of "GalleryApplicationVersions_Get" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this GalleryApplicationResource created on azure
             // for more information of creating GalleryApplicationResource, please refer to the document of GalleryApplicationResource
@@ -205,11 +235,13 @@ StorageAccountType = ImageStorageAccountType.StandardLrs,
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetAll_ListGalleryApplicationVersionsInAGalleryApplicationDefinition()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/GalleryRP/stable/2022-01-03/examples/galleryExamples/GalleryApplicationVersion_ListByGalleryApplication.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/GalleryRP/stable/2022-03-03/examples/galleryExamples/GalleryApplicationVersion_ListByGalleryApplication.json
             // this example is just showing the usage of "GalleryApplicationVersions_ListByGalleryApplication" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this GalleryApplicationResource created on azure
             // for more information of creating GalleryApplicationResource, please refer to the document of GalleryApplicationResource

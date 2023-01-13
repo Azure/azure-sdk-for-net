@@ -6,9 +6,7 @@
 #nullable disable
 
 using System;
-using System.Linq;
 using System.Threading;
-using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -82,37 +80,9 @@ namespace Azure.ResourceManager.EventGrid
         /// <returns> An async collection of <see cref="EventGridDomainResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<EventGridDomainResource> GetEventGridDomainsAsync(string filter = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<EventGridDomainResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = EventGridDomainDomainsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetEventGridDomains");
-                scope.Start();
-                try
-                {
-                    var response = await EventGridDomainDomainsRestClient.ListBySubscriptionAsync(Id.SubscriptionId, filter, top, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new EventGridDomainResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<EventGridDomainResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = EventGridDomainDomainsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetEventGridDomains");
-                scope.Start();
-                try
-                {
-                    var response = await EventGridDomainDomainsRestClient.ListBySubscriptionNextPageAsync(nextLink, Id.SubscriptionId, filter, top, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new EventGridDomainResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => EventGridDomainDomainsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, filter, top);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => EventGridDomainDomainsRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, filter, top);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new EventGridDomainResource(Client, EventGridDomainData.DeserializeEventGridDomainData(e)), EventGridDomainDomainsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetEventGridDomains", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -126,37 +96,9 @@ namespace Azure.ResourceManager.EventGrid
         /// <returns> A collection of <see cref="EventGridDomainResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<EventGridDomainResource> GetEventGridDomains(string filter = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            Page<EventGridDomainResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = EventGridDomainDomainsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetEventGridDomains");
-                scope.Start();
-                try
-                {
-                    var response = EventGridDomainDomainsRestClient.ListBySubscription(Id.SubscriptionId, filter, top, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new EventGridDomainResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<EventGridDomainResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = EventGridDomainDomainsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetEventGridDomains");
-                scope.Start();
-                try
-                {
-                    var response = EventGridDomainDomainsRestClient.ListBySubscriptionNextPage(nextLink, Id.SubscriptionId, filter, top, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new EventGridDomainResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => EventGridDomainDomainsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, filter, top);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => EventGridDomainDomainsRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, filter, top);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new EventGridDomainResource(Client, EventGridDomainData.DeserializeEventGridDomainData(e)), EventGridDomainDomainsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetEventGridDomains", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -170,37 +112,9 @@ namespace Azure.ResourceManager.EventGrid
         /// <returns> An async collection of <see cref="EventGridTopicResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<EventGridTopicResource> GetEventGridTopicsAsync(string filter = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<EventGridTopicResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = EventGridTopicTopicsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetEventGridTopics");
-                scope.Start();
-                try
-                {
-                    var response = await EventGridTopicTopicsRestClient.ListBySubscriptionAsync(Id.SubscriptionId, filter, top, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new EventGridTopicResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<EventGridTopicResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = EventGridTopicTopicsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetEventGridTopics");
-                scope.Start();
-                try
-                {
-                    var response = await EventGridTopicTopicsRestClient.ListBySubscriptionNextPageAsync(nextLink, Id.SubscriptionId, filter, top, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new EventGridTopicResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => EventGridTopicTopicsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, filter, top);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => EventGridTopicTopicsRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, filter, top);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new EventGridTopicResource(Client, EventGridTopicData.DeserializeEventGridTopicData(e)), EventGridTopicTopicsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetEventGridTopics", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -214,37 +128,9 @@ namespace Azure.ResourceManager.EventGrid
         /// <returns> A collection of <see cref="EventGridTopicResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<EventGridTopicResource> GetEventGridTopics(string filter = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            Page<EventGridTopicResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = EventGridTopicTopicsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetEventGridTopics");
-                scope.Start();
-                try
-                {
-                    var response = EventGridTopicTopicsRestClient.ListBySubscription(Id.SubscriptionId, filter, top, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new EventGridTopicResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<EventGridTopicResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = EventGridTopicTopicsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetEventGridTopics");
-                scope.Start();
-                try
-                {
-                    var response = EventGridTopicTopicsRestClient.ListBySubscriptionNextPage(nextLink, Id.SubscriptionId, filter, top, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new EventGridTopicResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => EventGridTopicTopicsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, filter, top);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => EventGridTopicTopicsRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, filter, top);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new EventGridTopicResource(Client, EventGridTopicData.DeserializeEventGridTopicData(e)), EventGridTopicTopicsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetEventGridTopics", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -258,37 +144,9 @@ namespace Azure.ResourceManager.EventGrid
         /// <returns> An async collection of <see cref="PartnerConfigurationResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<PartnerConfigurationResource> GetPartnerConfigurationsAsync(string filter = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<PartnerConfigurationResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = PartnerConfigurationClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetPartnerConfigurations");
-                scope.Start();
-                try
-                {
-                    var response = await PartnerConfigurationRestClient.ListBySubscriptionAsync(Id.SubscriptionId, filter, top, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new PartnerConfigurationResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<PartnerConfigurationResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = PartnerConfigurationClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetPartnerConfigurations");
-                scope.Start();
-                try
-                {
-                    var response = await PartnerConfigurationRestClient.ListBySubscriptionNextPageAsync(nextLink, Id.SubscriptionId, filter, top, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new PartnerConfigurationResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => PartnerConfigurationRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, filter, top);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => PartnerConfigurationRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, filter, top);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new PartnerConfigurationResource(Client, PartnerConfigurationData.DeserializePartnerConfigurationData(e)), PartnerConfigurationClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetPartnerConfigurations", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -302,37 +160,9 @@ namespace Azure.ResourceManager.EventGrid
         /// <returns> A collection of <see cref="PartnerConfigurationResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<PartnerConfigurationResource> GetPartnerConfigurations(string filter = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            Page<PartnerConfigurationResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = PartnerConfigurationClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetPartnerConfigurations");
-                scope.Start();
-                try
-                {
-                    var response = PartnerConfigurationRestClient.ListBySubscription(Id.SubscriptionId, filter, top, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new PartnerConfigurationResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<PartnerConfigurationResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = PartnerConfigurationClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetPartnerConfigurations");
-                scope.Start();
-                try
-                {
-                    var response = PartnerConfigurationRestClient.ListBySubscriptionNextPage(nextLink, Id.SubscriptionId, filter, top, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new PartnerConfigurationResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => PartnerConfigurationRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, filter, top);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => PartnerConfigurationRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, filter, top);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new PartnerConfigurationResource(Client, PartnerConfigurationData.DeserializePartnerConfigurationData(e)), PartnerConfigurationClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetPartnerConfigurations", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -346,37 +176,9 @@ namespace Azure.ResourceManager.EventGrid
         /// <returns> An async collection of <see cref="PartnerNamespaceResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<PartnerNamespaceResource> GetPartnerNamespacesAsync(string filter = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<PartnerNamespaceResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = PartnerNamespaceClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetPartnerNamespaces");
-                scope.Start();
-                try
-                {
-                    var response = await PartnerNamespaceRestClient.ListBySubscriptionAsync(Id.SubscriptionId, filter, top, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new PartnerNamespaceResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<PartnerNamespaceResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = PartnerNamespaceClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetPartnerNamespaces");
-                scope.Start();
-                try
-                {
-                    var response = await PartnerNamespaceRestClient.ListBySubscriptionNextPageAsync(nextLink, Id.SubscriptionId, filter, top, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new PartnerNamespaceResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => PartnerNamespaceRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, filter, top);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => PartnerNamespaceRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, filter, top);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new PartnerNamespaceResource(Client, PartnerNamespaceData.DeserializePartnerNamespaceData(e)), PartnerNamespaceClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetPartnerNamespaces", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -390,37 +192,9 @@ namespace Azure.ResourceManager.EventGrid
         /// <returns> A collection of <see cref="PartnerNamespaceResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<PartnerNamespaceResource> GetPartnerNamespaces(string filter = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            Page<PartnerNamespaceResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = PartnerNamespaceClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetPartnerNamespaces");
-                scope.Start();
-                try
-                {
-                    var response = PartnerNamespaceRestClient.ListBySubscription(Id.SubscriptionId, filter, top, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new PartnerNamespaceResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<PartnerNamespaceResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = PartnerNamespaceClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetPartnerNamespaces");
-                scope.Start();
-                try
-                {
-                    var response = PartnerNamespaceRestClient.ListBySubscriptionNextPage(nextLink, Id.SubscriptionId, filter, top, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new PartnerNamespaceResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => PartnerNamespaceRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, filter, top);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => PartnerNamespaceRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, filter, top);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new PartnerNamespaceResource(Client, PartnerNamespaceData.DeserializePartnerNamespaceData(e)), PartnerNamespaceClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetPartnerNamespaces", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -434,37 +208,9 @@ namespace Azure.ResourceManager.EventGrid
         /// <returns> An async collection of <see cref="PartnerRegistrationResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<PartnerRegistrationResource> GetPartnerRegistrationsAsync(string filter = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<PartnerRegistrationResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = PartnerRegistrationClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetPartnerRegistrations");
-                scope.Start();
-                try
-                {
-                    var response = await PartnerRegistrationRestClient.ListBySubscriptionAsync(Id.SubscriptionId, filter, top, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new PartnerRegistrationResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<PartnerRegistrationResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = PartnerRegistrationClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetPartnerRegistrations");
-                scope.Start();
-                try
-                {
-                    var response = await PartnerRegistrationRestClient.ListBySubscriptionNextPageAsync(nextLink, Id.SubscriptionId, filter, top, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new PartnerRegistrationResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => PartnerRegistrationRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, filter, top);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => PartnerRegistrationRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, filter, top);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new PartnerRegistrationResource(Client, PartnerRegistrationData.DeserializePartnerRegistrationData(e)), PartnerRegistrationClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetPartnerRegistrations", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -478,37 +224,9 @@ namespace Azure.ResourceManager.EventGrid
         /// <returns> A collection of <see cref="PartnerRegistrationResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<PartnerRegistrationResource> GetPartnerRegistrations(string filter = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            Page<PartnerRegistrationResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = PartnerRegistrationClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetPartnerRegistrations");
-                scope.Start();
-                try
-                {
-                    var response = PartnerRegistrationRestClient.ListBySubscription(Id.SubscriptionId, filter, top, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new PartnerRegistrationResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<PartnerRegistrationResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = PartnerRegistrationClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetPartnerRegistrations");
-                scope.Start();
-                try
-                {
-                    var response = PartnerRegistrationRestClient.ListBySubscriptionNextPage(nextLink, Id.SubscriptionId, filter, top, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new PartnerRegistrationResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => PartnerRegistrationRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, filter, top);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => PartnerRegistrationRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, filter, top);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new PartnerRegistrationResource(Client, PartnerRegistrationData.DeserializePartnerRegistrationData(e)), PartnerRegistrationClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetPartnerRegistrations", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -522,37 +240,9 @@ namespace Azure.ResourceManager.EventGrid
         /// <returns> An async collection of <see cref="PartnerTopicResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<PartnerTopicResource> GetPartnerTopicsAsync(string filter = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<PartnerTopicResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = PartnerTopicClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetPartnerTopics");
-                scope.Start();
-                try
-                {
-                    var response = await PartnerTopicRestClient.ListBySubscriptionAsync(Id.SubscriptionId, filter, top, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new PartnerTopicResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<PartnerTopicResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = PartnerTopicClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetPartnerTopics");
-                scope.Start();
-                try
-                {
-                    var response = await PartnerTopicRestClient.ListBySubscriptionNextPageAsync(nextLink, Id.SubscriptionId, filter, top, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new PartnerTopicResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => PartnerTopicRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, filter, top);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => PartnerTopicRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, filter, top);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new PartnerTopicResource(Client, PartnerTopicData.DeserializePartnerTopicData(e)), PartnerTopicClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetPartnerTopics", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -566,37 +256,9 @@ namespace Azure.ResourceManager.EventGrid
         /// <returns> A collection of <see cref="PartnerTopicResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<PartnerTopicResource> GetPartnerTopics(string filter = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            Page<PartnerTopicResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = PartnerTopicClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetPartnerTopics");
-                scope.Start();
-                try
-                {
-                    var response = PartnerTopicRestClient.ListBySubscription(Id.SubscriptionId, filter, top, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new PartnerTopicResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<PartnerTopicResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = PartnerTopicClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetPartnerTopics");
-                scope.Start();
-                try
-                {
-                    var response = PartnerTopicRestClient.ListBySubscriptionNextPage(nextLink, Id.SubscriptionId, filter, top, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new PartnerTopicResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => PartnerTopicRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, filter, top);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => PartnerTopicRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, filter, top);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new PartnerTopicResource(Client, PartnerTopicData.DeserializePartnerTopicData(e)), PartnerTopicClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetPartnerTopics", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -610,37 +272,9 @@ namespace Azure.ResourceManager.EventGrid
         /// <returns> An async collection of <see cref="SystemTopicResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SystemTopicResource> GetSystemTopicsAsync(string filter = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<SystemTopicResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = SystemTopicClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetSystemTopics");
-                scope.Start();
-                try
-                {
-                    var response = await SystemTopicRestClient.ListBySubscriptionAsync(Id.SubscriptionId, filter, top, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new SystemTopicResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<SystemTopicResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = SystemTopicClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetSystemTopics");
-                scope.Start();
-                try
-                {
-                    var response = await SystemTopicRestClient.ListBySubscriptionNextPageAsync(nextLink, Id.SubscriptionId, filter, top, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new SystemTopicResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => SystemTopicRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, filter, top);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => SystemTopicRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, filter, top);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SystemTopicResource(Client, SystemTopicData.DeserializeSystemTopicData(e)), SystemTopicClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetSystemTopics", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -654,37 +288,9 @@ namespace Azure.ResourceManager.EventGrid
         /// <returns> A collection of <see cref="SystemTopicResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SystemTopicResource> GetSystemTopics(string filter = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            Page<SystemTopicResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = SystemTopicClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetSystemTopics");
-                scope.Start();
-                try
-                {
-                    var response = SystemTopicRestClient.ListBySubscription(Id.SubscriptionId, filter, top, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new SystemTopicResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<SystemTopicResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = SystemTopicClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetSystemTopics");
-                scope.Start();
-                try
-                {
-                    var response = SystemTopicRestClient.ListBySubscriptionNextPage(nextLink, Id.SubscriptionId, filter, top, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new SystemTopicResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => SystemTopicRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, filter, top);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => SystemTopicRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, filter, top);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SystemTopicResource(Client, SystemTopicData.DeserializeSystemTopicData(e)), SystemTopicClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetSystemTopics", "value", "nextLink", cancellationToken);
         }
     }
 }

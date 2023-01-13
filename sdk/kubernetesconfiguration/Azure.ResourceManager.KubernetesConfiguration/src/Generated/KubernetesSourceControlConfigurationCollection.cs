@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -198,37 +197,9 @@ namespace Azure.ResourceManager.KubernetesConfiguration
         /// <returns> An async collection of <see cref="KubernetesSourceControlConfigurationResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<KubernetesSourceControlConfigurationResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<KubernetesSourceControlConfigurationResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _kubernetesSourceControlConfigurationSourceControlConfigurationsClientDiagnostics.CreateScope("KubernetesSourceControlConfigurationCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _kubernetesSourceControlConfigurationSourceControlConfigurationsRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, _clusterRp, _clusterResourceName, _clusterName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new KubernetesSourceControlConfigurationResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<KubernetesSourceControlConfigurationResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _kubernetesSourceControlConfigurationSourceControlConfigurationsClientDiagnostics.CreateScope("KubernetesSourceControlConfigurationCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _kubernetesSourceControlConfigurationSourceControlConfigurationsRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, _clusterRp, _clusterResourceName, _clusterName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new KubernetesSourceControlConfigurationResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _kubernetesSourceControlConfigurationSourceControlConfigurationsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, _clusterRp, _clusterResourceName, _clusterName);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _kubernetesSourceControlConfigurationSourceControlConfigurationsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, _clusterRp, _clusterResourceName, _clusterName);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new KubernetesSourceControlConfigurationResource(Client, KubernetesSourceControlConfigurationData.DeserializeKubernetesSourceControlConfigurationData(e)), _kubernetesSourceControlConfigurationSourceControlConfigurationsClientDiagnostics, Pipeline, "KubernetesSourceControlConfigurationCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -240,37 +211,9 @@ namespace Azure.ResourceManager.KubernetesConfiguration
         /// <returns> A collection of <see cref="KubernetesSourceControlConfigurationResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<KubernetesSourceControlConfigurationResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<KubernetesSourceControlConfigurationResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _kubernetesSourceControlConfigurationSourceControlConfigurationsClientDiagnostics.CreateScope("KubernetesSourceControlConfigurationCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _kubernetesSourceControlConfigurationSourceControlConfigurationsRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, _clusterRp, _clusterResourceName, _clusterName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new KubernetesSourceControlConfigurationResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<KubernetesSourceControlConfigurationResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _kubernetesSourceControlConfigurationSourceControlConfigurationsClientDiagnostics.CreateScope("KubernetesSourceControlConfigurationCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _kubernetesSourceControlConfigurationSourceControlConfigurationsRestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, _clusterRp, _clusterResourceName, _clusterName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new KubernetesSourceControlConfigurationResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _kubernetesSourceControlConfigurationSourceControlConfigurationsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, _clusterRp, _clusterResourceName, _clusterName);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _kubernetesSourceControlConfigurationSourceControlConfigurationsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, _clusterRp, _clusterResourceName, _clusterName);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new KubernetesSourceControlConfigurationResource(Client, KubernetesSourceControlConfigurationData.DeserializeKubernetesSourceControlConfigurationData(e)), _kubernetesSourceControlConfigurationSourceControlConfigurationsClientDiagnostics, Pipeline, "KubernetesSourceControlConfigurationCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

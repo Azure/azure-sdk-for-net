@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -99,37 +98,9 @@ namespace Azure.ResourceManager.Relay
         /// <returns> An async collection of <see cref="RelayNamespaceResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<RelayNamespaceResource> GetRelayNamespacesAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<RelayNamespaceResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = RelayNamespaceNamespacesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetRelayNamespaces");
-                scope.Start();
-                try
-                {
-                    var response = await RelayNamespaceNamespacesRestClient.ListAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new RelayNamespaceResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<RelayNamespaceResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = RelayNamespaceNamespacesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetRelayNamespaces");
-                scope.Start();
-                try
-                {
-                    var response = await RelayNamespaceNamespacesRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new RelayNamespaceResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => RelayNamespaceNamespacesRestClient.CreateListRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => RelayNamespaceNamespacesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new RelayNamespaceResource(Client, RelayNamespaceData.DeserializeRelayNamespaceData(e)), RelayNamespaceNamespacesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetRelayNamespaces", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -141,37 +112,9 @@ namespace Azure.ResourceManager.Relay
         /// <returns> A collection of <see cref="RelayNamespaceResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<RelayNamespaceResource> GetRelayNamespaces(CancellationToken cancellationToken = default)
         {
-            Page<RelayNamespaceResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = RelayNamespaceNamespacesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetRelayNamespaces");
-                scope.Start();
-                try
-                {
-                    var response = RelayNamespaceNamespacesRestClient.List(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new RelayNamespaceResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<RelayNamespaceResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = RelayNamespaceNamespacesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetRelayNamespaces");
-                scope.Start();
-                try
-                {
-                    var response = RelayNamespaceNamespacesRestClient.ListNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new RelayNamespaceResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => RelayNamespaceNamespacesRestClient.CreateListRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => RelayNamespaceNamespacesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new RelayNamespaceResource(Client, RelayNamespaceData.DeserializeRelayNamespaceData(e)), RelayNamespaceNamespacesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetRelayNamespaces", "value", "nextLink", cancellationToken);
         }
     }
 }

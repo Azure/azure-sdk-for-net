@@ -18,6 +18,360 @@ modelerfour:
   flatten-payloads: false
   lenient-model-deduplication: true   # Mitigate the duplication schema 'ErrorResponse' issue
 
+rename-mapping:
+  AzureADOnlyAuthentication: SynapseAadOnlyAuthentication
+  AzureADOnlyAuthenticationListResult: SynapseAadOnlyAuthenticationListResult
+  AzureADOnlyAuthenticationName: SynapseAadOnlyAuthenticationName
+  DedicatedSQLminimalTlsSettings: SynapseDedicatedSqlMinimalTlsSetting
+  DedicatedSQLminimalTlsSettingsListResult: SynapseDedicatedSqlMinimalTlsSettingListResult
+  DedicatedSQLMinimalTlsSettingsName: SynapseDedicatedSqlMinimalTlsSettingName
+  BigDataPoolResourceInfo: SynapseBigDataPoolInfo
+  BigDataPoolResourceInfoListResult: SynapseBigDataPoolInfoListResult
+  IntegrationRuntimeResource: SynapseIntegrationRuntime
+  LibraryResource: SynapseLibrary
+  ManagedIdentitySqlControlSettingsModel: SynapseManagedIdentitySqlControlSetting
+  ManagedIdentitySqlControlSettingsModelPropertiesGrantSqlControlToManagedIdentity: SynapseGrantSqlControlToManagedIdentity
+  MetadataSyncConfig: SynapseMetadataSyncConfiguration
+  SparkConfigurationResource: SynapseSparkConfiguration
+  ConfigurationType: SynapseSparkConfigurationType
+  ActualState: SynapseGrantSqlControlToManagedIdentityState
+  AzureCapacity: SynapseDataSourceCapacity
+  AzureScaleType: SynapseDataSourceScaleType
+  AzureSku: SynapseDataSourceSku
+  AzureResourceSku: SynapseDataSourceResourceSku
+  AutoPauseProperties: BigDataPoolAutoPauseProperties
+  AutoScaleProperties: BigDataPoolAutoScaleProperties
+  CheckNameResult: KustoPoolNameAvailabilityResult
+  Reason: KustoPoolNameUnavailableReason
+  DataConnectionCheckNameRequest: KustoPoolDataConnectionNameAvailabilityContent
+  DatabasePrincipalAssignmentCheckNameRequest: KustoPoolDatabasePrincipalAssignmentNameAvailabilityContent
+  DatabaseCheckNameRequest: KustoPoolChildResourceNameAvailabilityContent
+  ClusterPrincipalAssignmentCheckNameRequest: KustoPoolPrincipalAssignmentNameAvailabilityContent
+  KustoPoolCheckNameRequest: KustoPoolNameAvailabilityContent
+  ConnectionPolicyName: SqlPoolConnectionPolicyName
+  CreateMode: SqlPoolCreateMode
+  CreateSqlPoolRestorePointDefinition: SqlPoolCreateRestorePointContent
+  CustomerManagedKeyDetails: WorkspaceCustomerManagedKeyDetails
+  IntegrationRuntime: SynapseIntegrationRuntimeProperties
+  Compression: KustoPoolCompressionType
+  IntegrationRuntimeMonitoringData: SynapseIntegrationRuntimeMonitoringResult
+  IntegrationRuntimeNodeMonitoringData: SynapseIntegrationRuntimeNodeMonitoringResult
+  ColumnDataType: SqlPoolColumnDataType
+  IntegrationRuntimeListResponse: SynapseIntegrationRuntimeListResult
+  IntegrationRuntimeOutboundNetworkDependenciesEndpointsResponse: SynapseIntegrationRuntimeOutboundNetworkDependenciesCategoryEndpointListResult
+  IntegrationRuntimeStatusResponse: SynapseIntegrationRuntimeStatusResult
+  IntegrationRuntimeVNetProperties: SynapseIntegrationRuntimeVnetProperties
+  LibraryInfo: BigDataPoolLibraryInfo
+  LibraryListResponse: BigDataPoolLibraryListResult
+  LibraryRequirements: BigDataPoolLibraryRequirements
+  ListResourceSkusResult: SynapseDataSourceResourceSkuListResult
+  ListSqlPoolSecurityAlertPolicies: SynapseSqlPoolSecurityAlertPolicyListResult
+  NodeSize: BigDataPoolNodeSize
+  NodeSizeFamily: BigDataPoolNodeSizeFamily
+  PrivateEndpointConnectionForPrivateLinkHubResourceCollectionResponse: SynapsePrivateEndpointConnectionForPrivateLinkHubListResult
+  PrivateEndpointConnectionList: SynapsePrivateEndpointConnectionListResult
+  PrivateLinkHubInfoListResult: SynapsePrivateLinkHubListResult
+  RecommendedSensitivityLabelUpdateList: SynapseRecommendedSensitivityLabelUpdateOperationListResult
+  RecoverableSqlPoolListResult: SynapseRecoverableSqlPoolListResult
+  ReplaceAllFirewallRulesOperationResponse: ReplaceAllFirewallRulesOperationResult
+  ReplicationLinkListResult: SynapseReplicationLinkListResult
+  ResourceType: KustoPoolDatabaseType
+  RestorableDroppedSqlPoolListResult: SynapseRestorableDroppedSqlPoolListResult
+  RestorePointListResult: SynapseRestorePointListResult
+  SensitivityLabelListResult: SynapseSensitivityLabelListResult
+  SensitivityLabelUpdateList: SynapseSensitivityLabelUpdateListResult
+  ServerBlobAuditingPolicyListResult: SynapseServerBlobAuditingPolicyListResult
+  ServerSecurityAlertPolicyListResult: SynapseServerSecurityAlertPolicyListResult
+  ServerUsageListResult: SynapseServerUsageListResult
+  ServerVulnerabilityAssessmentListResult: SynapseServerVulnerabilityAssessmentListResult
+  SkuDescription: KustoPoolSkuDescription
+  SkuDescriptionList: KustoPoolSkuDescriptionListResult
+  SkuLocationInfoItem: KustoPoolSkuLocationInfoItem
+  SkuSize: KustoPoolSkuSize
+  SparkConfigProperties: BigDataPoolSparkConfigProperties
+  SparkConfigurationListResponse: SynapseSparkConfigurationListResult
+  SsisObjectMetadataStatusResponse: SynapseSsisObjectMetadataStatusResult
+  State: KustoPoolState
+  StateValue: AadAuthenticationState
+  StorageAccountType: SqlPoolStorageAccountType
+  SsisObjectMetadataListResponse: SynapseSsisObjectMetadataListResult
+  WorkspaceInfoListResult: SynapseWorkspaceListResult
+  MaintenanceWindowTimeRange.startTime: StartOn
+  AutoPauseProperties.enabled: IsEnabled
+  CheckNameResult.nameAvailable: IsNameAvailable
+  IntegrationRuntimeNodeIpAddress.ipAddress: -|ip-address
+  ColumnDataType.uniqueidentifier: UniqueIdentifier
+  ColumnDataType.datetime2: DateTime2
+  ColumnDataType.datetimeoffset: DateTimeOffset
+  ColumnDataType.tinyint: TinyInt
+  ColumnDataType.smallint: SmallInt
+  ColumnDataType.smalldatetime: SmallDateTime
+  ColumnDataType.datetime: DateTime
+  ColumnDataType.smallmoney: SmallMoney
+  ColumnDataType.bigint: BigInt
+  IpFirewallRuleProperties.endIpAddress: -|ip-address
+  IpFirewallRuleProperties.startIpAddress: -|ip-address
+  LibraryInfo.uploadedTimestamp: UploadedOn
+  ManagedVirtualNetworkSettings.linkedAccessCheckOnTargetResource: EnableLinkedAccessCheckOnTargetResource
+  AutoScaleProperties.enabled: IsEnabled
+  ReplicationState.CATCH_UP: CatchUp
+  ResourceMoveDefinition.id: -|arm-id
+  AzureADOnlyAuthentication.properties.azureADOnlyAuthentication: IsAadOnlyAuthenticationEnabled
+  BigDataPoolResourceInfo.properties.sessionLevelPackagesEnabled: IsSessionLevelPackagesEnabled
+  MetadataSyncConfig.properties.enabled: IsEnabled
+  ServerSecurityAlertPolicy.properties.emailAccountAdmins: EnableEmailToAccountAdmins
+  SqlPoolSecurityAlertPolicy.properties.emailAccountAdmins: EnableEmailToAccountAdmins
+  Workspace.properties.azureADOnlyAuthentication: IsAadOnlyAuthenticationEnabled
+  Workspace.properties.trustedServiceBypassEnabled: IsTrustedServiceBypassEnabled
+  DynamicExecutorAllocation.enabled: IsEnabled
+  EncryptionDetails.doubleEncryptionEnabled: IsDoubleEncryptionEnabled
+  SsisParameter.required: IsRequired
+  SsisParameter.sensitive: IsSensitive
+  SsisVariable.sensitive: IsSensitive
+  VulnerabilityAssessmentRecurringScansProperties.emailSubscriptionAdmins: EnableEmailToAccountAdmins
+  DataLakeStorageAccountDetails.resourceId: -|arm-id
+  LinkedIntegrationRuntimeRbacAuthorization.resourceId: -|arm-id
+  LibraryRequirements.time: UpdatedOn
+  SparkConfigProperties.time: UpdatedOn
+  CspWorkspaceAdminProperties.initialWorkspaceAdminObjectId: -|uuid
+  KekIdentityProperties.userAssignedIdentity: UserAssignedIdentityId|arm-id
+  SkuDescription.locations: -|azure-location
+  PurviewConfiguration.purviewResourceId: -|arm-id
+  DataMaskingFunction.CCN: Ccn
+  DataMaskingFunction.SSN: Ssn
+  EventGridDataConnection.properties.storageAccountResourceId: -|arm-id
+  EventGridDataConnection.properties.eventHubResourceId: -|arm-id
+  EventHubDataConnection.properties.eventHubResourceId: -|arm-id
+  EventHubDataConnection.properties.managedIdentityResourceId: -|arm-id
+  FollowerDatabaseDefinition.clusterResourceId: -|arm-id
+  IntegrationRuntimeComputeProperties.vNetProperties: VnetProperties
+  IntegrationRuntimeConnectionInfo.identityCertThumbprint: -|any
+  IntegrationRuntimeSsisCatalogInfo.catalogServerEndpoint: -|uri
+  IntegrationRuntimeVNetProperties.vNetId: VnetId|uuid
+  IntegrationRuntimeVNetProperties.subnetId: -|arm-id
+  IotHubDataConnection.properties.iotHubResourceId: -|arm-id
+  SelfHostedIntegrationRuntimeNode.lastConnectTime: LastConnectedOn
+  SelfHostedIntegrationRuntimeNode.expiryTime: ExpireOn
+  SelfHostedIntegrationRuntimeNode.lastStartTime: LastStartedOn
+  AttachedDatabaseConfiguration.properties.clusterResourceId: -|arm-id
+  BigDataPoolResourceInfo.properties.lastSucceededTimestamp: LastSucceededOn
+  ClusterPrincipalAssignment.properties.aadObjectId: -|uuid
+  DatabasePrincipalAssignment.properties.aadObjectId: -|uuid
+  DataMaskingRule.properties.id: ruleId
+  EncryptionProtector.properties.thumbprint: -|any
+  Key.properties.isActiveCMK: IsActiveCmk
+  KustoPool.properties.workspaceUID: WorkspaceUid|uuid
+  LibraryResource.properties.uploadedTimestamp: UploadedOn
+  ReplicationLink.properties.partnerLocation: -|azure-location
+  SensitivityLabel.properties.labelId: -|uuid
+  SensitivityLabel.properties.informationTypeId: -|uuid
+  SparkConfigurationResource.properties.created: CreatedOn
+  Workspace.properties.workspaceUID: WorkspaceUid|uuid
+  Workspace.properties.adlaResourceId: -|arm-id
+  KustoPoolUpdate.properties.workspaceUID: WorkspaceUid|uuid
+
+prepend-rp-prefix:
+  - AttachedDatabaseConfiguration
+  - AttachedDatabaseConfigurationListResult
+  - ClusterPrincipalAssignment
+  - ClusterPrincipalAssignmentListResult
+  - ClusterPrincipalRole
+  - Database
+  - DatabaseListResult
+  - DatabasePrincipalAssignment
+  - DatabasePrincipalAssignmentListResult
+  - DataConnection
+  - DataMaskingPolicy
+  - DataMaskingRule
+  - DataMaskingRuleListResult
+  - DataWarehouseUserActivities
+  - EncryptionProtector
+  - EncryptionProtectorListResult
+  - ExtendedServerBlobAuditingPolicy
+  - ExtendedServerBlobAuditingPolicyListResult
+  - ExtendedSqlPoolBlobAuditingPolicy
+  - ExtendedSqlPoolBlobAuditingPolicyListResult
+  - GeoBackupPolicy
+  - GeoBackupPolicyListResult
+  - IPFirewallRuleInfo
+  - Key
+  - KustoPool
+  - MaintenanceWindows
+  - MaintenanceWindowOptions
+  - PrivateEndpointConnectionForPrivateLinkHub
+  - PrivateLinkHub
+  - RecoverableSqlPool
+  - ReplicationLink
+  - RestorableDroppedSqlPool
+  - RestorePoint
+  - SensitivityLabel
+  - ServerBlobAuditingPolicy
+  - ServerSecurityAlertPolicy
+  - ServerVulnerabilityAssessment
+  - SqlPool
+  - SqlPoolBlobAuditingPolicy
+  - SqlPoolBlobAuditingPolicyListResult
+  - SqlPoolColumn
+  - SqlPoolConnectionPolicy
+  - SqlPoolSchema
+  - SqlPoolSecurityAlertPolicy
+  - SqlPoolTable
+  - SqlPoolVulnerabilityAssessment
+  - SqlPoolVulnerabilityAssessmentRuleBaseline
+  - TransparentDataEncryption
+  - TransparentDataEncryptionListResult
+  - TransparentDataEncryptionName
+  - TransparentDataEncryptionStatus
+  - VulnerabilityAssessmentScanRecord
+  - VulnerabilityAssessmentScanRecordListResult
+  - WorkloadClassifier
+  - WorkloadClassifierListResult
+  - WorkloadGroup
+  - WorkloadGroupListResult
+  - WorkspaceAadAdminInfo
+  - Workspace
+  - BlobAuditingPolicyName
+  - BlobAuditingPolicyState
+  - BlobStorageEventType
+  - CmdkeySetup
+  - CustomSetupBase
+  - ComponentSetup
+  - DatabasePrincipalAssignmentType
+  - DatabasePrincipalRole
+  - DataConnectionKind
+  - DataConnectionListResult
+  - DataConnectionType
+  - DataConnectionValidation
+  - DataConnectionValidationListResult
+  - DataConnectionValidationResult
+  - DataFlowComputeType
+  - DataLakeStorageAccountDetails
+  - DataMaskingFunction
+  - DataMaskingRuleState
+  - DataMaskingState
+  - DataWarehouseUserActivityName
+  - DayOfWeek
+  - DefaultPrincipalsModificationKind
+  - DesiredState
+  - DynamicExecutorAllocation
+  - EncryptionDetails
+  - EncryptionProtectorName
+  - EntityReference
+  - EnvironmentVariableSetup
+  - EventGridDataConnection
+  - EventGridDataFormat
+  - EventHubDataConnection
+  - EventHubDataFormat
+  - FollowerDatabaseDefinition
+  - FollowerDatabaseListResult
+  - GeoBackupPolicyName
+  - GeoBackupPolicyState
+  - GetSsisObjectMetadataRequest
+  - IntegrationRuntimeAuthKeyName
+  - IntegrationRuntimeAuthKeys
+  - IntegrationRuntimeAutoUpdate
+  - IntegrationRuntimeComputeProperties
+  - IntegrationRuntimeConnectionInfo
+  - IntegrationRuntimeCustomSetupScriptProperties
+  - IntegrationRuntimeDataFlowProperties
+  - IntegrationRuntimeDataProxyProperties
+  - IntegrationRuntimeEdition
+  - IntegrationRuntimeEntityReferenceType
+  - IntegrationRuntimeInternalChannelEncryptionMode
+  - IntegrationRuntimeLicenseType
+  - IntegrationRuntimeNodeIPAddress
+  - IntegrationRuntimeOutboundNetworkDependenciesCategoryEndpoint
+  - IntegrationRuntimeOutboundNetworkDependenciesEndpoint
+  - IntegrationRuntimeOutboundNetworkDependenciesEndpointDetails
+  - IntegrationRuntimeRegenerateKeyContent
+  - IntegrationRuntimeSsisCatalogInfo
+  - IntegrationRuntimeSsisCatalogPricingTier
+  - IntegrationRuntimeSsisProperties
+  - IntegrationRuntimeState
+  - IntegrationRuntimeStatus
+  - IntegrationRuntimeUpdateResult
+  - IotHubDataConnection
+  - IotHubDataFormat
+  - IPFirewallRuleInfoListResult
+  - IPFirewallRuleProperties
+  - LanguageExtension
+  - LanguageExtensionName
+  - LanguageExtensionsList
+  - LinkedIntegrationRuntime
+  - LinkedIntegrationRuntimeKeyAuthorization
+  - LinkedIntegrationRuntimeRbacAuthorization
+  - LinkedIntegrationRuntimeType
+  - MaintenanceWindowTimeRange
+  - ManagedIntegrationRuntime
+  - ManagedIntegrationRuntimeError
+  - ManagedIntegrationRuntimeNode
+  - ManagedIntegrationRuntimeNodeStatus
+  - ManagedIntegrationRuntimeOperationResult
+  - ManagedIntegrationRuntimeStatus
+  - ManagedVirtualNetworkSettings
+  - ManagementOperationState
+  - OptimizedAutoscale
+  - PrincipalAssignmentType
+  - PrincipalsModificationKind
+  - PrincipalType
+  - PrivateEndpointConnectionProperties
+  - ProvisioningState
+  - ReadOnlyFollowingDatabase
+  - ReadWriteDatabase
+  - RecommendedSensitivityLabelUpdate
+  - RecommendedSensitivityLabelUpdateKind
+  - ReplicationRole
+  - ReplicationState
+  - ResourceMoveDefinition
+  - RestorePointType
+  - SecretBase
+  - SecureString
+  - SecurityAlertPolicyState
+  - SelfHostedIntegrationRuntime
+  - SelfHostedIntegrationRuntimeNode
+  - SelfHostedIntegrationRuntimeNodeStatus
+  - SelfHostedIntegrationRuntimeStatus
+  - SensitivityLabelRank
+  - SensitivityLabelSource
+  - SensitivityLabelUpdate
+  - SensitivityLabelUpdateKind
+  - ServerKeyType
+  - ServerUsage
+  - SsisEnvironment
+  - SsisEnvironmentReference
+  - SsisFolder
+  - SsisObjectMetadata
+  - SsisObjectMetadataType
+  - SsisPackage
+  - SsisParameter
+  - SsisProject
+  - SsisVariable
+  - TableLevelSharingProperties
+  - VulnerabilityAssessmentName
+  - VulnerabilityAssessmentPolicyBaselineName
+  - VulnerabilityAssessmentRecurringScansProperties
+  - VulnerabilityAssessmentScanError
+  - VulnerabilityAssessmentScanState
+  - VulnerabilityAssessmentScanTriggerType
+  - WorkspaceKeyDetails
+  - WorkspaceRepositoryConfiguration
+
+override-operation-name:
+  IntegrationRuntimeStatus_Get: GetIntegrationRuntimeStatus
+  KustoPoolDataConnections_CheckNameAvailability: CheckKustoPoolDataConnectionNameAvailability
+  KustoPoolDatabasePrincipalAssignments_CheckNameAvailability: CheckKustoPoolDatabasePrincipalAssignmentNameAvailability
+  KustoPoolChildResource_CheckNameAvailability: CheckKustoPoolChildResourceNameAvailability
+  KustoPoolPrincipalAssignments_CheckNameAvailability: CheckKustoPoolPrincipalAssignmentNameAvailability
+  KustoPools_CheckNameAvailability: CheckKustoPoolNameAvailability
+  KustoPoolDataConnections_dataConnectionValidation: ValidateDataConnection
+  IntegrationRuntimeNodeIpAddress_Get: GetIntegrationRuntimeNodeIPAddress
+
+request-path-to-resource-name:
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/privateLinkHubs/{privateLinkHubName}/privateLinkResources/{privateLinkResourceName}: SynapsePrivateLinkResource
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/privateLinkResources/{privateLinkResourceName}: SynapseWorkspacePrivateLinkResource
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/administrators/activeDirectory: SynapseWorkspaceAdministratorResource
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/sqlAdministrators/activeDirectory: SynapseWorkspaceSqlAdministratorResource
+
 format-by-name-rules:
   'tenantId': 'uuid'
   'ETag': 'etag'
@@ -47,6 +401,20 @@ rename-rules:
   SSO: Sso
   URI: Uri
   Etag: ETag|etag
+  Multijson: MultiJson
+  CSV: Csv
+  TSV: Tsv
+  PSV: Psv
+  TXT: Txt
+  RAW: Raw
+  Singlejson: SingleJson
+  ORC: Orc
+  Apacheavro: ApacheAvro
+  W3Clogfile: W3CLogfile
+  GRS: Grs
+  LRS: Lrs
+  GPU: Gpu
+  ETA: Eta
 
 list-exception:
   - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/sqlPools/{sqlPoolName}/dataWarehouseUserActivities/{dataWarehouseUserActivityName}
@@ -54,13 +422,13 @@ list-exception:
   - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/sqlPools/{sqlPoolName}/connectionPolicies/{connectionPolicyName}
   - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/sqlPools/{sqlPoolName}/vulnerabilityAssessments/{vulnerabilityAssessmentName}/rules/{ruleId}/baselines/{baselineName}
 
-override-operation-name:
-  IntegrationRuntimeStatus_Get: GetIntegrationRuntimeStatus
-
 directive:
   - remove-operation: Operations_List
   - remove-operation: Operations_GetLocationHeaderResult
   - remove-operation: Operations_GetAzureAsyncHeaderResult
+  - remove-operation: KustoOperations_List
+  - remove-operation: SqlPoolOperations_List
+  - remove-operation: SqlPoolOperationResults_GetLocationHeaderResult
   - from: operations.json
     where: $.definitions
     transform: >
@@ -69,11 +437,12 @@ directive:
     where: $.definitions
     transform: >
       $.MaintenanceWindowTimeRange.properties.duration['format'] = 'duration';
+      $.MaintenanceWindowTimeRange.properties.startTime['format'] = 'time';
   - from: kustoPool.json
     where: $.definitions
     transform: >
       $.DatabaseCheckNameRequest.properties.type['x-ms-client-name'] = 'resourceType';
-      $.DatabaseCheckNameRequest.properties.type['x-ms-enum']['name'] = 'KustoDatabaseResourceType';
+      $.DatabaseCheckNameRequest.properties.type['x-ms-enum']['name'] = 'ResourceType';
   # Fix the dubplicate schema 'PrivateEndpointConnectionForPrivateLinkHubBasic'
   - from: privatelinkhub.json
     where: $.definitions

@@ -21,6 +21,60 @@ namespace Azure.Storage.DataMovement.Tests
     [TestFixture]
     public class CommitChunkHandlerTests
     {
+        private readonly int _maxDelayInSec = 1;
+        private readonly string _failedEventMsg = "Amount of Failed Event Handler calls was incorrect.";
+        private readonly string _putBlockMsg = "Amount of Put Block Task calls were incorrect";
+        private readonly string _reportProgressInBytesMsg = "Amount of Progress amount calls were incorrect.";
+        private readonly string _commitBlockMsg = "Amount of Commit Block Task calls were incorrect";
+
+        private void VerifyDelegateInvocations(
+            MockCommitChunkBehaviors behaviors,
+            int expectedFailureCount,
+            int expectedPutBlockCount,
+            int expectedReportProgressCount,
+            int expectedCompleteFileCount,
+            int maxWaitTimeInSec = 6)
+        {
+            CancellationTokenSource cancellationSource = new CancellationTokenSource(TimeSpan.FromSeconds(maxWaitTimeInSec));
+            CancellationToken cancellationToken = cancellationSource.Token;
+            int currentFailedEventCount = behaviors.InvokeFailedEventHandlerTask.Invocations.Count;
+            int currentPutBlockCount = behaviors.PutBlockTask.Invocations.Count;
+            int currentProgressReportedCount = behaviors.ReportProgressInBytesTask.Invocations.Count;
+            int currentCompleteDownloadCount = behaviors.QueueCommitBlockTask.Invocations.Count;
+            try
+            {
+                while (currentFailedEventCount != expectedFailureCount
+                       || currentPutBlockCount != expectedPutBlockCount
+                       || currentProgressReportedCount != expectedReportProgressCount
+                       || currentCompleteDownloadCount != expectedCompleteFileCount)
+                {
+                    CancellationHelper.ThrowIfCancellationRequested(cancellationToken);
+                    // If it exceeds the count we should just fail. But if it's less,
+                    // we can retry and see if the invocation count will reach the
+                    // expected amount
+                    Thread.Sleep(TimeSpan.FromSeconds(_maxDelayInSec));
+
+                    currentFailedEventCount = behaviors.InvokeFailedEventHandlerTask.Invocations.Count;
+                    Assert.LessOrEqual(currentFailedEventCount, expectedFailureCount, _failedEventMsg);
+                    currentPutBlockCount = behaviors.PutBlockTask.Invocations.Count;
+                    Assert.LessOrEqual(currentPutBlockCount, expectedPutBlockCount, _putBlockMsg);
+                    currentProgressReportedCount = behaviors.ReportProgressInBytesTask.Invocations.Count;
+                    Assert.LessOrEqual(currentProgressReportedCount, expectedReportProgressCount, _reportProgressInBytesMsg);
+                    currentCompleteDownloadCount = behaviors.QueueCommitBlockTask.Invocations.Count;
+                    Assert.LessOrEqual(currentCompleteDownloadCount, expectedCompleteFileCount, _commitBlockMsg);
+                }
+            }
+            catch (TaskCanceledException)
+            {
+                string message = "Timed out waiting for the correct amount of invocations for each task\n" +
+                    $"Current Failed Event Invocations: {currentFailedEventCount} | Expected: {expectedFailureCount}\n" +
+                    $"Current Put Block Invocations: {currentPutBlockCount} | Expected: {expectedPutBlockCount}\n" +
+                    $"Current Progress Reported Invocations: {currentProgressReportedCount} | Expected: {expectedReportProgressCount}\n" +
+                    $"Current Commit Block Invocations: {currentCompleteDownloadCount} | Expected: {expectedCompleteFileCount}";
+                Assert.Fail(message);
+            }
+        }
+
         public CommitChunkHandlerTests() { }
 
         private Mock<CommitChunkHandler.QueuePutBlockTaskInternal> GetPutBlockTask()
@@ -54,6 +108,23 @@ namespace Azure.Storage.DataMovement.Tests
             return mock;
         }
 
+        internal struct MockCommitChunkBehaviors
+        {
+            public Mock<CommitChunkHandler.QueuePutBlockTaskInternal> PutBlockTask;
+            public Mock<CommitChunkHandler.ReportProgressInBytes> ReportProgressInBytesTask;
+            public Mock<CommitChunkHandler.QueueCommitBlockTaskInternal> QueueCommitBlockTask;
+            public Mock<CommitChunkHandler.InvokeFailedEventHandlerInternal> InvokeFailedEventHandlerTask;
+        }
+
+        private MockCommitChunkBehaviors GetCommitChunkBehaviors()
+            => new MockCommitChunkBehaviors()
+            {
+                PutBlockTask = GetPutBlockTask(),
+                ReportProgressInBytesTask = GetReportProgressInBytesTask(),
+                QueueCommitBlockTask = GetCommitBlockTask(),
+                InvokeFailedEventHandlerTask = GetInvokeFailedEventHandlerTask()
+            };
+
         [Test]
         [TestCase(512)]
         [TestCase(Constants.KB)]
@@ -62,19 +133,16 @@ namespace Azure.Storage.DataMovement.Tests
         public async Task OneChunkTransfer(long blockSize)
         {
             // Set up tasks
-            var putBlockTask = GetPutBlockTask();
-            var commitBlockTask = GetCommitBlockTask();
-            var reportProgressInBytesTask = GetReportProgressInBytesTask();
-            var invokeFailedEventHandlerTask = GetInvokeFailedEventHandlerTask();
+            MockCommitChunkBehaviors mockCommitChunkBehaviors = GetCommitChunkBehaviors();
             var commitBlockHandler = new CommitChunkHandler(
                 expectedLength: blockSize * 2,
                 blockSize: blockSize,
                 new CommitChunkHandler.Behaviors
                 {
-                    QueuePutBlockTask = putBlockTask.Object,
-                    QueueCommitBlockTask = commitBlockTask.Object,
-                    ReportProgressInBytes = reportProgressInBytesTask.Object,
-                    InvokeFailedHandler = invokeFailedEventHandlerTask.Object,
+                    QueuePutBlockTask = mockCommitChunkBehaviors.PutBlockTask.Object,
+                    QueueCommitBlockTask = mockCommitChunkBehaviors.QueueCommitBlockTask.Object,
+                    ReportProgressInBytes = mockCommitChunkBehaviors.ReportProgressInBytesTask.Object,
+                    InvokeFailedHandler = mockCommitChunkBehaviors.InvokeFailedEventHandlerTask.Object,
                 },
                 TransferType.Concurrent);
 
@@ -88,35 +156,30 @@ namespace Azure.Storage.DataMovement.Tests
                 isRunningSynchronously: false,
                 cancellationToken: CancellationToken.None));
 
-            // Since the events get added to the channel and return immediately, it's
-            // possible the chunks haven't been processed. Let's wait a respectable amount of time.
-            Thread.Sleep(TimeSpan.FromSeconds(2)); // 2 seconds
-
-            // Assert
-            Assert.AreEqual(0, invokeFailedEventHandlerTask.Invocations.Count, "Amount of Report Event Handler calls were incorrect");
-            Assert.AreEqual(0, putBlockTask.Invocations.Count, "Amount of Put Block Task calls were incorrect");
-            Assert.AreEqual(1, commitBlockTask.Invocations.Count, "Amount of Commit Block Task calls were incorrect");
-            Assert.AreEqual(1, reportProgressInBytesTask.Invocations.Count, "Amount of Progress amount calls were incorrect");
+            VerifyDelegateInvocations(
+                behaviors: mockCommitChunkBehaviors,
+                expectedFailureCount: 0,
+                expectedPutBlockCount: 0,
+                expectedReportProgressCount: 1,
+                expectedCompleteFileCount: 1);
         }
+
         [Test]
         [TestCase(512)]
         [TestCase(Constants.KB)]
         public async Task ParallelChunkTransfer(long blockSize)
         {
             // Set up tasks
-            var putBlockTask = GetPutBlockTask();
-            var commitBlockTask = GetCommitBlockTask();
-            var reportProgressInBytesTask = GetReportProgressInBytesTask();
-            var invokeFailedEventHandlerTask = GetInvokeFailedEventHandlerTask();
+            MockCommitChunkBehaviors mockCommitChunkBehaviors = GetCommitChunkBehaviors();
             var commitBlockHandler = new CommitChunkHandler(
                 expectedLength: blockSize * 3,
                 blockSize: blockSize,
                 new CommitChunkHandler.Behaviors
                 {
-                    QueuePutBlockTask = putBlockTask.Object,
-                    QueueCommitBlockTask = commitBlockTask.Object,
-                    ReportProgressInBytes = reportProgressInBytesTask.Object,
-                    InvokeFailedHandler = invokeFailedEventHandlerTask.Object,
+                    QueuePutBlockTask = mockCommitChunkBehaviors.PutBlockTask.Object,
+                    QueueCommitBlockTask = mockCommitChunkBehaviors.QueueCommitBlockTask.Object,
+                    ReportProgressInBytes = mockCommitChunkBehaviors.ReportProgressInBytesTask.Object,
+                    InvokeFailedHandler = mockCommitChunkBehaviors.InvokeFailedEventHandlerTask.Object,
                 },
                 TransferType.Concurrent);
 
@@ -130,15 +193,13 @@ namespace Azure.Storage.DataMovement.Tests
                 isRunningSynchronously: false,
                 cancellationToken: CancellationToken.None));
 
-            // Since the events get added to the channel and return immediately, it's
-            // possible the chunks haven't been processed. Let's wait a respectable amount of time.
-            Thread.Sleep(5); // 2 seconds
-
             // Assert
-            Assert.AreEqual(0, invokeFailedEventHandlerTask.Invocations.Count, "Amount of Failed Event Handler calls were incorrect");
-            Assert.AreEqual(0, putBlockTask.Invocations.Count, "Amount of Put Block Task calls were incorrect");
-            Assert.AreEqual(0, commitBlockTask.Invocations.Count, "Amount of Commit Block Task calls were incorrect");
-            Assert.AreEqual(1, reportProgressInBytesTask.Invocations.Count, "Amount of Progress amount calls were incorrect");
+            VerifyDelegateInvocations(
+                behaviors: mockCommitChunkBehaviors,
+                expectedFailureCount: 0,
+                expectedPutBlockCount: 0,
+                expectedReportProgressCount: 1,
+                expectedCompleteFileCount: 0);
 
             // Now add the last block to meet the required commited block amount.
             await commitBlockHandler.InvokeEvent(new StageChunkEventArgs(
@@ -150,15 +211,13 @@ namespace Azure.Storage.DataMovement.Tests
                 isRunningSynchronously: false,
                 cancellationToken: CancellationToken.None));
 
-            // Since the events get added to the channel and return immediately, it's
-            // possible the chunks haven't been processed. Let's wait a respectable amount of time.
-            Thread.Sleep(TimeSpan.FromSeconds(2)); // 2 seconds
-
             // Assert
-            Assert.AreEqual(0, invokeFailedEventHandlerTask.Invocations.Count, "Amount of Failed Event Handler calls were incorrect");
-            Assert.AreEqual(0, putBlockTask.Invocations.Count, "Amount of Put Block Task calls were incorrect");
-            Assert.AreEqual(1, commitBlockTask.Invocations.Count, "Amount of Commit Block Task calls were incorrect");
-            Assert.AreEqual(2, reportProgressInBytesTask.Invocations.Count, "Amount of Progress amount calls were incorrect");
+            VerifyDelegateInvocations(
+                behaviors: mockCommitChunkBehaviors,
+                expectedFailureCount: 0,
+                expectedPutBlockCount: 0,
+                expectedReportProgressCount: 2,
+                expectedCompleteFileCount: 1);
         }
 
         [Test]
@@ -167,19 +226,16 @@ namespace Azure.Storage.DataMovement.Tests
         public async Task ParallelChunkTransfer_ExceedError(long blockSize)
         {
             // Set up tasks
-            var putBlockTask = GetPutBlockTask();
-            var commitBlockTask = GetCommitBlockTask();
-            var reportProgressInBytesTask = GetReportProgressInBytesTask();
-            var invokeFailedEventHandlerTask = GetInvokeFailedEventHandlerTask();
+            MockCommitChunkBehaviors mockCommitChunkBehaviors = GetCommitChunkBehaviors();
             var commitBlockHandler = new CommitChunkHandler(
                 expectedLength: blockSize * 2,
                 blockSize: blockSize,
                 new CommitChunkHandler.Behaviors
                 {
-                    QueuePutBlockTask = putBlockTask.Object,
-                    QueueCommitBlockTask = commitBlockTask.Object,
-                    ReportProgressInBytes = reportProgressInBytesTask.Object,
-                    InvokeFailedHandler = invokeFailedEventHandlerTask.Object,
+                    QueuePutBlockTask = mockCommitChunkBehaviors.PutBlockTask.Object,
+                    QueueCommitBlockTask = mockCommitChunkBehaviors.QueueCommitBlockTask.Object,
+                    ReportProgressInBytes = mockCommitChunkBehaviors.ReportProgressInBytesTask.Object,
+                    InvokeFailedHandler = mockCommitChunkBehaviors.InvokeFailedEventHandlerTask.Object,
                 },
                 TransferType.Concurrent);
 
@@ -193,15 +249,13 @@ namespace Azure.Storage.DataMovement.Tests
                 isRunningSynchronously: false,
                 cancellationToken: CancellationToken.None));
 
-            // Since the events get added to the channel and return immediately, it's
-            // possible the chunks haven't been processed. Let's wait a respectable amount of time.
-            Thread.Sleep(TimeSpan.FromSeconds(2)); // 2 seconds
-
             // Assert
-            Assert.AreEqual(1, invokeFailedEventHandlerTask.Invocations.Count, "Amount of Failed Event Handler calls were incorrect");
-            Assert.AreEqual(0, putBlockTask.Invocations.Count, "Amount of  Block Task calls were incorrect");
-            Assert.AreEqual(0, commitBlockTask.Invocations.Count, "Amount of Commit Block Task calls were incorrect");
-            Assert.AreEqual(1, reportProgressInBytesTask.Invocations.Count, "Amount of  Progress amount calls were incorrect");
+            VerifyDelegateInvocations(
+                behaviors: mockCommitChunkBehaviors,
+                expectedFailureCount: 1,
+                expectedPutBlockCount: 0,
+                expectedReportProgressCount: 1,
+                expectedCompleteFileCount: 0);
         }
 
         [Test]
@@ -209,22 +263,19 @@ namespace Azure.Storage.DataMovement.Tests
         [TestCase(512, 20)]
         [TestCase(Constants.KB, 4)]
         [TestCase(Constants.KB, 20)]
-        public async Task ParallelChunkTransfer_MultipleProcesses(long blockSize, long taskSize)
+        public async Task ParallelChunkTransfer_MultipleProcesses(long blockSize, int taskSize)
         {
             // Set up tasks
-            var putBlockTask = GetPutBlockTask();
-            var commitBlockTask = GetCommitBlockTask();
-            var reportProgressInBytesTask = GetReportProgressInBytesTask();
-            var invokeFailedEventHandlerTask = GetInvokeFailedEventHandlerTask();
+            MockCommitChunkBehaviors mockCommitChunkBehaviors = GetCommitChunkBehaviors();
             var commitBlockHandler = new CommitChunkHandler(
                 expectedLength: blockSize * (taskSize+1),
                 blockSize: blockSize,
                 new CommitChunkHandler.Behaviors
                 {
-                    QueuePutBlockTask = putBlockTask.Object,
-                    QueueCommitBlockTask = commitBlockTask.Object,
-                    ReportProgressInBytes = reportProgressInBytesTask.Object,
-                    InvokeFailedHandler = invokeFailedEventHandlerTask.Object,
+                    QueuePutBlockTask = mockCommitChunkBehaviors.PutBlockTask.Object,
+                    QueueCommitBlockTask = mockCommitChunkBehaviors.QueueCommitBlockTask.Object,
+                    ReportProgressInBytes = mockCommitChunkBehaviors.ReportProgressInBytesTask.Object,
+                    InvokeFailedHandler = mockCommitChunkBehaviors.InvokeFailedEventHandlerTask.Object,
                 },
                 TransferType.Concurrent);
 
@@ -247,15 +298,13 @@ namespace Azure.Storage.DataMovement.Tests
             // commit the block list to complete the upload
             await Task.WhenAll(runningTasks).ConfigureAwait(false);
 
-            // Since the events get added to the channel and return immediately, it's
-            // possible the chunks haven't been processed. Let's wait a respectable amount of time.
-            Thread.Sleep(5); // 2 seconds
-
             // Assert
-            Assert.AreEqual(0, invokeFailedEventHandlerTask.Invocations.Count, "Amount of Failed Event Handler calls were incorrect");
-            Assert.AreEqual(0, putBlockTask.Invocations.Count, "Amount of Put Block Task calls were incorrect");
-            Assert.AreEqual(1, commitBlockTask.Invocations.Count, "Amount of Commit Block Task calls were incorrect");
-            Assert.AreEqual(taskSize, reportProgressInBytesTask.Invocations.Count, "Amount of Progress amount calls were incorrect");
+            VerifyDelegateInvocations(
+                behaviors: mockCommitChunkBehaviors,
+                expectedFailureCount: 0,
+                expectedPutBlockCount: 0,
+                expectedReportProgressCount: taskSize,
+                expectedCompleteFileCount: 1);
         }
 
         [Test]
@@ -264,19 +313,16 @@ namespace Azure.Storage.DataMovement.Tests
         public async Task SequentialChunkTransfer(long blockSize)
         {
             // Set up tasks
-            var putBlockTask = GetPutBlockTask();
-            var commitBlockTask = GetCommitBlockTask();
-            var reportProgressInBytesTask = GetReportProgressInBytesTask();
-            var invokeFailedEventHandlerTask = GetInvokeFailedEventHandlerTask();
+            MockCommitChunkBehaviors mockCommitChunkBehaviors = GetCommitChunkBehaviors();
             var commitBlockHandler = new CommitChunkHandler(
                 expectedLength: blockSize * 3,
                 blockSize: blockSize,
                 new CommitChunkHandler.Behaviors
                 {
-                    QueuePutBlockTask = putBlockTask.Object,
-                    QueueCommitBlockTask = commitBlockTask.Object,
-                    ReportProgressInBytes = reportProgressInBytesTask.Object,
-                    InvokeFailedHandler = invokeFailedEventHandlerTask.Object,
+                    QueuePutBlockTask = mockCommitChunkBehaviors.PutBlockTask.Object,
+                    QueueCommitBlockTask = mockCommitChunkBehaviors.QueueCommitBlockTask.Object,
+                    ReportProgressInBytes = mockCommitChunkBehaviors.ReportProgressInBytesTask.Object,
+                    InvokeFailedHandler = mockCommitChunkBehaviors.InvokeFailedEventHandlerTask.Object,
                 },
                 TransferType.Sequential);
 
@@ -290,15 +336,13 @@ namespace Azure.Storage.DataMovement.Tests
                 isRunningSynchronously: false,
                 cancellationToken: CancellationToken.None));
 
-            // Since the events get added to the channel and return immediately, it's
-            // possible the chunks haven't been processed. Let's wait a respectable amount of time.
-            Thread.Sleep(TimeSpan.FromSeconds(2)); // 2 seconds
-
             // Assert
-            Assert.AreEqual(0, invokeFailedEventHandlerTask.Invocations.Count, "Amount of Failed Event Handler calls were incorrect");
-            Assert.AreEqual(1, putBlockTask.Invocations.Count, "Amount of Put Block Task calls were incorrect");
-            Assert.AreEqual(0, commitBlockTask.Invocations.Count, "Amount of Commit Block Task calls were incorrect");
-            Assert.AreEqual(1, reportProgressInBytesTask.Invocations.Count, "Amount of Progress amount calls were incorrect");
+            VerifyDelegateInvocations(
+                behaviors: mockCommitChunkBehaviors,
+                expectedFailureCount: 0,
+                expectedPutBlockCount: 1,
+                expectedReportProgressCount: 1,
+                expectedCompleteFileCount: 0);
 
             // Now add the last block to meet the required commited block amount.
             await commitBlockHandler.InvokeEvent(new StageChunkEventArgs(
@@ -310,15 +354,13 @@ namespace Azure.Storage.DataMovement.Tests
                 isRunningSynchronously: false,
                 cancellationToken: CancellationToken.None));
 
-            // Since the events get added to the channel and return immediately, it's
-            // possible the chunks haven't been processed. Let's wait a respectable amount of time.
-            Thread.Sleep(5); // 2 seconds
-
             // Assert
-            Assert.AreEqual(0, invokeFailedEventHandlerTask.Invocations.Count, "Amount of Failed Event Handler calls were incorrect");
-            Assert.AreEqual(1, putBlockTask.Invocations.Count, "Amount of Put Block Task calls were incorrect");
-            Assert.AreEqual(1, commitBlockTask.Invocations.Count, "Amount of Commit Block Task calls were incorrect");
-            Assert.AreEqual(2, reportProgressInBytesTask.Invocations.Count, "Amount of Progress amount calls were incorrect");
+            VerifyDelegateInvocations(
+                behaviors: mockCommitChunkBehaviors,
+                expectedFailureCount: 0,
+                expectedPutBlockCount: 1,
+                expectedReportProgressCount: 2,
+                expectedCompleteFileCount: 1);
         }
 
         [Test]
@@ -327,19 +369,16 @@ namespace Azure.Storage.DataMovement.Tests
         public async Task SequentialChunkTransfer_ExceedError(long blockSize)
         {
             // Set up tasks
-            var putBlockTask = GetPutBlockTask();
-            var commitBlockTask = GetCommitBlockTask();
-            var reportProgressInBytesTask = GetReportProgressInBytesTask();
-            var invokeFailedEventHandlerTask = GetInvokeFailedEventHandlerTask();
+            MockCommitChunkBehaviors mockCommitChunkBehaviors = GetCommitChunkBehaviors();
             var commitBlockHandler = new CommitChunkHandler(
                 expectedLength: blockSize * 2,
                 blockSize: blockSize,
                 new CommitChunkHandler.Behaviors
                 {
-                    QueuePutBlockTask = putBlockTask.Object,
-                    QueueCommitBlockTask = commitBlockTask.Object,
-                    ReportProgressInBytes = reportProgressInBytesTask.Object,
-                    InvokeFailedHandler = invokeFailedEventHandlerTask.Object,
+                    QueuePutBlockTask = mockCommitChunkBehaviors.PutBlockTask.Object,
+                    QueueCommitBlockTask = mockCommitChunkBehaviors.QueueCommitBlockTask.Object,
+                    ReportProgressInBytes = mockCommitChunkBehaviors.ReportProgressInBytesTask.Object,
+                    InvokeFailedHandler = mockCommitChunkBehaviors.InvokeFailedEventHandlerTask.Object,
                 },
                 TransferType.Sequential);
 
@@ -353,15 +392,13 @@ namespace Azure.Storage.DataMovement.Tests
                 isRunningSynchronously: false,
                 cancellationToken: CancellationToken.None));
 
-            // Since the events get added to the channel and return immediately, it's
-            // possible the chunks haven't been processed. Let's wait a respectable amount of time.
-            Thread.Sleep(TimeSpan.FromSeconds(2)); // 2 seconds
-
             // Assert
-            Assert.AreEqual(1, invokeFailedEventHandlerTask.Invocations.Count, "Amount of Failed Event Handler calls were incorrect");
-            Assert.AreEqual(0, putBlockTask.Invocations.Count, "Amount of  Block Task calls were incorrect");
-            Assert.AreEqual(0, commitBlockTask.Invocations.Count, "Amount of Commit Block Task calls were incorrect");
-            Assert.AreEqual(1, reportProgressInBytesTask.Invocations.Count, "Amount of  Progress amount calls were incorrect");
+            VerifyDelegateInvocations(
+                behaviors: mockCommitChunkBehaviors,
+                expectedFailureCount: 1,
+                expectedPutBlockCount: 0,
+                expectedReportProgressCount: 1,
+                expectedCompleteFileCount: 0);
         }
     }
 }
