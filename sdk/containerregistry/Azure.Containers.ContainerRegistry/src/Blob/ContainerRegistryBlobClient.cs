@@ -703,8 +703,8 @@ namespace Azure.Containers.ContainerRegistry.Specialized
 
             // Download in multiple chunks.
             byte[] buffer = ArrayPool<byte>.Shared.Rent(maxChunkSize);
-            int chunkCount = 0;
-            int bytesDownloaded = 0;
+            long chunkCount = 0;
+            long bytesDownloaded = 0;
             using SHA256 sha256 = SHA256.Create();
 
             try
@@ -714,8 +714,7 @@ namespace Azure.Containers.ContainerRegistry.Specialized
                 while (bytesDownloaded < blobLength)
                 {
                     int chunkSize = (int)Math.Min(blobLength - bytesDownloaded, maxChunkSize);
-                    int offset = bytesDownloaded;
-                    HttpRange range = new HttpRange(offset, chunkSize);
+                    HttpRange range = new HttpRange(bytesDownloaded, chunkSize);
 
                     ResponseWithHeaders<Stream, ContainerRegistryBlobGetChunkHeaders> chunkResult = async ?
                         await _blobRestClient.GetChunkAsync(_repositoryName, digest, range.ToString(), cancellationToken).ConfigureAwait(false) :
