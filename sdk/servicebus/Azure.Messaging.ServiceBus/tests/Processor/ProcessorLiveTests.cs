@@ -1099,7 +1099,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                     // decrease prefetch
                     if (count == 100)
                     {
-                        processor.UpdatePrefetch(1);
+                        processor.UpdatePrefetchCount(1);
                         Assert.AreEqual(20, processor.MaxConcurrentCalls);
                         Assert.AreEqual(1, processor.PrefetchCount);
                     }
@@ -1108,7 +1108,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                     if (count == 150)
                     {
                         Assert.LessOrEqual(processor.TaskTuples.Where(t => !t.Task.IsCompleted).Count(), 20);
-                        processor.UpdatePrefetch(10);
+                        processor.UpdatePrefetchCount(10);
                         Assert.AreEqual(20, processor.MaxConcurrentCalls);
                         Assert.AreEqual(10, processor.PrefetchCount);
                     }

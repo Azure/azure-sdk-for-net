@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -120,37 +119,9 @@ namespace Azure.ResourceManager.Resources
         /// <returns> An async collection of <see cref="FeatureResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<FeatureResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<FeatureResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _featureClientDiagnostics.CreateScope("FeatureCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _featureRestClient.ListAsync(Id.SubscriptionId, Id.Provider, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new FeatureResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<FeatureResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _featureClientDiagnostics.CreateScope("FeatureCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _featureRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, Id.Provider, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new FeatureResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _featureRestClient.CreateListRequest(Id.SubscriptionId, Id.Provider);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _featureRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.Provider);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new FeatureResource(Client, FeatureData.DeserializeFeatureData(e)), _featureClientDiagnostics, Pipeline, "FeatureCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -162,37 +133,9 @@ namespace Azure.ResourceManager.Resources
         /// <returns> A collection of <see cref="FeatureResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<FeatureResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<FeatureResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _featureClientDiagnostics.CreateScope("FeatureCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _featureRestClient.List(Id.SubscriptionId, Id.Provider, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new FeatureResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<FeatureResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _featureClientDiagnostics.CreateScope("FeatureCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _featureRestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.Provider, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new FeatureResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _featureRestClient.CreateListRequest(Id.SubscriptionId, Id.Provider);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _featureRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.Provider);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new FeatureResource(Client, FeatureData.DeserializeFeatureData(e)), _featureClientDiagnostics, Pipeline, "FeatureCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

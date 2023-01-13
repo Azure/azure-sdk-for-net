@@ -386,22 +386,8 @@ namespace Azure.ResourceManager.Network
         /// <returns> An async collection of <see cref="ResourceNavigationLink" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ResourceNavigationLink> GetResourceNavigationLinksAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<ResourceNavigationLink>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _resourceNavigationLinksClientDiagnostics.CreateScope("SubnetResource.GetResourceNavigationLinks");
-                scope.Start();
-                try
-                {
-                    var response = await _resourceNavigationLinksRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _resourceNavigationLinksRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, ResourceNavigationLink.DeserializeResourceNavigationLink, _resourceNavigationLinksClientDiagnostics, Pipeline, "SubnetResource.GetResourceNavigationLinks", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -413,22 +399,8 @@ namespace Azure.ResourceManager.Network
         /// <returns> A collection of <see cref="ResourceNavigationLink" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ResourceNavigationLink> GetResourceNavigationLinks(CancellationToken cancellationToken = default)
         {
-            Page<ResourceNavigationLink> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _resourceNavigationLinksClientDiagnostics.CreateScope("SubnetResource.GetResourceNavigationLinks");
-                scope.Start();
-                try
-                {
-                    var response = _resourceNavigationLinksRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _resourceNavigationLinksRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, ResourceNavigationLink.DeserializeResourceNavigationLink, _resourceNavigationLinksClientDiagnostics, Pipeline, "SubnetResource.GetResourceNavigationLinks", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -440,22 +412,8 @@ namespace Azure.ResourceManager.Network
         /// <returns> An async collection of <see cref="ServiceAssociationLink" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ServiceAssociationLink> GetServiceAssociationLinksAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<ServiceAssociationLink>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _serviceAssociationLinksClientDiagnostics.CreateScope("SubnetResource.GetServiceAssociationLinks");
-                scope.Start();
-                try
-                {
-                    var response = await _serviceAssociationLinksRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _serviceAssociationLinksRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, ServiceAssociationLink.DeserializeServiceAssociationLink, _serviceAssociationLinksClientDiagnostics, Pipeline, "SubnetResource.GetServiceAssociationLinks", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -467,22 +425,8 @@ namespace Azure.ResourceManager.Network
         /// <returns> A collection of <see cref="ServiceAssociationLink" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ServiceAssociationLink> GetServiceAssociationLinks(CancellationToken cancellationToken = default)
         {
-            Page<ServiceAssociationLink> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _serviceAssociationLinksClientDiagnostics.CreateScope("SubnetResource.GetServiceAssociationLinks");
-                scope.Start();
-                try
-                {
-                    var response = _serviceAssociationLinksRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _serviceAssociationLinksRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, ServiceAssociationLink.DeserializeServiceAssociationLink, _serviceAssociationLinksClientDiagnostics, Pipeline, "SubnetResource.GetServiceAssociationLinks", "value", null, cancellationToken);
         }
     }
 }

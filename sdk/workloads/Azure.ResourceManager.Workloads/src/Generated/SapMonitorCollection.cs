@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -187,37 +186,9 @@ namespace Azure.ResourceManager.Workloads
         /// <returns> An async collection of <see cref="SapMonitorResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SapMonitorResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<SapMonitorResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _sapMonitormonitorsClientDiagnostics.CreateScope("SapMonitorCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _sapMonitormonitorsRestClient.ListByResourceGroupAsync(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new SapMonitorResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<SapMonitorResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _sapMonitormonitorsClientDiagnostics.CreateScope("SapMonitorCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _sapMonitormonitorsRestClient.ListByResourceGroupNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new SapMonitorResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _sapMonitormonitorsRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _sapMonitormonitorsRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SapMonitorResource(Client, SapMonitorData.DeserializeSapMonitorData(e)), _sapMonitormonitorsClientDiagnostics, Pipeline, "SapMonitorCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -229,37 +200,9 @@ namespace Azure.ResourceManager.Workloads
         /// <returns> A collection of <see cref="SapMonitorResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SapMonitorResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<SapMonitorResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _sapMonitormonitorsClientDiagnostics.CreateScope("SapMonitorCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _sapMonitormonitorsRestClient.ListByResourceGroup(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new SapMonitorResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<SapMonitorResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _sapMonitormonitorsClientDiagnostics.CreateScope("SapMonitorCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _sapMonitormonitorsRestClient.ListByResourceGroupNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new SapMonitorResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _sapMonitormonitorsRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _sapMonitormonitorsRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SapMonitorResource(Client, SapMonitorData.DeserializeSapMonitorData(e)), _sapMonitormonitorsClientDiagnostics, Pipeline, "SapMonitorCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

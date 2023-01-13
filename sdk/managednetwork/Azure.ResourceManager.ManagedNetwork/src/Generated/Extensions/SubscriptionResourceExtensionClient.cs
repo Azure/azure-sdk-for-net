@@ -6,9 +6,7 @@
 #nullable disable
 
 using System;
-using System.Linq;
 using System.Threading;
-using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -54,37 +52,9 @@ namespace Azure.ResourceManager.ManagedNetwork
         /// <returns> An async collection of <see cref="ManagedNetworkResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ManagedNetworkResource> GetManagedNetworksAsync(int? top = null, string skiptoken = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<ManagedNetworkResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = ManagedNetworkClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetManagedNetworks");
-                scope.Start();
-                try
-                {
-                    var response = await ManagedNetworkRestClient.ListBySubscriptionAsync(Id.SubscriptionId, top, skiptoken, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ManagedNetworkResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<ManagedNetworkResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = ManagedNetworkClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetManagedNetworks");
-                scope.Start();
-                try
-                {
-                    var response = await ManagedNetworkRestClient.ListBySubscriptionNextPageAsync(nextLink, Id.SubscriptionId, top, skiptoken, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ManagedNetworkResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => ManagedNetworkRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, top, skiptoken);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ManagedNetworkRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, top, skiptoken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ManagedNetworkResource(Client, ManagedNetworkData.DeserializeManagedNetworkData(e)), ManagedNetworkClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetManagedNetworks", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -98,37 +68,9 @@ namespace Azure.ResourceManager.ManagedNetwork
         /// <returns> A collection of <see cref="ManagedNetworkResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ManagedNetworkResource> GetManagedNetworks(int? top = null, string skiptoken = null, CancellationToken cancellationToken = default)
         {
-            Page<ManagedNetworkResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = ManagedNetworkClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetManagedNetworks");
-                scope.Start();
-                try
-                {
-                    var response = ManagedNetworkRestClient.ListBySubscription(Id.SubscriptionId, top, skiptoken, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ManagedNetworkResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<ManagedNetworkResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = ManagedNetworkClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetManagedNetworks");
-                scope.Start();
-                try
-                {
-                    var response = ManagedNetworkRestClient.ListBySubscriptionNextPage(nextLink, Id.SubscriptionId, top, skiptoken, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ManagedNetworkResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => ManagedNetworkRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, top, skiptoken);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ManagedNetworkRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, top, skiptoken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ManagedNetworkResource(Client, ManagedNetworkData.DeserializeManagedNetworkData(e)), ManagedNetworkClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetManagedNetworks", "value", "nextLink", cancellationToken);
         }
     }
 }

@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -186,37 +185,9 @@ namespace Azure.ResourceManager.Avs
         /// <returns> An async collection of <see cref="WorkloadNetworkVmGroupResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<WorkloadNetworkVmGroupResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<WorkloadNetworkVmGroupResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _workloadNetworkVmGroupWorkloadNetworksClientDiagnostics.CreateScope("WorkloadNetworkVmGroupCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _workloadNetworkVmGroupWorkloadNetworksRestClient.ListVmGroupsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new WorkloadNetworkVmGroupResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<WorkloadNetworkVmGroupResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _workloadNetworkVmGroupWorkloadNetworksClientDiagnostics.CreateScope("WorkloadNetworkVmGroupCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _workloadNetworkVmGroupWorkloadNetworksRestClient.ListVmGroupsNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new WorkloadNetworkVmGroupResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _workloadNetworkVmGroupWorkloadNetworksRestClient.CreateListVmGroupsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _workloadNetworkVmGroupWorkloadNetworksRestClient.CreateListVmGroupsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new WorkloadNetworkVmGroupResource(Client, WorkloadNetworkVmGroupData.DeserializeWorkloadNetworkVmGroupData(e)), _workloadNetworkVmGroupWorkloadNetworksClientDiagnostics, Pipeline, "WorkloadNetworkVmGroupCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -228,37 +199,9 @@ namespace Azure.ResourceManager.Avs
         /// <returns> A collection of <see cref="WorkloadNetworkVmGroupResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<WorkloadNetworkVmGroupResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<WorkloadNetworkVmGroupResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _workloadNetworkVmGroupWorkloadNetworksClientDiagnostics.CreateScope("WorkloadNetworkVmGroupCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _workloadNetworkVmGroupWorkloadNetworksRestClient.ListVmGroups(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new WorkloadNetworkVmGroupResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<WorkloadNetworkVmGroupResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _workloadNetworkVmGroupWorkloadNetworksClientDiagnostics.CreateScope("WorkloadNetworkVmGroupCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _workloadNetworkVmGroupWorkloadNetworksRestClient.ListVmGroupsNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new WorkloadNetworkVmGroupResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _workloadNetworkVmGroupWorkloadNetworksRestClient.CreateListVmGroupsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _workloadNetworkVmGroupWorkloadNetworksRestClient.CreateListVmGroupsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new WorkloadNetworkVmGroupResource(Client, WorkloadNetworkVmGroupData.DeserializeWorkloadNetworkVmGroupData(e)), _workloadNetworkVmGroupWorkloadNetworksClientDiagnostics, Pipeline, "WorkloadNetworkVmGroupCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

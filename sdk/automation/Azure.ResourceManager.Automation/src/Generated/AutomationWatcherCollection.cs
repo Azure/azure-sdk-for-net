@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -187,37 +186,9 @@ namespace Azure.ResourceManager.Automation
         /// <returns> An async collection of <see cref="AutomationWatcherResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<AutomationWatcherResource> GetAllAsync(string filter = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<AutomationWatcherResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _automationWatcherWatcherClientDiagnostics.CreateScope("AutomationWatcherCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _automationWatcherWatcherRestClient.ListByAutomationAccountAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new AutomationWatcherResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<AutomationWatcherResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _automationWatcherWatcherClientDiagnostics.CreateScope("AutomationWatcherCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _automationWatcherWatcherRestClient.ListByAutomationAccountNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new AutomationWatcherResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _automationWatcherWatcherRestClient.CreateListByAutomationAccountRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _automationWatcherWatcherRestClient.CreateListByAutomationAccountNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new AutomationWatcherResource(Client, AutomationWatcherData.DeserializeAutomationWatcherData(e)), _automationWatcherWatcherClientDiagnostics, Pipeline, "AutomationWatcherCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -230,37 +201,9 @@ namespace Azure.ResourceManager.Automation
         /// <returns> A collection of <see cref="AutomationWatcherResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<AutomationWatcherResource> GetAll(string filter = null, CancellationToken cancellationToken = default)
         {
-            Page<AutomationWatcherResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _automationWatcherWatcherClientDiagnostics.CreateScope("AutomationWatcherCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _automationWatcherWatcherRestClient.ListByAutomationAccount(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new AutomationWatcherResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<AutomationWatcherResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _automationWatcherWatcherClientDiagnostics.CreateScope("AutomationWatcherCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _automationWatcherWatcherRestClient.ListByAutomationAccountNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new AutomationWatcherResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _automationWatcherWatcherRestClient.CreateListByAutomationAccountRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _automationWatcherWatcherRestClient.CreateListByAutomationAccountNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new AutomationWatcherResource(Client, AutomationWatcherData.DeserializeAutomationWatcherData(e)), _automationWatcherWatcherClientDiagnostics, Pipeline, "AutomationWatcherCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

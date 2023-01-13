@@ -963,45 +963,6 @@ namespace Azure.ResourceManager.Sql
             return resourceGroupResource.GetManagedInstances().Get(managedInstanceName, expand, cancellationToken);
         }
 
-        /// <summary> Gets a collection of ManagedDatabaseMoveOperationResultResources in the ResourceGroupResource. </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="locationName"> The String to use. </param>
-        /// <returns> An object representing collection of ManagedDatabaseMoveOperationResultResources and their operations over a ManagedDatabaseMoveOperationResultResource. </returns>
-        public static ManagedDatabaseMoveOperationResultCollection GetManagedDatabaseMoveOperationResults(this ResourceGroupResource resourceGroupResource, AzureLocation locationName)
-        {
-            return GetExtensionClient(resourceGroupResource).GetManagedDatabaseMoveOperationResults(locationName);
-        }
-
-        /// <summary>
-        /// Gets a managed database move operation.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/locations/{locationName}/managedDatabaseMoveOperationResults/{operationId}
-        /// Operation Id: ManagedDatabaseMoveOperations_Get
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="locationName"> The String to use. </param>
-        /// <param name="operationId"> The Uuid to use. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        [ForwardsClientCalls]
-        public static async Task<Response<ManagedDatabaseMoveOperationResultResource>> GetManagedDatabaseMoveOperationResultAsync(this ResourceGroupResource resourceGroupResource, AzureLocation locationName, Guid operationId, CancellationToken cancellationToken = default)
-        {
-            return await resourceGroupResource.GetManagedDatabaseMoveOperationResults(locationName).GetAsync(operationId, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Gets a managed database move operation.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/locations/{locationName}/managedDatabaseMoveOperationResults/{operationId}
-        /// Operation Id: ManagedDatabaseMoveOperations_Get
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="locationName"> The String to use. </param>
-        /// <param name="operationId"> The Uuid to use. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        [ForwardsClientCalls]
-        public static Response<ManagedDatabaseMoveOperationResultResource> GetManagedDatabaseMoveOperationResult(this ResourceGroupResource resourceGroupResource, AzureLocation locationName, Guid operationId, CancellationToken cancellationToken = default)
-        {
-            return resourceGroupResource.GetManagedDatabaseMoveOperationResults(locationName).Get(operationId, cancellationToken);
-        }
-
         /// <summary> Gets a collection of VirtualClusterResources in the ResourceGroupResource. </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of VirtualClusterResources and their operations over a VirtualClusterResource. </returns>
@@ -3185,191 +3146,191 @@ namespace Azure.ResourceManager.Sql
         }
         #endregion
 
-        #region ServerDatabaseSqlVulnerabilityAssessmentBaselineResource
+        #region SqlDatabaseSqlVulnerabilityAssessmentBaselineResource
         /// <summary>
-        /// Gets an object representing a <see cref="ServerDatabaseSqlVulnerabilityAssessmentBaselineResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ServerDatabaseSqlVulnerabilityAssessmentBaselineResource.CreateResourceIdentifier" /> to create a <see cref="ServerDatabaseSqlVulnerabilityAssessmentBaselineResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="SqlDatabaseSqlVulnerabilityAssessmentBaselineResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SqlDatabaseSqlVulnerabilityAssessmentBaselineResource.CreateResourceIdentifier" /> to create a <see cref="SqlDatabaseSqlVulnerabilityAssessmentBaselineResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ServerDatabaseSqlVulnerabilityAssessmentBaselineResource" /> object. </returns>
-        public static ServerDatabaseSqlVulnerabilityAssessmentBaselineResource GetServerDatabaseSqlVulnerabilityAssessmentBaselineResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SqlDatabaseSqlVulnerabilityAssessmentBaselineResource" /> object. </returns>
+        public static SqlDatabaseSqlVulnerabilityAssessmentBaselineResource GetSqlDatabaseSqlVulnerabilityAssessmentBaselineResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                ServerDatabaseSqlVulnerabilityAssessmentBaselineResource.ValidateResourceId(id);
-                return new ServerDatabaseSqlVulnerabilityAssessmentBaselineResource(client, id);
+                SqlDatabaseSqlVulnerabilityAssessmentBaselineResource.ValidateResourceId(id);
+                return new SqlDatabaseSqlVulnerabilityAssessmentBaselineResource(client, id);
             }
             );
         }
         #endregion
 
-        #region ServerSqlVulnerabilityAssessmentBaselineResource
+        #region SqlServerSqlVulnerabilityAssessmentBaselineResource
         /// <summary>
-        /// Gets an object representing a <see cref="ServerSqlVulnerabilityAssessmentBaselineResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ServerSqlVulnerabilityAssessmentBaselineResource.CreateResourceIdentifier" /> to create a <see cref="ServerSqlVulnerabilityAssessmentBaselineResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="SqlServerSqlVulnerabilityAssessmentBaselineResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SqlServerSqlVulnerabilityAssessmentBaselineResource.CreateResourceIdentifier" /> to create a <see cref="SqlServerSqlVulnerabilityAssessmentBaselineResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ServerSqlVulnerabilityAssessmentBaselineResource" /> object. </returns>
-        public static ServerSqlVulnerabilityAssessmentBaselineResource GetServerSqlVulnerabilityAssessmentBaselineResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SqlServerSqlVulnerabilityAssessmentBaselineResource" /> object. </returns>
+        public static SqlServerSqlVulnerabilityAssessmentBaselineResource GetSqlServerSqlVulnerabilityAssessmentBaselineResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                ServerSqlVulnerabilityAssessmentBaselineResource.ValidateResourceId(id);
-                return new ServerSqlVulnerabilityAssessmentBaselineResource(client, id);
+                SqlServerSqlVulnerabilityAssessmentBaselineResource.ValidateResourceId(id);
+                return new SqlServerSqlVulnerabilityAssessmentBaselineResource(client, id);
             }
             );
         }
         #endregion
 
-        #region ServerDatabaseSqlVulnerabilityAssessmentBaselineRuleResource
+        #region SqlDatabaseSqlVulnerabilityAssessmentBaselineRuleResource
         /// <summary>
-        /// Gets an object representing a <see cref="ServerDatabaseSqlVulnerabilityAssessmentBaselineRuleResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ServerDatabaseSqlVulnerabilityAssessmentBaselineRuleResource.CreateResourceIdentifier" /> to create a <see cref="ServerDatabaseSqlVulnerabilityAssessmentBaselineRuleResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="SqlDatabaseSqlVulnerabilityAssessmentBaselineRuleResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SqlDatabaseSqlVulnerabilityAssessmentBaselineRuleResource.CreateResourceIdentifier" /> to create a <see cref="SqlDatabaseSqlVulnerabilityAssessmentBaselineRuleResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ServerDatabaseSqlVulnerabilityAssessmentBaselineRuleResource" /> object. </returns>
-        public static ServerDatabaseSqlVulnerabilityAssessmentBaselineRuleResource GetServerDatabaseSqlVulnerabilityAssessmentBaselineRuleResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SqlDatabaseSqlVulnerabilityAssessmentBaselineRuleResource" /> object. </returns>
+        public static SqlDatabaseSqlVulnerabilityAssessmentBaselineRuleResource GetSqlDatabaseSqlVulnerabilityAssessmentBaselineRuleResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                ServerDatabaseSqlVulnerabilityAssessmentBaselineRuleResource.ValidateResourceId(id);
-                return new ServerDatabaseSqlVulnerabilityAssessmentBaselineRuleResource(client, id);
+                SqlDatabaseSqlVulnerabilityAssessmentBaselineRuleResource.ValidateResourceId(id);
+                return new SqlDatabaseSqlVulnerabilityAssessmentBaselineRuleResource(client, id);
             }
             );
         }
         #endregion
 
-        #region ServerSqlVulnerabilityAssessmentBaselineRuleResource
+        #region SqlServerSqlVulnerabilityAssessmentBaselineRuleResource
         /// <summary>
-        /// Gets an object representing a <see cref="ServerSqlVulnerabilityAssessmentBaselineRuleResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ServerSqlVulnerabilityAssessmentBaselineRuleResource.CreateResourceIdentifier" /> to create a <see cref="ServerSqlVulnerabilityAssessmentBaselineRuleResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="SqlServerSqlVulnerabilityAssessmentBaselineRuleResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SqlServerSqlVulnerabilityAssessmentBaselineRuleResource.CreateResourceIdentifier" /> to create a <see cref="SqlServerSqlVulnerabilityAssessmentBaselineRuleResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ServerSqlVulnerabilityAssessmentBaselineRuleResource" /> object. </returns>
-        public static ServerSqlVulnerabilityAssessmentBaselineRuleResource GetServerSqlVulnerabilityAssessmentBaselineRuleResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SqlServerSqlVulnerabilityAssessmentBaselineRuleResource" /> object. </returns>
+        public static SqlServerSqlVulnerabilityAssessmentBaselineRuleResource GetSqlServerSqlVulnerabilityAssessmentBaselineRuleResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                ServerSqlVulnerabilityAssessmentBaselineRuleResource.ValidateResourceId(id);
-                return new ServerSqlVulnerabilityAssessmentBaselineRuleResource(client, id);
+                SqlServerSqlVulnerabilityAssessmentBaselineRuleResource.ValidateResourceId(id);
+                return new SqlServerSqlVulnerabilityAssessmentBaselineRuleResource(client, id);
             }
             );
         }
         #endregion
 
-        #region ServerDatabaseSqlVulnerabilityAssessmentScanScanResultResource
+        #region SqlDatabaseSqlVulnerabilityAssessmentScanResultResource
         /// <summary>
-        /// Gets an object representing a <see cref="ServerDatabaseSqlVulnerabilityAssessmentScanScanResultResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ServerDatabaseSqlVulnerabilityAssessmentScanScanResultResource.CreateResourceIdentifier" /> to create a <see cref="ServerDatabaseSqlVulnerabilityAssessmentScanScanResultResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="SqlDatabaseSqlVulnerabilityAssessmentScanResultResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SqlDatabaseSqlVulnerabilityAssessmentScanResultResource.CreateResourceIdentifier" /> to create a <see cref="SqlDatabaseSqlVulnerabilityAssessmentScanResultResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ServerDatabaseSqlVulnerabilityAssessmentScanScanResultResource" /> object. </returns>
-        public static ServerDatabaseSqlVulnerabilityAssessmentScanScanResultResource GetServerDatabaseSqlVulnerabilityAssessmentScanScanResultResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SqlDatabaseSqlVulnerabilityAssessmentScanResultResource" /> object. </returns>
+        public static SqlDatabaseSqlVulnerabilityAssessmentScanResultResource GetSqlDatabaseSqlVulnerabilityAssessmentScanResultResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                ServerDatabaseSqlVulnerabilityAssessmentScanScanResultResource.ValidateResourceId(id);
-                return new ServerDatabaseSqlVulnerabilityAssessmentScanScanResultResource(client, id);
+                SqlDatabaseSqlVulnerabilityAssessmentScanResultResource.ValidateResourceId(id);
+                return new SqlDatabaseSqlVulnerabilityAssessmentScanResultResource(client, id);
             }
             );
         }
         #endregion
 
-        #region ServerSqlVulnerabilityAssessmentScanScanResultResource
+        #region SqlServerSqlVulnerabilityAssessmentScanResultResource
         /// <summary>
-        /// Gets an object representing a <see cref="ServerSqlVulnerabilityAssessmentScanScanResultResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ServerSqlVulnerabilityAssessmentScanScanResultResource.CreateResourceIdentifier" /> to create a <see cref="ServerSqlVulnerabilityAssessmentScanScanResultResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="SqlServerSqlVulnerabilityAssessmentScanResultResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SqlServerSqlVulnerabilityAssessmentScanResultResource.CreateResourceIdentifier" /> to create a <see cref="SqlServerSqlVulnerabilityAssessmentScanResultResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ServerSqlVulnerabilityAssessmentScanScanResultResource" /> object. </returns>
-        public static ServerSqlVulnerabilityAssessmentScanScanResultResource GetServerSqlVulnerabilityAssessmentScanScanResultResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SqlServerSqlVulnerabilityAssessmentScanResultResource" /> object. </returns>
+        public static SqlServerSqlVulnerabilityAssessmentScanResultResource GetSqlServerSqlVulnerabilityAssessmentScanResultResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                ServerSqlVulnerabilityAssessmentScanScanResultResource.ValidateResourceId(id);
-                return new ServerSqlVulnerabilityAssessmentScanScanResultResource(client, id);
+                SqlServerSqlVulnerabilityAssessmentScanResultResource.ValidateResourceId(id);
+                return new SqlServerSqlVulnerabilityAssessmentScanResultResource(client, id);
             }
             );
         }
         #endregion
 
-        #region ServerDatabaseSqlVulnerabilityAssessmentScanResource
+        #region SqlDatabaseSqlVulnerabilityAssessmentScanResource
         /// <summary>
-        /// Gets an object representing a <see cref="ServerDatabaseSqlVulnerabilityAssessmentScanResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ServerDatabaseSqlVulnerabilityAssessmentScanResource.CreateResourceIdentifier" /> to create a <see cref="ServerDatabaseSqlVulnerabilityAssessmentScanResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="SqlDatabaseSqlVulnerabilityAssessmentScanResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SqlDatabaseSqlVulnerabilityAssessmentScanResource.CreateResourceIdentifier" /> to create a <see cref="SqlDatabaseSqlVulnerabilityAssessmentScanResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ServerDatabaseSqlVulnerabilityAssessmentScanResource" /> object. </returns>
-        public static ServerDatabaseSqlVulnerabilityAssessmentScanResource GetServerDatabaseSqlVulnerabilityAssessmentScanResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SqlDatabaseSqlVulnerabilityAssessmentScanResource" /> object. </returns>
+        public static SqlDatabaseSqlVulnerabilityAssessmentScanResource GetSqlDatabaseSqlVulnerabilityAssessmentScanResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                ServerDatabaseSqlVulnerabilityAssessmentScanResource.ValidateResourceId(id);
-                return new ServerDatabaseSqlVulnerabilityAssessmentScanResource(client, id);
+                SqlDatabaseSqlVulnerabilityAssessmentScanResource.ValidateResourceId(id);
+                return new SqlDatabaseSqlVulnerabilityAssessmentScanResource(client, id);
             }
             );
         }
         #endregion
 
-        #region ServerSqlVulnerabilityAssessmentScanResource
+        #region SqlServerSqlVulnerabilityAssessmentScanResource
         /// <summary>
-        /// Gets an object representing a <see cref="ServerSqlVulnerabilityAssessmentScanResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ServerSqlVulnerabilityAssessmentScanResource.CreateResourceIdentifier" /> to create a <see cref="ServerSqlVulnerabilityAssessmentScanResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="SqlServerSqlVulnerabilityAssessmentScanResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SqlServerSqlVulnerabilityAssessmentScanResource.CreateResourceIdentifier" /> to create a <see cref="SqlServerSqlVulnerabilityAssessmentScanResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ServerSqlVulnerabilityAssessmentScanResource" /> object. </returns>
-        public static ServerSqlVulnerabilityAssessmentScanResource GetServerSqlVulnerabilityAssessmentScanResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SqlServerSqlVulnerabilityAssessmentScanResource" /> object. </returns>
+        public static SqlServerSqlVulnerabilityAssessmentScanResource GetSqlServerSqlVulnerabilityAssessmentScanResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                ServerSqlVulnerabilityAssessmentScanResource.ValidateResourceId(id);
-                return new ServerSqlVulnerabilityAssessmentScanResource(client, id);
+                SqlServerSqlVulnerabilityAssessmentScanResource.ValidateResourceId(id);
+                return new SqlServerSqlVulnerabilityAssessmentScanResource(client, id);
             }
             );
         }
         #endregion
 
-        #region ServerDatabaseSqlVulnerabilityAssessmentResource
+        #region SqlDatabaseSqlVulnerabilityAssessmentResource
         /// <summary>
-        /// Gets an object representing a <see cref="ServerDatabaseSqlVulnerabilityAssessmentResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ServerDatabaseSqlVulnerabilityAssessmentResource.CreateResourceIdentifier" /> to create a <see cref="ServerDatabaseSqlVulnerabilityAssessmentResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="SqlDatabaseSqlVulnerabilityAssessmentResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SqlDatabaseSqlVulnerabilityAssessmentResource.CreateResourceIdentifier" /> to create a <see cref="SqlDatabaseSqlVulnerabilityAssessmentResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ServerDatabaseSqlVulnerabilityAssessmentResource" /> object. </returns>
-        public static ServerDatabaseSqlVulnerabilityAssessmentResource GetServerDatabaseSqlVulnerabilityAssessmentResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SqlDatabaseSqlVulnerabilityAssessmentResource" /> object. </returns>
+        public static SqlDatabaseSqlVulnerabilityAssessmentResource GetSqlDatabaseSqlVulnerabilityAssessmentResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                ServerDatabaseSqlVulnerabilityAssessmentResource.ValidateResourceId(id);
-                return new ServerDatabaseSqlVulnerabilityAssessmentResource(client, id);
+                SqlDatabaseSqlVulnerabilityAssessmentResource.ValidateResourceId(id);
+                return new SqlDatabaseSqlVulnerabilityAssessmentResource(client, id);
             }
             );
         }
         #endregion
 
-        #region ServerSqlVulnerabilityAssessmentResource
+        #region SqlServerSqlVulnerabilityAssessmentResource
         /// <summary>
-        /// Gets an object representing a <see cref="ServerSqlVulnerabilityAssessmentResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ServerSqlVulnerabilityAssessmentResource.CreateResourceIdentifier" /> to create a <see cref="ServerSqlVulnerabilityAssessmentResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="SqlServerSqlVulnerabilityAssessmentResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SqlServerSqlVulnerabilityAssessmentResource.CreateResourceIdentifier" /> to create a <see cref="SqlServerSqlVulnerabilityAssessmentResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ServerSqlVulnerabilityAssessmentResource" /> object. </returns>
-        public static ServerSqlVulnerabilityAssessmentResource GetServerSqlVulnerabilityAssessmentResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SqlServerSqlVulnerabilityAssessmentResource" /> object. </returns>
+        public static SqlServerSqlVulnerabilityAssessmentResource GetSqlServerSqlVulnerabilityAssessmentResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                ServerSqlVulnerabilityAssessmentResource.ValidateResourceId(id);
-                return new ServerSqlVulnerabilityAssessmentResource(client, id);
+                SqlServerSqlVulnerabilityAssessmentResource.ValidateResourceId(id);
+                return new SqlServerSqlVulnerabilityAssessmentResource(client, id);
             }
             );
         }
@@ -3465,25 +3426,6 @@ namespace Azure.ResourceManager.Sql
             {
                 SqlServerDatabaseReplicationLinkResource.ValidateResourceId(id);
                 return new SqlServerDatabaseReplicationLinkResource(client, id);
-            }
-            );
-        }
-        #endregion
-
-        #region ManagedDatabaseMoveOperationResultResource
-        /// <summary>
-        /// Gets an object representing a <see cref="ManagedDatabaseMoveOperationResultResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ManagedDatabaseMoveOperationResultResource.CreateResourceIdentifier" /> to create a <see cref="ManagedDatabaseMoveOperationResultResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ManagedDatabaseMoveOperationResultResource" /> object. </returns>
-        public static ManagedDatabaseMoveOperationResultResource GetManagedDatabaseMoveOperationResultResource(this ArmClient client, ResourceIdentifier id)
-        {
-            return client.GetResourceClient(() =>
-            {
-                ManagedDatabaseMoveOperationResultResource.ValidateResourceId(id);
-                return new ManagedDatabaseMoveOperationResultResource(client, id);
             }
             );
         }

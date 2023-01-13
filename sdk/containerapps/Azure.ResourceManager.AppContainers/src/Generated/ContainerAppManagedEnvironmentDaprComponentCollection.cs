@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -186,37 +185,9 @@ namespace Azure.ResourceManager.AppContainers
         /// <returns> An async collection of <see cref="ContainerAppManagedEnvironmentDaprComponentResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ContainerAppManagedEnvironmentDaprComponentResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<ContainerAppManagedEnvironmentDaprComponentResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _containerAppManagedEnvironmentDaprComponentDaprComponentsClientDiagnostics.CreateScope("ContainerAppManagedEnvironmentDaprComponentCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _containerAppManagedEnvironmentDaprComponentDaprComponentsRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ContainerAppManagedEnvironmentDaprComponentResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<ContainerAppManagedEnvironmentDaprComponentResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _containerAppManagedEnvironmentDaprComponentDaprComponentsClientDiagnostics.CreateScope("ContainerAppManagedEnvironmentDaprComponentCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _containerAppManagedEnvironmentDaprComponentDaprComponentsRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ContainerAppManagedEnvironmentDaprComponentResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _containerAppManagedEnvironmentDaprComponentDaprComponentsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _containerAppManagedEnvironmentDaprComponentDaprComponentsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ContainerAppManagedEnvironmentDaprComponentResource(Client, ContainerAppDaprComponentData.DeserializeContainerAppDaprComponentData(e)), _containerAppManagedEnvironmentDaprComponentDaprComponentsClientDiagnostics, Pipeline, "ContainerAppManagedEnvironmentDaprComponentCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -228,37 +199,9 @@ namespace Azure.ResourceManager.AppContainers
         /// <returns> A collection of <see cref="ContainerAppManagedEnvironmentDaprComponentResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ContainerAppManagedEnvironmentDaprComponentResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<ContainerAppManagedEnvironmentDaprComponentResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _containerAppManagedEnvironmentDaprComponentDaprComponentsClientDiagnostics.CreateScope("ContainerAppManagedEnvironmentDaprComponentCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _containerAppManagedEnvironmentDaprComponentDaprComponentsRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ContainerAppManagedEnvironmentDaprComponentResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<ContainerAppManagedEnvironmentDaprComponentResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _containerAppManagedEnvironmentDaprComponentDaprComponentsClientDiagnostics.CreateScope("ContainerAppManagedEnvironmentDaprComponentCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _containerAppManagedEnvironmentDaprComponentDaprComponentsRestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ContainerAppManagedEnvironmentDaprComponentResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _containerAppManagedEnvironmentDaprComponentDaprComponentsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _containerAppManagedEnvironmentDaprComponentDaprComponentsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ContainerAppManagedEnvironmentDaprComponentResource(Client, ContainerAppDaprComponentData.DeserializeContainerAppDaprComponentData(e)), _containerAppManagedEnvironmentDaprComponentDaprComponentsClientDiagnostics, Pipeline, "ContainerAppManagedEnvironmentDaprComponentCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

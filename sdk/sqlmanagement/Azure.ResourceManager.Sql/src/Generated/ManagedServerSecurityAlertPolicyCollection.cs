@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -175,37 +174,9 @@ namespace Azure.ResourceManager.Sql
         /// <returns> An async collection of <see cref="ManagedServerSecurityAlertPolicyResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ManagedServerSecurityAlertPolicyResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<ManagedServerSecurityAlertPolicyResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _managedServerSecurityAlertPolicyClientDiagnostics.CreateScope("ManagedServerSecurityAlertPolicyCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _managedServerSecurityAlertPolicyRestClient.ListByInstanceAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ManagedServerSecurityAlertPolicyResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<ManagedServerSecurityAlertPolicyResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _managedServerSecurityAlertPolicyClientDiagnostics.CreateScope("ManagedServerSecurityAlertPolicyCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _managedServerSecurityAlertPolicyRestClient.ListByInstanceNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ManagedServerSecurityAlertPolicyResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _managedServerSecurityAlertPolicyRestClient.CreateListByInstanceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _managedServerSecurityAlertPolicyRestClient.CreateListByInstanceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ManagedServerSecurityAlertPolicyResource(Client, ManagedServerSecurityAlertPolicyData.DeserializeManagedServerSecurityAlertPolicyData(e)), _managedServerSecurityAlertPolicyClientDiagnostics, Pipeline, "ManagedServerSecurityAlertPolicyCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -217,37 +188,9 @@ namespace Azure.ResourceManager.Sql
         /// <returns> A collection of <see cref="ManagedServerSecurityAlertPolicyResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ManagedServerSecurityAlertPolicyResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<ManagedServerSecurityAlertPolicyResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _managedServerSecurityAlertPolicyClientDiagnostics.CreateScope("ManagedServerSecurityAlertPolicyCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _managedServerSecurityAlertPolicyRestClient.ListByInstance(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ManagedServerSecurityAlertPolicyResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<ManagedServerSecurityAlertPolicyResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _managedServerSecurityAlertPolicyClientDiagnostics.CreateScope("ManagedServerSecurityAlertPolicyCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _managedServerSecurityAlertPolicyRestClient.ListByInstanceNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ManagedServerSecurityAlertPolicyResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _managedServerSecurityAlertPolicyRestClient.CreateListByInstanceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _managedServerSecurityAlertPolicyRestClient.CreateListByInstanceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ManagedServerSecurityAlertPolicyResource(Client, ManagedServerSecurityAlertPolicyData.DeserializeManagedServerSecurityAlertPolicyData(e)), _managedServerSecurityAlertPolicyClientDiagnostics, Pipeline, "ManagedServerSecurityAlertPolicyCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

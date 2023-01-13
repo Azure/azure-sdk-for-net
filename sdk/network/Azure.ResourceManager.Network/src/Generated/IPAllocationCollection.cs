@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -189,37 +188,9 @@ namespace Azure.ResourceManager.Network
         /// <returns> An async collection of <see cref="IPAllocationResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<IPAllocationResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<IPAllocationResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _ipAllocationIPAllocationsClientDiagnostics.CreateScope("IPAllocationCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _ipAllocationIPAllocationsRestClient.ListByResourceGroupAsync(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new IPAllocationResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<IPAllocationResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _ipAllocationIPAllocationsClientDiagnostics.CreateScope("IPAllocationCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _ipAllocationIPAllocationsRestClient.ListByResourceGroupNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new IPAllocationResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _ipAllocationIPAllocationsRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _ipAllocationIPAllocationsRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new IPAllocationResource(Client, IPAllocationData.DeserializeIPAllocationData(e)), _ipAllocationIPAllocationsClientDiagnostics, Pipeline, "IPAllocationCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -231,37 +202,9 @@ namespace Azure.ResourceManager.Network
         /// <returns> A collection of <see cref="IPAllocationResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<IPAllocationResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<IPAllocationResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _ipAllocationIPAllocationsClientDiagnostics.CreateScope("IPAllocationCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _ipAllocationIPAllocationsRestClient.ListByResourceGroup(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new IPAllocationResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<IPAllocationResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _ipAllocationIPAllocationsClientDiagnostics.CreateScope("IPAllocationCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _ipAllocationIPAllocationsRestClient.ListByResourceGroupNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new IPAllocationResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _ipAllocationIPAllocationsRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _ipAllocationIPAllocationsRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new IPAllocationResource(Client, IPAllocationData.DeserializeIPAllocationData(e)), _ipAllocationIPAllocationsClientDiagnostics, Pipeline, "IPAllocationCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

@@ -682,22 +682,8 @@ namespace Azure.ResourceManager.NetApp
         /// <returns> An async collection of <see cref="NetAppVolumeReplication" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<NetAppVolumeReplication> GetReplicationsAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<NetAppVolumeReplication>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _netAppVolumeVolumesClientDiagnostics.CreateScope("NetAppVolumeResource.GetReplications");
-                scope.Start();
-                try
-                {
-                    var response = await _netAppVolumeVolumesRestClient.ListReplicationsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _netAppVolumeVolumesRestClient.CreateListReplicationsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, NetAppVolumeReplication.DeserializeNetAppVolumeReplication, _netAppVolumeVolumesClientDiagnostics, Pipeline, "NetAppVolumeResource.GetReplications", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -709,22 +695,8 @@ namespace Azure.ResourceManager.NetApp
         /// <returns> A collection of <see cref="NetAppVolumeReplication" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<NetAppVolumeReplication> GetReplications(CancellationToken cancellationToken = default)
         {
-            Page<NetAppVolumeReplication> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _netAppVolumeVolumesClientDiagnostics.CreateScope("NetAppVolumeResource.GetReplications");
-                scope.Start();
-                try
-                {
-                    var response = _netAppVolumeVolumesRestClient.ListReplications(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _netAppVolumeVolumesRestClient.CreateListReplicationsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, NetAppVolumeReplication.DeserializeNetAppVolumeReplication, _netAppVolumeVolumesClientDiagnostics, Pipeline, "NetAppVolumeResource.GetReplications", "value", null, cancellationToken);
         }
 
         /// <summary>

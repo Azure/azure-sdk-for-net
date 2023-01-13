@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -187,37 +186,9 @@ namespace Azure.ResourceManager.Peering
         /// <returns> An async collection of <see cref="PeeringServiceResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<PeeringServiceResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<PeeringServiceResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _peeringServiceClientDiagnostics.CreateScope("PeeringServiceCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _peeringServiceRestClient.ListByResourceGroupAsync(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new PeeringServiceResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<PeeringServiceResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _peeringServiceClientDiagnostics.CreateScope("PeeringServiceCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _peeringServiceRestClient.ListByResourceGroupNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new PeeringServiceResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _peeringServiceRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _peeringServiceRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new PeeringServiceResource(Client, PeeringServiceData.DeserializePeeringServiceData(e)), _peeringServiceClientDiagnostics, Pipeline, "PeeringServiceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -229,37 +200,9 @@ namespace Azure.ResourceManager.Peering
         /// <returns> A collection of <see cref="PeeringServiceResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<PeeringServiceResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<PeeringServiceResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _peeringServiceClientDiagnostics.CreateScope("PeeringServiceCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _peeringServiceRestClient.ListByResourceGroup(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new PeeringServiceResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<PeeringServiceResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _peeringServiceClientDiagnostics.CreateScope("PeeringServiceCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _peeringServiceRestClient.ListByResourceGroupNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new PeeringServiceResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _peeringServiceRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _peeringServiceRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new PeeringServiceResource(Client, PeeringServiceData.DeserializePeeringServiceData(e)), _peeringServiceClientDiagnostics, Pipeline, "PeeringServiceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

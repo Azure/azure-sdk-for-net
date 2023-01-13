@@ -328,37 +328,9 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <returns> An async collection of <see cref="DesktopVirtualizationStartMenuItem" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DesktopVirtualizationStartMenuItem> GetStartMenuItemsAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<DesktopVirtualizationStartMenuItem>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _startMenuItemsClientDiagnostics.CreateScope("VirtualApplicationGroupResource.GetStartMenuItems");
-                scope.Start();
-                try
-                {
-                    var response = await _startMenuItemsRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<DesktopVirtualizationStartMenuItem>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _startMenuItemsClientDiagnostics.CreateScope("VirtualApplicationGroupResource.GetStartMenuItems");
-                scope.Start();
-                try
-                {
-                    var response = await _startMenuItemsRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _startMenuItemsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _startMenuItemsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, DesktopVirtualizationStartMenuItem.DeserializeDesktopVirtualizationStartMenuItem, _startMenuItemsClientDiagnostics, Pipeline, "VirtualApplicationGroupResource.GetStartMenuItems", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -370,37 +342,9 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <returns> A collection of <see cref="DesktopVirtualizationStartMenuItem" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DesktopVirtualizationStartMenuItem> GetStartMenuItems(CancellationToken cancellationToken = default)
         {
-            Page<DesktopVirtualizationStartMenuItem> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _startMenuItemsClientDiagnostics.CreateScope("VirtualApplicationGroupResource.GetStartMenuItems");
-                scope.Start();
-                try
-                {
-                    var response = _startMenuItemsRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<DesktopVirtualizationStartMenuItem> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _startMenuItemsClientDiagnostics.CreateScope("VirtualApplicationGroupResource.GetStartMenuItems");
-                scope.Start();
-                try
-                {
-                    var response = _startMenuItemsRestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _startMenuItemsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _startMenuItemsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, DesktopVirtualizationStartMenuItem.DeserializeDesktopVirtualizationStartMenuItem, _startMenuItemsClientDiagnostics, Pipeline, "VirtualApplicationGroupResource.GetStartMenuItems", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

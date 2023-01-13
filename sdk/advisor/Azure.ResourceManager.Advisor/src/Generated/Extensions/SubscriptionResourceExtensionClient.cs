@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -61,37 +60,9 @@ namespace Azure.ResourceManager.Advisor
         /// <returns> An async collection of <see cref="ConfigData" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ConfigData> GetConfigurationsAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<ConfigData>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = ConfigurationsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetConfigurations");
-                scope.Start();
-                try
-                {
-                    var response = await ConfigurationsRestClient.ListBySubscriptionAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<ConfigData>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = ConfigurationsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetConfigurations");
-                scope.Start();
-                try
-                {
-                    var response = await ConfigurationsRestClient.ListBySubscriptionNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => ConfigurationsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ConfigurationsRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, ConfigData.DeserializeConfigData, ConfigurationsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetConfigurations", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -103,37 +74,9 @@ namespace Azure.ResourceManager.Advisor
         /// <returns> A collection of <see cref="ConfigData" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ConfigData> GetConfigurations(CancellationToken cancellationToken = default)
         {
-            Page<ConfigData> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = ConfigurationsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetConfigurations");
-                scope.Start();
-                try
-                {
-                    var response = ConfigurationsRestClient.ListBySubscription(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<ConfigData> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = ConfigurationsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetConfigurations");
-                scope.Start();
-                try
-                {
-                    var response = ConfigurationsRestClient.ListBySubscriptionNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => ConfigurationsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ConfigurationsRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, ConfigData.DeserializeConfigData, ConfigurationsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetConfigurations", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -285,37 +228,9 @@ namespace Azure.ResourceManager.Advisor
         /// <returns> An async collection of <see cref="SuppressionContractResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SuppressionContractResource> GetSuppressionContractsAsync(int? top = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<SuppressionContractResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = SuppressionContractSuppressionsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetSuppressionContracts");
-                scope.Start();
-                try
-                {
-                    var response = await SuppressionContractSuppressionsRestClient.ListAsync(Id.SubscriptionId, top, skipToken, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new SuppressionContractResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<SuppressionContractResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = SuppressionContractSuppressionsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetSuppressionContracts");
-                scope.Start();
-                try
-                {
-                    var response = await SuppressionContractSuppressionsRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, top, skipToken, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new SuppressionContractResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => SuppressionContractSuppressionsRestClient.CreateListRequest(Id.SubscriptionId, top, skipToken);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => SuppressionContractSuppressionsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, top, skipToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SuppressionContractResource(Client, SuppressionContractData.DeserializeSuppressionContractData(e)), SuppressionContractSuppressionsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetSuppressionContracts", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -329,37 +244,9 @@ namespace Azure.ResourceManager.Advisor
         /// <returns> A collection of <see cref="SuppressionContractResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SuppressionContractResource> GetSuppressionContracts(int? top = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            Page<SuppressionContractResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = SuppressionContractSuppressionsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetSuppressionContracts");
-                scope.Start();
-                try
-                {
-                    var response = SuppressionContractSuppressionsRestClient.List(Id.SubscriptionId, top, skipToken, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new SuppressionContractResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<SuppressionContractResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = SuppressionContractSuppressionsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetSuppressionContracts");
-                scope.Start();
-                try
-                {
-                    var response = SuppressionContractSuppressionsRestClient.ListNextPage(nextLink, Id.SubscriptionId, top, skipToken, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new SuppressionContractResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => SuppressionContractSuppressionsRestClient.CreateListRequest(Id.SubscriptionId, top, skipToken);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => SuppressionContractSuppressionsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, top, skipToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SuppressionContractResource(Client, SuppressionContractData.DeserializeSuppressionContractData(e)), SuppressionContractSuppressionsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetSuppressionContracts", "value", "nextLink", cancellationToken);
         }
     }
 }

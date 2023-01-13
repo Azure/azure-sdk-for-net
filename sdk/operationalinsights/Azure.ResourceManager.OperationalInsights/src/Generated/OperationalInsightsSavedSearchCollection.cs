@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -186,22 +185,8 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <returns> An async collection of <see cref="OperationalInsightsSavedSearchResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<OperationalInsightsSavedSearchResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<OperationalInsightsSavedSearchResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _operationalInsightsSavedSearchSavedSearchesClientDiagnostics.CreateScope("OperationalInsightsSavedSearchCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _operationalInsightsSavedSearchSavedSearchesRestClient.ListByWorkspaceAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new OperationalInsightsSavedSearchResource(Client, value)), null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _operationalInsightsSavedSearchSavedSearchesRestClient.CreateListByWorkspaceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new OperationalInsightsSavedSearchResource(Client, OperationalInsightsSavedSearchData.DeserializeOperationalInsightsSavedSearchData(e)), _operationalInsightsSavedSearchSavedSearchesClientDiagnostics, Pipeline, "OperationalInsightsSavedSearchCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -213,22 +198,8 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <returns> A collection of <see cref="OperationalInsightsSavedSearchResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<OperationalInsightsSavedSearchResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<OperationalInsightsSavedSearchResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _operationalInsightsSavedSearchSavedSearchesClientDiagnostics.CreateScope("OperationalInsightsSavedSearchCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _operationalInsightsSavedSearchSavedSearchesRestClient.ListByWorkspace(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new OperationalInsightsSavedSearchResource(Client, value)), null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _operationalInsightsSavedSearchSavedSearchesRestClient.CreateListByWorkspaceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new OperationalInsightsSavedSearchResource(Client, OperationalInsightsSavedSearchData.DeserializeOperationalInsightsSavedSearchData(e)), _operationalInsightsSavedSearchSavedSearchesClientDiagnostics, Pipeline, "OperationalInsightsSavedSearchCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>

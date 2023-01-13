@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -187,37 +186,9 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <returns> An async collection of <see cref="ContainerRegistryWebhookResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ContainerRegistryWebhookResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<ContainerRegistryWebhookResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _containerRegistryWebhookWebhooksClientDiagnostics.CreateScope("ContainerRegistryWebhookCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _containerRegistryWebhookWebhooksRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ContainerRegistryWebhookResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<ContainerRegistryWebhookResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _containerRegistryWebhookWebhooksClientDiagnostics.CreateScope("ContainerRegistryWebhookCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _containerRegistryWebhookWebhooksRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ContainerRegistryWebhookResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _containerRegistryWebhookWebhooksRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _containerRegistryWebhookWebhooksRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ContainerRegistryWebhookResource(Client, ContainerRegistryWebhookData.DeserializeContainerRegistryWebhookData(e)), _containerRegistryWebhookWebhooksClientDiagnostics, Pipeline, "ContainerRegistryWebhookCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -229,37 +200,9 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <returns> A collection of <see cref="ContainerRegistryWebhookResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ContainerRegistryWebhookResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<ContainerRegistryWebhookResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _containerRegistryWebhookWebhooksClientDiagnostics.CreateScope("ContainerRegistryWebhookCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _containerRegistryWebhookWebhooksRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ContainerRegistryWebhookResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<ContainerRegistryWebhookResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _containerRegistryWebhookWebhooksClientDiagnostics.CreateScope("ContainerRegistryWebhookCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _containerRegistryWebhookWebhooksRestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ContainerRegistryWebhookResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _containerRegistryWebhookWebhooksRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _containerRegistryWebhookWebhooksRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ContainerRegistryWebhookResource(Client, ContainerRegistryWebhookData.DeserializeContainerRegistryWebhookData(e)), _containerRegistryWebhookWebhooksClientDiagnostics, Pipeline, "ContainerRegistryWebhookCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
