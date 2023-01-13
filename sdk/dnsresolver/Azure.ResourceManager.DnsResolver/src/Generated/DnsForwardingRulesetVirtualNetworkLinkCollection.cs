@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -191,37 +190,9 @@ namespace Azure.ResourceManager.DnsResolver
         /// <returns> An async collection of <see cref="DnsForwardingRulesetVirtualNetworkLinkResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DnsForwardingRulesetVirtualNetworkLinkResource> GetAllAsync(int? top = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<DnsForwardingRulesetVirtualNetworkLinkResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _dnsForwardingRulesetVirtualNetworkLinkVirtualNetworkLinksClientDiagnostics.CreateScope("DnsForwardingRulesetVirtualNetworkLinkCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _dnsForwardingRulesetVirtualNetworkLinkVirtualNetworkLinksRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new DnsForwardingRulesetVirtualNetworkLinkResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<DnsForwardingRulesetVirtualNetworkLinkResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _dnsForwardingRulesetVirtualNetworkLinkVirtualNetworkLinksClientDiagnostics.CreateScope("DnsForwardingRulesetVirtualNetworkLinkCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _dnsForwardingRulesetVirtualNetworkLinkVirtualNetworkLinksRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new DnsForwardingRulesetVirtualNetworkLinkResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _dnsForwardingRulesetVirtualNetworkLinkVirtualNetworkLinksRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _dnsForwardingRulesetVirtualNetworkLinkVirtualNetworkLinksRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DnsForwardingRulesetVirtualNetworkLinkResource(Client, DnsForwardingRulesetVirtualNetworkLinkData.DeserializeDnsForwardingRulesetVirtualNetworkLinkData(e)), _dnsForwardingRulesetVirtualNetworkLinkVirtualNetworkLinksClientDiagnostics, Pipeline, "DnsForwardingRulesetVirtualNetworkLinkCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -234,37 +205,9 @@ namespace Azure.ResourceManager.DnsResolver
         /// <returns> A collection of <see cref="DnsForwardingRulesetVirtualNetworkLinkResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DnsForwardingRulesetVirtualNetworkLinkResource> GetAll(int? top = null, CancellationToken cancellationToken = default)
         {
-            Page<DnsForwardingRulesetVirtualNetworkLinkResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _dnsForwardingRulesetVirtualNetworkLinkVirtualNetworkLinksClientDiagnostics.CreateScope("DnsForwardingRulesetVirtualNetworkLinkCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _dnsForwardingRulesetVirtualNetworkLinkVirtualNetworkLinksRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new DnsForwardingRulesetVirtualNetworkLinkResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<DnsForwardingRulesetVirtualNetworkLinkResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _dnsForwardingRulesetVirtualNetworkLinkVirtualNetworkLinksClientDiagnostics.CreateScope("DnsForwardingRulesetVirtualNetworkLinkCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _dnsForwardingRulesetVirtualNetworkLinkVirtualNetworkLinksRestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new DnsForwardingRulesetVirtualNetworkLinkResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _dnsForwardingRulesetVirtualNetworkLinkVirtualNetworkLinksRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _dnsForwardingRulesetVirtualNetworkLinkVirtualNetworkLinksRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DnsForwardingRulesetVirtualNetworkLinkResource(Client, DnsForwardingRulesetVirtualNetworkLinkData.DeserializeDnsForwardingRulesetVirtualNetworkLinkData(e)), _dnsForwardingRulesetVirtualNetworkLinkVirtualNetworkLinksClientDiagnostics, Pipeline, "DnsForwardingRulesetVirtualNetworkLinkCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

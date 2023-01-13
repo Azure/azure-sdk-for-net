@@ -11,9 +11,10 @@ using Azure;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager;
+using Azure.ResourceManager.Attestation;
 using Azure.ResourceManager.Attestation.Models;
 
-namespace Azure.ResourceManager.Attestation
+namespace Azure.ResourceManager.Attestation.Samples
 {
     public partial class Sample_AttestationPrivateEndpointConnectionResource
     {
@@ -25,8 +26,10 @@ namespace Azure.ResourceManager.Attestation
             // Generated from example definition: specification/attestation/resource-manager/Microsoft.Attestation/preview/2021-06-01-preview/examples/AttestationProviderGetPrivateEndpointConnection.json
             // this example is just showing the usage of "PrivateEndpointConnections_Get" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this AttestationPrivateEndpointConnectionResource created on azure
             // for more information of creating AttestationPrivateEndpointConnectionResource, please refer to the document of AttestationPrivateEndpointConnectionResource
@@ -55,8 +58,10 @@ namespace Azure.ResourceManager.Attestation
             // Generated from example definition: specification/attestation/resource-manager/Microsoft.Attestation/preview/2021-06-01-preview/examples/AttestationProviderPutPrivateEndpointConnection.json
             // this example is just showing the usage of "PrivateEndpointConnections_Create" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this AttestationPrivateEndpointConnectionResource created on azure
             // for more information of creating AttestationPrivateEndpointConnectionResource, please refer to the document of AttestationPrivateEndpointConnectionResource
@@ -94,8 +99,10 @@ namespace Azure.ResourceManager.Attestation
             // Generated from example definition: specification/attestation/resource-manager/Microsoft.Attestation/preview/2021-06-01-preview/examples/AttestationProviderDeletePrivateEndpointConnection.json
             // this example is just showing the usage of "PrivateEndpointConnections_Delete" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this AttestationPrivateEndpointConnectionResource created on azure
             // for more information of creating AttestationPrivateEndpointConnectionResource, please refer to the document of AttestationPrivateEndpointConnectionResource

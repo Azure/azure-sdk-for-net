@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -121,37 +120,9 @@ namespace Azure.ResourceManager.Sql
         /// <returns> An async collection of <see cref="ManagedDatabaseColumnResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ManagedDatabaseColumnResource> GetAllAsync(string filter = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<ManagedDatabaseColumnResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _managedDatabaseColumnClientDiagnostics.CreateScope("ManagedDatabaseColumnCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _managedDatabaseColumnRestClient.ListByTableAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ManagedDatabaseColumnResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<ManagedDatabaseColumnResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _managedDatabaseColumnClientDiagnostics.CreateScope("ManagedDatabaseColumnCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _managedDatabaseColumnRestClient.ListByTableNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ManagedDatabaseColumnResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _managedDatabaseColumnRestClient.CreateListByTableRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, filter);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _managedDatabaseColumnRestClient.CreateListByTableNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, filter);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ManagedDatabaseColumnResource(Client, DatabaseColumnData.DeserializeDatabaseColumnData(e)), _managedDatabaseColumnClientDiagnostics, Pipeline, "ManagedDatabaseColumnCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -164,37 +135,9 @@ namespace Azure.ResourceManager.Sql
         /// <returns> A collection of <see cref="ManagedDatabaseColumnResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ManagedDatabaseColumnResource> GetAll(string filter = null, CancellationToken cancellationToken = default)
         {
-            Page<ManagedDatabaseColumnResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _managedDatabaseColumnClientDiagnostics.CreateScope("ManagedDatabaseColumnCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _managedDatabaseColumnRestClient.ListByTable(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, filter, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ManagedDatabaseColumnResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<ManagedDatabaseColumnResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _managedDatabaseColumnClientDiagnostics.CreateScope("ManagedDatabaseColumnCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _managedDatabaseColumnRestClient.ListByTableNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, filter, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ManagedDatabaseColumnResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _managedDatabaseColumnRestClient.CreateListByTableRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, filter);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _managedDatabaseColumnRestClient.CreateListByTableNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, filter);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ManagedDatabaseColumnResource(Client, DatabaseColumnData.DeserializeDatabaseColumnData(e)), _managedDatabaseColumnClientDiagnostics, Pipeline, "ManagedDatabaseColumnCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

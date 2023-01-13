@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
     {
         internal static AutomationRulesList DeserializeAutomationRulesList(JsonElement element)
         {
-            Optional<IReadOnlyList<AutomationRuleData>> value = default;
+            Optional<IReadOnlyList<SecurityInsightsAutomationRuleData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -27,10 +27,10 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<AutomationRuleData> array = new List<AutomationRuleData>();
+                    List<SecurityInsightsAutomationRuleData> array = new List<SecurityInsightsAutomationRuleData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AutomationRuleData.DeserializeAutomationRuleData(item));
+                        array.Add(SecurityInsightsAutomationRuleData.DeserializeSecurityInsightsAutomationRuleData(item));
                     }
                     value = array;
                     continue;

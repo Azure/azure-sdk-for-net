@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -186,22 +185,8 @@ namespace Azure.ResourceManager.Automanage
         /// <returns> An async collection of <see cref="ConfigurationProfileVersionResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ConfigurationProfileVersionResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<ConfigurationProfileVersionResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _configurationProfileVersionConfigurationProfilesVersionsClientDiagnostics.CreateScope("ConfigurationProfileVersionCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _configurationProfileVersionConfigurationProfilesVersionsRestClient.ListChildResourcesAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ConfigurationProfileVersionResource(Client, value)), null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _configurationProfileVersionConfigurationProfilesVersionsRestClient.CreateListChildResourcesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new ConfigurationProfileVersionResource(Client, ConfigurationProfileData.DeserializeConfigurationProfileData(e)), _configurationProfileVersionConfigurationProfilesVersionsClientDiagnostics, Pipeline, "ConfigurationProfileVersionCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -213,22 +198,8 @@ namespace Azure.ResourceManager.Automanage
         /// <returns> A collection of <see cref="ConfigurationProfileVersionResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ConfigurationProfileVersionResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<ConfigurationProfileVersionResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _configurationProfileVersionConfigurationProfilesVersionsClientDiagnostics.CreateScope("ConfigurationProfileVersionCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _configurationProfileVersionConfigurationProfilesVersionsRestClient.ListChildResources(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ConfigurationProfileVersionResource(Client, value)), null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _configurationProfileVersionConfigurationProfilesVersionsRestClient.CreateListChildResourcesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new ConfigurationProfileVersionResource(Client, ConfigurationProfileData.DeserializeConfigurationProfileData(e)), _configurationProfileVersionConfigurationProfilesVersionsClientDiagnostics, Pipeline, "ConfigurationProfileVersionCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>

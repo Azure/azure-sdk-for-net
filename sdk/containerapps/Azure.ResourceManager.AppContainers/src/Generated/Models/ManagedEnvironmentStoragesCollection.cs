@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// <summary> Initializes a new instance of ManagedEnvironmentStoragesCollection. </summary>
         /// <param name="value"> Collection of storage resources. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal ManagedEnvironmentStoragesCollection(IEnumerable<ManagedEnvironmentStorageData> value)
+        internal ManagedEnvironmentStoragesCollection(IEnumerable<ContainerAppManagedEnvironmentStorageData> value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -28,12 +28,12 @@ namespace Azure.ResourceManager.AppContainers.Models
 
         /// <summary> Initializes a new instance of ManagedEnvironmentStoragesCollection. </summary>
         /// <param name="value"> Collection of storage resources. </param>
-        internal ManagedEnvironmentStoragesCollection(IReadOnlyList<ManagedEnvironmentStorageData> value)
+        internal ManagedEnvironmentStoragesCollection(IReadOnlyList<ContainerAppManagedEnvironmentStorageData> value)
         {
             Value = value;
         }
 
         /// <summary> Collection of storage resources. </summary>
-        public IReadOnlyList<ManagedEnvironmentStorageData> Value { get; }
+        public IReadOnlyList<ContainerAppManagedEnvironmentStorageData> Value { get; }
     }
 }

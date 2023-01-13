@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -186,22 +185,8 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <returns> An async collection of <see cref="OperationalInsightsDataExportResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<OperationalInsightsDataExportResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<OperationalInsightsDataExportResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _operationalInsightsDataExportDataExportsClientDiagnostics.CreateScope("OperationalInsightsDataExportCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _operationalInsightsDataExportDataExportsRestClient.ListByWorkspaceAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new OperationalInsightsDataExportResource(Client, value)), null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _operationalInsightsDataExportDataExportsRestClient.CreateListByWorkspaceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new OperationalInsightsDataExportResource(Client, OperationalInsightsDataExportData.DeserializeOperationalInsightsDataExportData(e)), _operationalInsightsDataExportDataExportsClientDiagnostics, Pipeline, "OperationalInsightsDataExportCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -213,22 +198,8 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <returns> A collection of <see cref="OperationalInsightsDataExportResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<OperationalInsightsDataExportResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<OperationalInsightsDataExportResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _operationalInsightsDataExportDataExportsClientDiagnostics.CreateScope("OperationalInsightsDataExportCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _operationalInsightsDataExportDataExportsRestClient.ListByWorkspace(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new OperationalInsightsDataExportResource(Client, value)), null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _operationalInsightsDataExportDataExportsRestClient.CreateListByWorkspaceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new OperationalInsightsDataExportResource(Client, OperationalInsightsDataExportData.DeserializeOperationalInsightsDataExportData(e)), _operationalInsightsDataExportDataExportsClientDiagnostics, Pipeline, "OperationalInsightsDataExportCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>

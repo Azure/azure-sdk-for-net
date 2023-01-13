@@ -12,9 +12,10 @@ using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.ServiceBus;
 using Azure.ResourceManager.ServiceBus.Models;
 
-namespace Azure.ResourceManager.ServiceBus
+namespace Azure.ResourceManager.ServiceBus.Samples
 {
     public partial class Sample_ServiceBusNamespaceCollection
     {
@@ -23,11 +24,13 @@ namespace Azure.ResourceManager.ServiceBus
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetAll_NameSpaceListByResourceGroup()
         {
-            // Generated from example definition: specification/servicebus/resource-manager/Microsoft.ServiceBus/stable/2021-11-01/examples/NameSpaces/SBNameSpaceListByResourceGroup.json
+            // Generated from example definition: specification/servicebus/resource-manager/Microsoft.ServiceBus/preview/2022-10-01-preview/examples/NameSpaces/SBNameSpaceListByResourceGroup.json
             // this example is just showing the usage of "Namespaces_ListByResourceGroup" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this ResourceGroupResource created on azure
             // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
@@ -57,11 +60,13 @@ namespace Azure.ResourceManager.ServiceBus
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task CreateOrUpdate_NameSpaceCreate()
         {
-            // Generated from example definition: specification/servicebus/resource-manager/Microsoft.ServiceBus/stable/2021-11-01/examples/NameSpaces/SBNameSpaceCreate.json
+            // Generated from example definition: specification/servicebus/resource-manager/Microsoft.ServiceBus/preview/2022-10-01-preview/examples/NameSpaces/SBNameSpaceCreate.json
             // this example is just showing the usage of "Namespaces_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this ResourceGroupResource created on azure
             // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
@@ -77,10 +82,12 @@ namespace Azure.ResourceManager.ServiceBus
             string namespaceName = "sdk-Namespace2924";
             ServiceBusNamespaceData data = new ServiceBusNamespaceData(new AzureLocation("South Central US"))
             {
-                Sku = new ServiceBusSku(ServiceBusSkuName.Standard)
+                Sku = new ServiceBusSku(ServiceBusSkuName.Premium)
                 {
-                    Tier = ServiceBusSkuTier.Standard,
+                    Tier = ServiceBusSkuTier.Premium,
+                    Capacity = 4,
                 },
+                PremiumMessagingPartitions = 2,
                 Tags =
 {
 ["tag1"] = "value1",
@@ -102,11 +109,13 @@ namespace Azure.ResourceManager.ServiceBus
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_NameSpaceGet()
         {
-            // Generated from example definition: specification/servicebus/resource-manager/Microsoft.ServiceBus/stable/2021-11-01/examples/NameSpaces/SBNameSpaceGet.json
+            // Generated from example definition: specification/servicebus/resource-manager/Microsoft.ServiceBus/preview/2022-10-01-preview/examples/NameSpaces/SBNameSpaceGet.json
             // this example is just showing the usage of "Namespaces_Get" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this ResourceGroupResource created on azure
             // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
@@ -134,11 +143,13 @@ namespace Azure.ResourceManager.ServiceBus
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Exists_NameSpaceGet()
         {
-            // Generated from example definition: specification/servicebus/resource-manager/Microsoft.ServiceBus/stable/2021-11-01/examples/NameSpaces/SBNameSpaceGet.json
+            // Generated from example definition: specification/servicebus/resource-manager/Microsoft.ServiceBus/preview/2022-10-01-preview/examples/NameSpaces/SBNameSpaceGet.json
             // this example is just showing the usage of "Namespaces_Get" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this ResourceGroupResource created on azure
             // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource

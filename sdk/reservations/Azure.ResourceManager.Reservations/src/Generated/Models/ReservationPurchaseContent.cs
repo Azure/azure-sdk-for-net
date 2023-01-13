@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Reservations.Models
 
         /// <summary> Gets or sets the sku. </summary>
         internal ReservationsSkuName Sku { get; set; }
-        /// <summary> Gets or sets the name. </summary>
+        /// <summary> Gets or sets the sku name. </summary>
         public string SkuName
         {
             get => Sku is null ? default : Sku.Name;

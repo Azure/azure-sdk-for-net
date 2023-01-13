@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -186,37 +185,9 @@ namespace Azure.ResourceManager.FrontDoor
         /// <returns> An async collection of <see cref="FrontDoorExperimentResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<FrontDoorExperimentResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<FrontDoorExperimentResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _frontDoorExperimentExperimentsClientDiagnostics.CreateScope("FrontDoorExperimentCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _frontDoorExperimentExperimentsRestClient.ListByProfileAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new FrontDoorExperimentResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<FrontDoorExperimentResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _frontDoorExperimentExperimentsClientDiagnostics.CreateScope("FrontDoorExperimentCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _frontDoorExperimentExperimentsRestClient.ListByProfileNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new FrontDoorExperimentResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _frontDoorExperimentExperimentsRestClient.CreateListByProfileRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _frontDoorExperimentExperimentsRestClient.CreateListByProfileNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new FrontDoorExperimentResource(Client, FrontDoorExperimentData.DeserializeFrontDoorExperimentData(e)), _frontDoorExperimentExperimentsClientDiagnostics, Pipeline, "FrontDoorExperimentCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -228,37 +199,9 @@ namespace Azure.ResourceManager.FrontDoor
         /// <returns> A collection of <see cref="FrontDoorExperimentResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<FrontDoorExperimentResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<FrontDoorExperimentResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _frontDoorExperimentExperimentsClientDiagnostics.CreateScope("FrontDoorExperimentCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _frontDoorExperimentExperimentsRestClient.ListByProfile(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new FrontDoorExperimentResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<FrontDoorExperimentResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _frontDoorExperimentExperimentsClientDiagnostics.CreateScope("FrontDoorExperimentCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _frontDoorExperimentExperimentsRestClient.ListByProfileNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new FrontDoorExperimentResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _frontDoorExperimentExperimentsRestClient.CreateListByProfileRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _frontDoorExperimentExperimentsRestClient.CreateListByProfileNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new FrontDoorExperimentResource(Client, FrontDoorExperimentData.DeserializeFrontDoorExperimentData(e)), _frontDoorExperimentExperimentsClientDiagnostics, Pipeline, "FrontDoorExperimentCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

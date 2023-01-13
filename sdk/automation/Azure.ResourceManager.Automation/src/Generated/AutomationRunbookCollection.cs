@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -187,37 +186,9 @@ namespace Azure.ResourceManager.Automation
         /// <returns> An async collection of <see cref="AutomationRunbookResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<AutomationRunbookResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<AutomationRunbookResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _automationRunbookRunbookClientDiagnostics.CreateScope("AutomationRunbookCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _automationRunbookRunbookRestClient.ListByAutomationAccountAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new AutomationRunbookResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<AutomationRunbookResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _automationRunbookRunbookClientDiagnostics.CreateScope("AutomationRunbookCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _automationRunbookRunbookRestClient.ListByAutomationAccountNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new AutomationRunbookResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _automationRunbookRunbookRestClient.CreateListByAutomationAccountRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _automationRunbookRunbookRestClient.CreateListByAutomationAccountNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new AutomationRunbookResource(Client, AutomationRunbookData.DeserializeAutomationRunbookData(e)), _automationRunbookRunbookClientDiagnostics, Pipeline, "AutomationRunbookCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -229,37 +200,9 @@ namespace Azure.ResourceManager.Automation
         /// <returns> A collection of <see cref="AutomationRunbookResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<AutomationRunbookResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<AutomationRunbookResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _automationRunbookRunbookClientDiagnostics.CreateScope("AutomationRunbookCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _automationRunbookRunbookRestClient.ListByAutomationAccount(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new AutomationRunbookResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<AutomationRunbookResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _automationRunbookRunbookClientDiagnostics.CreateScope("AutomationRunbookCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _automationRunbookRunbookRestClient.ListByAutomationAccountNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new AutomationRunbookResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _automationRunbookRunbookRestClient.CreateListByAutomationAccountRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _automationRunbookRunbookRestClient.CreateListByAutomationAccountNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new AutomationRunbookResource(Client, AutomationRunbookData.DeserializeAutomationRunbookData(e)), _automationRunbookRunbookClientDiagnostics, Pipeline, "AutomationRunbookCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

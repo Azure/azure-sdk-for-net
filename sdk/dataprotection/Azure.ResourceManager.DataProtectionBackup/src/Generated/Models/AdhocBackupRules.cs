@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         public string RuleName { get; }
         /// <summary> Adhoc backup trigger option. </summary>
         internal AdhocBackupTriggerSetting BackupTrigger { get; }
-        /// <summary> Gets or sets the retention tag override. </summary>
+        /// <summary> Gets the backup trigger retention tag override. </summary>
         public string BackupTriggerRetentionTagOverride
         {
             get => BackupTrigger?.RetentionTagOverride;

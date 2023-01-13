@@ -357,37 +357,9 @@ namespace Azure.ResourceManager.Automation
         /// <returns> An async collection of <see cref="SourceControlSyncJob" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SourceControlSyncJob> GetSourceControlSyncJobsAsync(string filter = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<SourceControlSyncJob>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _sourceControlSyncJobClientDiagnostics.CreateScope("AutomationSourceControlResource.GetSourceControlSyncJobs");
-                scope.Start();
-                try
-                {
-                    var response = await _sourceControlSyncJobRestClient.ListByAutomationAccountAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<SourceControlSyncJob>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _sourceControlSyncJobClientDiagnostics.CreateScope("AutomationSourceControlResource.GetSourceControlSyncJobs");
-                scope.Start();
-                try
-                {
-                    var response = await _sourceControlSyncJobRestClient.ListByAutomationAccountNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _sourceControlSyncJobRestClient.CreateListByAutomationAccountRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _sourceControlSyncJobRestClient.CreateListByAutomationAccountNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, SourceControlSyncJob.DeserializeSourceControlSyncJob, _sourceControlSyncJobClientDiagnostics, Pipeline, "AutomationSourceControlResource.GetSourceControlSyncJobs", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -400,37 +372,9 @@ namespace Azure.ResourceManager.Automation
         /// <returns> A collection of <see cref="SourceControlSyncJob" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SourceControlSyncJob> GetSourceControlSyncJobs(string filter = null, CancellationToken cancellationToken = default)
         {
-            Page<SourceControlSyncJob> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _sourceControlSyncJobClientDiagnostics.CreateScope("AutomationSourceControlResource.GetSourceControlSyncJobs");
-                scope.Start();
-                try
-                {
-                    var response = _sourceControlSyncJobRestClient.ListByAutomationAccount(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<SourceControlSyncJob> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _sourceControlSyncJobClientDiagnostics.CreateScope("AutomationSourceControlResource.GetSourceControlSyncJobs");
-                scope.Start();
-                try
-                {
-                    var response = _sourceControlSyncJobRestClient.ListByAutomationAccountNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _sourceControlSyncJobRestClient.CreateListByAutomationAccountRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _sourceControlSyncJobRestClient.CreateListByAutomationAccountNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, SourceControlSyncJob.DeserializeSourceControlSyncJob, _sourceControlSyncJobClientDiagnostics, Pipeline, "AutomationSourceControlResource.GetSourceControlSyncJobs", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -444,37 +388,9 @@ namespace Azure.ResourceManager.Automation
         /// <returns> An async collection of <see cref="SourceControlSyncJobStream" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SourceControlSyncJobStream> GetSourceControlSyncJobStreamsAsync(Guid sourceControlSyncJobId, string filter = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<SourceControlSyncJobStream>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _sourceControlSyncJobStreamsClientDiagnostics.CreateScope("AutomationSourceControlResource.GetSourceControlSyncJobStreams");
-                scope.Start();
-                try
-                {
-                    var response = await _sourceControlSyncJobStreamsRestClient.ListBySyncJobAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, sourceControlSyncJobId, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<SourceControlSyncJobStream>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _sourceControlSyncJobStreamsClientDiagnostics.CreateScope("AutomationSourceControlResource.GetSourceControlSyncJobStreams");
-                scope.Start();
-                try
-                {
-                    var response = await _sourceControlSyncJobStreamsRestClient.ListBySyncJobNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, sourceControlSyncJobId, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _sourceControlSyncJobStreamsRestClient.CreateListBySyncJobRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, sourceControlSyncJobId, filter);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _sourceControlSyncJobStreamsRestClient.CreateListBySyncJobNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, sourceControlSyncJobId, filter);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, SourceControlSyncJobStream.DeserializeSourceControlSyncJobStream, _sourceControlSyncJobStreamsClientDiagnostics, Pipeline, "AutomationSourceControlResource.GetSourceControlSyncJobStreams", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -488,37 +404,9 @@ namespace Azure.ResourceManager.Automation
         /// <returns> A collection of <see cref="SourceControlSyncJobStream" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SourceControlSyncJobStream> GetSourceControlSyncJobStreams(Guid sourceControlSyncJobId, string filter = null, CancellationToken cancellationToken = default)
         {
-            Page<SourceControlSyncJobStream> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _sourceControlSyncJobStreamsClientDiagnostics.CreateScope("AutomationSourceControlResource.GetSourceControlSyncJobStreams");
-                scope.Start();
-                try
-                {
-                    var response = _sourceControlSyncJobStreamsRestClient.ListBySyncJob(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, sourceControlSyncJobId, filter, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<SourceControlSyncJobStream> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _sourceControlSyncJobStreamsClientDiagnostics.CreateScope("AutomationSourceControlResource.GetSourceControlSyncJobStreams");
-                scope.Start();
-                try
-                {
-                    var response = _sourceControlSyncJobStreamsRestClient.ListBySyncJobNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, sourceControlSyncJobId, filter, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _sourceControlSyncJobStreamsRestClient.CreateListBySyncJobRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, sourceControlSyncJobId, filter);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _sourceControlSyncJobStreamsRestClient.CreateListBySyncJobNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, sourceControlSyncJobId, filter);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, SourceControlSyncJobStream.DeserializeSourceControlSyncJobStream, _sourceControlSyncJobStreamsClientDiagnostics, Pipeline, "AutomationSourceControlResource.GetSourceControlSyncJobStreams", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

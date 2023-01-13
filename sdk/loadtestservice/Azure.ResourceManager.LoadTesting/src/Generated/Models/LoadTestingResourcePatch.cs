@@ -5,7 +5,8 @@
 
 #nullable disable
 
-using System;
+using System.Collections.Generic;
+using Azure.Core;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.LoadTesting.Models
@@ -16,39 +17,11 @@ namespace Azure.ResourceManager.LoadTesting.Models
         /// <summary> Initializes a new instance of LoadTestingResourcePatch. </summary>
         public LoadTestingResourcePatch()
         {
+            Tags = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary>
-        /// Resource tags.
-        /// <para>
-        /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        public BinaryData Tags { get; set; }
+        /// <summary> Resource tags. </summary>
+        public IDictionary<string, string> Tags { get; set; }
         /// <summary> The type of identity used for the resource. </summary>
         public ManagedServiceIdentity Identity { get; set; }
         /// <summary> Description of the resource. </summary>

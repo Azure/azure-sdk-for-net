@@ -1,7 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System.Collections.Generic;
+using System.Linq;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
 using Task = System.Threading.Tasks.Task;
@@ -97,48 +97,36 @@ namespace Azure.Containers.ContainerRegistry.Tests
             Assert.IsTrue(pageCount >= minExpectedPages);
         }
 
-        [RecordedTest, NonParallelizable]
+        [RecordedTest]
         public async Task CanDeleteRepository()
         {
             // Arrange
-            string registry = TestEnvironment.Registry;
-            string repository = $"library/hello-world";
-            List<string> tags = new List<string>()
-            {
-                "latest",
-                "v1",
-                "v2",
-                "v3",
-                "v4",
-            };
             var client = CreateClient();
+            var repositoryId = Recording.Random.NewGuid().ToString();
 
             try
             {
                 if (Mode != RecordedTestMode.Playback)
                 {
-                    await ImportImageAsync(registry, repository, tags);
+                    await CreateRepositoryAsync(repositoryId);
                 }
-
-                // Act
-                await client.DeleteRepositoryAsync(repository);
 
                 var repositories = client.GetRepositoryNamesAsync();
+                Assert.IsTrue(await repositories.ContainsAsync(repositoryId), $"Test set-up failed: Repository {repositoryId} was not created.");
 
-                await foreach (var item in repositories)
-                {
-                    if (item.Contains(repository))
-                    {
-                        Assert.Fail($"Repository {repository} was not deleted.");
-                    }
-                }
+                // Act
+                await client.DeleteRepositoryAsync(repositoryId);
+                await Delay(5000);
+
+                // Assert
+                repositories = client.GetRepositoryNamesAsync();
+                Assert.IsFalse(await repositories.ContainsAsync(repositoryId), $"Repository {repositoryId} was not deleted.");
             }
             finally
             {
-                // Clean up - put the repository with tags back.
                 if (Mode != RecordedTestMode.Playback)
                 {
-                    await ImportImageAsync(registry, repository, tags);
+                    await DeleteRepositoryAsync(repositoryId);
                 }
             }
         }

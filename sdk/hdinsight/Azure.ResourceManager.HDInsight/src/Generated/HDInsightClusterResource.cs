@@ -1613,37 +1613,9 @@ namespace Azure.ResourceManager.HDInsight
         /// <returns> An async collection of <see cref="RuntimeScriptActionDetail" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<RuntimeScriptActionDetail> GetScriptActionsAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<RuntimeScriptActionDetail>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _scriptActionsClientDiagnostics.CreateScope("HDInsightClusterResource.GetScriptActions");
-                scope.Start();
-                try
-                {
-                    var response = await _scriptActionsRestClient.ListByClusterAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<RuntimeScriptActionDetail>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _scriptActionsClientDiagnostics.CreateScope("HDInsightClusterResource.GetScriptActions");
-                scope.Start();
-                try
-                {
-                    var response = await _scriptActionsRestClient.ListByClusterNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _scriptActionsRestClient.CreateListByClusterRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _scriptActionsRestClient.CreateListByClusterNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, RuntimeScriptActionDetail.DeserializeRuntimeScriptActionDetail, _scriptActionsClientDiagnostics, Pipeline, "HDInsightClusterResource.GetScriptActions", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -1655,37 +1627,9 @@ namespace Azure.ResourceManager.HDInsight
         /// <returns> A collection of <see cref="RuntimeScriptActionDetail" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<RuntimeScriptActionDetail> GetScriptActions(CancellationToken cancellationToken = default)
         {
-            Page<RuntimeScriptActionDetail> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _scriptActionsClientDiagnostics.CreateScope("HDInsightClusterResource.GetScriptActions");
-                scope.Start();
-                try
-                {
-                    var response = _scriptActionsRestClient.ListByCluster(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<RuntimeScriptActionDetail> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _scriptActionsClientDiagnostics.CreateScope("HDInsightClusterResource.GetScriptActions");
-                scope.Start();
-                try
-                {
-                    var response = _scriptActionsRestClient.ListByClusterNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _scriptActionsRestClient.CreateListByClusterRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _scriptActionsRestClient.CreateListByClusterNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, RuntimeScriptActionDetail.DeserializeRuntimeScriptActionDetail, _scriptActionsClientDiagnostics, Pipeline, "HDInsightClusterResource.GetScriptActions", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -1805,37 +1749,9 @@ namespace Azure.ResourceManager.HDInsight
         /// <returns> An async collection of <see cref="RuntimeScriptActionDetail" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<RuntimeScriptActionDetail> GetScriptExecutionHistoriesAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<RuntimeScriptActionDetail>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _scriptExecutionHistoryClientDiagnostics.CreateScope("HDInsightClusterResource.GetScriptExecutionHistories");
-                scope.Start();
-                try
-                {
-                    var response = await _scriptExecutionHistoryRestClient.ListByClusterAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<RuntimeScriptActionDetail>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _scriptExecutionHistoryClientDiagnostics.CreateScope("HDInsightClusterResource.GetScriptExecutionHistories");
-                scope.Start();
-                try
-                {
-                    var response = await _scriptExecutionHistoryRestClient.ListByClusterNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _scriptExecutionHistoryRestClient.CreateListByClusterRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _scriptExecutionHistoryRestClient.CreateListByClusterNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, RuntimeScriptActionDetail.DeserializeRuntimeScriptActionDetail, _scriptExecutionHistoryClientDiagnostics, Pipeline, "HDInsightClusterResource.GetScriptExecutionHistories", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -1847,37 +1763,9 @@ namespace Azure.ResourceManager.HDInsight
         /// <returns> A collection of <see cref="RuntimeScriptActionDetail" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<RuntimeScriptActionDetail> GetScriptExecutionHistories(CancellationToken cancellationToken = default)
         {
-            Page<RuntimeScriptActionDetail> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _scriptExecutionHistoryClientDiagnostics.CreateScope("HDInsightClusterResource.GetScriptExecutionHistories");
-                scope.Start();
-                try
-                {
-                    var response = _scriptExecutionHistoryRestClient.ListByCluster(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<RuntimeScriptActionDetail> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _scriptExecutionHistoryClientDiagnostics.CreateScope("HDInsightClusterResource.GetScriptExecutionHistories");
-                scope.Start();
-                try
-                {
-                    var response = _scriptExecutionHistoryRestClient.ListByClusterNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _scriptExecutionHistoryRestClient.CreateListByClusterRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _scriptExecutionHistoryRestClient.CreateListByClusterNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, RuntimeScriptActionDetail.DeserializeRuntimeScriptActionDetail, _scriptExecutionHistoryClientDiagnostics, Pipeline, "HDInsightClusterResource.GetScriptExecutionHistories", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -1943,22 +1831,8 @@ namespace Azure.ResourceManager.HDInsight
         /// <returns> An async collection of <see cref="HDInsightClusterHostInfo" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<HDInsightClusterHostInfo> GetVirtualMachineHostsAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<HDInsightClusterHostInfo>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _virtualMachinesClientDiagnostics.CreateScope("HDInsightClusterResource.GetVirtualMachineHosts");
-                scope.Start();
-                try
-                {
-                    var response = await _virtualMachinesRestClient.ListHostsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value, null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _virtualMachinesRestClient.CreateListHostsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, HDInsightClusterHostInfo.DeserializeHDInsightClusterHostInfo, _virtualMachinesClientDiagnostics, Pipeline, "HDInsightClusterResource.GetVirtualMachineHosts", "", null, cancellationToken);
         }
 
         /// <summary>
@@ -1970,22 +1844,8 @@ namespace Azure.ResourceManager.HDInsight
         /// <returns> A collection of <see cref="HDInsightClusterHostInfo" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<HDInsightClusterHostInfo> GetVirtualMachineHosts(CancellationToken cancellationToken = default)
         {
-            Page<HDInsightClusterHostInfo> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _virtualMachinesClientDiagnostics.CreateScope("HDInsightClusterResource.GetVirtualMachineHosts");
-                scope.Start();
-                try
-                {
-                    var response = _virtualMachinesRestClient.ListHosts(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value, null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _virtualMachinesRestClient.CreateListHostsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, HDInsightClusterHostInfo.DeserializeHDInsightClusterHostInfo, _virtualMachinesClientDiagnostics, Pipeline, "HDInsightClusterResource.GetVirtualMachineHosts", "", null, cancellationToken);
         }
 
         /// <summary>

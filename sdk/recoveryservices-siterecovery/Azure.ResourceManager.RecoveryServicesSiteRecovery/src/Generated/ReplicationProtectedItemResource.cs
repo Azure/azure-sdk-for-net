@@ -1166,7 +1166,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
 
         /// <summary>
         /// The operation to update(push update) the installed mobility service software on a replication protected item to the latest available version.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationFabrics/{fabricName}/replicationProtectionContainers/{protectionContainerName}/replicationProtectedItems/{replicationProtectedItemName}/updateMobilityService
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationFabrics/{fabricName}/replicationProtectionContainers/{protectionContainerName}/replicationProtectedItems/{replicatedProtectedItemName}/updateMobilityService
         /// Operation Id: ReplicationProtectedItems_UpdateMobilityService
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -1196,7 +1196,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
 
         /// <summary>
         /// The operation to update(push update) the installed mobility service software on a replication protected item to the latest available version.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationFabrics/{fabricName}/replicationProtectionContainers/{protectionContainerName}/replicationProtectedItems/{replicationProtectedItemName}/updateMobilityService
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationFabrics/{fabricName}/replicationProtectionContainers/{protectionContainerName}/replicationProtectedItems/{replicatedProtectedItemName}/updateMobilityService
         /// Operation Id: ReplicationProtectedItems_UpdateMobilityService
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -1233,37 +1233,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <returns> An async collection of <see cref="TargetComputeSize" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<TargetComputeSize> GetTargetComputeSizesByReplicationProtectedItemsAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<TargetComputeSize>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _targetComputeSizesClientDiagnostics.CreateScope("ReplicationProtectedItemResource.GetTargetComputeSizesByReplicationProtectedItems");
-                scope.Start();
-                try
-                {
-                    var response = await _targetComputeSizesRestClient.ListByReplicationProtectedItemsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<TargetComputeSize>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _targetComputeSizesClientDiagnostics.CreateScope("ReplicationProtectedItemResource.GetTargetComputeSizesByReplicationProtectedItems");
-                scope.Start();
-                try
-                {
-                    var response = await _targetComputeSizesRestClient.ListByReplicationProtectedItemsNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _targetComputeSizesRestClient.CreateListByReplicationProtectedItemsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _targetComputeSizesRestClient.CreateListByReplicationProtectedItemsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, TargetComputeSize.DeserializeTargetComputeSize, _targetComputeSizesClientDiagnostics, Pipeline, "ReplicationProtectedItemResource.GetTargetComputeSizesByReplicationProtectedItems", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -1275,37 +1247,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <returns> A collection of <see cref="TargetComputeSize" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<TargetComputeSize> GetTargetComputeSizesByReplicationProtectedItems(CancellationToken cancellationToken = default)
         {
-            Page<TargetComputeSize> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _targetComputeSizesClientDiagnostics.CreateScope("ReplicationProtectedItemResource.GetTargetComputeSizesByReplicationProtectedItems");
-                scope.Start();
-                try
-                {
-                    var response = _targetComputeSizesRestClient.ListByReplicationProtectedItems(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<TargetComputeSize> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _targetComputeSizesClientDiagnostics.CreateScope("ReplicationProtectedItemResource.GetTargetComputeSizesByReplicationProtectedItems");
-                scope.Start();
-                try
-                {
-                    var response = _targetComputeSizesRestClient.ListByReplicationProtectedItemsNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _targetComputeSizesRestClient.CreateListByReplicationProtectedItemsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _targetComputeSizesRestClient.CreateListByReplicationProtectedItemsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, TargetComputeSize.DeserializeTargetComputeSize, _targetComputeSizesClientDiagnostics, Pipeline, "ReplicationProtectedItemResource.GetTargetComputeSizesByReplicationProtectedItems", "value", "nextLink", cancellationToken);
         }
     }
 }

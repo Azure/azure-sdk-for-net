@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -186,37 +185,9 @@ namespace Azure.ResourceManager.AppService
         /// <returns> An async collection of <see cref="AppServiceCertificateResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<AppServiceCertificateResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<AppServiceCertificateResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _appServiceCertificateAppServiceCertificateOrdersClientDiagnostics.CreateScope("AppServiceCertificateCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _appServiceCertificateAppServiceCertificateOrdersRestClient.ListCertificatesAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new AppServiceCertificateResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<AppServiceCertificateResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _appServiceCertificateAppServiceCertificateOrdersClientDiagnostics.CreateScope("AppServiceCertificateCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _appServiceCertificateAppServiceCertificateOrdersRestClient.ListCertificatesNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new AppServiceCertificateResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _appServiceCertificateAppServiceCertificateOrdersRestClient.CreateListCertificatesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _appServiceCertificateAppServiceCertificateOrdersRestClient.CreateListCertificatesNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new AppServiceCertificateResource(Client, AppServiceCertificateData.DeserializeAppServiceCertificateData(e)), _appServiceCertificateAppServiceCertificateOrdersClientDiagnostics, Pipeline, "AppServiceCertificateCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -228,37 +199,9 @@ namespace Azure.ResourceManager.AppService
         /// <returns> A collection of <see cref="AppServiceCertificateResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<AppServiceCertificateResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<AppServiceCertificateResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _appServiceCertificateAppServiceCertificateOrdersClientDiagnostics.CreateScope("AppServiceCertificateCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _appServiceCertificateAppServiceCertificateOrdersRestClient.ListCertificates(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new AppServiceCertificateResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<AppServiceCertificateResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _appServiceCertificateAppServiceCertificateOrdersClientDiagnostics.CreateScope("AppServiceCertificateCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _appServiceCertificateAppServiceCertificateOrdersRestClient.ListCertificatesNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new AppServiceCertificateResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _appServiceCertificateAppServiceCertificateOrdersRestClient.CreateListCertificatesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _appServiceCertificateAppServiceCertificateOrdersRestClient.CreateListCertificatesNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new AppServiceCertificateResource(Client, AppServiceCertificateData.DeserializeAppServiceCertificateData(e)), _appServiceCertificateAppServiceCertificateOrdersClientDiagnostics, Pipeline, "AppServiceCertificateCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

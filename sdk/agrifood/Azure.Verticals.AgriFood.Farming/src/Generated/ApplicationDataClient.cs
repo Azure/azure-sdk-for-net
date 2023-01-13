@@ -7,8 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Runtime.CompilerServices;
-using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
@@ -16,7 +14,7 @@ using Azure.Core.Pipeline;
 
 namespace Azure.Verticals.AgriFood.Farming
 {
-    // Data plane generated client. The ApplicationData service client.
+    // Data plane generated client.
     /// <summary> The ApplicationData service client. </summary>
     public partial class ApplicationDataClient
     {
@@ -276,24 +274,9 @@ namespace Azure.Verticals.AgriFood.Farming
         {
             Argument.AssertNotNullOrEmpty(farmerId, nameof(farmerId));
 
-            return GetAllApplicationDataByFarmerIdImplementationAsync("ApplicationDataClient.GetAllApplicationDataByFarmerId", farmerId, minAvgMaterial, maxAvgMaterial, minTotalMaterial, maxTotalMaterial, sources, associatedBoundaryIds, operationBoundaryIds, minOperationStartDateTime, maxOperationStartDateTime, minOperationEndDateTime, maxOperationEndDateTime, minOperationModifiedDateTime, maxOperationModifiedDateTime, minArea, maxArea, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
-        }
-
-        private AsyncPageable<BinaryData> GetAllApplicationDataByFarmerIdImplementationAsync(string diagnosticsScopeName, string farmerId, double? minAvgMaterial, double? maxAvgMaterial, double? minTotalMaterial, double? maxTotalMaterial, IEnumerable<string> sources, IEnumerable<string> associatedBoundaryIds, IEnumerable<string> operationBoundaryIds, DateTimeOffset? minOperationStartDateTime, DateTimeOffset? maxOperationStartDateTime, DateTimeOffset? minOperationEndDateTime, DateTimeOffset? maxOperationEndDateTime, DateTimeOffset? minOperationModifiedDateTime, DateTimeOffset? maxOperationModifiedDateTime, double? minArea, double? maxArea, IEnumerable<string> ids, IEnumerable<string> names, IEnumerable<string> propertyFilters, IEnumerable<string> statuses, DateTimeOffset? minCreatedDateTime, DateTimeOffset? maxCreatedDateTime, DateTimeOffset? minLastModifiedDateTime, DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken, RequestContext context)
-        {
-            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, ClientDiagnostics, diagnosticsScopeName);
-            async IAsyncEnumerable<Page<BinaryData>> CreateEnumerableAsync(string nextLink, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken = default)
-            {
-                do
-                {
-                    var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetAllApplicationDataByFarmerIdRequest(farmerId, minAvgMaterial, maxAvgMaterial, minTotalMaterial, maxTotalMaterial, sources, associatedBoundaryIds, operationBoundaryIds, minOperationStartDateTime, maxOperationStartDateTime, minOperationEndDateTime, maxOperationEndDateTime, minOperationModifiedDateTime, maxOperationModifiedDateTime, minArea, maxArea, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context)
-                        : CreateGetAllApplicationDataByFarmerIdNextPageRequest(nextLink, farmerId, minAvgMaterial, maxAvgMaterial, minTotalMaterial, maxTotalMaterial, sources, associatedBoundaryIds, operationBoundaryIds, minOperationStartDateTime, maxOperationStartDateTime, minOperationEndDateTime, maxOperationEndDateTime, minOperationModifiedDateTime, maxOperationModifiedDateTime, minArea, maxArea, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
-                    var page = await LowLevelPageableHelpers.ProcessMessageAsync(_pipeline, message, context, "value", "nextLink", cancellationToken).ConfigureAwait(false);
-                    nextLink = page.ContinuationToken;
-                    yield return page;
-                } while (!string.IsNullOrEmpty(nextLink));
-            }
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetAllApplicationDataByFarmerIdRequest(farmerId, minAvgMaterial, maxAvgMaterial, minTotalMaterial, maxTotalMaterial, sources, associatedBoundaryIds, operationBoundaryIds, minOperationStartDateTime, maxOperationStartDateTime, minOperationEndDateTime, maxOperationEndDateTime, minOperationModifiedDateTime, maxOperationModifiedDateTime, minArea, maxArea, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetAllApplicationDataByFarmerIdNextPageRequest(nextLink, farmerId, minAvgMaterial, maxAvgMaterial, minTotalMaterial, maxTotalMaterial, sources, associatedBoundaryIds, operationBoundaryIds, minOperationStartDateTime, maxOperationStartDateTime, minOperationEndDateTime, maxOperationEndDateTime, minOperationModifiedDateTime, maxOperationModifiedDateTime, minArea, maxArea, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "ApplicationDataClient.GetAllApplicationDataByFarmerId", "value", "nextLink", context);
         }
 
         /// <summary> Returns a paginated list of application data resources under a particular farm. </summary>
@@ -339,24 +322,9 @@ namespace Azure.Verticals.AgriFood.Farming
         {
             Argument.AssertNotNullOrEmpty(farmerId, nameof(farmerId));
 
-            return GetAllApplicationDataByFarmerIdImplementation("ApplicationDataClient.GetAllApplicationDataByFarmerId", farmerId, minAvgMaterial, maxAvgMaterial, minTotalMaterial, maxTotalMaterial, sources, associatedBoundaryIds, operationBoundaryIds, minOperationStartDateTime, maxOperationStartDateTime, minOperationEndDateTime, maxOperationEndDateTime, minOperationModifiedDateTime, maxOperationModifiedDateTime, minArea, maxArea, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
-        }
-
-        private Pageable<BinaryData> GetAllApplicationDataByFarmerIdImplementation(string diagnosticsScopeName, string farmerId, double? minAvgMaterial, double? maxAvgMaterial, double? minTotalMaterial, double? maxTotalMaterial, IEnumerable<string> sources, IEnumerable<string> associatedBoundaryIds, IEnumerable<string> operationBoundaryIds, DateTimeOffset? minOperationStartDateTime, DateTimeOffset? maxOperationStartDateTime, DateTimeOffset? minOperationEndDateTime, DateTimeOffset? maxOperationEndDateTime, DateTimeOffset? minOperationModifiedDateTime, DateTimeOffset? maxOperationModifiedDateTime, double? minArea, double? maxArea, IEnumerable<string> ids, IEnumerable<string> names, IEnumerable<string> propertyFilters, IEnumerable<string> statuses, DateTimeOffset? minCreatedDateTime, DateTimeOffset? maxCreatedDateTime, DateTimeOffset? minLastModifiedDateTime, DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken, RequestContext context)
-        {
-            return PageableHelpers.CreatePageable(CreateEnumerable, ClientDiagnostics, diagnosticsScopeName);
-            IEnumerable<Page<BinaryData>> CreateEnumerable(string nextLink, int? pageSizeHint)
-            {
-                do
-                {
-                    var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetAllApplicationDataByFarmerIdRequest(farmerId, minAvgMaterial, maxAvgMaterial, minTotalMaterial, maxTotalMaterial, sources, associatedBoundaryIds, operationBoundaryIds, minOperationStartDateTime, maxOperationStartDateTime, minOperationEndDateTime, maxOperationEndDateTime, minOperationModifiedDateTime, maxOperationModifiedDateTime, minArea, maxArea, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context)
-                        : CreateGetAllApplicationDataByFarmerIdNextPageRequest(nextLink, farmerId, minAvgMaterial, maxAvgMaterial, minTotalMaterial, maxTotalMaterial, sources, associatedBoundaryIds, operationBoundaryIds, minOperationStartDateTime, maxOperationStartDateTime, minOperationEndDateTime, maxOperationEndDateTime, minOperationModifiedDateTime, maxOperationModifiedDateTime, minArea, maxArea, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
-                    var page = LowLevelPageableHelpers.ProcessMessage(_pipeline, message, context, "value", "nextLink");
-                    nextLink = page.ContinuationToken;
-                    yield return page;
-                } while (!string.IsNullOrEmpty(nextLink));
-            }
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetAllApplicationDataByFarmerIdRequest(farmerId, minAvgMaterial, maxAvgMaterial, minTotalMaterial, maxTotalMaterial, sources, associatedBoundaryIds, operationBoundaryIds, minOperationStartDateTime, maxOperationStartDateTime, minOperationEndDateTime, maxOperationEndDateTime, minOperationModifiedDateTime, maxOperationModifiedDateTime, minArea, maxArea, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetAllApplicationDataByFarmerIdNextPageRequest(nextLink, farmerId, minAvgMaterial, maxAvgMaterial, minTotalMaterial, maxTotalMaterial, sources, associatedBoundaryIds, operationBoundaryIds, minOperationStartDateTime, maxOperationStartDateTime, minOperationEndDateTime, maxOperationEndDateTime, minOperationModifiedDateTime, maxOperationModifiedDateTime, minArea, maxArea, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "ApplicationDataClient.GetAllApplicationDataByFarmerId", "value", "nextLink", context);
         }
 
         /// <summary> Returns a paginated list of application data resources across all farmers. </summary>
@@ -397,24 +365,9 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <include file="Docs/ApplicationDataClient.xml" path="doc/members/member[@name='GetAllApplicationDataAsync(Double,Double,Double,Double,IEnumerable,IEnumerable,IEnumerable,DateTimeOffset,DateTimeOffset,DateTimeOffset,DateTimeOffset,DateTimeOffset,DateTimeOffset,Double,Double,IEnumerable,IEnumerable,IEnumerable,IEnumerable,DateTimeOffset,DateTimeOffset,DateTimeOffset,DateTimeOffset,Int32,String,RequestContext)']/*" />
         public virtual AsyncPageable<BinaryData> GetAllApplicationDataAsync(double? minAvgMaterial = null, double? maxAvgMaterial = null, double? minTotalMaterial = null, double? maxTotalMaterial = null, IEnumerable<string> sources = null, IEnumerable<string> associatedBoundaryIds = null, IEnumerable<string> operationBoundaryIds = null, DateTimeOffset? minOperationStartDateTime = null, DateTimeOffset? maxOperationStartDateTime = null, DateTimeOffset? minOperationEndDateTime = null, DateTimeOffset? maxOperationEndDateTime = null, DateTimeOffset? minOperationModifiedDateTime = null, DateTimeOffset? maxOperationModifiedDateTime = null, double? minArea = null, double? maxArea = null, IEnumerable<string> ids = null, IEnumerable<string> names = null, IEnumerable<string> propertyFilters = null, IEnumerable<string> statuses = null, DateTimeOffset? minCreatedDateTime = null, DateTimeOffset? maxCreatedDateTime = null, DateTimeOffset? minLastModifiedDateTime = null, DateTimeOffset? maxLastModifiedDateTime = null, int? maxPageSize = null, string skipToken = null, RequestContext context = null)
         {
-            return GetAllApplicationDataImplementationAsync("ApplicationDataClient.GetAllApplicationData", minAvgMaterial, maxAvgMaterial, minTotalMaterial, maxTotalMaterial, sources, associatedBoundaryIds, operationBoundaryIds, minOperationStartDateTime, maxOperationStartDateTime, minOperationEndDateTime, maxOperationEndDateTime, minOperationModifiedDateTime, maxOperationModifiedDateTime, minArea, maxArea, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
-        }
-
-        private AsyncPageable<BinaryData> GetAllApplicationDataImplementationAsync(string diagnosticsScopeName, double? minAvgMaterial, double? maxAvgMaterial, double? minTotalMaterial, double? maxTotalMaterial, IEnumerable<string> sources, IEnumerable<string> associatedBoundaryIds, IEnumerable<string> operationBoundaryIds, DateTimeOffset? minOperationStartDateTime, DateTimeOffset? maxOperationStartDateTime, DateTimeOffset? minOperationEndDateTime, DateTimeOffset? maxOperationEndDateTime, DateTimeOffset? minOperationModifiedDateTime, DateTimeOffset? maxOperationModifiedDateTime, double? minArea, double? maxArea, IEnumerable<string> ids, IEnumerable<string> names, IEnumerable<string> propertyFilters, IEnumerable<string> statuses, DateTimeOffset? minCreatedDateTime, DateTimeOffset? maxCreatedDateTime, DateTimeOffset? minLastModifiedDateTime, DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken, RequestContext context)
-        {
-            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, ClientDiagnostics, diagnosticsScopeName);
-            async IAsyncEnumerable<Page<BinaryData>> CreateEnumerableAsync(string nextLink, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken = default)
-            {
-                do
-                {
-                    var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetAllApplicationDataRequest(minAvgMaterial, maxAvgMaterial, minTotalMaterial, maxTotalMaterial, sources, associatedBoundaryIds, operationBoundaryIds, minOperationStartDateTime, maxOperationStartDateTime, minOperationEndDateTime, maxOperationEndDateTime, minOperationModifiedDateTime, maxOperationModifiedDateTime, minArea, maxArea, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context)
-                        : CreateGetAllApplicationDataNextPageRequest(nextLink, minAvgMaterial, maxAvgMaterial, minTotalMaterial, maxTotalMaterial, sources, associatedBoundaryIds, operationBoundaryIds, minOperationStartDateTime, maxOperationStartDateTime, minOperationEndDateTime, maxOperationEndDateTime, minOperationModifiedDateTime, maxOperationModifiedDateTime, minArea, maxArea, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
-                    var page = await LowLevelPageableHelpers.ProcessMessageAsync(_pipeline, message, context, "value", "nextLink", cancellationToken).ConfigureAwait(false);
-                    nextLink = page.ContinuationToken;
-                    yield return page;
-                } while (!string.IsNullOrEmpty(nextLink));
-            }
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetAllApplicationDataRequest(minAvgMaterial, maxAvgMaterial, minTotalMaterial, maxTotalMaterial, sources, associatedBoundaryIds, operationBoundaryIds, minOperationStartDateTime, maxOperationStartDateTime, minOperationEndDateTime, maxOperationEndDateTime, minOperationModifiedDateTime, maxOperationModifiedDateTime, minArea, maxArea, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetAllApplicationDataNextPageRequest(nextLink, minAvgMaterial, maxAvgMaterial, minTotalMaterial, maxTotalMaterial, sources, associatedBoundaryIds, operationBoundaryIds, minOperationStartDateTime, maxOperationStartDateTime, minOperationEndDateTime, maxOperationEndDateTime, minOperationModifiedDateTime, maxOperationModifiedDateTime, minArea, maxArea, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "ApplicationDataClient.GetAllApplicationData", "value", "nextLink", context);
         }
 
         /// <summary> Returns a paginated list of application data resources across all farmers. </summary>
@@ -455,24 +408,9 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <include file="Docs/ApplicationDataClient.xml" path="doc/members/member[@name='GetAllApplicationData(Double,Double,Double,Double,IEnumerable,IEnumerable,IEnumerable,DateTimeOffset,DateTimeOffset,DateTimeOffset,DateTimeOffset,DateTimeOffset,DateTimeOffset,Double,Double,IEnumerable,IEnumerable,IEnumerable,IEnumerable,DateTimeOffset,DateTimeOffset,DateTimeOffset,DateTimeOffset,Int32,String,RequestContext)']/*" />
         public virtual Pageable<BinaryData> GetAllApplicationData(double? minAvgMaterial = null, double? maxAvgMaterial = null, double? minTotalMaterial = null, double? maxTotalMaterial = null, IEnumerable<string> sources = null, IEnumerable<string> associatedBoundaryIds = null, IEnumerable<string> operationBoundaryIds = null, DateTimeOffset? minOperationStartDateTime = null, DateTimeOffset? maxOperationStartDateTime = null, DateTimeOffset? minOperationEndDateTime = null, DateTimeOffset? maxOperationEndDateTime = null, DateTimeOffset? minOperationModifiedDateTime = null, DateTimeOffset? maxOperationModifiedDateTime = null, double? minArea = null, double? maxArea = null, IEnumerable<string> ids = null, IEnumerable<string> names = null, IEnumerable<string> propertyFilters = null, IEnumerable<string> statuses = null, DateTimeOffset? minCreatedDateTime = null, DateTimeOffset? maxCreatedDateTime = null, DateTimeOffset? minLastModifiedDateTime = null, DateTimeOffset? maxLastModifiedDateTime = null, int? maxPageSize = null, string skipToken = null, RequestContext context = null)
         {
-            return GetAllApplicationDataImplementation("ApplicationDataClient.GetAllApplicationData", minAvgMaterial, maxAvgMaterial, minTotalMaterial, maxTotalMaterial, sources, associatedBoundaryIds, operationBoundaryIds, minOperationStartDateTime, maxOperationStartDateTime, minOperationEndDateTime, maxOperationEndDateTime, minOperationModifiedDateTime, maxOperationModifiedDateTime, minArea, maxArea, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
-        }
-
-        private Pageable<BinaryData> GetAllApplicationDataImplementation(string diagnosticsScopeName, double? minAvgMaterial, double? maxAvgMaterial, double? minTotalMaterial, double? maxTotalMaterial, IEnumerable<string> sources, IEnumerable<string> associatedBoundaryIds, IEnumerable<string> operationBoundaryIds, DateTimeOffset? minOperationStartDateTime, DateTimeOffset? maxOperationStartDateTime, DateTimeOffset? minOperationEndDateTime, DateTimeOffset? maxOperationEndDateTime, DateTimeOffset? minOperationModifiedDateTime, DateTimeOffset? maxOperationModifiedDateTime, double? minArea, double? maxArea, IEnumerable<string> ids, IEnumerable<string> names, IEnumerable<string> propertyFilters, IEnumerable<string> statuses, DateTimeOffset? minCreatedDateTime, DateTimeOffset? maxCreatedDateTime, DateTimeOffset? minLastModifiedDateTime, DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken, RequestContext context)
-        {
-            return PageableHelpers.CreatePageable(CreateEnumerable, ClientDiagnostics, diagnosticsScopeName);
-            IEnumerable<Page<BinaryData>> CreateEnumerable(string nextLink, int? pageSizeHint)
-            {
-                do
-                {
-                    var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetAllApplicationDataRequest(minAvgMaterial, maxAvgMaterial, minTotalMaterial, maxTotalMaterial, sources, associatedBoundaryIds, operationBoundaryIds, minOperationStartDateTime, maxOperationStartDateTime, minOperationEndDateTime, maxOperationEndDateTime, minOperationModifiedDateTime, maxOperationModifiedDateTime, minArea, maxArea, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context)
-                        : CreateGetAllApplicationDataNextPageRequest(nextLink, minAvgMaterial, maxAvgMaterial, minTotalMaterial, maxTotalMaterial, sources, associatedBoundaryIds, operationBoundaryIds, minOperationStartDateTime, maxOperationStartDateTime, minOperationEndDateTime, maxOperationEndDateTime, minOperationModifiedDateTime, maxOperationModifiedDateTime, minArea, maxArea, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
-                    var page = LowLevelPageableHelpers.ProcessMessage(_pipeline, message, context, "value", "nextLink");
-                    nextLink = page.ContinuationToken;
-                    yield return page;
-                } while (!string.IsNullOrEmpty(nextLink));
-            }
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetAllApplicationDataRequest(minAvgMaterial, maxAvgMaterial, minTotalMaterial, maxTotalMaterial, sources, associatedBoundaryIds, operationBoundaryIds, minOperationStartDateTime, maxOperationStartDateTime, minOperationEndDateTime, maxOperationEndDateTime, minOperationModifiedDateTime, maxOperationModifiedDateTime, minArea, maxArea, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetAllApplicationDataNextPageRequest(nextLink, minAvgMaterial, maxAvgMaterial, minTotalMaterial, maxTotalMaterial, sources, associatedBoundaryIds, operationBoundaryIds, minOperationStartDateTime, maxOperationStartDateTime, minOperationEndDateTime, maxOperationEndDateTime, minOperationModifiedDateTime, maxOperationModifiedDateTime, minArea, maxArea, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "ApplicationDataClient.GetAllApplicationData", "value", "nextLink", context);
         }
 
         internal HttpMessage CreateGetAllApplicationDataByFarmerIdRequest(string farmerId, double? minAvgMaterial, double? maxAvgMaterial, double? minTotalMaterial, double? maxTotalMaterial, IEnumerable<string> sources, IEnumerable<string> associatedBoundaryIds, IEnumerable<string> operationBoundaryIds, DateTimeOffset? minOperationStartDateTime, DateTimeOffset? maxOperationStartDateTime, DateTimeOffset? minOperationEndDateTime, DateTimeOffset? maxOperationEndDateTime, DateTimeOffset? minOperationModifiedDateTime, DateTimeOffset? maxOperationModifiedDateTime, double? minArea, double? maxArea, IEnumerable<string> ids, IEnumerable<string> names, IEnumerable<string> propertyFilters, IEnumerable<string> statuses, DateTimeOffset? minCreatedDateTime, DateTimeOffset? maxCreatedDateTime, DateTimeOffset? minLastModifiedDateTime, DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken, RequestContext context)

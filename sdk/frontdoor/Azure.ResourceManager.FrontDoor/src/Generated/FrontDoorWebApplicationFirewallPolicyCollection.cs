@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -187,37 +186,9 @@ namespace Azure.ResourceManager.FrontDoor
         /// <returns> An async collection of <see cref="FrontDoorWebApplicationFirewallPolicyResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<FrontDoorWebApplicationFirewallPolicyResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<FrontDoorWebApplicationFirewallPolicyResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _frontDoorWebApplicationFirewallPolicyPoliciesClientDiagnostics.CreateScope("FrontDoorWebApplicationFirewallPolicyCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _frontDoorWebApplicationFirewallPolicyPoliciesRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new FrontDoorWebApplicationFirewallPolicyResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<FrontDoorWebApplicationFirewallPolicyResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _frontDoorWebApplicationFirewallPolicyPoliciesClientDiagnostics.CreateScope("FrontDoorWebApplicationFirewallPolicyCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _frontDoorWebApplicationFirewallPolicyPoliciesRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new FrontDoorWebApplicationFirewallPolicyResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _frontDoorWebApplicationFirewallPolicyPoliciesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _frontDoorWebApplicationFirewallPolicyPoliciesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new FrontDoorWebApplicationFirewallPolicyResource(Client, FrontDoorWebApplicationFirewallPolicyData.DeserializeFrontDoorWebApplicationFirewallPolicyData(e)), _frontDoorWebApplicationFirewallPolicyPoliciesClientDiagnostics, Pipeline, "FrontDoorWebApplicationFirewallPolicyCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -229,37 +200,9 @@ namespace Azure.ResourceManager.FrontDoor
         /// <returns> A collection of <see cref="FrontDoorWebApplicationFirewallPolicyResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<FrontDoorWebApplicationFirewallPolicyResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<FrontDoorWebApplicationFirewallPolicyResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _frontDoorWebApplicationFirewallPolicyPoliciesClientDiagnostics.CreateScope("FrontDoorWebApplicationFirewallPolicyCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _frontDoorWebApplicationFirewallPolicyPoliciesRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new FrontDoorWebApplicationFirewallPolicyResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<FrontDoorWebApplicationFirewallPolicyResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _frontDoorWebApplicationFirewallPolicyPoliciesClientDiagnostics.CreateScope("FrontDoorWebApplicationFirewallPolicyCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _frontDoorWebApplicationFirewallPolicyPoliciesRestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new FrontDoorWebApplicationFirewallPolicyResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _frontDoorWebApplicationFirewallPolicyPoliciesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _frontDoorWebApplicationFirewallPolicyPoliciesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new FrontDoorWebApplicationFirewallPolicyResource(Client, FrontDoorWebApplicationFirewallPolicyData.DeserializeFrontDoorWebApplicationFirewallPolicyData(e)), _frontDoorWebApplicationFirewallPolicyPoliciesClientDiagnostics, Pipeline, "FrontDoorWebApplicationFirewallPolicyCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

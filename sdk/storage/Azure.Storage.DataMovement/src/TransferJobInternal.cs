@@ -142,6 +142,7 @@ namespace Azure.Storage.DataMovement
         internal ArrayPool<byte> _arrayPool;
 
         public List<JobPartInternal> _jobParts;
+        internal bool _enumerationComplete;
 
         /// <summary>
         /// Constructor for mocking
@@ -174,6 +175,7 @@ namespace Azure.Storage.DataMovement
             _cancellationTokenSource = new CancellationTokenSource();
             _arrayPool = arrayPool;
             _jobParts = new List<JobPartInternal>();
+            _enumerationComplete = false;
 
             TransferStatusEventHandler = statusEventHandler;
             TransferFailedEventHandler = failedEventHandler;
@@ -294,27 +296,9 @@ namespace Azure.Storage.DataMovement
             if (args.StorageTransferStatus == StorageTransferStatus.Completed
                 && _transferStatus < StorageTransferStatus.Completed)
             {
-                // The respective job part has completed, however does not mean we set
-                // the entire job to completed.
-                if (_jobParts.All((JobPartInternal x) =>
-                    (x.JobPartStatus == StorageTransferStatus.Completed ||
-                     x.JobPartStatus == StorageTransferStatus.CompletedWithFailedTransfers ||
-                     x.JobPartStatus == StorageTransferStatus.CompletedWithSkippedTransfers)))
+                if (_enumerationComplete)
                 {
-                    if (_jobParts.Any((JobPartInternal x) =>
-                        x.JobPartStatus == StorageTransferStatus.CompletedWithFailedTransfers))
-                    {
-                        await OnJobStatusChangedAsync(StorageTransferStatus.CompletedWithFailedTransfers).ConfigureAwait(false);
-                    }
-                    else if (_jobParts.Any((JobPartInternal x) =>
-                        x.JobPartStatus == StorageTransferStatus.CompletedWithSkippedTransfers))
-                    {
-                        await OnJobStatusChangedAsync(StorageTransferStatus.CompletedWithSkippedTransfers).ConfigureAwait(false);
-                    }
-                    else
-                    {
-                        await OnJobStatusChangedAsync(StorageTransferStatus.Completed).ConfigureAwait(false);
-                    }
+                    await CheckAndUpdateCompletedStatus().ConfigureAwait(false);
                 }
             }
             else if (args.StorageTransferStatus == StorageTransferStatus.Paused &&
@@ -343,7 +327,7 @@ namespace Azure.Storage.DataMovement
                             isRunningSynchronously: false,
                             cancellationToken: _cancellationTokenSource.Token)).ConfigureAwait(false);
                 }
-                _dataTransfer._state.SetTransferStatus(status);
+                await _dataTransfer._state.SetTransferStatus(status).ConfigureAwait(false);
             }
         }
 
@@ -356,6 +340,42 @@ namespace Azure.Storage.DataMovement
                     transferStatus: status,
                     isRunningSynchronously: false,
                     cancellationToken: _cancellationTokenSource.Token)).ConfigureAwait(false);
+        }
+
+        internal async Task OnEnumerationComplete()
+        {
+            if (_jobParts.Count == 0)
+            {
+                // no files to perform a transfer.
+                await OnJobStatusChangedAsync(StorageTransferStatus.Completed).ConfigureAwait(false);
+            }
+            await CheckAndUpdateCompletedStatus().ConfigureAwait(false);
+        }
+
+        internal async Task CheckAndUpdateCompletedStatus()
+        {
+            // The respective job part has completed, however does not mean we set
+            // the entire job to completed.
+            if (_jobParts.All((JobPartInternal x) =>
+                (x.JobPartStatus == StorageTransferStatus.Completed ||
+                 x.JobPartStatus == StorageTransferStatus.CompletedWithFailedTransfers ||
+                 x.JobPartStatus == StorageTransferStatus.CompletedWithSkippedTransfers)))
+            {
+                if (_jobParts.Any((JobPartInternal x) =>
+                    x.JobPartStatus == StorageTransferStatus.CompletedWithFailedTransfers))
+                {
+                    await OnJobStatusChangedAsync(StorageTransferStatus.CompletedWithFailedTransfers).ConfigureAwait(false);
+                }
+                else if (_jobParts.Any((JobPartInternal x) =>
+                    x.JobPartStatus == StorageTransferStatus.CompletedWithSkippedTransfers))
+                {
+                    await OnJobStatusChangedAsync(StorageTransferStatus.CompletedWithSkippedTransfers).ConfigureAwait(false);
+                }
+                else
+                {
+                    await OnJobStatusChangedAsync(StorageTransferStatus.Completed).ConfigureAwait(false);
+                }
+            }
         }
     }
 }

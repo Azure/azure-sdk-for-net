@@ -7,7 +7,6 @@
 
 using System;
 using System.Threading;
-using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -52,22 +51,8 @@ namespace Azure.ResourceManager.AppPlatform
         /// <returns> An async collection of <see cref="AppPlatformSupportedRuntimeVersion" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<AppPlatformSupportedRuntimeVersion> GetRuntimeVersionsAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<AppPlatformSupportedRuntimeVersion>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = RuntimeVersionsClientDiagnostics.CreateScope("TenantResourceExtensionClient.GetRuntimeVersions");
-                scope.Start();
-                try
-                {
-                    var response = await RuntimeVersionsRestClient.ListRuntimeVersionsAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => RuntimeVersionsRestClient.CreateListRuntimeVersionsRequest();
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, AppPlatformSupportedRuntimeVersion.DeserializeAppPlatformSupportedRuntimeVersion, RuntimeVersionsClientDiagnostics, Pipeline, "TenantResourceExtensionClient.GetRuntimeVersions", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -79,22 +64,8 @@ namespace Azure.ResourceManager.AppPlatform
         /// <returns> A collection of <see cref="AppPlatformSupportedRuntimeVersion" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<AppPlatformSupportedRuntimeVersion> GetRuntimeVersions(CancellationToken cancellationToken = default)
         {
-            Page<AppPlatformSupportedRuntimeVersion> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = RuntimeVersionsClientDiagnostics.CreateScope("TenantResourceExtensionClient.GetRuntimeVersions");
-                scope.Start();
-                try
-                {
-                    var response = RuntimeVersionsRestClient.ListRuntimeVersions(cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => RuntimeVersionsRestClient.CreateListRuntimeVersionsRequest();
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, AppPlatformSupportedRuntimeVersion.DeserializeAppPlatformSupportedRuntimeVersion, RuntimeVersionsClientDiagnostics, Pipeline, "TenantResourceExtensionClient.GetRuntimeVersions", "value", null, cancellationToken);
         }
     }
 }

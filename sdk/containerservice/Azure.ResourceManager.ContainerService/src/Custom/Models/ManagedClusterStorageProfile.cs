@@ -46,5 +46,17 @@ namespace Azure.ResourceManager.ContainerService.Models
                 SnapshotController.IsEnabled = value;
             }
         }
+
+        /// <summary> Whether to enable AzureBlob CSI Driver. The default value is false. </summary>
+        public bool? IsBlobCsiDriverEnabled
+        {
+            get => BlobCsiDriver is null ? default : BlobCsiDriver.IsEnabled;
+            set
+            {
+                if (BlobCsiDriver is null)
+                    BlobCsiDriver = new ManagedClusterStorageProfileBlobCsiDriver();
+                BlobCsiDriver.IsEnabled = value;
+            }
+        }
     }
 }

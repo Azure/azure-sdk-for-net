@@ -192,37 +192,9 @@ namespace Azure.ResourceManager.Automation
         /// <returns> An async collection of <see cref="AutomationJobCollectionItemData" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<AutomationJobCollectionItemData> GetAllAsync(string filter = null, string clientRequestId = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<AutomationJobCollectionItemData>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _automationJobJobClientDiagnostics.CreateScope("AutomationJobCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _automationJobJobRestClient.ListByAutomationAccountAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, clientRequestId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<AutomationJobCollectionItemData>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _automationJobJobClientDiagnostics.CreateScope("AutomationJobCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _automationJobJobRestClient.ListByAutomationAccountNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, clientRequestId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _automationJobJobRestClient.CreateListByAutomationAccountRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, clientRequestId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _automationJobJobRestClient.CreateListByAutomationAccountNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, clientRequestId);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, AutomationJobCollectionItemData.DeserializeAutomationJobCollectionItemData, _automationJobJobClientDiagnostics, Pipeline, "AutomationJobCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -236,37 +208,9 @@ namespace Azure.ResourceManager.Automation
         /// <returns> A collection of <see cref="AutomationJobCollectionItemData" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<AutomationJobCollectionItemData> GetAll(string filter = null, string clientRequestId = null, CancellationToken cancellationToken = default)
         {
-            Page<AutomationJobCollectionItemData> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _automationJobJobClientDiagnostics.CreateScope("AutomationJobCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _automationJobJobRestClient.ListByAutomationAccount(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, clientRequestId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<AutomationJobCollectionItemData> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _automationJobJobClientDiagnostics.CreateScope("AutomationJobCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _automationJobJobRestClient.ListByAutomationAccountNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, clientRequestId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _automationJobJobRestClient.CreateListByAutomationAccountRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, clientRequestId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _automationJobJobRestClient.CreateListByAutomationAccountNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, clientRequestId);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, AutomationJobCollectionItemData.DeserializeAutomationJobCollectionItemData, _automationJobJobClientDiagnostics, Pipeline, "AutomationJobCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

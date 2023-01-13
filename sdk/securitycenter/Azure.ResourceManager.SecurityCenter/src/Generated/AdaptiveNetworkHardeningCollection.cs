@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -132,37 +131,9 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <returns> An async collection of <see cref="AdaptiveNetworkHardeningResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<AdaptiveNetworkHardeningResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<AdaptiveNetworkHardeningResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _adaptiveNetworkHardeningClientDiagnostics.CreateScope("AdaptiveNetworkHardeningCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _adaptiveNetworkHardeningRestClient.ListByExtendedResourceAsync(Id.SubscriptionId, Id.ResourceGroupName, _resourceNamespace, _resourceType, _resourceName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new AdaptiveNetworkHardeningResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<AdaptiveNetworkHardeningResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _adaptiveNetworkHardeningClientDiagnostics.CreateScope("AdaptiveNetworkHardeningCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _adaptiveNetworkHardeningRestClient.ListByExtendedResourceNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, _resourceNamespace, _resourceType, _resourceName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new AdaptiveNetworkHardeningResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _adaptiveNetworkHardeningRestClient.CreateListByExtendedResourceRequest(Id.SubscriptionId, Id.ResourceGroupName, _resourceNamespace, _resourceType, _resourceName);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _adaptiveNetworkHardeningRestClient.CreateListByExtendedResourceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, _resourceNamespace, _resourceType, _resourceName);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new AdaptiveNetworkHardeningResource(Client, AdaptiveNetworkHardeningData.DeserializeAdaptiveNetworkHardeningData(e)), _adaptiveNetworkHardeningClientDiagnostics, Pipeline, "AdaptiveNetworkHardeningCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -174,37 +145,9 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <returns> A collection of <see cref="AdaptiveNetworkHardeningResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<AdaptiveNetworkHardeningResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<AdaptiveNetworkHardeningResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _adaptiveNetworkHardeningClientDiagnostics.CreateScope("AdaptiveNetworkHardeningCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _adaptiveNetworkHardeningRestClient.ListByExtendedResource(Id.SubscriptionId, Id.ResourceGroupName, _resourceNamespace, _resourceType, _resourceName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new AdaptiveNetworkHardeningResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<AdaptiveNetworkHardeningResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _adaptiveNetworkHardeningClientDiagnostics.CreateScope("AdaptiveNetworkHardeningCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _adaptiveNetworkHardeningRestClient.ListByExtendedResourceNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, _resourceNamespace, _resourceType, _resourceName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new AdaptiveNetworkHardeningResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _adaptiveNetworkHardeningRestClient.CreateListByExtendedResourceRequest(Id.SubscriptionId, Id.ResourceGroupName, _resourceNamespace, _resourceType, _resourceName);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _adaptiveNetworkHardeningRestClient.CreateListByExtendedResourceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, _resourceNamespace, _resourceType, _resourceName);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new AdaptiveNetworkHardeningResource(Client, AdaptiveNetworkHardeningData.DeserializeAdaptiveNetworkHardeningData(e)), _adaptiveNetworkHardeningClientDiagnostics, Pipeline, "AdaptiveNetworkHardeningCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
