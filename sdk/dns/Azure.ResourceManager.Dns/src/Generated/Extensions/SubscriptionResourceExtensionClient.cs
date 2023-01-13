@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -58,37 +57,9 @@ namespace Azure.ResourceManager.Dns
         /// <returns> An async collection of <see cref="DnsZoneResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DnsZoneResource> GetDnsZonesAsync(int? top = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<DnsZoneResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = DnsZoneZonesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetDnsZones");
-                scope.Start();
-                try
-                {
-                    var response = await DnsZoneZonesRestClient.ListAsync(Id.SubscriptionId, top, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new DnsZoneResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<DnsZoneResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = DnsZoneZonesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetDnsZones");
-                scope.Start();
-                try
-                {
-                    var response = await DnsZoneZonesRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, top, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new DnsZoneResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => DnsZoneZonesRestClient.CreateListRequest(Id.SubscriptionId, top);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DnsZoneZonesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, top);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DnsZoneResource(Client, DnsZoneData.DeserializeDnsZoneData(e)), DnsZoneZonesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetDnsZones", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -101,37 +72,9 @@ namespace Azure.ResourceManager.Dns
         /// <returns> A collection of <see cref="DnsZoneResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DnsZoneResource> GetDnsZones(int? top = null, CancellationToken cancellationToken = default)
         {
-            Page<DnsZoneResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = DnsZoneZonesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetDnsZones");
-                scope.Start();
-                try
-                {
-                    var response = DnsZoneZonesRestClient.List(Id.SubscriptionId, top, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new DnsZoneResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<DnsZoneResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = DnsZoneZonesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetDnsZones");
-                scope.Start();
-                try
-                {
-                    var response = DnsZoneZonesRestClient.ListNextPage(nextLink, Id.SubscriptionId, top, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new DnsZoneResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => DnsZoneZonesRestClient.CreateListRequest(Id.SubscriptionId, top);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DnsZoneZonesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, top);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DnsZoneResource(Client, DnsZoneData.DeserializeDnsZoneData(e)), DnsZoneZonesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetDnsZones", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

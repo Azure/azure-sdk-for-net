@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -186,37 +185,9 @@ namespace Azure.ResourceManager.Blueprint
         /// <returns> An async collection of <see cref="BlueprintArtifactResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<BlueprintArtifactResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<BlueprintArtifactResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _blueprintArtifactArtifactsClientDiagnostics.CreateScope("BlueprintArtifactCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _blueprintArtifactArtifactsRestClient.ListAsync(Id.Parent, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new BlueprintArtifactResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<BlueprintArtifactResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _blueprintArtifactArtifactsClientDiagnostics.CreateScope("BlueprintArtifactCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _blueprintArtifactArtifactsRestClient.ListNextPageAsync(nextLink, Id.Parent, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new BlueprintArtifactResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _blueprintArtifactArtifactsRestClient.CreateListRequest(Id.Parent, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _blueprintArtifactArtifactsRestClient.CreateListNextPageRequest(nextLink, Id.Parent, Id.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new BlueprintArtifactResource(Client, ArtifactData.DeserializeArtifactData(e)), _blueprintArtifactArtifactsClientDiagnostics, Pipeline, "BlueprintArtifactCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -228,37 +199,9 @@ namespace Azure.ResourceManager.Blueprint
         /// <returns> A collection of <see cref="BlueprintArtifactResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<BlueprintArtifactResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<BlueprintArtifactResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _blueprintArtifactArtifactsClientDiagnostics.CreateScope("BlueprintArtifactCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _blueprintArtifactArtifactsRestClient.List(Id.Parent, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new BlueprintArtifactResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<BlueprintArtifactResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _blueprintArtifactArtifactsClientDiagnostics.CreateScope("BlueprintArtifactCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _blueprintArtifactArtifactsRestClient.ListNextPage(nextLink, Id.Parent, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new BlueprintArtifactResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _blueprintArtifactArtifactsRestClient.CreateListRequest(Id.Parent, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _blueprintArtifactArtifactsRestClient.CreateListNextPageRequest(nextLink, Id.Parent, Id.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new BlueprintArtifactResource(Client, ArtifactData.DeserializeArtifactData(e)), _blueprintArtifactArtifactsClientDiagnostics, Pipeline, "BlueprintArtifactCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

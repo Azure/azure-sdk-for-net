@@ -301,22 +301,8 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <returns> An async collection of <see cref="IngestionConnectionString" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<IngestionConnectionString> GetConnectionStringsAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<IngestionConnectionString>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _ingestionSettingClientDiagnostics.CreateScope("IngestionSettingResource.GetConnectionStrings");
-                scope.Start();
-                try
-                {
-                    var response = await _ingestionSettingRestClient.ListConnectionStringsAsync(Id.SubscriptionId, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _ingestionSettingRestClient.CreateListConnectionStringsRequest(Id.SubscriptionId, Id.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, IngestionConnectionString.DeserializeIngestionConnectionString, _ingestionSettingClientDiagnostics, Pipeline, "IngestionSettingResource.GetConnectionStrings", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -328,22 +314,8 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <returns> A collection of <see cref="IngestionConnectionString" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<IngestionConnectionString> GetConnectionStrings(CancellationToken cancellationToken = default)
         {
-            Page<IngestionConnectionString> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _ingestionSettingClientDiagnostics.CreateScope("IngestionSettingResource.GetConnectionStrings");
-                scope.Start();
-                try
-                {
-                    var response = _ingestionSettingRestClient.ListConnectionStrings(Id.SubscriptionId, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _ingestionSettingRestClient.CreateListConnectionStringsRequest(Id.SubscriptionId, Id.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, IngestionConnectionString.DeserializeIngestionConnectionString, _ingestionSettingClientDiagnostics, Pipeline, "IngestionSettingResource.GetConnectionStrings", "value", null, cancellationToken);
         }
     }
 }

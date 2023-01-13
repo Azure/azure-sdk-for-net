@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -186,22 +185,8 @@ namespace Azure.ResourceManager.DeviceUpdate
         /// <returns> An async collection of <see cref="PrivateEndpointConnectionProxyResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<PrivateEndpointConnectionProxyResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<PrivateEndpointConnectionProxyResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _privateEndpointConnectionProxyClientDiagnostics.CreateScope("PrivateEndpointConnectionProxyCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _privateEndpointConnectionProxyRestClient.ListByAccountAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new PrivateEndpointConnectionProxyResource(Client, value)), null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _privateEndpointConnectionProxyRestClient.CreateListByAccountRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new PrivateEndpointConnectionProxyResource(Client, PrivateEndpointConnectionProxyData.DeserializePrivateEndpointConnectionProxyData(e)), _privateEndpointConnectionProxyClientDiagnostics, Pipeline, "PrivateEndpointConnectionProxyCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -213,22 +198,8 @@ namespace Azure.ResourceManager.DeviceUpdate
         /// <returns> A collection of <see cref="PrivateEndpointConnectionProxyResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<PrivateEndpointConnectionProxyResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<PrivateEndpointConnectionProxyResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _privateEndpointConnectionProxyClientDiagnostics.CreateScope("PrivateEndpointConnectionProxyCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _privateEndpointConnectionProxyRestClient.ListByAccount(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new PrivateEndpointConnectionProxyResource(Client, value)), null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _privateEndpointConnectionProxyRestClient.CreateListByAccountRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new PrivateEndpointConnectionProxyResource(Client, PrivateEndpointConnectionProxyData.DeserializePrivateEndpointConnectionProxyData(e)), _privateEndpointConnectionProxyClientDiagnostics, Pipeline, "PrivateEndpointConnectionProxyCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>

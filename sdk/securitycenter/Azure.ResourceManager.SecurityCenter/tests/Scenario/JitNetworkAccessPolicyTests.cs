@@ -38,11 +38,11 @@ namespace Azure.ResourceManager.SecurityCenter.Tests
             var nsg = await CreateNetworkSecurityGroup(_resourceGroup, Recording.GenerateAssetName("nsg"));
             var network = await CreateNetwork(_resourceGroup, nsg, Recording.GenerateAssetName("vnet"));
             var networkInterface = await CreateNetworkInterface(_resourceGroup, network, Recording.GenerateAssetName("networkInterface"));
-            var vm = await CreateVirtualMachine(_resourceGroup, networkInterface.Data.Id, Recording.GenerateAssetName("vm"));
+            var vm = await CreateVirtualMachine(_resourceGroup, networkInterface.Id, Recording.GenerateAssetName("vm"));
 
             var jitVirtualMachines = new List<JitNetworkAccessPolicyVirtualMachine>()
             {
-                new JitNetworkAccessPolicyVirtualMachine(vm.Data.Id, new List<JitNetworkAccessPortRule>() { new JitNetworkAccessPortRule(8080, JitNetworkAccessPortProtocol.Tcp, TimeSpan.FromHours(5)) { AllowedSourceAddressPrefix = "192.168.0.5" } })
+                new JitNetworkAccessPolicyVirtualMachine(vm.Id, new List<JitNetworkAccessPortRule>() { new JitNetworkAccessPortRule(8080, JitNetworkAccessPortProtocol.Tcp, TimeSpan.FromHours(5)) { AllowedSourceAddressPrefix = "192.168.0.5" } })
             };
             JitNetworkAccessPolicyData data = new JitNetworkAccessPolicyData(jitVirtualMachines)
             {

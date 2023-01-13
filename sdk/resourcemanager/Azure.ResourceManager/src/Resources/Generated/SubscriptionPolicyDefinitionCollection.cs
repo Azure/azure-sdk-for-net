@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -188,37 +187,9 @@ namespace Azure.ResourceManager.Resources
         /// <returns> An async collection of <see cref="SubscriptionPolicyDefinitionResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SubscriptionPolicyDefinitionResource> GetAllAsync(string filter = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<SubscriptionPolicyDefinitionResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _subscriptionPolicyDefinitionPolicyDefinitionsClientDiagnostics.CreateScope("SubscriptionPolicyDefinitionCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _subscriptionPolicyDefinitionPolicyDefinitionsRestClient.ListAsync(Id.SubscriptionId, filter, top, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new SubscriptionPolicyDefinitionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<SubscriptionPolicyDefinitionResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _subscriptionPolicyDefinitionPolicyDefinitionsClientDiagnostics.CreateScope("SubscriptionPolicyDefinitionCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _subscriptionPolicyDefinitionPolicyDefinitionsRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, filter, top, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new SubscriptionPolicyDefinitionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _subscriptionPolicyDefinitionPolicyDefinitionsRestClient.CreateListRequest(Id.SubscriptionId, filter, top);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _subscriptionPolicyDefinitionPolicyDefinitionsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, filter, top);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SubscriptionPolicyDefinitionResource(Client, PolicyDefinitionData.DeserializePolicyDefinitionData(e)), _subscriptionPolicyDefinitionPolicyDefinitionsClientDiagnostics, Pipeline, "SubscriptionPolicyDefinitionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -232,37 +203,9 @@ namespace Azure.ResourceManager.Resources
         /// <returns> A collection of <see cref="SubscriptionPolicyDefinitionResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SubscriptionPolicyDefinitionResource> GetAll(string filter = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            Page<SubscriptionPolicyDefinitionResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _subscriptionPolicyDefinitionPolicyDefinitionsClientDiagnostics.CreateScope("SubscriptionPolicyDefinitionCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _subscriptionPolicyDefinitionPolicyDefinitionsRestClient.List(Id.SubscriptionId, filter, top, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new SubscriptionPolicyDefinitionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<SubscriptionPolicyDefinitionResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _subscriptionPolicyDefinitionPolicyDefinitionsClientDiagnostics.CreateScope("SubscriptionPolicyDefinitionCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _subscriptionPolicyDefinitionPolicyDefinitionsRestClient.ListNextPage(nextLink, Id.SubscriptionId, filter, top, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new SubscriptionPolicyDefinitionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _subscriptionPolicyDefinitionPolicyDefinitionsRestClient.CreateListRequest(Id.SubscriptionId, filter, top);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _subscriptionPolicyDefinitionPolicyDefinitionsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, filter, top);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SubscriptionPolicyDefinitionResource(Client, PolicyDefinitionData.DeserializePolicyDefinitionData(e)), _subscriptionPolicyDefinitionPolicyDefinitionsClientDiagnostics, Pipeline, "SubscriptionPolicyDefinitionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

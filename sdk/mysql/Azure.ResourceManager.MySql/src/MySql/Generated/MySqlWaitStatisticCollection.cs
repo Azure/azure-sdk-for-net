@@ -7,7 +7,6 @@
 
 using System;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -123,37 +122,9 @@ namespace Azure.ResourceManager.MySql
         {
             Argument.AssertNotNull(input, nameof(input));
 
-            async Task<Page<MySqlWaitStatisticResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _mySqlWaitStatisticWaitStatisticsClientDiagnostics.CreateScope("MySqlWaitStatisticCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _mySqlWaitStatisticWaitStatisticsRestClient.ListByServerAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, input, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new MySqlWaitStatisticResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<MySqlWaitStatisticResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _mySqlWaitStatisticWaitStatisticsClientDiagnostics.CreateScope("MySqlWaitStatisticCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _mySqlWaitStatisticWaitStatisticsRestClient.ListByServerNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, input, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new MySqlWaitStatisticResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _mySqlWaitStatisticWaitStatisticsRestClient.CreateListByServerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, input);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _mySqlWaitStatisticWaitStatisticsRestClient.CreateListByServerNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, input);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new MySqlWaitStatisticResource(Client, MySqlWaitStatisticData.DeserializeMySqlWaitStatisticData(e)), _mySqlWaitStatisticWaitStatisticsClientDiagnostics, Pipeline, "MySqlWaitStatisticCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -169,37 +140,9 @@ namespace Azure.ResourceManager.MySql
         {
             Argument.AssertNotNull(input, nameof(input));
 
-            Page<MySqlWaitStatisticResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _mySqlWaitStatisticWaitStatisticsClientDiagnostics.CreateScope("MySqlWaitStatisticCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _mySqlWaitStatisticWaitStatisticsRestClient.ListByServer(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, input, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new MySqlWaitStatisticResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<MySqlWaitStatisticResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _mySqlWaitStatisticWaitStatisticsClientDiagnostics.CreateScope("MySqlWaitStatisticCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _mySqlWaitStatisticWaitStatisticsRestClient.ListByServerNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, input, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new MySqlWaitStatisticResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _mySqlWaitStatisticWaitStatisticsRestClient.CreateListByServerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, input);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _mySqlWaitStatisticWaitStatisticsRestClient.CreateListByServerNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, input);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new MySqlWaitStatisticResource(Client, MySqlWaitStatisticData.DeserializeMySqlWaitStatisticData(e)), _mySqlWaitStatisticWaitStatisticsClientDiagnostics, Pipeline, "MySqlWaitStatisticCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

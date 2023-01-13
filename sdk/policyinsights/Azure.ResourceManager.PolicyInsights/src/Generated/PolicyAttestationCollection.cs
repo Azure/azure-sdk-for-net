@@ -8,7 +8,6 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -178,37 +177,9 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <returns> An async collection of <see cref="PolicyAttestationResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<PolicyAttestationResource> GetAllAsync(PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<PolicyAttestationResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _policyAttestationAttestationsClientDiagnostics.CreateScope("PolicyAttestationCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _policyAttestationAttestationsRestClient.ListForResourceAsync(Id, policyQuerySettings, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new PolicyAttestationResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<PolicyAttestationResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _policyAttestationAttestationsClientDiagnostics.CreateScope("PolicyAttestationCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _policyAttestationAttestationsRestClient.ListForResourceNextPageAsync(nextLink, Id, policyQuerySettings, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new PolicyAttestationResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _policyAttestationAttestationsRestClient.CreateListForResourceRequest(Id, policyQuerySettings);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _policyAttestationAttestationsRestClient.CreateListForResourceNextPageRequest(nextLink, Id, policyQuerySettings);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new PolicyAttestationResource(Client, PolicyAttestationData.DeserializePolicyAttestationData(e)), _policyAttestationAttestationsClientDiagnostics, Pipeline, "PolicyAttestationCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -221,37 +192,9 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <returns> A collection of <see cref="PolicyAttestationResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<PolicyAttestationResource> GetAll(PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
         {
-            Page<PolicyAttestationResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _policyAttestationAttestationsClientDiagnostics.CreateScope("PolicyAttestationCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _policyAttestationAttestationsRestClient.ListForResource(Id, policyQuerySettings, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new PolicyAttestationResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<PolicyAttestationResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _policyAttestationAttestationsClientDiagnostics.CreateScope("PolicyAttestationCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _policyAttestationAttestationsRestClient.ListForResourceNextPage(nextLink, Id, policyQuerySettings, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new PolicyAttestationResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _policyAttestationAttestationsRestClient.CreateListForResourceRequest(Id, policyQuerySettings);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _policyAttestationAttestationsRestClient.CreateListForResourceNextPageRequest(nextLink, Id, policyQuerySettings);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new PolicyAttestationResource(Client, PolicyAttestationData.DeserializePolicyAttestationData(e)), _policyAttestationAttestationsClientDiagnostics, Pipeline, "PolicyAttestationCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

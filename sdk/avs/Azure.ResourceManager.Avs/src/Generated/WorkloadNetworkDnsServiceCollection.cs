@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -186,37 +185,9 @@ namespace Azure.ResourceManager.Avs
         /// <returns> An async collection of <see cref="WorkloadNetworkDnsServiceResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<WorkloadNetworkDnsServiceResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<WorkloadNetworkDnsServiceResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _workloadNetworkDnsServiceWorkloadNetworksClientDiagnostics.CreateScope("WorkloadNetworkDnsServiceCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _workloadNetworkDnsServiceWorkloadNetworksRestClient.ListDnsServicesAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new WorkloadNetworkDnsServiceResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<WorkloadNetworkDnsServiceResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _workloadNetworkDnsServiceWorkloadNetworksClientDiagnostics.CreateScope("WorkloadNetworkDnsServiceCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _workloadNetworkDnsServiceWorkloadNetworksRestClient.ListDnsServicesNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new WorkloadNetworkDnsServiceResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _workloadNetworkDnsServiceWorkloadNetworksRestClient.CreateListDnsServicesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _workloadNetworkDnsServiceWorkloadNetworksRestClient.CreateListDnsServicesNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new WorkloadNetworkDnsServiceResource(Client, WorkloadNetworkDnsServiceData.DeserializeWorkloadNetworkDnsServiceData(e)), _workloadNetworkDnsServiceWorkloadNetworksClientDiagnostics, Pipeline, "WorkloadNetworkDnsServiceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -228,37 +199,9 @@ namespace Azure.ResourceManager.Avs
         /// <returns> A collection of <see cref="WorkloadNetworkDnsServiceResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<WorkloadNetworkDnsServiceResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<WorkloadNetworkDnsServiceResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _workloadNetworkDnsServiceWorkloadNetworksClientDiagnostics.CreateScope("WorkloadNetworkDnsServiceCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _workloadNetworkDnsServiceWorkloadNetworksRestClient.ListDnsServices(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new WorkloadNetworkDnsServiceResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<WorkloadNetworkDnsServiceResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _workloadNetworkDnsServiceWorkloadNetworksClientDiagnostics.CreateScope("WorkloadNetworkDnsServiceCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _workloadNetworkDnsServiceWorkloadNetworksRestClient.ListDnsServicesNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new WorkloadNetworkDnsServiceResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _workloadNetworkDnsServiceWorkloadNetworksRestClient.CreateListDnsServicesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _workloadNetworkDnsServiceWorkloadNetworksRestClient.CreateListDnsServicesNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new WorkloadNetworkDnsServiceResource(Client, WorkloadNetworkDnsServiceData.DeserializeWorkloadNetworkDnsServiceData(e)), _workloadNetworkDnsServiceWorkloadNetworksClientDiagnostics, Pipeline, "WorkloadNetworkDnsServiceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

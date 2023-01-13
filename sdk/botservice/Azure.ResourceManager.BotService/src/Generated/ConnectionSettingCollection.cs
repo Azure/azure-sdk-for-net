@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -186,37 +185,9 @@ namespace Azure.ResourceManager.BotService
         /// <returns> An async collection of <see cref="ConnectionSettingResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ConnectionSettingResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<ConnectionSettingResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _connectionSettingBotConnectionClientDiagnostics.CreateScope("ConnectionSettingCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _connectionSettingBotConnectionRestClient.ListByBotServiceAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ConnectionSettingResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<ConnectionSettingResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _connectionSettingBotConnectionClientDiagnostics.CreateScope("ConnectionSettingCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _connectionSettingBotConnectionRestClient.ListByBotServiceNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ConnectionSettingResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _connectionSettingBotConnectionRestClient.CreateListByBotServiceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _connectionSettingBotConnectionRestClient.CreateListByBotServiceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ConnectionSettingResource(Client, ConnectionSettingData.DeserializeConnectionSettingData(e)), _connectionSettingBotConnectionClientDiagnostics, Pipeline, "ConnectionSettingCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -228,37 +199,9 @@ namespace Azure.ResourceManager.BotService
         /// <returns> A collection of <see cref="ConnectionSettingResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ConnectionSettingResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<ConnectionSettingResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _connectionSettingBotConnectionClientDiagnostics.CreateScope("ConnectionSettingCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _connectionSettingBotConnectionRestClient.ListByBotService(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ConnectionSettingResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<ConnectionSettingResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _connectionSettingBotConnectionClientDiagnostics.CreateScope("ConnectionSettingCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _connectionSettingBotConnectionRestClient.ListByBotServiceNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ConnectionSettingResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _connectionSettingBotConnectionRestClient.CreateListByBotServiceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _connectionSettingBotConnectionRestClient.CreateListByBotServiceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ConnectionSettingResource(Client, ConnectionSettingData.DeserializeConnectionSettingData(e)), _connectionSettingBotConnectionClientDiagnostics, Pipeline, "ConnectionSettingCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

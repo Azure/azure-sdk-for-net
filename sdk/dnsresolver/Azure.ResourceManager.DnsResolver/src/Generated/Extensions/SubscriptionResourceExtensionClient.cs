@@ -6,9 +6,7 @@
 #nullable disable
 
 using System;
-using System.Linq;
 using System.Threading;
-using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -57,37 +55,9 @@ namespace Azure.ResourceManager.DnsResolver
         /// <returns> An async collection of <see cref="DnsResolverResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DnsResolverResource> GetDnsResolversAsync(int? top = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<DnsResolverResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = DnsResolverClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetDnsResolvers");
-                scope.Start();
-                try
-                {
-                    var response = await DnsResolverRestClient.ListAsync(Id.SubscriptionId, top, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new DnsResolverResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<DnsResolverResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = DnsResolverClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetDnsResolvers");
-                scope.Start();
-                try
-                {
-                    var response = await DnsResolverRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, top, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new DnsResolverResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => DnsResolverRestClient.CreateListRequest(Id.SubscriptionId, top);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DnsResolverRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, top);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DnsResolverResource(Client, DnsResolverData.DeserializeDnsResolverData(e)), DnsResolverClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetDnsResolvers", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -100,37 +70,9 @@ namespace Azure.ResourceManager.DnsResolver
         /// <returns> A collection of <see cref="DnsResolverResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DnsResolverResource> GetDnsResolvers(int? top = null, CancellationToken cancellationToken = default)
         {
-            Page<DnsResolverResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = DnsResolverClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetDnsResolvers");
-                scope.Start();
-                try
-                {
-                    var response = DnsResolverRestClient.List(Id.SubscriptionId, top, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new DnsResolverResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<DnsResolverResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = DnsResolverClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetDnsResolvers");
-                scope.Start();
-                try
-                {
-                    var response = DnsResolverRestClient.ListNextPage(nextLink, Id.SubscriptionId, top, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new DnsResolverResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => DnsResolverRestClient.CreateListRequest(Id.SubscriptionId, top);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DnsResolverRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, top);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DnsResolverResource(Client, DnsResolverData.DeserializeDnsResolverData(e)), DnsResolverClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetDnsResolvers", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -143,37 +85,9 @@ namespace Azure.ResourceManager.DnsResolver
         /// <returns> An async collection of <see cref="DnsForwardingRulesetResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DnsForwardingRulesetResource> GetDnsForwardingRulesetsAsync(int? top = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<DnsForwardingRulesetResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = DnsForwardingRulesetClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetDnsForwardingRulesets");
-                scope.Start();
-                try
-                {
-                    var response = await DnsForwardingRulesetRestClient.ListAsync(Id.SubscriptionId, top, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new DnsForwardingRulesetResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<DnsForwardingRulesetResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = DnsForwardingRulesetClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetDnsForwardingRulesets");
-                scope.Start();
-                try
-                {
-                    var response = await DnsForwardingRulesetRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, top, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new DnsForwardingRulesetResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => DnsForwardingRulesetRestClient.CreateListRequest(Id.SubscriptionId, top);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DnsForwardingRulesetRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, top);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DnsForwardingRulesetResource(Client, DnsForwardingRulesetData.DeserializeDnsForwardingRulesetData(e)), DnsForwardingRulesetClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetDnsForwardingRulesets", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -186,37 +100,9 @@ namespace Azure.ResourceManager.DnsResolver
         /// <returns> A collection of <see cref="DnsForwardingRulesetResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DnsForwardingRulesetResource> GetDnsForwardingRulesets(int? top = null, CancellationToken cancellationToken = default)
         {
-            Page<DnsForwardingRulesetResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = DnsForwardingRulesetClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetDnsForwardingRulesets");
-                scope.Start();
-                try
-                {
-                    var response = DnsForwardingRulesetRestClient.List(Id.SubscriptionId, top, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new DnsForwardingRulesetResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<DnsForwardingRulesetResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = DnsForwardingRulesetClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetDnsForwardingRulesets");
-                scope.Start();
-                try
-                {
-                    var response = DnsForwardingRulesetRestClient.ListNextPage(nextLink, Id.SubscriptionId, top, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new DnsForwardingRulesetResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => DnsForwardingRulesetRestClient.CreateListRequest(Id.SubscriptionId, top);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DnsForwardingRulesetRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, top);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DnsForwardingRulesetResource(Client, DnsForwardingRulesetData.DeserializeDnsForwardingRulesetData(e)), DnsForwardingRulesetClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetDnsForwardingRulesets", "value", "nextLink", cancellationToken);
         }
     }
 }

@@ -20,10 +20,10 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WritePropertyName("hostCaching");
                 writer.WriteStringValue(HostCaching.Value.ToSerialString());
             }
-            if (Optional.IsDefined(Source))
+            if (Optional.IsDefined(GallerySource))
             {
                 writer.WritePropertyName("source");
-                writer.WriteObjectValue(Source);
+                writer.WriteObjectValue(GallerySource);
             }
             writer.WriteEndObject();
         }
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Compute.Models
         {
             Optional<int> sizeInGB = default;
             Optional<HostCaching> hostCaching = default;
-            Optional<GalleryArtifactVersionSource> source = default;
+            Optional<GalleryDiskImageSource> source = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sizeInGB"))
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Compute.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    source = GalleryArtifactVersionSource.DeserializeGalleryArtifactVersionSource(property.Value);
+                    source = GalleryDiskImageSource.DeserializeGalleryDiskImageSource(property.Value);
                     continue;
                 }
             }

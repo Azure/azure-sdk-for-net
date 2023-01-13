@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -120,37 +119,9 @@ namespace Azure.ResourceManager.AppService
         /// <returns> An async collection of <see cref="WebSiteTriggeredWebJobHistoryResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<WebSiteTriggeredWebJobHistoryResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<WebSiteTriggeredWebJobHistoryResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _webSiteTriggeredWebJobHistoryWebAppsClientDiagnostics.CreateScope("WebSiteTriggeredWebJobHistoryCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _webSiteTriggeredWebJobHistoryWebAppsRestClient.ListTriggeredWebJobHistorySlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new WebSiteTriggeredWebJobHistoryResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<WebSiteTriggeredWebJobHistoryResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _webSiteTriggeredWebJobHistoryWebAppsClientDiagnostics.CreateScope("WebSiteTriggeredWebJobHistoryCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _webSiteTriggeredWebJobHistoryWebAppsRestClient.ListTriggeredWebJobHistorySlotNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new WebSiteTriggeredWebJobHistoryResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _webSiteTriggeredWebJobHistoryWebAppsRestClient.CreateListTriggeredWebJobHistorySlotRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _webSiteTriggeredWebJobHistoryWebAppsRestClient.CreateListTriggeredWebJobHistorySlotNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new WebSiteTriggeredWebJobHistoryResource(Client, TriggeredJobHistoryData.DeserializeTriggeredJobHistoryData(e)), _webSiteTriggeredWebJobHistoryWebAppsClientDiagnostics, Pipeline, "WebSiteTriggeredWebJobHistoryCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -162,37 +133,9 @@ namespace Azure.ResourceManager.AppService
         /// <returns> A collection of <see cref="WebSiteTriggeredWebJobHistoryResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<WebSiteTriggeredWebJobHistoryResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<WebSiteTriggeredWebJobHistoryResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _webSiteTriggeredWebJobHistoryWebAppsClientDiagnostics.CreateScope("WebSiteTriggeredWebJobHistoryCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _webSiteTriggeredWebJobHistoryWebAppsRestClient.ListTriggeredWebJobHistorySlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new WebSiteTriggeredWebJobHistoryResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<WebSiteTriggeredWebJobHistoryResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _webSiteTriggeredWebJobHistoryWebAppsClientDiagnostics.CreateScope("WebSiteTriggeredWebJobHistoryCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _webSiteTriggeredWebJobHistoryWebAppsRestClient.ListTriggeredWebJobHistorySlotNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new WebSiteTriggeredWebJobHistoryResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _webSiteTriggeredWebJobHistoryWebAppsRestClient.CreateListTriggeredWebJobHistorySlotRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _webSiteTriggeredWebJobHistoryWebAppsRestClient.CreateListTriggeredWebJobHistorySlotNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new WebSiteTriggeredWebJobHistoryResource(Client, TriggeredJobHistoryData.DeserializeTriggeredJobHistoryData(e)), _webSiteTriggeredWebJobHistoryWebAppsClientDiagnostics, Pipeline, "WebSiteTriggeredWebJobHistoryCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

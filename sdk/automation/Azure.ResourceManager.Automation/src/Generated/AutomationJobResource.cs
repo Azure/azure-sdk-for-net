@@ -500,37 +500,9 @@ namespace Azure.ResourceManager.Automation
         /// <returns> An async collection of <see cref="AutomationJobStream" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<AutomationJobStream> GetJobStreamsAsync(string filter = null, string clientRequestId = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<AutomationJobStream>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _jobStreamClientDiagnostics.CreateScope("AutomationJobResource.GetJobStreams");
-                scope.Start();
-                try
-                {
-                    var response = await _jobStreamRestClient.ListByJobAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, clientRequestId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<AutomationJobStream>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _jobStreamClientDiagnostics.CreateScope("AutomationJobResource.GetJobStreams");
-                scope.Start();
-                try
-                {
-                    var response = await _jobStreamRestClient.ListByJobNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, clientRequestId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _jobStreamRestClient.CreateListByJobRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, clientRequestId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _jobStreamRestClient.CreateListByJobNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, clientRequestId);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, AutomationJobStream.DeserializeAutomationJobStream, _jobStreamClientDiagnostics, Pipeline, "AutomationJobResource.GetJobStreams", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -544,37 +516,9 @@ namespace Azure.ResourceManager.Automation
         /// <returns> A collection of <see cref="AutomationJobStream" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<AutomationJobStream> GetJobStreams(string filter = null, string clientRequestId = null, CancellationToken cancellationToken = default)
         {
-            Page<AutomationJobStream> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _jobStreamClientDiagnostics.CreateScope("AutomationJobResource.GetJobStreams");
-                scope.Start();
-                try
-                {
-                    var response = _jobStreamRestClient.ListByJob(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, clientRequestId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<AutomationJobStream> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _jobStreamClientDiagnostics.CreateScope("AutomationJobResource.GetJobStreams");
-                scope.Start();
-                try
-                {
-                    var response = _jobStreamRestClient.ListByJobNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, clientRequestId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _jobStreamRestClient.CreateListByJobRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, clientRequestId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _jobStreamRestClient.CreateListByJobNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, clientRequestId);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, AutomationJobStream.DeserializeAutomationJobStream, _jobStreamClientDiagnostics, Pipeline, "AutomationJobResource.GetJobStreams", "value", "nextLink", cancellationToken);
         }
     }
 }
