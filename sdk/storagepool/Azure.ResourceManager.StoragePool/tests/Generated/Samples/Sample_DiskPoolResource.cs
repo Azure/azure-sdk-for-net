@@ -13,9 +13,10 @@ using Azure.Identity;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Resources.Models;
+using Azure.ResourceManager.StoragePool;
 using Azure.ResourceManager.StoragePool.Models;
 
-namespace Azure.ResourceManager.StoragePool
+namespace Azure.ResourceManager.StoragePool.Samples
 {
     public partial class Sample_DiskPoolResource
     {
@@ -27,8 +28,10 @@ namespace Azure.ResourceManager.StoragePool
             // Generated from example definition: specification/storagepool/resource-manager/Microsoft.StoragePool/stable/2021-08-01/examples/DiskPools_ListBySubscription.json
             // this example is just showing the usage of "DiskPools_ListBySubscription" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this SubscriptionResource created on azure
             // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
@@ -57,8 +60,10 @@ namespace Azure.ResourceManager.StoragePool
             // Generated from example definition: specification/storagepool/resource-manager/Microsoft.StoragePool/stable/2021-08-01/examples/DiskPools_Patch.json
             // this example is just showing the usage of "DiskPools_Update" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this DiskPoolResource created on azure
             // for more information of creating DiskPoolResource, please refer to the document of DiskPoolResource
@@ -108,8 +113,10 @@ Id = new ResourceIdentifier("/subscriptions/11111111-1111-1111-1111-111111111111
             // Generated from example definition: specification/storagepool/resource-manager/Microsoft.StoragePool/stable/2021-08-01/examples/DiskPools_Delete.json
             // this example is just showing the usage of "DiskPools_Delete" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this DiskPoolResource created on azure
             // for more information of creating DiskPoolResource, please refer to the document of DiskPoolResource
@@ -133,8 +140,10 @@ Id = new ResourceIdentifier("/subscriptions/11111111-1111-1111-1111-111111111111
             // Generated from example definition: specification/storagepool/resource-manager/Microsoft.StoragePool/stable/2021-08-01/examples/DiskPools_Get.json
             // this example is just showing the usage of "DiskPools_Get" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this DiskPoolResource created on azure
             // for more information of creating DiskPoolResource, please refer to the document of DiskPoolResource
@@ -162,8 +171,10 @@ Id = new ResourceIdentifier("/subscriptions/11111111-1111-1111-1111-111111111111
             // Generated from example definition: specification/storagepool/resource-manager/Microsoft.StoragePool/stable/2021-08-01/examples/DiskPools_GetOutboundNetworkDependencies.json
             // this example is just showing the usage of "DiskPools_ListOutboundNetworkDependenciesEndpoints" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this DiskPoolResource created on azure
             // for more information of creating DiskPoolResource, please refer to the document of DiskPoolResource
@@ -190,8 +201,10 @@ Id = new ResourceIdentifier("/subscriptions/11111111-1111-1111-1111-111111111111
             // Generated from example definition: specification/storagepool/resource-manager/Microsoft.StoragePool/stable/2021-08-01/examples/DiskPools_Start.json
             // this example is just showing the usage of "DiskPools_Start" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this DiskPoolResource created on azure
             // for more information of creating DiskPoolResource, please refer to the document of DiskPoolResource
@@ -215,8 +228,10 @@ Id = new ResourceIdentifier("/subscriptions/11111111-1111-1111-1111-111111111111
             // Generated from example definition: specification/storagepool/resource-manager/Microsoft.StoragePool/stable/2021-08-01/examples/DiskPools_Deallocate.json
             // this example is just showing the usage of "DiskPools_Deallocate" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this DiskPoolResource created on azure
             // for more information of creating DiskPoolResource, please refer to the document of DiskPoolResource
@@ -240,8 +255,10 @@ Id = new ResourceIdentifier("/subscriptions/11111111-1111-1111-1111-111111111111
             // Generated from example definition: specification/storagepool/resource-manager/Microsoft.StoragePool/stable/2021-08-01/examples/DiskPools_Upgrade.json
             // this example is just showing the usage of "DiskPools_Upgrade" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this DiskPoolResource created on azure
             // for more information of creating DiskPoolResource, please refer to the document of DiskPoolResource

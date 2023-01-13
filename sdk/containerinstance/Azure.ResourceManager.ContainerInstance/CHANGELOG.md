@@ -10,6 +10,12 @@
 
 ### Other Changes
 
+## 1.0.1 (2023-01-11)
+
+### Bugs Fixed
+
+- Allowed to construct `ContainerGroupImageRegistryCredential` only with Server as Username should not be required when Identity is present.
+
 ## 1.0.0 (2022-08-29)
 
 This release is the first stable release of the Container Instance Management client library.

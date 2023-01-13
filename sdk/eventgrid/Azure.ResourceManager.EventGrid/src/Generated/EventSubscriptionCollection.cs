@@ -187,139 +187,27 @@ namespace Azure.ResourceManager.EventGrid
         {
             if (Id.ResourceType == SubscriptionResource.ResourceType)
             {
-                async Task<Page<EventSubscriptionResource>> FirstPageFunc(int? pageSizeHint)
-                {
-                    using var scope = _eventSubscriptionClientDiagnostics.CreateScope("EventSubscriptionCollection.GetAll");
-                    scope.Start();
-                    try
-                    {
-                        var response = await _eventSubscriptionRestClient.ListGlobalBySubscriptionAsync(Id.SubscriptionId, filter, top, cancellationToken: cancellationToken).ConfigureAwait(false);
-                        return Page.FromValues(response.Value.Value.Select(value => new EventSubscriptionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                    }
-                    catch (Exception e)
-                    {
-                        scope.Failed(e);
-                        throw;
-                    }
-                }
-                async Task<Page<EventSubscriptionResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-                {
-                    using var scope = _eventSubscriptionClientDiagnostics.CreateScope("EventSubscriptionCollection.GetAll");
-                    scope.Start();
-                    try
-                    {
-                        var response = await _eventSubscriptionRestClient.ListGlobalBySubscriptionNextPageAsync(nextLink, Id.SubscriptionId, filter, top, cancellationToken: cancellationToken).ConfigureAwait(false);
-                        return Page.FromValues(response.Value.Value.Select(value => new EventSubscriptionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                    }
-                    catch (Exception e)
-                    {
-                        scope.Failed(e);
-                        throw;
-                    }
-                }
-                return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+                HttpMessage FirstPageRequest(int? pageSizeHint) => _eventSubscriptionRestClient.CreateListGlobalBySubscriptionRequest(Id.SubscriptionId, filter, top);
+                HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _eventSubscriptionRestClient.CreateListGlobalBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, filter, top);
+                return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new EventSubscriptionResource(Client, EventGridSubscriptionData.DeserializeEventGridSubscriptionData(e)), _eventSubscriptionClientDiagnostics, Pipeline, "EventSubscriptionCollection.GetAll", "value", "nextLink", cancellationToken);
             }
             else if (Id.ResourceType == ResourceGroupResource.ResourceType)
             {
-                async Task<Page<EventSubscriptionResource>> FirstPageFunc(int? pageSizeHint)
-                {
-                    using var scope = _eventSubscriptionClientDiagnostics.CreateScope("EventSubscriptionCollection.GetAll");
-                    scope.Start();
-                    try
-                    {
-                        var response = await _eventSubscriptionRestClient.ListGlobalByResourceGroupAsync(Id.SubscriptionId, Id.ResourceGroupName, filter, top, cancellationToken: cancellationToken).ConfigureAwait(false);
-                        return Page.FromValues(response.Value.Value.Select(value => new EventSubscriptionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                    }
-                    catch (Exception e)
-                    {
-                        scope.Failed(e);
-                        throw;
-                    }
-                }
-                async Task<Page<EventSubscriptionResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-                {
-                    using var scope = _eventSubscriptionClientDiagnostics.CreateScope("EventSubscriptionCollection.GetAll");
-                    scope.Start();
-                    try
-                    {
-                        var response = await _eventSubscriptionRestClient.ListGlobalByResourceGroupNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, filter, top, cancellationToken: cancellationToken).ConfigureAwait(false);
-                        return Page.FromValues(response.Value.Value.Select(value => new EventSubscriptionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                    }
-                    catch (Exception e)
-                    {
-                        scope.Failed(e);
-                        throw;
-                    }
-                }
-                return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+                HttpMessage FirstPageRequest(int? pageSizeHint) => _eventSubscriptionRestClient.CreateListGlobalByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, filter, top);
+                HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _eventSubscriptionRestClient.CreateListGlobalByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, filter, top);
+                return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new EventSubscriptionResource(Client, EventGridSubscriptionData.DeserializeEventGridSubscriptionData(e)), _eventSubscriptionClientDiagnostics, Pipeline, "EventSubscriptionCollection.GetAll", "value", "nextLink", cancellationToken);
             }
             else if (Id.ResourceType == DomainTopicResource.ResourceType)
             {
-                async Task<Page<EventSubscriptionResource>> FirstPageFunc(int? pageSizeHint)
-                {
-                    using var scope = _eventSubscriptionClientDiagnostics.CreateScope("EventSubscriptionCollection.GetAll");
-                    scope.Start();
-                    try
-                    {
-                        var response = await _eventSubscriptionRestClient.ListByDomainTopicAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, top, cancellationToken: cancellationToken).ConfigureAwait(false);
-                        return Page.FromValues(response.Value.Value.Select(value => new EventSubscriptionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                    }
-                    catch (Exception e)
-                    {
-                        scope.Failed(e);
-                        throw;
-                    }
-                }
-                async Task<Page<EventSubscriptionResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-                {
-                    using var scope = _eventSubscriptionClientDiagnostics.CreateScope("EventSubscriptionCollection.GetAll");
-                    scope.Start();
-                    try
-                    {
-                        var response = await _eventSubscriptionRestClient.ListByDomainTopicNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, top, cancellationToken: cancellationToken).ConfigureAwait(false);
-                        return Page.FromValues(response.Value.Value.Select(value => new EventSubscriptionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                    }
-                    catch (Exception e)
-                    {
-                        scope.Failed(e);
-                        throw;
-                    }
-                }
-                return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+                HttpMessage FirstPageRequest(int? pageSizeHint) => _eventSubscriptionRestClient.CreateListByDomainTopicRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, top);
+                HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _eventSubscriptionRestClient.CreateListByDomainTopicNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, top);
+                return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new EventSubscriptionResource(Client, EventGridSubscriptionData.DeserializeEventGridSubscriptionData(e)), _eventSubscriptionClientDiagnostics, Pipeline, "EventSubscriptionCollection.GetAll", "value", "nextLink", cancellationToken);
             }
             else
             {
-                async Task<Page<EventSubscriptionResource>> FirstPageFunc(int? pageSizeHint)
-                {
-                    using var scope = _eventSubscriptionClientDiagnostics.CreateScope("EventSubscriptionCollection.GetAll");
-                    scope.Start();
-                    try
-                    {
-                        var response = await _eventSubscriptionRestClient.ListByResourceAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.ResourceType.Namespace, Id.ResourceType.GetLastType(), Id.Name, filter, top, cancellationToken: cancellationToken).ConfigureAwait(false);
-                        return Page.FromValues(response.Value.Value.Select(value => new EventSubscriptionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                    }
-                    catch (Exception e)
-                    {
-                        scope.Failed(e);
-                        throw;
-                    }
-                }
-                async Task<Page<EventSubscriptionResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-                {
-                    using var scope = _eventSubscriptionClientDiagnostics.CreateScope("EventSubscriptionCollection.GetAll");
-                    scope.Start();
-                    try
-                    {
-                        var response = await _eventSubscriptionRestClient.ListByResourceNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.ResourceType.Namespace, Id.ResourceType.GetLastType(), Id.Name, filter, top, cancellationToken: cancellationToken).ConfigureAwait(false);
-                        return Page.FromValues(response.Value.Value.Select(value => new EventSubscriptionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                    }
-                    catch (Exception e)
-                    {
-                        scope.Failed(e);
-                        throw;
-                    }
-                }
-                return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+                HttpMessage FirstPageRequest(int? pageSizeHint) => _eventSubscriptionRestClient.CreateListByResourceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.ResourceType.Namespace, Id.ResourceType.GetLastType(), Id.Name, filter, top);
+                HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _eventSubscriptionRestClient.CreateListByResourceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.ResourceType.Namespace, Id.ResourceType.GetLastType(), Id.Name, filter, top);
+                return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new EventSubscriptionResource(Client, EventGridSubscriptionData.DeserializeEventGridSubscriptionData(e)), _eventSubscriptionClientDiagnostics, Pipeline, "EventSubscriptionCollection.GetAll", "value", "nextLink", cancellationToken);
             }
         }
 
@@ -342,139 +230,27 @@ namespace Azure.ResourceManager.EventGrid
         {
             if (Id.ResourceType == SubscriptionResource.ResourceType)
             {
-                Page<EventSubscriptionResource> FirstPageFunc(int? pageSizeHint)
-                {
-                    using var scope = _eventSubscriptionClientDiagnostics.CreateScope("EventSubscriptionCollection.GetAll");
-                    scope.Start();
-                    try
-                    {
-                        var response = _eventSubscriptionRestClient.ListGlobalBySubscription(Id.SubscriptionId, filter, top, cancellationToken: cancellationToken);
-                        return Page.FromValues(response.Value.Value.Select(value => new EventSubscriptionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                    }
-                    catch (Exception e)
-                    {
-                        scope.Failed(e);
-                        throw;
-                    }
-                }
-                Page<EventSubscriptionResource> NextPageFunc(string nextLink, int? pageSizeHint)
-                {
-                    using var scope = _eventSubscriptionClientDiagnostics.CreateScope("EventSubscriptionCollection.GetAll");
-                    scope.Start();
-                    try
-                    {
-                        var response = _eventSubscriptionRestClient.ListGlobalBySubscriptionNextPage(nextLink, Id.SubscriptionId, filter, top, cancellationToken: cancellationToken);
-                        return Page.FromValues(response.Value.Value.Select(value => new EventSubscriptionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                    }
-                    catch (Exception e)
-                    {
-                        scope.Failed(e);
-                        throw;
-                    }
-                }
-                return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+                HttpMessage FirstPageRequest(int? pageSizeHint) => _eventSubscriptionRestClient.CreateListGlobalBySubscriptionRequest(Id.SubscriptionId, filter, top);
+                HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _eventSubscriptionRestClient.CreateListGlobalBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, filter, top);
+                return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new EventSubscriptionResource(Client, EventGridSubscriptionData.DeserializeEventGridSubscriptionData(e)), _eventSubscriptionClientDiagnostics, Pipeline, "EventSubscriptionCollection.GetAll", "value", "nextLink", cancellationToken);
             }
             else if (Id.ResourceType == ResourceGroupResource.ResourceType)
             {
-                Page<EventSubscriptionResource> FirstPageFunc(int? pageSizeHint)
-                {
-                    using var scope = _eventSubscriptionClientDiagnostics.CreateScope("EventSubscriptionCollection.GetAll");
-                    scope.Start();
-                    try
-                    {
-                        var response = _eventSubscriptionRestClient.ListGlobalByResourceGroup(Id.SubscriptionId, Id.ResourceGroupName, filter, top, cancellationToken: cancellationToken);
-                        return Page.FromValues(response.Value.Value.Select(value => new EventSubscriptionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                    }
-                    catch (Exception e)
-                    {
-                        scope.Failed(e);
-                        throw;
-                    }
-                }
-                Page<EventSubscriptionResource> NextPageFunc(string nextLink, int? pageSizeHint)
-                {
-                    using var scope = _eventSubscriptionClientDiagnostics.CreateScope("EventSubscriptionCollection.GetAll");
-                    scope.Start();
-                    try
-                    {
-                        var response = _eventSubscriptionRestClient.ListGlobalByResourceGroupNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, filter, top, cancellationToken: cancellationToken);
-                        return Page.FromValues(response.Value.Value.Select(value => new EventSubscriptionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                    }
-                    catch (Exception e)
-                    {
-                        scope.Failed(e);
-                        throw;
-                    }
-                }
-                return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+                HttpMessage FirstPageRequest(int? pageSizeHint) => _eventSubscriptionRestClient.CreateListGlobalByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, filter, top);
+                HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _eventSubscriptionRestClient.CreateListGlobalByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, filter, top);
+                return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new EventSubscriptionResource(Client, EventGridSubscriptionData.DeserializeEventGridSubscriptionData(e)), _eventSubscriptionClientDiagnostics, Pipeline, "EventSubscriptionCollection.GetAll", "value", "nextLink", cancellationToken);
             }
             else if (Id.ResourceType == DomainTopicResource.ResourceType)
             {
-                Page<EventSubscriptionResource> FirstPageFunc(int? pageSizeHint)
-                {
-                    using var scope = _eventSubscriptionClientDiagnostics.CreateScope("EventSubscriptionCollection.GetAll");
-                    scope.Start();
-                    try
-                    {
-                        var response = _eventSubscriptionRestClient.ListByDomainTopic(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, top, cancellationToken: cancellationToken);
-                        return Page.FromValues(response.Value.Value.Select(value => new EventSubscriptionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                    }
-                    catch (Exception e)
-                    {
-                        scope.Failed(e);
-                        throw;
-                    }
-                }
-                Page<EventSubscriptionResource> NextPageFunc(string nextLink, int? pageSizeHint)
-                {
-                    using var scope = _eventSubscriptionClientDiagnostics.CreateScope("EventSubscriptionCollection.GetAll");
-                    scope.Start();
-                    try
-                    {
-                        var response = _eventSubscriptionRestClient.ListByDomainTopicNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, top, cancellationToken: cancellationToken);
-                        return Page.FromValues(response.Value.Value.Select(value => new EventSubscriptionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                    }
-                    catch (Exception e)
-                    {
-                        scope.Failed(e);
-                        throw;
-                    }
-                }
-                return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+                HttpMessage FirstPageRequest(int? pageSizeHint) => _eventSubscriptionRestClient.CreateListByDomainTopicRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, top);
+                HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _eventSubscriptionRestClient.CreateListByDomainTopicNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, top);
+                return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new EventSubscriptionResource(Client, EventGridSubscriptionData.DeserializeEventGridSubscriptionData(e)), _eventSubscriptionClientDiagnostics, Pipeline, "EventSubscriptionCollection.GetAll", "value", "nextLink", cancellationToken);
             }
             else
             {
-                Page<EventSubscriptionResource> FirstPageFunc(int? pageSizeHint)
-                {
-                    using var scope = _eventSubscriptionClientDiagnostics.CreateScope("EventSubscriptionCollection.GetAll");
-                    scope.Start();
-                    try
-                    {
-                        var response = _eventSubscriptionRestClient.ListByResource(Id.SubscriptionId, Id.ResourceGroupName, Id.ResourceType.Namespace, Id.ResourceType.GetLastType(), Id.Name, filter, top, cancellationToken: cancellationToken);
-                        return Page.FromValues(response.Value.Value.Select(value => new EventSubscriptionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                    }
-                    catch (Exception e)
-                    {
-                        scope.Failed(e);
-                        throw;
-                    }
-                }
-                Page<EventSubscriptionResource> NextPageFunc(string nextLink, int? pageSizeHint)
-                {
-                    using var scope = _eventSubscriptionClientDiagnostics.CreateScope("EventSubscriptionCollection.GetAll");
-                    scope.Start();
-                    try
-                    {
-                        var response = _eventSubscriptionRestClient.ListByResourceNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.ResourceType.Namespace, Id.ResourceType.GetLastType(), Id.Name, filter, top, cancellationToken: cancellationToken);
-                        return Page.FromValues(response.Value.Value.Select(value => new EventSubscriptionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                    }
-                    catch (Exception e)
-                    {
-                        scope.Failed(e);
-                        throw;
-                    }
-                }
-                return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+                HttpMessage FirstPageRequest(int? pageSizeHint) => _eventSubscriptionRestClient.CreateListByResourceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.ResourceType.Namespace, Id.ResourceType.GetLastType(), Id.Name, filter, top);
+                HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _eventSubscriptionRestClient.CreateListByResourceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.ResourceType.Namespace, Id.ResourceType.GetLastType(), Id.Name, filter, top);
+                return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new EventSubscriptionResource(Client, EventGridSubscriptionData.DeserializeEventGridSubscriptionData(e)), _eventSubscriptionClientDiagnostics, Pipeline, "EventSubscriptionCollection.GetAll", "value", "nextLink", cancellationToken);
             }
         }
 

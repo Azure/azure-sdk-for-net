@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -186,37 +185,9 @@ namespace Azure.ResourceManager.Cdn
         /// <returns> An async collection of <see cref="FrontDoorRuleResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<FrontDoorRuleResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<FrontDoorRuleResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _frontDoorRuleClientDiagnostics.CreateScope("FrontDoorRuleCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _frontDoorRuleRestClient.ListByRuleSetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new FrontDoorRuleResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<FrontDoorRuleResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _frontDoorRuleClientDiagnostics.CreateScope("FrontDoorRuleCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _frontDoorRuleRestClient.ListByRuleSetNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new FrontDoorRuleResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _frontDoorRuleRestClient.CreateListByRuleSetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _frontDoorRuleRestClient.CreateListByRuleSetNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new FrontDoorRuleResource(Client, FrontDoorRuleData.DeserializeFrontDoorRuleData(e)), _frontDoorRuleClientDiagnostics, Pipeline, "FrontDoorRuleCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -228,37 +199,9 @@ namespace Azure.ResourceManager.Cdn
         /// <returns> A collection of <see cref="FrontDoorRuleResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<FrontDoorRuleResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<FrontDoorRuleResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _frontDoorRuleClientDiagnostics.CreateScope("FrontDoorRuleCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _frontDoorRuleRestClient.ListByRuleSet(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new FrontDoorRuleResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<FrontDoorRuleResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _frontDoorRuleClientDiagnostics.CreateScope("FrontDoorRuleCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _frontDoorRuleRestClient.ListByRuleSetNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new FrontDoorRuleResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _frontDoorRuleRestClient.CreateListByRuleSetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _frontDoorRuleRestClient.CreateListByRuleSetNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new FrontDoorRuleResource(Client, FrontDoorRuleData.DeserializeFrontDoorRuleData(e)), _frontDoorRuleClientDiagnostics, Pipeline, "FrontDoorRuleCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

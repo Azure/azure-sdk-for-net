@@ -6,8 +6,7 @@ Run `dotnet build /t:GenerateCode` to generate code.
 azure-arm: true
 csharp: true
 namespace: Azure.ResourceManager.ServiceBus
-require: https://github.com/Azure/azure-rest-api-specs/blob/c2d2b523575031790b8672640ea762bdf9ad4964/specification/servicebus/resource-manager/readme.md
-tag: package-2021-11
+require: https://github.com/Azure/azure-rest-api-specs/blob/d60e51137381d590fd5dbe76f7baacf7402eb653/specification/servicebus/resource-manager/readme.md
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 skip-csproj: true
@@ -65,6 +64,8 @@ rename-mapping:
   ServiceBusNamespace.properties.zoneRedundant: IsZoneRedundant
   ServiceBusNetworkRuleSet.properties.trustedServiceAccessEnabled: IsTrustedServiceAccessEnabled
   ServiceBusNameAvailabilityResult.nameAvailable: IsNameAvailable
+  PublicNetworkAccess: ServiceBusPublicNetworkAccess
+  TlsVersion: ServiceBusMinimumTlsVersion
 
 directive:
     - from: swagger-document

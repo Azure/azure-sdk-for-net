@@ -291,22 +291,8 @@ namespace Azure.ResourceManager.Attestation
         /// <returns> An async collection of <see cref="AttestationPrivateLinkResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<AttestationPrivateLinkResource> GetPrivateLinkResourcesByProviderAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<AttestationPrivateLinkResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _privateLinkResourcesClientDiagnostics.CreateScope("AttestationProviderResource.GetPrivateLinkResourcesByProvider");
-                scope.Start();
-                try
-                {
-                    var response = await _privateLinkResourcesRestClient.ListByProviderAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _privateLinkResourcesRestClient.CreateListByProviderRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, AttestationPrivateLinkResource.DeserializeAttestationPrivateLinkResource, _privateLinkResourcesClientDiagnostics, Pipeline, "AttestationProviderResource.GetPrivateLinkResourcesByProvider", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -318,22 +304,8 @@ namespace Azure.ResourceManager.Attestation
         /// <returns> A collection of <see cref="AttestationPrivateLinkResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<AttestationPrivateLinkResource> GetPrivateLinkResourcesByProvider(CancellationToken cancellationToken = default)
         {
-            Page<AttestationPrivateLinkResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _privateLinkResourcesClientDiagnostics.CreateScope("AttestationProviderResource.GetPrivateLinkResourcesByProvider");
-                scope.Start();
-                try
-                {
-                    var response = _privateLinkResourcesRestClient.ListByProvider(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _privateLinkResourcesRestClient.CreateListByProviderRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, AttestationPrivateLinkResource.DeserializeAttestationPrivateLinkResource, _privateLinkResourcesClientDiagnostics, Pipeline, "AttestationProviderResource.GetPrivateLinkResourcesByProvider", "value", null, cancellationToken);
         }
 
         /// <summary>

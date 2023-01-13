@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -187,37 +186,9 @@ namespace Azure.ResourceManager.LabServices
         /// <returns> An async collection of <see cref="LabServicesScheduleResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<LabServicesScheduleResource> GetAllAsync(string filter = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<LabServicesScheduleResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _labServicesScheduleSchedulesClientDiagnostics.CreateScope("LabServicesScheduleCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _labServicesScheduleSchedulesRestClient.ListByLabAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new LabServicesScheduleResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<LabServicesScheduleResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _labServicesScheduleSchedulesClientDiagnostics.CreateScope("LabServicesScheduleCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _labServicesScheduleSchedulesRestClient.ListByLabNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new LabServicesScheduleResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _labServicesScheduleSchedulesRestClient.CreateListByLabRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _labServicesScheduleSchedulesRestClient.CreateListByLabNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new LabServicesScheduleResource(Client, LabServicesScheduleData.DeserializeLabServicesScheduleData(e)), _labServicesScheduleSchedulesClientDiagnostics, Pipeline, "LabServicesScheduleCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -230,37 +201,9 @@ namespace Azure.ResourceManager.LabServices
         /// <returns> A collection of <see cref="LabServicesScheduleResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<LabServicesScheduleResource> GetAll(string filter = null, CancellationToken cancellationToken = default)
         {
-            Page<LabServicesScheduleResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _labServicesScheduleSchedulesClientDiagnostics.CreateScope("LabServicesScheduleCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _labServicesScheduleSchedulesRestClient.ListByLab(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new LabServicesScheduleResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<LabServicesScheduleResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _labServicesScheduleSchedulesClientDiagnostics.CreateScope("LabServicesScheduleCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _labServicesScheduleSchedulesRestClient.ListByLabNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new LabServicesScheduleResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _labServicesScheduleSchedulesRestClient.CreateListByLabRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _labServicesScheduleSchedulesRestClient.CreateListByLabNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new LabServicesScheduleResource(Client, LabServicesScheduleData.DeserializeLabServicesScheduleData(e)), _labServicesScheduleSchedulesClientDiagnostics, Pipeline, "LabServicesScheduleCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

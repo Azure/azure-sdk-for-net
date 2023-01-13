@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -175,37 +174,9 @@ namespace Azure.ResourceManager.Sql
         /// <returns> An async collection of <see cref="ServerAdvancedThreatProtectionResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ServerAdvancedThreatProtectionResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<ServerAdvancedThreatProtectionResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _serverAdvancedThreatProtectionServerAdvancedThreatProtectionSettingsClientDiagnostics.CreateScope("ServerAdvancedThreatProtectionCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _serverAdvancedThreatProtectionServerAdvancedThreatProtectionSettingsRestClient.ListByServerAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ServerAdvancedThreatProtectionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<ServerAdvancedThreatProtectionResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _serverAdvancedThreatProtectionServerAdvancedThreatProtectionSettingsClientDiagnostics.CreateScope("ServerAdvancedThreatProtectionCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _serverAdvancedThreatProtectionServerAdvancedThreatProtectionSettingsRestClient.ListByServerNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ServerAdvancedThreatProtectionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _serverAdvancedThreatProtectionServerAdvancedThreatProtectionSettingsRestClient.CreateListByServerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _serverAdvancedThreatProtectionServerAdvancedThreatProtectionSettingsRestClient.CreateListByServerNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ServerAdvancedThreatProtectionResource(Client, ServerAdvancedThreatProtectionData.DeserializeServerAdvancedThreatProtectionData(e)), _serverAdvancedThreatProtectionServerAdvancedThreatProtectionSettingsClientDiagnostics, Pipeline, "ServerAdvancedThreatProtectionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -217,37 +188,9 @@ namespace Azure.ResourceManager.Sql
         /// <returns> A collection of <see cref="ServerAdvancedThreatProtectionResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ServerAdvancedThreatProtectionResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<ServerAdvancedThreatProtectionResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _serverAdvancedThreatProtectionServerAdvancedThreatProtectionSettingsClientDiagnostics.CreateScope("ServerAdvancedThreatProtectionCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _serverAdvancedThreatProtectionServerAdvancedThreatProtectionSettingsRestClient.ListByServer(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ServerAdvancedThreatProtectionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<ServerAdvancedThreatProtectionResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _serverAdvancedThreatProtectionServerAdvancedThreatProtectionSettingsClientDiagnostics.CreateScope("ServerAdvancedThreatProtectionCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _serverAdvancedThreatProtectionServerAdvancedThreatProtectionSettingsRestClient.ListByServerNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ServerAdvancedThreatProtectionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _serverAdvancedThreatProtectionServerAdvancedThreatProtectionSettingsRestClient.CreateListByServerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _serverAdvancedThreatProtectionServerAdvancedThreatProtectionSettingsRestClient.CreateListByServerNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ServerAdvancedThreatProtectionResource(Client, ServerAdvancedThreatProtectionData.DeserializeServerAdvancedThreatProtectionData(e)), _serverAdvancedThreatProtectionServerAdvancedThreatProtectionSettingsClientDiagnostics, Pipeline, "ServerAdvancedThreatProtectionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

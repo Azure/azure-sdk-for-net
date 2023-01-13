@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -186,22 +185,8 @@ namespace Azure.ResourceManager.Kusto
         /// <returns> An async collection of <see cref="KustoDatabasePrincipalAssignmentResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<KustoDatabasePrincipalAssignmentResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<KustoDatabasePrincipalAssignmentResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _kustoDatabasePrincipalAssignmentDatabasePrincipalAssignmentsClientDiagnostics.CreateScope("KustoDatabasePrincipalAssignmentCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _kustoDatabasePrincipalAssignmentDatabasePrincipalAssignmentsRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new KustoDatabasePrincipalAssignmentResource(Client, value)), null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _kustoDatabasePrincipalAssignmentDatabasePrincipalAssignmentsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new KustoDatabasePrincipalAssignmentResource(Client, KustoDatabasePrincipalAssignmentData.DeserializeKustoDatabasePrincipalAssignmentData(e)), _kustoDatabasePrincipalAssignmentDatabasePrincipalAssignmentsClientDiagnostics, Pipeline, "KustoDatabasePrincipalAssignmentCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -213,22 +198,8 @@ namespace Azure.ResourceManager.Kusto
         /// <returns> A collection of <see cref="KustoDatabasePrincipalAssignmentResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<KustoDatabasePrincipalAssignmentResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<KustoDatabasePrincipalAssignmentResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _kustoDatabasePrincipalAssignmentDatabasePrincipalAssignmentsClientDiagnostics.CreateScope("KustoDatabasePrincipalAssignmentCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _kustoDatabasePrincipalAssignmentDatabasePrincipalAssignmentsRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new KustoDatabasePrincipalAssignmentResource(Client, value)), null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _kustoDatabasePrincipalAssignmentDatabasePrincipalAssignmentsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new KustoDatabasePrincipalAssignmentResource(Client, KustoDatabasePrincipalAssignmentData.DeserializeKustoDatabasePrincipalAssignmentData(e)), _kustoDatabasePrincipalAssignmentDatabasePrincipalAssignmentsClientDiagnostics, Pipeline, "KustoDatabasePrincipalAssignmentCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>

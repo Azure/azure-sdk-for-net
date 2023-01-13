@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -186,37 +185,9 @@ namespace Azure.ResourceManager.Peering
         /// <returns> An async collection of <see cref="PeeringRegisteredPrefixResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<PeeringRegisteredPrefixResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<PeeringRegisteredPrefixResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _peeringRegisteredPrefixRegisteredPrefixesClientDiagnostics.CreateScope("PeeringRegisteredPrefixCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _peeringRegisteredPrefixRegisteredPrefixesRestClient.ListByPeeringAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new PeeringRegisteredPrefixResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<PeeringRegisteredPrefixResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _peeringRegisteredPrefixRegisteredPrefixesClientDiagnostics.CreateScope("PeeringRegisteredPrefixCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _peeringRegisteredPrefixRegisteredPrefixesRestClient.ListByPeeringNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new PeeringRegisteredPrefixResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _peeringRegisteredPrefixRegisteredPrefixesRestClient.CreateListByPeeringRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _peeringRegisteredPrefixRegisteredPrefixesRestClient.CreateListByPeeringNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new PeeringRegisteredPrefixResource(Client, PeeringRegisteredPrefixData.DeserializePeeringRegisteredPrefixData(e)), _peeringRegisteredPrefixRegisteredPrefixesClientDiagnostics, Pipeline, "PeeringRegisteredPrefixCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -228,37 +199,9 @@ namespace Azure.ResourceManager.Peering
         /// <returns> A collection of <see cref="PeeringRegisteredPrefixResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<PeeringRegisteredPrefixResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<PeeringRegisteredPrefixResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _peeringRegisteredPrefixRegisteredPrefixesClientDiagnostics.CreateScope("PeeringRegisteredPrefixCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _peeringRegisteredPrefixRegisteredPrefixesRestClient.ListByPeering(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new PeeringRegisteredPrefixResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<PeeringRegisteredPrefixResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _peeringRegisteredPrefixRegisteredPrefixesClientDiagnostics.CreateScope("PeeringRegisteredPrefixCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _peeringRegisteredPrefixRegisteredPrefixesRestClient.ListByPeeringNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new PeeringRegisteredPrefixResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _peeringRegisteredPrefixRegisteredPrefixesRestClient.CreateListByPeeringRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _peeringRegisteredPrefixRegisteredPrefixesRestClient.CreateListByPeeringNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new PeeringRegisteredPrefixResource(Client, PeeringRegisteredPrefixData.DeserializePeeringRegisteredPrefixData(e)), _peeringRegisteredPrefixRegisteredPrefixesClientDiagnostics, Pipeline, "PeeringRegisteredPrefixCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
