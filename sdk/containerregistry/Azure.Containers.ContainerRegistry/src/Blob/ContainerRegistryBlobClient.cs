@@ -396,7 +396,7 @@ namespace Azure.Containers.ContainerRegistry.Specialized
 
             // Otherwise, upload in multiple chunks.
             byte[] buffer = ArrayPool<byte>.Shared.Rent(chunkSize);
-            int chunkCount = 0;
+            long chunkCount = 0;
             long blobLength = 0;
             using SHA256 sha256 = SHA256.Create();
 
@@ -450,7 +450,7 @@ namespace Azure.Containers.ContainerRegistry.Specialized
         /// <param name="offset">The offset of the chunk in the blob stream.</param>
         /// <param name="length">The length of the chunk.</param>
         /// <returns>A string describing the chunk range in the non-standard Content-Range header format.</returns>
-        private static string GetContentRange(int offset, int length)
+        private static string GetContentRange(long offset, long length)
         {
             var endRange = (offset + length - 1).ToString(CultureInfo.InvariantCulture);
             return FormattableString.Invariant($"{offset}-{endRange}");
