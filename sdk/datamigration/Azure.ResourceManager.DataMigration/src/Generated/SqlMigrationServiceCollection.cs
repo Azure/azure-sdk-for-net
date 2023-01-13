@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -187,37 +186,9 @@ namespace Azure.ResourceManager.DataMigration
         /// <returns> An async collection of <see cref="SqlMigrationServiceResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SqlMigrationServiceResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<SqlMigrationServiceResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _sqlMigrationServiceClientDiagnostics.CreateScope("SqlMigrationServiceCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _sqlMigrationServiceRestClient.ListByResourceGroupAsync(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new SqlMigrationServiceResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<SqlMigrationServiceResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _sqlMigrationServiceClientDiagnostics.CreateScope("SqlMigrationServiceCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _sqlMigrationServiceRestClient.ListByResourceGroupNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new SqlMigrationServiceResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _sqlMigrationServiceRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _sqlMigrationServiceRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SqlMigrationServiceResource(Client, SqlMigrationServiceData.DeserializeSqlMigrationServiceData(e)), _sqlMigrationServiceClientDiagnostics, Pipeline, "SqlMigrationServiceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -229,37 +200,9 @@ namespace Azure.ResourceManager.DataMigration
         /// <returns> A collection of <see cref="SqlMigrationServiceResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SqlMigrationServiceResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<SqlMigrationServiceResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _sqlMigrationServiceClientDiagnostics.CreateScope("SqlMigrationServiceCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _sqlMigrationServiceRestClient.ListByResourceGroup(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new SqlMigrationServiceResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<SqlMigrationServiceResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _sqlMigrationServiceClientDiagnostics.CreateScope("SqlMigrationServiceCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _sqlMigrationServiceRestClient.ListByResourceGroupNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new SqlMigrationServiceResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _sqlMigrationServiceRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _sqlMigrationServiceRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SqlMigrationServiceResource(Client, SqlMigrationServiceData.DeserializeSqlMigrationServiceData(e)), _sqlMigrationServiceClientDiagnostics, Pipeline, "SqlMigrationServiceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

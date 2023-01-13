@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -186,37 +185,9 @@ namespace Azure.ResourceManager.Marketplace
         /// <returns> An async collection of <see cref="PrivateStoreOfferResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<PrivateStoreOfferResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<PrivateStoreOfferResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _privateStoreOfferPrivateStoreCollectionOfferClientDiagnostics.CreateScope("PrivateStoreOfferCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _privateStoreOfferPrivateStoreCollectionOfferRestClient.ListAsync(Guid.Parse(Id.Parent.Name), Guid.Parse(Id.Name), cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new PrivateStoreOfferResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<PrivateStoreOfferResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _privateStoreOfferPrivateStoreCollectionOfferClientDiagnostics.CreateScope("PrivateStoreOfferCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _privateStoreOfferPrivateStoreCollectionOfferRestClient.ListNextPageAsync(nextLink, Guid.Parse(Id.Parent.Name), Guid.Parse(Id.Name), cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new PrivateStoreOfferResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _privateStoreOfferPrivateStoreCollectionOfferRestClient.CreateListRequest(Guid.Parse(Id.Parent.Name), Guid.Parse(Id.Name));
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _privateStoreOfferPrivateStoreCollectionOfferRestClient.CreateListNextPageRequest(nextLink, Guid.Parse(Id.Parent.Name), Guid.Parse(Id.Name));
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new PrivateStoreOfferResource(Client, PrivateStoreOfferData.DeserializePrivateStoreOfferData(e)), _privateStoreOfferPrivateStoreCollectionOfferClientDiagnostics, Pipeline, "PrivateStoreOfferCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -228,37 +199,9 @@ namespace Azure.ResourceManager.Marketplace
         /// <returns> A collection of <see cref="PrivateStoreOfferResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<PrivateStoreOfferResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<PrivateStoreOfferResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _privateStoreOfferPrivateStoreCollectionOfferClientDiagnostics.CreateScope("PrivateStoreOfferCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _privateStoreOfferPrivateStoreCollectionOfferRestClient.List(Guid.Parse(Id.Parent.Name), Guid.Parse(Id.Name), cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new PrivateStoreOfferResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<PrivateStoreOfferResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _privateStoreOfferPrivateStoreCollectionOfferClientDiagnostics.CreateScope("PrivateStoreOfferCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _privateStoreOfferPrivateStoreCollectionOfferRestClient.ListNextPage(nextLink, Guid.Parse(Id.Parent.Name), Guid.Parse(Id.Name), cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new PrivateStoreOfferResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _privateStoreOfferPrivateStoreCollectionOfferRestClient.CreateListRequest(Guid.Parse(Id.Parent.Name), Guid.Parse(Id.Name));
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _privateStoreOfferPrivateStoreCollectionOfferRestClient.CreateListNextPageRequest(nextLink, Guid.Parse(Id.Parent.Name), Guid.Parse(Id.Name));
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new PrivateStoreOfferResource(Client, PrivateStoreOfferData.DeserializePrivateStoreOfferData(e)), _privateStoreOfferPrivateStoreCollectionOfferClientDiagnostics, Pipeline, "PrivateStoreOfferCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

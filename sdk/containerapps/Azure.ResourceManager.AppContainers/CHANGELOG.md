@@ -10,6 +10,12 @@
 
 ### Other Changes
 
+## 1.0.1 (2022-12-27)
+
+### Bugs Fixed
+
+- Fix the incorrect format of the `ContainerAppData.OutboundIPAddresses` by deprecating this property and adding new property `ContainerAppData.OutboundIPAddressList`.
+
 ## 1.0.0 (2022-12-23)
 
 This is the first stable release of the AppContainers Management library.

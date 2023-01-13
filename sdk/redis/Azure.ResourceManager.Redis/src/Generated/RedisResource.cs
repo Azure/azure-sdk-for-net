@@ -407,37 +407,9 @@ namespace Azure.ResourceManager.Redis
         /// <returns> An async collection of <see cref="RedisUpgradeNotification" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<RedisUpgradeNotification> GetUpgradeNotificationsAsync(double history, CancellationToken cancellationToken = default)
         {
-            async Task<Page<RedisUpgradeNotification>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _redisClientDiagnostics.CreateScope("RedisResource.GetUpgradeNotifications");
-                scope.Start();
-                try
-                {
-                    var response = await _redisRestClient.ListUpgradeNotificationsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, history, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<RedisUpgradeNotification>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _redisClientDiagnostics.CreateScope("RedisResource.GetUpgradeNotifications");
-                scope.Start();
-                try
-                {
-                    var response = await _redisRestClient.ListUpgradeNotificationsNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, history, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _redisRestClient.CreateListUpgradeNotificationsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, history);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _redisRestClient.CreateListUpgradeNotificationsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, history);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, RedisUpgradeNotification.DeserializeRedisUpgradeNotification, _redisClientDiagnostics, Pipeline, "RedisResource.GetUpgradeNotifications", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -450,37 +422,9 @@ namespace Azure.ResourceManager.Redis
         /// <returns> A collection of <see cref="RedisUpgradeNotification" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<RedisUpgradeNotification> GetUpgradeNotifications(double history, CancellationToken cancellationToken = default)
         {
-            Page<RedisUpgradeNotification> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _redisClientDiagnostics.CreateScope("RedisResource.GetUpgradeNotifications");
-                scope.Start();
-                try
-                {
-                    var response = _redisRestClient.ListUpgradeNotifications(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, history, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<RedisUpgradeNotification> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _redisClientDiagnostics.CreateScope("RedisResource.GetUpgradeNotifications");
-                scope.Start();
-                try
-                {
-                    var response = _redisRestClient.ListUpgradeNotificationsNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, history, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _redisRestClient.CreateListUpgradeNotificationsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, history);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _redisRestClient.CreateListUpgradeNotificationsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, history);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, RedisUpgradeNotification.DeserializeRedisUpgradeNotification, _redisClientDiagnostics, Pipeline, "RedisResource.GetUpgradeNotifications", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -760,22 +704,8 @@ namespace Azure.ResourceManager.Redis
         /// <returns> An async collection of <see cref="RedisPrivateLinkResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<RedisPrivateLinkResource> GetPrivateLinkResourcesByRedisCacheAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<RedisPrivateLinkResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _privateLinkResourcesClientDiagnostics.CreateScope("RedisResource.GetPrivateLinkResourcesByRedisCache");
-                scope.Start();
-                try
-                {
-                    var response = await _privateLinkResourcesRestClient.ListByRedisCacheAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _privateLinkResourcesRestClient.CreateListByRedisCacheRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, RedisPrivateLinkResource.DeserializeRedisPrivateLinkResource, _privateLinkResourcesClientDiagnostics, Pipeline, "RedisResource.GetPrivateLinkResourcesByRedisCache", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -787,22 +717,8 @@ namespace Azure.ResourceManager.Redis
         /// <returns> A collection of <see cref="RedisPrivateLinkResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<RedisPrivateLinkResource> GetPrivateLinkResourcesByRedisCache(CancellationToken cancellationToken = default)
         {
-            Page<RedisPrivateLinkResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _privateLinkResourcesClientDiagnostics.CreateScope("RedisResource.GetPrivateLinkResourcesByRedisCache");
-                scope.Start();
-                try
-                {
-                    var response = _privateLinkResourcesRestClient.ListByRedisCache(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _privateLinkResourcesRestClient.CreateListByRedisCacheRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, RedisPrivateLinkResource.DeserializeRedisPrivateLinkResource, _privateLinkResourcesClientDiagnostics, Pipeline, "RedisResource.GetPrivateLinkResourcesByRedisCache", "value", null, cancellationToken);
         }
 
         /// <summary>

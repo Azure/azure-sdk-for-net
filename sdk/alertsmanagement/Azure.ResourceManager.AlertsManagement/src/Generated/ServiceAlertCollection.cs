@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -131,37 +130,9 @@ namespace Azure.ResourceManager.AlertsManagement
         /// <returns> An async collection of <see cref="ServiceAlertResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ServiceAlertResource> GetAllAsync(string targetResource = null, string targetResourceType = null, string targetResourceGroup = null, MonitorServiceSourceForAlert? monitorService = null, MonitorCondition? monitorCondition = null, ServiceAlertSeverity? severity = null, ServiceAlertState? alertState = null, string alertRule = null, string smartGroupId = null, bool? includeContext = null, bool? includeEgressConfig = null, long? pageCount = null, ListServiceAlertsSortByField? sortBy = null, AlertsManagementQuerySortOrder? sortOrder = null, string select = null, TimeRangeFilter? timeRange = null, string customTimeRange = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<ServiceAlertResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _serviceAlertAlertsClientDiagnostics.CreateScope("ServiceAlertCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _serviceAlertAlertsRestClient.GetAllAsync(Id.SubscriptionId, targetResource, targetResourceType, targetResourceGroup, monitorService, monitorCondition, severity, alertState, alertRule, smartGroupId, includeContext, includeEgressConfig, pageCount, sortBy, sortOrder, select, timeRange, customTimeRange, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ServiceAlertResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<ServiceAlertResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _serviceAlertAlertsClientDiagnostics.CreateScope("ServiceAlertCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _serviceAlertAlertsRestClient.GetAllNextPageAsync(nextLink, Id.SubscriptionId, targetResource, targetResourceType, targetResourceGroup, monitorService, monitorCondition, severity, alertState, alertRule, smartGroupId, includeContext, includeEgressConfig, pageCount, sortBy, sortOrder, select, timeRange, customTimeRange, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ServiceAlertResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _serviceAlertAlertsRestClient.CreateGetAllRequest(Id.SubscriptionId, targetResource, targetResourceType, targetResourceGroup, monitorService, monitorCondition, severity, alertState, alertRule, smartGroupId, includeContext, includeEgressConfig, pageCount, sortBy, sortOrder, select, timeRange, customTimeRange);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _serviceAlertAlertsRestClient.CreateGetAllNextPageRequest(nextLink, Id.SubscriptionId, targetResource, targetResourceType, targetResourceGroup, monitorService, monitorCondition, severity, alertState, alertRule, smartGroupId, includeContext, includeEgressConfig, pageCount, sortBy, sortOrder, select, timeRange, customTimeRange);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ServiceAlertResource(Client, ServiceAlertData.DeserializeServiceAlertData(e)), _serviceAlertAlertsClientDiagnostics, Pipeline, "ServiceAlertCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -190,37 +161,9 @@ namespace Azure.ResourceManager.AlertsManagement
         /// <returns> A collection of <see cref="ServiceAlertResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ServiceAlertResource> GetAll(string targetResource = null, string targetResourceType = null, string targetResourceGroup = null, MonitorServiceSourceForAlert? monitorService = null, MonitorCondition? monitorCondition = null, ServiceAlertSeverity? severity = null, ServiceAlertState? alertState = null, string alertRule = null, string smartGroupId = null, bool? includeContext = null, bool? includeEgressConfig = null, long? pageCount = null, ListServiceAlertsSortByField? sortBy = null, AlertsManagementQuerySortOrder? sortOrder = null, string select = null, TimeRangeFilter? timeRange = null, string customTimeRange = null, CancellationToken cancellationToken = default)
         {
-            Page<ServiceAlertResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _serviceAlertAlertsClientDiagnostics.CreateScope("ServiceAlertCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _serviceAlertAlertsRestClient.GetAll(Id.SubscriptionId, targetResource, targetResourceType, targetResourceGroup, monitorService, monitorCondition, severity, alertState, alertRule, smartGroupId, includeContext, includeEgressConfig, pageCount, sortBy, sortOrder, select, timeRange, customTimeRange, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ServiceAlertResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<ServiceAlertResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _serviceAlertAlertsClientDiagnostics.CreateScope("ServiceAlertCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _serviceAlertAlertsRestClient.GetAllNextPage(nextLink, Id.SubscriptionId, targetResource, targetResourceType, targetResourceGroup, monitorService, monitorCondition, severity, alertState, alertRule, smartGroupId, includeContext, includeEgressConfig, pageCount, sortBy, sortOrder, select, timeRange, customTimeRange, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ServiceAlertResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _serviceAlertAlertsRestClient.CreateGetAllRequest(Id.SubscriptionId, targetResource, targetResourceType, targetResourceGroup, monitorService, monitorCondition, severity, alertState, alertRule, smartGroupId, includeContext, includeEgressConfig, pageCount, sortBy, sortOrder, select, timeRange, customTimeRange);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _serviceAlertAlertsRestClient.CreateGetAllNextPageRequest(nextLink, Id.SubscriptionId, targetResource, targetResourceType, targetResourceGroup, monitorService, monitorCondition, severity, alertState, alertRule, smartGroupId, includeContext, includeEgressConfig, pageCount, sortBy, sortOrder, select, timeRange, customTimeRange);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ServiceAlertResource(Client, ServiceAlertData.DeserializeServiceAlertData(e)), _serviceAlertAlertsClientDiagnostics, Pipeline, "ServiceAlertCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

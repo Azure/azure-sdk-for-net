@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -186,37 +185,9 @@ namespace Azure.ResourceManager.ServiceBus
         /// <returns> An async collection of <see cref="ServiceBusTopicAuthorizationRuleResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ServiceBusTopicAuthorizationRuleResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<ServiceBusTopicAuthorizationRuleResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _serviceBusTopicAuthorizationRuleTopicAuthorizationRulesClientDiagnostics.CreateScope("ServiceBusTopicAuthorizationRuleCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _serviceBusTopicAuthorizationRuleTopicAuthorizationRulesRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ServiceBusTopicAuthorizationRuleResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<ServiceBusTopicAuthorizationRuleResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _serviceBusTopicAuthorizationRuleTopicAuthorizationRulesClientDiagnostics.CreateScope("ServiceBusTopicAuthorizationRuleCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _serviceBusTopicAuthorizationRuleTopicAuthorizationRulesRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ServiceBusTopicAuthorizationRuleResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _serviceBusTopicAuthorizationRuleTopicAuthorizationRulesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _serviceBusTopicAuthorizationRuleTopicAuthorizationRulesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ServiceBusTopicAuthorizationRuleResource(Client, ServiceBusAuthorizationRuleData.DeserializeServiceBusAuthorizationRuleData(e)), _serviceBusTopicAuthorizationRuleTopicAuthorizationRulesClientDiagnostics, Pipeline, "ServiceBusTopicAuthorizationRuleCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -228,37 +199,9 @@ namespace Azure.ResourceManager.ServiceBus
         /// <returns> A collection of <see cref="ServiceBusTopicAuthorizationRuleResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ServiceBusTopicAuthorizationRuleResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<ServiceBusTopicAuthorizationRuleResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _serviceBusTopicAuthorizationRuleTopicAuthorizationRulesClientDiagnostics.CreateScope("ServiceBusTopicAuthorizationRuleCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _serviceBusTopicAuthorizationRuleTopicAuthorizationRulesRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ServiceBusTopicAuthorizationRuleResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<ServiceBusTopicAuthorizationRuleResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _serviceBusTopicAuthorizationRuleTopicAuthorizationRulesClientDiagnostics.CreateScope("ServiceBusTopicAuthorizationRuleCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _serviceBusTopicAuthorizationRuleTopicAuthorizationRulesRestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ServiceBusTopicAuthorizationRuleResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _serviceBusTopicAuthorizationRuleTopicAuthorizationRulesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _serviceBusTopicAuthorizationRuleTopicAuthorizationRulesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ServiceBusTopicAuthorizationRuleResource(Client, ServiceBusAuthorizationRuleData.DeserializeServiceBusAuthorizationRuleData(e)), _serviceBusTopicAuthorizationRuleTopicAuthorizationRulesClientDiagnostics, Pipeline, "ServiceBusTopicAuthorizationRuleCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

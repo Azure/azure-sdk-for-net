@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -61,37 +60,9 @@ namespace Azure.ResourceManager.Quantum
         /// <returns> An async collection of <see cref="QuantumWorkspaceResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<QuantumWorkspaceResource> GetQuantumWorkspacesAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<QuantumWorkspaceResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = QuantumWorkspaceWorkspacesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetQuantumWorkspaces");
-                scope.Start();
-                try
-                {
-                    var response = await QuantumWorkspaceWorkspacesRestClient.ListBySubscriptionAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new QuantumWorkspaceResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<QuantumWorkspaceResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = QuantumWorkspaceWorkspacesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetQuantumWorkspaces");
-                scope.Start();
-                try
-                {
-                    var response = await QuantumWorkspaceWorkspacesRestClient.ListBySubscriptionNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new QuantumWorkspaceResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => QuantumWorkspaceWorkspacesRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => QuantumWorkspaceWorkspacesRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new QuantumWorkspaceResource(Client, QuantumWorkspaceData.DeserializeQuantumWorkspaceData(e)), QuantumWorkspaceWorkspacesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetQuantumWorkspaces", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -103,37 +74,9 @@ namespace Azure.ResourceManager.Quantum
         /// <returns> A collection of <see cref="QuantumWorkspaceResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<QuantumWorkspaceResource> GetQuantumWorkspaces(CancellationToken cancellationToken = default)
         {
-            Page<QuantumWorkspaceResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = QuantumWorkspaceWorkspacesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetQuantumWorkspaces");
-                scope.Start();
-                try
-                {
-                    var response = QuantumWorkspaceWorkspacesRestClient.ListBySubscription(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new QuantumWorkspaceResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<QuantumWorkspaceResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = QuantumWorkspaceWorkspacesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetQuantumWorkspaces");
-                scope.Start();
-                try
-                {
-                    var response = QuantumWorkspaceWorkspacesRestClient.ListBySubscriptionNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new QuantumWorkspaceResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => QuantumWorkspaceWorkspacesRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => QuantumWorkspaceWorkspacesRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new QuantumWorkspaceResource(Client, QuantumWorkspaceData.DeserializeQuantumWorkspaceData(e)), QuantumWorkspaceWorkspacesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetQuantumWorkspaces", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -146,37 +89,9 @@ namespace Azure.ResourceManager.Quantum
         /// <returns> An async collection of <see cref="ProviderDescription" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ProviderDescription> GetOfferingsAsync(string locationName, CancellationToken cancellationToken = default)
         {
-            async Task<Page<ProviderDescription>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = OfferingsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetOfferings");
-                scope.Start();
-                try
-                {
-                    var response = await OfferingsRestClient.ListAsync(Id.SubscriptionId, locationName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<ProviderDescription>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = OfferingsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetOfferings");
-                scope.Start();
-                try
-                {
-                    var response = await OfferingsRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, locationName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => OfferingsRestClient.CreateListRequest(Id.SubscriptionId, locationName);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => OfferingsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, locationName);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, ProviderDescription.DeserializeProviderDescription, OfferingsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetOfferings", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -189,37 +104,9 @@ namespace Azure.ResourceManager.Quantum
         /// <returns> A collection of <see cref="ProviderDescription" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ProviderDescription> GetOfferings(string locationName, CancellationToken cancellationToken = default)
         {
-            Page<ProviderDescription> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = OfferingsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetOfferings");
-                scope.Start();
-                try
-                {
-                    var response = OfferingsRestClient.List(Id.SubscriptionId, locationName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<ProviderDescription> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = OfferingsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetOfferings");
-                scope.Start();
-                try
-                {
-                    var response = OfferingsRestClient.ListNextPage(nextLink, Id.SubscriptionId, locationName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => OfferingsRestClient.CreateListRequest(Id.SubscriptionId, locationName);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => OfferingsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, locationName);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, ProviderDescription.DeserializeProviderDescription, OfferingsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetOfferings", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

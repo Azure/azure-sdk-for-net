@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -61,37 +60,9 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <returns> An async collection of <see cref="DataProtectionBackupVaultResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DataProtectionBackupVaultResource> GetDataProtectionBackupVaultsAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<DataProtectionBackupVaultResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = DataProtectionBackupVaultBackupVaultsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetDataProtectionBackupVaults");
-                scope.Start();
-                try
-                {
-                    var response = await DataProtectionBackupVaultBackupVaultsRestClient.GetInSubscriptionAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new DataProtectionBackupVaultResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<DataProtectionBackupVaultResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = DataProtectionBackupVaultBackupVaultsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetDataProtectionBackupVaults");
-                scope.Start();
-                try
-                {
-                    var response = await DataProtectionBackupVaultBackupVaultsRestClient.GetInSubscriptionNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new DataProtectionBackupVaultResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => DataProtectionBackupVaultBackupVaultsRestClient.CreateGetInSubscriptionRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DataProtectionBackupVaultBackupVaultsRestClient.CreateGetInSubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DataProtectionBackupVaultResource(Client, DataProtectionBackupVaultData.DeserializeDataProtectionBackupVaultData(e)), DataProtectionBackupVaultBackupVaultsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetDataProtectionBackupVaults", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -103,37 +74,9 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <returns> A collection of <see cref="DataProtectionBackupVaultResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DataProtectionBackupVaultResource> GetDataProtectionBackupVaults(CancellationToken cancellationToken = default)
         {
-            Page<DataProtectionBackupVaultResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = DataProtectionBackupVaultBackupVaultsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetDataProtectionBackupVaults");
-                scope.Start();
-                try
-                {
-                    var response = DataProtectionBackupVaultBackupVaultsRestClient.GetInSubscription(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new DataProtectionBackupVaultResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<DataProtectionBackupVaultResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = DataProtectionBackupVaultBackupVaultsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetDataProtectionBackupVaults");
-                scope.Start();
-                try
-                {
-                    var response = DataProtectionBackupVaultBackupVaultsRestClient.GetInSubscriptionNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new DataProtectionBackupVaultResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => DataProtectionBackupVaultBackupVaultsRestClient.CreateGetInSubscriptionRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DataProtectionBackupVaultBackupVaultsRestClient.CreateGetInSubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DataProtectionBackupVaultResource(Client, DataProtectionBackupVaultData.DeserializeDataProtectionBackupVaultData(e)), DataProtectionBackupVaultBackupVaultsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetDataProtectionBackupVaults", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -193,37 +136,9 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <returns> An async collection of <see cref="ResourceGuardResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ResourceGuardResource> GetResourceGuardsAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<ResourceGuardResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = ResourceGuardClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetResourceGuards");
-                scope.Start();
-                try
-                {
-                    var response = await ResourceGuardRestClient.GetResourcesInSubscriptionAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ResourceGuardResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<ResourceGuardResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = ResourceGuardClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetResourceGuards");
-                scope.Start();
-                try
-                {
-                    var response = await ResourceGuardRestClient.GetResourcesInSubscriptionNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ResourceGuardResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => ResourceGuardRestClient.CreateGetResourcesInSubscriptionRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ResourceGuardRestClient.CreateGetResourcesInSubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ResourceGuardResource(Client, ResourceGuardData.DeserializeResourceGuardData(e)), ResourceGuardClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetResourceGuards", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -235,37 +150,9 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <returns> A collection of <see cref="ResourceGuardResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ResourceGuardResource> GetResourceGuards(CancellationToken cancellationToken = default)
         {
-            Page<ResourceGuardResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = ResourceGuardClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetResourceGuards");
-                scope.Start();
-                try
-                {
-                    var response = ResourceGuardRestClient.GetResourcesInSubscription(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ResourceGuardResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<ResourceGuardResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = ResourceGuardClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetResourceGuards");
-                scope.Start();
-                try
-                {
-                    var response = ResourceGuardRestClient.GetResourcesInSubscriptionNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ResourceGuardResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => ResourceGuardRestClient.CreateGetResourcesInSubscriptionRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ResourceGuardRestClient.CreateGetResourcesInSubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ResourceGuardResource(Client, ResourceGuardData.DeserializeResourceGuardData(e)), ResourceGuardClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetResourceGuards", "value", "nextLink", cancellationToken);
         }
     }
 }

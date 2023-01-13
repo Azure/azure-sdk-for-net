@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -58,37 +57,9 @@ namespace Azure.ResourceManager.Resources
         /// <returns> An async collection of <see cref="TenantResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<TenantResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<TenantResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _tenantClientDiagnostics.CreateScope("TenantCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _tenantRestClient.ListAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new TenantResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<TenantResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _tenantClientDiagnostics.CreateScope("TenantCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _tenantRestClient.ListNextPageAsync(nextLink, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new TenantResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _tenantRestClient.CreateListRequest();
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _tenantRestClient.CreateListNextPageRequest(nextLink);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new TenantResource(Client, TenantData.DeserializeTenantData(e)), _tenantClientDiagnostics, Pipeline, "TenantCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -100,37 +71,9 @@ namespace Azure.ResourceManager.Resources
         /// <returns> A collection of <see cref="TenantResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<TenantResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<TenantResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _tenantClientDiagnostics.CreateScope("TenantCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _tenantRestClient.List(cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new TenantResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<TenantResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _tenantClientDiagnostics.CreateScope("TenantCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _tenantRestClient.ListNextPage(nextLink, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new TenantResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _tenantRestClient.CreateListRequest();
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _tenantRestClient.CreateListNextPageRequest(nextLink);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new TenantResource(Client, TenantData.DeserializeTenantData(e)), _tenantClientDiagnostics, Pipeline, "TenantCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         IEnumerator<TenantResource> IEnumerable<TenantResource>.GetEnumerator()

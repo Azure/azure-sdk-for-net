@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -193,37 +192,9 @@ namespace Azure.ResourceManager.ApiManagement
         /// <returns> An async collection of <see cref="ApiManagementCertificateResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ApiManagementCertificateResource> GetAllAsync(string filter = null, int? top = null, int? skip = null, bool? isKeyVaultRefreshFailed = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<ApiManagementCertificateResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _apiManagementCertificateCertificateClientDiagnostics.CreateScope("ApiManagementCertificateCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _apiManagementCertificateCertificateRestClient.ListByServiceAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, isKeyVaultRefreshFailed, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ApiManagementCertificateResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<ApiManagementCertificateResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _apiManagementCertificateCertificateClientDiagnostics.CreateScope("ApiManagementCertificateCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _apiManagementCertificateCertificateRestClient.ListByServiceNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, isKeyVaultRefreshFailed, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ApiManagementCertificateResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _apiManagementCertificateCertificateRestClient.CreateListByServiceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, isKeyVaultRefreshFailed);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _apiManagementCertificateCertificateRestClient.CreateListByServiceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, isKeyVaultRefreshFailed);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ApiManagementCertificateResource(Client, ApiManagementCertificateData.DeserializeApiManagementCertificateData(e)), _apiManagementCertificateCertificateClientDiagnostics, Pipeline, "ApiManagementCertificateCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -239,37 +210,9 @@ namespace Azure.ResourceManager.ApiManagement
         /// <returns> A collection of <see cref="ApiManagementCertificateResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ApiManagementCertificateResource> GetAll(string filter = null, int? top = null, int? skip = null, bool? isKeyVaultRefreshFailed = null, CancellationToken cancellationToken = default)
         {
-            Page<ApiManagementCertificateResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _apiManagementCertificateCertificateClientDiagnostics.CreateScope("ApiManagementCertificateCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _apiManagementCertificateCertificateRestClient.ListByService(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, isKeyVaultRefreshFailed, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ApiManagementCertificateResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<ApiManagementCertificateResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _apiManagementCertificateCertificateClientDiagnostics.CreateScope("ApiManagementCertificateCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _apiManagementCertificateCertificateRestClient.ListByServiceNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, isKeyVaultRefreshFailed, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ApiManagementCertificateResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _apiManagementCertificateCertificateRestClient.CreateListByServiceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, isKeyVaultRefreshFailed);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _apiManagementCertificateCertificateRestClient.CreateListByServiceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, isKeyVaultRefreshFailed);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ApiManagementCertificateResource(Client, ApiManagementCertificateData.DeserializeApiManagementCertificateData(e)), _apiManagementCertificateCertificateClientDiagnostics, Pipeline, "ApiManagementCertificateCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

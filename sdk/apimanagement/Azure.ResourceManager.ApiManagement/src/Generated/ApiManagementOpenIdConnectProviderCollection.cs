@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -191,37 +190,9 @@ namespace Azure.ResourceManager.ApiManagement
         /// <returns> An async collection of <see cref="ApiManagementOpenIdConnectProviderResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ApiManagementOpenIdConnectProviderResource> GetAllAsync(string filter = null, int? top = null, int? skip = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<ApiManagementOpenIdConnectProviderResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _apiManagementOpenIdConnectProviderOpenIdConnectProviderClientDiagnostics.CreateScope("ApiManagementOpenIdConnectProviderCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _apiManagementOpenIdConnectProviderOpenIdConnectProviderRestClient.ListByServiceAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ApiManagementOpenIdConnectProviderResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<ApiManagementOpenIdConnectProviderResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _apiManagementOpenIdConnectProviderOpenIdConnectProviderClientDiagnostics.CreateScope("ApiManagementOpenIdConnectProviderCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _apiManagementOpenIdConnectProviderOpenIdConnectProviderRestClient.ListByServiceNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ApiManagementOpenIdConnectProviderResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _apiManagementOpenIdConnectProviderOpenIdConnectProviderRestClient.CreateListByServiceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _apiManagementOpenIdConnectProviderOpenIdConnectProviderRestClient.CreateListByServiceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ApiManagementOpenIdConnectProviderResource(Client, ApiManagementOpenIdConnectProviderData.DeserializeApiManagementOpenIdConnectProviderData(e)), _apiManagementOpenIdConnectProviderOpenIdConnectProviderClientDiagnostics, Pipeline, "ApiManagementOpenIdConnectProviderCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -236,37 +207,9 @@ namespace Azure.ResourceManager.ApiManagement
         /// <returns> A collection of <see cref="ApiManagementOpenIdConnectProviderResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ApiManagementOpenIdConnectProviderResource> GetAll(string filter = null, int? top = null, int? skip = null, CancellationToken cancellationToken = default)
         {
-            Page<ApiManagementOpenIdConnectProviderResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _apiManagementOpenIdConnectProviderOpenIdConnectProviderClientDiagnostics.CreateScope("ApiManagementOpenIdConnectProviderCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _apiManagementOpenIdConnectProviderOpenIdConnectProviderRestClient.ListByService(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ApiManagementOpenIdConnectProviderResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<ApiManagementOpenIdConnectProviderResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _apiManagementOpenIdConnectProviderOpenIdConnectProviderClientDiagnostics.CreateScope("ApiManagementOpenIdConnectProviderCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _apiManagementOpenIdConnectProviderOpenIdConnectProviderRestClient.ListByServiceNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ApiManagementOpenIdConnectProviderResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _apiManagementOpenIdConnectProviderOpenIdConnectProviderRestClient.CreateListByServiceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _apiManagementOpenIdConnectProviderOpenIdConnectProviderRestClient.CreateListByServiceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ApiManagementOpenIdConnectProviderResource(Client, ApiManagementOpenIdConnectProviderData.DeserializeApiManagementOpenIdConnectProviderData(e)), _apiManagementOpenIdConnectProviderOpenIdConnectProviderClientDiagnostics, Pipeline, "ApiManagementOpenIdConnectProviderCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

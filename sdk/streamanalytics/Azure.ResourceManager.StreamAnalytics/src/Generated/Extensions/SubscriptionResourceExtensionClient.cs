@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -62,37 +61,9 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// <returns> An async collection of <see cref="StreamingJobResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<StreamingJobResource> GetStreamingJobsAsync(string expand = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<StreamingJobResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = StreamingJobClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetStreamingJobs");
-                scope.Start();
-                try
-                {
-                    var response = await StreamingJobRestClient.ListAsync(Id.SubscriptionId, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new StreamingJobResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<StreamingJobResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = StreamingJobClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetStreamingJobs");
-                scope.Start();
-                try
-                {
-                    var response = await StreamingJobRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new StreamingJobResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => StreamingJobRestClient.CreateListRequest(Id.SubscriptionId, expand);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => StreamingJobRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, expand);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new StreamingJobResource(Client, StreamingJobData.DeserializeStreamingJobData(e)), StreamingJobClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetStreamingJobs", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -105,37 +76,9 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// <returns> A collection of <see cref="StreamingJobResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<StreamingJobResource> GetStreamingJobs(string expand = null, CancellationToken cancellationToken = default)
         {
-            Page<StreamingJobResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = StreamingJobClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetStreamingJobs");
-                scope.Start();
-                try
-                {
-                    var response = StreamingJobRestClient.List(Id.SubscriptionId, expand, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new StreamingJobResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<StreamingJobResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = StreamingJobClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetStreamingJobs");
-                scope.Start();
-                try
-                {
-                    var response = StreamingJobRestClient.ListNextPage(nextLink, Id.SubscriptionId, expand, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new StreamingJobResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => StreamingJobRestClient.CreateListRequest(Id.SubscriptionId, expand);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => StreamingJobRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, expand);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new StreamingJobResource(Client, StreamingJobData.DeserializeStreamingJobData(e)), StreamingJobClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetStreamingJobs", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -148,22 +91,8 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// <returns> An async collection of <see cref="StreamAnalyticsSubscriptionQuota" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<StreamAnalyticsSubscriptionQuota> GetQuotasSubscriptionsAsync(AzureLocation location, CancellationToken cancellationToken = default)
         {
-            async Task<Page<StreamAnalyticsSubscriptionQuota>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = SubscriptionsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetQuotasSubscriptions");
-                scope.Start();
-                try
-                {
-                    var response = await SubscriptionsRestClient.ListQuotasAsync(Id.SubscriptionId, location, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => SubscriptionsRestClient.CreateListQuotasRequest(Id.SubscriptionId, location);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, StreamAnalyticsSubscriptionQuota.DeserializeStreamAnalyticsSubscriptionQuota, SubscriptionsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetQuotasSubscriptions", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -176,22 +105,8 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// <returns> A collection of <see cref="StreamAnalyticsSubscriptionQuota" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<StreamAnalyticsSubscriptionQuota> GetQuotasSubscriptions(AzureLocation location, CancellationToken cancellationToken = default)
         {
-            Page<StreamAnalyticsSubscriptionQuota> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = SubscriptionsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetQuotasSubscriptions");
-                scope.Start();
-                try
-                {
-                    var response = SubscriptionsRestClient.ListQuotas(Id.SubscriptionId, location, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => SubscriptionsRestClient.CreateListQuotasRequest(Id.SubscriptionId, location);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, StreamAnalyticsSubscriptionQuota.DeserializeStreamAnalyticsSubscriptionQuota, SubscriptionsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetQuotasSubscriptions", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -475,37 +390,9 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// <returns> An async collection of <see cref="StreamAnalyticsClusterResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<StreamAnalyticsClusterResource> GetStreamAnalyticsClustersAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<StreamAnalyticsClusterResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = StreamAnalyticsClusterClustersClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetStreamAnalyticsClusters");
-                scope.Start();
-                try
-                {
-                    var response = await StreamAnalyticsClusterClustersRestClient.ListBySubscriptionAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new StreamAnalyticsClusterResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<StreamAnalyticsClusterResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = StreamAnalyticsClusterClustersClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetStreamAnalyticsClusters");
-                scope.Start();
-                try
-                {
-                    var response = await StreamAnalyticsClusterClustersRestClient.ListBySubscriptionNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new StreamAnalyticsClusterResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => StreamAnalyticsClusterClustersRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => StreamAnalyticsClusterClustersRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new StreamAnalyticsClusterResource(Client, StreamAnalyticsClusterData.DeserializeStreamAnalyticsClusterData(e)), StreamAnalyticsClusterClustersClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetStreamAnalyticsClusters", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -517,37 +404,9 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// <returns> A collection of <see cref="StreamAnalyticsClusterResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<StreamAnalyticsClusterResource> GetStreamAnalyticsClusters(CancellationToken cancellationToken = default)
         {
-            Page<StreamAnalyticsClusterResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = StreamAnalyticsClusterClustersClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetStreamAnalyticsClusters");
-                scope.Start();
-                try
-                {
-                    var response = StreamAnalyticsClusterClustersRestClient.ListBySubscription(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new StreamAnalyticsClusterResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<StreamAnalyticsClusterResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = StreamAnalyticsClusterClustersClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetStreamAnalyticsClusters");
-                scope.Start();
-                try
-                {
-                    var response = StreamAnalyticsClusterClustersRestClient.ListBySubscriptionNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new StreamAnalyticsClusterResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => StreamAnalyticsClusterClustersRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => StreamAnalyticsClusterClustersRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new StreamAnalyticsClusterResource(Client, StreamAnalyticsClusterData.DeserializeStreamAnalyticsClusterData(e)), StreamAnalyticsClusterClustersClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetStreamAnalyticsClusters", "value", "nextLink", cancellationToken);
         }
     }
 }

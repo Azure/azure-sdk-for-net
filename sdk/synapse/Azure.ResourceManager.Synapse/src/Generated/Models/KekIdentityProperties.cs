@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
@@ -18,16 +19,16 @@ namespace Azure.ResourceManager.Synapse.Models
         }
 
         /// <summary> Initializes a new instance of KekIdentityProperties. </summary>
-        /// <param name="userAssignedIdentity"> User assigned identity resource Id. </param>
+        /// <param name="userAssignedIdentityId"> User assigned identity resource Id. </param>
         /// <param name="useSystemAssignedIdentity"> Boolean specifying whether to use system assigned identity or not. </param>
-        internal KekIdentityProperties(string userAssignedIdentity, BinaryData useSystemAssignedIdentity)
+        internal KekIdentityProperties(ResourceIdentifier userAssignedIdentityId, BinaryData useSystemAssignedIdentity)
         {
-            UserAssignedIdentity = userAssignedIdentity;
+            UserAssignedIdentityId = userAssignedIdentityId;
             UseSystemAssignedIdentity = useSystemAssignedIdentity;
         }
 
         /// <summary> User assigned identity resource Id. </summary>
-        public string UserAssignedIdentity { get; set; }
+        public ResourceIdentifier UserAssignedIdentityId { get; set; }
         /// <summary>
         /// Boolean specifying whether to use system assigned identity or not
         /// <para>

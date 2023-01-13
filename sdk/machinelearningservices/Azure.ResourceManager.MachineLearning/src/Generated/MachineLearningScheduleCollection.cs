@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -189,37 +188,9 @@ namespace Azure.ResourceManager.MachineLearning
         /// <returns> An async collection of <see cref="MachineLearningScheduleResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<MachineLearningScheduleResource> GetAllAsync(string skip = null, MachineLearningScheduleListViewType? listViewType = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<MachineLearningScheduleResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _machineLearningScheduleSchedulesClientDiagnostics.CreateScope("MachineLearningScheduleCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _machineLearningScheduleSchedulesRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, skip, listViewType, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new MachineLearningScheduleResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<MachineLearningScheduleResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _machineLearningScheduleSchedulesClientDiagnostics.CreateScope("MachineLearningScheduleCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _machineLearningScheduleSchedulesRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, skip, listViewType, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new MachineLearningScheduleResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _machineLearningScheduleSchedulesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, skip, listViewType);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _machineLearningScheduleSchedulesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, skip, listViewType);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new MachineLearningScheduleResource(Client, MachineLearningScheduleData.DeserializeMachineLearningScheduleData(e)), _machineLearningScheduleSchedulesClientDiagnostics, Pipeline, "MachineLearningScheduleCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -233,37 +204,9 @@ namespace Azure.ResourceManager.MachineLearning
         /// <returns> A collection of <see cref="MachineLearningScheduleResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<MachineLearningScheduleResource> GetAll(string skip = null, MachineLearningScheduleListViewType? listViewType = null, CancellationToken cancellationToken = default)
         {
-            Page<MachineLearningScheduleResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _machineLearningScheduleSchedulesClientDiagnostics.CreateScope("MachineLearningScheduleCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _machineLearningScheduleSchedulesRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, skip, listViewType, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new MachineLearningScheduleResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<MachineLearningScheduleResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _machineLearningScheduleSchedulesClientDiagnostics.CreateScope("MachineLearningScheduleCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _machineLearningScheduleSchedulesRestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, skip, listViewType, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new MachineLearningScheduleResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _machineLearningScheduleSchedulesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, skip, listViewType);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _machineLearningScheduleSchedulesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, skip, listViewType);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new MachineLearningScheduleResource(Client, MachineLearningScheduleData.DeserializeMachineLearningScheduleData(e)), _machineLearningScheduleSchedulesClientDiagnostics, Pipeline, "MachineLearningScheduleCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

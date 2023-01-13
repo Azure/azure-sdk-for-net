@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -69,37 +68,9 @@ namespace Azure.ResourceManager.BotService
         /// <returns> An async collection of <see cref="BotResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<BotResource> GetBotsAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<BotResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = BotClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetBots");
-                scope.Start();
-                try
-                {
-                    var response = await BotRestClient.ListAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new BotResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<BotResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = BotClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetBots");
-                scope.Start();
-                try
-                {
-                    var response = await BotRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new BotResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => BotRestClient.CreateListRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => BotRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new BotResource(Client, BotData.DeserializeBotData(e)), BotClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetBots", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -111,37 +82,9 @@ namespace Azure.ResourceManager.BotService
         /// <returns> A collection of <see cref="BotResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<BotResource> GetBots(CancellationToken cancellationToken = default)
         {
-            Page<BotResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = BotClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetBots");
-                scope.Start();
-                try
-                {
-                    var response = BotRestClient.List(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new BotResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<BotResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = BotClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetBots");
-                scope.Start();
-                try
-                {
-                    var response = BotRestClient.ListNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new BotResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => BotRestClient.CreateListRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => BotRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new BotResource(Client, BotData.DeserializeBotData(e)), BotClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetBots", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -153,22 +96,8 @@ namespace Azure.ResourceManager.BotService
         /// <returns> An async collection of <see cref="ServiceProvider" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ServiceProvider> GetServiceProvidersBotConnectionsAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<ServiceProvider>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = ConnectionSettingBotConnectionClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetServiceProvidersBotConnections");
-                scope.Start();
-                try
-                {
-                    var response = await ConnectionSettingBotConnectionRestClient.ListServiceProvidersAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => ConnectionSettingBotConnectionRestClient.CreateListServiceProvidersRequest(Id.SubscriptionId);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, ServiceProvider.DeserializeServiceProvider, ConnectionSettingBotConnectionClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetServiceProvidersBotConnections", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -180,22 +109,8 @@ namespace Azure.ResourceManager.BotService
         /// <returns> A collection of <see cref="ServiceProvider" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ServiceProvider> GetServiceProvidersBotConnections(CancellationToken cancellationToken = default)
         {
-            Page<ServiceProvider> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = ConnectionSettingBotConnectionClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetServiceProvidersBotConnections");
-                scope.Start();
-                try
-                {
-                    var response = ConnectionSettingBotConnectionRestClient.ListServiceProviders(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => ConnectionSettingBotConnectionRestClient.CreateListServiceProvidersRequest(Id.SubscriptionId);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, ServiceProvider.DeserializeServiceProvider, ConnectionSettingBotConnectionClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetServiceProvidersBotConnections", "value", null, cancellationToken);
         }
 
         /// <summary>

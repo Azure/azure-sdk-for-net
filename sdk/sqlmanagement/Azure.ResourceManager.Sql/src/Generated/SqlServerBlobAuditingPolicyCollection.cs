@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -175,37 +174,9 @@ namespace Azure.ResourceManager.Sql
         /// <returns> An async collection of <see cref="SqlServerBlobAuditingPolicyResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SqlServerBlobAuditingPolicyResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<SqlServerBlobAuditingPolicyResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _sqlServerBlobAuditingPolicyServerBlobAuditingPoliciesClientDiagnostics.CreateScope("SqlServerBlobAuditingPolicyCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _sqlServerBlobAuditingPolicyServerBlobAuditingPoliciesRestClient.ListByServerAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new SqlServerBlobAuditingPolicyResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<SqlServerBlobAuditingPolicyResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _sqlServerBlobAuditingPolicyServerBlobAuditingPoliciesClientDiagnostics.CreateScope("SqlServerBlobAuditingPolicyCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _sqlServerBlobAuditingPolicyServerBlobAuditingPoliciesRestClient.ListByServerNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new SqlServerBlobAuditingPolicyResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _sqlServerBlobAuditingPolicyServerBlobAuditingPoliciesRestClient.CreateListByServerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _sqlServerBlobAuditingPolicyServerBlobAuditingPoliciesRestClient.CreateListByServerNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SqlServerBlobAuditingPolicyResource(Client, SqlServerBlobAuditingPolicyData.DeserializeSqlServerBlobAuditingPolicyData(e)), _sqlServerBlobAuditingPolicyServerBlobAuditingPoliciesClientDiagnostics, Pipeline, "SqlServerBlobAuditingPolicyCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -217,37 +188,9 @@ namespace Azure.ResourceManager.Sql
         /// <returns> A collection of <see cref="SqlServerBlobAuditingPolicyResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SqlServerBlobAuditingPolicyResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<SqlServerBlobAuditingPolicyResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _sqlServerBlobAuditingPolicyServerBlobAuditingPoliciesClientDiagnostics.CreateScope("SqlServerBlobAuditingPolicyCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _sqlServerBlobAuditingPolicyServerBlobAuditingPoliciesRestClient.ListByServer(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new SqlServerBlobAuditingPolicyResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<SqlServerBlobAuditingPolicyResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _sqlServerBlobAuditingPolicyServerBlobAuditingPoliciesClientDiagnostics.CreateScope("SqlServerBlobAuditingPolicyCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _sqlServerBlobAuditingPolicyServerBlobAuditingPoliciesRestClient.ListByServerNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new SqlServerBlobAuditingPolicyResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _sqlServerBlobAuditingPolicyServerBlobAuditingPoliciesRestClient.CreateListByServerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _sqlServerBlobAuditingPolicyServerBlobAuditingPoliciesRestClient.CreateListByServerNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SqlServerBlobAuditingPolicyResource(Client, SqlServerBlobAuditingPolicyData.DeserializeSqlServerBlobAuditingPolicyData(e)), _sqlServerBlobAuditingPolicyServerBlobAuditingPoliciesClientDiagnostics, Pipeline, "SqlServerBlobAuditingPolicyCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

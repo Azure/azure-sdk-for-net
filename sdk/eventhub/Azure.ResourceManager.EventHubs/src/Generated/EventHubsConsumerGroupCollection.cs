@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -188,37 +187,9 @@ namespace Azure.ResourceManager.EventHubs
         /// <returns> An async collection of <see cref="EventHubsConsumerGroupResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<EventHubsConsumerGroupResource> GetAllAsync(int? skip = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<EventHubsConsumerGroupResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _eventHubsConsumerGroupConsumerGroupsClientDiagnostics.CreateScope("EventHubsConsumerGroupCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _eventHubsConsumerGroupConsumerGroupsRestClient.ListByEventHubAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skip, top, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new EventHubsConsumerGroupResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<EventHubsConsumerGroupResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _eventHubsConsumerGroupConsumerGroupsClientDiagnostics.CreateScope("EventHubsConsumerGroupCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _eventHubsConsumerGroupConsumerGroupsRestClient.ListByEventHubNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skip, top, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new EventHubsConsumerGroupResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _eventHubsConsumerGroupConsumerGroupsRestClient.CreateListByEventHubRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skip, top);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _eventHubsConsumerGroupConsumerGroupsRestClient.CreateListByEventHubNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skip, top);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new EventHubsConsumerGroupResource(Client, EventHubsConsumerGroupData.DeserializeEventHubsConsumerGroupData(e)), _eventHubsConsumerGroupConsumerGroupsClientDiagnostics, Pipeline, "EventHubsConsumerGroupCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -232,37 +203,9 @@ namespace Azure.ResourceManager.EventHubs
         /// <returns> A collection of <see cref="EventHubsConsumerGroupResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<EventHubsConsumerGroupResource> GetAll(int? skip = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            Page<EventHubsConsumerGroupResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _eventHubsConsumerGroupConsumerGroupsClientDiagnostics.CreateScope("EventHubsConsumerGroupCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _eventHubsConsumerGroupConsumerGroupsRestClient.ListByEventHub(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skip, top, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new EventHubsConsumerGroupResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<EventHubsConsumerGroupResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _eventHubsConsumerGroupConsumerGroupsClientDiagnostics.CreateScope("EventHubsConsumerGroupCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _eventHubsConsumerGroupConsumerGroupsRestClient.ListByEventHubNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skip, top, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new EventHubsConsumerGroupResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _eventHubsConsumerGroupConsumerGroupsRestClient.CreateListByEventHubRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skip, top);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _eventHubsConsumerGroupConsumerGroupsRestClient.CreateListByEventHubNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skip, top);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new EventHubsConsumerGroupResource(Client, EventHubsConsumerGroupData.DeserializeEventHubsConsumerGroupData(e)), _eventHubsConsumerGroupConsumerGroupsClientDiagnostics, Pipeline, "EventHubsConsumerGroupCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

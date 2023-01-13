@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -193,37 +192,9 @@ namespace Azure.ResourceManager.DataLakeAnalytics
         /// <returns> An async collection of <see cref="DataLakeStoreAccountInformationResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DataLakeStoreAccountInformationResource> GetAllAsync(string filter = null, int? top = null, int? skip = null, string select = null, string orderby = null, bool? count = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<DataLakeStoreAccountInformationResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _dataLakeStoreAccountInformationDataLakeStoreAccountsClientDiagnostics.CreateScope("DataLakeStoreAccountInformationCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _dataLakeStoreAccountInformationDataLakeStoreAccountsRestClient.ListByAccountAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, select, orderby, count, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new DataLakeStoreAccountInformationResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<DataLakeStoreAccountInformationResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _dataLakeStoreAccountInformationDataLakeStoreAccountsClientDiagnostics.CreateScope("DataLakeStoreAccountInformationCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _dataLakeStoreAccountInformationDataLakeStoreAccountsRestClient.ListByAccountNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, select, orderby, count, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new DataLakeStoreAccountInformationResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _dataLakeStoreAccountInformationDataLakeStoreAccountsRestClient.CreateListByAccountRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, select, orderby, count);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _dataLakeStoreAccountInformationDataLakeStoreAccountsRestClient.CreateListByAccountNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, select, orderby, count);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DataLakeStoreAccountInformationResource(Client, DataLakeStoreAccountInformationData.DeserializeDataLakeStoreAccountInformationData(e)), _dataLakeStoreAccountInformationDataLakeStoreAccountsClientDiagnostics, Pipeline, "DataLakeStoreAccountInformationCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -241,37 +212,9 @@ namespace Azure.ResourceManager.DataLakeAnalytics
         /// <returns> A collection of <see cref="DataLakeStoreAccountInformationResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DataLakeStoreAccountInformationResource> GetAll(string filter = null, int? top = null, int? skip = null, string select = null, string orderby = null, bool? count = null, CancellationToken cancellationToken = default)
         {
-            Page<DataLakeStoreAccountInformationResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _dataLakeStoreAccountInformationDataLakeStoreAccountsClientDiagnostics.CreateScope("DataLakeStoreAccountInformationCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _dataLakeStoreAccountInformationDataLakeStoreAccountsRestClient.ListByAccount(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, select, orderby, count, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new DataLakeStoreAccountInformationResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<DataLakeStoreAccountInformationResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _dataLakeStoreAccountInformationDataLakeStoreAccountsClientDiagnostics.CreateScope("DataLakeStoreAccountInformationCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _dataLakeStoreAccountInformationDataLakeStoreAccountsRestClient.ListByAccountNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, select, orderby, count, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new DataLakeStoreAccountInformationResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _dataLakeStoreAccountInformationDataLakeStoreAccountsRestClient.CreateListByAccountRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, select, orderby, count);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _dataLakeStoreAccountInformationDataLakeStoreAccountsRestClient.CreateListByAccountNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, select, orderby, count);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DataLakeStoreAccountInformationResource(Client, DataLakeStoreAccountInformationData.DeserializeDataLakeStoreAccountInformationData(e)), _dataLakeStoreAccountInformationDataLakeStoreAccountsClientDiagnostics, Pipeline, "DataLakeStoreAccountInformationCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
