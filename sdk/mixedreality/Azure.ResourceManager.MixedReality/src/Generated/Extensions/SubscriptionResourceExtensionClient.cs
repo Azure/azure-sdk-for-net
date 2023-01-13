@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -109,37 +108,9 @@ namespace Azure.ResourceManager.MixedReality
         /// <returns> An async collection of <see cref="SpatialAnchorsAccountResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SpatialAnchorsAccountResource> GetSpatialAnchorsAccountsAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<SpatialAnchorsAccountResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = SpatialAnchorsAccountClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetSpatialAnchorsAccounts");
-                scope.Start();
-                try
-                {
-                    var response = await SpatialAnchorsAccountRestClient.ListBySubscriptionAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new SpatialAnchorsAccountResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<SpatialAnchorsAccountResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = SpatialAnchorsAccountClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetSpatialAnchorsAccounts");
-                scope.Start();
-                try
-                {
-                    var response = await SpatialAnchorsAccountRestClient.ListBySubscriptionNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new SpatialAnchorsAccountResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => SpatialAnchorsAccountRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => SpatialAnchorsAccountRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SpatialAnchorsAccountResource(Client, SpatialAnchorsAccountData.DeserializeSpatialAnchorsAccountData(e)), SpatialAnchorsAccountClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetSpatialAnchorsAccounts", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -151,37 +122,9 @@ namespace Azure.ResourceManager.MixedReality
         /// <returns> A collection of <see cref="SpatialAnchorsAccountResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SpatialAnchorsAccountResource> GetSpatialAnchorsAccounts(CancellationToken cancellationToken = default)
         {
-            Page<SpatialAnchorsAccountResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = SpatialAnchorsAccountClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetSpatialAnchorsAccounts");
-                scope.Start();
-                try
-                {
-                    var response = SpatialAnchorsAccountRestClient.ListBySubscription(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new SpatialAnchorsAccountResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<SpatialAnchorsAccountResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = SpatialAnchorsAccountClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetSpatialAnchorsAccounts");
-                scope.Start();
-                try
-                {
-                    var response = SpatialAnchorsAccountRestClient.ListBySubscriptionNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new SpatialAnchorsAccountResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => SpatialAnchorsAccountRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => SpatialAnchorsAccountRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SpatialAnchorsAccountResource(Client, SpatialAnchorsAccountData.DeserializeSpatialAnchorsAccountData(e)), SpatialAnchorsAccountClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetSpatialAnchorsAccounts", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -193,37 +136,9 @@ namespace Azure.ResourceManager.MixedReality
         /// <returns> An async collection of <see cref="RemoteRenderingAccountResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<RemoteRenderingAccountResource> GetRemoteRenderingAccountsAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<RemoteRenderingAccountResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = RemoteRenderingAccountClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetRemoteRenderingAccounts");
-                scope.Start();
-                try
-                {
-                    var response = await RemoteRenderingAccountRestClient.ListBySubscriptionAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new RemoteRenderingAccountResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<RemoteRenderingAccountResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = RemoteRenderingAccountClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetRemoteRenderingAccounts");
-                scope.Start();
-                try
-                {
-                    var response = await RemoteRenderingAccountRestClient.ListBySubscriptionNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new RemoteRenderingAccountResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => RemoteRenderingAccountRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => RemoteRenderingAccountRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new RemoteRenderingAccountResource(Client, RemoteRenderingAccountData.DeserializeRemoteRenderingAccountData(e)), RemoteRenderingAccountClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetRemoteRenderingAccounts", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -235,37 +150,9 @@ namespace Azure.ResourceManager.MixedReality
         /// <returns> A collection of <see cref="RemoteRenderingAccountResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<RemoteRenderingAccountResource> GetRemoteRenderingAccounts(CancellationToken cancellationToken = default)
         {
-            Page<RemoteRenderingAccountResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = RemoteRenderingAccountClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetRemoteRenderingAccounts");
-                scope.Start();
-                try
-                {
-                    var response = RemoteRenderingAccountRestClient.ListBySubscription(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new RemoteRenderingAccountResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<RemoteRenderingAccountResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = RemoteRenderingAccountClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetRemoteRenderingAccounts");
-                scope.Start();
-                try
-                {
-                    var response = RemoteRenderingAccountRestClient.ListBySubscriptionNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new RemoteRenderingAccountResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => RemoteRenderingAccountRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => RemoteRenderingAccountRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new RemoteRenderingAccountResource(Client, RemoteRenderingAccountData.DeserializeRemoteRenderingAccountData(e)), RemoteRenderingAccountClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetRemoteRenderingAccounts", "value", "nextLink", cancellationToken);
         }
     }
 }

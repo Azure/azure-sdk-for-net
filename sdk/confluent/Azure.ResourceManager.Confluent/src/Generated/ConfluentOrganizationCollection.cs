@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -187,37 +186,9 @@ namespace Azure.ResourceManager.Confluent
         /// <returns> An async collection of <see cref="ConfluentOrganizationResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ConfluentOrganizationResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<ConfluentOrganizationResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _confluentOrganizationOrganizationClientDiagnostics.CreateScope("ConfluentOrganizationCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _confluentOrganizationOrganizationRestClient.ListByResourceGroupAsync(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ConfluentOrganizationResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<ConfluentOrganizationResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _confluentOrganizationOrganizationClientDiagnostics.CreateScope("ConfluentOrganizationCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _confluentOrganizationOrganizationRestClient.ListByResourceGroupNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ConfluentOrganizationResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _confluentOrganizationOrganizationRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _confluentOrganizationOrganizationRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ConfluentOrganizationResource(Client, ConfluentOrganizationData.DeserializeConfluentOrganizationData(e)), _confluentOrganizationOrganizationClientDiagnostics, Pipeline, "ConfluentOrganizationCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -229,37 +200,9 @@ namespace Azure.ResourceManager.Confluent
         /// <returns> A collection of <see cref="ConfluentOrganizationResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ConfluentOrganizationResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<ConfluentOrganizationResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _confluentOrganizationOrganizationClientDiagnostics.CreateScope("ConfluentOrganizationCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _confluentOrganizationOrganizationRestClient.ListByResourceGroup(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ConfluentOrganizationResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<ConfluentOrganizationResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _confluentOrganizationOrganizationClientDiagnostics.CreateScope("ConfluentOrganizationCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _confluentOrganizationOrganizationRestClient.ListByResourceGroupNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ConfluentOrganizationResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _confluentOrganizationOrganizationRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _confluentOrganizationOrganizationRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ConfluentOrganizationResource(Client, ConfluentOrganizationData.DeserializeConfluentOrganizationData(e)), _confluentOrganizationOrganizationClientDiagnostics, Pipeline, "ConfluentOrganizationCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

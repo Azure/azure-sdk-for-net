@@ -8,7 +8,7 @@
   <ItemGroup>
     <PackageReference Include="Azure.Identity" />
   </ItemGroup>
-  
+
   <ItemGroup>
     <ProjectReference Include="..\src\Azure.ResourceManager.csproj" />
     <PackageReference Include="Azure.ResourceManager.Compute" />

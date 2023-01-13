@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -121,37 +120,9 @@ namespace Azure.ResourceManager.AppContainers
         /// <returns> An async collection of <see cref="ContainerAppDetectorPropertyRevisionResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ContainerAppDetectorPropertyRevisionResource> GetAllAsync(string filter = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<ContainerAppDetectorPropertyRevisionResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _containerAppDetectorPropertyRevisionContainerAppsDiagnosticsClientDiagnostics.CreateScope("ContainerAppDetectorPropertyRevisionCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _containerAppDetectorPropertyRevisionContainerAppsDiagnosticsRestClient.ListRevisionsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ContainerAppDetectorPropertyRevisionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<ContainerAppDetectorPropertyRevisionResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _containerAppDetectorPropertyRevisionContainerAppsDiagnosticsClientDiagnostics.CreateScope("ContainerAppDetectorPropertyRevisionCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _containerAppDetectorPropertyRevisionContainerAppsDiagnosticsRestClient.ListRevisionsNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ContainerAppDetectorPropertyRevisionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _containerAppDetectorPropertyRevisionContainerAppsDiagnosticsRestClient.CreateListRevisionsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _containerAppDetectorPropertyRevisionContainerAppsDiagnosticsRestClient.CreateListRevisionsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ContainerAppDetectorPropertyRevisionResource(Client, ContainerAppRevisionData.DeserializeContainerAppRevisionData(e)), _containerAppDetectorPropertyRevisionContainerAppsDiagnosticsClientDiagnostics, Pipeline, "ContainerAppDetectorPropertyRevisionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -164,37 +135,9 @@ namespace Azure.ResourceManager.AppContainers
         /// <returns> A collection of <see cref="ContainerAppDetectorPropertyRevisionResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ContainerAppDetectorPropertyRevisionResource> GetAll(string filter = null, CancellationToken cancellationToken = default)
         {
-            Page<ContainerAppDetectorPropertyRevisionResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _containerAppDetectorPropertyRevisionContainerAppsDiagnosticsClientDiagnostics.CreateScope("ContainerAppDetectorPropertyRevisionCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _containerAppDetectorPropertyRevisionContainerAppsDiagnosticsRestClient.ListRevisions(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ContainerAppDetectorPropertyRevisionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<ContainerAppDetectorPropertyRevisionResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _containerAppDetectorPropertyRevisionContainerAppsDiagnosticsClientDiagnostics.CreateScope("ContainerAppDetectorPropertyRevisionCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _containerAppDetectorPropertyRevisionContainerAppsDiagnosticsRestClient.ListRevisionsNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ContainerAppDetectorPropertyRevisionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _containerAppDetectorPropertyRevisionContainerAppsDiagnosticsRestClient.CreateListRevisionsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _containerAppDetectorPropertyRevisionContainerAppsDiagnosticsRestClient.CreateListRevisionsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ContainerAppDetectorPropertyRevisionResource(Client, ContainerAppRevisionData.DeserializeContainerAppRevisionData(e)), _containerAppDetectorPropertyRevisionContainerAppsDiagnosticsClientDiagnostics, Pipeline, "ContainerAppDetectorPropertyRevisionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

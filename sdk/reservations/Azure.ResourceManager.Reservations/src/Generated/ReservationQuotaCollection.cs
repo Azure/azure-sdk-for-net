@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -205,37 +204,9 @@ namespace Azure.ResourceManager.Reservations
         /// <returns> An async collection of <see cref="ReservationQuotaResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ReservationQuotaResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<ReservationQuotaResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _reservationQuotaQuotaClientDiagnostics.CreateScope("ReservationQuotaCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _reservationQuotaQuotaRestClient.ListAsync(Id.SubscriptionId, _providerId, new AzureLocation(_location), cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ReservationQuotaResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<ReservationQuotaResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _reservationQuotaQuotaClientDiagnostics.CreateScope("ReservationQuotaCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _reservationQuotaQuotaRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, _providerId, new AzureLocation(_location), cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ReservationQuotaResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _reservationQuotaQuotaRestClient.CreateListRequest(Id.SubscriptionId, _providerId, new AzureLocation(_location));
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _reservationQuotaQuotaRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, _providerId, new AzureLocation(_location));
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ReservationQuotaResource(Client, ReservationQuotaData.DeserializeReservationQuotaData(e)), _reservationQuotaQuotaClientDiagnostics, Pipeline, "ReservationQuotaCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -247,37 +218,9 @@ namespace Azure.ResourceManager.Reservations
         /// <returns> A collection of <see cref="ReservationQuotaResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ReservationQuotaResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<ReservationQuotaResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _reservationQuotaQuotaClientDiagnostics.CreateScope("ReservationQuotaCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _reservationQuotaQuotaRestClient.List(Id.SubscriptionId, _providerId, new AzureLocation(_location), cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ReservationQuotaResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<ReservationQuotaResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _reservationQuotaQuotaClientDiagnostics.CreateScope("ReservationQuotaCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _reservationQuotaQuotaRestClient.ListNextPage(nextLink, Id.SubscriptionId, _providerId, new AzureLocation(_location), cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ReservationQuotaResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _reservationQuotaQuotaRestClient.CreateListRequest(Id.SubscriptionId, _providerId, new AzureLocation(_location));
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _reservationQuotaQuotaRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, _providerId, new AzureLocation(_location));
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ReservationQuotaResource(Client, ReservationQuotaData.DeserializeReservationQuotaData(e)), _reservationQuotaQuotaClientDiagnostics, Pipeline, "ReservationQuotaCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -190,37 +189,9 @@ namespace Azure.ResourceManager.DataFactory
         /// <returns> An async collection of <see cref="FactoryTriggerResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<FactoryTriggerResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<FactoryTriggerResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _factoryTriggerTriggersClientDiagnostics.CreateScope("FactoryTriggerCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _factoryTriggerTriggersRestClient.ListByFactoryAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new FactoryTriggerResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<FactoryTriggerResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _factoryTriggerTriggersClientDiagnostics.CreateScope("FactoryTriggerCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _factoryTriggerTriggersRestClient.ListByFactoryNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new FactoryTriggerResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _factoryTriggerTriggersRestClient.CreateListByFactoryRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _factoryTriggerTriggersRestClient.CreateListByFactoryNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new FactoryTriggerResource(Client, FactoryTriggerData.DeserializeFactoryTriggerData(e)), _factoryTriggerTriggersClientDiagnostics, Pipeline, "FactoryTriggerCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -232,37 +203,9 @@ namespace Azure.ResourceManager.DataFactory
         /// <returns> A collection of <see cref="FactoryTriggerResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<FactoryTriggerResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<FactoryTriggerResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _factoryTriggerTriggersClientDiagnostics.CreateScope("FactoryTriggerCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _factoryTriggerTriggersRestClient.ListByFactory(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new FactoryTriggerResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<FactoryTriggerResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _factoryTriggerTriggersClientDiagnostics.CreateScope("FactoryTriggerCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _factoryTriggerTriggersRestClient.ListByFactoryNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new FactoryTriggerResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _factoryTriggerTriggersRestClient.CreateListByFactoryRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _factoryTriggerTriggersRestClient.CreateListByFactoryNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new FactoryTriggerResource(Client, FactoryTriggerData.DeserializeFactoryTriggerData(e)), _factoryTriggerTriggersClientDiagnostics, Pipeline, "FactoryTriggerCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

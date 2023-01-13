@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -187,37 +186,9 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <returns> An async collection of <see cref="VMwareHostResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<VMwareHostResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<VMwareHostResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _vMwareHostHostsClientDiagnostics.CreateScope("VMwareHostCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _vMwareHostHostsRestClient.ListByResourceGroupAsync(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new VMwareHostResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<VMwareHostResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _vMwareHostHostsClientDiagnostics.CreateScope("VMwareHostCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _vMwareHostHostsRestClient.ListByResourceGroupNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new VMwareHostResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _vMwareHostHostsRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _vMwareHostHostsRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new VMwareHostResource(Client, VMwareHostData.DeserializeVMwareHostData(e)), _vMwareHostHostsClientDiagnostics, Pipeline, "VMwareHostCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -229,37 +200,9 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <returns> A collection of <see cref="VMwareHostResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<VMwareHostResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<VMwareHostResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _vMwareHostHostsClientDiagnostics.CreateScope("VMwareHostCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _vMwareHostHostsRestClient.ListByResourceGroup(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new VMwareHostResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<VMwareHostResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _vMwareHostHostsClientDiagnostics.CreateScope("VMwareHostCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _vMwareHostHostsRestClient.ListByResourceGroupNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new VMwareHostResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _vMwareHostHostsRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _vMwareHostHostsRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new VMwareHostResource(Client, VMwareHostData.DeserializeVMwareHostData(e)), _vMwareHostHostsClientDiagnostics, Pipeline, "VMwareHostCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

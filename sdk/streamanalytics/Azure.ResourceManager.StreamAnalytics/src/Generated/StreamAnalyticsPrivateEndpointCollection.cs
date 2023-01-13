@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -190,37 +189,9 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// <returns> An async collection of <see cref="StreamAnalyticsPrivateEndpointResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<StreamAnalyticsPrivateEndpointResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<StreamAnalyticsPrivateEndpointResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _streamAnalyticsPrivateEndpointPrivateEndpointsClientDiagnostics.CreateScope("StreamAnalyticsPrivateEndpointCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _streamAnalyticsPrivateEndpointPrivateEndpointsRestClient.ListByClusterAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new StreamAnalyticsPrivateEndpointResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<StreamAnalyticsPrivateEndpointResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _streamAnalyticsPrivateEndpointPrivateEndpointsClientDiagnostics.CreateScope("StreamAnalyticsPrivateEndpointCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _streamAnalyticsPrivateEndpointPrivateEndpointsRestClient.ListByClusterNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new StreamAnalyticsPrivateEndpointResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _streamAnalyticsPrivateEndpointPrivateEndpointsRestClient.CreateListByClusterRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _streamAnalyticsPrivateEndpointPrivateEndpointsRestClient.CreateListByClusterNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new StreamAnalyticsPrivateEndpointResource(Client, StreamAnalyticsPrivateEndpointData.DeserializeStreamAnalyticsPrivateEndpointData(e)), _streamAnalyticsPrivateEndpointPrivateEndpointsClientDiagnostics, Pipeline, "StreamAnalyticsPrivateEndpointCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -232,37 +203,9 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// <returns> A collection of <see cref="StreamAnalyticsPrivateEndpointResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<StreamAnalyticsPrivateEndpointResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<StreamAnalyticsPrivateEndpointResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _streamAnalyticsPrivateEndpointPrivateEndpointsClientDiagnostics.CreateScope("StreamAnalyticsPrivateEndpointCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _streamAnalyticsPrivateEndpointPrivateEndpointsRestClient.ListByCluster(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new StreamAnalyticsPrivateEndpointResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<StreamAnalyticsPrivateEndpointResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _streamAnalyticsPrivateEndpointPrivateEndpointsClientDiagnostics.CreateScope("StreamAnalyticsPrivateEndpointCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _streamAnalyticsPrivateEndpointPrivateEndpointsRestClient.ListByClusterNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new StreamAnalyticsPrivateEndpointResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _streamAnalyticsPrivateEndpointPrivateEndpointsRestClient.CreateListByClusterRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _streamAnalyticsPrivateEndpointPrivateEndpointsRestClient.CreateListByClusterNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new StreamAnalyticsPrivateEndpointResource(Client, StreamAnalyticsPrivateEndpointData.DeserializeStreamAnalyticsPrivateEndpointData(e)), _streamAnalyticsPrivateEndpointPrivateEndpointsClientDiagnostics, Pipeline, "StreamAnalyticsPrivateEndpointCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

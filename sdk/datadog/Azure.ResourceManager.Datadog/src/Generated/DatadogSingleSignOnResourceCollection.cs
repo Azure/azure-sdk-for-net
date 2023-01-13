@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -186,37 +185,9 @@ namespace Azure.ResourceManager.Datadog
         /// <returns> An async collection of <see cref="DatadogSingleSignOnResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DatadogSingleSignOnResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<DatadogSingleSignOnResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _datadogSingleSignOnResourceSingleSignOnConfigurationsClientDiagnostics.CreateScope("DatadogSingleSignOnResourceCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _datadogSingleSignOnResourceSingleSignOnConfigurationsRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new DatadogSingleSignOnResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<DatadogSingleSignOnResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _datadogSingleSignOnResourceSingleSignOnConfigurationsClientDiagnostics.CreateScope("DatadogSingleSignOnResourceCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _datadogSingleSignOnResourceSingleSignOnConfigurationsRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new DatadogSingleSignOnResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _datadogSingleSignOnResourceSingleSignOnConfigurationsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _datadogSingleSignOnResourceSingleSignOnConfigurationsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DatadogSingleSignOnResource(Client, DatadogSingleSignOnResourceData.DeserializeDatadogSingleSignOnResourceData(e)), _datadogSingleSignOnResourceSingleSignOnConfigurationsClientDiagnostics, Pipeline, "DatadogSingleSignOnResourceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -228,37 +199,9 @@ namespace Azure.ResourceManager.Datadog
         /// <returns> A collection of <see cref="DatadogSingleSignOnResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DatadogSingleSignOnResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<DatadogSingleSignOnResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _datadogSingleSignOnResourceSingleSignOnConfigurationsClientDiagnostics.CreateScope("DatadogSingleSignOnResourceCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _datadogSingleSignOnResourceSingleSignOnConfigurationsRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new DatadogSingleSignOnResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<DatadogSingleSignOnResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _datadogSingleSignOnResourceSingleSignOnConfigurationsClientDiagnostics.CreateScope("DatadogSingleSignOnResourceCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _datadogSingleSignOnResourceSingleSignOnConfigurationsRestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new DatadogSingleSignOnResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _datadogSingleSignOnResourceSingleSignOnConfigurationsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _datadogSingleSignOnResourceSingleSignOnConfigurationsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DatadogSingleSignOnResource(Client, DatadogSingleSignOnResourceData.DeserializeDatadogSingleSignOnResourceData(e)), _datadogSingleSignOnResourceSingleSignOnConfigurationsClientDiagnostics, Pipeline, "DatadogSingleSignOnResourceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

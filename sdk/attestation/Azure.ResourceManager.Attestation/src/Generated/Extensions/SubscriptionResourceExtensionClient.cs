@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -52,22 +51,8 @@ namespace Azure.ResourceManager.Attestation
         /// <returns> An async collection of <see cref="AttestationProviderResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<AttestationProviderResource> GetAttestationProvidersAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<AttestationProviderResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = AttestationProviderClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetAttestationProviders");
-                scope.Start();
-                try
-                {
-                    var response = await AttestationProviderRestClient.ListAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new AttestationProviderResource(Client, value)), null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => AttestationProviderRestClient.CreateListRequest(Id.SubscriptionId);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new AttestationProviderResource(Client, AttestationProviderData.DeserializeAttestationProviderData(e)), AttestationProviderClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetAttestationProviders", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -79,22 +64,8 @@ namespace Azure.ResourceManager.Attestation
         /// <returns> A collection of <see cref="AttestationProviderResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<AttestationProviderResource> GetAttestationProviders(CancellationToken cancellationToken = default)
         {
-            Page<AttestationProviderResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = AttestationProviderClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetAttestationProviders");
-                scope.Start();
-                try
-                {
-                    var response = AttestationProviderRestClient.List(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new AttestationProviderResource(Client, value)), null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => AttestationProviderRestClient.CreateListRequest(Id.SubscriptionId);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new AttestationProviderResource(Client, AttestationProviderData.DeserializeAttestationProviderData(e)), AttestationProviderClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetAttestationProviders", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -106,22 +77,8 @@ namespace Azure.ResourceManager.Attestation
         /// <returns> An async collection of <see cref="AttestationProviderResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<AttestationProviderResource> GetAttestationProvidersByDefaultProviderAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<AttestationProviderResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = AttestationProviderClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetAttestationProvidersByDefaultProvider");
-                scope.Start();
-                try
-                {
-                    var response = await AttestationProviderRestClient.ListDefaultAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new AttestationProviderResource(Client, value)), null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => AttestationProviderRestClient.CreateListDefaultRequest(Id.SubscriptionId);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new AttestationProviderResource(Client, AttestationProviderData.DeserializeAttestationProviderData(e)), AttestationProviderClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetAttestationProvidersByDefaultProvider", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -133,22 +90,8 @@ namespace Azure.ResourceManager.Attestation
         /// <returns> A collection of <see cref="AttestationProviderResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<AttestationProviderResource> GetAttestationProvidersByDefaultProvider(CancellationToken cancellationToken = default)
         {
-            Page<AttestationProviderResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = AttestationProviderClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetAttestationProvidersByDefaultProvider");
-                scope.Start();
-                try
-                {
-                    var response = AttestationProviderRestClient.ListDefault(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new AttestationProviderResource(Client, value)), null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => AttestationProviderRestClient.CreateListDefaultRequest(Id.SubscriptionId);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new AttestationProviderResource(Client, AttestationProviderData.DeserializeAttestationProviderData(e)), AttestationProviderClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetAttestationProvidersByDefaultProvider", "value", null, cancellationToken);
         }
 
         /// <summary>

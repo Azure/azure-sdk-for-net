@@ -6,9 +6,7 @@
 #nullable disable
 
 using System;
-using System.Linq;
 using System.Threading;
-using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -52,37 +50,9 @@ namespace Azure.ResourceManager.ResourceMover
         /// <returns> An async collection of <see cref="MoverResourceSetResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<MoverResourceSetResource> GetMoverResourceSetsAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<MoverResourceSetResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = MoverResourceSetMoveCollectionsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetMoverResourceSets");
-                scope.Start();
-                try
-                {
-                    var response = await MoverResourceSetMoveCollectionsRestClient.ListMoveCollectionsBySubscriptionAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new MoverResourceSetResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<MoverResourceSetResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = MoverResourceSetMoveCollectionsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetMoverResourceSets");
-                scope.Start();
-                try
-                {
-                    var response = await MoverResourceSetMoveCollectionsRestClient.ListMoveCollectionsBySubscriptionNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new MoverResourceSetResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => MoverResourceSetMoveCollectionsRestClient.CreateListMoveCollectionsBySubscriptionRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => MoverResourceSetMoveCollectionsRestClient.CreateListMoveCollectionsBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new MoverResourceSetResource(Client, MoverResourceSetData.DeserializeMoverResourceSetData(e)), MoverResourceSetMoveCollectionsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetMoverResourceSets", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -94,37 +64,9 @@ namespace Azure.ResourceManager.ResourceMover
         /// <returns> A collection of <see cref="MoverResourceSetResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<MoverResourceSetResource> GetMoverResourceSets(CancellationToken cancellationToken = default)
         {
-            Page<MoverResourceSetResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = MoverResourceSetMoveCollectionsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetMoverResourceSets");
-                scope.Start();
-                try
-                {
-                    var response = MoverResourceSetMoveCollectionsRestClient.ListMoveCollectionsBySubscription(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new MoverResourceSetResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<MoverResourceSetResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = MoverResourceSetMoveCollectionsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetMoverResourceSets");
-                scope.Start();
-                try
-                {
-                    var response = MoverResourceSetMoveCollectionsRestClient.ListMoveCollectionsBySubscriptionNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new MoverResourceSetResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => MoverResourceSetMoveCollectionsRestClient.CreateListMoveCollectionsBySubscriptionRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => MoverResourceSetMoveCollectionsRestClient.CreateListMoveCollectionsBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new MoverResourceSetResource(Client, MoverResourceSetData.DeserializeMoverResourceSetData(e)), MoverResourceSetMoveCollectionsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetMoverResourceSets", "value", "nextLink", cancellationToken);
         }
     }
 }

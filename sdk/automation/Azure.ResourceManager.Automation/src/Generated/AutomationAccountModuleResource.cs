@@ -315,37 +315,9 @@ namespace Azure.ResourceManager.Automation
         /// <returns> An async collection of <see cref="AutomationActivity" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<AutomationActivity> GetActivitiesAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<AutomationActivity>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _activityClientDiagnostics.CreateScope("AutomationAccountModuleResource.GetActivities");
-                scope.Start();
-                try
-                {
-                    var response = await _activityRestClient.ListByModuleAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<AutomationActivity>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _activityClientDiagnostics.CreateScope("AutomationAccountModuleResource.GetActivities");
-                scope.Start();
-                try
-                {
-                    var response = await _activityRestClient.ListByModuleNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _activityRestClient.CreateListByModuleRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _activityRestClient.CreateListByModuleNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, AutomationActivity.DeserializeAutomationActivity, _activityClientDiagnostics, Pipeline, "AutomationAccountModuleResource.GetActivities", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -357,37 +329,9 @@ namespace Azure.ResourceManager.Automation
         /// <returns> A collection of <see cref="AutomationActivity" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<AutomationActivity> GetActivities(CancellationToken cancellationToken = default)
         {
-            Page<AutomationActivity> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _activityClientDiagnostics.CreateScope("AutomationAccountModuleResource.GetActivities");
-                scope.Start();
-                try
-                {
-                    var response = _activityRestClient.ListByModule(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<AutomationActivity> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _activityClientDiagnostics.CreateScope("AutomationAccountModuleResource.GetActivities");
-                scope.Start();
-                try
-                {
-                    var response = _activityRestClient.ListByModuleNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _activityRestClient.CreateListByModuleRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _activityRestClient.CreateListByModuleNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, AutomationActivity.DeserializeAutomationActivity, _activityClientDiagnostics, Pipeline, "AutomationAccountModuleResource.GetActivities", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -404,22 +348,8 @@ namespace Azure.ResourceManager.Automation
         {
             Argument.AssertNotNullOrEmpty(typeName, nameof(typeName));
 
-            async Task<Page<AutomationModuleField>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _objectDataTypesClientDiagnostics.CreateScope("AutomationAccountModuleResource.GetFieldsByModuleAndType");
-                scope.Start();
-                try
-                {
-                    var response = await _objectDataTypesRestClient.ListFieldsByModuleAndTypeAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, typeName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _objectDataTypesRestClient.CreateListFieldsByModuleAndTypeRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, typeName);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, AutomationModuleField.DeserializeAutomationModuleField, _objectDataTypesClientDiagnostics, Pipeline, "AutomationAccountModuleResource.GetFieldsByModuleAndType", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -436,22 +366,8 @@ namespace Azure.ResourceManager.Automation
         {
             Argument.AssertNotNullOrEmpty(typeName, nameof(typeName));
 
-            Page<AutomationModuleField> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _objectDataTypesClientDiagnostics.CreateScope("AutomationAccountModuleResource.GetFieldsByModuleAndType");
-                scope.Start();
-                try
-                {
-                    var response = _objectDataTypesRestClient.ListFieldsByModuleAndType(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, typeName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _objectDataTypesRestClient.CreateListFieldsByModuleAndTypeRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, typeName);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, AutomationModuleField.DeserializeAutomationModuleField, _objectDataTypesClientDiagnostics, Pipeline, "AutomationAccountModuleResource.GetFieldsByModuleAndType", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -468,22 +384,8 @@ namespace Azure.ResourceManager.Automation
         {
             Argument.AssertNotNullOrEmpty(typeName, nameof(typeName));
 
-            async Task<Page<AutomationModuleField>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _fieldsClientDiagnostics.CreateScope("AutomationAccountModuleResource.GetFieldsByType");
-                scope.Start();
-                try
-                {
-                    var response = await _fieldsRestClient.ListByTypeAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, typeName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _fieldsRestClient.CreateListByTypeRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, typeName);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, AutomationModuleField.DeserializeAutomationModuleField, _fieldsClientDiagnostics, Pipeline, "AutomationAccountModuleResource.GetFieldsByType", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -500,22 +402,8 @@ namespace Azure.ResourceManager.Automation
         {
             Argument.AssertNotNullOrEmpty(typeName, nameof(typeName));
 
-            Page<AutomationModuleField> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _fieldsClientDiagnostics.CreateScope("AutomationAccountModuleResource.GetFieldsByType");
-                scope.Start();
-                try
-                {
-                    var response = _fieldsRestClient.ListByType(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, typeName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _fieldsRestClient.CreateListByTypeRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, typeName);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, AutomationModuleField.DeserializeAutomationModuleField, _fieldsClientDiagnostics, Pipeline, "AutomationAccountModuleResource.GetFieldsByType", "value", null, cancellationToken);
         }
 
         /// <summary>

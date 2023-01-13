@@ -529,22 +529,8 @@ namespace Azure.ResourceManager.WebPubSub
         /// <returns> An async collection of <see cref="WebPubSubSku" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<WebPubSubSku> GetSkusAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<WebPubSubSku>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _webPubSubClientDiagnostics.CreateScope("WebPubSubResource.GetSkus");
-                scope.Start();
-                try
-                {
-                    var response = await _webPubSubRestClient.ListSkusAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _webPubSubRestClient.CreateListSkusRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, WebPubSubSku.DeserializeWebPubSubSku, _webPubSubClientDiagnostics, Pipeline, "WebPubSubResource.GetSkus", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -556,22 +542,8 @@ namespace Azure.ResourceManager.WebPubSub
         /// <returns> A collection of <see cref="WebPubSubSku" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<WebPubSubSku> GetSkus(CancellationToken cancellationToken = default)
         {
-            Page<WebPubSubSku> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _webPubSubClientDiagnostics.CreateScope("WebPubSubResource.GetSkus");
-                scope.Start();
-                try
-                {
-                    var response = _webPubSubRestClient.ListSkus(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _webPubSubRestClient.CreateListSkusRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, WebPubSubSku.DeserializeWebPubSubSku, _webPubSubClientDiagnostics, Pipeline, "WebPubSubResource.GetSkus", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -583,37 +555,9 @@ namespace Azure.ResourceManager.WebPubSub
         /// <returns> An async collection of <see cref="WebPubSubPrivateLink" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<WebPubSubPrivateLink> GetWebPubSubPrivateLinkResourcesAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<WebPubSubPrivateLink>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _webPubSubPrivateLinkResourcesClientDiagnostics.CreateScope("WebPubSubResource.GetWebPubSubPrivateLinkResources");
-                scope.Start();
-                try
-                {
-                    var response = await _webPubSubPrivateLinkResourcesRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<WebPubSubPrivateLink>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _webPubSubPrivateLinkResourcesClientDiagnostics.CreateScope("WebPubSubResource.GetWebPubSubPrivateLinkResources");
-                scope.Start();
-                try
-                {
-                    var response = await _webPubSubPrivateLinkResourcesRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _webPubSubPrivateLinkResourcesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _webPubSubPrivateLinkResourcesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, WebPubSubPrivateLink.DeserializeWebPubSubPrivateLink, _webPubSubPrivateLinkResourcesClientDiagnostics, Pipeline, "WebPubSubResource.GetWebPubSubPrivateLinkResources", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -625,37 +569,9 @@ namespace Azure.ResourceManager.WebPubSub
         /// <returns> A collection of <see cref="WebPubSubPrivateLink" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<WebPubSubPrivateLink> GetWebPubSubPrivateLinkResources(CancellationToken cancellationToken = default)
         {
-            Page<WebPubSubPrivateLink> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _webPubSubPrivateLinkResourcesClientDiagnostics.CreateScope("WebPubSubResource.GetWebPubSubPrivateLinkResources");
-                scope.Start();
-                try
-                {
-                    var response = _webPubSubPrivateLinkResourcesRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<WebPubSubPrivateLink> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _webPubSubPrivateLinkResourcesClientDiagnostics.CreateScope("WebPubSubResource.GetWebPubSubPrivateLinkResources");
-                scope.Start();
-                try
-                {
-                    var response = _webPubSubPrivateLinkResourcesRestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _webPubSubPrivateLinkResourcesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _webPubSubPrivateLinkResourcesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, WebPubSubPrivateLink.DeserializeWebPubSubPrivateLink, _webPubSubPrivateLinkResourcesClientDiagnostics, Pipeline, "WebPubSubResource.GetWebPubSubPrivateLinkResources", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

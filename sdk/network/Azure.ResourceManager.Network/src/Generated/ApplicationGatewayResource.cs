@@ -511,37 +511,9 @@ namespace Azure.ResourceManager.Network
         /// <returns> An async collection of <see cref="ApplicationGatewayPrivateLinkResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ApplicationGatewayPrivateLinkResource> GetApplicationGatewayPrivateLinkResourcesAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<ApplicationGatewayPrivateLinkResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _applicationGatewayPrivateLinkResourcesClientDiagnostics.CreateScope("ApplicationGatewayResource.GetApplicationGatewayPrivateLinkResources");
-                scope.Start();
-                try
-                {
-                    var response = await _applicationGatewayPrivateLinkResourcesRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<ApplicationGatewayPrivateLinkResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _applicationGatewayPrivateLinkResourcesClientDiagnostics.CreateScope("ApplicationGatewayResource.GetApplicationGatewayPrivateLinkResources");
-                scope.Start();
-                try
-                {
-                    var response = await _applicationGatewayPrivateLinkResourcesRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _applicationGatewayPrivateLinkResourcesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _applicationGatewayPrivateLinkResourcesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, ApplicationGatewayPrivateLinkResource.DeserializeApplicationGatewayPrivateLinkResource, _applicationGatewayPrivateLinkResourcesClientDiagnostics, Pipeline, "ApplicationGatewayResource.GetApplicationGatewayPrivateLinkResources", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -553,37 +525,9 @@ namespace Azure.ResourceManager.Network
         /// <returns> A collection of <see cref="ApplicationGatewayPrivateLinkResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ApplicationGatewayPrivateLinkResource> GetApplicationGatewayPrivateLinkResources(CancellationToken cancellationToken = default)
         {
-            Page<ApplicationGatewayPrivateLinkResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _applicationGatewayPrivateLinkResourcesClientDiagnostics.CreateScope("ApplicationGatewayResource.GetApplicationGatewayPrivateLinkResources");
-                scope.Start();
-                try
-                {
-                    var response = _applicationGatewayPrivateLinkResourcesRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<ApplicationGatewayPrivateLinkResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _applicationGatewayPrivateLinkResourcesClientDiagnostics.CreateScope("ApplicationGatewayResource.GetApplicationGatewayPrivateLinkResources");
-                scope.Start();
-                try
-                {
-                    var response = _applicationGatewayPrivateLinkResourcesRestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _applicationGatewayPrivateLinkResourcesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _applicationGatewayPrivateLinkResourcesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, ApplicationGatewayPrivateLinkResource.DeserializeApplicationGatewayPrivateLinkResource, _applicationGatewayPrivateLinkResourcesClientDiagnostics, Pipeline, "ApplicationGatewayResource.GetApplicationGatewayPrivateLinkResources", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
