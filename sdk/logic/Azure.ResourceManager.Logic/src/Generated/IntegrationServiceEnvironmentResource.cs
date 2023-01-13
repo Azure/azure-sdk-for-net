@@ -347,37 +347,9 @@ namespace Azure.ResourceManager.Logic
         /// <returns> An async collection of <see cref="IntegrationServiceEnvironmentSkuDefinition" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<IntegrationServiceEnvironmentSkuDefinition> GetIntegrationServiceEnvironmentSkusAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<IntegrationServiceEnvironmentSkuDefinition>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _integrationServiceEnvironmentSkusClientDiagnostics.CreateScope("IntegrationServiceEnvironmentResource.GetIntegrationServiceEnvironmentSkus");
-                scope.Start();
-                try
-                {
-                    var response = await _integrationServiceEnvironmentSkusRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<IntegrationServiceEnvironmentSkuDefinition>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _integrationServiceEnvironmentSkusClientDiagnostics.CreateScope("IntegrationServiceEnvironmentResource.GetIntegrationServiceEnvironmentSkus");
-                scope.Start();
-                try
-                {
-                    var response = await _integrationServiceEnvironmentSkusRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _integrationServiceEnvironmentSkusRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _integrationServiceEnvironmentSkusRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, IntegrationServiceEnvironmentSkuDefinition.DeserializeIntegrationServiceEnvironmentSkuDefinition, _integrationServiceEnvironmentSkusClientDiagnostics, Pipeline, "IntegrationServiceEnvironmentResource.GetIntegrationServiceEnvironmentSkus", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -389,37 +361,9 @@ namespace Azure.ResourceManager.Logic
         /// <returns> A collection of <see cref="IntegrationServiceEnvironmentSkuDefinition" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<IntegrationServiceEnvironmentSkuDefinition> GetIntegrationServiceEnvironmentSkus(CancellationToken cancellationToken = default)
         {
-            Page<IntegrationServiceEnvironmentSkuDefinition> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _integrationServiceEnvironmentSkusClientDiagnostics.CreateScope("IntegrationServiceEnvironmentResource.GetIntegrationServiceEnvironmentSkus");
-                scope.Start();
-                try
-                {
-                    var response = _integrationServiceEnvironmentSkusRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<IntegrationServiceEnvironmentSkuDefinition> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _integrationServiceEnvironmentSkusClientDiagnostics.CreateScope("IntegrationServiceEnvironmentResource.GetIntegrationServiceEnvironmentSkus");
-                scope.Start();
-                try
-                {
-                    var response = _integrationServiceEnvironmentSkusRestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _integrationServiceEnvironmentSkusRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _integrationServiceEnvironmentSkusRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, IntegrationServiceEnvironmentSkuDefinition.DeserializeIntegrationServiceEnvironmentSkuDefinition, _integrationServiceEnvironmentSkusClientDiagnostics, Pipeline, "IntegrationServiceEnvironmentResource.GetIntegrationServiceEnvironmentSkus", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -187,37 +186,9 @@ namespace Azure.ResourceManager.Datadog
         /// <returns> An async collection of <see cref="DatadogMonitorResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DatadogMonitorResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<DatadogMonitorResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _datadogMonitorResourceMonitorsClientDiagnostics.CreateScope("DatadogMonitorResourceCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _datadogMonitorResourceMonitorsRestClient.ListByResourceGroupAsync(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new DatadogMonitorResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<DatadogMonitorResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _datadogMonitorResourceMonitorsClientDiagnostics.CreateScope("DatadogMonitorResourceCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _datadogMonitorResourceMonitorsRestClient.ListByResourceGroupNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new DatadogMonitorResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _datadogMonitorResourceMonitorsRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _datadogMonitorResourceMonitorsRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DatadogMonitorResource(Client, DatadogMonitorResourceData.DeserializeDatadogMonitorResourceData(e)), _datadogMonitorResourceMonitorsClientDiagnostics, Pipeline, "DatadogMonitorResourceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -229,37 +200,9 @@ namespace Azure.ResourceManager.Datadog
         /// <returns> A collection of <see cref="DatadogMonitorResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DatadogMonitorResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<DatadogMonitorResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _datadogMonitorResourceMonitorsClientDiagnostics.CreateScope("DatadogMonitorResourceCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _datadogMonitorResourceMonitorsRestClient.ListByResourceGroup(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new DatadogMonitorResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<DatadogMonitorResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _datadogMonitorResourceMonitorsClientDiagnostics.CreateScope("DatadogMonitorResourceCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _datadogMonitorResourceMonitorsRestClient.ListByResourceGroupNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new DatadogMonitorResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _datadogMonitorResourceMonitorsRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _datadogMonitorResourceMonitorsRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DatadogMonitorResource(Client, DatadogMonitorResourceData.DeserializeDatadogMonitorResourceData(e)), _datadogMonitorResourceMonitorsClientDiagnostics, Pipeline, "DatadogMonitorResourceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

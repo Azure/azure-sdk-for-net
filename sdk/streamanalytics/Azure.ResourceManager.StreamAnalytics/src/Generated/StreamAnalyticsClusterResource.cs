@@ -297,37 +297,9 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// <returns> An async collection of <see cref="StreamAnalyticsClusterJob" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<StreamAnalyticsClusterJob> GetStreamingJobsAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<StreamAnalyticsClusterJob>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _streamAnalyticsClusterClustersClientDiagnostics.CreateScope("StreamAnalyticsClusterResource.GetStreamingJobs");
-                scope.Start();
-                try
-                {
-                    var response = await _streamAnalyticsClusterClustersRestClient.ListStreamingJobsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<StreamAnalyticsClusterJob>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _streamAnalyticsClusterClustersClientDiagnostics.CreateScope("StreamAnalyticsClusterResource.GetStreamingJobs");
-                scope.Start();
-                try
-                {
-                    var response = await _streamAnalyticsClusterClustersRestClient.ListStreamingJobsNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _streamAnalyticsClusterClustersRestClient.CreateListStreamingJobsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _streamAnalyticsClusterClustersRestClient.CreateListStreamingJobsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, StreamAnalyticsClusterJob.DeserializeStreamAnalyticsClusterJob, _streamAnalyticsClusterClustersClientDiagnostics, Pipeline, "StreamAnalyticsClusterResource.GetStreamingJobs", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -339,37 +311,9 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// <returns> A collection of <see cref="StreamAnalyticsClusterJob" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<StreamAnalyticsClusterJob> GetStreamingJobs(CancellationToken cancellationToken = default)
         {
-            Page<StreamAnalyticsClusterJob> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _streamAnalyticsClusterClustersClientDiagnostics.CreateScope("StreamAnalyticsClusterResource.GetStreamingJobs");
-                scope.Start();
-                try
-                {
-                    var response = _streamAnalyticsClusterClustersRestClient.ListStreamingJobs(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<StreamAnalyticsClusterJob> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _streamAnalyticsClusterClustersClientDiagnostics.CreateScope("StreamAnalyticsClusterResource.GetStreamingJobs");
-                scope.Start();
-                try
-                {
-                    var response = _streamAnalyticsClusterClustersRestClient.ListStreamingJobsNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _streamAnalyticsClusterClustersRestClient.CreateListStreamingJobsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _streamAnalyticsClusterClustersRestClient.CreateListStreamingJobsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, StreamAnalyticsClusterJob.DeserializeStreamAnalyticsClusterJob, _streamAnalyticsClusterClustersClientDiagnostics, Pipeline, "StreamAnalyticsClusterResource.GetStreamingJobs", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

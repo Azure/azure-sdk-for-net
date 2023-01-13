@@ -647,22 +647,8 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <returns> An async collection of <see cref="OperationalInsightsIntelligencePack" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<OperationalInsightsIntelligencePack> GetIntelligencePacksAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<OperationalInsightsIntelligencePack>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _intelligencePacksClientDiagnostics.CreateScope("OperationalInsightsWorkspaceResource.GetIntelligencePacks");
-                scope.Start();
-                try
-                {
-                    var response = await _intelligencePacksRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value, null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _intelligencePacksRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, OperationalInsightsIntelligencePack.DeserializeOperationalInsightsIntelligencePack, _intelligencePacksClientDiagnostics, Pipeline, "OperationalInsightsWorkspaceResource.GetIntelligencePacks", "", null, cancellationToken);
         }
 
         /// <summary>
@@ -674,22 +660,8 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <returns> A collection of <see cref="OperationalInsightsIntelligencePack" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<OperationalInsightsIntelligencePack> GetIntelligencePacks(CancellationToken cancellationToken = default)
         {
-            Page<OperationalInsightsIntelligencePack> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _intelligencePacksClientDiagnostics.CreateScope("OperationalInsightsWorkspaceResource.GetIntelligencePacks");
-                scope.Start();
-                try
-                {
-                    var response = _intelligencePacksRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value, null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _intelligencePacksRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, OperationalInsightsIntelligencePack.DeserializeOperationalInsightsIntelligencePack, _intelligencePacksClientDiagnostics, Pipeline, "OperationalInsightsWorkspaceResource.GetIntelligencePacks", "", null, cancellationToken);
         }
 
         /// <summary>
@@ -701,22 +673,8 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <returns> An async collection of <see cref="OperationalInsightsManagementGroup" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<OperationalInsightsManagementGroup> GetManagementGroupsAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<OperationalInsightsManagementGroup>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _managementGroupsClientDiagnostics.CreateScope("OperationalInsightsWorkspaceResource.GetManagementGroups");
-                scope.Start();
-                try
-                {
-                    var response = await _managementGroupsRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _managementGroupsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, OperationalInsightsManagementGroup.DeserializeOperationalInsightsManagementGroup, _managementGroupsClientDiagnostics, Pipeline, "OperationalInsightsWorkspaceResource.GetManagementGroups", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -728,22 +686,8 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <returns> A collection of <see cref="OperationalInsightsManagementGroup" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<OperationalInsightsManagementGroup> GetManagementGroups(CancellationToken cancellationToken = default)
         {
-            Page<OperationalInsightsManagementGroup> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _managementGroupsClientDiagnostics.CreateScope("OperationalInsightsWorkspaceResource.GetManagementGroups");
-                scope.Start();
-                try
-                {
-                    var response = _managementGroupsRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _managementGroupsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, OperationalInsightsManagementGroup.DeserializeOperationalInsightsManagementGroup, _managementGroupsClientDiagnostics, Pipeline, "OperationalInsightsWorkspaceResource.GetManagementGroups", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -843,22 +787,8 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <returns> An async collection of <see cref="OperationalInsightsUsageMetric" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<OperationalInsightsUsageMetric> GetUsagesAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<OperationalInsightsUsageMetric>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _usagesClientDiagnostics.CreateScope("OperationalInsightsWorkspaceResource.GetUsages");
-                scope.Start();
-                try
-                {
-                    var response = await _usagesRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _usagesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, OperationalInsightsUsageMetric.DeserializeOperationalInsightsUsageMetric, _usagesClientDiagnostics, Pipeline, "OperationalInsightsWorkspaceResource.GetUsages", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -870,22 +800,8 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <returns> A collection of <see cref="OperationalInsightsUsageMetric" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<OperationalInsightsUsageMetric> GetUsages(CancellationToken cancellationToken = default)
         {
-            Page<OperationalInsightsUsageMetric> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _usagesClientDiagnostics.CreateScope("OperationalInsightsWorkspaceResource.GetUsages");
-                scope.Start();
-                try
-                {
-                    var response = _usagesRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _usagesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, OperationalInsightsUsageMetric.DeserializeOperationalInsightsUsageMetric, _usagesClientDiagnostics, Pipeline, "OperationalInsightsWorkspaceResource.GetUsages", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -897,22 +813,8 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <returns> An async collection of <see cref="OperationalInsightsAvailableServiceTier" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<OperationalInsightsAvailableServiceTier> GetAvailableServiceTiersAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<OperationalInsightsAvailableServiceTier>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _availableServiceTiersClientDiagnostics.CreateScope("OperationalInsightsWorkspaceResource.GetAvailableServiceTiers");
-                scope.Start();
-                try
-                {
-                    var response = await _availableServiceTiersRestClient.ListByWorkspaceAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value, null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _availableServiceTiersRestClient.CreateListByWorkspaceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, OperationalInsightsAvailableServiceTier.DeserializeOperationalInsightsAvailableServiceTier, _availableServiceTiersClientDiagnostics, Pipeline, "OperationalInsightsWorkspaceResource.GetAvailableServiceTiers", "", null, cancellationToken);
         }
 
         /// <summary>
@@ -924,22 +826,8 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <returns> A collection of <see cref="OperationalInsightsAvailableServiceTier" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<OperationalInsightsAvailableServiceTier> GetAvailableServiceTiers(CancellationToken cancellationToken = default)
         {
-            Page<OperationalInsightsAvailableServiceTier> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _availableServiceTiersClientDiagnostics.CreateScope("OperationalInsightsWorkspaceResource.GetAvailableServiceTiers");
-                scope.Start();
-                try
-                {
-                    var response = _availableServiceTiersRestClient.ListByWorkspace(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value, null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _availableServiceTiersRestClient.CreateListByWorkspaceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, OperationalInsightsAvailableServiceTier.DeserializeOperationalInsightsAvailableServiceTier, _availableServiceTiersClientDiagnostics, Pipeline, "OperationalInsightsWorkspaceResource.GetAvailableServiceTiers", "", null, cancellationToken);
         }
 
         /// <summary>
@@ -997,22 +885,8 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <returns> An async collection of <see cref="OperationalInsightsSearchSchemaValue" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<OperationalInsightsSearchSchemaValue> GetSchemasAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<OperationalInsightsSearchSchemaValue>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _schemaClientDiagnostics.CreateScope("OperationalInsightsWorkspaceResource.GetSchemas");
-                scope.Start();
-                try
-                {
-                    var response = await _schemaRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _schemaRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, OperationalInsightsSearchSchemaValue.DeserializeOperationalInsightsSearchSchemaValue, _schemaClientDiagnostics, Pipeline, "OperationalInsightsWorkspaceResource.GetSchemas", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -1024,22 +898,8 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <returns> A collection of <see cref="OperationalInsightsSearchSchemaValue" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<OperationalInsightsSearchSchemaValue> GetSchemas(CancellationToken cancellationToken = default)
         {
-            Page<OperationalInsightsSearchSchemaValue> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _schemaClientDiagnostics.CreateScope("OperationalInsightsWorkspaceResource.GetSchemas");
-                scope.Start();
-                try
-                {
-                    var response = _schemaRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _schemaRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, OperationalInsightsSearchSchemaValue.DeserializeOperationalInsightsSearchSchemaValue, _schemaClientDiagnostics, Pipeline, "OperationalInsightsWorkspaceResource.GetSchemas", "value", null, cancellationToken);
         }
 
         /// <summary>

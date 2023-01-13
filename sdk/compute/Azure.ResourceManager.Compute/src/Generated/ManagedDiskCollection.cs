@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -187,37 +186,9 @@ namespace Azure.ResourceManager.Compute
         /// <returns> An async collection of <see cref="ManagedDiskResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ManagedDiskResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<ManagedDiskResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _managedDiskDisksClientDiagnostics.CreateScope("ManagedDiskCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _managedDiskDisksRestClient.ListByResourceGroupAsync(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ManagedDiskResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<ManagedDiskResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _managedDiskDisksClientDiagnostics.CreateScope("ManagedDiskCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _managedDiskDisksRestClient.ListByResourceGroupNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ManagedDiskResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _managedDiskDisksRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _managedDiskDisksRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ManagedDiskResource(Client, ManagedDiskData.DeserializeManagedDiskData(e)), _managedDiskDisksClientDiagnostics, Pipeline, "ManagedDiskCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -229,37 +200,9 @@ namespace Azure.ResourceManager.Compute
         /// <returns> A collection of <see cref="ManagedDiskResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ManagedDiskResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<ManagedDiskResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _managedDiskDisksClientDiagnostics.CreateScope("ManagedDiskCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _managedDiskDisksRestClient.ListByResourceGroup(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ManagedDiskResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<ManagedDiskResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _managedDiskDisksClientDiagnostics.CreateScope("ManagedDiskCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _managedDiskDisksRestClient.ListByResourceGroupNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ManagedDiskResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _managedDiskDisksRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _managedDiskDisksRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ManagedDiskResource(Client, ManagedDiskData.DeserializeManagedDiskData(e)), _managedDiskDisksClientDiagnostics, Pipeline, "ManagedDiskCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

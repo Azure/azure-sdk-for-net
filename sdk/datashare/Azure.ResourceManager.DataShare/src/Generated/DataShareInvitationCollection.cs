@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -189,37 +188,9 @@ namespace Azure.ResourceManager.DataShare
         /// <returns> An async collection of <see cref="DataShareInvitationResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DataShareInvitationResource> GetAllAsync(string skipToken = null, string filter = null, string orderby = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<DataShareInvitationResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _dataShareInvitationInvitationsClientDiagnostics.CreateScope("DataShareInvitationCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _dataShareInvitationInvitationsRestClient.ListByShareAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skipToken, filter, orderby, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new DataShareInvitationResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<DataShareInvitationResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _dataShareInvitationInvitationsClientDiagnostics.CreateScope("DataShareInvitationCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _dataShareInvitationInvitationsRestClient.ListByShareNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skipToken, filter, orderby, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new DataShareInvitationResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _dataShareInvitationInvitationsRestClient.CreateListByShareRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skipToken, filter, orderby);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _dataShareInvitationInvitationsRestClient.CreateListByShareNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skipToken, filter, orderby);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DataShareInvitationResource(Client, DataShareInvitationData.DeserializeDataShareInvitationData(e)), _dataShareInvitationInvitationsClientDiagnostics, Pipeline, "DataShareInvitationCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -234,37 +205,9 @@ namespace Azure.ResourceManager.DataShare
         /// <returns> A collection of <see cref="DataShareInvitationResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DataShareInvitationResource> GetAll(string skipToken = null, string filter = null, string orderby = null, CancellationToken cancellationToken = default)
         {
-            Page<DataShareInvitationResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _dataShareInvitationInvitationsClientDiagnostics.CreateScope("DataShareInvitationCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _dataShareInvitationInvitationsRestClient.ListByShare(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skipToken, filter, orderby, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new DataShareInvitationResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<DataShareInvitationResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _dataShareInvitationInvitationsClientDiagnostics.CreateScope("DataShareInvitationCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _dataShareInvitationInvitationsRestClient.ListByShareNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skipToken, filter, orderby, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new DataShareInvitationResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _dataShareInvitationInvitationsRestClient.CreateListByShareRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skipToken, filter, orderby);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _dataShareInvitationInvitationsRestClient.CreateListByShareNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skipToken, filter, orderby);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DataShareInvitationResource(Client, DataShareInvitationData.DeserializeDataShareInvitationData(e)), _dataShareInvitationInvitationsClientDiagnostics, Pipeline, "DataShareInvitationCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

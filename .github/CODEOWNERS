@@ -27,7 +27,7 @@
 /sdk/extensions/                                @jsquire
 
 # PRLabel: %EngSys
-/sdk/template/                                  @hallipr @weshaggard @benbp @heaths @annelo-msft @chunyu3 @lirenhe
+/sdk/template/                                  @hallipr @weshaggard @benbp @heaths @chunyu3 @lirenhe
 
 # Smoke tests
 /common/SmokeTests/                             @schaabs @heaths @tg-msft @jsquire @pallavit
@@ -309,7 +309,7 @@
 #/<NotInRepo>/                                  @sebrenna @mharlan @chrissmiller
 
 # PRLabel: %DevCenter
-/sdk/devcenter/                                 @sebrenna @mharlan @chrissmiller @shivangireja 
+/sdk/devcenter/                                 @sebrenna @mharlan @chrissmiller @shivangireja
 
 # ServiceLabel: %Devtestlab %Service Attention
 /sdk/devtestlabs/Microsoft.Azure.Management.DevTestLabs/            @Tanmayeekamath
@@ -597,7 +597,7 @@ sdk/trafficmanager/Microsoft.Azure.Management.TrafficManager/            @tmsupp
 #/<NotInRepo>/            @chlahav
 
 # PRLabel: %Search
-/sdk/search/                                    @ShivangiReja @kinelski @tg-msft
+/sdk/search/                                    @ShivangiReja @kinelski @tg-msft @heaths
 
 # ServiceLabel: %Search %Service Attention
 /sdk/search/Microsoft.*/                        @arv100kri @bleroy @tjacobhi
@@ -622,7 +622,7 @@ sdk/trafficmanager/Microsoft.Azure.Management.TrafficManager/            @tmsupp
 #/sdk/schemaregistry/            @hmlam
 
 # ServiceLabel: %SignalR %Service Attention
-/sdk/signalr/            @sffamily @chenkennt @Y-Sindo     
+/sdk/signalr/            @sffamily @chenkennt @Y-Sindo
 
 # ServiceLabel: %SQL %Service Attention
 #/<NotInRepo>/            @azureSQLGitHub
@@ -713,12 +713,12 @@ sdk/trafficmanager/Microsoft.Azure.Management.TrafficManager/            @tmsupp
 # ######## Management Plane ########
 
 /**/*Management*/                               @fengzhou-msft @archerzz @ArcturusZhang @Yao725 @ArthurMa1978
-/**/Azure.ResourceManager*/                     @m-nash @fengzhou-msft @archerzz @ArcturusZhang @Yao725 @ArthurMa1978
+/**/Azure.ResourceManager*/                     @fengzhou-msft @archerzz @ArcturusZhang @Yao725 @ArthurMa1978
 
 # Reviewers to double check any API changes
 /sdk/**/api/                                    @KrzysztofCwalina @tg-msft
 
-# ######## Eng Sys ######## 
+# ######## Eng Sys ########
 /eng/           @hallipr @weshaggard @benbp
 /eng/mgmt/      @ArthurMa1978 @m-nash @markcowl
 /**/tests.yml   @hallipr @benbp
@@ -727,7 +727,7 @@ sdk/trafficmanager/Microsoft.Azure.Management.TrafficManager/            @tmsupp
 # Add owners for notifications for specific pipelines
 /eng/pipelines/aggregate-reports.yml            @jsquire @maririos @pallavit
 /sdk/eventhub/tests.data.yml  @serkantkaraca @sjkwak
-/sdk/servicebus/tests.data.yml @shankarsama @DorothySun216 
+/sdk/servicebus/tests.data.yml @shankarsama @DorothySun216
 
 # ######## DPG ########
 
@@ -735,4 +735,4 @@ sdk/trafficmanager/Microsoft.Azure.Management.TrafficManager/            @tmsupp
 /doc/Data\ Plane\ Code\ Generation           @chunyu3 @pshao25 @fengzhou-msft @lirenhe @annelo-msft
 
 # Client generation tooling
-/eng/templates/Azure.ServiceTemplate.Template   @chunyu3 @lirenhe @annelo-msft
+/eng/templates/Azure.ServiceTemplate.Template   @chunyu3 @lirenhe

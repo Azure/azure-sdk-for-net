@@ -274,7 +274,10 @@ namespace Azure.ResourceManager.AppContainers
         public string LatestRevisionFqdn { get { throw null; } }
         public string LatestRevisionName { get { throw null; } }
         public Azure.Core.ResourceIdentifier ManagedEnvironmentId { get { throw null; } set { } }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        [System.ObsoleteAttribute("This property is obsolete and will be removed in a future release", false)]
         public System.Collections.Generic.IReadOnlyList<System.Uri> OutboundIPAddresses { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<System.Net.IPAddress> OutboundIPAddressList { get { throw null; } }
         public Azure.ResourceManager.AppContainers.Models.ContainerAppProvisioningState? ProvisioningState { get { throw null; } }
         public Azure.ResourceManager.AppContainers.Models.ContainerAppTemplate Template { get { throw null; } set { } }
         public string WorkloadProfileType { get { throw null; } set { } }

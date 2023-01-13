@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -188,37 +187,9 @@ namespace Azure.ResourceManager.Orbital
         /// <returns> An async collection of <see cref="OrbitalContactProfileResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<OrbitalContactProfileResource> GetAllAsync(string skiptoken = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<OrbitalContactProfileResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _orbitalContactProfileContactProfilesClientDiagnostics.CreateScope("OrbitalContactProfileCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _orbitalContactProfileContactProfilesRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, skiptoken, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new OrbitalContactProfileResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<OrbitalContactProfileResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _orbitalContactProfileContactProfilesClientDiagnostics.CreateScope("OrbitalContactProfileCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _orbitalContactProfileContactProfilesRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, skiptoken, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new OrbitalContactProfileResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _orbitalContactProfileContactProfilesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, skiptoken);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _orbitalContactProfileContactProfilesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, skiptoken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new OrbitalContactProfileResource(Client, OrbitalContactProfileData.DeserializeOrbitalContactProfileData(e)), _orbitalContactProfileContactProfilesClientDiagnostics, Pipeline, "OrbitalContactProfileCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -231,37 +202,9 @@ namespace Azure.ResourceManager.Orbital
         /// <returns> A collection of <see cref="OrbitalContactProfileResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<OrbitalContactProfileResource> GetAll(string skiptoken = null, CancellationToken cancellationToken = default)
         {
-            Page<OrbitalContactProfileResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _orbitalContactProfileContactProfilesClientDiagnostics.CreateScope("OrbitalContactProfileCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _orbitalContactProfileContactProfilesRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, skiptoken, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new OrbitalContactProfileResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<OrbitalContactProfileResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _orbitalContactProfileContactProfilesClientDiagnostics.CreateScope("OrbitalContactProfileCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _orbitalContactProfileContactProfilesRestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, skiptoken, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new OrbitalContactProfileResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _orbitalContactProfileContactProfilesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, skiptoken);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _orbitalContactProfileContactProfilesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, skiptoken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new OrbitalContactProfileResource(Client, OrbitalContactProfileData.DeserializeOrbitalContactProfileData(e)), _orbitalContactProfileContactProfilesClientDiagnostics, Pipeline, "OrbitalContactProfileCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

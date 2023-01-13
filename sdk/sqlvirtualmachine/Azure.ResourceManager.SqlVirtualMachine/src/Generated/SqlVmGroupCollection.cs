@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -187,37 +186,9 @@ namespace Azure.ResourceManager.SqlVirtualMachine
         /// <returns> An async collection of <see cref="SqlVmGroupResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SqlVmGroupResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<SqlVmGroupResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _sqlVmGroupSqlVmGroupsClientDiagnostics.CreateScope("SqlVmGroupCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _sqlVmGroupSqlVmGroupsRestClient.ListByResourceGroupAsync(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new SqlVmGroupResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<SqlVmGroupResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _sqlVmGroupSqlVmGroupsClientDiagnostics.CreateScope("SqlVmGroupCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _sqlVmGroupSqlVmGroupsRestClient.ListByResourceGroupNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new SqlVmGroupResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _sqlVmGroupSqlVmGroupsRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _sqlVmGroupSqlVmGroupsRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SqlVmGroupResource(Client, SqlVmGroupData.DeserializeSqlVmGroupData(e)), _sqlVmGroupSqlVmGroupsClientDiagnostics, Pipeline, "SqlVmGroupCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -229,37 +200,9 @@ namespace Azure.ResourceManager.SqlVirtualMachine
         /// <returns> A collection of <see cref="SqlVmGroupResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SqlVmGroupResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<SqlVmGroupResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _sqlVmGroupSqlVmGroupsClientDiagnostics.CreateScope("SqlVmGroupCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _sqlVmGroupSqlVmGroupsRestClient.ListByResourceGroup(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new SqlVmGroupResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<SqlVmGroupResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _sqlVmGroupSqlVmGroupsClientDiagnostics.CreateScope("SqlVmGroupCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _sqlVmGroupSqlVmGroupsRestClient.ListByResourceGroupNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new SqlVmGroupResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _sqlVmGroupSqlVmGroupsRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _sqlVmGroupSqlVmGroupsRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SqlVmGroupResource(Client, SqlVmGroupData.DeserializeSqlVmGroupData(e)), _sqlVmGroupSqlVmGroupsClientDiagnostics, Pipeline, "SqlVmGroupCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

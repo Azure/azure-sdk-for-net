@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -103,37 +102,9 @@ namespace Azure.ResourceManager.Redis
         /// <returns> An async collection of <see cref="RedisResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<RedisResource> GetAllRedisAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<RedisResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = RedisClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetAllRedis");
-                scope.Start();
-                try
-                {
-                    var response = await RedisRestClient.ListBySubscriptionAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new RedisResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<RedisResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = RedisClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetAllRedis");
-                scope.Start();
-                try
-                {
-                    var response = await RedisRestClient.ListBySubscriptionNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new RedisResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => RedisRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => RedisRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new RedisResource(Client, RedisData.DeserializeRedisData(e)), RedisClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetAllRedis", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -145,37 +116,9 @@ namespace Azure.ResourceManager.Redis
         /// <returns> A collection of <see cref="RedisResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<RedisResource> GetAllRedis(CancellationToken cancellationToken = default)
         {
-            Page<RedisResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = RedisClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetAllRedis");
-                scope.Start();
-                try
-                {
-                    var response = RedisRestClient.ListBySubscription(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new RedisResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<RedisResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = RedisClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetAllRedis");
-                scope.Start();
-                try
-                {
-                    var response = RedisRestClient.ListBySubscriptionNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new RedisResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => RedisRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => RedisRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new RedisResource(Client, RedisData.DeserializeRedisData(e)), RedisClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetAllRedis", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

@@ -11,10 +11,11 @@ using Azure;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager;
+using Azure.ResourceManager.Confluent;
 using Azure.ResourceManager.Confluent.Models;
 using Azure.ResourceManager.Resources;
 
-namespace Azure.ResourceManager.Confluent
+namespace Azure.ResourceManager.Confluent.Samples
 {
     public partial class Sample_ConfluentOrganizationCollection
     {
@@ -26,8 +27,10 @@ namespace Azure.ResourceManager.Confluent
             // Generated from example definition: specification/confluent/resource-manager/Microsoft.Confluent/stable/2021-12-01/examples/Organization_ListByResourceGroup.json
             // this example is just showing the usage of "Organization_ListByResourceGroup" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this ResourceGroupResource created on azure
             // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
@@ -60,8 +63,10 @@ namespace Azure.ResourceManager.Confluent
             // Generated from example definition: specification/confluent/resource-manager/Microsoft.Confluent/stable/2021-12-01/examples/Organization_Get.json
             // this example is just showing the usage of "Organization_Get" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this ResourceGroupResource created on azure
             // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
@@ -92,8 +97,10 @@ namespace Azure.ResourceManager.Confluent
             // Generated from example definition: specification/confluent/resource-manager/Microsoft.Confluent/stable/2021-12-01/examples/Organization_Get.json
             // this example is just showing the usage of "Organization_Get" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this ResourceGroupResource created on azure
             // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
@@ -120,8 +127,10 @@ namespace Azure.ResourceManager.Confluent
             // Generated from example definition: specification/confluent/resource-manager/Microsoft.Confluent/stable/2021-12-01/examples/Organization_Create.json
             // this example is just showing the usage of "Organization_Create" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this ResourceGroupResource created on azure
             // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
