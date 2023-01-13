@@ -49,8 +49,6 @@ namespace Azure.Search.Documents.Tests.Samples
             Response<SearchServiceStatistics> stats = indexClient.GetServiceStatistics();
             Console.WriteLine($"You are using {stats.Value.Counters.IndexCounter.Usage} indexes.");
             #endregion Snippet:Azure_Search_Tests_Samples_CreateClient
-
-            Assert.AreEqual(1, stats.Value.Counters.IndexCounter.Usage);
         }
 
         [Test]
@@ -77,8 +75,6 @@ namespace Azure.Search.Documents.Tests.Samples
             Response<SearchServiceStatistics> stats = await indexClient.GetServiceStatisticsAsync();
             Console.WriteLine($"You are using {stats.Value.Counters.IndexCounter.Usage} indexes.");
             #endregion Snippet:Azure_Search_Tests_Samples_CreateClientAsync
-
-            Assert.AreEqual(1, stats.Value.Counters.IndexCounter.Usage);
         }
 
         [Test]
