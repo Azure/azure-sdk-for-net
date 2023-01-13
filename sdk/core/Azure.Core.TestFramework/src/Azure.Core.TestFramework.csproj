@@ -13,7 +13,7 @@
     <PackageReference Include="Microsoft.NET.Test.Sdk" />
     <PackageReference Include="Moq" />
     <Reference Include="System.Web" Condition="'$(TargetFramework)' == 'net461' OR '$(TargetFramework)' == 'net47'" />
-    <!-- 
+    <!--
       Explicit references to pull in patched versions of ASP.NET Core packages
     -->
     <PackageReference Include="Microsoft.AspNetCore.Server.Kestrel" />
@@ -28,14 +28,12 @@
     <Compile Include="$(AzureCoreSharedSources)DictionaryHeaders.cs" LinkBase="Shared\Core" />
     <Compile Include="$(AzureCoreSharedSources)EventSourceEventFormatting.cs" LinkBase="Shared\Core" />
     <Compile Include="$(AzureCoreSharedSources)ApiVersionString.cs" LinkBase="Shared\Core" />
-    <Compile Include="$(AzureCoreSharedSources)DecodedResponse.cs" LinkBase="Shared\Core" />
-    <Compile Include="$(AzureCoreSharedSources)StreamConverter.cs" LinkBase="Shared\Core" />
   </ItemGroup>
-    
+
   <ItemGroup>
     <AssemblyAttribute Include="System.Reflection.AssemblyMetadataAttribute">
       <_Parameter1>TestProxyPath</_Parameter1>
       <_Parameter2>$(NuGetPackageRoot)azure.sdk.tools.testproxy\$(TestProxyVersion)\tools\net6.0\any\Azure.Sdk.Tools.TestProxy.dll</_Parameter2>
     </AssemblyAttribute>
-  </ItemGroup>  
+  </ItemGroup>
 </Project>
