@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -186,37 +185,9 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <returns> An async collection of <see cref="VirtualApplicationResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<VirtualApplicationResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<VirtualApplicationResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _virtualApplicationApplicationsClientDiagnostics.CreateScope("VirtualApplicationCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _virtualApplicationApplicationsRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new VirtualApplicationResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<VirtualApplicationResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _virtualApplicationApplicationsClientDiagnostics.CreateScope("VirtualApplicationCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _virtualApplicationApplicationsRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new VirtualApplicationResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _virtualApplicationApplicationsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _virtualApplicationApplicationsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new VirtualApplicationResource(Client, VirtualApplicationData.DeserializeVirtualApplicationData(e)), _virtualApplicationApplicationsClientDiagnostics, Pipeline, "VirtualApplicationCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -228,37 +199,9 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <returns> A collection of <see cref="VirtualApplicationResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<VirtualApplicationResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<VirtualApplicationResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _virtualApplicationApplicationsClientDiagnostics.CreateScope("VirtualApplicationCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _virtualApplicationApplicationsRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new VirtualApplicationResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<VirtualApplicationResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _virtualApplicationApplicationsClientDiagnostics.CreateScope("VirtualApplicationCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _virtualApplicationApplicationsRestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new VirtualApplicationResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _virtualApplicationApplicationsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _virtualApplicationApplicationsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new VirtualApplicationResource(Client, VirtualApplicationData.DeserializeVirtualApplicationData(e)), _virtualApplicationApplicationsClientDiagnostics, Pipeline, "VirtualApplicationCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

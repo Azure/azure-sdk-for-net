@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -189,37 +188,9 @@ namespace Azure.ResourceManager.Compute
         /// <returns> An async collection of <see cref="CapacityReservationResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<CapacityReservationResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<CapacityReservationResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _capacityReservationClientDiagnostics.CreateScope("CapacityReservationCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _capacityReservationRestClient.ListByCapacityReservationGroupAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new CapacityReservationResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<CapacityReservationResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _capacityReservationClientDiagnostics.CreateScope("CapacityReservationCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _capacityReservationRestClient.ListByCapacityReservationGroupNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new CapacityReservationResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _capacityReservationRestClient.CreateListByCapacityReservationGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _capacityReservationRestClient.CreateListByCapacityReservationGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new CapacityReservationResource(Client, CapacityReservationData.DeserializeCapacityReservationData(e)), _capacityReservationClientDiagnostics, Pipeline, "CapacityReservationCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -231,37 +202,9 @@ namespace Azure.ResourceManager.Compute
         /// <returns> A collection of <see cref="CapacityReservationResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<CapacityReservationResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<CapacityReservationResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _capacityReservationClientDiagnostics.CreateScope("CapacityReservationCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _capacityReservationRestClient.ListByCapacityReservationGroup(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new CapacityReservationResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<CapacityReservationResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _capacityReservationClientDiagnostics.CreateScope("CapacityReservationCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _capacityReservationRestClient.ListByCapacityReservationGroupNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new CapacityReservationResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _capacityReservationRestClient.CreateListByCapacityReservationGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _capacityReservationRestClient.CreateListByCapacityReservationGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new CapacityReservationResource(Client, CapacityReservationData.DeserializeCapacityReservationData(e)), _capacityReservationClientDiagnostics, Pipeline, "CapacityReservationCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

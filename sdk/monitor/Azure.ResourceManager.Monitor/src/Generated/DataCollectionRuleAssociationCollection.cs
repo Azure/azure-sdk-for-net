@@ -8,7 +8,6 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -176,37 +175,9 @@ namespace Azure.ResourceManager.Monitor
         /// <returns> An async collection of <see cref="DataCollectionRuleAssociationResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DataCollectionRuleAssociationResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<DataCollectionRuleAssociationResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _dataCollectionRuleAssociationClientDiagnostics.CreateScope("DataCollectionRuleAssociationCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _dataCollectionRuleAssociationRestClient.ListByResourceAsync(Id, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new DataCollectionRuleAssociationResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<DataCollectionRuleAssociationResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _dataCollectionRuleAssociationClientDiagnostics.CreateScope("DataCollectionRuleAssociationCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _dataCollectionRuleAssociationRestClient.ListByResourceNextPageAsync(nextLink, Id, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new DataCollectionRuleAssociationResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _dataCollectionRuleAssociationRestClient.CreateListByResourceRequest(Id);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _dataCollectionRuleAssociationRestClient.CreateListByResourceNextPageRequest(nextLink, Id);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DataCollectionRuleAssociationResource(Client, DataCollectionRuleAssociationData.DeserializeDataCollectionRuleAssociationData(e)), _dataCollectionRuleAssociationClientDiagnostics, Pipeline, "DataCollectionRuleAssociationCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -218,37 +189,9 @@ namespace Azure.ResourceManager.Monitor
         /// <returns> A collection of <see cref="DataCollectionRuleAssociationResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DataCollectionRuleAssociationResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<DataCollectionRuleAssociationResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _dataCollectionRuleAssociationClientDiagnostics.CreateScope("DataCollectionRuleAssociationCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _dataCollectionRuleAssociationRestClient.ListByResource(Id, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new DataCollectionRuleAssociationResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<DataCollectionRuleAssociationResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _dataCollectionRuleAssociationClientDiagnostics.CreateScope("DataCollectionRuleAssociationCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _dataCollectionRuleAssociationRestClient.ListByResourceNextPage(nextLink, Id, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new DataCollectionRuleAssociationResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _dataCollectionRuleAssociationRestClient.CreateListByResourceRequest(Id);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _dataCollectionRuleAssociationRestClient.CreateListByResourceNextPageRequest(nextLink, Id);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DataCollectionRuleAssociationResource(Client, DataCollectionRuleAssociationData.DeserializeDataCollectionRuleAssociationData(e)), _dataCollectionRuleAssociationClientDiagnostics, Pipeline, "DataCollectionRuleAssociationCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

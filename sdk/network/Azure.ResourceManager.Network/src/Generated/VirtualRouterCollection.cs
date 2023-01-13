@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -189,37 +188,9 @@ namespace Azure.ResourceManager.Network
         /// <returns> An async collection of <see cref="VirtualRouterResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<VirtualRouterResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<VirtualRouterResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _virtualRouterClientDiagnostics.CreateScope("VirtualRouterCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _virtualRouterRestClient.ListByResourceGroupAsync(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new VirtualRouterResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<VirtualRouterResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _virtualRouterClientDiagnostics.CreateScope("VirtualRouterCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _virtualRouterRestClient.ListByResourceGroupNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new VirtualRouterResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _virtualRouterRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _virtualRouterRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new VirtualRouterResource(Client, VirtualRouterData.DeserializeVirtualRouterData(e)), _virtualRouterClientDiagnostics, Pipeline, "VirtualRouterCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -231,37 +202,9 @@ namespace Azure.ResourceManager.Network
         /// <returns> A collection of <see cref="VirtualRouterResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<VirtualRouterResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<VirtualRouterResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _virtualRouterClientDiagnostics.CreateScope("VirtualRouterCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _virtualRouterRestClient.ListByResourceGroup(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new VirtualRouterResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<VirtualRouterResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _virtualRouterClientDiagnostics.CreateScope("VirtualRouterCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _virtualRouterRestClient.ListByResourceGroupNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new VirtualRouterResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _virtualRouterRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _virtualRouterRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new VirtualRouterResource(Client, VirtualRouterData.DeserializeVirtualRouterData(e)), _virtualRouterClientDiagnostics, Pipeline, "VirtualRouterCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

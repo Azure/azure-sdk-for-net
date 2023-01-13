@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -190,37 +189,9 @@ namespace Azure.ResourceManager.Storage
         /// <returns> An async collection of <see cref="EncryptionScopeResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<EncryptionScopeResource> GetAllAsync(int? maxpagesize = null, string filter = null, EncryptionScopesIncludeType? include = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<EncryptionScopeResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _encryptionScopeClientDiagnostics.CreateScope("EncryptionScopeCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _encryptionScopeRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, pageSizeHint, filter, include, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new EncryptionScopeResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<EncryptionScopeResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _encryptionScopeClientDiagnostics.CreateScope("EncryptionScopeCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _encryptionScopeRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, pageSizeHint, filter, include, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new EncryptionScopeResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _encryptionScopeRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, pageSizeHint, filter, include);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _encryptionScopeRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, pageSizeHint, filter, include);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new EncryptionScopeResource(Client, EncryptionScopeData.DeserializeEncryptionScopeData(e)), _encryptionScopeClientDiagnostics, Pipeline, "EncryptionScopeCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -235,37 +206,9 @@ namespace Azure.ResourceManager.Storage
         /// <returns> A collection of <see cref="EncryptionScopeResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<EncryptionScopeResource> GetAll(int? maxpagesize = null, string filter = null, EncryptionScopesIncludeType? include = null, CancellationToken cancellationToken = default)
         {
-            Page<EncryptionScopeResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _encryptionScopeClientDiagnostics.CreateScope("EncryptionScopeCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _encryptionScopeRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, pageSizeHint, filter, include, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new EncryptionScopeResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<EncryptionScopeResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _encryptionScopeClientDiagnostics.CreateScope("EncryptionScopeCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _encryptionScopeRestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, pageSizeHint, filter, include, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new EncryptionScopeResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _encryptionScopeRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, pageSizeHint, filter, include);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _encryptionScopeRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, pageSizeHint, filter, include);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new EncryptionScopeResource(Client, EncryptionScopeData.DeserializeEncryptionScopeData(e)), _encryptionScopeClientDiagnostics, Pipeline, "EncryptionScopeCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

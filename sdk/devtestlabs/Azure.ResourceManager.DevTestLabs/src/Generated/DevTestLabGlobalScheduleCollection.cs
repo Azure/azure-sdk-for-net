@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -193,37 +192,9 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <returns> An async collection of <see cref="DevTestLabGlobalScheduleResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DevTestLabGlobalScheduleResource> GetAllAsync(string expand = null, string filter = null, int? top = null, string orderby = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<DevTestLabGlobalScheduleResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _devTestLabGlobalScheduleGlobalSchedulesClientDiagnostics.CreateScope("DevTestLabGlobalScheduleCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _devTestLabGlobalScheduleGlobalSchedulesRestClient.ListByResourceGroupAsync(Id.SubscriptionId, Id.ResourceGroupName, expand, filter, top, orderby, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new DevTestLabGlobalScheduleResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<DevTestLabGlobalScheduleResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _devTestLabGlobalScheduleGlobalSchedulesClientDiagnostics.CreateScope("DevTestLabGlobalScheduleCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _devTestLabGlobalScheduleGlobalSchedulesRestClient.ListByResourceGroupNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, expand, filter, top, orderby, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new DevTestLabGlobalScheduleResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _devTestLabGlobalScheduleGlobalSchedulesRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, expand, filter, top, orderby);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _devTestLabGlobalScheduleGlobalSchedulesRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, expand, filter, top, orderby);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DevTestLabGlobalScheduleResource(Client, DevTestLabScheduleData.DeserializeDevTestLabScheduleData(e)), _devTestLabGlobalScheduleGlobalSchedulesClientDiagnostics, Pipeline, "DevTestLabGlobalScheduleCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -239,37 +210,9 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <returns> A collection of <see cref="DevTestLabGlobalScheduleResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DevTestLabGlobalScheduleResource> GetAll(string expand = null, string filter = null, int? top = null, string orderby = null, CancellationToken cancellationToken = default)
         {
-            Page<DevTestLabGlobalScheduleResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _devTestLabGlobalScheduleGlobalSchedulesClientDiagnostics.CreateScope("DevTestLabGlobalScheduleCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _devTestLabGlobalScheduleGlobalSchedulesRestClient.ListByResourceGroup(Id.SubscriptionId, Id.ResourceGroupName, expand, filter, top, orderby, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new DevTestLabGlobalScheduleResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<DevTestLabGlobalScheduleResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _devTestLabGlobalScheduleGlobalSchedulesClientDiagnostics.CreateScope("DevTestLabGlobalScheduleCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _devTestLabGlobalScheduleGlobalSchedulesRestClient.ListByResourceGroupNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, expand, filter, top, orderby, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new DevTestLabGlobalScheduleResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _devTestLabGlobalScheduleGlobalSchedulesRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, expand, filter, top, orderby);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _devTestLabGlobalScheduleGlobalSchedulesRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, expand, filter, top, orderby);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DevTestLabGlobalScheduleResource(Client, DevTestLabScheduleData.DeserializeDevTestLabScheduleData(e)), _devTestLabGlobalScheduleGlobalSchedulesClientDiagnostics, Pipeline, "DevTestLabGlobalScheduleCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

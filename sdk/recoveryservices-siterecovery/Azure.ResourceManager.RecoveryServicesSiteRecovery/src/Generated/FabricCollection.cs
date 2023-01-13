@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -195,37 +194,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <returns> An async collection of <see cref="FabricResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<FabricResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<FabricResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _fabricReplicationFabricsClientDiagnostics.CreateScope("FabricCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _fabricReplicationFabricsRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, _resourceName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new FabricResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<FabricResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _fabricReplicationFabricsClientDiagnostics.CreateScope("FabricCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _fabricReplicationFabricsRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, _resourceName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new FabricResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _fabricReplicationFabricsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, _resourceName);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _fabricReplicationFabricsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, _resourceName);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new FabricResource(Client, FabricData.DeserializeFabricData(e)), _fabricReplicationFabricsClientDiagnostics, Pipeline, "FabricCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -237,37 +208,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <returns> A collection of <see cref="FabricResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<FabricResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<FabricResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _fabricReplicationFabricsClientDiagnostics.CreateScope("FabricCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _fabricReplicationFabricsRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, _resourceName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new FabricResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<FabricResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _fabricReplicationFabricsClientDiagnostics.CreateScope("FabricCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _fabricReplicationFabricsRestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, _resourceName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new FabricResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _fabricReplicationFabricsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, _resourceName);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _fabricReplicationFabricsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, _resourceName);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new FabricResource(Client, FabricData.DeserializeFabricData(e)), _fabricReplicationFabricsClientDiagnostics, Pipeline, "FabricCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -175,37 +174,9 @@ namespace Azure.ResourceManager.ServiceBus
         /// <returns> An async collection of <see cref="MigrationConfigurationResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<MigrationConfigurationResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<MigrationConfigurationResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _migrationConfigurationMigrationConfigsClientDiagnostics.CreateScope("MigrationConfigurationCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _migrationConfigurationMigrationConfigsRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new MigrationConfigurationResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<MigrationConfigurationResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _migrationConfigurationMigrationConfigsClientDiagnostics.CreateScope("MigrationConfigurationCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _migrationConfigurationMigrationConfigsRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new MigrationConfigurationResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _migrationConfigurationMigrationConfigsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _migrationConfigurationMigrationConfigsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new MigrationConfigurationResource(Client, MigrationConfigurationData.DeserializeMigrationConfigurationData(e)), _migrationConfigurationMigrationConfigsClientDiagnostics, Pipeline, "MigrationConfigurationCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -217,37 +188,9 @@ namespace Azure.ResourceManager.ServiceBus
         /// <returns> A collection of <see cref="MigrationConfigurationResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<MigrationConfigurationResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<MigrationConfigurationResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _migrationConfigurationMigrationConfigsClientDiagnostics.CreateScope("MigrationConfigurationCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _migrationConfigurationMigrationConfigsRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new MigrationConfigurationResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<MigrationConfigurationResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _migrationConfigurationMigrationConfigsClientDiagnostics.CreateScope("MigrationConfigurationCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _migrationConfigurationMigrationConfigsRestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new MigrationConfigurationResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _migrationConfigurationMigrationConfigsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _migrationConfigurationMigrationConfigsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new MigrationConfigurationResource(Client, MigrationConfigurationData.DeserializeMigrationConfigurationData(e)), _migrationConfigurationMigrationConfigsClientDiagnostics, Pipeline, "MigrationConfigurationCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

@@ -337,37 +337,9 @@ namespace Azure.ResourceManager.Peering
         /// <returns> An async collection of <see cref="PeeringReceivedRoute" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<PeeringReceivedRoute> GetReceivedRoutesAsync(string prefix = null, string asPath = null, string originAsValidationState = null, string rpkiValidationState = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<PeeringReceivedRoute>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _receivedRoutesClientDiagnostics.CreateScope("PeeringResource.GetReceivedRoutes");
-                scope.Start();
-                try
-                {
-                    var response = await _receivedRoutesRestClient.ListByPeeringAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, prefix, asPath, originAsValidationState, rpkiValidationState, skipToken, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<PeeringReceivedRoute>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _receivedRoutesClientDiagnostics.CreateScope("PeeringResource.GetReceivedRoutes");
-                scope.Start();
-                try
-                {
-                    var response = await _receivedRoutesRestClient.ListByPeeringNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, prefix, asPath, originAsValidationState, rpkiValidationState, skipToken, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _receivedRoutesRestClient.CreateListByPeeringRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, prefix, asPath, originAsValidationState, rpkiValidationState, skipToken);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _receivedRoutesRestClient.CreateListByPeeringNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, prefix, asPath, originAsValidationState, rpkiValidationState, skipToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, PeeringReceivedRoute.DeserializePeeringReceivedRoute, _receivedRoutesClientDiagnostics, Pipeline, "PeeringResource.GetReceivedRoutes", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -384,37 +356,9 @@ namespace Azure.ResourceManager.Peering
         /// <returns> A collection of <see cref="PeeringReceivedRoute" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<PeeringReceivedRoute> GetReceivedRoutes(string prefix = null, string asPath = null, string originAsValidationState = null, string rpkiValidationState = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            Page<PeeringReceivedRoute> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _receivedRoutesClientDiagnostics.CreateScope("PeeringResource.GetReceivedRoutes");
-                scope.Start();
-                try
-                {
-                    var response = _receivedRoutesRestClient.ListByPeering(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, prefix, asPath, originAsValidationState, rpkiValidationState, skipToken, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<PeeringReceivedRoute> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _receivedRoutesClientDiagnostics.CreateScope("PeeringResource.GetReceivedRoutes");
-                scope.Start();
-                try
-                {
-                    var response = _receivedRoutesRestClient.ListByPeeringNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, prefix, asPath, originAsValidationState, rpkiValidationState, skipToken, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _receivedRoutesRestClient.CreateListByPeeringRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, prefix, asPath, originAsValidationState, rpkiValidationState, skipToken);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _receivedRoutesRestClient.CreateListByPeeringNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, prefix, asPath, originAsValidationState, rpkiValidationState, skipToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, PeeringReceivedRoute.DeserializePeeringReceivedRoute, _receivedRoutesClientDiagnostics, Pipeline, "PeeringResource.GetReceivedRoutes", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -427,37 +371,9 @@ namespace Azure.ResourceManager.Peering
         /// <returns> An async collection of <see cref="RoutingPreferenceUnbilledPrefix" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<RoutingPreferenceUnbilledPrefix> GetRpUnbilledPrefixesAsync(bool? consolidate = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<RoutingPreferenceUnbilledPrefix>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _rpUnbilledPrefixesClientDiagnostics.CreateScope("PeeringResource.GetRpUnbilledPrefixes");
-                scope.Start();
-                try
-                {
-                    var response = await _rpUnbilledPrefixesRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, consolidate, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<RoutingPreferenceUnbilledPrefix>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _rpUnbilledPrefixesClientDiagnostics.CreateScope("PeeringResource.GetRpUnbilledPrefixes");
-                scope.Start();
-                try
-                {
-                    var response = await _rpUnbilledPrefixesRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, consolidate, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _rpUnbilledPrefixesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, consolidate);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _rpUnbilledPrefixesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, consolidate);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, RoutingPreferenceUnbilledPrefix.DeserializeRoutingPreferenceUnbilledPrefix, _rpUnbilledPrefixesClientDiagnostics, Pipeline, "PeeringResource.GetRpUnbilledPrefixes", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -470,37 +386,9 @@ namespace Azure.ResourceManager.Peering
         /// <returns> A collection of <see cref="RoutingPreferenceUnbilledPrefix" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<RoutingPreferenceUnbilledPrefix> GetRpUnbilledPrefixes(bool? consolidate = null, CancellationToken cancellationToken = default)
         {
-            Page<RoutingPreferenceUnbilledPrefix> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _rpUnbilledPrefixesClientDiagnostics.CreateScope("PeeringResource.GetRpUnbilledPrefixes");
-                scope.Start();
-                try
-                {
-                    var response = _rpUnbilledPrefixesRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, consolidate, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<RoutingPreferenceUnbilledPrefix> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _rpUnbilledPrefixesClientDiagnostics.CreateScope("PeeringResource.GetRpUnbilledPrefixes");
-                scope.Start();
-                try
-                {
-                    var response = _rpUnbilledPrefixesRestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, consolidate, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _rpUnbilledPrefixesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, consolidate);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _rpUnbilledPrefixesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, consolidate);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, RoutingPreferenceUnbilledPrefix.DeserializeRoutingPreferenceUnbilledPrefix, _rpUnbilledPrefixesClientDiagnostics, Pipeline, "PeeringResource.GetRpUnbilledPrefixes", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

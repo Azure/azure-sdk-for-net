@@ -1029,37 +1029,9 @@ namespace Azure.ResourceManager.Synapse
         /// <returns> An async collection of <see cref="SynapseServerUsage" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SynapseServerUsage> GetWorkspaceManagedSqlServerUsagesAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<SynapseServerUsage>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _workspaceManagedSqlServerUsagesClientDiagnostics.CreateScope("SynapseWorkspaceResource.GetWorkspaceManagedSqlServerUsages");
-                scope.Start();
-                try
-                {
-                    var response = await _workspaceManagedSqlServerUsagesRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<SynapseServerUsage>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _workspaceManagedSqlServerUsagesClientDiagnostics.CreateScope("SynapseWorkspaceResource.GetWorkspaceManagedSqlServerUsages");
-                scope.Start();
-                try
-                {
-                    var response = await _workspaceManagedSqlServerUsagesRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _workspaceManagedSqlServerUsagesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _workspaceManagedSqlServerUsagesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, SynapseServerUsage.DeserializeSynapseServerUsage, _workspaceManagedSqlServerUsagesClientDiagnostics, Pipeline, "SynapseWorkspaceResource.GetWorkspaceManagedSqlServerUsages", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -1071,37 +1043,9 @@ namespace Azure.ResourceManager.Synapse
         /// <returns> A collection of <see cref="SynapseServerUsage" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SynapseServerUsage> GetWorkspaceManagedSqlServerUsages(CancellationToken cancellationToken = default)
         {
-            Page<SynapseServerUsage> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _workspaceManagedSqlServerUsagesClientDiagnostics.CreateScope("SynapseWorkspaceResource.GetWorkspaceManagedSqlServerUsages");
-                scope.Start();
-                try
-                {
-                    var response = _workspaceManagedSqlServerUsagesRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<SynapseServerUsage> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _workspaceManagedSqlServerUsagesClientDiagnostics.CreateScope("SynapseWorkspaceResource.GetWorkspaceManagedSqlServerUsages");
-                scope.Start();
-                try
-                {
-                    var response = _workspaceManagedSqlServerUsagesRestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _workspaceManagedSqlServerUsagesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _workspaceManagedSqlServerUsagesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, SynapseServerUsage.DeserializeSynapseServerUsage, _workspaceManagedSqlServerUsagesClientDiagnostics, Pipeline, "SynapseWorkspaceResource.GetWorkspaceManagedSqlServerUsages", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

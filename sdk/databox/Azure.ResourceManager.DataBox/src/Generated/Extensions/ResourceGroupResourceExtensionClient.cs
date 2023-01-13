@@ -61,37 +61,9 @@ namespace Azure.ResourceManager.DataBox
         /// <returns> An async collection of <see cref="DataBoxSkuInformation" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DataBoxSkuInformation> GetAvailableSkusAsync(AzureLocation location, AvailableSkusContent content, CancellationToken cancellationToken = default)
         {
-            async Task<Page<DataBoxSkuInformation>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = ServiceClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetAvailableSkus");
-                scope.Start();
-                try
-                {
-                    var response = await ServiceRestClient.ListAvailableSkusByResourceGroupAsync(Id.SubscriptionId, Id.ResourceGroupName, location, content, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<DataBoxSkuInformation>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = ServiceClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetAvailableSkus");
-                scope.Start();
-                try
-                {
-                    var response = await ServiceRestClient.ListAvailableSkusByResourceGroupNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, location, content, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => ServiceRestClient.CreateListAvailableSkusByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, location, content);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ServiceRestClient.CreateListAvailableSkusByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, location, content);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, DataBoxSkuInformation.DeserializeDataBoxSkuInformation, ServiceClientDiagnostics, Pipeline, "ResourceGroupResourceExtensionClient.GetAvailableSkus", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -105,37 +77,9 @@ namespace Azure.ResourceManager.DataBox
         /// <returns> A collection of <see cref="DataBoxSkuInformation" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DataBoxSkuInformation> GetAvailableSkus(AzureLocation location, AvailableSkusContent content, CancellationToken cancellationToken = default)
         {
-            Page<DataBoxSkuInformation> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = ServiceClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetAvailableSkus");
-                scope.Start();
-                try
-                {
-                    var response = ServiceRestClient.ListAvailableSkusByResourceGroup(Id.SubscriptionId, Id.ResourceGroupName, location, content, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<DataBoxSkuInformation> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = ServiceClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetAvailableSkus");
-                scope.Start();
-                try
-                {
-                    var response = ServiceRestClient.ListAvailableSkusByResourceGroupNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, location, content, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => ServiceRestClient.CreateListAvailableSkusByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, location, content);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ServiceRestClient.CreateListAvailableSkusByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, location, content);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, DataBoxSkuInformation.DeserializeDataBoxSkuInformation, ServiceClientDiagnostics, Pipeline, "ResourceGroupResourceExtensionClient.GetAvailableSkus", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

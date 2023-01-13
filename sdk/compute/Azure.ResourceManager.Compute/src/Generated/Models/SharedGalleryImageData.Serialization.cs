@@ -29,6 +29,8 @@ namespace Azure.ResourceManager.Compute
             Optional<IReadOnlyList<GalleryImageFeature>> features = default;
             Optional<ImagePurchasePlan> purchasePlan = default;
             Optional<ArchitectureType> architecture = default;
+            Optional<Uri> privacyStatementUri = default;
+            Optional<string> eula = default;
             Optional<string> uniqueId = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -161,6 +163,21 @@ namespace Azure.ResourceManager.Compute
                             architecture = new ArchitectureType(property0.Value.GetString());
                             continue;
                         }
+                        if (property0.NameEquals("privacyStatementUri"))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                privacyStatementUri = null;
+                                continue;
+                            }
+                            privacyStatementUri = new Uri(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("eula"))
+                        {
+                            eula = property0.Value.GetString();
+                            continue;
+                        }
                     }
                     continue;
                 }
@@ -182,7 +199,7 @@ namespace Azure.ResourceManager.Compute
                     continue;
                 }
             }
-            return new SharedGalleryImageData(name.Value, Optional.ToNullable(location), uniqueId.Value, Optional.ToNullable(osType), Optional.ToNullable(osState), Optional.ToNullable(endOfLifeDate), identifier.Value, recommended.Value, disallowed.Value, Optional.ToNullable(hyperVGeneration), Optional.ToList(features), purchasePlan.Value, Optional.ToNullable(architecture));
+            return new SharedGalleryImageData(name.Value, Optional.ToNullable(location), uniqueId.Value, Optional.ToNullable(osType), Optional.ToNullable(osState), Optional.ToNullable(endOfLifeDate), identifier.Value, recommended.Value, disallowed.Value, Optional.ToNullable(hyperVGeneration), Optional.ToList(features), purchasePlan.Value, Optional.ToNullable(architecture), privacyStatementUri.Value, eula.Value);
         }
     }
 }

@@ -1547,10 +1547,13 @@ namespace Azure.Storage.Blobs.Test
             // Upload a blob
             var data = GetRandomBuffer(Constants.KB);
             BlobClient blob = InstrumentClient(test.Container.GetBlobClient(GetNewBlobName()));
+            Response<BlobContentInfo> uploadResponse;
             using (var stream = new MemoryStream(data))
             {
-                await blob.UploadAsync(stream);
+                uploadResponse = await blob.UploadAsync(stream);
             }
+
+            CheckModifiedSinceAndWait(uploadResponse);
 
             // Add conditions to cause a failure and ensure we don't explode
             Response result = await blob.DownloadToAsync(
@@ -1571,10 +1574,13 @@ namespace Azure.Storage.Blobs.Test
             // Upload a blob
             var data = GetRandomBuffer(Constants.KB);
             BlobClient blob = InstrumentClient(test.Container.GetBlobClient(GetNewBlobName()));
+            Response<BlobContentInfo> uploadResponse;
             using (var stream = new MemoryStream(data))
             {
-                await blob.UploadAsync(stream);
+                uploadResponse = await blob.UploadAsync(stream);
             }
+
+            CheckModifiedSinceAndWait(uploadResponse);
 
             // Add conditions to cause a failure and ensure we don't explode
             Response<BlobDownloadResult> result = await blob.DownloadContentAsync(new BlobDownloadOptions
@@ -1596,10 +1602,13 @@ namespace Azure.Storage.Blobs.Test
             // Upload a blob
             var data = GetRandomBuffer(Constants.KB);
             BlobClient blob = InstrumentClient(test.Container.GetBlobClient(GetNewBlobName()));
+            Response<BlobContentInfo> uploadResponse;
             using (var stream = new MemoryStream(data))
             {
-                await blob.UploadAsync(stream);
+                uploadResponse = await blob.UploadAsync(stream);
             }
+
+            CheckModifiedSinceAndWait(uploadResponse);
 
             // Add conditions to cause a failure and ensure we don't explode
             Response<BlobDownloadStreamingResult> result = await blob.DownloadStreamingAsync(new BlobDownloadOptions
@@ -1621,10 +1630,13 @@ namespace Azure.Storage.Blobs.Test
             // Upload a blob
             var data = GetRandomBuffer(Constants.KB);
             BlobClient blob = InstrumentClient(test.Container.GetBlobClient(GetNewBlobName()));
+            Response<BlobContentInfo> uploadResponse;
             using (var stream = new MemoryStream(data))
             {
-                await blob.UploadAsync(stream);
+                uploadResponse = await blob.UploadAsync(stream);
             }
+
+            CheckModifiedSinceAndWait(uploadResponse);
 
             // Add conditions to cause a failure and ensure we don't explode
             Response<BlobDownloadInfo> result = await blob.DownloadAsync(

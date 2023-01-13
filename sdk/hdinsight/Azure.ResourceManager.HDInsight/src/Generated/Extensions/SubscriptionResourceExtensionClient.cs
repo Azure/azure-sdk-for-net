@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -57,37 +56,9 @@ namespace Azure.ResourceManager.HDInsight
         /// <returns> An async collection of <see cref="HDInsightClusterResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<HDInsightClusterResource> GetHDInsightClustersAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<HDInsightClusterResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = HDInsightClusterClustersClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetHDInsightClusters");
-                scope.Start();
-                try
-                {
-                    var response = await HDInsightClusterClustersRestClient.ListAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new HDInsightClusterResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<HDInsightClusterResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = HDInsightClusterClustersClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetHDInsightClusters");
-                scope.Start();
-                try
-                {
-                    var response = await HDInsightClusterClustersRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new HDInsightClusterResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => HDInsightClusterClustersRestClient.CreateListRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => HDInsightClusterClustersRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new HDInsightClusterResource(Client, HDInsightClusterData.DeserializeHDInsightClusterData(e)), HDInsightClusterClustersClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetHDInsightClusters", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -99,37 +70,9 @@ namespace Azure.ResourceManager.HDInsight
         /// <returns> A collection of <see cref="HDInsightClusterResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<HDInsightClusterResource> GetHDInsightClusters(CancellationToken cancellationToken = default)
         {
-            Page<HDInsightClusterResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = HDInsightClusterClustersClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetHDInsightClusters");
-                scope.Start();
-                try
-                {
-                    var response = HDInsightClusterClustersRestClient.List(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new HDInsightClusterResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<HDInsightClusterResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = HDInsightClusterClustersClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetHDInsightClusters");
-                scope.Start();
-                try
-                {
-                    var response = HDInsightClusterClustersRestClient.ListNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new HDInsightClusterResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => HDInsightClusterClustersRestClient.CreateListRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => HDInsightClusterClustersRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new HDInsightClusterResource(Client, HDInsightClusterData.DeserializeHDInsightClusterData(e)), HDInsightClusterClustersClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetHDInsightClusters", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -188,22 +131,8 @@ namespace Azure.ResourceManager.HDInsight
         /// <returns> An async collection of <see cref="HDInsightUsage" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<HDInsightUsage> GetHDInsightUsagesAsync(AzureLocation location, CancellationToken cancellationToken = default)
         {
-            async Task<Page<HDInsightUsage>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = LocationsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetHDInsightUsages");
-                scope.Start();
-                try
-                {
-                    var response = await LocationsRestClient.ListUsagesAsync(Id.SubscriptionId, location, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => LocationsRestClient.CreateListUsagesRequest(Id.SubscriptionId, location);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, HDInsightUsage.DeserializeHDInsightUsage, LocationsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetHDInsightUsages", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -216,22 +145,8 @@ namespace Azure.ResourceManager.HDInsight
         /// <returns> A collection of <see cref="HDInsightUsage" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<HDInsightUsage> GetHDInsightUsages(AzureLocation location, CancellationToken cancellationToken = default)
         {
-            Page<HDInsightUsage> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = LocationsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetHDInsightUsages");
-                scope.Start();
-                try
-                {
-                    var response = LocationsRestClient.ListUsages(Id.SubscriptionId, location, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => LocationsRestClient.CreateListUsagesRequest(Id.SubscriptionId, location);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, HDInsightUsage.DeserializeHDInsightUsage, LocationsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetHDInsightUsages", "value", null, cancellationToken);
         }
 
         /// <summary>

@@ -7,7 +7,6 @@
 
 using System;
 using System.Threading;
-using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -52,37 +51,9 @@ namespace Azure.ResourceManager.Quota
         /// <returns> An async collection of <see cref="OperationResponse" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<OperationResponse> GetQuotaOperationsAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<OperationResponse>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = QuotaOperationClientDiagnostics.CreateScope("TenantResourceExtensionClient.GetQuotaOperations");
-                scope.Start();
-                try
-                {
-                    var response = await QuotaOperationRestClient.ListAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<OperationResponse>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = QuotaOperationClientDiagnostics.CreateScope("TenantResourceExtensionClient.GetQuotaOperations");
-                scope.Start();
-                try
-                {
-                    var response = await QuotaOperationRestClient.ListNextPageAsync(nextLink, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => QuotaOperationRestClient.CreateListRequest();
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => QuotaOperationRestClient.CreateListNextPageRequest(nextLink);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, OperationResponse.DeserializeOperationResponse, QuotaOperationClientDiagnostics, Pipeline, "TenantResourceExtensionClient.GetQuotaOperations", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -94,37 +65,9 @@ namespace Azure.ResourceManager.Quota
         /// <returns> A collection of <see cref="OperationResponse" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<OperationResponse> GetQuotaOperations(CancellationToken cancellationToken = default)
         {
-            Page<OperationResponse> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = QuotaOperationClientDiagnostics.CreateScope("TenantResourceExtensionClient.GetQuotaOperations");
-                scope.Start();
-                try
-                {
-                    var response = QuotaOperationRestClient.List(cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<OperationResponse> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = QuotaOperationClientDiagnostics.CreateScope("TenantResourceExtensionClient.GetQuotaOperations");
-                scope.Start();
-                try
-                {
-                    var response = QuotaOperationRestClient.ListNextPage(nextLink, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => QuotaOperationRestClient.CreateListRequest();
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => QuotaOperationRestClient.CreateListNextPageRequest(nextLink);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, OperationResponse.DeserializeOperationResponse, QuotaOperationClientDiagnostics, Pipeline, "TenantResourceExtensionClient.GetQuotaOperations", "value", "nextLink", cancellationToken);
         }
     }
 }

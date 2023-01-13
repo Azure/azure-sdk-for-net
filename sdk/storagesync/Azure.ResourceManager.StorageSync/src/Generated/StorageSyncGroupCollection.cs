@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -187,22 +186,8 @@ namespace Azure.ResourceManager.StorageSync
         /// <returns> An async collection of <see cref="StorageSyncGroupResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<StorageSyncGroupResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<StorageSyncGroupResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _storageSyncGroupSyncGroupsClientDiagnostics.CreateScope("StorageSyncGroupCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _storageSyncGroupSyncGroupsRestClient.ListByStorageSyncServiceAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new StorageSyncGroupResource(Client, value)), null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _storageSyncGroupSyncGroupsRestClient.CreateListByStorageSyncServiceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new StorageSyncGroupResource(Client, StorageSyncGroupData.DeserializeStorageSyncGroupData(e)), _storageSyncGroupSyncGroupsClientDiagnostics, Pipeline, "StorageSyncGroupCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -214,22 +199,8 @@ namespace Azure.ResourceManager.StorageSync
         /// <returns> A collection of <see cref="StorageSyncGroupResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<StorageSyncGroupResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<StorageSyncGroupResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _storageSyncGroupSyncGroupsClientDiagnostics.CreateScope("StorageSyncGroupCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _storageSyncGroupSyncGroupsRestClient.ListByStorageSyncService(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new StorageSyncGroupResource(Client, value)), null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _storageSyncGroupSyncGroupsRestClient.CreateListByStorageSyncServiceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new StorageSyncGroupResource(Client, StorageSyncGroupData.DeserializeStorageSyncGroupData(e)), _storageSyncGroupSyncGroupsClientDiagnostics, Pipeline, "StorageSyncGroupCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>

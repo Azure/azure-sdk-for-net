@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -188,37 +187,9 @@ namespace Azure.ResourceManager.HybridContainerService
         /// <returns> An async collection of <see cref="ProvisionedClusterResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ProvisionedClusterResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<ProvisionedClusterResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _provisionedClusterClientDiagnostics.CreateScope("ProvisionedClusterCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _provisionedClusterRestClient.ListByResourceGroupAsync(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ProvisionedClusterResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<ProvisionedClusterResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _provisionedClusterClientDiagnostics.CreateScope("ProvisionedClusterCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _provisionedClusterRestClient.ListByResourceGroupNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ProvisionedClusterResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _provisionedClusterRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _provisionedClusterRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ProvisionedClusterResource(Client, ProvisionedClusterData.DeserializeProvisionedClusterData(e)), _provisionedClusterClientDiagnostics, Pipeline, "ProvisionedClusterCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -230,37 +201,9 @@ namespace Azure.ResourceManager.HybridContainerService
         /// <returns> A collection of <see cref="ProvisionedClusterResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ProvisionedClusterResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<ProvisionedClusterResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _provisionedClusterClientDiagnostics.CreateScope("ProvisionedClusterCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _provisionedClusterRestClient.ListByResourceGroup(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ProvisionedClusterResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<ProvisionedClusterResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _provisionedClusterClientDiagnostics.CreateScope("ProvisionedClusterCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _provisionedClusterRestClient.ListByResourceGroupNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ProvisionedClusterResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _provisionedClusterRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _provisionedClusterRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ProvisionedClusterResource(Client, ProvisionedClusterData.DeserializeProvisionedClusterData(e)), _provisionedClusterClientDiagnostics, Pipeline, "ProvisionedClusterCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

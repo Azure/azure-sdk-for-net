@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
@@ -53,14 +52,15 @@ namespace Azure.ResourceManager.Kusto.Tests.Scenario
                 DatabaseName = TE.DatabaseName,
                 DefaultPrincipalsModificationKind = KustoDatabaseDefaultPrincipalsModificationKind.Replace,
                 Location = Location,
-                TableLevelSharingProperties = new KustoDatabaseTableLevelSharingProperties(
-                    new List<string> { "include" },
-                    new List<string> { "exclude" },
-                    new List<string> { "externalInclude" },
-                    new List<string> { "externalExclude" },
-                    new List<string> { "materializedViewInclude" },
-                    new List<string> { "materializedViewExclude" }
-                )
+                TableLevelSharingProperties = new KustoDatabaseTableLevelSharingProperties
+                {
+                    TablesToInclude = { "include" },
+                    TablesToExclude = { "exclude" },
+                    ExternalTablesToInclude = { "externalInclude" },
+                    ExternalTablesToExclude = { "externalExclude" },
+                    MaterializedViewsToInclude = { "materializedViewInclude" },
+                    MaterializedViewsToExclude = { "materializedViewExclude" }
+                }
             };
 
             Task<ArmOperation<KustoAttachedDatabaseConfigurationResource>>

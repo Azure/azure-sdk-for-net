@@ -8,7 +8,7 @@ azure-arm: true
 csharp: true
 library-name: Kusto
 namespace: Azure.ResourceManager.Kusto
-require: https://github.com/Azure/azure-rest-api-specs/blob/05a9cdab363b8ec824094ee73950c04594325172/specification/azure-kusto/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/2224eaaa3dcebd1220d36f193d4bc0bb8fcdcac6/specification/azure-kusto/resource-manager/readme.md
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 skip-csproj: true
@@ -187,6 +187,10 @@ rename-mapping:
   EventHubDataFormat.SINGLEJSON: SingleJson
   EventHubDataFormat.ORC: Orc
   EventHubDataFormat.W3CLOGFILE: W3CLogFile
+  CosmosDbDataConnection: KustoCosmosDbDataConnection
+  CosmosDbDataConnection.properties.managedIdentityResourceId: -|arm-id
+  CosmosDbDataConnection.properties.managedIdentityObjectId: -|uuid
+  CosmosDbDataConnection.properties.cosmosDbAccountResourceId: -|arm-id
   FollowerDatabaseDefinition: KustoFollowerDatabaseDefinition
   FollowerDatabaseDefinition.clusterResourceId: -|arm-id
   IotHubDataConnection: KustoIotHubDataConnection
@@ -214,6 +218,10 @@ rename-mapping:
   TrustedExternalTenant: KustoClusterTrustedExternalTenant
   CallerRole: KustoDatabaseCallerRole
   DatabaseShareOrigin: KustoDatabaseShareOrigin
+  LanguageExtensionImageName: KustoLanguageExtensionImageName
+  ResourceSkuCapabilities: KustoResourceSkuCapabilities
+  ResourceSkuZoneDetails: KustoResourceSkuZoneDetails
+  SkuDescriptionList: kustoSkuDescriptionList
 
 
 format-by-name-rules:
@@ -245,6 +253,7 @@ rename-rules:
   SSO: Sso
   URI: Uri
   Etag: ETag|etag
+  Db: DB
 
 directive:
   - from: kusto.json

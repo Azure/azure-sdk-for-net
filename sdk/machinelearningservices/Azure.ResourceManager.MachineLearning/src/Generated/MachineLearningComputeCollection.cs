@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -187,37 +186,9 @@ namespace Azure.ResourceManager.MachineLearning
         /// <returns> An async collection of <see cref="MachineLearningComputeResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<MachineLearningComputeResource> GetAllAsync(string skip = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<MachineLearningComputeResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _machineLearningComputeComputeClientDiagnostics.CreateScope("MachineLearningComputeCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _machineLearningComputeComputeRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, skip, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new MachineLearningComputeResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<MachineLearningComputeResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _machineLearningComputeComputeClientDiagnostics.CreateScope("MachineLearningComputeCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _machineLearningComputeComputeRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, skip, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new MachineLearningComputeResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _machineLearningComputeComputeRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, skip);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _machineLearningComputeComputeRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, skip);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new MachineLearningComputeResource(Client, MachineLearningComputeData.DeserializeMachineLearningComputeData(e)), _machineLearningComputeComputeClientDiagnostics, Pipeline, "MachineLearningComputeCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -230,37 +201,9 @@ namespace Azure.ResourceManager.MachineLearning
         /// <returns> A collection of <see cref="MachineLearningComputeResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<MachineLearningComputeResource> GetAll(string skip = null, CancellationToken cancellationToken = default)
         {
-            Page<MachineLearningComputeResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _machineLearningComputeComputeClientDiagnostics.CreateScope("MachineLearningComputeCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _machineLearningComputeComputeRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, skip, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new MachineLearningComputeResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<MachineLearningComputeResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _machineLearningComputeComputeClientDiagnostics.CreateScope("MachineLearningComputeCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _machineLearningComputeComputeRestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, skip, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new MachineLearningComputeResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _machineLearningComputeComputeRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, skip);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _machineLearningComputeComputeRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, skip);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new MachineLearningComputeResource(Client, MachineLearningComputeData.DeserializeMachineLearningComputeData(e)), _machineLearningComputeComputeClientDiagnostics, Pipeline, "MachineLearningComputeCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

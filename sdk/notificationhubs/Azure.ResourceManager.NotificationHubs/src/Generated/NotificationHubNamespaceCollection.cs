@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -188,37 +187,9 @@ namespace Azure.ResourceManager.NotificationHubs
         /// <returns> An async collection of <see cref="NotificationHubNamespaceResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<NotificationHubNamespaceResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<NotificationHubNamespaceResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _notificationHubNamespaceNamespacesClientDiagnostics.CreateScope("NotificationHubNamespaceCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _notificationHubNamespaceNamespacesRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new NotificationHubNamespaceResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<NotificationHubNamespaceResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _notificationHubNamespaceNamespacesClientDiagnostics.CreateScope("NotificationHubNamespaceCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _notificationHubNamespaceNamespacesRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new NotificationHubNamespaceResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _notificationHubNamespaceNamespacesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _notificationHubNamespaceNamespacesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new NotificationHubNamespaceResource(Client, NotificationHubNamespaceData.DeserializeNotificationHubNamespaceData(e)), _notificationHubNamespaceNamespacesClientDiagnostics, Pipeline, "NotificationHubNamespaceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -230,37 +201,9 @@ namespace Azure.ResourceManager.NotificationHubs
         /// <returns> A collection of <see cref="NotificationHubNamespaceResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<NotificationHubNamespaceResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<NotificationHubNamespaceResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _notificationHubNamespaceNamespacesClientDiagnostics.CreateScope("NotificationHubNamespaceCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _notificationHubNamespaceNamespacesRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new NotificationHubNamespaceResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<NotificationHubNamespaceResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _notificationHubNamespaceNamespacesClientDiagnostics.CreateScope("NotificationHubNamespaceCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _notificationHubNamespaceNamespacesRestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new NotificationHubNamespaceResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _notificationHubNamespaceNamespacesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _notificationHubNamespaceNamespacesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new NotificationHubNamespaceResource(Client, NotificationHubNamespaceData.DeserializeNotificationHubNamespaceData(e)), _notificationHubNamespaceNamespacesClientDiagnostics, Pipeline, "NotificationHubNamespaceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

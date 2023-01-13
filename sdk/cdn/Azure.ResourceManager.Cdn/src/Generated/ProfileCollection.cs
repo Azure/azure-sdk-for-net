@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -187,37 +186,9 @@ namespace Azure.ResourceManager.Cdn
         /// <returns> An async collection of <see cref="ProfileResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ProfileResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<ProfileResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _profileClientDiagnostics.CreateScope("ProfileCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _profileRestClient.ListByResourceGroupAsync(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ProfileResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<ProfileResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _profileClientDiagnostics.CreateScope("ProfileCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _profileRestClient.ListByResourceGroupNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ProfileResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _profileRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _profileRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ProfileResource(Client, ProfileData.DeserializeProfileData(e)), _profileClientDiagnostics, Pipeline, "ProfileCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -229,37 +200,9 @@ namespace Azure.ResourceManager.Cdn
         /// <returns> A collection of <see cref="ProfileResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ProfileResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<ProfileResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _profileClientDiagnostics.CreateScope("ProfileCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _profileRestClient.ListByResourceGroup(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ProfileResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<ProfileResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _profileClientDiagnostics.CreateScope("ProfileCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _profileRestClient.ListByResourceGroupNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ProfileResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _profileRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _profileRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ProfileResource(Client, ProfileData.DeserializeProfileData(e)), _profileClientDiagnostics, Pipeline, "ProfileCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

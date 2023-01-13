@@ -181,22 +181,8 @@ namespace Azure.ResourceManager.AppService
         /// <returns> An async collection of <see cref="AppServiceVirtualNetworkRoute" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<AppServiceVirtualNetworkRoute> GetRoutesForVnetAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<AppServiceVirtualNetworkRoute>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _appServicePlanVirtualNetworkConnectionAppServicePlansClientDiagnostics.CreateScope("AppServicePlanVirtualNetworkConnectionResource.GetRoutesForVnet");
-                scope.Start();
-                try
-                {
-                    var response = await _appServicePlanVirtualNetworkConnectionAppServicePlansRestClient.ListRoutesForVnetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value, null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _appServicePlanVirtualNetworkConnectionAppServicePlansRestClient.CreateListRoutesForVnetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, AppServiceVirtualNetworkRoute.DeserializeAppServiceVirtualNetworkRoute, _appServicePlanVirtualNetworkConnectionAppServicePlansClientDiagnostics, Pipeline, "AppServicePlanVirtualNetworkConnectionResource.GetRoutesForVnet", "", null, cancellationToken);
         }
 
         /// <summary>
@@ -208,22 +194,8 @@ namespace Azure.ResourceManager.AppService
         /// <returns> A collection of <see cref="AppServiceVirtualNetworkRoute" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<AppServiceVirtualNetworkRoute> GetRoutesForVnet(CancellationToken cancellationToken = default)
         {
-            Page<AppServiceVirtualNetworkRoute> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _appServicePlanVirtualNetworkConnectionAppServicePlansClientDiagnostics.CreateScope("AppServicePlanVirtualNetworkConnectionResource.GetRoutesForVnet");
-                scope.Start();
-                try
-                {
-                    var response = _appServicePlanVirtualNetworkConnectionAppServicePlansRestClient.ListRoutesForVnet(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value, null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _appServicePlanVirtualNetworkConnectionAppServicePlansRestClient.CreateListRoutesForVnetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, AppServiceVirtualNetworkRoute.DeserializeAppServiceVirtualNetworkRoute, _appServicePlanVirtualNetworkConnectionAppServicePlansClientDiagnostics, Pipeline, "AppServicePlanVirtualNetworkConnectionResource.GetRoutesForVnet", "", null, cancellationToken);
         }
 
         /// <summary>

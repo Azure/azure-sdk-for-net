@@ -6,9 +6,7 @@
 #nullable disable
 
 using System;
-using System.Linq;
 using System.Threading;
-using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -52,37 +50,9 @@ namespace Azure.ResourceManager.CustomerInsights
         /// <returns> An async collection of <see cref="HubResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<HubResource> GetHubsAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<HubResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = HubClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetHubs");
-                scope.Start();
-                try
-                {
-                    var response = await HubRestClient.ListAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new HubResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<HubResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = HubClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetHubs");
-                scope.Start();
-                try
-                {
-                    var response = await HubRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new HubResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => HubRestClient.CreateListRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => HubRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new HubResource(Client, HubData.DeserializeHubData(e)), HubClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetHubs", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -94,37 +64,9 @@ namespace Azure.ResourceManager.CustomerInsights
         /// <returns> A collection of <see cref="HubResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<HubResource> GetHubs(CancellationToken cancellationToken = default)
         {
-            Page<HubResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = HubClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetHubs");
-                scope.Start();
-                try
-                {
-                    var response = HubRestClient.List(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new HubResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<HubResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = HubClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetHubs");
-                scope.Start();
-                try
-                {
-                    var response = HubRestClient.ListNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new HubResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => HubRestClient.CreateListRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => HubRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new HubResource(Client, HubData.DeserializeHubData(e)), HubClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetHubs", "value", "nextLink", cancellationToken);
         }
     }
 }

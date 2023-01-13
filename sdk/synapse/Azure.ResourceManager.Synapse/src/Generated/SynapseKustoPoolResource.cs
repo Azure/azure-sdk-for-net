@@ -483,22 +483,8 @@ namespace Azure.ResourceManager.Synapse
         /// <returns> An async collection of <see cref="SynapseDataSourceResourceSku" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SynapseDataSourceResourceSku> GetSkusByResourceAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<SynapseDataSourceResourceSku>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _synapseKustoPoolKustoPoolsClientDiagnostics.CreateScope("SynapseKustoPoolResource.GetSkusByResource");
-                scope.Start();
-                try
-                {
-                    var response = await _synapseKustoPoolKustoPoolsRestClient.ListSkusByResourceAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _synapseKustoPoolKustoPoolsRestClient.CreateListSkusByResourceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, SynapseDataSourceResourceSku.DeserializeSynapseDataSourceResourceSku, _synapseKustoPoolKustoPoolsClientDiagnostics, Pipeline, "SynapseKustoPoolResource.GetSkusByResource", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -510,22 +496,8 @@ namespace Azure.ResourceManager.Synapse
         /// <returns> A collection of <see cref="SynapseDataSourceResourceSku" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SynapseDataSourceResourceSku> GetSkusByResource(CancellationToken cancellationToken = default)
         {
-            Page<SynapseDataSourceResourceSku> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _synapseKustoPoolKustoPoolsClientDiagnostics.CreateScope("SynapseKustoPoolResource.GetSkusByResource");
-                scope.Start();
-                try
-                {
-                    var response = _synapseKustoPoolKustoPoolsRestClient.ListSkusByResource(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _synapseKustoPoolKustoPoolsRestClient.CreateListSkusByResourceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, SynapseDataSourceResourceSku.DeserializeSynapseDataSourceResourceSku, _synapseKustoPoolKustoPoolsClientDiagnostics, Pipeline, "SynapseKustoPoolResource.GetSkusByResource", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -537,22 +509,8 @@ namespace Azure.ResourceManager.Synapse
         /// <returns> An async collection of <see cref="SynapseLanguageExtension" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SynapseLanguageExtension> GetLanguageExtensionsAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<SynapseLanguageExtension>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _synapseKustoPoolKustoPoolsClientDiagnostics.CreateScope("SynapseKustoPoolResource.GetLanguageExtensions");
-                scope.Start();
-                try
-                {
-                    var response = await _synapseKustoPoolKustoPoolsRestClient.ListLanguageExtensionsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _synapseKustoPoolKustoPoolsRestClient.CreateListLanguageExtensionsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, SynapseLanguageExtension.DeserializeSynapseLanguageExtension, _synapseKustoPoolKustoPoolsClientDiagnostics, Pipeline, "SynapseKustoPoolResource.GetLanguageExtensions", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -564,22 +522,8 @@ namespace Azure.ResourceManager.Synapse
         /// <returns> A collection of <see cref="SynapseLanguageExtension" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SynapseLanguageExtension> GetLanguageExtensions(CancellationToken cancellationToken = default)
         {
-            Page<SynapseLanguageExtension> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _synapseKustoPoolKustoPoolsClientDiagnostics.CreateScope("SynapseKustoPoolResource.GetLanguageExtensions");
-                scope.Start();
-                try
-                {
-                    var response = _synapseKustoPoolKustoPoolsRestClient.ListLanguageExtensions(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _synapseKustoPoolKustoPoolsRestClient.CreateListLanguageExtensionsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, SynapseLanguageExtension.DeserializeSynapseLanguageExtension, _synapseKustoPoolKustoPoolsClientDiagnostics, Pipeline, "SynapseKustoPoolResource.GetLanguageExtensions", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -711,22 +655,8 @@ namespace Azure.ResourceManager.Synapse
         /// <returns> An async collection of <see cref="SynapseFollowerDatabaseDefinition" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SynapseFollowerDatabaseDefinition> GetFollowerDatabasesAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<SynapseFollowerDatabaseDefinition>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _synapseKustoPoolKustoPoolsClientDiagnostics.CreateScope("SynapseKustoPoolResource.GetFollowerDatabases");
-                scope.Start();
-                try
-                {
-                    var response = await _synapseKustoPoolKustoPoolsRestClient.ListFollowerDatabasesAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _synapseKustoPoolKustoPoolsRestClient.CreateListFollowerDatabasesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, SynapseFollowerDatabaseDefinition.DeserializeSynapseFollowerDatabaseDefinition, _synapseKustoPoolKustoPoolsClientDiagnostics, Pipeline, "SynapseKustoPoolResource.GetFollowerDatabases", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -738,22 +668,8 @@ namespace Azure.ResourceManager.Synapse
         /// <returns> A collection of <see cref="SynapseFollowerDatabaseDefinition" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SynapseFollowerDatabaseDefinition> GetFollowerDatabases(CancellationToken cancellationToken = default)
         {
-            Page<SynapseFollowerDatabaseDefinition> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _synapseKustoPoolKustoPoolsClientDiagnostics.CreateScope("SynapseKustoPoolResource.GetFollowerDatabases");
-                scope.Start();
-                try
-                {
-                    var response = _synapseKustoPoolKustoPoolsRestClient.ListFollowerDatabases(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _synapseKustoPoolKustoPoolsRestClient.CreateListFollowerDatabasesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, SynapseFollowerDatabaseDefinition.DeserializeSynapseFollowerDatabaseDefinition, _synapseKustoPoolKustoPoolsClientDiagnostics, Pipeline, "SynapseKustoPoolResource.GetFollowerDatabases", "value", null, cancellationToken);
         }
 
         /// <summary>
