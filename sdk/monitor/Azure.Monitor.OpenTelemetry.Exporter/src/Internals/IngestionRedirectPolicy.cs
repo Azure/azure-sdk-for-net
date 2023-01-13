@@ -1,6 +1,8 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+#nullable disable // TODO: remove and fix errors
+
 using Azure.Core;
 using System.Threading.Tasks;
 using System;
@@ -51,19 +53,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                     break;
                 }
 
-                if (!TryGetRedirectCacheTimeSpan(response, out TimeSpan cacheExpirationDuration))
-                {
-                    // if failed to read cache, use default
-                    AzureMonitorExporterEventSource.Log.WriteWarning("ParseRedirectCacheFailed","Failed to parse redirect cache, using default.");
-                    cacheExpirationDuration = DefaultCacheExpirationDuration;
-                }
-
-                cache.Set(redirectUri, cacheExpirationDuration);
-
                 response.Dispose();
-
-                // Clear the authorization header.
-                request.Headers.Remove(HttpHeader.Names.Authorization);
 
                 // Set up for the redirect
                 request.Uri.Reset(redirectUri);
@@ -80,6 +70,15 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 
                 response = message.Response;
 
+                if (!TryGetRedirectCacheTimeSpan(response, out TimeSpan cacheExpirationDuration))
+                {
+                    // if failed to read cache, use default
+                    AzureMonitorExporterEventSource.Log.WriteWarning("ParseRedirectCacheFailed", "Failed to parse redirect cache, using default.");
+                    cacheExpirationDuration = DefaultCacheExpirationDuration;
+                }
+
+                cache.Set(redirectUri, cacheExpirationDuration);
+
                 redirectCount++;
             }
 
@@ -95,7 +94,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 
         private static bool TryGetRedirectCacheTimeSpan(Response response, out TimeSpan cacheExpirationDuration)
         {
-            response.Headers.TryGetValue("CacheControl", out string cacheControlHeader);
+            response.Headers.TryGetValue("Cache-Control", out string cacheControlHeader);
             if (CacheControlHeaderValue.TryParse(cacheControlHeader, out CacheControlHeaderValue cacheControlHeaderValue))
             {
                 cacheExpirationDuration = cacheControlHeaderValue?.MaxAge ?? default;
