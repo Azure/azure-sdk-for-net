@@ -6,9 +6,7 @@
 #nullable disable
 
 using System;
-using System.Linq;
 using System.Threading;
-using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -109,22 +107,8 @@ namespace Azure.ResourceManager.EventGrid
         /// <returns> An async collection of <see cref="EventTypeUnderTopic" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<EventTypeUnderTopic> GetEventTypesAsync(string providerNamespace, string resourceTypeName, string resourceName, CancellationToken cancellationToken = default)
         {
-            async Task<Page<EventTypeUnderTopic>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = EventGridTopicTopicsClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetEventTypes");
-                scope.Start();
-                try
-                {
-                    var response = await EventGridTopicTopicsRestClient.ListEventTypesAsync(Id.SubscriptionId, Id.ResourceGroupName, providerNamespace, resourceTypeName, resourceName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => EventGridTopicTopicsRestClient.CreateListEventTypesRequest(Id.SubscriptionId, Id.ResourceGroupName, providerNamespace, resourceTypeName, resourceName);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, EventTypeUnderTopic.DeserializeEventTypeUnderTopic, EventGridTopicTopicsClientDiagnostics, Pipeline, "ResourceGroupResourceExtensionClient.GetEventTypes", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -139,22 +123,8 @@ namespace Azure.ResourceManager.EventGrid
         /// <returns> A collection of <see cref="EventTypeUnderTopic" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<EventTypeUnderTopic> GetEventTypes(string providerNamespace, string resourceTypeName, string resourceName, CancellationToken cancellationToken = default)
         {
-            Page<EventTypeUnderTopic> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = EventGridTopicTopicsClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetEventTypes");
-                scope.Start();
-                try
-                {
-                    var response = EventGridTopicTopicsRestClient.ListEventTypes(Id.SubscriptionId, Id.ResourceGroupName, providerNamespace, resourceTypeName, resourceName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => EventGridTopicTopicsRestClient.CreateListEventTypesRequest(Id.SubscriptionId, Id.ResourceGroupName, providerNamespace, resourceTypeName, resourceName);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, EventTypeUnderTopic.DeserializeEventTypeUnderTopic, EventGridTopicTopicsClientDiagnostics, Pipeline, "ResourceGroupResourceExtensionClient.GetEventTypes", "value", null, cancellationToken);
         }
     }
 }

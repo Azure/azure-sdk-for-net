@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -186,37 +185,9 @@ namespace Azure.ResourceManager.KeyVault
         /// <returns> An async collection of <see cref="ManagedHsmPrivateEndpointConnectionResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ManagedHsmPrivateEndpointConnectionResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<ManagedHsmPrivateEndpointConnectionResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _managedHsmPrivateEndpointConnectionMHSMPrivateEndpointConnectionsClientDiagnostics.CreateScope("ManagedHsmPrivateEndpointConnectionCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _managedHsmPrivateEndpointConnectionMHSMPrivateEndpointConnectionsRestClient.ListByResourceAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ManagedHsmPrivateEndpointConnectionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<ManagedHsmPrivateEndpointConnectionResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _managedHsmPrivateEndpointConnectionMHSMPrivateEndpointConnectionsClientDiagnostics.CreateScope("ManagedHsmPrivateEndpointConnectionCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _managedHsmPrivateEndpointConnectionMHSMPrivateEndpointConnectionsRestClient.ListByResourceNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ManagedHsmPrivateEndpointConnectionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _managedHsmPrivateEndpointConnectionMHSMPrivateEndpointConnectionsRestClient.CreateListByResourceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _managedHsmPrivateEndpointConnectionMHSMPrivateEndpointConnectionsRestClient.CreateListByResourceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ManagedHsmPrivateEndpointConnectionResource(Client, ManagedHsmPrivateEndpointConnectionData.DeserializeManagedHsmPrivateEndpointConnectionData(e)), _managedHsmPrivateEndpointConnectionMHSMPrivateEndpointConnectionsClientDiagnostics, Pipeline, "ManagedHsmPrivateEndpointConnectionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -228,37 +199,9 @@ namespace Azure.ResourceManager.KeyVault
         /// <returns> A collection of <see cref="ManagedHsmPrivateEndpointConnectionResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ManagedHsmPrivateEndpointConnectionResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<ManagedHsmPrivateEndpointConnectionResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _managedHsmPrivateEndpointConnectionMHSMPrivateEndpointConnectionsClientDiagnostics.CreateScope("ManagedHsmPrivateEndpointConnectionCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _managedHsmPrivateEndpointConnectionMHSMPrivateEndpointConnectionsRestClient.ListByResource(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ManagedHsmPrivateEndpointConnectionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<ManagedHsmPrivateEndpointConnectionResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _managedHsmPrivateEndpointConnectionMHSMPrivateEndpointConnectionsClientDiagnostics.CreateScope("ManagedHsmPrivateEndpointConnectionCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _managedHsmPrivateEndpointConnectionMHSMPrivateEndpointConnectionsRestClient.ListByResourceNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ManagedHsmPrivateEndpointConnectionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _managedHsmPrivateEndpointConnectionMHSMPrivateEndpointConnectionsRestClient.CreateListByResourceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _managedHsmPrivateEndpointConnectionMHSMPrivateEndpointConnectionsRestClient.CreateListByResourceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ManagedHsmPrivateEndpointConnectionResource(Client, ManagedHsmPrivateEndpointConnectionData.DeserializeManagedHsmPrivateEndpointConnectionData(e)), _managedHsmPrivateEndpointConnectionMHSMPrivateEndpointConnectionsClientDiagnostics, Pipeline, "ManagedHsmPrivateEndpointConnectionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -186,22 +185,8 @@ namespace Azure.ResourceManager.Logic
         /// <returns> An async collection of <see cref="IntegrationAccountAssemblyDefinitionResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<IntegrationAccountAssemblyDefinitionResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<IntegrationAccountAssemblyDefinitionResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _integrationAccountAssemblyDefinitionIntegrationAccountAssembliesClientDiagnostics.CreateScope("IntegrationAccountAssemblyDefinitionCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _integrationAccountAssemblyDefinitionIntegrationAccountAssembliesRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new IntegrationAccountAssemblyDefinitionResource(Client, value)), null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _integrationAccountAssemblyDefinitionIntegrationAccountAssembliesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new IntegrationAccountAssemblyDefinitionResource(Client, IntegrationAccountAssemblyDefinitionData.DeserializeIntegrationAccountAssemblyDefinitionData(e)), _integrationAccountAssemblyDefinitionIntegrationAccountAssembliesClientDiagnostics, Pipeline, "IntegrationAccountAssemblyDefinitionCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -213,22 +198,8 @@ namespace Azure.ResourceManager.Logic
         /// <returns> A collection of <see cref="IntegrationAccountAssemblyDefinitionResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<IntegrationAccountAssemblyDefinitionResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<IntegrationAccountAssemblyDefinitionResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _integrationAccountAssemblyDefinitionIntegrationAccountAssembliesClientDiagnostics.CreateScope("IntegrationAccountAssemblyDefinitionCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _integrationAccountAssemblyDefinitionIntegrationAccountAssembliesRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new IntegrationAccountAssemblyDefinitionResource(Client, value)), null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _integrationAccountAssemblyDefinitionIntegrationAccountAssembliesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new IntegrationAccountAssemblyDefinitionResource(Client, IntegrationAccountAssemblyDefinitionData.DeserializeIntegrationAccountAssemblyDefinitionData(e)), _integrationAccountAssemblyDefinitionIntegrationAccountAssembliesClientDiagnostics, Pipeline, "IntegrationAccountAssemblyDefinitionCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>

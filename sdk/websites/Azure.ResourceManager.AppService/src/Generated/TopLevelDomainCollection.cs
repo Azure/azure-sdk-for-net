@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -121,37 +120,9 @@ namespace Azure.ResourceManager.AppService
         /// <returns> An async collection of <see cref="TopLevelDomainResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<TopLevelDomainResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<TopLevelDomainResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _topLevelDomainClientDiagnostics.CreateScope("TopLevelDomainCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _topLevelDomainRestClient.ListAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new TopLevelDomainResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<TopLevelDomainResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _topLevelDomainClientDiagnostics.CreateScope("TopLevelDomainCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _topLevelDomainRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new TopLevelDomainResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _topLevelDomainRestClient.CreateListRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _topLevelDomainRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new TopLevelDomainResource(Client, TopLevelDomainData.DeserializeTopLevelDomainData(e)), _topLevelDomainClientDiagnostics, Pipeline, "TopLevelDomainCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -163,37 +134,9 @@ namespace Azure.ResourceManager.AppService
         /// <returns> A collection of <see cref="TopLevelDomainResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<TopLevelDomainResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<TopLevelDomainResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _topLevelDomainClientDiagnostics.CreateScope("TopLevelDomainCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _topLevelDomainRestClient.List(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new TopLevelDomainResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<TopLevelDomainResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _topLevelDomainClientDiagnostics.CreateScope("TopLevelDomainCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _topLevelDomainRestClient.ListNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new TopLevelDomainResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _topLevelDomainRestClient.CreateListRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _topLevelDomainRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new TopLevelDomainResource(Client, TopLevelDomainData.DeserializeTopLevelDomainData(e)), _topLevelDomainClientDiagnostics, Pipeline, "TopLevelDomainCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

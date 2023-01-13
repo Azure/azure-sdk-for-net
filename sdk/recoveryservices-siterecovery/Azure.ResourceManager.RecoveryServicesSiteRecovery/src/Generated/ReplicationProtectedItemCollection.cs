@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -187,37 +186,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <returns> An async collection of <see cref="ReplicationProtectedItemResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ReplicationProtectedItemResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<ReplicationProtectedItemResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _replicationProtectedItemClientDiagnostics.CreateScope("ReplicationProtectedItemCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _replicationProtectedItemRestClient.ListByReplicationProtectionContainersAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ReplicationProtectedItemResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<ReplicationProtectedItemResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _replicationProtectedItemClientDiagnostics.CreateScope("ReplicationProtectedItemCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _replicationProtectedItemRestClient.ListByReplicationProtectionContainersNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ReplicationProtectedItemResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _replicationProtectedItemRestClient.CreateListByReplicationProtectionContainersRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _replicationProtectedItemRestClient.CreateListByReplicationProtectionContainersNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ReplicationProtectedItemResource(Client, ReplicationProtectedItemData.DeserializeReplicationProtectedItemData(e)), _replicationProtectedItemClientDiagnostics, Pipeline, "ReplicationProtectedItemCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -229,37 +200,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <returns> A collection of <see cref="ReplicationProtectedItemResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ReplicationProtectedItemResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<ReplicationProtectedItemResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _replicationProtectedItemClientDiagnostics.CreateScope("ReplicationProtectedItemCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _replicationProtectedItemRestClient.ListByReplicationProtectionContainers(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ReplicationProtectedItemResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<ReplicationProtectedItemResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _replicationProtectedItemClientDiagnostics.CreateScope("ReplicationProtectedItemCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _replicationProtectedItemRestClient.ListByReplicationProtectionContainersNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ReplicationProtectedItemResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _replicationProtectedItemRestClient.CreateListByReplicationProtectionContainersRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _replicationProtectedItemRestClient.CreateListByReplicationProtectionContainersNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ReplicationProtectedItemResource(Client, ReplicationProtectedItemData.DeserializeReplicationProtectedItemData(e)), _replicationProtectedItemClientDiagnostics, Pipeline, "ReplicationProtectedItemCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

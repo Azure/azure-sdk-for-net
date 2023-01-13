@@ -585,7 +585,15 @@ namespace Azure.Messaging.WebPubSub.Clients
                 }
                 throw new SendMessageFailedException("Failed to send message.", id, ex);
             }
-            return await entity.Task.ConfigureAwait(false);
+
+            try
+            {
+                return await entity.Task.AwaitWithCancellation<WebPubSubResult>(token);
+            }
+            catch (OperationCanceledException ex)
+            {
+                throw new SendMessageFailedException("Cancelled by CancellationToken", id, ex);
+            }
         }
 
         private Task HandleConnectionCloseAndNoRecovery(DisconnectedMessage disconnectedMessage, CancellationToken token)

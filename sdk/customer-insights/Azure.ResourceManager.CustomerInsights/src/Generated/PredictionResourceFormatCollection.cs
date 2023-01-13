@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -186,37 +185,9 @@ namespace Azure.ResourceManager.CustomerInsights
         /// <returns> An async collection of <see cref="PredictionResourceFormatResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<PredictionResourceFormatResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<PredictionResourceFormatResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _predictionResourceFormatPredictionsClientDiagnostics.CreateScope("PredictionResourceFormatCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _predictionResourceFormatPredictionsRestClient.ListByHubAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new PredictionResourceFormatResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<PredictionResourceFormatResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _predictionResourceFormatPredictionsClientDiagnostics.CreateScope("PredictionResourceFormatCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _predictionResourceFormatPredictionsRestClient.ListByHubNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new PredictionResourceFormatResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _predictionResourceFormatPredictionsRestClient.CreateListByHubRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _predictionResourceFormatPredictionsRestClient.CreateListByHubNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new PredictionResourceFormatResource(Client, PredictionResourceFormatData.DeserializePredictionResourceFormatData(e)), _predictionResourceFormatPredictionsClientDiagnostics, Pipeline, "PredictionResourceFormatCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -228,37 +199,9 @@ namespace Azure.ResourceManager.CustomerInsights
         /// <returns> A collection of <see cref="PredictionResourceFormatResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<PredictionResourceFormatResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<PredictionResourceFormatResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _predictionResourceFormatPredictionsClientDiagnostics.CreateScope("PredictionResourceFormatCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _predictionResourceFormatPredictionsRestClient.ListByHub(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new PredictionResourceFormatResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<PredictionResourceFormatResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _predictionResourceFormatPredictionsClientDiagnostics.CreateScope("PredictionResourceFormatCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _predictionResourceFormatPredictionsRestClient.ListByHubNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new PredictionResourceFormatResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _predictionResourceFormatPredictionsRestClient.CreateListByHubRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _predictionResourceFormatPredictionsRestClient.CreateListByHubNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new PredictionResourceFormatResource(Client, PredictionResourceFormatData.DeserializePredictionResourceFormatData(e)), _predictionResourceFormatPredictionsClientDiagnostics, Pipeline, "PredictionResourceFormatCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

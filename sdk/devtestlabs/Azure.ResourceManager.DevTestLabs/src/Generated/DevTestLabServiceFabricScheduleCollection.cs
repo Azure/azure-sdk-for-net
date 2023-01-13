@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -192,37 +191,9 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <returns> An async collection of <see cref="DevTestLabServiceFabricScheduleResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DevTestLabServiceFabricScheduleResource> GetAllAsync(string expand = null, string filter = null, int? top = null, string orderby = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<DevTestLabServiceFabricScheduleResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _devTestLabServiceFabricScheduleServiceFabricSchedulesClientDiagnostics.CreateScope("DevTestLabServiceFabricScheduleCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _devTestLabServiceFabricScheduleServiceFabricSchedulesRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, expand, filter, top, orderby, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new DevTestLabServiceFabricScheduleResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<DevTestLabServiceFabricScheduleResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _devTestLabServiceFabricScheduleServiceFabricSchedulesClientDiagnostics.CreateScope("DevTestLabServiceFabricScheduleCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _devTestLabServiceFabricScheduleServiceFabricSchedulesRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, expand, filter, top, orderby, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new DevTestLabServiceFabricScheduleResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _devTestLabServiceFabricScheduleServiceFabricSchedulesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, expand, filter, top, orderby);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _devTestLabServiceFabricScheduleServiceFabricSchedulesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, expand, filter, top, orderby);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DevTestLabServiceFabricScheduleResource(Client, DevTestLabScheduleData.DeserializeDevTestLabScheduleData(e)), _devTestLabServiceFabricScheduleServiceFabricSchedulesClientDiagnostics, Pipeline, "DevTestLabServiceFabricScheduleCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -238,37 +209,9 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <returns> A collection of <see cref="DevTestLabServiceFabricScheduleResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DevTestLabServiceFabricScheduleResource> GetAll(string expand = null, string filter = null, int? top = null, string orderby = null, CancellationToken cancellationToken = default)
         {
-            Page<DevTestLabServiceFabricScheduleResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _devTestLabServiceFabricScheduleServiceFabricSchedulesClientDiagnostics.CreateScope("DevTestLabServiceFabricScheduleCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _devTestLabServiceFabricScheduleServiceFabricSchedulesRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, expand, filter, top, orderby, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new DevTestLabServiceFabricScheduleResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<DevTestLabServiceFabricScheduleResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _devTestLabServiceFabricScheduleServiceFabricSchedulesClientDiagnostics.CreateScope("DevTestLabServiceFabricScheduleCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _devTestLabServiceFabricScheduleServiceFabricSchedulesRestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, expand, filter, top, orderby, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new DevTestLabServiceFabricScheduleResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _devTestLabServiceFabricScheduleServiceFabricSchedulesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, expand, filter, top, orderby);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _devTestLabServiceFabricScheduleServiceFabricSchedulesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, expand, filter, top, orderby);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DevTestLabServiceFabricScheduleResource(Client, DevTestLabScheduleData.DeserializeDevTestLabScheduleData(e)), _devTestLabServiceFabricScheduleServiceFabricSchedulesClientDiagnostics, Pipeline, "DevTestLabServiceFabricScheduleCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

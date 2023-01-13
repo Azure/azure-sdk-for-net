@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -187,37 +186,9 @@ namespace Azure.ResourceManager.Automation
         /// <returns> An async collection of <see cref="AutomationCredentialResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<AutomationCredentialResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<AutomationCredentialResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _automationCredentialCredentialClientDiagnostics.CreateScope("AutomationCredentialCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _automationCredentialCredentialRestClient.ListByAutomationAccountAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new AutomationCredentialResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<AutomationCredentialResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _automationCredentialCredentialClientDiagnostics.CreateScope("AutomationCredentialCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _automationCredentialCredentialRestClient.ListByAutomationAccountNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new AutomationCredentialResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _automationCredentialCredentialRestClient.CreateListByAutomationAccountRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _automationCredentialCredentialRestClient.CreateListByAutomationAccountNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new AutomationCredentialResource(Client, AutomationCredentialData.DeserializeAutomationCredentialData(e)), _automationCredentialCredentialClientDiagnostics, Pipeline, "AutomationCredentialCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -229,37 +200,9 @@ namespace Azure.ResourceManager.Automation
         /// <returns> A collection of <see cref="AutomationCredentialResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<AutomationCredentialResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<AutomationCredentialResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _automationCredentialCredentialClientDiagnostics.CreateScope("AutomationCredentialCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _automationCredentialCredentialRestClient.ListByAutomationAccount(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new AutomationCredentialResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<AutomationCredentialResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _automationCredentialCredentialClientDiagnostics.CreateScope("AutomationCredentialCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _automationCredentialCredentialRestClient.ListByAutomationAccountNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new AutomationCredentialResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _automationCredentialCredentialRestClient.CreateListByAutomationAccountRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _automationCredentialCredentialRestClient.CreateListByAutomationAccountNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new AutomationCredentialResource(Client, AutomationCredentialData.DeserializeAutomationCredentialData(e)), _automationCredentialCredentialClientDiagnostics, Pipeline, "AutomationCredentialCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

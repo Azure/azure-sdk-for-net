@@ -11,9 +11,10 @@ using Azure;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager;
+using Azure.ResourceManager.Kusto;
 using Azure.ResourceManager.Kusto.Models;
 
-namespace Azure.ResourceManager.Kusto
+namespace Azure.ResourceManager.Kusto.Samples
 {
     public partial class Sample_KustoAttachedDatabaseConfigurationCollection
     {
@@ -22,11 +23,13 @@ namespace Azure.ResourceManager.Kusto
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetAll_KustoAttachedDatabaseConfigurationsListByCluster()
         {
-            // Generated from example definition: specification/azure-kusto/resource-manager/Microsoft.Kusto/stable/2022-07-07/examples/KustoAttachedDatabaseConfigurationsListByCluster.json
+            // Generated from example definition: specification/azure-kusto/resource-manager/Microsoft.Kusto/stable/2022-11-11/examples/KustoAttachedDatabaseConfigurationsListByCluster.json
             // this example is just showing the usage of "AttachedDatabaseConfigurations_ListByCluster" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this KustoClusterResource created on azure
             // for more information of creating KustoClusterResource, please refer to the document of KustoClusterResource
@@ -57,11 +60,13 @@ namespace Azure.ResourceManager.Kusto
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_AttachedDatabaseConfigurationsGet()
         {
-            // Generated from example definition: specification/azure-kusto/resource-manager/Microsoft.Kusto/stable/2022-07-07/examples/KustoAttachedDatabaseConfigurationsGet.json
+            // Generated from example definition: specification/azure-kusto/resource-manager/Microsoft.Kusto/stable/2022-11-11/examples/KustoAttachedDatabaseConfigurationsGet.json
             // this example is just showing the usage of "AttachedDatabaseConfigurations_Get" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this KustoClusterResource created on azure
             // for more information of creating KustoClusterResource, please refer to the document of KustoClusterResource
@@ -90,11 +95,13 @@ namespace Azure.ResourceManager.Kusto
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Exists_AttachedDatabaseConfigurationsGet()
         {
-            // Generated from example definition: specification/azure-kusto/resource-manager/Microsoft.Kusto/stable/2022-07-07/examples/KustoAttachedDatabaseConfigurationsGet.json
+            // Generated from example definition: specification/azure-kusto/resource-manager/Microsoft.Kusto/stable/2022-11-11/examples/KustoAttachedDatabaseConfigurationsGet.json
             // this example is just showing the usage of "AttachedDatabaseConfigurations_Get" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this KustoClusterResource created on azure
             // for more information of creating KustoClusterResource, please refer to the document of KustoClusterResource
@@ -119,11 +126,13 @@ namespace Azure.ResourceManager.Kusto
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task CreateOrUpdate_AttachedDatabaseConfigurationsCreateOrUpdate()
         {
-            // Generated from example definition: specification/azure-kusto/resource-manager/Microsoft.Kusto/stable/2022-07-07/examples/KustoAttachedDatabaseConfigurationsCreateOrUpdate.json
+            // Generated from example definition: specification/azure-kusto/resource-manager/Microsoft.Kusto/stable/2022-11-11/examples/KustoAttachedDatabaseConfigurationsCreateOrUpdate.json
             // this example is just showing the usage of "AttachedDatabaseConfigurations_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this KustoClusterResource created on azure
             // for more information of creating KustoClusterResource, please refer to the document of KustoClusterResource

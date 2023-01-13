@@ -11,9 +11,10 @@ using Azure;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager;
+using Azure.ResourceManager.SecurityDevOps;
 using Azure.ResourceManager.SecurityDevOps.Models;
 
-namespace Azure.ResourceManager.SecurityDevOps
+namespace Azure.ResourceManager.SecurityDevOps.Samples
 {
     public partial class Sample_AzureDevOpsProjectResource
     {
@@ -25,8 +26,10 @@ namespace Azure.ResourceManager.SecurityDevOps
             // Generated from example definition: specification/securitydevops/resource-manager/Microsoft.SecurityDevOps/preview/2022-09-01-preview/examples/AzureDevOpsProjectGet.json
             // this example is just showing the usage of "AzureDevOpsProject_Get" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this AzureDevOpsProjectResource created on azure
             // for more information of creating AzureDevOpsProjectResource, please refer to the document of AzureDevOpsProjectResource
@@ -56,8 +59,10 @@ namespace Azure.ResourceManager.SecurityDevOps
             // Generated from example definition: specification/securitydevops/resource-manager/Microsoft.SecurityDevOps/preview/2022-09-01-preview/examples/AzureDevOpsProjectUpdate.json
             // this example is just showing the usage of "AzureDevOpsProject_Update" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this AzureDevOpsProjectResource created on azure
             // for more information of creating AzureDevOpsProjectResource, please refer to the document of AzureDevOpsProjectResource

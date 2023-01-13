@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -187,37 +186,9 @@ namespace Azure.ResourceManager.Network
         /// <returns> An async collection of <see cref="ExpressRouteCrossConnectionResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ExpressRouteCrossConnectionResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<ExpressRouteCrossConnectionResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _expressRouteCrossConnectionClientDiagnostics.CreateScope("ExpressRouteCrossConnectionCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _expressRouteCrossConnectionRestClient.ListByResourceGroupAsync(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ExpressRouteCrossConnectionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<ExpressRouteCrossConnectionResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _expressRouteCrossConnectionClientDiagnostics.CreateScope("ExpressRouteCrossConnectionCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _expressRouteCrossConnectionRestClient.ListByResourceGroupNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ExpressRouteCrossConnectionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _expressRouteCrossConnectionRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _expressRouteCrossConnectionRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ExpressRouteCrossConnectionResource(Client, ExpressRouteCrossConnectionData.DeserializeExpressRouteCrossConnectionData(e)), _expressRouteCrossConnectionClientDiagnostics, Pipeline, "ExpressRouteCrossConnectionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -229,37 +200,9 @@ namespace Azure.ResourceManager.Network
         /// <returns> A collection of <see cref="ExpressRouteCrossConnectionResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ExpressRouteCrossConnectionResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<ExpressRouteCrossConnectionResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _expressRouteCrossConnectionClientDiagnostics.CreateScope("ExpressRouteCrossConnectionCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _expressRouteCrossConnectionRestClient.ListByResourceGroup(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ExpressRouteCrossConnectionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<ExpressRouteCrossConnectionResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _expressRouteCrossConnectionClientDiagnostics.CreateScope("ExpressRouteCrossConnectionCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _expressRouteCrossConnectionRestClient.ListByResourceGroupNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ExpressRouteCrossConnectionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _expressRouteCrossConnectionRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _expressRouteCrossConnectionRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ExpressRouteCrossConnectionResource(Client, ExpressRouteCrossConnectionData.DeserializeExpressRouteCrossConnectionData(e)), _expressRouteCrossConnectionClientDiagnostics, Pipeline, "ExpressRouteCrossConnectionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

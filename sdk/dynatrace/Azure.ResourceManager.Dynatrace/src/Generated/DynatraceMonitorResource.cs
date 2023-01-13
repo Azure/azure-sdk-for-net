@@ -368,37 +368,9 @@ namespace Azure.ResourceManager.Dynatrace
         /// <returns> An async collection of <see cref="DynatraceMonitoredResourceDetails" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DynatraceMonitoredResourceDetails> GetMonitoredResourcesAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<DynatraceMonitoredResourceDetails>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _dynatraceMonitorMonitorsClientDiagnostics.CreateScope("DynatraceMonitorResource.GetMonitoredResources");
-                scope.Start();
-                try
-                {
-                    var response = await _dynatraceMonitorMonitorsRestClient.ListMonitoredResourcesAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<DynatraceMonitoredResourceDetails>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _dynatraceMonitorMonitorsClientDiagnostics.CreateScope("DynatraceMonitorResource.GetMonitoredResources");
-                scope.Start();
-                try
-                {
-                    var response = await _dynatraceMonitorMonitorsRestClient.ListMonitoredResourcesNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _dynatraceMonitorMonitorsRestClient.CreateListMonitoredResourcesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _dynatraceMonitorMonitorsRestClient.CreateListMonitoredResourcesNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, DynatraceMonitoredResourceDetails.DeserializeDynatraceMonitoredResourceDetails, _dynatraceMonitorMonitorsClientDiagnostics, Pipeline, "DynatraceMonitorResource.GetMonitoredResources", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -410,37 +382,9 @@ namespace Azure.ResourceManager.Dynatrace
         /// <returns> A collection of <see cref="DynatraceMonitoredResourceDetails" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DynatraceMonitoredResourceDetails> GetMonitoredResources(CancellationToken cancellationToken = default)
         {
-            Page<DynatraceMonitoredResourceDetails> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _dynatraceMonitorMonitorsClientDiagnostics.CreateScope("DynatraceMonitorResource.GetMonitoredResources");
-                scope.Start();
-                try
-                {
-                    var response = _dynatraceMonitorMonitorsRestClient.ListMonitoredResources(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<DynatraceMonitoredResourceDetails> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _dynatraceMonitorMonitorsClientDiagnostics.CreateScope("DynatraceMonitorResource.GetMonitoredResources");
-                scope.Start();
-                try
-                {
-                    var response = _dynatraceMonitorMonitorsRestClient.ListMonitoredResourcesNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _dynatraceMonitorMonitorsRestClient.CreateListMonitoredResourcesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _dynatraceMonitorMonitorsRestClient.CreateListMonitoredResourcesNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, DynatraceMonitoredResourceDetails.DeserializeDynatraceMonitoredResourceDetails, _dynatraceMonitorMonitorsClientDiagnostics, Pipeline, "DynatraceMonitorResource.GetMonitoredResources", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -496,37 +440,9 @@ namespace Azure.ResourceManager.Dynatrace
         /// <returns> An async collection of <see cref="DynatraceMonitorVmInfo" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DynatraceMonitorVmInfo> GetHostsAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<DynatraceMonitorVmInfo>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _dynatraceMonitorMonitorsClientDiagnostics.CreateScope("DynatraceMonitorResource.GetHosts");
-                scope.Start();
-                try
-                {
-                    var response = await _dynatraceMonitorMonitorsRestClient.ListHostsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<DynatraceMonitorVmInfo>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _dynatraceMonitorMonitorsClientDiagnostics.CreateScope("DynatraceMonitorResource.GetHosts");
-                scope.Start();
-                try
-                {
-                    var response = await _dynatraceMonitorMonitorsRestClient.ListHostsNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _dynatraceMonitorMonitorsRestClient.CreateListHostsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _dynatraceMonitorMonitorsRestClient.CreateListHostsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, DynatraceMonitorVmInfo.DeserializeDynatraceMonitorVmInfo, _dynatraceMonitorMonitorsClientDiagnostics, Pipeline, "DynatraceMonitorResource.GetHosts", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -538,37 +454,9 @@ namespace Azure.ResourceManager.Dynatrace
         /// <returns> A collection of <see cref="DynatraceMonitorVmInfo" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DynatraceMonitorVmInfo> GetHosts(CancellationToken cancellationToken = default)
         {
-            Page<DynatraceMonitorVmInfo> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _dynatraceMonitorMonitorsClientDiagnostics.CreateScope("DynatraceMonitorResource.GetHosts");
-                scope.Start();
-                try
-                {
-                    var response = _dynatraceMonitorMonitorsRestClient.ListHosts(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<DynatraceMonitorVmInfo> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _dynatraceMonitorMonitorsClientDiagnostics.CreateScope("DynatraceMonitorResource.GetHosts");
-                scope.Start();
-                try
-                {
-                    var response = _dynatraceMonitorMonitorsRestClient.ListHostsNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _dynatraceMonitorMonitorsRestClient.CreateListHostsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _dynatraceMonitorMonitorsRestClient.CreateListHostsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, DynatraceMonitorVmInfo.DeserializeDynatraceMonitorVmInfo, _dynatraceMonitorMonitorsClientDiagnostics, Pipeline, "DynatraceMonitorResource.GetHosts", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -580,37 +468,9 @@ namespace Azure.ResourceManager.Dynatrace
         /// <returns> An async collection of <see cref="DynatraceOneAgentEnabledAppServiceInfo" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DynatraceOneAgentEnabledAppServiceInfo> GetAppServicesAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<DynatraceOneAgentEnabledAppServiceInfo>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _dynatraceMonitorMonitorsClientDiagnostics.CreateScope("DynatraceMonitorResource.GetAppServices");
-                scope.Start();
-                try
-                {
-                    var response = await _dynatraceMonitorMonitorsRestClient.ListAppServicesAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<DynatraceOneAgentEnabledAppServiceInfo>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _dynatraceMonitorMonitorsClientDiagnostics.CreateScope("DynatraceMonitorResource.GetAppServices");
-                scope.Start();
-                try
-                {
-                    var response = await _dynatraceMonitorMonitorsRestClient.ListAppServicesNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _dynatraceMonitorMonitorsRestClient.CreateListAppServicesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _dynatraceMonitorMonitorsRestClient.CreateListAppServicesNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, DynatraceOneAgentEnabledAppServiceInfo.DeserializeDynatraceOneAgentEnabledAppServiceInfo, _dynatraceMonitorMonitorsClientDiagnostics, Pipeline, "DynatraceMonitorResource.GetAppServices", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -622,37 +482,9 @@ namespace Azure.ResourceManager.Dynatrace
         /// <returns> A collection of <see cref="DynatraceOneAgentEnabledAppServiceInfo" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DynatraceOneAgentEnabledAppServiceInfo> GetAppServices(CancellationToken cancellationToken = default)
         {
-            Page<DynatraceOneAgentEnabledAppServiceInfo> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _dynatraceMonitorMonitorsClientDiagnostics.CreateScope("DynatraceMonitorResource.GetAppServices");
-                scope.Start();
-                try
-                {
-                    var response = _dynatraceMonitorMonitorsRestClient.ListAppServices(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<DynatraceOneAgentEnabledAppServiceInfo> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _dynatraceMonitorMonitorsClientDiagnostics.CreateScope("DynatraceMonitorResource.GetAppServices");
-                scope.Start();
-                try
-                {
-                    var response = _dynatraceMonitorMonitorsRestClient.ListAppServicesNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _dynatraceMonitorMonitorsRestClient.CreateListAppServicesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _dynatraceMonitorMonitorsRestClient.CreateListAppServicesNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, DynatraceOneAgentEnabledAppServiceInfo.DeserializeDynatraceOneAgentEnabledAppServiceInfo, _dynatraceMonitorMonitorsClientDiagnostics, Pipeline, "DynatraceMonitorResource.GetAppServices", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -714,37 +546,9 @@ namespace Azure.ResourceManager.Dynatrace
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            async Task<Page<LinkableEnvironmentResult>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _dynatraceMonitorMonitorsClientDiagnostics.CreateScope("DynatraceMonitorResource.GetLinkableEnvironments");
-                scope.Start();
-                try
-                {
-                    var response = await _dynatraceMonitorMonitorsRestClient.ListLinkableEnvironmentsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<LinkableEnvironmentResult>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _dynatraceMonitorMonitorsClientDiagnostics.CreateScope("DynatraceMonitorResource.GetLinkableEnvironments");
-                scope.Start();
-                try
-                {
-                    var response = await _dynatraceMonitorMonitorsRestClient.ListLinkableEnvironmentsNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _dynatraceMonitorMonitorsRestClient.CreateListLinkableEnvironmentsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _dynatraceMonitorMonitorsRestClient.CreateListLinkableEnvironmentsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, LinkableEnvironmentResult.DeserializeLinkableEnvironmentResult, _dynatraceMonitorMonitorsClientDiagnostics, Pipeline, "DynatraceMonitorResource.GetLinkableEnvironments", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -760,37 +564,9 @@ namespace Azure.ResourceManager.Dynatrace
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            Page<LinkableEnvironmentResult> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _dynatraceMonitorMonitorsClientDiagnostics.CreateScope("DynatraceMonitorResource.GetLinkableEnvironments");
-                scope.Start();
-                try
-                {
-                    var response = _dynatraceMonitorMonitorsRestClient.ListLinkableEnvironments(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<LinkableEnvironmentResult> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _dynatraceMonitorMonitorsClientDiagnostics.CreateScope("DynatraceMonitorResource.GetLinkableEnvironments");
-                scope.Start();
-                try
-                {
-                    var response = _dynatraceMonitorMonitorsRestClient.ListLinkableEnvironmentsNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _dynatraceMonitorMonitorsRestClient.CreateListLinkableEnvironmentsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _dynatraceMonitorMonitorsRestClient.CreateListLinkableEnvironmentsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, LinkableEnvironmentResult.DeserializeLinkableEnvironmentResult, _dynatraceMonitorMonitorsClientDiagnostics, Pipeline, "DynatraceMonitorResource.GetLinkableEnvironments", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
