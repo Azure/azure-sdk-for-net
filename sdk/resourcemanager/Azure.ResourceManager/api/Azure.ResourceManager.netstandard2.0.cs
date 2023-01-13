@@ -80,11 +80,12 @@ namespace Azure.ResourceManager
     public partial class ArmOperation : Azure.Operation
     {
         protected ArmOperation() { }
-        public ArmOperation(Azure.ResourceManager.ArmClient client, string id) { }
         public override bool HasCompleted { get { throw null; } }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override string Id { get { throw null; } }
         public override Azure.Response GetRawResponse() { throw null; }
+        public static Azure.ResourceManager.ArmOperation Rehydrate(Azure.ResourceManager.ArmClient client, string id) { throw null; }
+        public static Azure.ResourceManager.ArmOperation<R> Rehydrate<R>(Azure.ResourceManager.ArmClient client, string id) where R : Azure.ResourceManager.ISerializable<R> { throw null; }
         public override Azure.Response UpdateStatus(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public override System.Threading.Tasks.ValueTask<Azure.Response> UpdateStatusAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public override Azure.Response WaitForCompletionResponse(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -95,7 +96,6 @@ namespace Azure.ResourceManager
     public partial class ArmOperation<T> : Azure.Operation<T>
     {
         protected ArmOperation() { }
-        public ArmOperation(Azure.ResourceManager.ArmClient client, string id) { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
@@ -136,6 +136,10 @@ namespace Azure.ResourceManager
     public enum AzureStackProfile
     {
         Profile20200901Hybrid = 0,
+    }
+    public partial interface ISerializable<T>
+    {
+        void Serialize(System.Span<byte> buffer);
     }
 }
 namespace Azure.ResourceManager.ManagementGroups
@@ -723,12 +727,13 @@ namespace Azure.ResourceManager.Resources
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Resources.ManagementLockResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.ManagementLockResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class ManagementLockData : Azure.ResourceManager.Models.ResourceData
+    public partial class ManagementLockData : Azure.ResourceManager.Models.ResourceData, Azure.ResourceManager.ISerializable<Azure.ResourceManager.Resources.ManagementLockData>
     {
         public ManagementLockData(Azure.ResourceManager.Resources.Models.ManagementLockLevel level) { }
         public Azure.ResourceManager.Resources.Models.ManagementLockLevel Level { get { throw null; } set { } }
         public string Notes { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Resources.Models.ManagementLockOwner> Owners { get { throw null; } }
+        void Azure.ResourceManager.ISerializable<Azure.ResourceManager.Resources.ManagementLockData>.Serialize(System.Span<byte> buffer) { }
     }
     public partial class ManagementLockResource : Azure.ResourceManager.ArmResource
     {
@@ -828,11 +833,12 @@ namespace Azure.ResourceManager.Resources
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Resources.ResourceGroupResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.ResourceGroupResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class ResourceGroupData : Azure.ResourceManager.Models.TrackedResourceData
+    public partial class ResourceGroupData : Azure.ResourceManager.Models.TrackedResourceData, Azure.ResourceManager.ISerializable<Azure.ResourceManager.Resources.ResourceGroupData>
     {
         public ResourceGroupData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
         public string ManagedBy { get { throw null; } set { } }
         public string ResourceGroupProvisioningState { get { throw null; } }
+        void Azure.ResourceManager.ISerializable<Azure.ResourceManager.Resources.ResourceGroupData>.Serialize(System.Span<byte> buffer) { }
     }
     public partial class ResourceGroupResource : Azure.ResourceManager.ArmResource
     {
@@ -1509,11 +1515,12 @@ namespace Azure.ResourceManager.Resources.Models
         public static bool operator !=(Azure.ResourceManager.Resources.Models.RegionType left, Azure.ResourceManager.Resources.Models.RegionType right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class ResourceGroupExportResult
+    public partial class ResourceGroupExportResult : Azure.ResourceManager.ISerializable<Azure.ResourceManager.Resources.Models.ResourceGroupExportResult>
     {
         internal ResourceGroupExportResult() { }
         public Azure.ResponseError Error { get { throw null; } }
         public System.BinaryData Template { get { throw null; } }
+        void Azure.ResourceManager.ISerializable<Azure.ResourceManager.Resources.Models.ResourceGroupExportResult>.Serialize(System.Span<byte> buffer) { }
     }
     public partial class ResourceGroupPatch
     {
