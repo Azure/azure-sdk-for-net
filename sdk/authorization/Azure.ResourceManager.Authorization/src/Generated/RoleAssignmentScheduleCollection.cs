@@ -8,7 +8,6 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -111,37 +110,9 @@ namespace Azure.ResourceManager.Authorization
         /// <returns> An async collection of <see cref="RoleAssignmentScheduleResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<RoleAssignmentScheduleResource> GetAllAsync(string filter = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<RoleAssignmentScheduleResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _roleAssignmentScheduleClientDiagnostics.CreateScope("RoleAssignmentScheduleCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _roleAssignmentScheduleRestClient.ListForScopeAsync(Id, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new RoleAssignmentScheduleResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<RoleAssignmentScheduleResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _roleAssignmentScheduleClientDiagnostics.CreateScope("RoleAssignmentScheduleCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _roleAssignmentScheduleRestClient.ListForScopeNextPageAsync(nextLink, Id, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new RoleAssignmentScheduleResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _roleAssignmentScheduleRestClient.CreateListForScopeRequest(Id, filter);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _roleAssignmentScheduleRestClient.CreateListForScopeNextPageRequest(nextLink, Id, filter);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new RoleAssignmentScheduleResource(Client, RoleAssignmentScheduleData.DeserializeRoleAssignmentScheduleData(e)), _roleAssignmentScheduleClientDiagnostics, Pipeline, "RoleAssignmentScheduleCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -154,37 +125,9 @@ namespace Azure.ResourceManager.Authorization
         /// <returns> A collection of <see cref="RoleAssignmentScheduleResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<RoleAssignmentScheduleResource> GetAll(string filter = null, CancellationToken cancellationToken = default)
         {
-            Page<RoleAssignmentScheduleResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _roleAssignmentScheduleClientDiagnostics.CreateScope("RoleAssignmentScheduleCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _roleAssignmentScheduleRestClient.ListForScope(Id, filter, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new RoleAssignmentScheduleResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<RoleAssignmentScheduleResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _roleAssignmentScheduleClientDiagnostics.CreateScope("RoleAssignmentScheduleCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _roleAssignmentScheduleRestClient.ListForScopeNextPage(nextLink, Id, filter, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new RoleAssignmentScheduleResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _roleAssignmentScheduleRestClient.CreateListForScopeRequest(Id, filter);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _roleAssignmentScheduleRestClient.CreateListForScopeNextPageRequest(nextLink, Id, filter);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new RoleAssignmentScheduleResource(Client, RoleAssignmentScheduleData.DeserializeRoleAssignmentScheduleData(e)), _roleAssignmentScheduleClientDiagnostics, Pipeline, "RoleAssignmentScheduleCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

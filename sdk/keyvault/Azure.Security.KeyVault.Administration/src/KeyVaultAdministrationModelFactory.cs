@@ -56,7 +56,7 @@ namespace Azure.Security.KeyVault.Administration
             new KeyVaultRoleAssignment(id, name, type, properties);
 
         /// <summary>
-        /// Initializes a new instance of a FullRestoreOperation for mocking purposes.
+        /// Initializes a new instance of a <see cref="KeyVaultRestoreOperation"/> for mocking purposes.
         /// </summary>
         /// <param name="response">The <see cref="Response" /> that will be returned from <see cref="KeyVaultRestoreOperation.GetRawResponse" />.</param>
         /// <param name="client">An instance of <see cref="KeyVaultBackupClient" />.</param>
@@ -74,7 +74,7 @@ namespace Azure.Security.KeyVault.Administration
                 endTime), response, client);
 
         /// <summary>
-        /// Initializes a new instance of a FullBackupOperation for mocking purposes.
+        /// Initializes a new instance of a <see cref="KeyVaultBackupOperation"/> for mocking purposes.
         /// </summary>
         /// <param name="response">The <see cref="Response" /> that will be returned from <see cref="KeyVaultBackupOperation.GetRawResponse" />.</param>
         /// <param name="client">An instance of <see cref="KeyVaultBackupClient" />.</param>
@@ -94,30 +94,30 @@ namespace Azure.Security.KeyVault.Administration
                 blobContainerUri.AbsoluteUri), response, client);
 
         /// <summary>
-        /// Initializes a new instance of a <see cref="BackupResult"/> for mocking purposes.
+        /// Initializes a new instance of a <see cref="KeyVaultBackupResult"/> for mocking purposes.
         /// </summary>
         /// <param name="folderUri">The location of the backup.</param>
         /// <param name="startTime">The start time of the backup operation.</param>
         /// <param name="endTime">The end time of the backup operation.</param>
-        /// <returns>A new <see cref="BackupResult"/> instance.</returns>
+        /// <returns>A new <see cref="KeyVaultBackupResult"/> instance.</returns>
         public static KeyVaultBackupResult BackupResult(Uri folderUri, DateTimeOffset startTime, DateTimeOffset endTime) =>
             new KeyVaultBackupResult(folderUri, startTime, endTime);
 
         /// <summary>
-        /// Initializes a new instance of a <see cref="RestoreResult"/> for mocking purposes.
+        /// Initializes a new instance of a <see cref="KeyVaultRestoreResult"/> for mocking purposes.
         /// </summary>
         /// <param name="startTime">The start time of the restore operation.</param>
         /// <param name="endTime">The end time of the restore operation.</param>
-        /// <returns>A new <see cref="BackupResult"/> instance.</returns>
+        /// <returns>A new <see cref="KeyVaultRestoreResult"/> instance.</returns>
         public static KeyVaultRestoreResult RestoreResult(DateTimeOffset startTime, DateTimeOffset endTime) =>
             new KeyVaultRestoreResult(startTime, endTime);
 
         /// <summary>
-        /// Initializes a new instance of a <see cref="SelectiveKeyRestoreResult"/> for mocking purposes.
+        /// Initializes a new instance of a <see cref="KeyVaultRestoreResult"/> for mocking purposes.
         /// </summary>
         /// <param name="startTime">The start time of the restore operation.</param>
         /// <param name="endTime">The end time of the restore operation.</param>
-        /// <returns>A new <see cref="BackupResult"/> instance.</returns>
+        /// <returns>A new <see cref="KeyVaultRestoreResult"/> instance.</returns>
         public static KeyVaultRestoreResult SelectiveKeyRestoreResult(DateTimeOffset startTime, DateTimeOffset endTime) =>
             new KeyVaultRestoreResult(startTime, endTime);
     }

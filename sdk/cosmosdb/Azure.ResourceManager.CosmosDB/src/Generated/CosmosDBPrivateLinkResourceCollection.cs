@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -120,22 +119,8 @@ namespace Azure.ResourceManager.CosmosDB
         /// <returns> An async collection of <see cref="CosmosDBPrivateLinkResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<CosmosDBPrivateLinkResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<CosmosDBPrivateLinkResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _cosmosDBPrivateLinkResourcePrivateLinkResourcesClientDiagnostics.CreateScope("CosmosDBPrivateLinkResourceCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _cosmosDBPrivateLinkResourcePrivateLinkResourcesRestClient.ListByDatabaseAccountAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new CosmosDBPrivateLinkResource(Client, value)), null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _cosmosDBPrivateLinkResourcePrivateLinkResourcesRestClient.CreateListByDatabaseAccountRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new CosmosDBPrivateLinkResource(Client, CosmosDBPrivateLinkResourceData.DeserializeCosmosDBPrivateLinkResourceData(e)), _cosmosDBPrivateLinkResourcePrivateLinkResourcesClientDiagnostics, Pipeline, "CosmosDBPrivateLinkResourceCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -147,22 +132,8 @@ namespace Azure.ResourceManager.CosmosDB
         /// <returns> A collection of <see cref="CosmosDBPrivateLinkResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<CosmosDBPrivateLinkResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<CosmosDBPrivateLinkResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _cosmosDBPrivateLinkResourcePrivateLinkResourcesClientDiagnostics.CreateScope("CosmosDBPrivateLinkResourceCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _cosmosDBPrivateLinkResourcePrivateLinkResourcesRestClient.ListByDatabaseAccount(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new CosmosDBPrivateLinkResource(Client, value)), null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _cosmosDBPrivateLinkResourcePrivateLinkResourcesRestClient.CreateListByDatabaseAccountRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new CosmosDBPrivateLinkResource(Client, CosmosDBPrivateLinkResourceData.DeserializeCosmosDBPrivateLinkResourceData(e)), _cosmosDBPrivateLinkResourcePrivateLinkResourcesClientDiagnostics, Pipeline, "CosmosDBPrivateLinkResourceCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>

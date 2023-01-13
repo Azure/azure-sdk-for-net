@@ -6,9 +6,7 @@
 #nullable disable
 
 using System;
-using System.Linq;
 using System.Threading;
-using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -59,22 +57,8 @@ namespace Azure.ResourceManager.Automanage
         /// <returns> An async collection of <see cref="ConfigurationProfileResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ConfigurationProfileResource> GetConfigurationProfilesAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<ConfigurationProfileResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = ConfigurationProfileClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetConfigurationProfiles");
-                scope.Start();
-                try
-                {
-                    var response = await ConfigurationProfileRestClient.ListBySubscriptionAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ConfigurationProfileResource(Client, value)), null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => ConfigurationProfileRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new ConfigurationProfileResource(Client, ConfigurationProfileData.DeserializeConfigurationProfileData(e)), ConfigurationProfileClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetConfigurationProfiles", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -86,22 +70,8 @@ namespace Azure.ResourceManager.Automanage
         /// <returns> A collection of <see cref="ConfigurationProfileResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ConfigurationProfileResource> GetConfigurationProfiles(CancellationToken cancellationToken = default)
         {
-            Page<ConfigurationProfileResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = ConfigurationProfileClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetConfigurationProfiles");
-                scope.Start();
-                try
-                {
-                    var response = ConfigurationProfileRestClient.ListBySubscription(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ConfigurationProfileResource(Client, value)), null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => ConfigurationProfileRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new ConfigurationProfileResource(Client, ConfigurationProfileData.DeserializeConfigurationProfileData(e)), ConfigurationProfileClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetConfigurationProfiles", "value", null, cancellationToken);
         }
     }
 }

@@ -497,37 +497,9 @@ namespace Azure.ResourceManager.Search
         /// <returns> An async collection of <see cref="SearchServiceQueryKey" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SearchServiceQueryKey> GetQueryKeysBySearchServiceAsync(SearchManagementRequestOptions searchManagementRequestOptions = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<SearchServiceQueryKey>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _queryKeysClientDiagnostics.CreateScope("SearchServiceResource.GetQueryKeysBySearchService");
-                scope.Start();
-                try
-                {
-                    var response = await _queryKeysRestClient.ListBySearchServiceAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, searchManagementRequestOptions, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<SearchServiceQueryKey>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _queryKeysClientDiagnostics.CreateScope("SearchServiceResource.GetQueryKeysBySearchService");
-                scope.Start();
-                try
-                {
-                    var response = await _queryKeysRestClient.ListBySearchServiceNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, searchManagementRequestOptions, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _queryKeysRestClient.CreateListBySearchServiceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, searchManagementRequestOptions);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _queryKeysRestClient.CreateListBySearchServiceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, searchManagementRequestOptions);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, SearchServiceQueryKey.DeserializeSearchServiceQueryKey, _queryKeysClientDiagnostics, Pipeline, "SearchServiceResource.GetQueryKeysBySearchService", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -540,37 +512,9 @@ namespace Azure.ResourceManager.Search
         /// <returns> A collection of <see cref="SearchServiceQueryKey" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SearchServiceQueryKey> GetQueryKeysBySearchService(SearchManagementRequestOptions searchManagementRequestOptions = null, CancellationToken cancellationToken = default)
         {
-            Page<SearchServiceQueryKey> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _queryKeysClientDiagnostics.CreateScope("SearchServiceResource.GetQueryKeysBySearchService");
-                scope.Start();
-                try
-                {
-                    var response = _queryKeysRestClient.ListBySearchService(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, searchManagementRequestOptions, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<SearchServiceQueryKey> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _queryKeysClientDiagnostics.CreateScope("SearchServiceResource.GetQueryKeysBySearchService");
-                scope.Start();
-                try
-                {
-                    var response = _queryKeysRestClient.ListBySearchServiceNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, searchManagementRequestOptions, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _queryKeysRestClient.CreateListBySearchServiceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, searchManagementRequestOptions);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _queryKeysRestClient.CreateListBySearchServiceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, searchManagementRequestOptions);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, SearchServiceQueryKey.DeserializeSearchServiceQueryKey, _queryKeysClientDiagnostics, Pipeline, "SearchServiceResource.GetQueryKeysBySearchService", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -639,22 +583,8 @@ namespace Azure.ResourceManager.Search
         /// <returns> An async collection of <see cref="SearchPrivateLinkResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SearchPrivateLinkResource> GetSupportedPrivateLinkResourcesAsync(SearchManagementRequestOptions searchManagementRequestOptions = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<SearchPrivateLinkResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _privateLinkResourcesClientDiagnostics.CreateScope("SearchServiceResource.GetSupportedPrivateLinkResources");
-                scope.Start();
-                try
-                {
-                    var response = await _privateLinkResourcesRestClient.ListSupportedAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, searchManagementRequestOptions, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _privateLinkResourcesRestClient.CreateListSupportedRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, searchManagementRequestOptions);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, SearchPrivateLinkResource.DeserializeSearchPrivateLinkResource, _privateLinkResourcesClientDiagnostics, Pipeline, "SearchServiceResource.GetSupportedPrivateLinkResources", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -667,22 +597,8 @@ namespace Azure.ResourceManager.Search
         /// <returns> A collection of <see cref="SearchPrivateLinkResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SearchPrivateLinkResource> GetSupportedPrivateLinkResources(SearchManagementRequestOptions searchManagementRequestOptions = null, CancellationToken cancellationToken = default)
         {
-            Page<SearchPrivateLinkResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _privateLinkResourcesClientDiagnostics.CreateScope("SearchServiceResource.GetSupportedPrivateLinkResources");
-                scope.Start();
-                try
-                {
-                    var response = _privateLinkResourcesRestClient.ListSupported(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, searchManagementRequestOptions, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _privateLinkResourcesRestClient.CreateListSupportedRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, searchManagementRequestOptions);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, SearchPrivateLinkResource.DeserializeSearchPrivateLinkResource, _privateLinkResourcesClientDiagnostics, Pipeline, "SearchServiceResource.GetSupportedPrivateLinkResources", "value", null, cancellationToken);
         }
 
         /// <summary>

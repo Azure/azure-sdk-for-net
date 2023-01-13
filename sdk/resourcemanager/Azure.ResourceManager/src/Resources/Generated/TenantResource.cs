@@ -274,37 +274,9 @@ namespace Azure.ResourceManager.Resources
         /// <returns> An async collection of <see cref="TenantResourceProvider" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<TenantResourceProvider> GetTenantResourceProvidersAsync(int? top = null, string expand = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<TenantResourceProvider>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _resourceProviderProvidersClientDiagnostics.CreateScope("TenantResource.GetTenantResourceProviders");
-                scope.Start();
-                try
-                {
-                    var response = await _resourceProviderProvidersRestClient.ListAtTenantScopeAsync(top, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<TenantResourceProvider>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _resourceProviderProvidersClientDiagnostics.CreateScope("TenantResource.GetTenantResourceProviders");
-                scope.Start();
-                try
-                {
-                    var response = await _resourceProviderProvidersRestClient.ListAtTenantScopeNextPageAsync(nextLink, top, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _resourceProviderProvidersRestClient.CreateListAtTenantScopeRequest(top, expand);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _resourceProviderProvidersRestClient.CreateListAtTenantScopeNextPageRequest(nextLink, top, expand);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, TenantResourceProvider.DeserializeTenantResourceProvider, _resourceProviderProvidersClientDiagnostics, Pipeline, "TenantResource.GetTenantResourceProviders", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -318,37 +290,9 @@ namespace Azure.ResourceManager.Resources
         /// <returns> A collection of <see cref="TenantResourceProvider" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<TenantResourceProvider> GetTenantResourceProviders(int? top = null, string expand = null, CancellationToken cancellationToken = default)
         {
-            Page<TenantResourceProvider> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _resourceProviderProvidersClientDiagnostics.CreateScope("TenantResource.GetTenantResourceProviders");
-                scope.Start();
-                try
-                {
-                    var response = _resourceProviderProvidersRestClient.ListAtTenantScope(top, expand, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<TenantResourceProvider> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _resourceProviderProvidersClientDiagnostics.CreateScope("TenantResource.GetTenantResourceProviders");
-                scope.Start();
-                try
-                {
-                    var response = _resourceProviderProvidersRestClient.ListAtTenantScopeNextPage(nextLink, top, expand, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _resourceProviderProvidersRestClient.CreateListAtTenantScopeRequest(top, expand);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _resourceProviderProvidersRestClient.CreateListAtTenantScopeNextPageRequest(nextLink, top, expand);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, TenantResourceProvider.DeserializeTenantResourceProvider, _resourceProviderProvidersClientDiagnostics, Pipeline, "TenantResource.GetTenantResourceProviders", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

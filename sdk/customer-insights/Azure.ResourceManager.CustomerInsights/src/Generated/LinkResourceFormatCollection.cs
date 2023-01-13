@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -186,37 +185,9 @@ namespace Azure.ResourceManager.CustomerInsights
         /// <returns> An async collection of <see cref="LinkResourceFormatResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<LinkResourceFormatResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<LinkResourceFormatResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _linkResourceFormatLinksClientDiagnostics.CreateScope("LinkResourceFormatCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _linkResourceFormatLinksRestClient.ListByHubAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new LinkResourceFormatResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<LinkResourceFormatResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _linkResourceFormatLinksClientDiagnostics.CreateScope("LinkResourceFormatCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _linkResourceFormatLinksRestClient.ListByHubNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new LinkResourceFormatResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _linkResourceFormatLinksRestClient.CreateListByHubRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _linkResourceFormatLinksRestClient.CreateListByHubNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new LinkResourceFormatResource(Client, LinkResourceFormatData.DeserializeLinkResourceFormatData(e)), _linkResourceFormatLinksClientDiagnostics, Pipeline, "LinkResourceFormatCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -228,37 +199,9 @@ namespace Azure.ResourceManager.CustomerInsights
         /// <returns> A collection of <see cref="LinkResourceFormatResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<LinkResourceFormatResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<LinkResourceFormatResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _linkResourceFormatLinksClientDiagnostics.CreateScope("LinkResourceFormatCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _linkResourceFormatLinksRestClient.ListByHub(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new LinkResourceFormatResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<LinkResourceFormatResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _linkResourceFormatLinksClientDiagnostics.CreateScope("LinkResourceFormatCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _linkResourceFormatLinksRestClient.ListByHubNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new LinkResourceFormatResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _linkResourceFormatLinksRestClient.CreateListByHubRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _linkResourceFormatLinksRestClient.CreateListByHubNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new LinkResourceFormatResource(Client, LinkResourceFormatData.DeserializeLinkResourceFormatData(e)), _linkResourceFormatLinksClientDiagnostics, Pipeline, "LinkResourceFormatCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

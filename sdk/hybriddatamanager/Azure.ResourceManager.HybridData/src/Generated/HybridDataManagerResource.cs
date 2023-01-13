@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -420,37 +419,9 @@ namespace Azure.ResourceManager.HybridData
         /// <returns> An async collection of <see cref="HybridDataJobDefinitionResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<HybridDataJobDefinitionResource> GetJobDefinitionsAsync(string filter = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<HybridDataJobDefinitionResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _hybridDataJobDefinitionJobDefinitionsClientDiagnostics.CreateScope("HybridDataManagerResource.GetJobDefinitions");
-                scope.Start();
-                try
-                {
-                    var response = await _hybridDataJobDefinitionJobDefinitionsRestClient.ListByDataManagerAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new HybridDataJobDefinitionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<HybridDataJobDefinitionResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _hybridDataJobDefinitionJobDefinitionsClientDiagnostics.CreateScope("HybridDataManagerResource.GetJobDefinitions");
-                scope.Start();
-                try
-                {
-                    var response = await _hybridDataJobDefinitionJobDefinitionsRestClient.ListByDataManagerNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new HybridDataJobDefinitionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _hybridDataJobDefinitionJobDefinitionsRestClient.CreateListByDataManagerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _hybridDataJobDefinitionJobDefinitionsRestClient.CreateListByDataManagerNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new HybridDataJobDefinitionResource(Client, HybridDataJobDefinitionData.DeserializeHybridDataJobDefinitionData(e)), _hybridDataJobDefinitionJobDefinitionsClientDiagnostics, Pipeline, "HybridDataManagerResource.GetJobDefinitions", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -463,37 +434,9 @@ namespace Azure.ResourceManager.HybridData
         /// <returns> A collection of <see cref="HybridDataJobDefinitionResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<HybridDataJobDefinitionResource> GetJobDefinitions(string filter = null, CancellationToken cancellationToken = default)
         {
-            Page<HybridDataJobDefinitionResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _hybridDataJobDefinitionJobDefinitionsClientDiagnostics.CreateScope("HybridDataManagerResource.GetJobDefinitions");
-                scope.Start();
-                try
-                {
-                    var response = _hybridDataJobDefinitionJobDefinitionsRestClient.ListByDataManager(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new HybridDataJobDefinitionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<HybridDataJobDefinitionResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _hybridDataJobDefinitionJobDefinitionsClientDiagnostics.CreateScope("HybridDataManagerResource.GetJobDefinitions");
-                scope.Start();
-                try
-                {
-                    var response = _hybridDataJobDefinitionJobDefinitionsRestClient.ListByDataManagerNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new HybridDataJobDefinitionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _hybridDataJobDefinitionJobDefinitionsRestClient.CreateListByDataManagerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _hybridDataJobDefinitionJobDefinitionsRestClient.CreateListByDataManagerNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new HybridDataJobDefinitionResource(Client, HybridDataJobDefinitionData.DeserializeHybridDataJobDefinitionData(e)), _hybridDataJobDefinitionJobDefinitionsClientDiagnostics, Pipeline, "HybridDataManagerResource.GetJobDefinitions", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -506,37 +449,9 @@ namespace Azure.ResourceManager.HybridData
         /// <returns> An async collection of <see cref="HybridDataJobResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<HybridDataJobResource> GetJobsAsync(string filter = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<HybridDataJobResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _hybridDataJobJobsClientDiagnostics.CreateScope("HybridDataManagerResource.GetJobs");
-                scope.Start();
-                try
-                {
-                    var response = await _hybridDataJobJobsRestClient.ListByDataManagerAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new HybridDataJobResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<HybridDataJobResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _hybridDataJobJobsClientDiagnostics.CreateScope("HybridDataManagerResource.GetJobs");
-                scope.Start();
-                try
-                {
-                    var response = await _hybridDataJobJobsRestClient.ListByDataManagerNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new HybridDataJobResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _hybridDataJobJobsRestClient.CreateListByDataManagerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _hybridDataJobJobsRestClient.CreateListByDataManagerNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new HybridDataJobResource(Client, HybridDataJobData.DeserializeHybridDataJobData(e)), _hybridDataJobJobsClientDiagnostics, Pipeline, "HybridDataManagerResource.GetJobs", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -549,37 +464,9 @@ namespace Azure.ResourceManager.HybridData
         /// <returns> A collection of <see cref="HybridDataJobResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<HybridDataJobResource> GetJobs(string filter = null, CancellationToken cancellationToken = default)
         {
-            Page<HybridDataJobResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _hybridDataJobJobsClientDiagnostics.CreateScope("HybridDataManagerResource.GetJobs");
-                scope.Start();
-                try
-                {
-                    var response = _hybridDataJobJobsRestClient.ListByDataManager(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new HybridDataJobResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<HybridDataJobResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _hybridDataJobJobsClientDiagnostics.CreateScope("HybridDataManagerResource.GetJobs");
-                scope.Start();
-                try
-                {
-                    var response = _hybridDataJobJobsRestClient.ListByDataManagerNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new HybridDataJobResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _hybridDataJobJobsRestClient.CreateListByDataManagerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _hybridDataJobJobsRestClient.CreateListByDataManagerNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new HybridDataJobResource(Client, HybridDataJobData.DeserializeHybridDataJobData(e)), _hybridDataJobJobsClientDiagnostics, Pipeline, "HybridDataManagerResource.GetJobs", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -192,22 +191,8 @@ namespace Azure.ResourceManager.GuestConfiguration
         /// <returns> An async collection of <see cref="GuestConfigurationHcrpAssignmentResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<GuestConfigurationHcrpAssignmentResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<GuestConfigurationHcrpAssignmentResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _guestConfigurationHcrpAssignmentGuestConfigurationHcrpAssignmentsClientDiagnostics.CreateScope("GuestConfigurationHcrpAssignmentCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _guestConfigurationHcrpAssignmentGuestConfigurationHcrpAssignmentsRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, _machineName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new GuestConfigurationHcrpAssignmentResource(Client, value)), null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _guestConfigurationHcrpAssignmentGuestConfigurationHcrpAssignmentsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, _machineName);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new GuestConfigurationHcrpAssignmentResource(Client, GuestConfigurationAssignmentData.DeserializeGuestConfigurationAssignmentData(e)), _guestConfigurationHcrpAssignmentGuestConfigurationHcrpAssignmentsClientDiagnostics, Pipeline, "GuestConfigurationHcrpAssignmentCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -219,22 +204,8 @@ namespace Azure.ResourceManager.GuestConfiguration
         /// <returns> A collection of <see cref="GuestConfigurationHcrpAssignmentResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<GuestConfigurationHcrpAssignmentResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<GuestConfigurationHcrpAssignmentResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _guestConfigurationHcrpAssignmentGuestConfigurationHcrpAssignmentsClientDiagnostics.CreateScope("GuestConfigurationHcrpAssignmentCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _guestConfigurationHcrpAssignmentGuestConfigurationHcrpAssignmentsRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, _machineName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new GuestConfigurationHcrpAssignmentResource(Client, value)), null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _guestConfigurationHcrpAssignmentGuestConfigurationHcrpAssignmentsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, _machineName);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new GuestConfigurationHcrpAssignmentResource(Client, GuestConfigurationAssignmentData.DeserializeGuestConfigurationAssignmentData(e)), _guestConfigurationHcrpAssignmentGuestConfigurationHcrpAssignmentsClientDiagnostics, Pipeline, "GuestConfigurationHcrpAssignmentCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>

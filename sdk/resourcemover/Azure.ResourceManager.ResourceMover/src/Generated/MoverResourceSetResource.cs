@@ -616,37 +616,9 @@ namespace Azure.ResourceManager.ResourceMover
         /// <returns> An async collection of <see cref="MoverUnresolvedDependency" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<MoverUnresolvedDependency> GetUnresolvedDependenciesAsync(MoverDependencyLevel? dependencyLevel = null, string orderby = null, string filter = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<MoverUnresolvedDependency>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _unresolvedDependenciesClientDiagnostics.CreateScope("MoverResourceSetResource.GetUnresolvedDependencies");
-                scope.Start();
-                try
-                {
-                    var response = await _unresolvedDependenciesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, dependencyLevel, orderby, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<MoverUnresolvedDependency>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _unresolvedDependenciesClientDiagnostics.CreateScope("MoverResourceSetResource.GetUnresolvedDependencies");
-                scope.Start();
-                try
-                {
-                    var response = await _unresolvedDependenciesRestClient.GetNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, dependencyLevel, orderby, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _unresolvedDependenciesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, dependencyLevel, orderby, filter);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _unresolvedDependenciesRestClient.CreateGetNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, dependencyLevel, orderby, filter);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, MoverUnresolvedDependency.DeserializeMoverUnresolvedDependency, _unresolvedDependenciesClientDiagnostics, Pipeline, "MoverResourceSetResource.GetUnresolvedDependencies", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -661,37 +633,9 @@ namespace Azure.ResourceManager.ResourceMover
         /// <returns> A collection of <see cref="MoverUnresolvedDependency" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<MoverUnresolvedDependency> GetUnresolvedDependencies(MoverDependencyLevel? dependencyLevel = null, string orderby = null, string filter = null, CancellationToken cancellationToken = default)
         {
-            Page<MoverUnresolvedDependency> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _unresolvedDependenciesClientDiagnostics.CreateScope("MoverResourceSetResource.GetUnresolvedDependencies");
-                scope.Start();
-                try
-                {
-                    var response = _unresolvedDependenciesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, dependencyLevel, orderby, filter, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<MoverUnresolvedDependency> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _unresolvedDependenciesClientDiagnostics.CreateScope("MoverResourceSetResource.GetUnresolvedDependencies");
-                scope.Start();
-                try
-                {
-                    var response = _unresolvedDependenciesRestClient.GetNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, dependencyLevel, orderby, filter, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _unresolvedDependenciesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, dependencyLevel, orderby, filter);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _unresolvedDependenciesRestClient.CreateGetNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, dependencyLevel, orderby, filter);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, MoverUnresolvedDependency.DeserializeMoverUnresolvedDependency, _unresolvedDependenciesClientDiagnostics, Pipeline, "MoverResourceSetResource.GetUnresolvedDependencies", "value", "nextLink", cancellationToken);
         }
     }
 }

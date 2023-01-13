@@ -36,14 +36,14 @@ namespace Azure.ResourceManager.SignalR.Models
 
         internal static SignalRFeature DeserializeSignalRFeature(JsonElement element)
         {
-            FeatureFlag flag = default;
+            SignalRFeatureFlag flag = default;
             string value = default;
             Optional<IDictionary<string, string>> properties = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("flag"))
                 {
-                    flag = new FeatureFlag(property.Value.GetString());
+                    flag = new SignalRFeatureFlag(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("value"))

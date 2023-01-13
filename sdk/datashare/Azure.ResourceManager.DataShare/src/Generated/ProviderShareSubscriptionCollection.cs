@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -121,37 +120,9 @@ namespace Azure.ResourceManager.DataShare
         /// <returns> An async collection of <see cref="ProviderShareSubscriptionResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ProviderShareSubscriptionResource> GetAllAsync(string skipToken = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<ProviderShareSubscriptionResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _providerShareSubscriptionClientDiagnostics.CreateScope("ProviderShareSubscriptionCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _providerShareSubscriptionRestClient.ListByShareAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skipToken, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ProviderShareSubscriptionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<ProviderShareSubscriptionResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _providerShareSubscriptionClientDiagnostics.CreateScope("ProviderShareSubscriptionCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _providerShareSubscriptionRestClient.ListByShareNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skipToken, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ProviderShareSubscriptionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _providerShareSubscriptionRestClient.CreateListByShareRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skipToken);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _providerShareSubscriptionRestClient.CreateListByShareNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skipToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ProviderShareSubscriptionResource(Client, ProviderShareSubscriptionData.DeserializeProviderShareSubscriptionData(e)), _providerShareSubscriptionClientDiagnostics, Pipeline, "ProviderShareSubscriptionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -164,37 +135,9 @@ namespace Azure.ResourceManager.DataShare
         /// <returns> A collection of <see cref="ProviderShareSubscriptionResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ProviderShareSubscriptionResource> GetAll(string skipToken = null, CancellationToken cancellationToken = default)
         {
-            Page<ProviderShareSubscriptionResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _providerShareSubscriptionClientDiagnostics.CreateScope("ProviderShareSubscriptionCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _providerShareSubscriptionRestClient.ListByShare(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skipToken, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ProviderShareSubscriptionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<ProviderShareSubscriptionResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _providerShareSubscriptionClientDiagnostics.CreateScope("ProviderShareSubscriptionCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _providerShareSubscriptionRestClient.ListByShareNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skipToken, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ProviderShareSubscriptionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _providerShareSubscriptionRestClient.CreateListByShareRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skipToken);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _providerShareSubscriptionRestClient.CreateListByShareNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skipToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ProviderShareSubscriptionResource(Client, ProviderShareSubscriptionData.DeserializeProviderShareSubscriptionData(e)), _providerShareSubscriptionClientDiagnostics, Pipeline, "ProviderShareSubscriptionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -187,37 +186,9 @@ namespace Azure.ResourceManager.DevCenter
         /// <returns> An async collection of <see cref="EnvironmentTypeResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<EnvironmentTypeResource> GetAllAsync(int? top = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<EnvironmentTypeResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _environmentTypeClientDiagnostics.CreateScope("EnvironmentTypeCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _environmentTypeRestClient.ListByDevCenterAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new EnvironmentTypeResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<EnvironmentTypeResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _environmentTypeClientDiagnostics.CreateScope("EnvironmentTypeCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _environmentTypeRestClient.ListByDevCenterNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new EnvironmentTypeResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _environmentTypeRestClient.CreateListByDevCenterRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _environmentTypeRestClient.CreateListByDevCenterNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new EnvironmentTypeResource(Client, EnvironmentTypeData.DeserializeEnvironmentTypeData(e)), _environmentTypeClientDiagnostics, Pipeline, "EnvironmentTypeCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -230,37 +201,9 @@ namespace Azure.ResourceManager.DevCenter
         /// <returns> A collection of <see cref="EnvironmentTypeResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<EnvironmentTypeResource> GetAll(int? top = null, CancellationToken cancellationToken = default)
         {
-            Page<EnvironmentTypeResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _environmentTypeClientDiagnostics.CreateScope("EnvironmentTypeCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _environmentTypeRestClient.ListByDevCenter(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new EnvironmentTypeResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<EnvironmentTypeResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _environmentTypeClientDiagnostics.CreateScope("EnvironmentTypeCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _environmentTypeRestClient.ListByDevCenterNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new EnvironmentTypeResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _environmentTypeRestClient.CreateListByDevCenterRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _environmentTypeRestClient.CreateListByDevCenterNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new EnvironmentTypeResource(Client, EnvironmentTypeData.DeserializeEnvironmentTypeData(e)), _environmentTypeClientDiagnostics, Pipeline, "EnvironmentTypeCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -191,37 +190,9 @@ namespace Azure.ResourceManager.DataFactory
         /// <returns> An async collection of <see cref="DataFactoryResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DataFactoryResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<DataFactoryResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _dataFactoryFactoriesClientDiagnostics.CreateScope("DataFactoryCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _dataFactoryFactoriesRestClient.ListByResourceGroupAsync(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new DataFactoryResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<DataFactoryResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _dataFactoryFactoriesClientDiagnostics.CreateScope("DataFactoryCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _dataFactoryFactoriesRestClient.ListByResourceGroupNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new DataFactoryResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _dataFactoryFactoriesRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _dataFactoryFactoriesRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DataFactoryResource(Client, DataFactoryData.DeserializeDataFactoryData(e)), _dataFactoryFactoriesClientDiagnostics, Pipeline, "DataFactoryCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -233,37 +204,9 @@ namespace Azure.ResourceManager.DataFactory
         /// <returns> A collection of <see cref="DataFactoryResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DataFactoryResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<DataFactoryResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _dataFactoryFactoriesClientDiagnostics.CreateScope("DataFactoryCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _dataFactoryFactoriesRestClient.ListByResourceGroup(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new DataFactoryResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<DataFactoryResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _dataFactoryFactoriesClientDiagnostics.CreateScope("DataFactoryCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _dataFactoryFactoriesRestClient.ListByResourceGroupNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new DataFactoryResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _dataFactoryFactoriesRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _dataFactoryFactoriesRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DataFactoryResource(Client, DataFactoryData.DeserializeDataFactoryData(e)), _dataFactoryFactoriesClientDiagnostics, Pipeline, "DataFactoryCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
