@@ -11,9 +11,10 @@ using Azure;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager;
+using Azure.ResourceManager.ApiManagement;
 using Azure.ResourceManager.ApiManagement.Models;
 
-namespace Azure.ResourceManager.ApiManagement
+namespace Azure.ResourceManager.ApiManagement.Samples
 {
     public partial class Sample_ApiManagementProductResource
     {
@@ -25,8 +26,10 @@ namespace Azure.ResourceManager.ApiManagement
             // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/stable/2021-08-01/examples/ApiManagementHeadProduct.json
             // this example is just showing the usage of "Product_GetEntityTag" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this ApiManagementProductResource created on azure
             // for more information of creating ApiManagementProductResource, please refer to the document of ApiManagementProductResource
@@ -51,8 +54,10 @@ namespace Azure.ResourceManager.ApiManagement
             // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/stable/2021-08-01/examples/ApiManagementGetProduct.json
             // this example is just showing the usage of "Product_Get" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this ApiManagementProductResource created on azure
             // for more information of creating ApiManagementProductResource, please refer to the document of ApiManagementProductResource
@@ -81,8 +86,10 @@ namespace Azure.ResourceManager.ApiManagement
             // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/stable/2021-08-01/examples/ApiManagementUpdateProduct.json
             // this example is just showing the usage of "Product_Update" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this ApiManagementProductResource created on azure
             // for more information of creating ApiManagementProductResource, please refer to the document of ApiManagementProductResource
@@ -116,8 +123,10 @@ namespace Azure.ResourceManager.ApiManagement
             // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/stable/2021-08-01/examples/ApiManagementDeleteProduct.json
             // this example is just showing the usage of "Product_Delete" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this ApiManagementProductResource created on azure
             // for more information of creating ApiManagementProductResource, please refer to the document of ApiManagementProductResource
@@ -144,8 +153,10 @@ namespace Azure.ResourceManager.ApiManagement
             // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/stable/2021-08-01/examples/ApiManagementListProductApis.json
             // this example is just showing the usage of "ProductApi_ListByProduct" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this ApiManagementProductResource created on azure
             // for more information of creating ApiManagementProductResource, please refer to the document of ApiManagementProductResource
@@ -173,8 +184,10 @@ namespace Azure.ResourceManager.ApiManagement
             // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/stable/2021-08-01/examples/ApiManagementHeadProductApi.json
             // this example is just showing the usage of "ProductApi_CheckEntityExists" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this ApiManagementProductResource created on azure
             // for more information of creating ApiManagementProductResource, please refer to the document of ApiManagementProductResource
@@ -200,8 +213,10 @@ namespace Azure.ResourceManager.ApiManagement
             // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/stable/2021-08-01/examples/ApiManagementCreateProductApi.json
             // this example is just showing the usage of "ProductApi_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this ApiManagementProductResource created on azure
             // for more information of creating ApiManagementProductResource, please refer to the document of ApiManagementProductResource
@@ -227,8 +242,10 @@ namespace Azure.ResourceManager.ApiManagement
             // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/stable/2021-08-01/examples/ApiManagementDeleteProductApi.json
             // this example is just showing the usage of "ProductApi_Delete" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this ApiManagementProductResource created on azure
             // for more information of creating ApiManagementProductResource, please refer to the document of ApiManagementProductResource
@@ -254,8 +271,10 @@ namespace Azure.ResourceManager.ApiManagement
             // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/stable/2021-08-01/examples/ApiManagementListProductGroups.json
             // this example is just showing the usage of "ProductGroup_ListByProduct" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this ApiManagementProductResource created on azure
             // for more information of creating ApiManagementProductResource, please refer to the document of ApiManagementProductResource
@@ -283,8 +302,10 @@ namespace Azure.ResourceManager.ApiManagement
             // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/stable/2021-08-01/examples/ApiManagementHeadProductGroup.json
             // this example is just showing the usage of "ProductGroup_CheckEntityExists" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this ApiManagementProductResource created on azure
             // for more information of creating ApiManagementProductResource, please refer to the document of ApiManagementProductResource
@@ -310,8 +331,10 @@ namespace Azure.ResourceManager.ApiManagement
             // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/stable/2021-08-01/examples/ApiManagementCreateProductGroup.json
             // this example is just showing the usage of "ProductGroup_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this ApiManagementProductResource created on azure
             // for more information of creating ApiManagementProductResource, please refer to the document of ApiManagementProductResource
@@ -337,8 +360,10 @@ namespace Azure.ResourceManager.ApiManagement
             // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/stable/2021-08-01/examples/ApiManagementDeleteProductGroup.json
             // this example is just showing the usage of "ProductGroup_Delete" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this ApiManagementProductResource created on azure
             // for more information of creating ApiManagementProductResource, please refer to the document of ApiManagementProductResource
@@ -364,8 +389,10 @@ namespace Azure.ResourceManager.ApiManagement
             // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/stable/2021-08-01/examples/ApiManagementListProductSubscriptions.json
             // this example is just showing the usage of "ProductSubscriptions_List" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this ApiManagementProductResource created on azure
             // for more information of creating ApiManagementProductResource, please refer to the document of ApiManagementProductResource

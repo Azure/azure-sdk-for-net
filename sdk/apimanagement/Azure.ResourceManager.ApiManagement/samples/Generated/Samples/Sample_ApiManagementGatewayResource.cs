@@ -11,9 +11,10 @@ using Azure;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager;
+using Azure.ResourceManager.ApiManagement;
 using Azure.ResourceManager.ApiManagement.Models;
 
-namespace Azure.ResourceManager.ApiManagement
+namespace Azure.ResourceManager.ApiManagement.Samples
 {
     public partial class Sample_ApiManagementGatewayResource
     {
@@ -25,8 +26,10 @@ namespace Azure.ResourceManager.ApiManagement
             // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/stable/2021-08-01/examples/ApiManagementHeadGateway.json
             // this example is just showing the usage of "Gateway_GetEntityTag" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this ApiManagementGatewayResource created on azure
             // for more information of creating ApiManagementGatewayResource, please refer to the document of ApiManagementGatewayResource
@@ -51,8 +54,10 @@ namespace Azure.ResourceManager.ApiManagement
             // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/stable/2021-08-01/examples/ApiManagementGetGateway.json
             // this example is just showing the usage of "Gateway_Get" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this ApiManagementGatewayResource created on azure
             // for more information of creating ApiManagementGatewayResource, please refer to the document of ApiManagementGatewayResource
@@ -81,8 +86,10 @@ namespace Azure.ResourceManager.ApiManagement
             // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/stable/2021-08-01/examples/ApiManagementUpdateGateway.json
             // this example is just showing the usage of "Gateway_Update" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this ApiManagementGatewayResource created on azure
             // for more information of creating ApiManagementGatewayResource, please refer to the document of ApiManagementGatewayResource
@@ -117,8 +124,10 @@ namespace Azure.ResourceManager.ApiManagement
             // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/stable/2021-08-01/examples/ApiManagementDeleteGateway.json
             // this example is just showing the usage of "Gateway_Delete" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this ApiManagementGatewayResource created on azure
             // for more information of creating ApiManagementGatewayResource, please refer to the document of ApiManagementGatewayResource
@@ -144,8 +153,10 @@ namespace Azure.ResourceManager.ApiManagement
             // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/stable/2021-08-01/examples/ApiManagementGatewayListKeys.json
             // this example is just showing the usage of "Gateway_ListKeys" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this ApiManagementGatewayResource created on azure
             // for more information of creating ApiManagementGatewayResource, please refer to the document of ApiManagementGatewayResource
@@ -170,8 +181,10 @@ namespace Azure.ResourceManager.ApiManagement
             // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/stable/2021-08-01/examples/ApiManagementGatewayRegenerateKey.json
             // this example is just showing the usage of "Gateway_RegenerateKey" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this ApiManagementGatewayResource created on azure
             // for more information of creating ApiManagementGatewayResource, please refer to the document of ApiManagementGatewayResource
@@ -197,8 +210,10 @@ namespace Azure.ResourceManager.ApiManagement
             // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/stable/2021-08-01/examples/ApiManagementGatewayGenerateToken.json
             // this example is just showing the usage of "Gateway_GenerateToken" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this ApiManagementGatewayResource created on azure
             // for more information of creating ApiManagementGatewayResource, please refer to the document of ApiManagementGatewayResource
@@ -224,8 +239,10 @@ namespace Azure.ResourceManager.ApiManagement
             // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/stable/2021-08-01/examples/ApiManagementListGatewayApis.json
             // this example is just showing the usage of "GatewayApi_ListByService" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this ApiManagementGatewayResource created on azure
             // for more information of creating ApiManagementGatewayResource, please refer to the document of ApiManagementGatewayResource
@@ -253,8 +270,10 @@ namespace Azure.ResourceManager.ApiManagement
             // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/stable/2021-08-01/examples/ApiManagementHeadGatewayApi.json
             // this example is just showing the usage of "GatewayApi_GetEntityTag" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this ApiManagementGatewayResource created on azure
             // for more information of creating ApiManagementGatewayResource, please refer to the document of ApiManagementGatewayResource
@@ -280,8 +299,10 @@ namespace Azure.ResourceManager.ApiManagement
             // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/stable/2021-08-01/examples/ApiManagementCreateGatewayApi.json
             // this example is just showing the usage of "GatewayApi_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this ApiManagementGatewayResource created on azure
             // for more information of creating ApiManagementGatewayResource, please refer to the document of ApiManagementGatewayResource
@@ -311,8 +332,10 @@ namespace Azure.ResourceManager.ApiManagement
             // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/stable/2021-08-01/examples/ApiManagementDeleteGatewayApi.json
             // this example is just showing the usage of "GatewayApi_Delete" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this ApiManagementGatewayResource created on azure
             // for more information of creating ApiManagementGatewayResource, please refer to the document of ApiManagementGatewayResource

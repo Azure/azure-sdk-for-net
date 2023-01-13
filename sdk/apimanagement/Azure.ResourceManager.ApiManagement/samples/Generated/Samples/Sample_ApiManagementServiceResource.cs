@@ -12,10 +12,11 @@ using Azure;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager;
+using Azure.ResourceManager.ApiManagement;
 using Azure.ResourceManager.ApiManagement.Models;
 using Azure.ResourceManager.Resources;
 
-namespace Azure.ResourceManager.ApiManagement
+namespace Azure.ResourceManager.ApiManagement.Samples
 {
     public partial class Sample_ApiManagementServiceResource
     {
@@ -27,8 +28,10 @@ namespace Azure.ResourceManager.ApiManagement
             // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/stable/2021-08-01/examples/ApiManagementListApisByTags.json
             // this example is just showing the usage of "Api_ListByTags" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this ApiManagementServiceResource created on azure
             // for more information of creating ApiManagementServiceResource, please refer to the document of ApiManagementServiceResource
@@ -55,8 +58,10 @@ namespace Azure.ResourceManager.ApiManagement
             // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/stable/2021-08-01/examples/ApiManagementPerformConnectivityCheckHttpConnect.json
             // this example is just showing the usage of "PerformConnectivityCheckAsync" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this ApiManagementServiceResource created on azure
             // for more information of creating ApiManagementServiceResource, please refer to the document of ApiManagementServiceResource
@@ -97,8 +102,10 @@ new HttpHeaderConfiguration("Authorization","Bearer myPreciousToken")
             // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/stable/2021-08-01/examples/ApiManagementPerformConnectivityCheck.json
             // this example is just showing the usage of "PerformConnectivityCheckAsync" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this ApiManagementServiceResource created on azure
             // for more information of creating ApiManagementServiceResource, please refer to the document of ApiManagementServiceResource
@@ -127,8 +134,10 @@ new HttpHeaderConfiguration("Authorization","Bearer myPreciousToken")
             // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/stable/2021-08-01/examples/ApiManagementListContentTypes.json
             // this example is just showing the usage of "ContentType_ListByService" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this ApiManagementServiceResource created on azure
             // for more information of creating ApiManagementServiceResource, please refer to the document of ApiManagementServiceResource
@@ -155,8 +164,10 @@ new HttpHeaderConfiguration("Authorization","Bearer myPreciousToken")
             // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/stable/2021-08-01/examples/ApiManagementGetContentType.json
             // this example is just showing the usage of "ContentType_Get" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this ApiManagementServiceResource created on azure
             // for more information of creating ApiManagementServiceResource, please refer to the document of ApiManagementServiceResource
@@ -181,8 +192,10 @@ new HttpHeaderConfiguration("Authorization","Bearer myPreciousToken")
             // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/stable/2021-08-01/examples/ApiManagementCreateContentType.json
             // this example is just showing the usage of "ContentType_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this ApiManagementServiceResource created on azure
             // for more information of creating ApiManagementServiceResource, please refer to the document of ApiManagementServiceResource
@@ -207,8 +220,10 @@ new HttpHeaderConfiguration("Authorization","Bearer myPreciousToken")
             // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/stable/2021-08-01/examples/ApiManagementDeleteContentType.json
             // this example is just showing the usage of "ContentType_Delete" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this ApiManagementServiceResource created on azure
             // for more information of creating ApiManagementServiceResource, please refer to the document of ApiManagementServiceResource
@@ -234,8 +249,10 @@ new HttpHeaderConfiguration("Authorization","Bearer myPreciousToken")
             // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/stable/2021-08-01/examples/ApiManagementListContentTypeContentItems.json
             // this example is just showing the usage of "ContentItem_ListByService" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this ApiManagementServiceResource created on azure
             // for more information of creating ApiManagementServiceResource, please refer to the document of ApiManagementServiceResource
@@ -263,8 +280,10 @@ new HttpHeaderConfiguration("Authorization","Bearer myPreciousToken")
             // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/stable/2021-08-01/examples/ApiManagementHeadContentTypeContentItem.json
             // this example is just showing the usage of "ContentItem_GetEntityTag" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this ApiManagementServiceResource created on azure
             // for more information of creating ApiManagementServiceResource, please refer to the document of ApiManagementServiceResource
@@ -290,8 +309,10 @@ new HttpHeaderConfiguration("Authorization","Bearer myPreciousToken")
             // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/stable/2021-08-01/examples/ApiManagementGetContentTypeContentItem.json
             // this example is just showing the usage of "ContentItem_Get" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this ApiManagementServiceResource created on azure
             // for more information of creating ApiManagementServiceResource, please refer to the document of ApiManagementServiceResource
@@ -317,8 +338,10 @@ new HttpHeaderConfiguration("Authorization","Bearer myPreciousToken")
             // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/stable/2021-08-01/examples/ApiManagementCreateContentTypeContentItem.json
             // this example is just showing the usage of "ContentItem_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this ApiManagementServiceResource created on azure
             // for more information of creating ApiManagementServiceResource, please refer to the document of ApiManagementServiceResource
@@ -344,8 +367,10 @@ new HttpHeaderConfiguration("Authorization","Bearer myPreciousToken")
             // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/stable/2021-08-01/examples/ApiManagementDeleteContentTypeContentItem.json
             // this example is just showing the usage of "ContentItem_Delete" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this ApiManagementServiceResource created on azure
             // for more information of creating ApiManagementServiceResource, please refer to the document of ApiManagementServiceResource
@@ -372,8 +397,10 @@ new HttpHeaderConfiguration("Authorization","Bearer myPreciousToken")
             // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/stable/2021-08-01/examples/ApiManagementListSKUs-Consumption.json
             // this example is just showing the usage of "ApiManagementServiceSkus_ListAvailableServiceSkus" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this ApiManagementServiceResource created on azure
             // for more information of creating ApiManagementServiceResource, please refer to the document of ApiManagementServiceResource
@@ -400,8 +427,10 @@ new HttpHeaderConfiguration("Authorization","Bearer myPreciousToken")
             // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/stable/2021-08-01/examples/ApiManagementListSKUs-Dedicated.json
             // this example is just showing the usage of "ApiManagementServiceSkus_ListAvailableServiceSkus" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this ApiManagementServiceResource created on azure
             // for more information of creating ApiManagementServiceResource, please refer to the document of ApiManagementServiceResource
@@ -428,8 +457,10 @@ new HttpHeaderConfiguration("Authorization","Bearer myPreciousToken")
             // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/stable/2021-08-01/examples/ApiManagementRestoreWithAccessKey.json
             // this example is just showing the usage of "ApiManagementService_Restore" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this ApiManagementServiceResource created on azure
             // for more information of creating ApiManagementServiceResource, please refer to the document of ApiManagementServiceResource
@@ -463,8 +494,10 @@ new HttpHeaderConfiguration("Authorization","Bearer myPreciousToken")
             // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/stable/2021-08-01/examples/ApiManagementBackupWithAccessKey.json
             // this example is just showing the usage of "ApiManagementService_Backup" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this ApiManagementServiceResource created on azure
             // for more information of creating ApiManagementServiceResource, please refer to the document of ApiManagementServiceResource
@@ -498,8 +531,10 @@ new HttpHeaderConfiguration("Authorization","Bearer myPreciousToken")
             // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/stable/2021-08-01/examples/ApiManagementBackupWithSystemManagedIdentity.json
             // this example is just showing the usage of "ApiManagementService_Backup" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this ApiManagementServiceResource created on azure
             // for more information of creating ApiManagementServiceResource, please refer to the document of ApiManagementServiceResource
@@ -532,8 +567,10 @@ new HttpHeaderConfiguration("Authorization","Bearer myPreciousToken")
             // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/stable/2021-08-01/examples/ApiManagementBackupWithUserAssignedManagedIdentity.json
             // this example is just showing the usage of "ApiManagementService_Backup" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this ApiManagementServiceResource created on azure
             // for more information of creating ApiManagementServiceResource, please refer to the document of ApiManagementServiceResource
@@ -567,8 +604,10 @@ new HttpHeaderConfiguration("Authorization","Bearer myPreciousToken")
             // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/stable/2021-08-01/examples/ApiManagementUpdateServiceDisableTls10.json
             // this example is just showing the usage of "ApiManagementService_Update" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this ApiManagementServiceResource created on azure
             // for more information of creating ApiManagementServiceResource, please refer to the document of ApiManagementServiceResource
@@ -604,8 +643,10 @@ new HttpHeaderConfiguration("Authorization","Bearer myPreciousToken")
             // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/stable/2021-08-01/examples/ApiManagementUpdateServicePublisherDetails.json
             // this example is just showing the usage of "ApiManagementService_Update" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this ApiManagementServiceResource created on azure
             // for more information of creating ApiManagementServiceResource, please refer to the document of ApiManagementServiceResource
@@ -639,8 +680,10 @@ new HttpHeaderConfiguration("Authorization","Bearer myPreciousToken")
             // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/stable/2021-08-01/examples/ApiManagementUpdateServiceToNewVnetAndAZs.json
             // this example is just showing the usage of "ApiManagementService_Update" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this ApiManagementServiceResource created on azure
             // for more information of creating ApiManagementServiceResource, please refer to the document of ApiManagementServiceResource
@@ -698,8 +741,10 @@ SubnetResourceId = new ResourceIdentifier("/subscriptions/subid/resourceGroups/r
             // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/stable/2021-08-01/examples/ApiManagementServiceGetMultiRegionInternalVnet.json
             // this example is just showing the usage of "ApiManagementService_Get" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this ApiManagementServiceResource created on azure
             // for more information of creating ApiManagementServiceResource, please refer to the document of ApiManagementServiceResource
@@ -727,8 +772,10 @@ SubnetResourceId = new ResourceIdentifier("/subscriptions/subid/resourceGroups/r
             // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/stable/2021-08-01/examples/ApiManagementServiceGetService.json
             // this example is just showing the usage of "ApiManagementService_Get" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this ApiManagementServiceResource created on azure
             // for more information of creating ApiManagementServiceResource, please refer to the document of ApiManagementServiceResource
@@ -756,8 +803,10 @@ SubnetResourceId = new ResourceIdentifier("/subscriptions/subid/resourceGroups/r
             // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/stable/2021-08-01/examples/ApiManagementServiceGetServiceHavingMsi.json
             // this example is just showing the usage of "ApiManagementService_Get" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this ApiManagementServiceResource created on azure
             // for more information of creating ApiManagementServiceResource, please refer to the document of ApiManagementServiceResource
@@ -785,8 +834,10 @@ SubnetResourceId = new ResourceIdentifier("/subscriptions/subid/resourceGroups/r
             // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/stable/2021-08-01/examples/ApiManagementServiceDeleteService.json
             // this example is just showing the usage of "ApiManagementService_Delete" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this ApiManagementServiceResource created on azure
             // for more information of creating ApiManagementServiceResource, please refer to the document of ApiManagementServiceResource
@@ -810,8 +861,10 @@ SubnetResourceId = new ResourceIdentifier("/subscriptions/subid/resourceGroups/r
             // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/stable/2021-08-01/examples/ApiManagementListServiceBySubscription.json
             // this example is just showing the usage of "ApiManagementService_List" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this SubscriptionResource created on azure
             // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
@@ -840,8 +893,10 @@ SubnetResourceId = new ResourceIdentifier("/subscriptions/subid/resourceGroups/r
             // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/stable/2021-08-01/examples/ApiManagementServiceGetSsoToken.json
             // this example is just showing the usage of "ApiManagementService_GetSsoToken" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this ApiManagementServiceResource created on azure
             // for more information of creating ApiManagementServiceResource, please refer to the document of ApiManagementServiceResource
@@ -865,8 +920,10 @@ SubnetResourceId = new ResourceIdentifier("/subscriptions/subid/resourceGroups/r
             // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/stable/2021-08-01/examples/ApiManagementServiceCheckNameAvailability.json
             // this example is just showing the usage of "ApiManagementService_CheckNameAvailability" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this SubscriptionResource created on azure
             // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
@@ -889,8 +946,10 @@ SubnetResourceId = new ResourceIdentifier("/subscriptions/subid/resourceGroups/r
             // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/stable/2021-08-01/examples/ApiManagementServiceGetDomainOwnershipIdentifier.json
             // this example is just showing the usage of "ApiManagementService_GetDomainOwnershipIdentifier" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this SubscriptionResource created on azure
             // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
@@ -912,8 +971,10 @@ SubnetResourceId = new ResourceIdentifier("/subscriptions/subid/resourceGroups/r
             // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/stable/2021-08-01/examples/ApiManagementApplyNetworkConfigurationUpdates.json
             // this example is just showing the usage of "ApiManagementService_ApplyNetworkConfigurationUpdates" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this ApiManagementServiceResource created on azure
             // for more information of creating ApiManagementServiceResource, please refer to the document of ApiManagementServiceResource
@@ -946,8 +1007,10 @@ SubnetResourceId = new ResourceIdentifier("/subscriptions/subid/resourceGroups/r
             // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/stable/2021-08-01/examples/ApiManagementServiceGetNetworkStatus.json
             // this example is just showing the usage of "NetworkStatus_ListByService" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this ApiManagementServiceResource created on azure
             // for more information of creating ApiManagementServiceResource, please refer to the document of ApiManagementServiceResource
@@ -974,8 +1037,10 @@ SubnetResourceId = new ResourceIdentifier("/subscriptions/subid/resourceGroups/r
             // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/stable/2021-08-01/examples/ApiManagementServiceGetNetworkStatusByLocation.json
             // this example is just showing the usage of "NetworkStatus_ListByLocation" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this ApiManagementServiceResource created on azure
             // for more information of creating ApiManagementServiceResource, please refer to the document of ApiManagementServiceResource
@@ -1000,8 +1065,10 @@ SubnetResourceId = new ResourceIdentifier("/subscriptions/subid/resourceGroups/r
             // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/stable/2021-08-01/examples/ApiManagementServiceGetOutboundNetworkDependenciesEndpoints.json
             // this example is just showing the usage of "OutboundNetworkDependenciesEndpoints_ListByService" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this ApiManagementServiceResource created on azure
             // for more information of creating ApiManagementServiceResource, please refer to the document of ApiManagementServiceResource
@@ -1028,8 +1095,10 @@ SubnetResourceId = new ResourceIdentifier("/subscriptions/subid/resourceGroups/r
             // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/stable/2021-08-01/examples/ApiManagementListPolicyDescriptions.json
             // this example is just showing the usage of "PolicyDescription_ListByService" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this ApiManagementServiceResource created on azure
             // for more information of creating ApiManagementServiceResource, please refer to the document of ApiManagementServiceResource
@@ -1057,8 +1126,10 @@ SubnetResourceId = new ResourceIdentifier("/subscriptions/subid/resourceGroups/r
             // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/stable/2021-08-01/examples/ApiManagementListPortalSettings.json
             // this example is just showing the usage of "PortalSettings_ListByService" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this ApiManagementServiceResource created on azure
             // for more information of creating ApiManagementServiceResource, please refer to the document of ApiManagementServiceResource
@@ -1085,8 +1156,10 @@ SubnetResourceId = new ResourceIdentifier("/subscriptions/subid/resourceGroups/r
             // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/stable/2021-08-01/examples/ApiManagementListProductsByTags.json
             // this example is just showing the usage of "Product_ListByTags" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this ApiManagementServiceResource created on azure
             // for more information of creating ApiManagementServiceResource, please refer to the document of ApiManagementServiceResource
@@ -1113,8 +1186,10 @@ SubnetResourceId = new ResourceIdentifier("/subscriptions/subid/resourceGroups/r
             // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/stable/2021-08-01/examples/ApiManagementGetQuotaCounterKeys.json
             // this example is just showing the usage of "QuotaByCounterKeys_ListByService" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this ApiManagementServiceResource created on azure
             // for more information of creating ApiManagementServiceResource, please refer to the document of ApiManagementServiceResource
@@ -1142,8 +1217,10 @@ SubnetResourceId = new ResourceIdentifier("/subscriptions/subid/resourceGroups/r
             // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/stable/2021-08-01/examples/ApiManagementUpdateQuotaCounterKey.json
             // this example is just showing the usage of "QuotaByCounterKeys_Update" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this ApiManagementServiceResource created on azure
             // for more information of creating ApiManagementServiceResource, please refer to the document of ApiManagementServiceResource
@@ -1176,8 +1253,10 @@ SubnetResourceId = new ResourceIdentifier("/subscriptions/subid/resourceGroups/r
             // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/stable/2021-08-01/examples/ApiManagementGetQuotaCounterKeysByQuotaPeriod.json
             // this example is just showing the usage of "QuotaByPeriodKeys_Get" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this ApiManagementServiceResource created on azure
             // for more information of creating ApiManagementServiceResource, please refer to the document of ApiManagementServiceResource
@@ -1203,8 +1282,10 @@ SubnetResourceId = new ResourceIdentifier("/subscriptions/subid/resourceGroups/r
             // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/stable/2021-08-01/examples/ApiManagementUpdateQuotaCounterKeyByQuotaPeriod.json
             // this example is just showing the usage of "QuotaByPeriodKeys_Update" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this ApiManagementServiceResource created on azure
             // for more information of creating ApiManagementServiceResource, please refer to the document of ApiManagementServiceResource
@@ -1235,8 +1316,10 @@ SubnetResourceId = new ResourceIdentifier("/subscriptions/subid/resourceGroups/r
             // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/stable/2021-08-01/examples/ApiManagementListRegions.json
             // this example is just showing the usage of "Region_ListByService" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this ApiManagementServiceResource created on azure
             // for more information of creating ApiManagementServiceResource, please refer to the document of ApiManagementServiceResource
@@ -1263,8 +1346,10 @@ SubnetResourceId = new ResourceIdentifier("/subscriptions/subid/resourceGroups/r
             // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/stable/2021-08-01/examples/ApiManagementGetReportsByApi.json
             // this example is just showing the usage of "Reports_ListByApi" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this ApiManagementServiceResource created on azure
             // for more information of creating ApiManagementServiceResource, please refer to the document of ApiManagementServiceResource
@@ -1292,8 +1377,10 @@ SubnetResourceId = new ResourceIdentifier("/subscriptions/subid/resourceGroups/r
             // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/stable/2021-08-01/examples/ApiManagementGetReportsByUser.json
             // this example is just showing the usage of "Reports_ListByUser" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this ApiManagementServiceResource created on azure
             // for more information of creating ApiManagementServiceResource, please refer to the document of ApiManagementServiceResource
@@ -1321,8 +1408,10 @@ SubnetResourceId = new ResourceIdentifier("/subscriptions/subid/resourceGroups/r
             // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/stable/2021-08-01/examples/ApiManagementGetReportsByOperation.json
             // this example is just showing the usage of "Reports_ListByOperation" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this ApiManagementServiceResource created on azure
             // for more information of creating ApiManagementServiceResource, please refer to the document of ApiManagementServiceResource
@@ -1350,8 +1439,10 @@ SubnetResourceId = new ResourceIdentifier("/subscriptions/subid/resourceGroups/r
             // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/stable/2021-08-01/examples/ApiManagementGetReportsByProduct.json
             // this example is just showing the usage of "Reports_ListByProduct" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this ApiManagementServiceResource created on azure
             // for more information of creating ApiManagementServiceResource, please refer to the document of ApiManagementServiceResource
@@ -1379,8 +1470,10 @@ SubnetResourceId = new ResourceIdentifier("/subscriptions/subid/resourceGroups/r
             // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/stable/2021-08-01/examples/ApiManagementGetReportsByGeo.json
             // this example is just showing the usage of "Reports_ListByGeo" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this ApiManagementServiceResource created on azure
             // for more information of creating ApiManagementServiceResource, please refer to the document of ApiManagementServiceResource
@@ -1408,8 +1501,10 @@ SubnetResourceId = new ResourceIdentifier("/subscriptions/subid/resourceGroups/r
             // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/stable/2021-08-01/examples/ApiManagementGetReportsBySubscription.json
             // this example is just showing the usage of "Reports_ListBySubscription" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this ApiManagementServiceResource created on azure
             // for more information of creating ApiManagementServiceResource, please refer to the document of ApiManagementServiceResource
@@ -1437,8 +1532,10 @@ SubnetResourceId = new ResourceIdentifier("/subscriptions/subid/resourceGroups/r
             // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/stable/2021-08-01/examples/ApiManagementGetReportsByTime.json
             // this example is just showing the usage of "Reports_ListByTime" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this ApiManagementServiceResource created on azure
             // for more information of creating ApiManagementServiceResource, please refer to the document of ApiManagementServiceResource
@@ -1467,8 +1564,10 @@ SubnetResourceId = new ResourceIdentifier("/subscriptions/subid/resourceGroups/r
             // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/stable/2021-08-01/examples/ApiManagementGetReportsByRequest.json
             // this example is just showing the usage of "Reports_ListByRequest" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this ApiManagementServiceResource created on azure
             // for more information of creating ApiManagementServiceResource, please refer to the document of ApiManagementServiceResource
@@ -1496,8 +1595,10 @@ SubnetResourceId = new ResourceIdentifier("/subscriptions/subid/resourceGroups/r
             // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/stable/2021-08-01/examples/ApiManagementListTagResources.json
             // this example is just showing the usage of "TagResource_ListByService" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this ApiManagementServiceResource created on azure
             // for more information of creating ApiManagementServiceResource, please refer to the document of ApiManagementServiceResource
@@ -1524,8 +1625,10 @@ SubnetResourceId = new ResourceIdentifier("/subscriptions/subid/resourceGroups/r
             // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/stable/2021-08-01/examples/ApiManagementTenantConfigurationDeploy.json
             // this example is just showing the usage of "TenantConfiguration_Deploy" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this ApiManagementServiceResource created on azure
             // for more information of creating ApiManagementServiceResource, please refer to the document of ApiManagementServiceResource
@@ -1555,8 +1658,10 @@ SubnetResourceId = new ResourceIdentifier("/subscriptions/subid/resourceGroups/r
             // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/stable/2021-08-01/examples/ApiManagementTenantConfigurationSave.json
             // this example is just showing the usage of "TenantConfiguration_Save" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this ApiManagementServiceResource created on azure
             // for more information of creating ApiManagementServiceResource, please refer to the document of ApiManagementServiceResource
@@ -1586,8 +1691,10 @@ SubnetResourceId = new ResourceIdentifier("/subscriptions/subid/resourceGroups/r
             // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/stable/2021-08-01/examples/ApiManagementTenantConfigurationValidate.json
             // this example is just showing the usage of "TenantConfiguration_Validate" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this ApiManagementServiceResource created on azure
             // for more information of creating ApiManagementServiceResource, please refer to the document of ApiManagementServiceResource
@@ -1617,8 +1724,10 @@ SubnetResourceId = new ResourceIdentifier("/subscriptions/subid/resourceGroups/r
             // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/stable/2021-08-01/examples/ApiManagementTenantAccessSyncState.json
             // this example is just showing the usage of "TenantConfiguration_GetSyncState" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this ApiManagementServiceResource created on azure
             // for more information of creating ApiManagementServiceResource, please refer to the document of ApiManagementServiceResource
