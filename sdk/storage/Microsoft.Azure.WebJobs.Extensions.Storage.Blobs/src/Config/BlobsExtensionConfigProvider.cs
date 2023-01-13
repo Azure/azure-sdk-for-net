@@ -301,16 +301,9 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Config
 
             async Task<T[]> IAsyncConverter<MultiBlobContext, T[]>.ConvertAsync(MultiBlobContext context, CancellationToken cancellationToken)
             {
-                // Query the blob container using the blob prefix (if specified)
-                // Note that we're explicitly using useFlatBlobListing=true to collapse
-                // sub directories.
-                string prefix = context.Prefix;
-                var container = context.Container;
-                IAsyncEnumerable<BlobItem> blobItems = container.GetBlobsAsync(prefix: prefix, cancellationToken: cancellationToken);
-
-                // create an IEnumerable<T> of the correct type, performing any required conversions on the blobs
-                var list = await ConvertBlobs(blobItems, container).ConfigureAwait(false);
-                return list.ToArray();
+                    IEnumerable<T> result = await ((IAsyncConverter<MultiBlobContext, IEnumerable<T>>)this).ConvertAsync(context, cancellationToken).ConfigureAwait(false);
+                    T[] convertedResult = result.ToArray();
+                    return convertedResult;
             }
 
             async Task<IEnumerable<T>> IAsyncConverter<MultiBlobContext, IEnumerable<T>>.ConvertAsync(MultiBlobContext context, CancellationToken cancellationToken)

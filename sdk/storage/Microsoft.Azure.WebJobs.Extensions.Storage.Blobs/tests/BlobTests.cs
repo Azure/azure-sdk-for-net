@@ -155,6 +155,53 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs
         }
 
         [Test]
+        public async Task Blob_IfBoundToParameterBindingDataEnumerable_CreatesParameterBindingDataArray()
+        {
+            string connectionString = AzuriteNUnitFixture.Instance.GetAzureAccount().ConnectionString;
+            var configuration = new ConfigurationBuilder()
+                    .AddInMemoryCollection(new Dictionary<string, string>()
+                    {
+                        { "ConnectionStrings:AzureWebJobsStorage", connectionString }
+                    }).Build();
+
+            // Arrange
+            var program = new BindToParameterBindingDataEnumerable();
+            IHost host = new HostBuilder()
+                .ConfigureDefaultTestHost<BindToParameterBindingDataEnumerable>(program, builder =>
+                {
+                    builder.AddAzureStorageBlobs()
+                    .UseStorageServicesWithConfiguration(blobServiceClient, queueServiceClient, configuration);
+                })
+                .Build();
+
+            var container = CreateContainer(blobServiceClient, ContainerName);
+            var blobfile = container.GetBlockBlobClient(BlobName);
+            await blobfile.UploadTextAsync(string.Empty);
+
+            var jobHost = host.GetJobHost<BindToParameterBindingDataEnumerable>();
+
+            // Act
+            await jobHost.CallAsync(nameof(BindToParameterBindingDataEnumerable.Run));
+            IEnumerable<ParameterBindingData> result = program.Result;
+
+            Assert.NotNull(result);
+
+            // Assert
+            foreach (var blob in result)
+            {
+                var blobData = blob?.Content.ToObjectFromJson<Dictionary<string,string>>();
+
+                Assert.True(blobData.TryGetValue("Connection", out var resultConnection));
+                Assert.True(blobData.TryGetValue("ContainerName", out var resultContainerName));
+                Assert.True(blobData.TryGetValue("BlobName", out var resultBlobName));
+
+                Assert.AreEqual(ConnectionName, resultConnection);
+                Assert.AreEqual(ContainerName, resultContainerName);
+                Assert.AreEqual(BlobName, resultBlobName);
+            }
+        }
+
+        [Test]
         public async Task Blob_IfBoundToParameterBindingDataArray_CreatesParameterBindingDataArray()
         {
             string connectionString = AzuriteNUnitFixture.Instance.GetAzureAccount().ConnectionString;
@@ -182,7 +229,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs
 
             // Act
             await jobHost.CallAsync(nameof(BindToParameterBindingDataArray.Run));
-            IEnumerable<ParameterBindingData> result = program.Result;
+            ParameterBindingData[] result = program.Result;
 
             Assert.NotNull(result);
 
@@ -279,12 +326,23 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs
             }
         }
 
-        private class BindToParameterBindingDataArray
+        private class BindToParameterBindingDataEnumerable
         {
             public IEnumerable<ParameterBindingData> Result { get; set; }
 
             public void Run(
                 [Blob(ContainerName)] IEnumerable<ParameterBindingData> blobs)
+            {
+                this.Result = blobs;
+            }
+        }
+
+        private class BindToParameterBindingDataArray
+        {
+            public ParameterBindingData[] Result { get; set; }
+
+            public void Run(
+                [Blob(ContainerName)] ParameterBindingData[] blobs)
             {
                 this.Result = blobs;
             }
