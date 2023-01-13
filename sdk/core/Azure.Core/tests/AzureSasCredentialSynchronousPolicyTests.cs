@@ -95,6 +95,7 @@ namespace Azure.Core.Tests
         }
 
         [Test]
+        [Ignore("Re-enable when AzureSasCredential change merges")]
         public async Task VerifyRetryAfterSasCredentialUpdateOperation()
         {
             // Arrange

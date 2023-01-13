@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -187,37 +186,9 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <returns> An async collection of <see cref="IngestionSettingResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<IngestionSettingResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<IngestionSettingResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _ingestionSettingClientDiagnostics.CreateScope("IngestionSettingCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _ingestionSettingRestClient.ListAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new IngestionSettingResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<IngestionSettingResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _ingestionSettingClientDiagnostics.CreateScope("IngestionSettingCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _ingestionSettingRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new IngestionSettingResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _ingestionSettingRestClient.CreateListRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _ingestionSettingRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new IngestionSettingResource(Client, IngestionSettingData.DeserializeIngestionSettingData(e)), _ingestionSettingClientDiagnostics, Pipeline, "IngestionSettingCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -229,37 +200,9 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <returns> A collection of <see cref="IngestionSettingResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<IngestionSettingResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<IngestionSettingResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _ingestionSettingClientDiagnostics.CreateScope("IngestionSettingCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _ingestionSettingRestClient.List(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new IngestionSettingResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<IngestionSettingResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _ingestionSettingClientDiagnostics.CreateScope("IngestionSettingCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _ingestionSettingRestClient.ListNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new IngestionSettingResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _ingestionSettingRestClient.CreateListRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _ingestionSettingRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new IngestionSettingResource(Client, IngestionSettingData.DeserializeIngestionSettingData(e)), _ingestionSettingClientDiagnostics, Pipeline, "IngestionSettingCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

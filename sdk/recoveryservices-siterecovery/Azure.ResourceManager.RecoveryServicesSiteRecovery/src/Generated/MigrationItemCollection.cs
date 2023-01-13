@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -190,37 +189,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <returns> An async collection of <see cref="MigrationItemResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<MigrationItemResource> GetAllAsync(string skipToken = null, string takeToken = null, string filter = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<MigrationItemResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _migrationItemReplicationMigrationItemsClientDiagnostics.CreateScope("MigrationItemCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _migrationItemReplicationMigrationItemsRestClient.ListByReplicationProtectionContainersAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, skipToken, takeToken, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new MigrationItemResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<MigrationItemResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _migrationItemReplicationMigrationItemsClientDiagnostics.CreateScope("MigrationItemCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _migrationItemReplicationMigrationItemsRestClient.ListByReplicationProtectionContainersNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, skipToken, takeToken, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new MigrationItemResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _migrationItemReplicationMigrationItemsRestClient.CreateListByReplicationProtectionContainersRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, skipToken, takeToken, filter);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _migrationItemReplicationMigrationItemsRestClient.CreateListByReplicationProtectionContainersNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, skipToken, takeToken, filter);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new MigrationItemResource(Client, MigrationItemData.DeserializeMigrationItemData(e)), _migrationItemReplicationMigrationItemsClientDiagnostics, Pipeline, "MigrationItemCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -235,37 +206,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <returns> A collection of <see cref="MigrationItemResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<MigrationItemResource> GetAll(string skipToken = null, string takeToken = null, string filter = null, CancellationToken cancellationToken = default)
         {
-            Page<MigrationItemResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _migrationItemReplicationMigrationItemsClientDiagnostics.CreateScope("MigrationItemCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _migrationItemReplicationMigrationItemsRestClient.ListByReplicationProtectionContainers(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, skipToken, takeToken, filter, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new MigrationItemResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<MigrationItemResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _migrationItemReplicationMigrationItemsClientDiagnostics.CreateScope("MigrationItemCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _migrationItemReplicationMigrationItemsRestClient.ListByReplicationProtectionContainersNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, skipToken, takeToken, filter, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new MigrationItemResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _migrationItemReplicationMigrationItemsRestClient.CreateListByReplicationProtectionContainersRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, skipToken, takeToken, filter);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _migrationItemReplicationMigrationItemsRestClient.CreateListByReplicationProtectionContainersNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, skipToken, takeToken, filter);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new MigrationItemResource(Client, MigrationItemData.DeserializeMigrationItemData(e)), _migrationItemReplicationMigrationItemsClientDiagnostics, Pipeline, "MigrationItemCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

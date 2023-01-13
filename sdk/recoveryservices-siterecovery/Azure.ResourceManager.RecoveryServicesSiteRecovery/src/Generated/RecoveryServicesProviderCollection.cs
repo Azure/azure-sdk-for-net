@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -187,37 +186,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <returns> An async collection of <see cref="RecoveryServicesProviderResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<RecoveryServicesProviderResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<RecoveryServicesProviderResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _recoveryServicesProviderReplicationRecoveryServicesProvidersClientDiagnostics.CreateScope("RecoveryServicesProviderCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _recoveryServicesProviderReplicationRecoveryServicesProvidersRestClient.ListByReplicationFabricsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new RecoveryServicesProviderResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<RecoveryServicesProviderResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _recoveryServicesProviderReplicationRecoveryServicesProvidersClientDiagnostics.CreateScope("RecoveryServicesProviderCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _recoveryServicesProviderReplicationRecoveryServicesProvidersRestClient.ListByReplicationFabricsNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new RecoveryServicesProviderResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _recoveryServicesProviderReplicationRecoveryServicesProvidersRestClient.CreateListByReplicationFabricsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _recoveryServicesProviderReplicationRecoveryServicesProvidersRestClient.CreateListByReplicationFabricsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new RecoveryServicesProviderResource(Client, RecoveryServicesProviderData.DeserializeRecoveryServicesProviderData(e)), _recoveryServicesProviderReplicationRecoveryServicesProvidersClientDiagnostics, Pipeline, "RecoveryServicesProviderCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -229,37 +200,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <returns> A collection of <see cref="RecoveryServicesProviderResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<RecoveryServicesProviderResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<RecoveryServicesProviderResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _recoveryServicesProviderReplicationRecoveryServicesProvidersClientDiagnostics.CreateScope("RecoveryServicesProviderCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _recoveryServicesProviderReplicationRecoveryServicesProvidersRestClient.ListByReplicationFabrics(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new RecoveryServicesProviderResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<RecoveryServicesProviderResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _recoveryServicesProviderReplicationRecoveryServicesProvidersClientDiagnostics.CreateScope("RecoveryServicesProviderCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _recoveryServicesProviderReplicationRecoveryServicesProvidersRestClient.ListByReplicationFabricsNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new RecoveryServicesProviderResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _recoveryServicesProviderReplicationRecoveryServicesProvidersRestClient.CreateListByReplicationFabricsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _recoveryServicesProviderReplicationRecoveryServicesProvidersRestClient.CreateListByReplicationFabricsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new RecoveryServicesProviderResource(Client, RecoveryServicesProviderData.DeserializeRecoveryServicesProviderData(e)), _recoveryServicesProviderReplicationRecoveryServicesProvidersClientDiagnostics, Pipeline, "RecoveryServicesProviderCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

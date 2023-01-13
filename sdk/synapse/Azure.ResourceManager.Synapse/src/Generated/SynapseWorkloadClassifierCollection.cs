@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -186,37 +185,9 @@ namespace Azure.ResourceManager.Synapse
         /// <returns> An async collection of <see cref="SynapseWorkloadClassifierResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SynapseWorkloadClassifierResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<SynapseWorkloadClassifierResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _synapseWorkloadClassifierSqlPoolWorkloadClassifierClientDiagnostics.CreateScope("SynapseWorkloadClassifierCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _synapseWorkloadClassifierSqlPoolWorkloadClassifierRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new SynapseWorkloadClassifierResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<SynapseWorkloadClassifierResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _synapseWorkloadClassifierSqlPoolWorkloadClassifierClientDiagnostics.CreateScope("SynapseWorkloadClassifierCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _synapseWorkloadClassifierSqlPoolWorkloadClassifierRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new SynapseWorkloadClassifierResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _synapseWorkloadClassifierSqlPoolWorkloadClassifierRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _synapseWorkloadClassifierSqlPoolWorkloadClassifierRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SynapseWorkloadClassifierResource(Client, SynapseWorkloadClassifierData.DeserializeSynapseWorkloadClassifierData(e)), _synapseWorkloadClassifierSqlPoolWorkloadClassifierClientDiagnostics, Pipeline, "SynapseWorkloadClassifierCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -228,37 +199,9 @@ namespace Azure.ResourceManager.Synapse
         /// <returns> A collection of <see cref="SynapseWorkloadClassifierResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SynapseWorkloadClassifierResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<SynapseWorkloadClassifierResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _synapseWorkloadClassifierSqlPoolWorkloadClassifierClientDiagnostics.CreateScope("SynapseWorkloadClassifierCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _synapseWorkloadClassifierSqlPoolWorkloadClassifierRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new SynapseWorkloadClassifierResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<SynapseWorkloadClassifierResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _synapseWorkloadClassifierSqlPoolWorkloadClassifierClientDiagnostics.CreateScope("SynapseWorkloadClassifierCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _synapseWorkloadClassifierSqlPoolWorkloadClassifierRestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new SynapseWorkloadClassifierResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _synapseWorkloadClassifierSqlPoolWorkloadClassifierRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _synapseWorkloadClassifierSqlPoolWorkloadClassifierRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SynapseWorkloadClassifierResource(Client, SynapseWorkloadClassifierData.DeserializeSynapseWorkloadClassifierData(e)), _synapseWorkloadClassifierSqlPoolWorkloadClassifierClientDiagnostics, Pipeline, "SynapseWorkloadClassifierCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

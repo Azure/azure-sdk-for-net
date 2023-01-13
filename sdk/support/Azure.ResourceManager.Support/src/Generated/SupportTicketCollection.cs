@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -189,37 +188,9 @@ namespace Azure.ResourceManager.Support
         /// <returns> An async collection of <see cref="SupportTicketResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SupportTicketResource> GetAllAsync(int? top = null, string filter = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<SupportTicketResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _supportTicketClientDiagnostics.CreateScope("SupportTicketCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _supportTicketRestClient.ListAsync(Id.SubscriptionId, top, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new SupportTicketResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<SupportTicketResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _supportTicketClientDiagnostics.CreateScope("SupportTicketCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _supportTicketRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, top, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new SupportTicketResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _supportTicketRestClient.CreateListRequest(Id.SubscriptionId, top, filter);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _supportTicketRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, top, filter);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SupportTicketResource(Client, SupportTicketData.DeserializeSupportTicketData(e)), _supportTicketClientDiagnostics, Pipeline, "SupportTicketCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -233,37 +204,9 @@ namespace Azure.ResourceManager.Support
         /// <returns> A collection of <see cref="SupportTicketResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SupportTicketResource> GetAll(int? top = null, string filter = null, CancellationToken cancellationToken = default)
         {
-            Page<SupportTicketResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _supportTicketClientDiagnostics.CreateScope("SupportTicketCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _supportTicketRestClient.List(Id.SubscriptionId, top, filter, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new SupportTicketResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<SupportTicketResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _supportTicketClientDiagnostics.CreateScope("SupportTicketCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _supportTicketRestClient.ListNextPage(nextLink, Id.SubscriptionId, top, filter, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new SupportTicketResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _supportTicketRestClient.CreateListRequest(Id.SubscriptionId, top, filter);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _supportTicketRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, top, filter);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SupportTicketResource(Client, SupportTicketData.DeserializeSupportTicketData(e)), _supportTicketClientDiagnostics, Pipeline, "SupportTicketCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

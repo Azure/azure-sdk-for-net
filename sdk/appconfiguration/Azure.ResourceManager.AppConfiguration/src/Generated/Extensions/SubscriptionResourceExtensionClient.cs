@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -65,37 +64,9 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <returns> An async collection of <see cref="AppConfigurationStoreResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<AppConfigurationStoreResource> GetAppConfigurationStoresAsync(string skipToken = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<AppConfigurationStoreResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = AppConfigurationStoreConfigurationStoresClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetAppConfigurationStores");
-                scope.Start();
-                try
-                {
-                    var response = await AppConfigurationStoreConfigurationStoresRestClient.ListAsync(Id.SubscriptionId, skipToken, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new AppConfigurationStoreResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<AppConfigurationStoreResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = AppConfigurationStoreConfigurationStoresClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetAppConfigurationStores");
-                scope.Start();
-                try
-                {
-                    var response = await AppConfigurationStoreConfigurationStoresRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, skipToken, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new AppConfigurationStoreResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => AppConfigurationStoreConfigurationStoresRestClient.CreateListRequest(Id.SubscriptionId, skipToken);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => AppConfigurationStoreConfigurationStoresRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, skipToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new AppConfigurationStoreResource(Client, AppConfigurationStoreData.DeserializeAppConfigurationStoreData(e)), AppConfigurationStoreConfigurationStoresClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetAppConfigurationStores", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -108,37 +79,9 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <returns> A collection of <see cref="AppConfigurationStoreResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<AppConfigurationStoreResource> GetAppConfigurationStores(string skipToken = null, CancellationToken cancellationToken = default)
         {
-            Page<AppConfigurationStoreResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = AppConfigurationStoreConfigurationStoresClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetAppConfigurationStores");
-                scope.Start();
-                try
-                {
-                    var response = AppConfigurationStoreConfigurationStoresRestClient.List(Id.SubscriptionId, skipToken, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new AppConfigurationStoreResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<AppConfigurationStoreResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = AppConfigurationStoreConfigurationStoresClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetAppConfigurationStores");
-                scope.Start();
-                try
-                {
-                    var response = AppConfigurationStoreConfigurationStoresRestClient.ListNextPage(nextLink, Id.SubscriptionId, skipToken, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new AppConfigurationStoreResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => AppConfigurationStoreConfigurationStoresRestClient.CreateListRequest(Id.SubscriptionId, skipToken);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => AppConfigurationStoreConfigurationStoresRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, skipToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new AppConfigurationStoreResource(Client, AppConfigurationStoreData.DeserializeAppConfigurationStoreData(e)), AppConfigurationStoreConfigurationStoresClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetAppConfigurationStores", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

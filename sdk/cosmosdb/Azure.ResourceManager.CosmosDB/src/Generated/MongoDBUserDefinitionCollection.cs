@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -187,22 +186,8 @@ namespace Azure.ResourceManager.CosmosDB
         /// <returns> An async collection of <see cref="MongoDBUserDefinitionResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<MongoDBUserDefinitionResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<MongoDBUserDefinitionResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _mongoDBUserDefinitionMongoDBResourcesClientDiagnostics.CreateScope("MongoDBUserDefinitionCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _mongoDBUserDefinitionMongoDBResourcesRestClient.ListMongoUserDefinitionsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new MongoDBUserDefinitionResource(Client, value)), null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _mongoDBUserDefinitionMongoDBResourcesRestClient.CreateListMongoUserDefinitionsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new MongoDBUserDefinitionResource(Client, MongoDBUserDefinitionData.DeserializeMongoDBUserDefinitionData(e)), _mongoDBUserDefinitionMongoDBResourcesClientDiagnostics, Pipeline, "MongoDBUserDefinitionCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -214,22 +199,8 @@ namespace Azure.ResourceManager.CosmosDB
         /// <returns> A collection of <see cref="MongoDBUserDefinitionResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<MongoDBUserDefinitionResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<MongoDBUserDefinitionResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _mongoDBUserDefinitionMongoDBResourcesClientDiagnostics.CreateScope("MongoDBUserDefinitionCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _mongoDBUserDefinitionMongoDBResourcesRestClient.ListMongoUserDefinitions(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new MongoDBUserDefinitionResource(Client, value)), null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _mongoDBUserDefinitionMongoDBResourcesRestClient.CreateListMongoUserDefinitionsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new MongoDBUserDefinitionResource(Client, MongoDBUserDefinitionData.DeserializeMongoDBUserDefinitionData(e)), _mongoDBUserDefinitionMongoDBResourcesClientDiagnostics, Pipeline, "MongoDBUserDefinitionCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
