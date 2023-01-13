@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -187,37 +186,9 @@ namespace Azure.ResourceManager.Sql
         /// <returns> An async collection of <see cref="InstancePoolResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<InstancePoolResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<InstancePoolResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _instancePoolClientDiagnostics.CreateScope("InstancePoolCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _instancePoolRestClient.ListByResourceGroupAsync(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new InstancePoolResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<InstancePoolResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _instancePoolClientDiagnostics.CreateScope("InstancePoolCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _instancePoolRestClient.ListByResourceGroupNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new InstancePoolResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _instancePoolRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _instancePoolRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new InstancePoolResource(Client, InstancePoolData.DeserializeInstancePoolData(e)), _instancePoolClientDiagnostics, Pipeline, "InstancePoolCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -229,37 +200,9 @@ namespace Azure.ResourceManager.Sql
         /// <returns> A collection of <see cref="InstancePoolResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<InstancePoolResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<InstancePoolResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _instancePoolClientDiagnostics.CreateScope("InstancePoolCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _instancePoolRestClient.ListByResourceGroup(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new InstancePoolResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<InstancePoolResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _instancePoolClientDiagnostics.CreateScope("InstancePoolCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _instancePoolRestClient.ListByResourceGroupNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new InstancePoolResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _instancePoolRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _instancePoolRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new InstancePoolResource(Client, InstancePoolData.DeserializeInstancePoolData(e)), _instancePoolClientDiagnostics, Pipeline, "InstancePoolCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

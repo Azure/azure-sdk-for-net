@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -22,6 +21,8 @@ namespace Azure.ResourceManager.Kusto
     {
         private ClientDiagnostics _kustoClusterClustersClientDiagnostics;
         private ClustersRestOperations _kustoClusterClustersRestClient;
+        private ClientDiagnostics _skusClientDiagnostics;
+        private SkusRestOperations _skusRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="SubscriptionResourceExtensionClient"/> class for mocking. </summary>
         protected SubscriptionResourceExtensionClient()
@@ -37,6 +38,8 @@ namespace Azure.ResourceManager.Kusto
 
         private ClientDiagnostics KustoClusterClustersClientDiagnostics => _kustoClusterClustersClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Kusto", KustoClusterResource.ResourceType.Namespace, Diagnostics);
         private ClustersRestOperations KustoClusterClustersRestClient => _kustoClusterClustersRestClient ??= new ClustersRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(KustoClusterResource.ResourceType));
+        private ClientDiagnostics SkusClientDiagnostics => _skusClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Kusto", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private SkusRestOperations SkusRestClient => _skusRestClient ??= new SkusRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
 
         private string GetApiVersionOrNull(ResourceType resourceType)
         {
@@ -53,22 +56,8 @@ namespace Azure.ResourceManager.Kusto
         /// <returns> An async collection of <see cref="KustoClusterResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<KustoClusterResource> GetKustoClustersAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<KustoClusterResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = KustoClusterClustersClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetKustoClusters");
-                scope.Start();
-                try
-                {
-                    var response = await KustoClusterClustersRestClient.ListAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new KustoClusterResource(Client, value)), null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => KustoClusterClustersRestClient.CreateListRequest(Id.SubscriptionId);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new KustoClusterResource(Client, KustoClusterData.DeserializeKustoClusterData(e)), KustoClusterClustersClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetKustoClusters", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -80,22 +69,8 @@ namespace Azure.ResourceManager.Kusto
         /// <returns> A collection of <see cref="KustoClusterResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<KustoClusterResource> GetKustoClusters(CancellationToken cancellationToken = default)
         {
-            Page<KustoClusterResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = KustoClusterClustersClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetKustoClusters");
-                scope.Start();
-                try
-                {
-                    var response = KustoClusterClustersRestClient.List(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new KustoClusterResource(Client, value)), null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => KustoClusterClustersRestClient.CreateListRequest(Id.SubscriptionId);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new KustoClusterResource(Client, KustoClusterData.DeserializeKustoClusterData(e)), KustoClusterClustersClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetKustoClusters", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -107,22 +82,8 @@ namespace Azure.ResourceManager.Kusto
         /// <returns> An async collection of <see cref="KustoSkuDescription" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<KustoSkuDescription> GetKustoEligibleSkusAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<KustoSkuDescription>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = KustoClusterClustersClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetKustoEligibleSkus");
-                scope.Start();
-                try
-                {
-                    var response = await KustoClusterClustersRestClient.ListSkusAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => KustoClusterClustersRestClient.CreateListSkusRequest(Id.SubscriptionId);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, KustoSkuDescription.DeserializeKustoSkuDescription, KustoClusterClustersClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetKustoEligibleSkus", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -134,22 +95,8 @@ namespace Azure.ResourceManager.Kusto
         /// <returns> A collection of <see cref="KustoSkuDescription" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<KustoSkuDescription> GetKustoEligibleSkus(CancellationToken cancellationToken = default)
         {
-            Page<KustoSkuDescription> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = KustoClusterClustersClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetKustoEligibleSkus");
-                scope.Start();
-                try
-                {
-                    var response = KustoClusterClustersRestClient.ListSkus(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => KustoClusterClustersRestClient.CreateListSkusRequest(Id.SubscriptionId);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, KustoSkuDescription.DeserializeKustoSkuDescription, KustoClusterClustersClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetKustoEligibleSkus", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -198,6 +145,34 @@ namespace Azure.ResourceManager.Kusto
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        /// <summary>
+        /// Lists eligible region SKUs for Kusto resource provider by Azure region.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Kusto/locations/{location}/skus
+        /// Operation Id: Skus_List
+        /// </summary>
+        /// <param name="location"> Azure location (region) name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="KustoSkuDescription" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<KustoSkuDescription> GetSkusAsync(AzureLocation location, CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => SkusRestClient.CreateListRequest(Id.SubscriptionId, location);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, KustoSkuDescription.DeserializeKustoSkuDescription, SkusClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetSkus", "value", null, cancellationToken);
+        }
+
+        /// <summary>
+        /// Lists eligible region SKUs for Kusto resource provider by Azure region.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Kusto/locations/{location}/skus
+        /// Operation Id: Skus_List
+        /// </summary>
+        /// <param name="location"> Azure location (region) name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="KustoSkuDescription" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<KustoSkuDescription> GetSkus(AzureLocation location, CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => SkusRestClient.CreateListRequest(Id.SubscriptionId, location);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, KustoSkuDescription.DeserializeKustoSkuDescription, SkusClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetSkus", "value", null, cancellationToken);
         }
     }
 }

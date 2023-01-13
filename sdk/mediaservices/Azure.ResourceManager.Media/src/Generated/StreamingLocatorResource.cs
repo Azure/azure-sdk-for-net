@@ -256,22 +256,8 @@ namespace Azure.ResourceManager.Media
         /// <returns> An async collection of <see cref="StreamingLocatorContentKey" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<StreamingLocatorContentKey> GetContentKeysAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<StreamingLocatorContentKey>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _streamingLocatorClientDiagnostics.CreateScope("StreamingLocatorResource.GetContentKeys");
-                scope.Start();
-                try
-                {
-                    var response = await _streamingLocatorRestClient.ListContentKeysAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.ContentKeys, null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _streamingLocatorRestClient.CreateListContentKeysRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, StreamingLocatorContentKey.DeserializeStreamingLocatorContentKey, _streamingLocatorClientDiagnostics, Pipeline, "StreamingLocatorResource.GetContentKeys", "contentKeys", null, cancellationToken);
         }
 
         /// <summary>
@@ -283,22 +269,8 @@ namespace Azure.ResourceManager.Media
         /// <returns> A collection of <see cref="StreamingLocatorContentKey" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<StreamingLocatorContentKey> GetContentKeys(CancellationToken cancellationToken = default)
         {
-            Page<StreamingLocatorContentKey> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _streamingLocatorClientDiagnostics.CreateScope("StreamingLocatorResource.GetContentKeys");
-                scope.Start();
-                try
-                {
-                    var response = _streamingLocatorRestClient.ListContentKeys(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.ContentKeys, null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _streamingLocatorRestClient.CreateListContentKeysRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, StreamingLocatorContentKey.DeserializeStreamingLocatorContentKey, _streamingLocatorClientDiagnostics, Pipeline, "StreamingLocatorResource.GetContentKeys", "contentKeys", null, cancellationToken);
         }
 
         /// <summary>

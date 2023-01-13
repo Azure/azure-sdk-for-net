@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -186,37 +185,9 @@ namespace Azure.ResourceManager.Hci
         /// <returns> An async collection of <see cref="ArcExtensionResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ArcExtensionResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<ArcExtensionResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _arcExtensionExtensionsClientDiagnostics.CreateScope("ArcExtensionCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _arcExtensionExtensionsRestClient.ListByArcSettingAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ArcExtensionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<ArcExtensionResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _arcExtensionExtensionsClientDiagnostics.CreateScope("ArcExtensionCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _arcExtensionExtensionsRestClient.ListByArcSettingNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ArcExtensionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _arcExtensionExtensionsRestClient.CreateListByArcSettingRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _arcExtensionExtensionsRestClient.CreateListByArcSettingNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ArcExtensionResource(Client, ArcExtensionData.DeserializeArcExtensionData(e)), _arcExtensionExtensionsClientDiagnostics, Pipeline, "ArcExtensionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -228,37 +199,9 @@ namespace Azure.ResourceManager.Hci
         /// <returns> A collection of <see cref="ArcExtensionResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ArcExtensionResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<ArcExtensionResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _arcExtensionExtensionsClientDiagnostics.CreateScope("ArcExtensionCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _arcExtensionExtensionsRestClient.ListByArcSetting(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ArcExtensionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<ArcExtensionResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _arcExtensionExtensionsClientDiagnostics.CreateScope("ArcExtensionCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _arcExtensionExtensionsRestClient.ListByArcSettingNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ArcExtensionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _arcExtensionExtensionsRestClient.CreateListByArcSettingRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _arcExtensionExtensionsRestClient.CreateListByArcSettingNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ArcExtensionResource(Client, ArcExtensionData.DeserializeArcExtensionData(e)), _arcExtensionExtensionsClientDiagnostics, Pipeline, "ArcExtensionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -192,37 +191,9 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <returns> An async collection of <see cref="SubscriptionSecurityApplicationResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SubscriptionSecurityApplicationResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<SubscriptionSecurityApplicationResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _subscriptionSecurityApplicationApplicationsClientDiagnostics.CreateScope("SubscriptionSecurityApplicationCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _subscriptionSecurityApplicationApplicationsRestClient.ListAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new SubscriptionSecurityApplicationResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<SubscriptionSecurityApplicationResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _subscriptionSecurityApplicationApplicationsClientDiagnostics.CreateScope("SubscriptionSecurityApplicationCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _subscriptionSecurityApplicationApplicationsRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new SubscriptionSecurityApplicationResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _subscriptionSecurityApplicationApplicationsRestClient.CreateListRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _subscriptionSecurityApplicationApplicationsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SubscriptionSecurityApplicationResource(Client, SecurityApplicationData.DeserializeSecurityApplicationData(e)), _subscriptionSecurityApplicationApplicationsClientDiagnostics, Pipeline, "SubscriptionSecurityApplicationCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -234,37 +205,9 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <returns> A collection of <see cref="SubscriptionSecurityApplicationResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SubscriptionSecurityApplicationResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<SubscriptionSecurityApplicationResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _subscriptionSecurityApplicationApplicationsClientDiagnostics.CreateScope("SubscriptionSecurityApplicationCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _subscriptionSecurityApplicationApplicationsRestClient.List(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new SubscriptionSecurityApplicationResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<SubscriptionSecurityApplicationResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _subscriptionSecurityApplicationApplicationsClientDiagnostics.CreateScope("SubscriptionSecurityApplicationCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _subscriptionSecurityApplicationApplicationsRestClient.ListNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new SubscriptionSecurityApplicationResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _subscriptionSecurityApplicationApplicationsRestClient.CreateListRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _subscriptionSecurityApplicationApplicationsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SubscriptionSecurityApplicationResource(Client, SecurityApplicationData.DeserializeSecurityApplicationData(e)), _subscriptionSecurityApplicationApplicationsClientDiagnostics, Pipeline, "SubscriptionSecurityApplicationCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

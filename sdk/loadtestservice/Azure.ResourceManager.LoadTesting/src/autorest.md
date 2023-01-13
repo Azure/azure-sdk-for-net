@@ -8,8 +8,7 @@ azure-arm: true
 csharp: true
 library-name: LoadTesting
 namespace: Azure.ResourceManager.LoadTesting
-require: https://github.com/Azure/azure-rest-api-specs/blob/d6b9d9d7ea3fa4e6c0c2122f7641b9b009ce482e/specification/loadtestservice/resource-manager/readme.md
-tag: package-2022-12-01
+require: https://github.com/Azure/azure-rest-api-specs/blob/3dae9445631a0e27d743c1355f8cb82391d1634f/specification/loadtestservice/resource-manager/readme.md
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 skip-csproj: true

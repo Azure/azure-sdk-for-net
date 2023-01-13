@@ -6,9 +6,7 @@
 #nullable disable
 
 using System;
-using System.Linq;
 using System.Threading;
-using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -52,37 +50,9 @@ namespace Azure.ResourceManager.HealthBot
         /// <returns> An async collection of <see cref="HealthBotResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<HealthBotResource> GetHealthBotsAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<HealthBotResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = HealthBotBotsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetHealthBots");
-                scope.Start();
-                try
-                {
-                    var response = await HealthBotBotsRestClient.ListAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new HealthBotResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<HealthBotResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = HealthBotBotsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetHealthBots");
-                scope.Start();
-                try
-                {
-                    var response = await HealthBotBotsRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new HealthBotResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => HealthBotBotsRestClient.CreateListRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => HealthBotBotsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new HealthBotResource(Client, HealthBotData.DeserializeHealthBotData(e)), HealthBotBotsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetHealthBots", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -94,37 +64,9 @@ namespace Azure.ResourceManager.HealthBot
         /// <returns> A collection of <see cref="HealthBotResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<HealthBotResource> GetHealthBots(CancellationToken cancellationToken = default)
         {
-            Page<HealthBotResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = HealthBotBotsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetHealthBots");
-                scope.Start();
-                try
-                {
-                    var response = HealthBotBotsRestClient.List(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new HealthBotResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<HealthBotResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = HealthBotBotsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetHealthBots");
-                scope.Start();
-                try
-                {
-                    var response = HealthBotBotsRestClient.ListNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new HealthBotResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => HealthBotBotsRestClient.CreateListRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => HealthBotBotsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new HealthBotResource(Client, HealthBotData.DeserializeHealthBotData(e)), HealthBotBotsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetHealthBots", "value", "nextLink", cancellationToken);
         }
     }
 }

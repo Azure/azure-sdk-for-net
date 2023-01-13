@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -186,37 +185,9 @@ namespace Azure.ResourceManager.PostgreSql
         /// <returns> An async collection of <see cref="PostgreSqlVirtualNetworkRuleResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<PostgreSqlVirtualNetworkRuleResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<PostgreSqlVirtualNetworkRuleResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _postgreSqlVirtualNetworkRuleVirtualNetworkRulesClientDiagnostics.CreateScope("PostgreSqlVirtualNetworkRuleCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _postgreSqlVirtualNetworkRuleVirtualNetworkRulesRestClient.ListByServerAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new PostgreSqlVirtualNetworkRuleResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<PostgreSqlVirtualNetworkRuleResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _postgreSqlVirtualNetworkRuleVirtualNetworkRulesClientDiagnostics.CreateScope("PostgreSqlVirtualNetworkRuleCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _postgreSqlVirtualNetworkRuleVirtualNetworkRulesRestClient.ListByServerNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new PostgreSqlVirtualNetworkRuleResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _postgreSqlVirtualNetworkRuleVirtualNetworkRulesRestClient.CreateListByServerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _postgreSqlVirtualNetworkRuleVirtualNetworkRulesRestClient.CreateListByServerNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new PostgreSqlVirtualNetworkRuleResource(Client, PostgreSqlVirtualNetworkRuleData.DeserializePostgreSqlVirtualNetworkRuleData(e)), _postgreSqlVirtualNetworkRuleVirtualNetworkRulesClientDiagnostics, Pipeline, "PostgreSqlVirtualNetworkRuleCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -228,37 +199,9 @@ namespace Azure.ResourceManager.PostgreSql
         /// <returns> A collection of <see cref="PostgreSqlVirtualNetworkRuleResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<PostgreSqlVirtualNetworkRuleResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<PostgreSqlVirtualNetworkRuleResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _postgreSqlVirtualNetworkRuleVirtualNetworkRulesClientDiagnostics.CreateScope("PostgreSqlVirtualNetworkRuleCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _postgreSqlVirtualNetworkRuleVirtualNetworkRulesRestClient.ListByServer(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new PostgreSqlVirtualNetworkRuleResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<PostgreSqlVirtualNetworkRuleResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _postgreSqlVirtualNetworkRuleVirtualNetworkRulesClientDiagnostics.CreateScope("PostgreSqlVirtualNetworkRuleCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _postgreSqlVirtualNetworkRuleVirtualNetworkRulesRestClient.ListByServerNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new PostgreSqlVirtualNetworkRuleResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _postgreSqlVirtualNetworkRuleVirtualNetworkRulesRestClient.CreateListByServerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _postgreSqlVirtualNetworkRuleVirtualNetworkRulesRestClient.CreateListByServerNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new PostgreSqlVirtualNetworkRuleResource(Client, PostgreSqlVirtualNetworkRuleData.DeserializePostgreSqlVirtualNetworkRuleData(e)), _postgreSqlVirtualNetworkRuleVirtualNetworkRulesClientDiagnostics, Pipeline, "PostgreSqlVirtualNetworkRuleCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

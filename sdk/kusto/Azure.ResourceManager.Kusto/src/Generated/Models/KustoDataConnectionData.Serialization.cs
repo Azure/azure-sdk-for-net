@@ -33,6 +33,7 @@ namespace Azure.ResourceManager.Kusto
             {
                 switch (discriminator.GetString())
                 {
+                    case "CosmosDb": return KustoCosmosDBDataConnection.DeserializeKustoCosmosDBDataConnection(element);
                     case "EventGrid": return KustoEventGridDataConnection.DeserializeKustoEventGridDataConnection(element);
                     case "EventHub": return KustoEventHubDataConnection.DeserializeKustoEventHubDataConnection(element);
                     case "IotHub": return KustoIotHubDataConnection.DeserializeKustoIotHubDataConnection(element);

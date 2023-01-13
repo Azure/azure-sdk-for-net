@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -186,22 +185,8 @@ namespace Azure.ResourceManager.Marketplace
         /// <returns> An async collection of <see cref="MarketplaceApprovalRequestResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<MarketplaceApprovalRequestResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<MarketplaceApprovalRequestResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _marketplaceApprovalRequestPrivateStoreClientDiagnostics.CreateScope("MarketplaceApprovalRequestCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _marketplaceApprovalRequestPrivateStoreRestClient.GetApprovalRequestsListAsync(Guid.Parse(Id.Name), cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new MarketplaceApprovalRequestResource(Client, value)), null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _marketplaceApprovalRequestPrivateStoreRestClient.CreateGetApprovalRequestsListRequest(Guid.Parse(Id.Name));
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new MarketplaceApprovalRequestResource(Client, MarketplaceApprovalRequestData.DeserializeMarketplaceApprovalRequestData(e)), _marketplaceApprovalRequestPrivateStoreClientDiagnostics, Pipeline, "MarketplaceApprovalRequestCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -213,22 +198,8 @@ namespace Azure.ResourceManager.Marketplace
         /// <returns> A collection of <see cref="MarketplaceApprovalRequestResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<MarketplaceApprovalRequestResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<MarketplaceApprovalRequestResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _marketplaceApprovalRequestPrivateStoreClientDiagnostics.CreateScope("MarketplaceApprovalRequestCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _marketplaceApprovalRequestPrivateStoreRestClient.GetApprovalRequestsList(Guid.Parse(Id.Name), cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new MarketplaceApprovalRequestResource(Client, value)), null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _marketplaceApprovalRequestPrivateStoreRestClient.CreateGetApprovalRequestsListRequest(Guid.Parse(Id.Name));
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new MarketplaceApprovalRequestResource(Client, MarketplaceApprovalRequestData.DeserializeMarketplaceApprovalRequestData(e)), _marketplaceApprovalRequestPrivateStoreClientDiagnostics, Pipeline, "MarketplaceApprovalRequestCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>

@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -262,37 +261,9 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <returns> An async collection of <see cref="JitNetworkAccessPolicyResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<JitNetworkAccessPolicyResource> GetJitNetworkAccessPoliciesAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<JitNetworkAccessPolicyResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = JitNetworkAccessPolicyClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetJitNetworkAccessPolicies");
-                scope.Start();
-                try
-                {
-                    var response = await JitNetworkAccessPolicyRestClient.ListByResourceGroupAsync(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new JitNetworkAccessPolicyResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<JitNetworkAccessPolicyResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = JitNetworkAccessPolicyClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetJitNetworkAccessPolicies");
-                scope.Start();
-                try
-                {
-                    var response = await JitNetworkAccessPolicyRestClient.ListByResourceGroupNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new JitNetworkAccessPolicyResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => JitNetworkAccessPolicyRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => JitNetworkAccessPolicyRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new JitNetworkAccessPolicyResource(Client, JitNetworkAccessPolicyData.DeserializeJitNetworkAccessPolicyData(e)), JitNetworkAccessPolicyClientDiagnostics, Pipeline, "ResourceGroupResourceExtensionClient.GetJitNetworkAccessPolicies", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -304,37 +275,9 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <returns> A collection of <see cref="JitNetworkAccessPolicyResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<JitNetworkAccessPolicyResource> GetJitNetworkAccessPolicies(CancellationToken cancellationToken = default)
         {
-            Page<JitNetworkAccessPolicyResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = JitNetworkAccessPolicyClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetJitNetworkAccessPolicies");
-                scope.Start();
-                try
-                {
-                    var response = JitNetworkAccessPolicyRestClient.ListByResourceGroup(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new JitNetworkAccessPolicyResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<JitNetworkAccessPolicyResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = JitNetworkAccessPolicyClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetJitNetworkAccessPolicies");
-                scope.Start();
-                try
-                {
-                    var response = JitNetworkAccessPolicyRestClient.ListByResourceGroupNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new JitNetworkAccessPolicyResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => JitNetworkAccessPolicyRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => JitNetworkAccessPolicyRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new JitNetworkAccessPolicyResource(Client, JitNetworkAccessPolicyData.DeserializeJitNetworkAccessPolicyData(e)), JitNetworkAccessPolicyClientDiagnostics, Pipeline, "ResourceGroupResourceExtensionClient.GetJitNetworkAccessPolicies", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -490,37 +433,9 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <returns> An async collection of <see cref="SecurityAlertData" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SecurityAlertData> GetAlertsByResourceGroupAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<SecurityAlertData>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = AlertsClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetAlertsByResourceGroup");
-                scope.Start();
-                try
-                {
-                    var response = await AlertsRestClient.ListByResourceGroupAsync(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<SecurityAlertData>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = AlertsClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetAlertsByResourceGroup");
-                scope.Start();
-                try
-                {
-                    var response = await AlertsRestClient.ListByResourceGroupNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => AlertsRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => AlertsRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, SecurityAlertData.DeserializeSecurityAlertData, AlertsClientDiagnostics, Pipeline, "ResourceGroupResourceExtensionClient.GetAlertsByResourceGroup", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -532,37 +447,9 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <returns> A collection of <see cref="SecurityAlertData" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SecurityAlertData> GetAlertsByResourceGroup(CancellationToken cancellationToken = default)
         {
-            Page<SecurityAlertData> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = AlertsClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetAlertsByResourceGroup");
-                scope.Start();
-                try
-                {
-                    var response = AlertsRestClient.ListByResourceGroup(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<SecurityAlertData> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = AlertsClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetAlertsByResourceGroup");
-                scope.Start();
-                try
-                {
-                    var response = AlertsRestClient.ListByResourceGroupNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => AlertsRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => AlertsRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, SecurityAlertData.DeserializeSecurityAlertData, AlertsClientDiagnostics, Pipeline, "ResourceGroupResourceExtensionClient.GetAlertsByResourceGroup", "value", "nextLink", cancellationToken);
         }
     }
 }

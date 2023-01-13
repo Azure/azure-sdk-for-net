@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -186,37 +185,9 @@ namespace Azure.ResourceManager.Avs
         /// <returns> An async collection of <see cref="GlobalReachConnectionResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<GlobalReachConnectionResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<GlobalReachConnectionResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _globalReachConnectionClientDiagnostics.CreateScope("GlobalReachConnectionCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _globalReachConnectionRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new GlobalReachConnectionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<GlobalReachConnectionResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _globalReachConnectionClientDiagnostics.CreateScope("GlobalReachConnectionCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _globalReachConnectionRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new GlobalReachConnectionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _globalReachConnectionRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _globalReachConnectionRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new GlobalReachConnectionResource(Client, GlobalReachConnectionData.DeserializeGlobalReachConnectionData(e)), _globalReachConnectionClientDiagnostics, Pipeline, "GlobalReachConnectionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -228,37 +199,9 @@ namespace Azure.ResourceManager.Avs
         /// <returns> A collection of <see cref="GlobalReachConnectionResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<GlobalReachConnectionResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<GlobalReachConnectionResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _globalReachConnectionClientDiagnostics.CreateScope("GlobalReachConnectionCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _globalReachConnectionRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new GlobalReachConnectionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<GlobalReachConnectionResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _globalReachConnectionClientDiagnostics.CreateScope("GlobalReachConnectionCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _globalReachConnectionRestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new GlobalReachConnectionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _globalReachConnectionRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _globalReachConnectionRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new GlobalReachConnectionResource(Client, GlobalReachConnectionData.DeserializeGlobalReachConnectionData(e)), _globalReachConnectionClientDiagnostics, Pipeline, "GlobalReachConnectionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

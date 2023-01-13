@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -191,37 +190,9 @@ namespace Azure.ResourceManager.ApiManagement
         /// <returns> An async collection of <see cref="ApiSchemaResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ApiSchemaResource> GetAllAsync(string filter = null, int? top = null, int? skip = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<ApiSchemaResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _apiSchemaClientDiagnostics.CreateScope("ApiSchemaCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _apiSchemaRestClient.ListByApiAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, top, skip, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ApiSchemaResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<ApiSchemaResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _apiSchemaClientDiagnostics.CreateScope("ApiSchemaCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _apiSchemaRestClient.ListByApiNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, top, skip, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ApiSchemaResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _apiSchemaRestClient.CreateListByApiRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, top, skip);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _apiSchemaRestClient.CreateListByApiNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, top, skip);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ApiSchemaResource(Client, ApiSchemaData.DeserializeApiSchemaData(e)), _apiSchemaClientDiagnostics, Pipeline, "ApiSchemaCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -236,37 +207,9 @@ namespace Azure.ResourceManager.ApiManagement
         /// <returns> A collection of <see cref="ApiSchemaResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ApiSchemaResource> GetAll(string filter = null, int? top = null, int? skip = null, CancellationToken cancellationToken = default)
         {
-            Page<ApiSchemaResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _apiSchemaClientDiagnostics.CreateScope("ApiSchemaCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _apiSchemaRestClient.ListByApi(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, top, skip, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ApiSchemaResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<ApiSchemaResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _apiSchemaClientDiagnostics.CreateScope("ApiSchemaCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _apiSchemaRestClient.ListByApiNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, top, skip, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ApiSchemaResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _apiSchemaRestClient.CreateListByApiRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, top, skip);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _apiSchemaRestClient.CreateListByApiNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, top, skip);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ApiSchemaResource(Client, ApiSchemaData.DeserializeApiSchemaData(e)), _apiSchemaClientDiagnostics, Pipeline, "ApiSchemaCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

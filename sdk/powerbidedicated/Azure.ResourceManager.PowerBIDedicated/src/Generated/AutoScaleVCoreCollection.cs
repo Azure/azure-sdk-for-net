@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -187,22 +186,8 @@ namespace Azure.ResourceManager.PowerBIDedicated
         /// <returns> An async collection of <see cref="AutoScaleVCoreResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<AutoScaleVCoreResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<AutoScaleVCoreResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _autoScaleVCoreClientDiagnostics.CreateScope("AutoScaleVCoreCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _autoScaleVCoreRestClient.ListByResourceGroupAsync(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new AutoScaleVCoreResource(Client, value)), null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _autoScaleVCoreRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new AutoScaleVCoreResource(Client, AutoScaleVCoreData.DeserializeAutoScaleVCoreData(e)), _autoScaleVCoreClientDiagnostics, Pipeline, "AutoScaleVCoreCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -214,22 +199,8 @@ namespace Azure.ResourceManager.PowerBIDedicated
         /// <returns> A collection of <see cref="AutoScaleVCoreResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<AutoScaleVCoreResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<AutoScaleVCoreResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _autoScaleVCoreClientDiagnostics.CreateScope("AutoScaleVCoreCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _autoScaleVCoreRestClient.ListByResourceGroup(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new AutoScaleVCoreResource(Client, value)), null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _autoScaleVCoreRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new AutoScaleVCoreResource(Client, AutoScaleVCoreData.DeserializeAutoScaleVCoreData(e)), _autoScaleVCoreClientDiagnostics, Pipeline, "AutoScaleVCoreCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>

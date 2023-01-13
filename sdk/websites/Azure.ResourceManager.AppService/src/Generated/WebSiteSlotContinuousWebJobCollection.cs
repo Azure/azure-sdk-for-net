@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -120,37 +119,9 @@ namespace Azure.ResourceManager.AppService
         /// <returns> An async collection of <see cref="WebSiteSlotContinuousWebJobResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<WebSiteSlotContinuousWebJobResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<WebSiteSlotContinuousWebJobResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _webSiteSlotContinuousWebJobWebAppsClientDiagnostics.CreateScope("WebSiteSlotContinuousWebJobCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _webSiteSlotContinuousWebJobWebAppsRestClient.ListContinuousWebJobsSlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new WebSiteSlotContinuousWebJobResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<WebSiteSlotContinuousWebJobResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _webSiteSlotContinuousWebJobWebAppsClientDiagnostics.CreateScope("WebSiteSlotContinuousWebJobCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _webSiteSlotContinuousWebJobWebAppsRestClient.ListContinuousWebJobsSlotNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new WebSiteSlotContinuousWebJobResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _webSiteSlotContinuousWebJobWebAppsRestClient.CreateListContinuousWebJobsSlotRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _webSiteSlotContinuousWebJobWebAppsRestClient.CreateListContinuousWebJobsSlotNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new WebSiteSlotContinuousWebJobResource(Client, ContinuousWebJobData.DeserializeContinuousWebJobData(e)), _webSiteSlotContinuousWebJobWebAppsClientDiagnostics, Pipeline, "WebSiteSlotContinuousWebJobCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -162,37 +133,9 @@ namespace Azure.ResourceManager.AppService
         /// <returns> A collection of <see cref="WebSiteSlotContinuousWebJobResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<WebSiteSlotContinuousWebJobResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<WebSiteSlotContinuousWebJobResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _webSiteSlotContinuousWebJobWebAppsClientDiagnostics.CreateScope("WebSiteSlotContinuousWebJobCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _webSiteSlotContinuousWebJobWebAppsRestClient.ListContinuousWebJobsSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new WebSiteSlotContinuousWebJobResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<WebSiteSlotContinuousWebJobResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _webSiteSlotContinuousWebJobWebAppsClientDiagnostics.CreateScope("WebSiteSlotContinuousWebJobCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _webSiteSlotContinuousWebJobWebAppsRestClient.ListContinuousWebJobsSlotNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new WebSiteSlotContinuousWebJobResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _webSiteSlotContinuousWebJobWebAppsRestClient.CreateListContinuousWebJobsSlotRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _webSiteSlotContinuousWebJobWebAppsRestClient.CreateListContinuousWebJobsSlotNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new WebSiteSlotContinuousWebJobResource(Client, ContinuousWebJobData.DeserializeContinuousWebJobData(e)), _webSiteSlotContinuousWebJobWebAppsClientDiagnostics, Pipeline, "WebSiteSlotContinuousWebJobCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

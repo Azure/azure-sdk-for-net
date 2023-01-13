@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -188,37 +187,9 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// <returns> An async collection of <see cref="DataBoxEdgeDeviceResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DataBoxEdgeDeviceResource> GetAllAsync(string expand = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<DataBoxEdgeDeviceResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _dataBoxEdgeDeviceDevicesClientDiagnostics.CreateScope("DataBoxEdgeDeviceCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _dataBoxEdgeDeviceDevicesRestClient.ListByResourceGroupAsync(Id.SubscriptionId, Id.ResourceGroupName, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new DataBoxEdgeDeviceResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<DataBoxEdgeDeviceResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _dataBoxEdgeDeviceDevicesClientDiagnostics.CreateScope("DataBoxEdgeDeviceCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _dataBoxEdgeDeviceDevicesRestClient.ListByResourceGroupNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new DataBoxEdgeDeviceResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _dataBoxEdgeDeviceDevicesRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, expand);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _dataBoxEdgeDeviceDevicesRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, expand);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DataBoxEdgeDeviceResource(Client, DataBoxEdgeDeviceData.DeserializeDataBoxEdgeDeviceData(e)), _dataBoxEdgeDeviceDevicesClientDiagnostics, Pipeline, "DataBoxEdgeDeviceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -231,37 +202,9 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// <returns> A collection of <see cref="DataBoxEdgeDeviceResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DataBoxEdgeDeviceResource> GetAll(string expand = null, CancellationToken cancellationToken = default)
         {
-            Page<DataBoxEdgeDeviceResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _dataBoxEdgeDeviceDevicesClientDiagnostics.CreateScope("DataBoxEdgeDeviceCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _dataBoxEdgeDeviceDevicesRestClient.ListByResourceGroup(Id.SubscriptionId, Id.ResourceGroupName, expand, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new DataBoxEdgeDeviceResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<DataBoxEdgeDeviceResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _dataBoxEdgeDeviceDevicesClientDiagnostics.CreateScope("DataBoxEdgeDeviceCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _dataBoxEdgeDeviceDevicesRestClient.ListByResourceGroupNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, expand, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new DataBoxEdgeDeviceResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _dataBoxEdgeDeviceDevicesRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, expand);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _dataBoxEdgeDeviceDevicesRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, expand);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DataBoxEdgeDeviceResource(Client, DataBoxEdgeDeviceData.DeserializeDataBoxEdgeDeviceData(e)), _dataBoxEdgeDeviceDevicesClientDiagnostics, Pipeline, "DataBoxEdgeDeviceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

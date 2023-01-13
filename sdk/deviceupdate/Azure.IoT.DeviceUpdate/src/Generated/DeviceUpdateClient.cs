@@ -6,9 +6,6 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
-using System.Runtime.CompilerServices;
-using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
@@ -259,24 +256,9 @@ namespace Azure.IoT.DeviceUpdate
         /// <include file="Docs/DeviceUpdateClient.xml" path="doc/members/member[@name='GetUpdatesAsync(String,String,RequestContext)']/*" />
         public virtual AsyncPageable<BinaryData> GetUpdatesAsync(string search = null, string filter = null, RequestContext context = null)
         {
-            return GetUpdatesImplementationAsync("DeviceUpdateClient.GetUpdates", search, filter, context);
-        }
-
-        private AsyncPageable<BinaryData> GetUpdatesImplementationAsync(string diagnosticsScopeName, string search, string filter, RequestContext context)
-        {
-            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, ClientDiagnostics, diagnosticsScopeName);
-            async IAsyncEnumerable<Page<BinaryData>> CreateEnumerableAsync(string nextLink, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken = default)
-            {
-                do
-                {
-                    var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetUpdatesRequest(search, filter, context)
-                        : CreateGetUpdatesNextPageRequest(nextLink, search, filter, context);
-                    var page = await LowLevelPageableHelpers.ProcessMessageAsync(_pipeline, message, context, "value", "nextLink", cancellationToken).ConfigureAwait(false);
-                    nextLink = page.ContinuationToken;
-                    yield return page;
-                } while (!string.IsNullOrEmpty(nextLink));
-            }
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetUpdatesRequest(search, filter, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetUpdatesNextPageRequest(nextLink, search, filter, context);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "DeviceUpdateClient.GetUpdates", "value", "nextLink", context);
         }
 
         /// <summary> Get a list of all updates that have been imported to Device Update for IoT Hub. </summary>
@@ -288,24 +270,9 @@ namespace Azure.IoT.DeviceUpdate
         /// <include file="Docs/DeviceUpdateClient.xml" path="doc/members/member[@name='GetUpdates(String,String,RequestContext)']/*" />
         public virtual Pageable<BinaryData> GetUpdates(string search = null, string filter = null, RequestContext context = null)
         {
-            return GetUpdatesImplementation("DeviceUpdateClient.GetUpdates", search, filter, context);
-        }
-
-        private Pageable<BinaryData> GetUpdatesImplementation(string diagnosticsScopeName, string search, string filter, RequestContext context)
-        {
-            return PageableHelpers.CreatePageable(CreateEnumerable, ClientDiagnostics, diagnosticsScopeName);
-            IEnumerable<Page<BinaryData>> CreateEnumerable(string nextLink, int? pageSizeHint)
-            {
-                do
-                {
-                    var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetUpdatesRequest(search, filter, context)
-                        : CreateGetUpdatesNextPageRequest(nextLink, search, filter, context);
-                    var page = LowLevelPageableHelpers.ProcessMessage(_pipeline, message, context, "value", "nextLink");
-                    nextLink = page.ContinuationToken;
-                    yield return page;
-                } while (!string.IsNullOrEmpty(nextLink));
-            }
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetUpdatesRequest(search, filter, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetUpdatesNextPageRequest(nextLink, search, filter, context);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "DeviceUpdateClient.GetUpdates", "value", "nextLink", context);
         }
 
         /// <summary> Get a list of all update providers that have been imported to Device Update for IoT Hub. </summary>
@@ -315,24 +282,9 @@ namespace Azure.IoT.DeviceUpdate
         /// <include file="Docs/DeviceUpdateClient.xml" path="doc/members/member[@name='GetProvidersAsync(RequestContext)']/*" />
         public virtual AsyncPageable<BinaryData> GetProvidersAsync(RequestContext context = null)
         {
-            return GetProvidersImplementationAsync("DeviceUpdateClient.GetProviders", context);
-        }
-
-        private AsyncPageable<BinaryData> GetProvidersImplementationAsync(string diagnosticsScopeName, RequestContext context)
-        {
-            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, ClientDiagnostics, diagnosticsScopeName);
-            async IAsyncEnumerable<Page<BinaryData>> CreateEnumerableAsync(string nextLink, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken = default)
-            {
-                do
-                {
-                    var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetProvidersRequest(context)
-                        : CreateGetProvidersNextPageRequest(nextLink, context);
-                    var page = await LowLevelPageableHelpers.ProcessMessageAsync(_pipeline, message, context, "value", "nextLink", cancellationToken).ConfigureAwait(false);
-                    nextLink = page.ContinuationToken;
-                    yield return page;
-                } while (!string.IsNullOrEmpty(nextLink));
-            }
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetProvidersRequest(context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetProvidersNextPageRequest(nextLink, context);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "DeviceUpdateClient.GetProviders", "value", "nextLink", context);
         }
 
         /// <summary> Get a list of all update providers that have been imported to Device Update for IoT Hub. </summary>
@@ -342,24 +294,9 @@ namespace Azure.IoT.DeviceUpdate
         /// <include file="Docs/DeviceUpdateClient.xml" path="doc/members/member[@name='GetProviders(RequestContext)']/*" />
         public virtual Pageable<BinaryData> GetProviders(RequestContext context = null)
         {
-            return GetProvidersImplementation("DeviceUpdateClient.GetProviders", context);
-        }
-
-        private Pageable<BinaryData> GetProvidersImplementation(string diagnosticsScopeName, RequestContext context)
-        {
-            return PageableHelpers.CreatePageable(CreateEnumerable, ClientDiagnostics, diagnosticsScopeName);
-            IEnumerable<Page<BinaryData>> CreateEnumerable(string nextLink, int? pageSizeHint)
-            {
-                do
-                {
-                    var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetProvidersRequest(context)
-                        : CreateGetProvidersNextPageRequest(nextLink, context);
-                    var page = LowLevelPageableHelpers.ProcessMessage(_pipeline, message, context, "value", "nextLink");
-                    nextLink = page.ContinuationToken;
-                    yield return page;
-                } while (!string.IsNullOrEmpty(nextLink));
-            }
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetProvidersRequest(context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetProvidersNextPageRequest(nextLink, context);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "DeviceUpdateClient.GetProviders", "value", "nextLink", context);
         }
 
         /// <summary> Get a list of all update names that match the specified provider. </summary>
@@ -374,24 +311,9 @@ namespace Azure.IoT.DeviceUpdate
         {
             Argument.AssertNotNullOrEmpty(provider, nameof(provider));
 
-            return GetNamesImplementationAsync("DeviceUpdateClient.GetNames", provider, context);
-        }
-
-        private AsyncPageable<BinaryData> GetNamesImplementationAsync(string diagnosticsScopeName, string provider, RequestContext context)
-        {
-            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, ClientDiagnostics, diagnosticsScopeName);
-            async IAsyncEnumerable<Page<BinaryData>> CreateEnumerableAsync(string nextLink, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken = default)
-            {
-                do
-                {
-                    var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetNamesRequest(provider, context)
-                        : CreateGetNamesNextPageRequest(nextLink, provider, context);
-                    var page = await LowLevelPageableHelpers.ProcessMessageAsync(_pipeline, message, context, "value", "nextLink", cancellationToken).ConfigureAwait(false);
-                    nextLink = page.ContinuationToken;
-                    yield return page;
-                } while (!string.IsNullOrEmpty(nextLink));
-            }
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetNamesRequest(provider, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetNamesNextPageRequest(nextLink, provider, context);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "DeviceUpdateClient.GetNames", "value", "nextLink", context);
         }
 
         /// <summary> Get a list of all update names that match the specified provider. </summary>
@@ -406,24 +328,9 @@ namespace Azure.IoT.DeviceUpdate
         {
             Argument.AssertNotNullOrEmpty(provider, nameof(provider));
 
-            return GetNamesImplementation("DeviceUpdateClient.GetNames", provider, context);
-        }
-
-        private Pageable<BinaryData> GetNamesImplementation(string diagnosticsScopeName, string provider, RequestContext context)
-        {
-            return PageableHelpers.CreatePageable(CreateEnumerable, ClientDiagnostics, diagnosticsScopeName);
-            IEnumerable<Page<BinaryData>> CreateEnumerable(string nextLink, int? pageSizeHint)
-            {
-                do
-                {
-                    var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetNamesRequest(provider, context)
-                        : CreateGetNamesNextPageRequest(nextLink, provider, context);
-                    var page = LowLevelPageableHelpers.ProcessMessage(_pipeline, message, context, "value", "nextLink");
-                    nextLink = page.ContinuationToken;
-                    yield return page;
-                } while (!string.IsNullOrEmpty(nextLink));
-            }
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetNamesRequest(provider, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetNamesNextPageRequest(nextLink, provider, context);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "DeviceUpdateClient.GetNames", "value", "nextLink", context);
         }
 
         /// <summary> Get a list of all update versions that match the specified provider and name. </summary>
@@ -441,24 +348,9 @@ namespace Azure.IoT.DeviceUpdate
             Argument.AssertNotNullOrEmpty(provider, nameof(provider));
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            return GetVersionsImplementationAsync("DeviceUpdateClient.GetVersions", provider, name, filter, context);
-        }
-
-        private AsyncPageable<BinaryData> GetVersionsImplementationAsync(string diagnosticsScopeName, string provider, string name, string filter, RequestContext context)
-        {
-            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, ClientDiagnostics, diagnosticsScopeName);
-            async IAsyncEnumerable<Page<BinaryData>> CreateEnumerableAsync(string nextLink, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken = default)
-            {
-                do
-                {
-                    var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetVersionsRequest(provider, name, filter, context)
-                        : CreateGetVersionsNextPageRequest(nextLink, provider, name, filter, context);
-                    var page = await LowLevelPageableHelpers.ProcessMessageAsync(_pipeline, message, context, "value", "nextLink", cancellationToken).ConfigureAwait(false);
-                    nextLink = page.ContinuationToken;
-                    yield return page;
-                } while (!string.IsNullOrEmpty(nextLink));
-            }
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetVersionsRequest(provider, name, filter, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetVersionsNextPageRequest(nextLink, provider, name, filter, context);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "DeviceUpdateClient.GetVersions", "value", "nextLink", context);
         }
 
         /// <summary> Get a list of all update versions that match the specified provider and name. </summary>
@@ -476,24 +368,9 @@ namespace Azure.IoT.DeviceUpdate
             Argument.AssertNotNullOrEmpty(provider, nameof(provider));
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            return GetVersionsImplementation("DeviceUpdateClient.GetVersions", provider, name, filter, context);
-        }
-
-        private Pageable<BinaryData> GetVersionsImplementation(string diagnosticsScopeName, string provider, string name, string filter, RequestContext context)
-        {
-            return PageableHelpers.CreatePageable(CreateEnumerable, ClientDiagnostics, diagnosticsScopeName);
-            IEnumerable<Page<BinaryData>> CreateEnumerable(string nextLink, int? pageSizeHint)
-            {
-                do
-                {
-                    var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetVersionsRequest(provider, name, filter, context)
-                        : CreateGetVersionsNextPageRequest(nextLink, provider, name, filter, context);
-                    var page = LowLevelPageableHelpers.ProcessMessage(_pipeline, message, context, "value", "nextLink");
-                    nextLink = page.ContinuationToken;
-                    yield return page;
-                } while (!string.IsNullOrEmpty(nextLink));
-            }
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetVersionsRequest(provider, name, filter, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetVersionsNextPageRequest(nextLink, provider, name, filter, context);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "DeviceUpdateClient.GetVersions", "value", "nextLink", context);
         }
 
         /// <summary> Get a list of all update file identifiers for the specified version. </summary>
@@ -512,24 +389,9 @@ namespace Azure.IoT.DeviceUpdate
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNullOrEmpty(version, nameof(version));
 
-            return GetFilesImplementationAsync("DeviceUpdateClient.GetFiles", provider, name, version, context);
-        }
-
-        private AsyncPageable<BinaryData> GetFilesImplementationAsync(string diagnosticsScopeName, string provider, string name, string version, RequestContext context)
-        {
-            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, ClientDiagnostics, diagnosticsScopeName);
-            async IAsyncEnumerable<Page<BinaryData>> CreateEnumerableAsync(string nextLink, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken = default)
-            {
-                do
-                {
-                    var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetFilesRequest(provider, name, version, context)
-                        : CreateGetFilesNextPageRequest(nextLink, provider, name, version, context);
-                    var page = await LowLevelPageableHelpers.ProcessMessageAsync(_pipeline, message, context, "value", "nextLink", cancellationToken).ConfigureAwait(false);
-                    nextLink = page.ContinuationToken;
-                    yield return page;
-                } while (!string.IsNullOrEmpty(nextLink));
-            }
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetFilesRequest(provider, name, version, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetFilesNextPageRequest(nextLink, provider, name, version, context);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "DeviceUpdateClient.GetFiles", "value", "nextLink", context);
         }
 
         /// <summary> Get a list of all update file identifiers for the specified version. </summary>
@@ -548,24 +410,9 @@ namespace Azure.IoT.DeviceUpdate
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNullOrEmpty(version, nameof(version));
 
-            return GetFilesImplementation("DeviceUpdateClient.GetFiles", provider, name, version, context);
-        }
-
-        private Pageable<BinaryData> GetFilesImplementation(string diagnosticsScopeName, string provider, string name, string version, RequestContext context)
-        {
-            return PageableHelpers.CreatePageable(CreateEnumerable, ClientDiagnostics, diagnosticsScopeName);
-            IEnumerable<Page<BinaryData>> CreateEnumerable(string nextLink, int? pageSizeHint)
-            {
-                do
-                {
-                    var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetFilesRequest(provider, name, version, context)
-                        : CreateGetFilesNextPageRequest(nextLink, provider, name, version, context);
-                    var page = LowLevelPageableHelpers.ProcessMessage(_pipeline, message, context, "value", "nextLink");
-                    nextLink = page.ContinuationToken;
-                    yield return page;
-                } while (!string.IsNullOrEmpty(nextLink));
-            }
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetFilesRequest(provider, name, version, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetFilesNextPageRequest(nextLink, provider, name, version, context);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "DeviceUpdateClient.GetFiles", "value", "nextLink", context);
         }
 
         /// <summary> Get a list of all import update operations. Completed operations are kept for 7 days before auto-deleted. Delete operations are not returned by this API version. </summary>
@@ -577,24 +424,9 @@ namespace Azure.IoT.DeviceUpdate
         /// <include file="Docs/DeviceUpdateClient.xml" path="doc/members/member[@name='GetOperationStatusesAsync(String,Int32,RequestContext)']/*" />
         public virtual AsyncPageable<BinaryData> GetOperationStatusesAsync(string filter = null, int? top = null, RequestContext context = null)
         {
-            return GetOperationStatusesImplementationAsync("DeviceUpdateClient.GetOperationStatuses", filter, top, context);
-        }
-
-        private AsyncPageable<BinaryData> GetOperationStatusesImplementationAsync(string diagnosticsScopeName, string filter, int? top, RequestContext context)
-        {
-            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, ClientDiagnostics, diagnosticsScopeName);
-            async IAsyncEnumerable<Page<BinaryData>> CreateEnumerableAsync(string nextLink, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken = default)
-            {
-                do
-                {
-                    var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetOperationStatusesRequest(filter, top, context)
-                        : CreateGetOperationStatusesNextPageRequest(nextLink, filter, top, context);
-                    var page = await LowLevelPageableHelpers.ProcessMessageAsync(_pipeline, message, context, "value", "nextLink", cancellationToken).ConfigureAwait(false);
-                    nextLink = page.ContinuationToken;
-                    yield return page;
-                } while (!string.IsNullOrEmpty(nextLink));
-            }
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetOperationStatusesRequest(filter, top, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetOperationStatusesNextPageRequest(nextLink, filter, top, context);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "DeviceUpdateClient.GetOperationStatuses", "value", "nextLink", context);
         }
 
         /// <summary> Get a list of all import update operations. Completed operations are kept for 7 days before auto-deleted. Delete operations are not returned by this API version. </summary>
@@ -606,24 +438,9 @@ namespace Azure.IoT.DeviceUpdate
         /// <include file="Docs/DeviceUpdateClient.xml" path="doc/members/member[@name='GetOperationStatuses(String,Int32,RequestContext)']/*" />
         public virtual Pageable<BinaryData> GetOperationStatuses(string filter = null, int? top = null, RequestContext context = null)
         {
-            return GetOperationStatusesImplementation("DeviceUpdateClient.GetOperationStatuses", filter, top, context);
-        }
-
-        private Pageable<BinaryData> GetOperationStatusesImplementation(string diagnosticsScopeName, string filter, int? top, RequestContext context)
-        {
-            return PageableHelpers.CreatePageable(CreateEnumerable, ClientDiagnostics, diagnosticsScopeName);
-            IEnumerable<Page<BinaryData>> CreateEnumerable(string nextLink, int? pageSizeHint)
-            {
-                do
-                {
-                    var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetOperationStatusesRequest(filter, top, context)
-                        : CreateGetOperationStatusesNextPageRequest(nextLink, filter, top, context);
-                    var page = LowLevelPageableHelpers.ProcessMessage(_pipeline, message, context, "value", "nextLink");
-                    nextLink = page.ContinuationToken;
-                    yield return page;
-                } while (!string.IsNullOrEmpty(nextLink));
-            }
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetOperationStatusesRequest(filter, top, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetOperationStatusesNextPageRequest(nextLink, filter, top, context);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "DeviceUpdateClient.GetOperationStatuses", "value", "nextLink", context);
         }
 
         /// <summary> Delete a specific update version. This is a long-running-operation; use Operation-Location response header value to check for operation status. </summary>

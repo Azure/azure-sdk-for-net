@@ -7,7 +7,6 @@
 
 using System;
 using System.Threading;
-using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -56,22 +55,8 @@ namespace Azure.ResourceManager.Monitor
         /// <returns> An async collection of <see cref="MonitorLocalizableString" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<MonitorLocalizableString> GetEventCategoriesAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<MonitorLocalizableString>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = EventCategoriesClientDiagnostics.CreateScope("TenantResourceExtensionClient.GetEventCategories");
-                scope.Start();
-                try
-                {
-                    var response = await EventCategoriesRestClient.ListAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => EventCategoriesRestClient.CreateListRequest();
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, MonitorLocalizableString.DeserializeMonitorLocalizableString, EventCategoriesClientDiagnostics, Pipeline, "TenantResourceExtensionClient.GetEventCategories", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -83,22 +68,8 @@ namespace Azure.ResourceManager.Monitor
         /// <returns> A collection of <see cref="MonitorLocalizableString" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<MonitorLocalizableString> GetEventCategories(CancellationToken cancellationToken = default)
         {
-            Page<MonitorLocalizableString> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = EventCategoriesClientDiagnostics.CreateScope("TenantResourceExtensionClient.GetEventCategories");
-                scope.Start();
-                try
-                {
-                    var response = EventCategoriesRestClient.List(cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => EventCategoriesRestClient.CreateListRequest();
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, MonitorLocalizableString.DeserializeMonitorLocalizableString, EventCategoriesClientDiagnostics, Pipeline, "TenantResourceExtensionClient.GetEventCategories", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -112,37 +83,9 @@ namespace Azure.ResourceManager.Monitor
         /// <returns> An async collection of <see cref="EventDataInfo" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<EventDataInfo> GetTenantActivityLogsAsync(string filter = null, string select = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<EventDataInfo>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = TenantActivityLogsClientDiagnostics.CreateScope("TenantResourceExtensionClient.GetTenantActivityLogs");
-                scope.Start();
-                try
-                {
-                    var response = await TenantActivityLogsRestClient.ListAsync(filter, select, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<EventDataInfo>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = TenantActivityLogsClientDiagnostics.CreateScope("TenantResourceExtensionClient.GetTenantActivityLogs");
-                scope.Start();
-                try
-                {
-                    var response = await TenantActivityLogsRestClient.ListNextPageAsync(nextLink, filter, select, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => TenantActivityLogsRestClient.CreateListRequest(filter, select);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => TenantActivityLogsRestClient.CreateListNextPageRequest(nextLink, filter, select);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, EventDataInfo.DeserializeEventDataInfo, TenantActivityLogsClientDiagnostics, Pipeline, "TenantResourceExtensionClient.GetTenantActivityLogs", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -156,37 +99,9 @@ namespace Azure.ResourceManager.Monitor
         /// <returns> A collection of <see cref="EventDataInfo" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<EventDataInfo> GetTenantActivityLogs(string filter = null, string select = null, CancellationToken cancellationToken = default)
         {
-            Page<EventDataInfo> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = TenantActivityLogsClientDiagnostics.CreateScope("TenantResourceExtensionClient.GetTenantActivityLogs");
-                scope.Start();
-                try
-                {
-                    var response = TenantActivityLogsRestClient.List(filter, select, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<EventDataInfo> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = TenantActivityLogsClientDiagnostics.CreateScope("TenantResourceExtensionClient.GetTenantActivityLogs");
-                scope.Start();
-                try
-                {
-                    var response = TenantActivityLogsRestClient.ListNextPage(nextLink, filter, select, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => TenantActivityLogsRestClient.CreateListRequest(filter, select);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => TenantActivityLogsRestClient.CreateListNextPageRequest(nextLink, filter, select);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, EventDataInfo.DeserializeEventDataInfo, TenantActivityLogsClientDiagnostics, Pipeline, "TenantResourceExtensionClient.GetTenantActivityLogs", "value", "nextLink", cancellationToken);
         }
     }
 }

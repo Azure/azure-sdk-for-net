@@ -292,37 +292,9 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
         /// <returns> An async collection of <see cref="IdentityAssociatedResourceData" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<IdentityAssociatedResourceData> GetAssociatedResourcesAsync(string filter = null, string orderby = null, int? top = null, int? skip = null, string skiptoken = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<IdentityAssociatedResourceData>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _userAssignedIdentityClientDiagnostics.CreateScope("UserAssignedIdentityResource.GetAssociatedResources");
-                scope.Start();
-                try
-                {
-                    var response = await _userAssignedIdentityRestClient.ListAssociatedResourcesAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, orderby, top, skip, skiptoken, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<IdentityAssociatedResourceData>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _userAssignedIdentityClientDiagnostics.CreateScope("UserAssignedIdentityResource.GetAssociatedResources");
-                scope.Start();
-                try
-                {
-                    var response = await _userAssignedIdentityRestClient.ListAssociatedResourcesNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, orderby, top, skip, skiptoken, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _userAssignedIdentityRestClient.CreateListAssociatedResourcesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, orderby, top, skip, skiptoken);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _userAssignedIdentityRestClient.CreateListAssociatedResourcesNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, orderby, top, skip, skiptoken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, IdentityAssociatedResourceData.DeserializeIdentityAssociatedResourceData, _userAssignedIdentityClientDiagnostics, Pipeline, "UserAssignedIdentityResource.GetAssociatedResources", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -339,37 +311,9 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
         /// <returns> A collection of <see cref="IdentityAssociatedResourceData" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<IdentityAssociatedResourceData> GetAssociatedResources(string filter = null, string orderby = null, int? top = null, int? skip = null, string skiptoken = null, CancellationToken cancellationToken = default)
         {
-            Page<IdentityAssociatedResourceData> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _userAssignedIdentityClientDiagnostics.CreateScope("UserAssignedIdentityResource.GetAssociatedResources");
-                scope.Start();
-                try
-                {
-                    var response = _userAssignedIdentityRestClient.ListAssociatedResources(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, orderby, top, skip, skiptoken, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<IdentityAssociatedResourceData> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _userAssignedIdentityClientDiagnostics.CreateScope("UserAssignedIdentityResource.GetAssociatedResources");
-                scope.Start();
-                try
-                {
-                    var response = _userAssignedIdentityRestClient.ListAssociatedResourcesNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, orderby, top, skip, skiptoken, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _userAssignedIdentityRestClient.CreateListAssociatedResourcesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, orderby, top, skip, skiptoken);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _userAssignedIdentityRestClient.CreateListAssociatedResourcesNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, orderby, top, skip, skiptoken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, IdentityAssociatedResourceData.DeserializeIdentityAssociatedResourceData, _userAssignedIdentityClientDiagnostics, Pipeline, "UserAssignedIdentityResource.GetAssociatedResources", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -199,37 +198,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <returns> An async collection of <see cref="ResourceGuardProxyBaseResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ResourceGuardProxyBaseResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<ResourceGuardProxyBaseResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _resourceGuardProxyBaseResourceResourceGuardProxiesClientDiagnostics.CreateScope("ResourceGuardProxyBaseResourceCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _resourceGuardProxyBaseResourceResourceGuardProxiesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, _vaultName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ResourceGuardProxyBaseResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<ResourceGuardProxyBaseResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _resourceGuardProxyBaseResourceResourceGuardProxiesClientDiagnostics.CreateScope("ResourceGuardProxyBaseResourceCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _resourceGuardProxyBaseResourceResourceGuardProxiesRestClient.GetNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, _vaultName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ResourceGuardProxyBaseResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _resourceGuardProxyBaseResourceResourceGuardProxiesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, _vaultName);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _resourceGuardProxyBaseResourceResourceGuardProxiesRestClient.CreateGetNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, _vaultName);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ResourceGuardProxyBaseResource(Client, ResourceGuardProxyBaseResourceData.DeserializeResourceGuardProxyBaseResourceData(e)), _resourceGuardProxyBaseResourceResourceGuardProxiesClientDiagnostics, Pipeline, "ResourceGuardProxyBaseResourceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -241,37 +212,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <returns> A collection of <see cref="ResourceGuardProxyBaseResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ResourceGuardProxyBaseResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<ResourceGuardProxyBaseResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _resourceGuardProxyBaseResourceResourceGuardProxiesClientDiagnostics.CreateScope("ResourceGuardProxyBaseResourceCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _resourceGuardProxyBaseResourceResourceGuardProxiesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, _vaultName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ResourceGuardProxyBaseResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<ResourceGuardProxyBaseResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _resourceGuardProxyBaseResourceResourceGuardProxiesClientDiagnostics.CreateScope("ResourceGuardProxyBaseResourceCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _resourceGuardProxyBaseResourceResourceGuardProxiesRestClient.GetNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, _vaultName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ResourceGuardProxyBaseResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _resourceGuardProxyBaseResourceResourceGuardProxiesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, _vaultName);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _resourceGuardProxyBaseResourceResourceGuardProxiesRestClient.CreateGetNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, _vaultName);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ResourceGuardProxyBaseResource(Client, ResourceGuardProxyBaseResourceData.DeserializeResourceGuardProxyBaseResourceData(e)), _resourceGuardProxyBaseResourceResourceGuardProxiesClientDiagnostics, Pipeline, "ResourceGuardProxyBaseResourceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -186,37 +185,9 @@ namespace Azure.ResourceManager.Hci
         /// <returns> An async collection of <see cref="ArcSettingResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ArcSettingResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<ArcSettingResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _arcSettingClientDiagnostics.CreateScope("ArcSettingCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _arcSettingRestClient.ListByClusterAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ArcSettingResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<ArcSettingResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _arcSettingClientDiagnostics.CreateScope("ArcSettingCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _arcSettingRestClient.ListByClusterNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ArcSettingResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _arcSettingRestClient.CreateListByClusterRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _arcSettingRestClient.CreateListByClusterNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ArcSettingResource(Client, ArcSettingData.DeserializeArcSettingData(e)), _arcSettingClientDiagnostics, Pipeline, "ArcSettingCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -228,37 +199,9 @@ namespace Azure.ResourceManager.Hci
         /// <returns> A collection of <see cref="ArcSettingResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ArcSettingResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<ArcSettingResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _arcSettingClientDiagnostics.CreateScope("ArcSettingCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _arcSettingRestClient.ListByCluster(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ArcSettingResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<ArcSettingResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _arcSettingClientDiagnostics.CreateScope("ArcSettingCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _arcSettingRestClient.ListByClusterNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ArcSettingResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _arcSettingRestClient.CreateListByClusterRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _arcSettingRestClient.CreateListByClusterNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ArcSettingResource(Client, ArcSettingData.DeserializeArcSettingData(e)), _arcSettingClientDiagnostics, Pipeline, "ArcSettingCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

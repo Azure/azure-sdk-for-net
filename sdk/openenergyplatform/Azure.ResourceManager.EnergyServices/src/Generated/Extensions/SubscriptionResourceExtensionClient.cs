@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -103,37 +102,9 @@ namespace Azure.ResourceManager.EnergyServices
         /// <returns> An async collection of <see cref="EnergyServiceResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<EnergyServiceResource> GetEnergyServicesAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<EnergyServiceResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = EnergyServiceClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetEnergyServices");
-                scope.Start();
-                try
-                {
-                    var response = await EnergyServiceRestClient.ListBySubscriptionAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new EnergyServiceResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<EnergyServiceResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = EnergyServiceClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetEnergyServices");
-                scope.Start();
-                try
-                {
-                    var response = await EnergyServiceRestClient.ListBySubscriptionNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new EnergyServiceResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => EnergyServiceRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => EnergyServiceRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new EnergyServiceResource(Client, EnergyServiceData.DeserializeEnergyServiceData(e)), EnergyServiceClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetEnergyServices", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -145,37 +116,9 @@ namespace Azure.ResourceManager.EnergyServices
         /// <returns> A collection of <see cref="EnergyServiceResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<EnergyServiceResource> GetEnergyServices(CancellationToken cancellationToken = default)
         {
-            Page<EnergyServiceResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = EnergyServiceClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetEnergyServices");
-                scope.Start();
-                try
-                {
-                    var response = EnergyServiceRestClient.ListBySubscription(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new EnergyServiceResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<EnergyServiceResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = EnergyServiceClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetEnergyServices");
-                scope.Start();
-                try
-                {
-                    var response = EnergyServiceRestClient.ListBySubscriptionNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new EnergyServiceResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => EnergyServiceRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => EnergyServiceRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new EnergyServiceResource(Client, EnergyServiceData.DeserializeEnergyServiceData(e)), EnergyServiceClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetEnergyServices", "value", "nextLink", cancellationToken);
         }
     }
 }

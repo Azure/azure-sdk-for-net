@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -186,37 +185,9 @@ namespace Azure.ResourceManager.Avs
         /// <returns> An async collection of <see cref="AvsPrivateCloudDatastoreResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<AvsPrivateCloudDatastoreResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<AvsPrivateCloudDatastoreResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _avsPrivateCloudDatastoreDatastoresClientDiagnostics.CreateScope("AvsPrivateCloudDatastoreCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _avsPrivateCloudDatastoreDatastoresRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new AvsPrivateCloudDatastoreResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<AvsPrivateCloudDatastoreResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _avsPrivateCloudDatastoreDatastoresClientDiagnostics.CreateScope("AvsPrivateCloudDatastoreCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _avsPrivateCloudDatastoreDatastoresRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new AvsPrivateCloudDatastoreResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _avsPrivateCloudDatastoreDatastoresRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _avsPrivateCloudDatastoreDatastoresRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new AvsPrivateCloudDatastoreResource(Client, AvsPrivateCloudDatastoreData.DeserializeAvsPrivateCloudDatastoreData(e)), _avsPrivateCloudDatastoreDatastoresClientDiagnostics, Pipeline, "AvsPrivateCloudDatastoreCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -228,37 +199,9 @@ namespace Azure.ResourceManager.Avs
         /// <returns> A collection of <see cref="AvsPrivateCloudDatastoreResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<AvsPrivateCloudDatastoreResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<AvsPrivateCloudDatastoreResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _avsPrivateCloudDatastoreDatastoresClientDiagnostics.CreateScope("AvsPrivateCloudDatastoreCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _avsPrivateCloudDatastoreDatastoresRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new AvsPrivateCloudDatastoreResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<AvsPrivateCloudDatastoreResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _avsPrivateCloudDatastoreDatastoresClientDiagnostics.CreateScope("AvsPrivateCloudDatastoreCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _avsPrivateCloudDatastoreDatastoresRestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new AvsPrivateCloudDatastoreResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _avsPrivateCloudDatastoreDatastoresRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _avsPrivateCloudDatastoreDatastoresRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new AvsPrivateCloudDatastoreResource(Client, AvsPrivateCloudDatastoreData.DeserializeAvsPrivateCloudDatastoreData(e)), _avsPrivateCloudDatastoreDatastoresClientDiagnostics, Pipeline, "AvsPrivateCloudDatastoreCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

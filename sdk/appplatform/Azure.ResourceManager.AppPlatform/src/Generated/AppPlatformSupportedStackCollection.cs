@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -120,22 +119,8 @@ namespace Azure.ResourceManager.AppPlatform
         /// <returns> An async collection of <see cref="AppPlatformSupportedStackResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<AppPlatformSupportedStackResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<AppPlatformSupportedStackResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _appPlatformSupportedStackBuildServiceClientDiagnostics.CreateScope("AppPlatformSupportedStackCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _appPlatformSupportedStackBuildServiceRestClient.ListSupportedStacksAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new AppPlatformSupportedStackResource(Client, value)), null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _appPlatformSupportedStackBuildServiceRestClient.CreateListSupportedStacksRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new AppPlatformSupportedStackResource(Client, AppPlatformSupportedStackData.DeserializeAppPlatformSupportedStackData(e)), _appPlatformSupportedStackBuildServiceClientDiagnostics, Pipeline, "AppPlatformSupportedStackCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -147,22 +132,8 @@ namespace Azure.ResourceManager.AppPlatform
         /// <returns> A collection of <see cref="AppPlatformSupportedStackResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<AppPlatformSupportedStackResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<AppPlatformSupportedStackResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _appPlatformSupportedStackBuildServiceClientDiagnostics.CreateScope("AppPlatformSupportedStackCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _appPlatformSupportedStackBuildServiceRestClient.ListSupportedStacks(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new AppPlatformSupportedStackResource(Client, value)), null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _appPlatformSupportedStackBuildServiceRestClient.CreateListSupportedStacksRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new AppPlatformSupportedStackResource(Client, AppPlatformSupportedStackData.DeserializeAppPlatformSupportedStackData(e)), _appPlatformSupportedStackBuildServiceClientDiagnostics, Pipeline, "AppPlatformSupportedStackCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>

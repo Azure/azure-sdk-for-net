@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -185,37 +184,9 @@ namespace Azure.ResourceManager.SecurityDevOps
         /// <returns> An async collection of <see cref="AzureDevOpsOrgResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<AzureDevOpsOrgResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<AzureDevOpsOrgResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _azureDevOpsOrgClientDiagnostics.CreateScope("AzureDevOpsOrgCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _azureDevOpsOrgRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new AzureDevOpsOrgResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<AzureDevOpsOrgResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _azureDevOpsOrgClientDiagnostics.CreateScope("AzureDevOpsOrgCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _azureDevOpsOrgRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new AzureDevOpsOrgResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _azureDevOpsOrgRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _azureDevOpsOrgRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new AzureDevOpsOrgResource(Client, AzureDevOpsOrgData.DeserializeAzureDevOpsOrgData(e)), _azureDevOpsOrgClientDiagnostics, Pipeline, "AzureDevOpsOrgCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -226,37 +197,9 @@ namespace Azure.ResourceManager.SecurityDevOps
         /// <returns> A collection of <see cref="AzureDevOpsOrgResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<AzureDevOpsOrgResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<AzureDevOpsOrgResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _azureDevOpsOrgClientDiagnostics.CreateScope("AzureDevOpsOrgCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _azureDevOpsOrgRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new AzureDevOpsOrgResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<AzureDevOpsOrgResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _azureDevOpsOrgClientDiagnostics.CreateScope("AzureDevOpsOrgCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _azureDevOpsOrgRestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new AzureDevOpsOrgResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _azureDevOpsOrgRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _azureDevOpsOrgRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new AzureDevOpsOrgResource(Client, AzureDevOpsOrgData.DeserializeAzureDevOpsOrgData(e)), _azureDevOpsOrgClientDiagnostics, Pipeline, "AzureDevOpsOrgCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
