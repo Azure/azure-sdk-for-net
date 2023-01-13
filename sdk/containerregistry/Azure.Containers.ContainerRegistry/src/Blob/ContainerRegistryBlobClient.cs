@@ -246,7 +246,7 @@ namespace Azure.Containers.ContainerRegistry.Specialized
 
         private async Task<Response<UploadManifestResult>> UploadManifestInternalAsync(MemoryStream stream, UploadManifestOptions options, bool async, CancellationToken cancellationToken)
         {
-            string digest = OciBlobDescriptor.ComputeDigest(stream);
+            string digest = BlobHelper.ComputeDigest(stream);
             string tagOrDigest = options.Tag ?? digest;
 
             ResponseWithHeaders<ContainerRegistryCreateManifestHeaders> response = async ?
@@ -394,7 +394,7 @@ namespace Azure.Containers.ContainerRegistry.Specialized
                     await CopyStreamAsync(stream, true).ConfigureAwait(false) :
                     CopyStreamAsync(stream, false).EnsureCompleted();
 
-                string digest = OciBlobDescriptor.ComputeDigest(chunk);
+                string digest = BlobHelper.ComputeDigest(chunk);
 
                 uploadChunkResult = async ?
                     await _blobRestClient.UploadChunkAsync(location, chunk, cancellationToken: cancellationToken).ConfigureAwait(false) :
@@ -443,7 +443,7 @@ namespace Azure.Containers.ContainerRegistry.Specialized
                 // Complete hash computation.
                 sha256.TransformFinalBlock(buffer, 0, 0);
 
-                return new ChunkedUploadResult(OciBlobDescriptor.FormatDigest(sha256.Hash), uploadChunkResult.Headers.Location, blobLength);
+                return new ChunkedUploadResult(BlobHelper.FormatDigest(sha256.Hash), uploadChunkResult.Headers.Location, blobLength);
             }
             finally
             {
@@ -571,7 +571,7 @@ namespace Azure.Containers.ContainerRegistry.Specialized
             // According to https://docs.docker.com/registry/spec/api/#content-digests, compliant
             // registry implementations use sha256.
 
-            string contentDigest = OciBlobDescriptor.ComputeDigest(content);
+            string contentDigest = BlobHelper.ComputeDigest(content);
             content.Position = 0;
 
             return ValidateDigest(contentDigest, digest);
@@ -774,7 +774,7 @@ namespace Azure.Containers.ContainerRegistry.Specialized
                 // Complete hash computation.
                 sha256.TransformFinalBlock(buffer, 0, 0);
 
-                var computedDigest = OciBlobDescriptor.FormatDigest(sha256.Hash);
+                var computedDigest = BlobHelper.FormatDigest(sha256.Hash);
 
                 if (!ValidateDigest(computedDigest, digest))
                 {

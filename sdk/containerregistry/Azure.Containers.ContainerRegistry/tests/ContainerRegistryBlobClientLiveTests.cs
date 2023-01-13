@@ -319,7 +319,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
 
             using (var stream = new MemoryStream(data))
             {
-                digest = OciBlobDescriptor.ComputeDigest(stream);
+                digest = BlobHelper.ComputeDigest(stream);
                 UploadBlobResult uploadResult = await client.UploadBlobAsync(stream);
                 streamLength = uploadResult.Size;
 
@@ -352,7 +352,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
 
             using (var stream = new MemoryStream(data))
             {
-                digest = OciBlobDescriptor.ComputeDigest(stream);
+                digest = BlobHelper.ComputeDigest(stream);
                 uploadResult = await client.UploadBlobAsync(stream, new UploadBlobOptions(chunkSize));
             }
 
@@ -382,7 +382,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
 
             using (var stream = new MemoryStream(data))
             {
-                digest = OciBlobDescriptor.ComputeDigest(stream);
+                digest = BlobHelper.ComputeDigest(stream);
                 uploadResult = await client.UploadBlobAsync(stream, new UploadBlobOptions(chunkSize));
             }
 
@@ -410,7 +410,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
 
             using (var stream = new MemoryStream(data))
             {
-                digest = OciBlobDescriptor.ComputeDigest(stream);
+                digest = BlobHelper.ComputeDigest(stream);
                 uploadResult = await client.UploadBlobAsync(stream, new UploadBlobOptions(chunkSize));
             }
 
@@ -434,7 +434,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
 
             var data = GetConstantBuffer(blobSize, 3);
             UploadBlobResult uploadResult = default;
-            string digest = OciBlobDescriptor.ComputeDigest(new MemoryStream(data));
+            string digest = BlobHelper.ComputeDigest(new MemoryStream(data));
 
             using (var stream = new NonSeekableMemoryStream(data))
             {
@@ -494,7 +494,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
             // Act
             using var downloadStream = new MemoryStream();
             await client.DownloadBlobToAsync(digest, downloadStream);
-            var digestOfDownload = OciBlobDescriptor.ComputeDigest(downloadStream);
+            var digestOfDownload = BlobHelper.ComputeDigest(downloadStream);
 
             Assert.AreEqual(digest, digestOfDownload);
             Assert.AreEqual(blobSize, downloadStream.Length);
@@ -526,7 +526,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
             downloadStream.Position = 0;
 
             BinaryData downloadedData = BinaryData.FromStream(downloadStream);
-            var digestOfDownload = OciBlobDescriptor.ComputeDigest(downloadStream);
+            var digestOfDownload = BlobHelper.ComputeDigest(downloadStream);
 
             Assert.AreEqual(digest, digestOfDownload);
             Assert.AreEqual(blobSize, downloadStream.Length);
@@ -561,7 +561,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
             downloadStream.Position = 0;
 
             BinaryData downloadedData = BinaryData.FromStream(downloadStream);
-            var digestOfDownload = OciBlobDescriptor.ComputeDigest(downloadStream);
+            var digestOfDownload = BlobHelper.ComputeDigest(downloadStream);
 
             Assert.AreEqual(digest, digestOfDownload);
             Assert.AreEqual(blobSize, downloadStream.Length);
