@@ -7,7 +7,6 @@
 
 using System;
 using System.Threading;
-using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -52,22 +51,8 @@ namespace Azure.ResourceManager.MachineLearningCompute
         /// <returns> An async collection of <see cref="ResourceOperation" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ResourceOperation> GetAvailableOperationsMachineLearningComputesAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<ResourceOperation>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = MachineLearningComputeClientDiagnostics.CreateScope("TenantResourceExtensionClient.GetAvailableOperationsMachineLearningComputes");
-                scope.Start();
-                try
-                {
-                    var response = await MachineLearningComputeRestClient.ListAvailableOperationsAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => MachineLearningComputeRestClient.CreateListAvailableOperationsRequest();
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, ResourceOperation.DeserializeResourceOperation, MachineLearningComputeClientDiagnostics, Pipeline, "TenantResourceExtensionClient.GetAvailableOperationsMachineLearningComputes", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -79,22 +64,8 @@ namespace Azure.ResourceManager.MachineLearningCompute
         /// <returns> A collection of <see cref="ResourceOperation" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ResourceOperation> GetAvailableOperationsMachineLearningComputes(CancellationToken cancellationToken = default)
         {
-            Page<ResourceOperation> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = MachineLearningComputeClientDiagnostics.CreateScope("TenantResourceExtensionClient.GetAvailableOperationsMachineLearningComputes");
-                scope.Start();
-                try
-                {
-                    var response = MachineLearningComputeRestClient.ListAvailableOperations(cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => MachineLearningComputeRestClient.CreateListAvailableOperationsRequest();
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, ResourceOperation.DeserializeResourceOperation, MachineLearningComputeClientDiagnostics, Pipeline, "TenantResourceExtensionClient.GetAvailableOperationsMachineLearningComputes", "value", null, cancellationToken);
         }
     }
 }

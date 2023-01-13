@@ -17,20 +17,20 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// <summary> Initializes a new instance of ConnectedEnvironmentCollection. </summary>
         internal ConnectedEnvironmentCollection()
         {
-            Value = new ChangeTrackingList<ConnectedEnvironmentData>();
+            Value = new ChangeTrackingList<ContainerAppConnectedEnvironmentData>();
         }
 
         /// <summary> Initializes a new instance of ConnectedEnvironmentCollection. </summary>
         /// <param name="value"> Collection of resources. </param>
         /// <param name="nextLink"> Link to next page of resources. </param>
-        internal ConnectedEnvironmentCollection(IReadOnlyList<ConnectedEnvironmentData> value, string nextLink)
+        internal ConnectedEnvironmentCollection(IReadOnlyList<ContainerAppConnectedEnvironmentData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> Collection of resources. </summary>
-        public IReadOnlyList<ConnectedEnvironmentData> Value { get; }
+        public IReadOnlyList<ContainerAppConnectedEnvironmentData> Value { get; }
         /// <summary> Link to next page of resources. </summary>
         public string NextLink { get; }
     }

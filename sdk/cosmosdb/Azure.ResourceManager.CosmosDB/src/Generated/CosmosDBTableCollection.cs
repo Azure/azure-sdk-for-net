@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -187,22 +186,8 @@ namespace Azure.ResourceManager.CosmosDB
         /// <returns> An async collection of <see cref="CosmosDBTableResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<CosmosDBTableResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<CosmosDBTableResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _cosmosDBTableTableResourcesClientDiagnostics.CreateScope("CosmosDBTableCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _cosmosDBTableTableResourcesRestClient.ListTablesAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new CosmosDBTableResource(Client, value)), null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _cosmosDBTableTableResourcesRestClient.CreateListTablesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new CosmosDBTableResource(Client, CosmosDBTableData.DeserializeCosmosDBTableData(e)), _cosmosDBTableTableResourcesClientDiagnostics, Pipeline, "CosmosDBTableCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -214,22 +199,8 @@ namespace Azure.ResourceManager.CosmosDB
         /// <returns> A collection of <see cref="CosmosDBTableResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<CosmosDBTableResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<CosmosDBTableResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _cosmosDBTableTableResourcesClientDiagnostics.CreateScope("CosmosDBTableCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _cosmosDBTableTableResourcesRestClient.ListTables(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new CosmosDBTableResource(Client, value)), null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _cosmosDBTableTableResourcesRestClient.CreateListTablesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new CosmosDBTableResource(Client, CosmosDBTableData.DeserializeCosmosDBTableData(e)), _cosmosDBTableTableResourcesClientDiagnostics, Pipeline, "CosmosDBTableCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>

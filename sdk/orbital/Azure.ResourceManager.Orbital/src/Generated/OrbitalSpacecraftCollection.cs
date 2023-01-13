@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -188,37 +187,9 @@ namespace Azure.ResourceManager.Orbital
         /// <returns> An async collection of <see cref="OrbitalSpacecraftResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<OrbitalSpacecraftResource> GetAllAsync(string skiptoken = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<OrbitalSpacecraftResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _orbitalSpacecraftSpacecraftsClientDiagnostics.CreateScope("OrbitalSpacecraftCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _orbitalSpacecraftSpacecraftsRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, skiptoken, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new OrbitalSpacecraftResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<OrbitalSpacecraftResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _orbitalSpacecraftSpacecraftsClientDiagnostics.CreateScope("OrbitalSpacecraftCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _orbitalSpacecraftSpacecraftsRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, skiptoken, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new OrbitalSpacecraftResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _orbitalSpacecraftSpacecraftsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, skiptoken);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _orbitalSpacecraftSpacecraftsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, skiptoken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new OrbitalSpacecraftResource(Client, OrbitalSpacecraftData.DeserializeOrbitalSpacecraftData(e)), _orbitalSpacecraftSpacecraftsClientDiagnostics, Pipeline, "OrbitalSpacecraftCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -231,37 +202,9 @@ namespace Azure.ResourceManager.Orbital
         /// <returns> A collection of <see cref="OrbitalSpacecraftResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<OrbitalSpacecraftResource> GetAll(string skiptoken = null, CancellationToken cancellationToken = default)
         {
-            Page<OrbitalSpacecraftResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _orbitalSpacecraftSpacecraftsClientDiagnostics.CreateScope("OrbitalSpacecraftCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _orbitalSpacecraftSpacecraftsRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, skiptoken, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new OrbitalSpacecraftResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<OrbitalSpacecraftResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _orbitalSpacecraftSpacecraftsClientDiagnostics.CreateScope("OrbitalSpacecraftCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _orbitalSpacecraftSpacecraftsRestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, skiptoken, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new OrbitalSpacecraftResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _orbitalSpacecraftSpacecraftsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, skiptoken);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _orbitalSpacecraftSpacecraftsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, skiptoken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new OrbitalSpacecraftResource(Client, OrbitalSpacecraftData.DeserializeOrbitalSpacecraftData(e)), _orbitalSpacecraftSpacecraftsClientDiagnostics, Pipeline, "OrbitalSpacecraftCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

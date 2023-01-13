@@ -54,8 +54,8 @@ namespace Azure.ResourceManager.AppContainers.Models
             Optional<LoginRoutes> routes = default;
             Optional<bool> preserveUrlFragmentsForLogins = default;
             Optional<IList<string>> allowedExternalRedirectUrls = default;
-            Optional<CookieExpiration> cookieExpiration = default;
-            Optional<LoginNonce> nonce = default;
+            Optional<ContainerAppCookieExpiration> cookieExpiration = default;
+            Optional<ContainerAppLoginNonce> nonce = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("routes"))
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    cookieExpiration = CookieExpiration.DeserializeCookieExpiration(property.Value);
+                    cookieExpiration = ContainerAppCookieExpiration.DeserializeContainerAppCookieExpiration(property.Value);
                     continue;
                 }
                 if (property.NameEquals("nonce"))
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    nonce = LoginNonce.DeserializeLoginNonce(property.Value);
+                    nonce = ContainerAppLoginNonce.DeserializeContainerAppLoginNonce(property.Value);
                     continue;
                 }
             }

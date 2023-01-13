@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -187,37 +186,9 @@ namespace Azure.ResourceManager.Nginx
         /// <returns> An async collection of <see cref="NginxDeploymentResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<NginxDeploymentResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<NginxDeploymentResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _nginxDeploymentDeploymentsClientDiagnostics.CreateScope("NginxDeploymentCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _nginxDeploymentDeploymentsRestClient.ListByResourceGroupAsync(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new NginxDeploymentResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<NginxDeploymentResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _nginxDeploymentDeploymentsClientDiagnostics.CreateScope("NginxDeploymentCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _nginxDeploymentDeploymentsRestClient.ListByResourceGroupNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new NginxDeploymentResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _nginxDeploymentDeploymentsRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _nginxDeploymentDeploymentsRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new NginxDeploymentResource(Client, NginxDeploymentData.DeserializeNginxDeploymentData(e)), _nginxDeploymentDeploymentsClientDiagnostics, Pipeline, "NginxDeploymentCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -229,37 +200,9 @@ namespace Azure.ResourceManager.Nginx
         /// <returns> A collection of <see cref="NginxDeploymentResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<NginxDeploymentResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<NginxDeploymentResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _nginxDeploymentDeploymentsClientDiagnostics.CreateScope("NginxDeploymentCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _nginxDeploymentDeploymentsRestClient.ListByResourceGroup(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new NginxDeploymentResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<NginxDeploymentResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _nginxDeploymentDeploymentsClientDiagnostics.CreateScope("NginxDeploymentCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _nginxDeploymentDeploymentsRestClient.ListByResourceGroupNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new NginxDeploymentResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _nginxDeploymentDeploymentsRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _nginxDeploymentDeploymentsRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new NginxDeploymentResource(Client, NginxDeploymentData.DeserializeNginxDeploymentData(e)), _nginxDeploymentDeploymentsClientDiagnostics, Pipeline, "NginxDeploymentCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -188,37 +187,9 @@ namespace Azure.ResourceManager.AppPlatform
         /// <returns> An async collection of <see cref="AppPlatformAppResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<AppPlatformAppResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<AppPlatformAppResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _appPlatformAppAppsClientDiagnostics.CreateScope("AppPlatformAppCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _appPlatformAppAppsRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new AppPlatformAppResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<AppPlatformAppResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _appPlatformAppAppsClientDiagnostics.CreateScope("AppPlatformAppCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _appPlatformAppAppsRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new AppPlatformAppResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _appPlatformAppAppsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _appPlatformAppAppsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new AppPlatformAppResource(Client, AppPlatformAppData.DeserializeAppPlatformAppData(e)), _appPlatformAppAppsClientDiagnostics, Pipeline, "AppPlatformAppCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -230,37 +201,9 @@ namespace Azure.ResourceManager.AppPlatform
         /// <returns> A collection of <see cref="AppPlatformAppResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<AppPlatformAppResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<AppPlatformAppResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _appPlatformAppAppsClientDiagnostics.CreateScope("AppPlatformAppCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _appPlatformAppAppsRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new AppPlatformAppResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<AppPlatformAppResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _appPlatformAppAppsClientDiagnostics.CreateScope("AppPlatformAppCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _appPlatformAppAppsRestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new AppPlatformAppResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _appPlatformAppAppsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _appPlatformAppAppsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new AppPlatformAppResource(Client, AppPlatformAppData.DeserializeAppPlatformAppData(e)), _appPlatformAppAppsClientDiagnostics, Pipeline, "AppPlatformAppCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

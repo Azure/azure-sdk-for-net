@@ -6,9 +6,7 @@
 #nullable disable
 
 using System;
-using System.Linq;
 using System.Threading;
-using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -53,37 +51,9 @@ namespace Azure.ResourceManager.MachineLearningCompute
         /// <returns> An async collection of <see cref="OperationalizationClusterResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<OperationalizationClusterResource> GetOperationalizationClustersAsync(string skiptoken = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<OperationalizationClusterResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = OperationalizationClusterClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetOperationalizationClusters");
-                scope.Start();
-                try
-                {
-                    var response = await OperationalizationClusterRestClient.ListBySubscriptionIdAsync(Id.SubscriptionId, skiptoken, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new OperationalizationClusterResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<OperationalizationClusterResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = OperationalizationClusterClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetOperationalizationClusters");
-                scope.Start();
-                try
-                {
-                    var response = await OperationalizationClusterRestClient.ListBySubscriptionIdNextPageAsync(nextLink, Id.SubscriptionId, skiptoken, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new OperationalizationClusterResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => OperationalizationClusterRestClient.CreateListBySubscriptionIdRequest(Id.SubscriptionId, skiptoken);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => OperationalizationClusterRestClient.CreateListBySubscriptionIdNextPageRequest(nextLink, Id.SubscriptionId, skiptoken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new OperationalizationClusterResource(Client, OperationalizationClusterData.DeserializeOperationalizationClusterData(e)), OperationalizationClusterClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetOperationalizationClusters", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -96,37 +66,9 @@ namespace Azure.ResourceManager.MachineLearningCompute
         /// <returns> A collection of <see cref="OperationalizationClusterResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<OperationalizationClusterResource> GetOperationalizationClusters(string skiptoken = null, CancellationToken cancellationToken = default)
         {
-            Page<OperationalizationClusterResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = OperationalizationClusterClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetOperationalizationClusters");
-                scope.Start();
-                try
-                {
-                    var response = OperationalizationClusterRestClient.ListBySubscriptionId(Id.SubscriptionId, skiptoken, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new OperationalizationClusterResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<OperationalizationClusterResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = OperationalizationClusterClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetOperationalizationClusters");
-                scope.Start();
-                try
-                {
-                    var response = OperationalizationClusterRestClient.ListBySubscriptionIdNextPage(nextLink, Id.SubscriptionId, skiptoken, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new OperationalizationClusterResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => OperationalizationClusterRestClient.CreateListBySubscriptionIdRequest(Id.SubscriptionId, skiptoken);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => OperationalizationClusterRestClient.CreateListBySubscriptionIdNextPageRequest(nextLink, Id.SubscriptionId, skiptoken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new OperationalizationClusterResource(Client, OperationalizationClusterData.DeserializeOperationalizationClusterData(e)), OperationalizationClusterClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetOperationalizationClusters", "value", "nextLink", cancellationToken);
         }
     }
 }

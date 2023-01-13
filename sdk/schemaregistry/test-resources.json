@@ -44,17 +44,57 @@
     }
   },
   "variables": {
-    "apiVersion": "2018-01-01-preview",
+    "apiVersion": "2022-10-01-preview",
     "schemaRegistryGroup": "azsdk_net_test_group",
-    "schemaRegistryEndpoint": "[format('{0}.servicebus.windows.net', parameters('baseName'))]",
+    "baseNameAvro": "[concat(parameters('baseName'), '-avro')]",
+    "baseNameJson": "[concat(parameters('baseName'), '-json')]",
+    "baseNameCustom": "[concat(parameters('baseName'), '-custom')]",
+    "schemaRegistryEndpointAvro": "[concat(parameters('baseName'), '-avro', '.servicebus.windows.net')]",
+    "schemaRegistryEndpointJson": "[concat(parameters('baseName'), '-json', '.servicebus.windows.net')]",
+    "schemaRegistryEndpointCustom": "[concat(parameters('baseName'), '-custom', '.servicebus.windows.net')]",
     "eventHubName": "azsdk_net_test_hub",
     "eventHubsDataOwnerRoleId": "f526a384-b230-433a-b45c-95f59c4a2dec"
   },
+
   "resources": [
     {
       "type": "Microsoft.EventHub/namespaces",
       "apiVersion": "[variables('apiVersion')]",
-      "name": "[parameters('baseName')]",
+      "name": "[variables('baseNameAvro')]",
+      "location": "[parameters('location')]",
+      "sku": {
+        "name": "Standard",
+        "tier": "Standard",
+        "capacity": 5
+      },
+      "properties": {
+        "zoneRedundant": false,
+        "isAutoInflateEnabled": false,
+        "maximumThroughputUnits": 0,
+        "kafkaEnabled": true
+      }
+    },
+    {
+      "type": "Microsoft.EventHub/namespaces",
+      "apiVersion": "[variables('apiVersion')]",
+      "name": "[variables('baseNameJson')]",
+      "location": "[parameters('location')]",
+      "sku": {
+        "name": "Standard",
+        "tier": "Standard",
+        "capacity": 5
+      },
+      "properties": {
+        "zoneRedundant": false,
+        "isAutoInflateEnabled": false,
+        "maximumThroughputUnits": 0,
+        "kafkaEnabled": true
+      }
+    },
+    {
+      "type": "Microsoft.EventHub/namespaces",
+      "apiVersion": "[variables('apiVersion')]",
+      "name": "[variables('baseNameCustom')]",
       "location": "[parameters('location')]",
       "sku": {
         "name": "Standard",
@@ -71,28 +111,38 @@
     {
       "type": "Microsoft.EventHub/namespaces/schemagroups",
       "apiVersion": "[variables('apiVersion')]",
-      "name": "[format('{0}/{1}', parameters('baseName'), variables('schemaRegistryGroup'))]",
+      "name": "[format('{0}/{1}', variables('baseNameAvro'), variables('schemaRegistryGroup'))]",
       "location": "[parameters('location')]",
-      "dependsOn": ["[resourceId('Microsoft.EventHub/namespaces',parameters('baseName'))]"],
+      "dependsOn": [ "[resourceId('Microsoft.EventHub/namespaces', variables('baseNameAvro'))]" ],
       "properties": {
         "schemaType": "avro"
       }
     },
     {
-      "type": "Microsoft.EventHub/namespaces/eventhubs",
-      "apiVersion": "2021-11-01",
-      "name": "[format('{0}/{1}', parameters('baseName'), variables('eventHubName'))]",
+      "type": "Microsoft.EventHub/namespaces/schemagroups",
+      "apiVersion": "[variables('apiVersion')]",
+      "name": "[format('{0}/{1}', variables('baseNameJson'), variables('schemaRegistryGroup'))]",
+      "location": "[parameters('location')]",
+      "dependsOn": [ "[resourceId('Microsoft.EventHub/namespaces', variables('baseNameJson'))]" ],
       "properties": {
-        "messageRetentionInDays": 7,
-        "partitionCount": 1
-      },
-      "dependsOn": ["[resourceId('Microsoft.EventHub/namespaces',parameters('baseName'))]"]
+        "schemaType": "json"
+      }
+    },
+    {
+      "type": "Microsoft.EventHub/namespaces/schemagroups",
+      "apiVersion": "[variables('apiVersion')]",
+      "name": "[format('{0}/{1}', variables('baseNameCustom'), variables('schemaRegistryGroup'))]",
+      "location": "[parameters('location')]",
+      "dependsOn": [ "[resourceId('Microsoft.EventHub/namespaces', variables('baseNameCustom'))]" ],
+      "properties": {
+        "schemaType": "custom"
+      }
     },
     {
       "type": "Microsoft.Authorization/roleAssignments",
       "apiVersion": "2019-04-01-preview",
       "name": "[guid(resourceGroup().id, parameters('testApplicationOid'), variables('eventHubsDataOwnerRoleId'))]",
-      "dependsOn": ["[resourceId('Microsoft.EventHub/namespaces',parameters('baseName'))]"],
+      "dependsOn": [ "[resourceId('Microsoft.EventHub/namespaces', variables('baseNameAvro'))]" ],
       "properties": {
         "roleDefinitionId": "[resourceId('Microsoft.Authorization/roleDefinitions', variables('eventHubsDataOwnerRoleId'))]",
         "principalId": "[parameters('testApplicationOid')]",
@@ -105,9 +155,17 @@
       "type": "string",
       "value": "[variables('schemaRegistryGroup')]"
     },
-    "SCHEMAREGISTRY_ENDPOINT": {
+    "SCHEMAREGISTRY_ENDPOINT_AVRO": {
       "type": "string",
-      "value": "[variables('schemaRegistryEndpoint')]"
+      "value": "[variables('schemaRegistryEndpointAvro')]"
+    },
+    "SCHEMAREGISTRY_ENDPOINT_JSON": {
+      "type": "string",
+      "value": "[variables('schemaRegistryEndpointJson')]"
+    },
+    "SCHEMAREGISTRY_ENDPOINT_CUSTOM": {
+      "type": "string",
+      "value": "[variables('schemaRegistryEndpointCustom')]"
     },
     "SCHEMAREGISTRY_EVENTHUB_NAME": {
       "type": "string",

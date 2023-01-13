@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -186,22 +185,8 @@ namespace Azure.ResourceManager.MySql
         /// <returns> An async collection of <see cref="MySqlFirewallRuleResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<MySqlFirewallRuleResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<MySqlFirewallRuleResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _mySqlFirewallRuleFirewallRulesClientDiagnostics.CreateScope("MySqlFirewallRuleCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _mySqlFirewallRuleFirewallRulesRestClient.ListByServerAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new MySqlFirewallRuleResource(Client, value)), null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _mySqlFirewallRuleFirewallRulesRestClient.CreateListByServerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new MySqlFirewallRuleResource(Client, MySqlFirewallRuleData.DeserializeMySqlFirewallRuleData(e)), _mySqlFirewallRuleFirewallRulesClientDiagnostics, Pipeline, "MySqlFirewallRuleCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -213,22 +198,8 @@ namespace Azure.ResourceManager.MySql
         /// <returns> A collection of <see cref="MySqlFirewallRuleResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<MySqlFirewallRuleResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<MySqlFirewallRuleResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _mySqlFirewallRuleFirewallRulesClientDiagnostics.CreateScope("MySqlFirewallRuleCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _mySqlFirewallRuleFirewallRulesRestClient.ListByServer(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new MySqlFirewallRuleResource(Client, value)), null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _mySqlFirewallRuleFirewallRulesRestClient.CreateListByServerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new MySqlFirewallRuleResource(Client, MySqlFirewallRuleData.DeserializeMySqlFirewallRuleData(e)), _mySqlFirewallRuleFirewallRulesClientDiagnostics, Pipeline, "MySqlFirewallRuleCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>

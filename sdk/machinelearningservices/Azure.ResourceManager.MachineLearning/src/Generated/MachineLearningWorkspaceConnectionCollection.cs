@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -183,37 +182,9 @@ namespace Azure.ResourceManager.MachineLearning
         /// <returns> An async collection of <see cref="MachineLearningWorkspaceConnectionResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<MachineLearningWorkspaceConnectionResource> GetAllAsync(string target = null, string category = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<MachineLearningWorkspaceConnectionResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _machineLearningWorkspaceConnectionWorkspaceConnectionsClientDiagnostics.CreateScope("MachineLearningWorkspaceConnectionCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _machineLearningWorkspaceConnectionWorkspaceConnectionsRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, target, category, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new MachineLearningWorkspaceConnectionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<MachineLearningWorkspaceConnectionResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _machineLearningWorkspaceConnectionWorkspaceConnectionsClientDiagnostics.CreateScope("MachineLearningWorkspaceConnectionCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _machineLearningWorkspaceConnectionWorkspaceConnectionsRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, target, category, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new MachineLearningWorkspaceConnectionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _machineLearningWorkspaceConnectionWorkspaceConnectionsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, target, category);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _machineLearningWorkspaceConnectionWorkspaceConnectionsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, target, category);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new MachineLearningWorkspaceConnectionResource(Client, MachineLearningWorkspaceConnectionData.DeserializeMachineLearningWorkspaceConnectionData(e)), _machineLearningWorkspaceConnectionWorkspaceConnectionsClientDiagnostics, Pipeline, "MachineLearningWorkspaceConnectionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -226,37 +197,9 @@ namespace Azure.ResourceManager.MachineLearning
         /// <returns> A collection of <see cref="MachineLearningWorkspaceConnectionResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<MachineLearningWorkspaceConnectionResource> GetAll(string target = null, string category = null, CancellationToken cancellationToken = default)
         {
-            Page<MachineLearningWorkspaceConnectionResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _machineLearningWorkspaceConnectionWorkspaceConnectionsClientDiagnostics.CreateScope("MachineLearningWorkspaceConnectionCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _machineLearningWorkspaceConnectionWorkspaceConnectionsRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, target, category, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new MachineLearningWorkspaceConnectionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<MachineLearningWorkspaceConnectionResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _machineLearningWorkspaceConnectionWorkspaceConnectionsClientDiagnostics.CreateScope("MachineLearningWorkspaceConnectionCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _machineLearningWorkspaceConnectionWorkspaceConnectionsRestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, target, category, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new MachineLearningWorkspaceConnectionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _machineLearningWorkspaceConnectionWorkspaceConnectionsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, target, category);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _machineLearningWorkspaceConnectionWorkspaceConnectionsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, target, category);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new MachineLearningWorkspaceConnectionResource(Client, MachineLearningWorkspaceConnectionData.DeserializeMachineLearningWorkspaceConnectionData(e)), _machineLearningWorkspaceConnectionWorkspaceConnectionsClientDiagnostics, Pipeline, "MachineLearningWorkspaceConnectionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

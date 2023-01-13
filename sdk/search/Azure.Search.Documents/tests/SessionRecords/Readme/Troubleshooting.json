@@ -1,40 +1,37 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://mohitc-acs.search.windows.net/indexes(\u0027mbqvlxmt\u0027)/docs(\u002712345\u0027)?api-version=2020-06-30",
+      "RequestUri": "https://azs-net-shrejaazsearch.search.windows.net/indexes(\u0027ylixaavx\u0027)/docs(\u002712345\u0027)?api-version=2020-06-30",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json; odata.metadata=none",
         "api-key": "Sanitized",
-        "User-Agent": [
-          "azsdk-net-Search.Documents/11.3.0-alpha.20210326.1",
-          "(.NET Core 4.6.29719.03; Microsoft Windows 10.0.19043 )"
-        ],
-        "x-ms-client-request-id": "7c34fbb2dd26e95ef8b150d6b9aa6381",
+        "User-Agent": "azsdk-net-Search.Documents/11.5.0-alpha.20230107.1 (.NET Framework 4.8.9105.0; Microsoft Windows 10.0.22621 )",
+        "x-ms-client-request-id": "a636db1b37056a3a4a3b767e8d87b8bc",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 404,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "client-request-id": "7c34fbb2-dd26-e95e-f8b1-50d6b9aa6381",
+        "client-request-id": "a636db1b-3705-6a3a-4a3b-767e8d87b8bc",
         "Content-Length": "0",
-        "Date": "Sat, 27 Mar 2021 18:43:15 GMT",
-        "elapsed-time": "6",
+        "Date": "Mon, 09 Jan 2023 17:58:13 GMT",
+        "elapsed-time": "7",
         "Expires": "-1",
         "Pragma": "no-cache",
-        "request-id": "7c34fbb2-dd26-e95e-f8b1-50d6b9aa6381",
+        "request-id": "a636db1b-3705-6a3a-4a3b-767e8d87b8bc",
         "Strict-Transport-Security": "max-age=15724800; includeSubDomains",
-        "x-ms-client-request-id": "7c34fbb2-dd26-e95e-f8b1-50d6b9aa6381"
+        "x-ms-client-request-id": "a636db1b-3705-6a3a-4a3b-767e8d87b8bc"
       },
-      "ResponseBody": []
+      "ResponseBody": null
     }
   ],
   "Variables": {
-    "RandomSeed": "1565637229",
-    "SearchIndexName": "mbqvlxmt",
-    "SEARCH_ENDPOINT_SUFFIX": null,
+    "RandomSeed": "365789068",
+    "SearchIndexName": "ylixaavx",
+    "SEARCH_ENDPOINT_SUFFIX": "search.windows.net",
     "SEARCH_QUERY_API_KEY": "Sanitized",
-    "SEARCH_SERVICE_NAME": "mohitc-acs"
+    "SEARCH_SERVICE_NAME": "azs-net-shrejaazsearch"
   }
 }

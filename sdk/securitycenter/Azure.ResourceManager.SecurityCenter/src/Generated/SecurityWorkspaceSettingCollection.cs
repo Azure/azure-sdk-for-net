@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -187,37 +186,9 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <returns> An async collection of <see cref="SecurityWorkspaceSettingResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SecurityWorkspaceSettingResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<SecurityWorkspaceSettingResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _securityWorkspaceSettingWorkspaceSettingsClientDiagnostics.CreateScope("SecurityWorkspaceSettingCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _securityWorkspaceSettingWorkspaceSettingsRestClient.ListAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new SecurityWorkspaceSettingResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<SecurityWorkspaceSettingResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _securityWorkspaceSettingWorkspaceSettingsClientDiagnostics.CreateScope("SecurityWorkspaceSettingCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _securityWorkspaceSettingWorkspaceSettingsRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new SecurityWorkspaceSettingResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _securityWorkspaceSettingWorkspaceSettingsRestClient.CreateListRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _securityWorkspaceSettingWorkspaceSettingsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SecurityWorkspaceSettingResource(Client, SecurityWorkspaceSettingData.DeserializeSecurityWorkspaceSettingData(e)), _securityWorkspaceSettingWorkspaceSettingsClientDiagnostics, Pipeline, "SecurityWorkspaceSettingCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -229,37 +200,9 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <returns> A collection of <see cref="SecurityWorkspaceSettingResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SecurityWorkspaceSettingResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<SecurityWorkspaceSettingResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _securityWorkspaceSettingWorkspaceSettingsClientDiagnostics.CreateScope("SecurityWorkspaceSettingCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _securityWorkspaceSettingWorkspaceSettingsRestClient.List(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new SecurityWorkspaceSettingResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<SecurityWorkspaceSettingResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _securityWorkspaceSettingWorkspaceSettingsClientDiagnostics.CreateScope("SecurityWorkspaceSettingCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _securityWorkspaceSettingWorkspaceSettingsRestClient.ListNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new SecurityWorkspaceSettingResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _securityWorkspaceSettingWorkspaceSettingsRestClient.CreateListRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _securityWorkspaceSettingWorkspaceSettingsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SecurityWorkspaceSettingResource(Client, SecurityWorkspaceSettingData.DeserializeSecurityWorkspaceSettingData(e)), _securityWorkspaceSettingWorkspaceSettingsClientDiagnostics, Pipeline, "SecurityWorkspaceSettingCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

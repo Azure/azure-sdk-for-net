@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -53,37 +52,9 @@ namespace Azure.ResourceManager.IotCentral
         /// <returns> An async collection of <see cref="IotCentralAppResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<IotCentralAppResource> GetIotCentralAppsAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<IotCentralAppResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = IotCentralAppAppsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetIotCentralApps");
-                scope.Start();
-                try
-                {
-                    var response = await IotCentralAppAppsRestClient.ListBySubscriptionAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new IotCentralAppResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<IotCentralAppResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = IotCentralAppAppsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetIotCentralApps");
-                scope.Start();
-                try
-                {
-                    var response = await IotCentralAppAppsRestClient.ListBySubscriptionNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new IotCentralAppResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => IotCentralAppAppsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => IotCentralAppAppsRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new IotCentralAppResource(Client, IotCentralAppData.DeserializeIotCentralAppData(e)), IotCentralAppAppsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetIotCentralApps", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -95,37 +66,9 @@ namespace Azure.ResourceManager.IotCentral
         /// <returns> A collection of <see cref="IotCentralAppResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<IotCentralAppResource> GetIotCentralApps(CancellationToken cancellationToken = default)
         {
-            Page<IotCentralAppResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = IotCentralAppAppsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetIotCentralApps");
-                scope.Start();
-                try
-                {
-                    var response = IotCentralAppAppsRestClient.ListBySubscription(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new IotCentralAppResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<IotCentralAppResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = IotCentralAppAppsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetIotCentralApps");
-                scope.Start();
-                try
-                {
-                    var response = IotCentralAppAppsRestClient.ListBySubscriptionNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new IotCentralAppResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => IotCentralAppAppsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => IotCentralAppAppsRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new IotCentralAppResource(Client, IotCentralAppData.DeserializeIotCentralAppData(e)), IotCentralAppAppsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetIotCentralApps", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -229,37 +172,9 @@ namespace Azure.ResourceManager.IotCentral
         /// <returns> An async collection of <see cref="IotCentralAppTemplate" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<IotCentralAppTemplate> GetTemplatesAppsAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<IotCentralAppTemplate>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = IotCentralAppAppsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetTemplatesApps");
-                scope.Start();
-                try
-                {
-                    var response = await IotCentralAppAppsRestClient.ListTemplatesAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<IotCentralAppTemplate>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = IotCentralAppAppsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetTemplatesApps");
-                scope.Start();
-                try
-                {
-                    var response = await IotCentralAppAppsRestClient.ListTemplatesNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => IotCentralAppAppsRestClient.CreateListTemplatesRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => IotCentralAppAppsRestClient.CreateListTemplatesNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, IotCentralAppTemplate.DeserializeIotCentralAppTemplate, IotCentralAppAppsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetTemplatesApps", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -271,37 +186,9 @@ namespace Azure.ResourceManager.IotCentral
         /// <returns> A collection of <see cref="IotCentralAppTemplate" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<IotCentralAppTemplate> GetTemplatesApps(CancellationToken cancellationToken = default)
         {
-            Page<IotCentralAppTemplate> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = IotCentralAppAppsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetTemplatesApps");
-                scope.Start();
-                try
-                {
-                    var response = IotCentralAppAppsRestClient.ListTemplates(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<IotCentralAppTemplate> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = IotCentralAppAppsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetTemplatesApps");
-                scope.Start();
-                try
-                {
-                    var response = IotCentralAppAppsRestClient.ListTemplatesNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => IotCentralAppAppsRestClient.CreateListTemplatesRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => IotCentralAppAppsRestClient.CreateListTemplatesNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, IotCentralAppTemplate.DeserializeIotCentralAppTemplate, IotCentralAppAppsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetTemplatesApps", "value", "nextLink", cancellationToken);
         }
     }
 }

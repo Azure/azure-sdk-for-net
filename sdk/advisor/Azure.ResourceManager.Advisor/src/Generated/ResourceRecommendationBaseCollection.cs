@@ -8,7 +8,6 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -113,37 +112,9 @@ namespace Azure.ResourceManager.Advisor
         /// <returns> An async collection of <see cref="ResourceRecommendationBaseResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ResourceRecommendationBaseResource> GetAllAsync(string filter = null, int? top = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<ResourceRecommendationBaseResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _resourceRecommendationBaseRecommendationsClientDiagnostics.CreateScope("ResourceRecommendationBaseCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _resourceRecommendationBaseRecommendationsRestClient.ListAsync(Id.SubscriptionId, filter, top, skipToken, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ResourceRecommendationBaseResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<ResourceRecommendationBaseResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _resourceRecommendationBaseRecommendationsClientDiagnostics.CreateScope("ResourceRecommendationBaseCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _resourceRecommendationBaseRecommendationsRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, filter, top, skipToken, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ResourceRecommendationBaseResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _resourceRecommendationBaseRecommendationsRestClient.CreateListRequest(Id.SubscriptionId, filter, top, skipToken);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _resourceRecommendationBaseRecommendationsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, filter, top, skipToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ResourceRecommendationBaseResource(Client, ResourceRecommendationBaseData.DeserializeResourceRecommendationBaseData(e)), _resourceRecommendationBaseRecommendationsClientDiagnostics, Pipeline, "ResourceRecommendationBaseCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -158,37 +129,9 @@ namespace Azure.ResourceManager.Advisor
         /// <returns> A collection of <see cref="ResourceRecommendationBaseResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ResourceRecommendationBaseResource> GetAll(string filter = null, int? top = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            Page<ResourceRecommendationBaseResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _resourceRecommendationBaseRecommendationsClientDiagnostics.CreateScope("ResourceRecommendationBaseCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _resourceRecommendationBaseRecommendationsRestClient.List(Id.SubscriptionId, filter, top, skipToken, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ResourceRecommendationBaseResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<ResourceRecommendationBaseResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _resourceRecommendationBaseRecommendationsClientDiagnostics.CreateScope("ResourceRecommendationBaseCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _resourceRecommendationBaseRecommendationsRestClient.ListNextPage(nextLink, Id.SubscriptionId, filter, top, skipToken, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ResourceRecommendationBaseResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _resourceRecommendationBaseRecommendationsRestClient.CreateListRequest(Id.SubscriptionId, filter, top, skipToken);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _resourceRecommendationBaseRecommendationsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, filter, top, skipToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ResourceRecommendationBaseResource(Client, ResourceRecommendationBaseData.DeserializeResourceRecommendationBaseData(e)), _resourceRecommendationBaseRecommendationsClientDiagnostics, Pipeline, "ResourceRecommendationBaseCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

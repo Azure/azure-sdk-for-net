@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -187,22 +186,8 @@ namespace Azure.ResourceManager.DeploymentManager
         /// <returns> An async collection of <see cref="StepResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<StepResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<StepResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _stepResourceStepsClientDiagnostics.CreateScope("StepResourceCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _stepResourceStepsRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Select(value => new StepResource(Client, value)), null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _stepResourceStepsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new StepResource(Client, StepResourceData.DeserializeStepResourceData(e)), _stepResourceStepsClientDiagnostics, Pipeline, "StepResourceCollection.GetAll", "", null, cancellationToken);
         }
 
         /// <summary>
@@ -214,22 +199,8 @@ namespace Azure.ResourceManager.DeploymentManager
         /// <returns> A collection of <see cref="StepResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<StepResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<StepResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _stepResourceStepsClientDiagnostics.CreateScope("StepResourceCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _stepResourceStepsRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Select(value => new StepResource(Client, value)), null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _stepResourceStepsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new StepResource(Client, StepResourceData.DeserializeStepResourceData(e)), _stepResourceStepsClientDiagnostics, Pipeline, "StepResourceCollection.GetAll", "", null, cancellationToken);
         }
 
         /// <summary>

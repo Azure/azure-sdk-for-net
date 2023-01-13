@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -58,37 +57,9 @@ namespace Azure.ResourceManager.DataBox
         /// <returns> An async collection of <see cref="DataBoxJobResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DataBoxJobResource> GetDataBoxJobsAsync(string skipToken = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<DataBoxJobResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = DataBoxJobJobsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetDataBoxJobs");
-                scope.Start();
-                try
-                {
-                    var response = await DataBoxJobJobsRestClient.ListAsync(Id.SubscriptionId, skipToken, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new DataBoxJobResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<DataBoxJobResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = DataBoxJobJobsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetDataBoxJobs");
-                scope.Start();
-                try
-                {
-                    var response = await DataBoxJobJobsRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, skipToken, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new DataBoxJobResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => DataBoxJobJobsRestClient.CreateListRequest(Id.SubscriptionId, skipToken);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DataBoxJobJobsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, skipToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DataBoxJobResource(Client, DataBoxJobData.DeserializeDataBoxJobData(e)), DataBoxJobJobsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetDataBoxJobs", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -101,37 +72,9 @@ namespace Azure.ResourceManager.DataBox
         /// <returns> A collection of <see cref="DataBoxJobResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DataBoxJobResource> GetDataBoxJobs(string skipToken = null, CancellationToken cancellationToken = default)
         {
-            Page<DataBoxJobResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = DataBoxJobJobsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetDataBoxJobs");
-                scope.Start();
-                try
-                {
-                    var response = DataBoxJobJobsRestClient.List(Id.SubscriptionId, skipToken, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new DataBoxJobResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<DataBoxJobResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = DataBoxJobJobsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetDataBoxJobs");
-                scope.Start();
-                try
-                {
-                    var response = DataBoxJobJobsRestClient.ListNextPage(nextLink, Id.SubscriptionId, skipToken, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new DataBoxJobResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => DataBoxJobJobsRestClient.CreateListRequest(Id.SubscriptionId, skipToken);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DataBoxJobJobsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, skipToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DataBoxJobResource(Client, DataBoxJobData.DeserializeDataBoxJobData(e)), DataBoxJobJobsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetDataBoxJobs", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

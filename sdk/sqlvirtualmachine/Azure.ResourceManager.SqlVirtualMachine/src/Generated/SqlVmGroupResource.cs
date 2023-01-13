@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -303,37 +302,9 @@ namespace Azure.ResourceManager.SqlVirtualMachine
         /// <returns> An async collection of <see cref="SqlVmResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SqlVmResource> GetSqlVmsBySqlVmGroupAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<SqlVmResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _sqlVmSqlVirtualMachinesClientDiagnostics.CreateScope("SqlVmGroupResource.GetSqlVmsBySqlVmGroup");
-                scope.Start();
-                try
-                {
-                    var response = await _sqlVmSqlVirtualMachinesRestClient.ListBySqlVmGroupAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new SqlVmResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<SqlVmResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _sqlVmSqlVirtualMachinesClientDiagnostics.CreateScope("SqlVmGroupResource.GetSqlVmsBySqlVmGroup");
-                scope.Start();
-                try
-                {
-                    var response = await _sqlVmSqlVirtualMachinesRestClient.ListBySqlVmGroupNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new SqlVmResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _sqlVmSqlVirtualMachinesRestClient.CreateListBySqlVmGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _sqlVmSqlVirtualMachinesRestClient.CreateListBySqlVmGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SqlVmResource(Client, SqlVmData.DeserializeSqlVmData(e)), _sqlVmSqlVirtualMachinesClientDiagnostics, Pipeline, "SqlVmGroupResource.GetSqlVmsBySqlVmGroup", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -345,37 +316,9 @@ namespace Azure.ResourceManager.SqlVirtualMachine
         /// <returns> A collection of <see cref="SqlVmResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SqlVmResource> GetSqlVmsBySqlVmGroup(CancellationToken cancellationToken = default)
         {
-            Page<SqlVmResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _sqlVmSqlVirtualMachinesClientDiagnostics.CreateScope("SqlVmGroupResource.GetSqlVmsBySqlVmGroup");
-                scope.Start();
-                try
-                {
-                    var response = _sqlVmSqlVirtualMachinesRestClient.ListBySqlVmGroup(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new SqlVmResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<SqlVmResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _sqlVmSqlVirtualMachinesClientDiagnostics.CreateScope("SqlVmGroupResource.GetSqlVmsBySqlVmGroup");
-                scope.Start();
-                try
-                {
-                    var response = _sqlVmSqlVirtualMachinesRestClient.ListBySqlVmGroupNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new SqlVmResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _sqlVmSqlVirtualMachinesRestClient.CreateListBySqlVmGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _sqlVmSqlVirtualMachinesRestClient.CreateListBySqlVmGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SqlVmResource(Client, SqlVmData.DeserializeSqlVmData(e)), _sqlVmSqlVirtualMachinesClientDiagnostics, Pipeline, "SqlVmGroupResource.GetSqlVmsBySqlVmGroup", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

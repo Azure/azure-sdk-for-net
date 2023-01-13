@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -103,37 +102,9 @@ namespace Azure.ResourceManager.DeviceUpdate
         /// <returns> An async collection of <see cref="DeviceUpdateAccountResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DeviceUpdateAccountResource> GetDeviceUpdateAccountsAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<DeviceUpdateAccountResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = DeviceUpdateAccountAccountsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetDeviceUpdateAccounts");
-                scope.Start();
-                try
-                {
-                    var response = await DeviceUpdateAccountAccountsRestClient.ListBySubscriptionAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new DeviceUpdateAccountResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<DeviceUpdateAccountResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = DeviceUpdateAccountAccountsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetDeviceUpdateAccounts");
-                scope.Start();
-                try
-                {
-                    var response = await DeviceUpdateAccountAccountsRestClient.ListBySubscriptionNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new DeviceUpdateAccountResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => DeviceUpdateAccountAccountsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DeviceUpdateAccountAccountsRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DeviceUpdateAccountResource(Client, DeviceUpdateAccountData.DeserializeDeviceUpdateAccountData(e)), DeviceUpdateAccountAccountsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetDeviceUpdateAccounts", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -145,37 +116,9 @@ namespace Azure.ResourceManager.DeviceUpdate
         /// <returns> A collection of <see cref="DeviceUpdateAccountResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DeviceUpdateAccountResource> GetDeviceUpdateAccounts(CancellationToken cancellationToken = default)
         {
-            Page<DeviceUpdateAccountResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = DeviceUpdateAccountAccountsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetDeviceUpdateAccounts");
-                scope.Start();
-                try
-                {
-                    var response = DeviceUpdateAccountAccountsRestClient.ListBySubscription(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new DeviceUpdateAccountResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<DeviceUpdateAccountResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = DeviceUpdateAccountAccountsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetDeviceUpdateAccounts");
-                scope.Start();
-                try
-                {
-                    var response = DeviceUpdateAccountAccountsRestClient.ListBySubscriptionNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new DeviceUpdateAccountResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => DeviceUpdateAccountAccountsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DeviceUpdateAccountAccountsRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DeviceUpdateAccountResource(Client, DeviceUpdateAccountData.DeserializeDeviceUpdateAccountData(e)), DeviceUpdateAccountAccountsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetDeviceUpdateAccounts", "value", "nextLink", cancellationToken);
         }
     }
 }

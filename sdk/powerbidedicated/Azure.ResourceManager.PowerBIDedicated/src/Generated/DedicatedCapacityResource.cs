@@ -362,22 +362,8 @@ namespace Azure.ResourceManager.PowerBIDedicated
         /// <returns> An async collection of <see cref="SkuDetailsForExistingResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SkuDetailsForExistingResource> GetSkusForCapacityAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<SkuDetailsForExistingResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _dedicatedCapacityCapacitiesClientDiagnostics.CreateScope("DedicatedCapacityResource.GetSkusForCapacity");
-                scope.Start();
-                try
-                {
-                    var response = await _dedicatedCapacityCapacitiesRestClient.ListSkusForCapacityAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _dedicatedCapacityCapacitiesRestClient.CreateListSkusForCapacityRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, SkuDetailsForExistingResource.DeserializeSkuDetailsForExistingResource, _dedicatedCapacityCapacitiesClientDiagnostics, Pipeline, "DedicatedCapacityResource.GetSkusForCapacity", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -389,22 +375,8 @@ namespace Azure.ResourceManager.PowerBIDedicated
         /// <returns> A collection of <see cref="SkuDetailsForExistingResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SkuDetailsForExistingResource> GetSkusForCapacity(CancellationToken cancellationToken = default)
         {
-            Page<SkuDetailsForExistingResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _dedicatedCapacityCapacitiesClientDiagnostics.CreateScope("DedicatedCapacityResource.GetSkusForCapacity");
-                scope.Start();
-                try
-                {
-                    var response = _dedicatedCapacityCapacitiesRestClient.ListSkusForCapacity(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _dedicatedCapacityCapacitiesRestClient.CreateListSkusForCapacityRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, SkuDetailsForExistingResource.DeserializeSkuDetailsForExistingResource, _dedicatedCapacityCapacitiesClientDiagnostics, Pipeline, "DedicatedCapacityResource.GetSkusForCapacity", "value", null, cancellationToken);
         }
 
         /// <summary>

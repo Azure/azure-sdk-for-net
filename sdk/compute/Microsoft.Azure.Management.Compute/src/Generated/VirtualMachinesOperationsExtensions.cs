@@ -813,8 +813,13 @@ namespace Microsoft.Azure.Management.Compute
             }
 
             /// <summary>
-            /// Reimages the virtual machine which has an ephemeral OS disk back to its
-            /// initial state.
+            /// Reimages (upgrade the operating system) a virtual machine which don't have
+            /// a ephemeral OS disk, for virtual machines who have a ephemeral OS disk the
+            /// virtual machine is reset to initial state. NOTE: The retaining of old OS
+            /// disk depends on the value of deleteOption of OS disk. If deleteOption is
+            /// detach, the old OS disk will be preserved after reimage. If deleteOption is
+            /// delete, the old OS disk will be deleted after reimage. The deleteOption of
+            /// the OS disk should be updated accordingly before performing the reimage.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -825,19 +830,22 @@ namespace Microsoft.Azure.Management.Compute
             /// <param name='vmName'>
             /// The name of the virtual machine.
             /// </param>
-            /// <param name='tempDisk'>
-            /// Specifies whether to reimage temp disk. Default value: false. Note: This
-            /// temp disk reimage parameter is only supported for VM/VMSS with Ephemeral OS
-            /// disk.
+            /// <param name='parameters'>
+            /// Parameters supplied to the Reimage Virtual Machine operation.
             /// </param>
-            public static void Reimage(this IVirtualMachinesOperations operations, string resourceGroupName, string vmName, bool? tempDisk = default(bool?))
+            public static void Reimage(this IVirtualMachinesOperations operations, string resourceGroupName, string vmName, VirtualMachineReimageParameters parameters = default(VirtualMachineReimageParameters))
             {
-                operations.ReimageAsync(resourceGroupName, vmName, tempDisk).GetAwaiter().GetResult();
+                operations.ReimageAsync(resourceGroupName, vmName, parameters).GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Reimages the virtual machine which has an ephemeral OS disk back to its
-            /// initial state.
+            /// Reimages (upgrade the operating system) a virtual machine which don't have
+            /// a ephemeral OS disk, for virtual machines who have a ephemeral OS disk the
+            /// virtual machine is reset to initial state. NOTE: The retaining of old OS
+            /// disk depends on the value of deleteOption of OS disk. If deleteOption is
+            /// detach, the old OS disk will be preserved after reimage. If deleteOption is
+            /// delete, the old OS disk will be deleted after reimage. The deleteOption of
+            /// the OS disk should be updated accordingly before performing the reimage.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -848,17 +856,15 @@ namespace Microsoft.Azure.Management.Compute
             /// <param name='vmName'>
             /// The name of the virtual machine.
             /// </param>
-            /// <param name='tempDisk'>
-            /// Specifies whether to reimage temp disk. Default value: false. Note: This
-            /// temp disk reimage parameter is only supported for VM/VMSS with Ephemeral OS
-            /// disk.
+            /// <param name='parameters'>
+            /// Parameters supplied to the Reimage Virtual Machine operation.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task ReimageAsync(this IVirtualMachinesOperations operations, string resourceGroupName, string vmName, bool? tempDisk = default(bool?), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task ReimageAsync(this IVirtualMachinesOperations operations, string resourceGroupName, string vmName, VirtualMachineReimageParameters parameters = default(VirtualMachineReimageParameters), CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.ReimageWithHttpMessagesAsync(resourceGroupName, vmName, tempDisk, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                (await operations.ReimageWithHttpMessagesAsync(resourceGroupName, vmName, parameters, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>
@@ -1590,8 +1596,13 @@ namespace Microsoft.Azure.Management.Compute
             }
 
             /// <summary>
-            /// Reimages the virtual machine which has an ephemeral OS disk back to its
-            /// initial state.
+            /// Reimages (upgrade the operating system) a virtual machine which don't have
+            /// a ephemeral OS disk, for virtual machines who have a ephemeral OS disk the
+            /// virtual machine is reset to initial state. NOTE: The retaining of old OS
+            /// disk depends on the value of deleteOption of OS disk. If deleteOption is
+            /// detach, the old OS disk will be preserved after reimage. If deleteOption is
+            /// delete, the old OS disk will be deleted after reimage. The deleteOption of
+            /// the OS disk should be updated accordingly before performing the reimage.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -1602,19 +1613,22 @@ namespace Microsoft.Azure.Management.Compute
             /// <param name='vmName'>
             /// The name of the virtual machine.
             /// </param>
-            /// <param name='tempDisk'>
-            /// Specifies whether to reimage temp disk. Default value: false. Note: This
-            /// temp disk reimage parameter is only supported for VM/VMSS with Ephemeral OS
-            /// disk.
+            /// <param name='parameters'>
+            /// Parameters supplied to the Reimage Virtual Machine operation.
             /// </param>
-            public static void BeginReimage(this IVirtualMachinesOperations operations, string resourceGroupName, string vmName, bool? tempDisk = default(bool?))
+            public static void BeginReimage(this IVirtualMachinesOperations operations, string resourceGroupName, string vmName, VirtualMachineReimageParameters parameters = default(VirtualMachineReimageParameters))
             {
-                operations.BeginReimageAsync(resourceGroupName, vmName, tempDisk).GetAwaiter().GetResult();
+                operations.BeginReimageAsync(resourceGroupName, vmName, parameters).GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Reimages the virtual machine which has an ephemeral OS disk back to its
-            /// initial state.
+            /// Reimages (upgrade the operating system) a virtual machine which don't have
+            /// a ephemeral OS disk, for virtual machines who have a ephemeral OS disk the
+            /// virtual machine is reset to initial state. NOTE: The retaining of old OS
+            /// disk depends on the value of deleteOption of OS disk. If deleteOption is
+            /// detach, the old OS disk will be preserved after reimage. If deleteOption is
+            /// delete, the old OS disk will be deleted after reimage. The deleteOption of
+            /// the OS disk should be updated accordingly before performing the reimage.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -1625,17 +1639,15 @@ namespace Microsoft.Azure.Management.Compute
             /// <param name='vmName'>
             /// The name of the virtual machine.
             /// </param>
-            /// <param name='tempDisk'>
-            /// Specifies whether to reimage temp disk. Default value: false. Note: This
-            /// temp disk reimage parameter is only supported for VM/VMSS with Ephemeral OS
-            /// disk.
+            /// <param name='parameters'>
+            /// Parameters supplied to the Reimage Virtual Machine operation.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task BeginReimageAsync(this IVirtualMachinesOperations operations, string resourceGroupName, string vmName, bool? tempDisk = default(bool?), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task BeginReimageAsync(this IVirtualMachinesOperations operations, string resourceGroupName, string vmName, VirtualMachineReimageParameters parameters = default(VirtualMachineReimageParameters), CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.BeginReimageWithHttpMessagesAsync(resourceGroupName, vmName, tempDisk, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                (await operations.BeginReimageWithHttpMessagesAsync(resourceGroupName, vmName, parameters, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>
