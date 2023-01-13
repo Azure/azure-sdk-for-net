@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -186,37 +185,9 @@ namespace Azure.ResourceManager.AppPlatform
         /// <returns> An async collection of <see cref="AppPlatformStorageResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<AppPlatformStorageResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<AppPlatformStorageResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _appPlatformStorageStoragesClientDiagnostics.CreateScope("AppPlatformStorageCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _appPlatformStorageStoragesRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new AppPlatformStorageResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<AppPlatformStorageResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _appPlatformStorageStoragesClientDiagnostics.CreateScope("AppPlatformStorageCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _appPlatformStorageStoragesRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new AppPlatformStorageResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _appPlatformStorageStoragesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _appPlatformStorageStoragesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new AppPlatformStorageResource(Client, AppPlatformStorageData.DeserializeAppPlatformStorageData(e)), _appPlatformStorageStoragesClientDiagnostics, Pipeline, "AppPlatformStorageCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -228,37 +199,9 @@ namespace Azure.ResourceManager.AppPlatform
         /// <returns> A collection of <see cref="AppPlatformStorageResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<AppPlatformStorageResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<AppPlatformStorageResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _appPlatformStorageStoragesClientDiagnostics.CreateScope("AppPlatformStorageCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _appPlatformStorageStoragesRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new AppPlatformStorageResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<AppPlatformStorageResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _appPlatformStorageStoragesClientDiagnostics.CreateScope("AppPlatformStorageCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _appPlatformStorageStoragesRestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new AppPlatformStorageResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _appPlatformStorageStoragesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _appPlatformStorageStoragesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new AppPlatformStorageResource(Client, AppPlatformStorageData.DeserializeAppPlatformStorageData(e)), _appPlatformStorageStoragesClientDiagnostics, Pipeline, "AppPlatformStorageCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

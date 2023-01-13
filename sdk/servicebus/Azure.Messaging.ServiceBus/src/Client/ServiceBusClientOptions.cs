@@ -82,12 +82,6 @@ namespace Azure.Messaging.ServiceBus
         public bool EnableCrossEntityTransactions { get; set; }
 
         /// <summary>
-        /// Gets or sets whether or not to enable metrics for the associated <see cref="ServiceBusClient"/> instance.
-        /// If set to <value>true</value>, <see cref="ServiceBusClient.GetTransportMetrics"/> can be called.
-        /// </summary>
-        internal bool EnableTransportMetrics { get; set; }
-
-        /// <summary>
         ///   Determines whether the specified <see cref="System.Object" /> is equal to this instance.
         /// </summary>
         ///
@@ -129,7 +123,6 @@ namespace Azure.Messaging.ServiceBus
                 WebProxy = WebProxy,
                 RetryOptions = RetryOptions.Clone(),
                 EnableCrossEntityTransactions = EnableCrossEntityTransactions,
-                EnableTransportMetrics = EnableTransportMetrics,
                 CustomEndpointAddress = CustomEndpointAddress,
                 Identifier = Identifier
             };

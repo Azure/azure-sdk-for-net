@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -186,37 +185,9 @@ namespace Azure.ResourceManager.ProviderHub
         /// <returns> An async collection of <see cref="ResourceTypeSkuResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ResourceTypeSkuResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<ResourceTypeSkuResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _resourceTypeSkuSkusClientDiagnostics.CreateScope("ResourceTypeSkuCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _resourceTypeSkuSkusRestClient.ListByResourceTypeRegistrationsAsync(Id.SubscriptionId, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ResourceTypeSkuResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<ResourceTypeSkuResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _resourceTypeSkuSkusClientDiagnostics.CreateScope("ResourceTypeSkuCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _resourceTypeSkuSkusRestClient.ListByResourceTypeRegistrationsNextPageAsync(nextLink, Id.SubscriptionId, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ResourceTypeSkuResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _resourceTypeSkuSkusRestClient.CreateListByResourceTypeRegistrationsRequest(Id.SubscriptionId, Id.Parent.Name, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _resourceTypeSkuSkusRestClient.CreateListByResourceTypeRegistrationsNextPageRequest(nextLink, Id.SubscriptionId, Id.Parent.Name, Id.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ResourceTypeSkuResource(Client, SkuResourceData.DeserializeSkuResourceData(e)), _resourceTypeSkuSkusClientDiagnostics, Pipeline, "ResourceTypeSkuCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -228,37 +199,9 @@ namespace Azure.ResourceManager.ProviderHub
         /// <returns> A collection of <see cref="ResourceTypeSkuResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ResourceTypeSkuResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<ResourceTypeSkuResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _resourceTypeSkuSkusClientDiagnostics.CreateScope("ResourceTypeSkuCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _resourceTypeSkuSkusRestClient.ListByResourceTypeRegistrations(Id.SubscriptionId, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ResourceTypeSkuResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<ResourceTypeSkuResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _resourceTypeSkuSkusClientDiagnostics.CreateScope("ResourceTypeSkuCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _resourceTypeSkuSkusRestClient.ListByResourceTypeRegistrationsNextPage(nextLink, Id.SubscriptionId, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ResourceTypeSkuResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _resourceTypeSkuSkusRestClient.CreateListByResourceTypeRegistrationsRequest(Id.SubscriptionId, Id.Parent.Name, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _resourceTypeSkuSkusRestClient.CreateListByResourceTypeRegistrationsNextPageRequest(nextLink, Id.SubscriptionId, Id.Parent.Name, Id.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ResourceTypeSkuResource(Client, SkuResourceData.DeserializeSkuResourceData(e)), _resourceTypeSkuSkusClientDiagnostics, Pipeline, "ResourceTypeSkuCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

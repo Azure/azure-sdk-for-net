@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -175,37 +174,9 @@ namespace Azure.ResourceManager.Sql
         /// <returns> An async collection of <see cref="EncryptionProtectorResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<EncryptionProtectorResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<EncryptionProtectorResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _encryptionProtectorClientDiagnostics.CreateScope("EncryptionProtectorCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _encryptionProtectorRestClient.ListByServerAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new EncryptionProtectorResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<EncryptionProtectorResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _encryptionProtectorClientDiagnostics.CreateScope("EncryptionProtectorCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _encryptionProtectorRestClient.ListByServerNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new EncryptionProtectorResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _encryptionProtectorRestClient.CreateListByServerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _encryptionProtectorRestClient.CreateListByServerNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new EncryptionProtectorResource(Client, EncryptionProtectorData.DeserializeEncryptionProtectorData(e)), _encryptionProtectorClientDiagnostics, Pipeline, "EncryptionProtectorCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -217,37 +188,9 @@ namespace Azure.ResourceManager.Sql
         /// <returns> A collection of <see cref="EncryptionProtectorResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<EncryptionProtectorResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<EncryptionProtectorResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _encryptionProtectorClientDiagnostics.CreateScope("EncryptionProtectorCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _encryptionProtectorRestClient.ListByServer(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new EncryptionProtectorResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<EncryptionProtectorResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _encryptionProtectorClientDiagnostics.CreateScope("EncryptionProtectorCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _encryptionProtectorRestClient.ListByServerNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new EncryptionProtectorResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _encryptionProtectorRestClient.CreateListByServerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _encryptionProtectorRestClient.CreateListByServerNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new EncryptionProtectorResource(Client, EncryptionProtectorData.DeserializeEncryptionProtectorData(e)), _encryptionProtectorClientDiagnostics, Pipeline, "EncryptionProtectorCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

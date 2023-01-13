@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -197,37 +196,9 @@ namespace Azure.ResourceManager.AppComplianceAutomation
         /// <returns> An async collection of <see cref="ReportResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ReportResource> GetAllAsync(string skipToken = null, int? top = null, string select = null, string offerGuid = null, string reportCreatorTenantId = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<ReportResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _reportResourceReportsClientDiagnostics.CreateScope("ReportResourceCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _reportResourceReportsRestClient.ListAsync(skipToken, top, select, offerGuid, reportCreatorTenantId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ReportResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<ReportResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _reportResourceReportsClientDiagnostics.CreateScope("ReportResourceCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _reportResourceReportsRestClient.ListNextPageAsync(nextLink, skipToken, top, select, offerGuid, reportCreatorTenantId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ReportResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _reportResourceReportsRestClient.CreateListRequest(skipToken, top, select, offerGuid, reportCreatorTenantId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _reportResourceReportsRestClient.CreateListNextPageRequest(nextLink, skipToken, top, select, offerGuid, reportCreatorTenantId);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ReportResource(Client, ReportResourceData.DeserializeReportResourceData(e)), _reportResourceReportsClientDiagnostics, Pipeline, "ReportResourceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -244,37 +215,9 @@ namespace Azure.ResourceManager.AppComplianceAutomation
         /// <returns> A collection of <see cref="ReportResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ReportResource> GetAll(string skipToken = null, int? top = null, string select = null, string offerGuid = null, string reportCreatorTenantId = null, CancellationToken cancellationToken = default)
         {
-            Page<ReportResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _reportResourceReportsClientDiagnostics.CreateScope("ReportResourceCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _reportResourceReportsRestClient.List(skipToken, top, select, offerGuid, reportCreatorTenantId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ReportResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<ReportResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _reportResourceReportsClientDiagnostics.CreateScope("ReportResourceCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _reportResourceReportsRestClient.ListNextPage(nextLink, skipToken, top, select, offerGuid, reportCreatorTenantId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ReportResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _reportResourceReportsRestClient.CreateListRequest(skipToken, top, select, offerGuid, reportCreatorTenantId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _reportResourceReportsRestClient.CreateListNextPageRequest(nextLink, skipToken, top, select, offerGuid, reportCreatorTenantId);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ReportResource(Client, ReportResourceData.DeserializeReportResourceData(e)), _reportResourceReportsClientDiagnostics, Pipeline, "ReportResourceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

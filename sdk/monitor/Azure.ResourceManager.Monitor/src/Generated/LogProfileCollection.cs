@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -187,22 +186,8 @@ namespace Azure.ResourceManager.Monitor
         /// <returns> An async collection of <see cref="LogProfileResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<LogProfileResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<LogProfileResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _logProfileClientDiagnostics.CreateScope("LogProfileCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _logProfileRestClient.ListAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new LogProfileResource(Client, value)), null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _logProfileRestClient.CreateListRequest(Id.SubscriptionId);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new LogProfileResource(Client, LogProfileData.DeserializeLogProfileData(e)), _logProfileClientDiagnostics, Pipeline, "LogProfileCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -214,22 +199,8 @@ namespace Azure.ResourceManager.Monitor
         /// <returns> A collection of <see cref="LogProfileResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<LogProfileResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<LogProfileResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _logProfileClientDiagnostics.CreateScope("LogProfileCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _logProfileRestClient.List(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new LogProfileResource(Client, value)), null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _logProfileRestClient.CreateListRequest(Id.SubscriptionId);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new LogProfileResource(Client, LogProfileData.DeserializeLogProfileData(e)), _logProfileClientDiagnostics, Pipeline, "LogProfileCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
