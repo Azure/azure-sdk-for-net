@@ -162,7 +162,7 @@ namespace Azure.Containers.ContainerRegistry
         public static Azure.Containers.ContainerRegistry.ArtifactTagProperties ArtifactTagProperties(string registryLoginServer = null, string repositoryName = null, string name = null, string digest = null, System.DateTimeOffset createdOn = default(System.DateTimeOffset), System.DateTimeOffset lastUpdatedOn = default(System.DateTimeOffset), bool? canDelete = default(bool?), bool? canWrite = default(bool?), bool? canList = default(bool?), bool? canRead = default(bool?)) { throw null; }
         public static Azure.Containers.ContainerRegistry.ContainerRepositoryProperties ContainerRepositoryProperties(string registryLoginServer = null, string name = null, System.DateTimeOffset createdOn = default(System.DateTimeOffset), System.DateTimeOffset lastUpdatedOn = default(System.DateTimeOffset), int manifestCount = 0, int tagCount = 0, bool? canDelete = default(bool?), bool? canWrite = default(bool?), bool? canList = default(bool?), bool? canRead = default(bool?)) { throw null; }
         public static Azure.Containers.ContainerRegistry.Specialized.DownloadBlobResult DownloadBlobResult(string digest = null, System.BinaryData content = null) { throw null; }
-        public static Azure.Containers.ContainerRegistry.Specialized.DownloadManifestResult DownloadManifestResult(string digest = null, Azure.Containers.ContainerRegistry.Specialized.OciManifest manifest = null, System.IO.Stream manifestStream = null) { throw null; }
+        public static Azure.Containers.ContainerRegistry.Specialized.DownloadManifestResult DownloadManifestResult(string digest = null, Azure.Containers.ContainerRegistry.Specialized.OciManifest manifest = null, System.BinaryData content = null) { throw null; }
         public static Azure.Containers.ContainerRegistry.Specialized.UploadBlobResult UploadBlobResult(string digest, long size) { throw null; }
         public static Azure.Containers.ContainerRegistry.Specialized.UploadManifestResult UploadManifestResult(string digest = null) { throw null; }
     }
@@ -273,13 +273,12 @@ namespace Azure.Containers.ContainerRegistry.Specialized
         public string Digest { get { throw null; } }
         public string Tag { get { throw null; } }
     }
-    public partial class DownloadManifestResult : System.IDisposable
+    public partial class DownloadManifestResult
     {
         internal DownloadManifestResult() { }
+        public System.BinaryData Content { get { throw null; } }
         public string Digest { get { throw null; } }
         public Azure.Containers.ContainerRegistry.Specialized.ArtifactManifest Manifest { get { throw null; } }
-        public System.IO.Stream ManifestStream { get { throw null; } }
-        public void Dispose() { }
     }
     public partial class OciAnnotations
     {
