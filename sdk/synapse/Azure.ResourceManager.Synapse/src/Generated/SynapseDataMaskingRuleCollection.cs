@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -186,22 +185,8 @@ namespace Azure.ResourceManager.Synapse
         /// <returns> An async collection of <see cref="SynapseDataMaskingRuleResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SynapseDataMaskingRuleResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<SynapseDataMaskingRuleResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _synapseDataMaskingRuleDataMaskingRulesClientDiagnostics.CreateScope("SynapseDataMaskingRuleCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _synapseDataMaskingRuleDataMaskingRulesRestClient.ListBySqlPoolAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new SynapseDataMaskingRuleResource(Client, value)), null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _synapseDataMaskingRuleDataMaskingRulesRestClient.CreateListBySqlPoolRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new SynapseDataMaskingRuleResource(Client, SynapseDataMaskingRuleData.DeserializeSynapseDataMaskingRuleData(e)), _synapseDataMaskingRuleDataMaskingRulesClientDiagnostics, Pipeline, "SynapseDataMaskingRuleCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -213,22 +198,8 @@ namespace Azure.ResourceManager.Synapse
         /// <returns> A collection of <see cref="SynapseDataMaskingRuleResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SynapseDataMaskingRuleResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<SynapseDataMaskingRuleResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _synapseDataMaskingRuleDataMaskingRulesClientDiagnostics.CreateScope("SynapseDataMaskingRuleCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _synapseDataMaskingRuleDataMaskingRulesRestClient.ListBySqlPool(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new SynapseDataMaskingRuleResource(Client, value)), null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _synapseDataMaskingRuleDataMaskingRulesRestClient.CreateListBySqlPoolRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new SynapseDataMaskingRuleResource(Client, SynapseDataMaskingRuleData.DeserializeSynapseDataMaskingRuleData(e)), _synapseDataMaskingRuleDataMaskingRulesClientDiagnostics, Pipeline, "SynapseDataMaskingRuleCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>

@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -186,37 +185,9 @@ namespace Azure.ResourceManager.DigitalTwins
         /// <returns> An async collection of <see cref="TimeSeriesDatabaseConnectionResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<TimeSeriesDatabaseConnectionResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<TimeSeriesDatabaseConnectionResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _timeSeriesDatabaseConnectionClientDiagnostics.CreateScope("TimeSeriesDatabaseConnectionCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _timeSeriesDatabaseConnectionRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new TimeSeriesDatabaseConnectionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<TimeSeriesDatabaseConnectionResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _timeSeriesDatabaseConnectionClientDiagnostics.CreateScope("TimeSeriesDatabaseConnectionCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _timeSeriesDatabaseConnectionRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new TimeSeriesDatabaseConnectionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _timeSeriesDatabaseConnectionRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _timeSeriesDatabaseConnectionRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new TimeSeriesDatabaseConnectionResource(Client, TimeSeriesDatabaseConnectionData.DeserializeTimeSeriesDatabaseConnectionData(e)), _timeSeriesDatabaseConnectionClientDiagnostics, Pipeline, "TimeSeriesDatabaseConnectionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -228,37 +199,9 @@ namespace Azure.ResourceManager.DigitalTwins
         /// <returns> A collection of <see cref="TimeSeriesDatabaseConnectionResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<TimeSeriesDatabaseConnectionResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<TimeSeriesDatabaseConnectionResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _timeSeriesDatabaseConnectionClientDiagnostics.CreateScope("TimeSeriesDatabaseConnectionCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _timeSeriesDatabaseConnectionRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new TimeSeriesDatabaseConnectionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<TimeSeriesDatabaseConnectionResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _timeSeriesDatabaseConnectionClientDiagnostics.CreateScope("TimeSeriesDatabaseConnectionCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _timeSeriesDatabaseConnectionRestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new TimeSeriesDatabaseConnectionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _timeSeriesDatabaseConnectionRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _timeSeriesDatabaseConnectionRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new TimeSeriesDatabaseConnectionResource(Client, TimeSeriesDatabaseConnectionData.DeserializeTimeSeriesDatabaseConnectionData(e)), _timeSeriesDatabaseConnectionClientDiagnostics, Pipeline, "TimeSeriesDatabaseConnectionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

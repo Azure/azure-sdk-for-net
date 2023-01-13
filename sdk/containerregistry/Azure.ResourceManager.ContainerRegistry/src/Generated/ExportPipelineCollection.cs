@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -186,37 +185,9 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <returns> An async collection of <see cref="ExportPipelineResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ExportPipelineResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<ExportPipelineResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _exportPipelineClientDiagnostics.CreateScope("ExportPipelineCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _exportPipelineRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ExportPipelineResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<ExportPipelineResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _exportPipelineClientDiagnostics.CreateScope("ExportPipelineCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _exportPipelineRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ExportPipelineResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _exportPipelineRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _exportPipelineRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ExportPipelineResource(Client, ExportPipelineData.DeserializeExportPipelineData(e)), _exportPipelineClientDiagnostics, Pipeline, "ExportPipelineCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -228,37 +199,9 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <returns> A collection of <see cref="ExportPipelineResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ExportPipelineResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<ExportPipelineResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _exportPipelineClientDiagnostics.CreateScope("ExportPipelineCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _exportPipelineRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ExportPipelineResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<ExportPipelineResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _exportPipelineClientDiagnostics.CreateScope("ExportPipelineCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _exportPipelineRestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ExportPipelineResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _exportPipelineRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _exportPipelineRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ExportPipelineResource(Client, ExportPipelineData.DeserializeExportPipelineData(e)), _exportPipelineClientDiagnostics, Pipeline, "ExportPipelineCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

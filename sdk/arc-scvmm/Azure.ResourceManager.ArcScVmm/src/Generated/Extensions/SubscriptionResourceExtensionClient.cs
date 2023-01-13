@@ -6,9 +6,7 @@
 #nullable disable
 
 using System;
-using System.Linq;
 using System.Threading;
-using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -72,37 +70,9 @@ namespace Azure.ResourceManager.ArcScVmm
         /// <returns> An async collection of <see cref="ScVmmServerResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ScVmmServerResource> GetScVmmServersAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<ScVmmServerResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = ScVmmServerVmmServersClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetScVmmServers");
-                scope.Start();
-                try
-                {
-                    var response = await ScVmmServerVmmServersRestClient.ListBySubscriptionAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ScVmmServerResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<ScVmmServerResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = ScVmmServerVmmServersClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetScVmmServers");
-                scope.Start();
-                try
-                {
-                    var response = await ScVmmServerVmmServersRestClient.ListBySubscriptionNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ScVmmServerResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => ScVmmServerVmmServersRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ScVmmServerVmmServersRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ScVmmServerResource(Client, ScVmmServerData.DeserializeScVmmServerData(e)), ScVmmServerVmmServersClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetScVmmServers", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -114,37 +84,9 @@ namespace Azure.ResourceManager.ArcScVmm
         /// <returns> A collection of <see cref="ScVmmServerResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ScVmmServerResource> GetScVmmServers(CancellationToken cancellationToken = default)
         {
-            Page<ScVmmServerResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = ScVmmServerVmmServersClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetScVmmServers");
-                scope.Start();
-                try
-                {
-                    var response = ScVmmServerVmmServersRestClient.ListBySubscription(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ScVmmServerResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<ScVmmServerResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = ScVmmServerVmmServersClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetScVmmServers");
-                scope.Start();
-                try
-                {
-                    var response = ScVmmServerVmmServersRestClient.ListBySubscriptionNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ScVmmServerResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => ScVmmServerVmmServersRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ScVmmServerVmmServersRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ScVmmServerResource(Client, ScVmmServerData.DeserializeScVmmServerData(e)), ScVmmServerVmmServersClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetScVmmServers", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -156,37 +98,9 @@ namespace Azure.ResourceManager.ArcScVmm
         /// <returns> An async collection of <see cref="ScVmmCloudResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ScVmmCloudResource> GetScVmmCloudsAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<ScVmmCloudResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = ScVmmCloudCloudsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetScVmmClouds");
-                scope.Start();
-                try
-                {
-                    var response = await ScVmmCloudCloudsRestClient.ListBySubscriptionAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ScVmmCloudResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<ScVmmCloudResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = ScVmmCloudCloudsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetScVmmClouds");
-                scope.Start();
-                try
-                {
-                    var response = await ScVmmCloudCloudsRestClient.ListBySubscriptionNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ScVmmCloudResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => ScVmmCloudCloudsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ScVmmCloudCloudsRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ScVmmCloudResource(Client, ScVmmCloudData.DeserializeScVmmCloudData(e)), ScVmmCloudCloudsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetScVmmClouds", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -198,37 +112,9 @@ namespace Azure.ResourceManager.ArcScVmm
         /// <returns> A collection of <see cref="ScVmmCloudResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ScVmmCloudResource> GetScVmmClouds(CancellationToken cancellationToken = default)
         {
-            Page<ScVmmCloudResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = ScVmmCloudCloudsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetScVmmClouds");
-                scope.Start();
-                try
-                {
-                    var response = ScVmmCloudCloudsRestClient.ListBySubscription(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ScVmmCloudResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<ScVmmCloudResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = ScVmmCloudCloudsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetScVmmClouds");
-                scope.Start();
-                try
-                {
-                    var response = ScVmmCloudCloudsRestClient.ListBySubscriptionNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ScVmmCloudResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => ScVmmCloudCloudsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ScVmmCloudCloudsRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ScVmmCloudResource(Client, ScVmmCloudData.DeserializeScVmmCloudData(e)), ScVmmCloudCloudsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetScVmmClouds", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -240,37 +126,9 @@ namespace Azure.ResourceManager.ArcScVmm
         /// <returns> An async collection of <see cref="ScVmmVirtualNetworkResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ScVmmVirtualNetworkResource> GetScVmmVirtualNetworksAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<ScVmmVirtualNetworkResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = ScVmmVirtualNetworkVirtualNetworksClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetScVmmVirtualNetworks");
-                scope.Start();
-                try
-                {
-                    var response = await ScVmmVirtualNetworkVirtualNetworksRestClient.ListBySubscriptionAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ScVmmVirtualNetworkResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<ScVmmVirtualNetworkResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = ScVmmVirtualNetworkVirtualNetworksClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetScVmmVirtualNetworks");
-                scope.Start();
-                try
-                {
-                    var response = await ScVmmVirtualNetworkVirtualNetworksRestClient.ListBySubscriptionNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ScVmmVirtualNetworkResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => ScVmmVirtualNetworkVirtualNetworksRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ScVmmVirtualNetworkVirtualNetworksRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ScVmmVirtualNetworkResource(Client, ScVmmVirtualNetworkData.DeserializeScVmmVirtualNetworkData(e)), ScVmmVirtualNetworkVirtualNetworksClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetScVmmVirtualNetworks", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -282,37 +140,9 @@ namespace Azure.ResourceManager.ArcScVmm
         /// <returns> A collection of <see cref="ScVmmVirtualNetworkResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ScVmmVirtualNetworkResource> GetScVmmVirtualNetworks(CancellationToken cancellationToken = default)
         {
-            Page<ScVmmVirtualNetworkResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = ScVmmVirtualNetworkVirtualNetworksClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetScVmmVirtualNetworks");
-                scope.Start();
-                try
-                {
-                    var response = ScVmmVirtualNetworkVirtualNetworksRestClient.ListBySubscription(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ScVmmVirtualNetworkResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<ScVmmVirtualNetworkResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = ScVmmVirtualNetworkVirtualNetworksClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetScVmmVirtualNetworks");
-                scope.Start();
-                try
-                {
-                    var response = ScVmmVirtualNetworkVirtualNetworksRestClient.ListBySubscriptionNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ScVmmVirtualNetworkResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => ScVmmVirtualNetworkVirtualNetworksRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ScVmmVirtualNetworkVirtualNetworksRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ScVmmVirtualNetworkResource(Client, ScVmmVirtualNetworkData.DeserializeScVmmVirtualNetworkData(e)), ScVmmVirtualNetworkVirtualNetworksClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetScVmmVirtualNetworks", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -324,37 +154,9 @@ namespace Azure.ResourceManager.ArcScVmm
         /// <returns> An async collection of <see cref="ScVmmVirtualMachineResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ScVmmVirtualMachineResource> GetScVmmVirtualMachinesAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<ScVmmVirtualMachineResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = ScVmmVirtualMachineVirtualMachinesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetScVmmVirtualMachines");
-                scope.Start();
-                try
-                {
-                    var response = await ScVmmVirtualMachineVirtualMachinesRestClient.ListBySubscriptionAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ScVmmVirtualMachineResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<ScVmmVirtualMachineResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = ScVmmVirtualMachineVirtualMachinesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetScVmmVirtualMachines");
-                scope.Start();
-                try
-                {
-                    var response = await ScVmmVirtualMachineVirtualMachinesRestClient.ListBySubscriptionNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ScVmmVirtualMachineResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => ScVmmVirtualMachineVirtualMachinesRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ScVmmVirtualMachineVirtualMachinesRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ScVmmVirtualMachineResource(Client, ScVmmVirtualMachineData.DeserializeScVmmVirtualMachineData(e)), ScVmmVirtualMachineVirtualMachinesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetScVmmVirtualMachines", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -366,37 +168,9 @@ namespace Azure.ResourceManager.ArcScVmm
         /// <returns> A collection of <see cref="ScVmmVirtualMachineResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ScVmmVirtualMachineResource> GetScVmmVirtualMachines(CancellationToken cancellationToken = default)
         {
-            Page<ScVmmVirtualMachineResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = ScVmmVirtualMachineVirtualMachinesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetScVmmVirtualMachines");
-                scope.Start();
-                try
-                {
-                    var response = ScVmmVirtualMachineVirtualMachinesRestClient.ListBySubscription(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ScVmmVirtualMachineResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<ScVmmVirtualMachineResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = ScVmmVirtualMachineVirtualMachinesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetScVmmVirtualMachines");
-                scope.Start();
-                try
-                {
-                    var response = ScVmmVirtualMachineVirtualMachinesRestClient.ListBySubscriptionNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ScVmmVirtualMachineResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => ScVmmVirtualMachineVirtualMachinesRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ScVmmVirtualMachineVirtualMachinesRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ScVmmVirtualMachineResource(Client, ScVmmVirtualMachineData.DeserializeScVmmVirtualMachineData(e)), ScVmmVirtualMachineVirtualMachinesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetScVmmVirtualMachines", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -408,37 +182,9 @@ namespace Azure.ResourceManager.ArcScVmm
         /// <returns> An async collection of <see cref="ScVmmVirtualMachineTemplateResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ScVmmVirtualMachineTemplateResource> GetScVmmVirtualMachineTemplatesAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<ScVmmVirtualMachineTemplateResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = ScVmmVirtualMachineTemplateVirtualMachineTemplatesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetScVmmVirtualMachineTemplates");
-                scope.Start();
-                try
-                {
-                    var response = await ScVmmVirtualMachineTemplateVirtualMachineTemplatesRestClient.ListBySubscriptionAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ScVmmVirtualMachineTemplateResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<ScVmmVirtualMachineTemplateResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = ScVmmVirtualMachineTemplateVirtualMachineTemplatesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetScVmmVirtualMachineTemplates");
-                scope.Start();
-                try
-                {
-                    var response = await ScVmmVirtualMachineTemplateVirtualMachineTemplatesRestClient.ListBySubscriptionNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ScVmmVirtualMachineTemplateResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => ScVmmVirtualMachineTemplateVirtualMachineTemplatesRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ScVmmVirtualMachineTemplateVirtualMachineTemplatesRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ScVmmVirtualMachineTemplateResource(Client, ScVmmVirtualMachineTemplateData.DeserializeScVmmVirtualMachineTemplateData(e)), ScVmmVirtualMachineTemplateVirtualMachineTemplatesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetScVmmVirtualMachineTemplates", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -450,37 +196,9 @@ namespace Azure.ResourceManager.ArcScVmm
         /// <returns> A collection of <see cref="ScVmmVirtualMachineTemplateResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ScVmmVirtualMachineTemplateResource> GetScVmmVirtualMachineTemplates(CancellationToken cancellationToken = default)
         {
-            Page<ScVmmVirtualMachineTemplateResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = ScVmmVirtualMachineTemplateVirtualMachineTemplatesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetScVmmVirtualMachineTemplates");
-                scope.Start();
-                try
-                {
-                    var response = ScVmmVirtualMachineTemplateVirtualMachineTemplatesRestClient.ListBySubscription(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ScVmmVirtualMachineTemplateResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<ScVmmVirtualMachineTemplateResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = ScVmmVirtualMachineTemplateVirtualMachineTemplatesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetScVmmVirtualMachineTemplates");
-                scope.Start();
-                try
-                {
-                    var response = ScVmmVirtualMachineTemplateVirtualMachineTemplatesRestClient.ListBySubscriptionNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ScVmmVirtualMachineTemplateResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => ScVmmVirtualMachineTemplateVirtualMachineTemplatesRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ScVmmVirtualMachineTemplateVirtualMachineTemplatesRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ScVmmVirtualMachineTemplateResource(Client, ScVmmVirtualMachineTemplateData.DeserializeScVmmVirtualMachineTemplateData(e)), ScVmmVirtualMachineTemplateVirtualMachineTemplatesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetScVmmVirtualMachineTemplates", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -492,37 +210,9 @@ namespace Azure.ResourceManager.ArcScVmm
         /// <returns> An async collection of <see cref="ScVmmAvailabilitySetResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ScVmmAvailabilitySetResource> GetScVmmAvailabilitySetsAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<ScVmmAvailabilitySetResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = ScVmmAvailabilitySetAvailabilitySetsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetScVmmAvailabilitySets");
-                scope.Start();
-                try
-                {
-                    var response = await ScVmmAvailabilitySetAvailabilitySetsRestClient.ListBySubscriptionAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ScVmmAvailabilitySetResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<ScVmmAvailabilitySetResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = ScVmmAvailabilitySetAvailabilitySetsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetScVmmAvailabilitySets");
-                scope.Start();
-                try
-                {
-                    var response = await ScVmmAvailabilitySetAvailabilitySetsRestClient.ListBySubscriptionNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ScVmmAvailabilitySetResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => ScVmmAvailabilitySetAvailabilitySetsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ScVmmAvailabilitySetAvailabilitySetsRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ScVmmAvailabilitySetResource(Client, ScVmmAvailabilitySetData.DeserializeScVmmAvailabilitySetData(e)), ScVmmAvailabilitySetAvailabilitySetsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetScVmmAvailabilitySets", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -534,37 +224,9 @@ namespace Azure.ResourceManager.ArcScVmm
         /// <returns> A collection of <see cref="ScVmmAvailabilitySetResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ScVmmAvailabilitySetResource> GetScVmmAvailabilitySets(CancellationToken cancellationToken = default)
         {
-            Page<ScVmmAvailabilitySetResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = ScVmmAvailabilitySetAvailabilitySetsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetScVmmAvailabilitySets");
-                scope.Start();
-                try
-                {
-                    var response = ScVmmAvailabilitySetAvailabilitySetsRestClient.ListBySubscription(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ScVmmAvailabilitySetResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<ScVmmAvailabilitySetResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = ScVmmAvailabilitySetAvailabilitySetsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetScVmmAvailabilitySets");
-                scope.Start();
-                try
-                {
-                    var response = ScVmmAvailabilitySetAvailabilitySetsRestClient.ListBySubscriptionNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ScVmmAvailabilitySetResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => ScVmmAvailabilitySetAvailabilitySetsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ScVmmAvailabilitySetAvailabilitySetsRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ScVmmAvailabilitySetResource(Client, ScVmmAvailabilitySetData.DeserializeScVmmAvailabilitySetData(e)), ScVmmAvailabilitySetAvailabilitySetsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetScVmmAvailabilitySets", "value", "nextLink", cancellationToken);
         }
     }
 }

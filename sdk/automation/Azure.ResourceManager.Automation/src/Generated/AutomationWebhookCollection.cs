@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -188,37 +187,9 @@ namespace Azure.ResourceManager.Automation
         /// <returns> An async collection of <see cref="AutomationWebhookResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<AutomationWebhookResource> GetAllAsync(string filter = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<AutomationWebhookResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _automationWebhookWebhookClientDiagnostics.CreateScope("AutomationWebhookCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _automationWebhookWebhookRestClient.ListByAutomationAccountAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new AutomationWebhookResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<AutomationWebhookResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _automationWebhookWebhookClientDiagnostics.CreateScope("AutomationWebhookCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _automationWebhookWebhookRestClient.ListByAutomationAccountNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new AutomationWebhookResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _automationWebhookWebhookRestClient.CreateListByAutomationAccountRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _automationWebhookWebhookRestClient.CreateListByAutomationAccountNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new AutomationWebhookResource(Client, AutomationWebhookData.DeserializeAutomationWebhookData(e)), _automationWebhookWebhookClientDiagnostics, Pipeline, "AutomationWebhookCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -231,37 +202,9 @@ namespace Azure.ResourceManager.Automation
         /// <returns> A collection of <see cref="AutomationWebhookResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<AutomationWebhookResource> GetAll(string filter = null, CancellationToken cancellationToken = default)
         {
-            Page<AutomationWebhookResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _automationWebhookWebhookClientDiagnostics.CreateScope("AutomationWebhookCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _automationWebhookWebhookRestClient.ListByAutomationAccount(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new AutomationWebhookResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<AutomationWebhookResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _automationWebhookWebhookClientDiagnostics.CreateScope("AutomationWebhookCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _automationWebhookWebhookRestClient.ListByAutomationAccountNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new AutomationWebhookResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _automationWebhookWebhookRestClient.CreateListByAutomationAccountRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _automationWebhookWebhookRestClient.CreateListByAutomationAccountNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new AutomationWebhookResource(Client, AutomationWebhookData.DeserializeAutomationWebhookData(e)), _automationWebhookWebhookClientDiagnostics, Pipeline, "AutomationWebhookCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

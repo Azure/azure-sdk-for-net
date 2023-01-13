@@ -342,7 +342,7 @@ var data = new {
 
 var operation = await client.CreateSatelliteDataIngestionJobAsync(WaitUntil.Completed, "<jobId>", RequestContent.Create(data));
 
-BinaryData data = await operation.WaitForCompletionAsync();
+BinaryData data = operation.Value;
 JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
 Console.WriteLine(result.GetProperty("farmerId").ToString());
 Console.WriteLine(result.GetProperty("boundaryId").ToString());
@@ -382,7 +382,7 @@ var data = new {
 
 var operation = await client.CreateSatelliteDataIngestionJobAsync(WaitUntil.Completed, "<jobId>", RequestContent.Create(data));
 
-BinaryData data = await operation.WaitForCompletionAsync();
+BinaryData data = operation.Value;
 JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
 Console.WriteLine(result.GetProperty("farmerId").ToString());
 Console.WriteLine(result.GetProperty("boundaryId").ToString());
@@ -494,7 +494,7 @@ var data = new {
 
 var operation = client.CreateSatelliteDataIngestionJob(WaitUntil.Completed, "<jobId>", RequestContent.Create(data));
 
-BinaryData data = operation.WaitForCompletion();
+BinaryData data = operation.Value;
 JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
 Console.WriteLine(result.GetProperty("farmerId").ToString());
 Console.WriteLine(result.GetProperty("boundaryId").ToString());
@@ -534,7 +534,7 @@ var data = new {
 
 var operation = client.CreateSatelliteDataIngestionJob(WaitUntil.Completed, "<jobId>", RequestContent.Create(data));
 
-BinaryData data = operation.WaitForCompletion();
+BinaryData data = operation.Value;
 JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
 Console.WriteLine(result.GetProperty("farmerId").ToString());
 Console.WriteLine(result.GetProperty("boundaryId").ToString());

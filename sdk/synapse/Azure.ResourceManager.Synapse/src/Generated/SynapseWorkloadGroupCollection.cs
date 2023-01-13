@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -186,37 +185,9 @@ namespace Azure.ResourceManager.Synapse
         /// <returns> An async collection of <see cref="SynapseWorkloadGroupResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SynapseWorkloadGroupResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<SynapseWorkloadGroupResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _synapseWorkloadGroupSqlPoolWorkloadGroupClientDiagnostics.CreateScope("SynapseWorkloadGroupCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _synapseWorkloadGroupSqlPoolWorkloadGroupRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new SynapseWorkloadGroupResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<SynapseWorkloadGroupResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _synapseWorkloadGroupSqlPoolWorkloadGroupClientDiagnostics.CreateScope("SynapseWorkloadGroupCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _synapseWorkloadGroupSqlPoolWorkloadGroupRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new SynapseWorkloadGroupResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _synapseWorkloadGroupSqlPoolWorkloadGroupRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _synapseWorkloadGroupSqlPoolWorkloadGroupRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SynapseWorkloadGroupResource(Client, SynapseWorkloadGroupData.DeserializeSynapseWorkloadGroupData(e)), _synapseWorkloadGroupSqlPoolWorkloadGroupClientDiagnostics, Pipeline, "SynapseWorkloadGroupCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -228,37 +199,9 @@ namespace Azure.ResourceManager.Synapse
         /// <returns> A collection of <see cref="SynapseWorkloadGroupResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SynapseWorkloadGroupResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<SynapseWorkloadGroupResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _synapseWorkloadGroupSqlPoolWorkloadGroupClientDiagnostics.CreateScope("SynapseWorkloadGroupCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _synapseWorkloadGroupSqlPoolWorkloadGroupRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new SynapseWorkloadGroupResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<SynapseWorkloadGroupResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _synapseWorkloadGroupSqlPoolWorkloadGroupClientDiagnostics.CreateScope("SynapseWorkloadGroupCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _synapseWorkloadGroupSqlPoolWorkloadGroupRestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new SynapseWorkloadGroupResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _synapseWorkloadGroupSqlPoolWorkloadGroupRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _synapseWorkloadGroupSqlPoolWorkloadGroupRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SynapseWorkloadGroupResource(Client, SynapseWorkloadGroupData.DeserializeSynapseWorkloadGroupData(e)), _synapseWorkloadGroupSqlPoolWorkloadGroupClientDiagnostics, Pipeline, "SynapseWorkloadGroupCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

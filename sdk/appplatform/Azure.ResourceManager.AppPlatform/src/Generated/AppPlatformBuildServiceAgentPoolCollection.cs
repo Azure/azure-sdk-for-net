@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -186,37 +185,9 @@ namespace Azure.ResourceManager.AppPlatform
         /// <returns> An async collection of <see cref="AppPlatformBuildServiceAgentPoolResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<AppPlatformBuildServiceAgentPoolResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<AppPlatformBuildServiceAgentPoolResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _appPlatformBuildServiceAgentPoolBuildServiceAgentPoolClientDiagnostics.CreateScope("AppPlatformBuildServiceAgentPoolCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _appPlatformBuildServiceAgentPoolBuildServiceAgentPoolRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new AppPlatformBuildServiceAgentPoolResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<AppPlatformBuildServiceAgentPoolResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _appPlatformBuildServiceAgentPoolBuildServiceAgentPoolClientDiagnostics.CreateScope("AppPlatformBuildServiceAgentPoolCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _appPlatformBuildServiceAgentPoolBuildServiceAgentPoolRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new AppPlatformBuildServiceAgentPoolResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _appPlatformBuildServiceAgentPoolBuildServiceAgentPoolRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _appPlatformBuildServiceAgentPoolBuildServiceAgentPoolRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new AppPlatformBuildServiceAgentPoolResource(Client, AppPlatformBuildServiceAgentPoolData.DeserializeAppPlatformBuildServiceAgentPoolData(e)), _appPlatformBuildServiceAgentPoolBuildServiceAgentPoolClientDiagnostics, Pipeline, "AppPlatformBuildServiceAgentPoolCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -228,37 +199,9 @@ namespace Azure.ResourceManager.AppPlatform
         /// <returns> A collection of <see cref="AppPlatformBuildServiceAgentPoolResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<AppPlatformBuildServiceAgentPoolResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<AppPlatformBuildServiceAgentPoolResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _appPlatformBuildServiceAgentPoolBuildServiceAgentPoolClientDiagnostics.CreateScope("AppPlatformBuildServiceAgentPoolCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _appPlatformBuildServiceAgentPoolBuildServiceAgentPoolRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new AppPlatformBuildServiceAgentPoolResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<AppPlatformBuildServiceAgentPoolResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _appPlatformBuildServiceAgentPoolBuildServiceAgentPoolClientDiagnostics.CreateScope("AppPlatformBuildServiceAgentPoolCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _appPlatformBuildServiceAgentPoolBuildServiceAgentPoolRestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new AppPlatformBuildServiceAgentPoolResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _appPlatformBuildServiceAgentPoolBuildServiceAgentPoolRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _appPlatformBuildServiceAgentPoolBuildServiceAgentPoolRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new AppPlatformBuildServiceAgentPoolResource(Client, AppPlatformBuildServiceAgentPoolData.DeserializeAppPlatformBuildServiceAgentPoolData(e)), _appPlatformBuildServiceAgentPoolBuildServiceAgentPoolClientDiagnostics, Pipeline, "AppPlatformBuildServiceAgentPoolCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

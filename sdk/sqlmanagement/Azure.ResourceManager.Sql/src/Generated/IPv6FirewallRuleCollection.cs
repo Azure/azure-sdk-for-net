@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -186,37 +185,9 @@ namespace Azure.ResourceManager.Sql
         /// <returns> An async collection of <see cref="IPv6FirewallRuleResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<IPv6FirewallRuleResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<IPv6FirewallRuleResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _iPv6FirewallRuleClientDiagnostics.CreateScope("IPv6FirewallRuleCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _iPv6FirewallRuleRestClient.ListByServerAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new IPv6FirewallRuleResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<IPv6FirewallRuleResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _iPv6FirewallRuleClientDiagnostics.CreateScope("IPv6FirewallRuleCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _iPv6FirewallRuleRestClient.ListByServerNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new IPv6FirewallRuleResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _iPv6FirewallRuleRestClient.CreateListByServerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _iPv6FirewallRuleRestClient.CreateListByServerNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new IPv6FirewallRuleResource(Client, IPv6FirewallRuleData.DeserializeIPv6FirewallRuleData(e)), _iPv6FirewallRuleClientDiagnostics, Pipeline, "IPv6FirewallRuleCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -228,37 +199,9 @@ namespace Azure.ResourceManager.Sql
         /// <returns> A collection of <see cref="IPv6FirewallRuleResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<IPv6FirewallRuleResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<IPv6FirewallRuleResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _iPv6FirewallRuleClientDiagnostics.CreateScope("IPv6FirewallRuleCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _iPv6FirewallRuleRestClient.ListByServer(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new IPv6FirewallRuleResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<IPv6FirewallRuleResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _iPv6FirewallRuleClientDiagnostics.CreateScope("IPv6FirewallRuleCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _iPv6FirewallRuleRestClient.ListByServerNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new IPv6FirewallRuleResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _iPv6FirewallRuleRestClient.CreateListByServerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _iPv6FirewallRuleRestClient.CreateListByServerNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new IPv6FirewallRuleResource(Client, IPv6FirewallRuleData.DeserializeIPv6FirewallRuleData(e)), _iPv6FirewallRuleClientDiagnostics, Pipeline, "IPv6FirewallRuleCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

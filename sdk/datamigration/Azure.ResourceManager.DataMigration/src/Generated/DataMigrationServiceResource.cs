@@ -484,37 +484,9 @@ namespace Azure.ResourceManager.DataMigration
         /// <returns> An async collection of <see cref="AvailableServiceSku" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<AvailableServiceSku> GetSkusAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<AvailableServiceSku>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _dataMigrationServiceServicesClientDiagnostics.CreateScope("DataMigrationServiceResource.GetSkus");
-                scope.Start();
-                try
-                {
-                    var response = await _dataMigrationServiceServicesRestClient.ListSkusAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<AvailableServiceSku>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _dataMigrationServiceServicesClientDiagnostics.CreateScope("DataMigrationServiceResource.GetSkus");
-                scope.Start();
-                try
-                {
-                    var response = await _dataMigrationServiceServicesRestClient.ListSkusNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _dataMigrationServiceServicesRestClient.CreateListSkusRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _dataMigrationServiceServicesRestClient.CreateListSkusNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, AvailableServiceSku.DeserializeAvailableServiceSku, _dataMigrationServiceServicesClientDiagnostics, Pipeline, "DataMigrationServiceResource.GetSkus", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -526,37 +498,9 @@ namespace Azure.ResourceManager.DataMigration
         /// <returns> A collection of <see cref="AvailableServiceSku" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<AvailableServiceSku> GetSkus(CancellationToken cancellationToken = default)
         {
-            Page<AvailableServiceSku> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _dataMigrationServiceServicesClientDiagnostics.CreateScope("DataMigrationServiceResource.GetSkus");
-                scope.Start();
-                try
-                {
-                    var response = _dataMigrationServiceServicesRestClient.ListSkus(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<AvailableServiceSku> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _dataMigrationServiceServicesClientDiagnostics.CreateScope("DataMigrationServiceResource.GetSkus");
-                scope.Start();
-                try
-                {
-                    var response = _dataMigrationServiceServicesRestClient.ListSkusNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _dataMigrationServiceServicesRestClient.CreateListSkusRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _dataMigrationServiceServicesRestClient.CreateListSkusNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, AvailableServiceSku.DeserializeAvailableServiceSku, _dataMigrationServiceServicesClientDiagnostics, Pipeline, "DataMigrationServiceResource.GetSkus", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
