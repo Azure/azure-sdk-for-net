@@ -40,11 +40,14 @@ namespace Azure.OpenAI.Inference.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
+                        logprobs = null;
                         continue;
                     }
-                    logprobs = CompletionsLogProbsModel.DeserializeCompletionsLogProbsModel(property.Value);
-                    continue;
+                    else
+                    {
+                        logprobs = CompletionsLogProbsModel.DeserializeCompletionsLogProbsModel(property.Value);
+                        continue;
+                    }    
                 }
                 if (property.NameEquals("finishReason"))
                 {

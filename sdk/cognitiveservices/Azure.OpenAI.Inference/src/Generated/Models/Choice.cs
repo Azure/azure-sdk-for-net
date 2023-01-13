@@ -24,7 +24,7 @@ namespace Azure.OpenAI.Inference.Models
         {
             Text = text;
             Index = index;
-            Logprobs = logprobs;
+            Logprobs = logprobs ?? null;
             FinishReason = finishReason;
         }
 

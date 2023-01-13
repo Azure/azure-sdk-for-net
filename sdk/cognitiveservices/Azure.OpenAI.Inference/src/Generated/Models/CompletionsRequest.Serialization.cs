@@ -21,12 +21,7 @@ namespace Azure.OpenAI.Inference.Models
                 writer.WriteStartArray();
                 foreach (var item in Prompt)
                 {
-                    writer.WriteStartArray();
-                    foreach (var item0 in item)
-                    {
-                        writer.WriteStringValue(item0);
-                    }
-                    writer.WriteEndArray();
+                    writer.WriteStringValue(item);
                 }
                 writer.WriteEndArray();
             }
@@ -68,14 +63,17 @@ namespace Azure.OpenAI.Inference.Models
             }
             if (Optional.IsCollectionDefined(Logit_bias))
             {
-                writer.WritePropertyName("logit_bias");
-                writer.WriteStartObject();
-                foreach (var item in Logit_bias)
+                if (Logit_bias != null)
                 {
-                    writer.WritePropertyName(item.Key);
-                    writer.WriteNumberValue(item.Value);
+                    writer.WritePropertyName("logit_bias");
+                    writer.WriteStartObject();
+                    foreach (var item in Logit_bias)
+                    {
+                        writer.WritePropertyName(item.Key);
+                        writer.WriteNumberValue(item.Value);
+                    }
+                    writer.WriteEndObject();
                 }
-                writer.WriteEndObject();
             }
             if (Optional.IsDefined(User))
             {
@@ -137,13 +135,16 @@ namespace Azure.OpenAI.Inference.Models
             }
             if (Optional.IsCollectionDefined(Stop))
             {
-                writer.WritePropertyName("stop");
-                writer.WriteStartArray();
-                foreach (var item in Stop)
+                if (Stop != null)
                 {
-                    writer.WriteStringValue(item);
+                    writer.WritePropertyName("stop");
+                    writer.WriteStartArray();
+                    foreach (var item in Stop)
+                    {
+                        writer.WriteStringValue(item);
+                    }
+                    writer.WriteEndArray();
                 }
-                writer.WriteEndArray();
             }
             if (Optional.IsDefined(Completion_config))
             {

@@ -16,13 +16,13 @@ namespace Azure.OpenAI.Inference.Models
         /// <summary> Initializes a new instance of CompletionsRequest. </summary>
         public CompletionsRequest()
         {
-            Prompt = new ChangeTrackingList<IList<string>>();
+            Prompt = new List<string>();
             Logit_bias = new ChangeTrackingDictionary<string, int>();
             Stop = new ChangeTrackingList<string>();
         }
 
         /// <summary> Gets the prompt. </summary>
-        public IList<IList<string>> Prompt { get; }
+        public IList<string> Prompt { get; }
         /// <summary> Gets or sets the max tokens. </summary>
         public int? Max_tokens { get; set; }
         /// <summary> Gets or sets the temperature. </summary>

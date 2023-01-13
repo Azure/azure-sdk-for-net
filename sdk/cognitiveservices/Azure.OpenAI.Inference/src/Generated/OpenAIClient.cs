@@ -19,7 +19,7 @@ namespace Azure.OpenAI.Inference
     /// <summary> Azure OpenAI APIs for completions and search. </summary>
     public partial class OpenAIClient
     {
-        private const string AuthorizationHeader = "apiKey";
+        private const string AuthorizationHeader = "api-key";
         private readonly AzureKeyCredential _keyCredential;
         private static readonly string[] AuthorizationScopes = new string[] { };
         private readonly TokenCredential _tokenCredential;
