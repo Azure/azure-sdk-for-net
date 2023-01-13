@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -186,22 +185,8 @@ namespace Azure.ResourceManager.Media
         /// <returns> An async collection of <see cref="MediaAssetTrackResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<MediaAssetTrackResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<MediaAssetTrackResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _mediaAssetTrackTracksClientDiagnostics.CreateScope("MediaAssetTrackCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _mediaAssetTrackTracksRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new MediaAssetTrackResource(Client, value)), null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _mediaAssetTrackTracksRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new MediaAssetTrackResource(Client, MediaAssetTrackData.DeserializeMediaAssetTrackData(e)), _mediaAssetTrackTracksClientDiagnostics, Pipeline, "MediaAssetTrackCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -213,22 +198,8 @@ namespace Azure.ResourceManager.Media
         /// <returns> A collection of <see cref="MediaAssetTrackResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<MediaAssetTrackResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<MediaAssetTrackResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _mediaAssetTrackTracksClientDiagnostics.CreateScope("MediaAssetTrackCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _mediaAssetTrackTracksRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new MediaAssetTrackResource(Client, value)), null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _mediaAssetTrackTracksRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new MediaAssetTrackResource(Client, MediaAssetTrackData.DeserializeMediaAssetTrackData(e)), _mediaAssetTrackTracksClientDiagnostics, Pipeline, "MediaAssetTrackCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>

@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -186,37 +185,9 @@ namespace Azure.ResourceManager.Network
         /// <returns> An async collection of <see cref="BackendAddressPoolResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<BackendAddressPoolResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<BackendAddressPoolResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _backendAddressPoolLoadBalancerBackendAddressPoolsClientDiagnostics.CreateScope("BackendAddressPoolCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _backendAddressPoolLoadBalancerBackendAddressPoolsRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new BackendAddressPoolResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<BackendAddressPoolResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _backendAddressPoolLoadBalancerBackendAddressPoolsClientDiagnostics.CreateScope("BackendAddressPoolCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _backendAddressPoolLoadBalancerBackendAddressPoolsRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new BackendAddressPoolResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _backendAddressPoolLoadBalancerBackendAddressPoolsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _backendAddressPoolLoadBalancerBackendAddressPoolsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new BackendAddressPoolResource(Client, BackendAddressPoolData.DeserializeBackendAddressPoolData(e)), _backendAddressPoolLoadBalancerBackendAddressPoolsClientDiagnostics, Pipeline, "BackendAddressPoolCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -228,37 +199,9 @@ namespace Azure.ResourceManager.Network
         /// <returns> A collection of <see cref="BackendAddressPoolResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<BackendAddressPoolResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<BackendAddressPoolResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _backendAddressPoolLoadBalancerBackendAddressPoolsClientDiagnostics.CreateScope("BackendAddressPoolCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _backendAddressPoolLoadBalancerBackendAddressPoolsRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new BackendAddressPoolResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<BackendAddressPoolResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _backendAddressPoolLoadBalancerBackendAddressPoolsClientDiagnostics.CreateScope("BackendAddressPoolCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _backendAddressPoolLoadBalancerBackendAddressPoolsRestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new BackendAddressPoolResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _backendAddressPoolLoadBalancerBackendAddressPoolsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _backendAddressPoolLoadBalancerBackendAddressPoolsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new BackendAddressPoolResource(Client, BackendAddressPoolData.DeserializeBackendAddressPoolData(e)), _backendAddressPoolLoadBalancerBackendAddressPoolsClientDiagnostics, Pipeline, "BackendAddressPoolCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

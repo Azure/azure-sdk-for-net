@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -174,22 +173,8 @@ namespace Azure.ResourceManager.Marketplace
         /// <returns> An async collection of <see cref="PrivateStoreCollectionInfoResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<PrivateStoreCollectionInfoResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<PrivateStoreCollectionInfoResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _privateStoreCollectionInfoPrivateStoreCollectionClientDiagnostics.CreateScope("PrivateStoreCollectionInfoCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _privateStoreCollectionInfoPrivateStoreCollectionRestClient.ListAsync(Guid.Parse(Id.Name), cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new PrivateStoreCollectionInfoResource(Client, value)), null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _privateStoreCollectionInfoPrivateStoreCollectionRestClient.CreateListRequest(Guid.Parse(Id.Name));
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new PrivateStoreCollectionInfoResource(Client, PrivateStoreCollectionInfoData.DeserializePrivateStoreCollectionInfoData(e)), _privateStoreCollectionInfoPrivateStoreCollectionClientDiagnostics, Pipeline, "PrivateStoreCollectionInfoCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -201,22 +186,8 @@ namespace Azure.ResourceManager.Marketplace
         /// <returns> A collection of <see cref="PrivateStoreCollectionInfoResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<PrivateStoreCollectionInfoResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<PrivateStoreCollectionInfoResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _privateStoreCollectionInfoPrivateStoreCollectionClientDiagnostics.CreateScope("PrivateStoreCollectionInfoCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _privateStoreCollectionInfoPrivateStoreCollectionRestClient.List(Guid.Parse(Id.Name), cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new PrivateStoreCollectionInfoResource(Client, value)), null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _privateStoreCollectionInfoPrivateStoreCollectionRestClient.CreateListRequest(Guid.Parse(Id.Name));
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new PrivateStoreCollectionInfoResource(Client, PrivateStoreCollectionInfoData.DeserializePrivateStoreCollectionInfoData(e)), _privateStoreCollectionInfoPrivateStoreCollectionClientDiagnostics, Pipeline, "PrivateStoreCollectionInfoCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>

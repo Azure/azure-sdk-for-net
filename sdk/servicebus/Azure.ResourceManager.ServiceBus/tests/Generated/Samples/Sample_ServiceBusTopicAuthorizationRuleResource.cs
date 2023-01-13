@@ -11,9 +11,10 @@ using Azure;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager;
+using Azure.ResourceManager.ServiceBus;
 using Azure.ResourceManager.ServiceBus.Models;
 
-namespace Azure.ResourceManager.ServiceBus
+namespace Azure.ResourceManager.ServiceBus.Samples
 {
     public partial class Sample_ServiceBusTopicAuthorizationRuleResource
     {
@@ -22,11 +23,13 @@ namespace Azure.ResourceManager.ServiceBus
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Update_TopicAuthorizationRuleCreate()
         {
-            // Generated from example definition: specification/servicebus/resource-manager/Microsoft.ServiceBus/stable/2021-11-01/examples/Topics/SBTopicAuthorizationRuleCreate.json
+            // Generated from example definition: specification/servicebus/resource-manager/Microsoft.ServiceBus/preview/2022-10-01-preview/examples/Topics/SBTopicAuthorizationRuleCreate.json
             // this example is just showing the usage of "TopicAuthorizationRules_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this ServiceBusTopicAuthorizationRuleResource created on azure
             // for more information of creating ServiceBusTopicAuthorizationRuleResource, please refer to the document of ServiceBusTopicAuthorizationRuleResource
@@ -61,11 +64,13 @@ ServiceBusAccessRight.Listen,ServiceBusAccessRight.Send
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_TopicAuthorizationRuleGet()
         {
-            // Generated from example definition: specification/servicebus/resource-manager/Microsoft.ServiceBus/stable/2021-11-01/examples/Topics/SBTopicAuthorizationRuleGet.json
+            // Generated from example definition: specification/servicebus/resource-manager/Microsoft.ServiceBus/preview/2022-10-01-preview/examples/Topics/SBTopicAuthorizationRuleGet.json
             // this example is just showing the usage of "TopicAuthorizationRules_Get" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this ServiceBusTopicAuthorizationRuleResource created on azure
             // for more information of creating ServiceBusTopicAuthorizationRuleResource, please refer to the document of ServiceBusTopicAuthorizationRuleResource
@@ -92,11 +97,13 @@ ServiceBusAccessRight.Listen,ServiceBusAccessRight.Send
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Delete_TopicAuthorizationRuleDelete()
         {
-            // Generated from example definition: specification/servicebus/resource-manager/Microsoft.ServiceBus/stable/2021-11-01/examples/Topics/SBTopicAuthorizationRuleDelete.json
+            // Generated from example definition: specification/servicebus/resource-manager/Microsoft.ServiceBus/preview/2022-10-01-preview/examples/Topics/SBTopicAuthorizationRuleDelete.json
             // this example is just showing the usage of "TopicAuthorizationRules_Delete" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this ServiceBusTopicAuthorizationRuleResource created on azure
             // for more information of creating ServiceBusTopicAuthorizationRuleResource, please refer to the document of ServiceBusTopicAuthorizationRuleResource
@@ -119,11 +126,13 @@ ServiceBusAccessRight.Listen,ServiceBusAccessRight.Send
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetKeys_TopicAuthorizationRuleListKey()
         {
-            // Generated from example definition: specification/servicebus/resource-manager/Microsoft.ServiceBus/stable/2021-11-01/examples/Topics/SBTopicAuthorizationRuleListKey.json
+            // Generated from example definition: specification/servicebus/resource-manager/Microsoft.ServiceBus/preview/2022-10-01-preview/examples/Topics/SBTopicAuthorizationRuleListKey.json
             // this example is just showing the usage of "TopicAuthorizationRules_ListKeys" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this ServiceBusTopicAuthorizationRuleResource created on azure
             // for more information of creating ServiceBusTopicAuthorizationRuleResource, please refer to the document of ServiceBusTopicAuthorizationRuleResource
@@ -146,11 +155,13 @@ ServiceBusAccessRight.Listen,ServiceBusAccessRight.Send
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task RegenerateKeys_TopicAuthorizationRuleRegenerateKey()
         {
-            // Generated from example definition: specification/servicebus/resource-manager/Microsoft.ServiceBus/stable/2021-11-01/examples/Topics/SBTopicAuthorizationRuleRegenerateKey.json
+            // Generated from example definition: specification/servicebus/resource-manager/Microsoft.ServiceBus/preview/2022-10-01-preview/examples/Topics/SBTopicAuthorizationRuleRegenerateKey.json
             // this example is just showing the usage of "TopicAuthorizationRules_RegenerateKeys" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this ServiceBusTopicAuthorizationRuleResource created on azure
             // for more information of creating ServiceBusTopicAuthorizationRuleResource, please refer to the document of ServiceBusTopicAuthorizationRuleResource

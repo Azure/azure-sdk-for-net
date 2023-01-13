@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -124,37 +123,9 @@ namespace Azure.ResourceManager.Compute
         /// <returns> An async collection of <see cref="CloudServiceOSVersionResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<CloudServiceOSVersionResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<CloudServiceOSVersionResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _cloudServiceOSVersionCloudServiceOperatingSystemsClientDiagnostics.CreateScope("CloudServiceOSVersionCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _cloudServiceOSVersionCloudServiceOperatingSystemsRestClient.ListOSVersionsAsync(Id.SubscriptionId, new AzureLocation(_location), cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new CloudServiceOSVersionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<CloudServiceOSVersionResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _cloudServiceOSVersionCloudServiceOperatingSystemsClientDiagnostics.CreateScope("CloudServiceOSVersionCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _cloudServiceOSVersionCloudServiceOperatingSystemsRestClient.ListOSVersionsNextPageAsync(nextLink, Id.SubscriptionId, new AzureLocation(_location), cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new CloudServiceOSVersionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _cloudServiceOSVersionCloudServiceOperatingSystemsRestClient.CreateListOSVersionsRequest(Id.SubscriptionId, new AzureLocation(_location));
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _cloudServiceOSVersionCloudServiceOperatingSystemsRestClient.CreateListOSVersionsNextPageRequest(nextLink, Id.SubscriptionId, new AzureLocation(_location));
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new CloudServiceOSVersionResource(Client, CloudServiceOSVersionData.DeserializeCloudServiceOSVersionData(e)), _cloudServiceOSVersionCloudServiceOperatingSystemsClientDiagnostics, Pipeline, "CloudServiceOSVersionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -166,37 +137,9 @@ namespace Azure.ResourceManager.Compute
         /// <returns> A collection of <see cref="CloudServiceOSVersionResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<CloudServiceOSVersionResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<CloudServiceOSVersionResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _cloudServiceOSVersionCloudServiceOperatingSystemsClientDiagnostics.CreateScope("CloudServiceOSVersionCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _cloudServiceOSVersionCloudServiceOperatingSystemsRestClient.ListOSVersions(Id.SubscriptionId, new AzureLocation(_location), cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new CloudServiceOSVersionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<CloudServiceOSVersionResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _cloudServiceOSVersionCloudServiceOperatingSystemsClientDiagnostics.CreateScope("CloudServiceOSVersionCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _cloudServiceOSVersionCloudServiceOperatingSystemsRestClient.ListOSVersionsNextPage(nextLink, Id.SubscriptionId, new AzureLocation(_location), cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new CloudServiceOSVersionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _cloudServiceOSVersionCloudServiceOperatingSystemsRestClient.CreateListOSVersionsRequest(Id.SubscriptionId, new AzureLocation(_location));
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _cloudServiceOSVersionCloudServiceOperatingSystemsRestClient.CreateListOSVersionsNextPageRequest(nextLink, Id.SubscriptionId, new AzureLocation(_location));
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new CloudServiceOSVersionResource(Client, CloudServiceOSVersionData.DeserializeCloudServiceOSVersionData(e)), _cloudServiceOSVersionCloudServiceOperatingSystemsClientDiagnostics, Pipeline, "CloudServiceOSVersionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

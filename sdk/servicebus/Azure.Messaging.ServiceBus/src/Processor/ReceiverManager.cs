@@ -123,6 +123,14 @@ namespace Azure.Messaging.ServiceBus
 
         public virtual Task CancelAsync() => Task.CompletedTask;
 
+        public virtual void UpdatePrefetchCount(int prefetchCount)
+        {
+            if (Receiver != null && Receiver.PrefetchCount != prefetchCount)
+            {
+                Receiver.PrefetchCount = prefetchCount;
+            }
+        }
+
         protected async Task ProcessOneMessageWithinScopeAsync(ServiceBusReceivedMessage message, string activityName, CancellationToken cancellationToken)
         {
             using DiagnosticScope scope = _scopeFactory.CreateScope(activityName, DiagnosticScope.ActivityKind.Consumer);

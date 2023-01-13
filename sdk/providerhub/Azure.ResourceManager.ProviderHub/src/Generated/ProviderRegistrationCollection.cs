@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -187,37 +186,9 @@ namespace Azure.ResourceManager.ProviderHub
         /// <returns> An async collection of <see cref="ProviderRegistrationResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ProviderRegistrationResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<ProviderRegistrationResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _providerRegistrationClientDiagnostics.CreateScope("ProviderRegistrationCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _providerRegistrationRestClient.ListAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ProviderRegistrationResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<ProviderRegistrationResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _providerRegistrationClientDiagnostics.CreateScope("ProviderRegistrationCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _providerRegistrationRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ProviderRegistrationResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _providerRegistrationRestClient.CreateListRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _providerRegistrationRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ProviderRegistrationResource(Client, ProviderRegistrationData.DeserializeProviderRegistrationData(e)), _providerRegistrationClientDiagnostics, Pipeline, "ProviderRegistrationCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -229,37 +200,9 @@ namespace Azure.ResourceManager.ProviderHub
         /// <returns> A collection of <see cref="ProviderRegistrationResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ProviderRegistrationResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<ProviderRegistrationResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _providerRegistrationClientDiagnostics.CreateScope("ProviderRegistrationCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _providerRegistrationRestClient.List(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ProviderRegistrationResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<ProviderRegistrationResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _providerRegistrationClientDiagnostics.CreateScope("ProviderRegistrationCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _providerRegistrationRestClient.ListNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ProviderRegistrationResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _providerRegistrationRestClient.CreateListRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _providerRegistrationRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ProviderRegistrationResource(Client, ProviderRegistrationData.DeserializeProviderRegistrationData(e)), _providerRegistrationClientDiagnostics, Pipeline, "ProviderRegistrationCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

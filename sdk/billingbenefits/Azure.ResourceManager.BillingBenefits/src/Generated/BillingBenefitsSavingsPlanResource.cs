@@ -202,37 +202,9 @@ namespace Azure.ResourceManager.BillingBenefits
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            async Task<Page<SavingsPlanValidateResult>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _billingBenefitsSavingsPlanSavingsPlanClientDiagnostics.CreateScope("BillingBenefitsSavingsPlanResource.ValidateUpdate");
-                scope.Start();
-                try
-                {
-                    var response = await _billingBenefitsSavingsPlanSavingsPlanRestClient.ValidateUpdateAsync(Id.Parent.Name, Id.Name, content, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Benefits, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<SavingsPlanValidateResult>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _billingBenefitsSavingsPlanSavingsPlanClientDiagnostics.CreateScope("BillingBenefitsSavingsPlanResource.ValidateUpdate");
-                scope.Start();
-                try
-                {
-                    var response = await _billingBenefitsSavingsPlanSavingsPlanRestClient.ValidateUpdateNextPageAsync(nextLink, Id.Parent.Name, Id.Name, content, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Benefits, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _billingBenefitsSavingsPlanSavingsPlanRestClient.CreateValidateUpdateRequest(Id.Parent.Name, Id.Name, content);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _billingBenefitsSavingsPlanSavingsPlanRestClient.CreateValidateUpdateNextPageRequest(nextLink, Id.Parent.Name, Id.Name, content);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, SavingsPlanValidateResult.DeserializeSavingsPlanValidateResult, _billingBenefitsSavingsPlanSavingsPlanClientDiagnostics, Pipeline, "BillingBenefitsSavingsPlanResource.ValidateUpdate", "benefits", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -248,37 +220,9 @@ namespace Azure.ResourceManager.BillingBenefits
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            Page<SavingsPlanValidateResult> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _billingBenefitsSavingsPlanSavingsPlanClientDiagnostics.CreateScope("BillingBenefitsSavingsPlanResource.ValidateUpdate");
-                scope.Start();
-                try
-                {
-                    var response = _billingBenefitsSavingsPlanSavingsPlanRestClient.ValidateUpdate(Id.Parent.Name, Id.Name, content, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Benefits, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<SavingsPlanValidateResult> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _billingBenefitsSavingsPlanSavingsPlanClientDiagnostics.CreateScope("BillingBenefitsSavingsPlanResource.ValidateUpdate");
-                scope.Start();
-                try
-                {
-                    var response = _billingBenefitsSavingsPlanSavingsPlanRestClient.ValidateUpdateNextPage(nextLink, Id.Parent.Name, Id.Name, content, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Benefits, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _billingBenefitsSavingsPlanSavingsPlanRestClient.CreateValidateUpdateRequest(Id.Parent.Name, Id.Name, content);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _billingBenefitsSavingsPlanSavingsPlanRestClient.CreateValidateUpdateNextPageRequest(nextLink, Id.Parent.Name, Id.Name, content);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, SavingsPlanValidateResult.DeserializeSavingsPlanValidateResult, _billingBenefitsSavingsPlanSavingsPlanClientDiagnostics, Pipeline, "BillingBenefitsSavingsPlanResource.ValidateUpdate", "benefits", "nextLink", cancellationToken);
         }
     }
 }
