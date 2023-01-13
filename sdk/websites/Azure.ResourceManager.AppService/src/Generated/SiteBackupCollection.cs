@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -120,37 +119,9 @@ namespace Azure.ResourceManager.AppService
         /// <returns> An async collection of <see cref="SiteBackupResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SiteBackupResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<SiteBackupResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _siteBackupWebAppsClientDiagnostics.CreateScope("SiteBackupCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _siteBackupWebAppsRestClient.ListBackupsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new SiteBackupResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<SiteBackupResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _siteBackupWebAppsClientDiagnostics.CreateScope("SiteBackupCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _siteBackupWebAppsRestClient.ListBackupsNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new SiteBackupResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _siteBackupWebAppsRestClient.CreateListBackupsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _siteBackupWebAppsRestClient.CreateListBackupsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SiteBackupResource(Client, WebAppBackupData.DeserializeWebAppBackupData(e)), _siteBackupWebAppsClientDiagnostics, Pipeline, "SiteBackupCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -162,37 +133,9 @@ namespace Azure.ResourceManager.AppService
         /// <returns> A collection of <see cref="SiteBackupResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SiteBackupResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<SiteBackupResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _siteBackupWebAppsClientDiagnostics.CreateScope("SiteBackupCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _siteBackupWebAppsRestClient.ListBackups(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new SiteBackupResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<SiteBackupResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _siteBackupWebAppsClientDiagnostics.CreateScope("SiteBackupCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _siteBackupWebAppsRestClient.ListBackupsNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new SiteBackupResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _siteBackupWebAppsRestClient.CreateListBackupsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _siteBackupWebAppsRestClient.CreateListBackupsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SiteBackupResource(Client, WebAppBackupData.DeserializeWebAppBackupData(e)), _siteBackupWebAppsClientDiagnostics, Pipeline, "SiteBackupCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

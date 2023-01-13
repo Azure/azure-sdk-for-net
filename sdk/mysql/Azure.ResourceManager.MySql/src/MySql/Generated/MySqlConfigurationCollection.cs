@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -186,22 +185,8 @@ namespace Azure.ResourceManager.MySql
         /// <returns> An async collection of <see cref="MySqlConfigurationResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<MySqlConfigurationResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<MySqlConfigurationResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _mySqlConfigurationConfigurationsClientDiagnostics.CreateScope("MySqlConfigurationCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _mySqlConfigurationConfigurationsRestClient.ListByServerAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Values.Select(value => new MySqlConfigurationResource(Client, value)), null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _mySqlConfigurationConfigurationsRestClient.CreateListByServerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new MySqlConfigurationResource(Client, MySqlConfigurationData.DeserializeMySqlConfigurationData(e)), _mySqlConfigurationConfigurationsClientDiagnostics, Pipeline, "MySqlConfigurationCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -213,22 +198,8 @@ namespace Azure.ResourceManager.MySql
         /// <returns> A collection of <see cref="MySqlConfigurationResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<MySqlConfigurationResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<MySqlConfigurationResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _mySqlConfigurationConfigurationsClientDiagnostics.CreateScope("MySqlConfigurationCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _mySqlConfigurationConfigurationsRestClient.ListByServer(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Values.Select(value => new MySqlConfigurationResource(Client, value)), null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _mySqlConfigurationConfigurationsRestClient.CreateListByServerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new MySqlConfigurationResource(Client, MySqlConfigurationData.DeserializeMySqlConfigurationData(e)), _mySqlConfigurationConfigurationsClientDiagnostics, Pipeline, "MySqlConfigurationCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>

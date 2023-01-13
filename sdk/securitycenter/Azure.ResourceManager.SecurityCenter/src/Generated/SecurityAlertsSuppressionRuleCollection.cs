@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -188,37 +187,9 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <returns> An async collection of <see cref="SecurityAlertsSuppressionRuleResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SecurityAlertsSuppressionRuleResource> GetAllAsync(string alertType = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<SecurityAlertsSuppressionRuleResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _securityAlertsSuppressionRuleAlertsSuppressionRulesClientDiagnostics.CreateScope("SecurityAlertsSuppressionRuleCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _securityAlertsSuppressionRuleAlertsSuppressionRulesRestClient.ListAsync(Id.SubscriptionId, alertType, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new SecurityAlertsSuppressionRuleResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<SecurityAlertsSuppressionRuleResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _securityAlertsSuppressionRuleAlertsSuppressionRulesClientDiagnostics.CreateScope("SecurityAlertsSuppressionRuleCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _securityAlertsSuppressionRuleAlertsSuppressionRulesRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, alertType, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new SecurityAlertsSuppressionRuleResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _securityAlertsSuppressionRuleAlertsSuppressionRulesRestClient.CreateListRequest(Id.SubscriptionId, alertType);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _securityAlertsSuppressionRuleAlertsSuppressionRulesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, alertType);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SecurityAlertsSuppressionRuleResource(Client, SecurityAlertsSuppressionRuleData.DeserializeSecurityAlertsSuppressionRuleData(e)), _securityAlertsSuppressionRuleAlertsSuppressionRulesClientDiagnostics, Pipeline, "SecurityAlertsSuppressionRuleCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -231,37 +202,9 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <returns> A collection of <see cref="SecurityAlertsSuppressionRuleResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SecurityAlertsSuppressionRuleResource> GetAll(string alertType = null, CancellationToken cancellationToken = default)
         {
-            Page<SecurityAlertsSuppressionRuleResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _securityAlertsSuppressionRuleAlertsSuppressionRulesClientDiagnostics.CreateScope("SecurityAlertsSuppressionRuleCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _securityAlertsSuppressionRuleAlertsSuppressionRulesRestClient.List(Id.SubscriptionId, alertType, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new SecurityAlertsSuppressionRuleResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<SecurityAlertsSuppressionRuleResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _securityAlertsSuppressionRuleAlertsSuppressionRulesClientDiagnostics.CreateScope("SecurityAlertsSuppressionRuleCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _securityAlertsSuppressionRuleAlertsSuppressionRulesRestClient.ListNextPage(nextLink, Id.SubscriptionId, alertType, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new SecurityAlertsSuppressionRuleResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _securityAlertsSuppressionRuleAlertsSuppressionRulesRestClient.CreateListRequest(Id.SubscriptionId, alertType);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _securityAlertsSuppressionRuleAlertsSuppressionRulesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, alertType);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SecurityAlertsSuppressionRuleResource(Client, SecurityAlertsSuppressionRuleData.DeserializeSecurityAlertsSuppressionRuleData(e)), _securityAlertsSuppressionRuleAlertsSuppressionRulesClientDiagnostics, Pipeline, "SecurityAlertsSuppressionRuleCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

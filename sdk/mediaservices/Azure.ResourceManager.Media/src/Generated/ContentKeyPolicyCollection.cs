@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -189,37 +188,9 @@ namespace Azure.ResourceManager.Media
         /// <returns> An async collection of <see cref="ContentKeyPolicyResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ContentKeyPolicyResource> GetAllAsync(string filter = null, int? top = null, string orderby = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<ContentKeyPolicyResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _contentKeyPolicyClientDiagnostics.CreateScope("ContentKeyPolicyCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _contentKeyPolicyRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, orderby, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ContentKeyPolicyResource(Client, value)), response.Value.OdataNextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<ContentKeyPolicyResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _contentKeyPolicyClientDiagnostics.CreateScope("ContentKeyPolicyCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _contentKeyPolicyRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, orderby, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ContentKeyPolicyResource(Client, value)), response.Value.OdataNextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _contentKeyPolicyRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, orderby);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _contentKeyPolicyRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, orderby);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ContentKeyPolicyResource(Client, ContentKeyPolicyData.DeserializeContentKeyPolicyData(e)), _contentKeyPolicyClientDiagnostics, Pipeline, "ContentKeyPolicyCollection.GetAll", "value", "@odata.nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -234,37 +205,9 @@ namespace Azure.ResourceManager.Media
         /// <returns> A collection of <see cref="ContentKeyPolicyResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ContentKeyPolicyResource> GetAll(string filter = null, int? top = null, string orderby = null, CancellationToken cancellationToken = default)
         {
-            Page<ContentKeyPolicyResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _contentKeyPolicyClientDiagnostics.CreateScope("ContentKeyPolicyCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _contentKeyPolicyRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, orderby, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ContentKeyPolicyResource(Client, value)), response.Value.OdataNextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<ContentKeyPolicyResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _contentKeyPolicyClientDiagnostics.CreateScope("ContentKeyPolicyCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _contentKeyPolicyRestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, orderby, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ContentKeyPolicyResource(Client, value)), response.Value.OdataNextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _contentKeyPolicyRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, orderby);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _contentKeyPolicyRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, orderby);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ContentKeyPolicyResource(Client, ContentKeyPolicyData.DeserializeContentKeyPolicyData(e)), _contentKeyPolicyClientDiagnostics, Pipeline, "ContentKeyPolicyCollection.GetAll", "value", "@odata.nextLink", cancellationToken);
         }
 
         /// <summary>

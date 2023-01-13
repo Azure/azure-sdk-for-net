@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -187,37 +186,9 @@ namespace Azure.ResourceManager.LabServices
         /// <returns> An async collection of <see cref="LabVirtualMachineImageResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<LabVirtualMachineImageResource> GetAllAsync(string filter = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<LabVirtualMachineImageResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _labVirtualMachineImageImagesClientDiagnostics.CreateScope("LabVirtualMachineImageCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _labVirtualMachineImageImagesRestClient.ListByLabPlanAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new LabVirtualMachineImageResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<LabVirtualMachineImageResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _labVirtualMachineImageImagesClientDiagnostics.CreateScope("LabVirtualMachineImageCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _labVirtualMachineImageImagesRestClient.ListByLabPlanNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new LabVirtualMachineImageResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _labVirtualMachineImageImagesRestClient.CreateListByLabPlanRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _labVirtualMachineImageImagesRestClient.CreateListByLabPlanNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new LabVirtualMachineImageResource(Client, LabVirtualMachineImageData.DeserializeLabVirtualMachineImageData(e)), _labVirtualMachineImageImagesClientDiagnostics, Pipeline, "LabVirtualMachineImageCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -230,37 +201,9 @@ namespace Azure.ResourceManager.LabServices
         /// <returns> A collection of <see cref="LabVirtualMachineImageResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<LabVirtualMachineImageResource> GetAll(string filter = null, CancellationToken cancellationToken = default)
         {
-            Page<LabVirtualMachineImageResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _labVirtualMachineImageImagesClientDiagnostics.CreateScope("LabVirtualMachineImageCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _labVirtualMachineImageImagesRestClient.ListByLabPlan(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new LabVirtualMachineImageResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<LabVirtualMachineImageResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _labVirtualMachineImageImagesClientDiagnostics.CreateScope("LabVirtualMachineImageCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _labVirtualMachineImageImagesRestClient.ListByLabPlanNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new LabVirtualMachineImageResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _labVirtualMachineImageImagesRestClient.CreateListByLabPlanRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _labVirtualMachineImageImagesRestClient.CreateListByLabPlanNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new LabVirtualMachineImageResource(Client, LabVirtualMachineImageData.DeserializeLabVirtualMachineImageData(e)), _labVirtualMachineImageImagesClientDiagnostics, Pipeline, "LabVirtualMachineImageCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

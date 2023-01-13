@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -186,37 +185,9 @@ namespace Azure.ResourceManager.PostgreSql
         /// <returns> An async collection of <see cref="PostgreSqlServerKeyResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<PostgreSqlServerKeyResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<PostgreSqlServerKeyResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _postgreSqlServerKeyServerKeysClientDiagnostics.CreateScope("PostgreSqlServerKeyCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _postgreSqlServerKeyServerKeysRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new PostgreSqlServerKeyResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<PostgreSqlServerKeyResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _postgreSqlServerKeyServerKeysClientDiagnostics.CreateScope("PostgreSqlServerKeyCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _postgreSqlServerKeyServerKeysRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new PostgreSqlServerKeyResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _postgreSqlServerKeyServerKeysRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _postgreSqlServerKeyServerKeysRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new PostgreSqlServerKeyResource(Client, PostgreSqlServerKeyData.DeserializePostgreSqlServerKeyData(e)), _postgreSqlServerKeyServerKeysClientDiagnostics, Pipeline, "PostgreSqlServerKeyCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -228,37 +199,9 @@ namespace Azure.ResourceManager.PostgreSql
         /// <returns> A collection of <see cref="PostgreSqlServerKeyResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<PostgreSqlServerKeyResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<PostgreSqlServerKeyResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _postgreSqlServerKeyServerKeysClientDiagnostics.CreateScope("PostgreSqlServerKeyCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _postgreSqlServerKeyServerKeysRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new PostgreSqlServerKeyResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<PostgreSqlServerKeyResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _postgreSqlServerKeyServerKeysClientDiagnostics.CreateScope("PostgreSqlServerKeyCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _postgreSqlServerKeyServerKeysRestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new PostgreSqlServerKeyResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _postgreSqlServerKeyServerKeysRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _postgreSqlServerKeyServerKeysRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new PostgreSqlServerKeyResource(Client, PostgreSqlServerKeyData.DeserializePostgreSqlServerKeyData(e)), _postgreSqlServerKeyServerKeysClientDiagnostics, Pipeline, "PostgreSqlServerKeyCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

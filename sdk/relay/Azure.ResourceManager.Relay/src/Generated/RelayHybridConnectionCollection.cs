@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -186,37 +185,9 @@ namespace Azure.ResourceManager.Relay
         /// <returns> An async collection of <see cref="RelayHybridConnectionResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<RelayHybridConnectionResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<RelayHybridConnectionResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _relayHybridConnectionHybridConnectionsClientDiagnostics.CreateScope("RelayHybridConnectionCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _relayHybridConnectionHybridConnectionsRestClient.ListByNamespaceAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new RelayHybridConnectionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<RelayHybridConnectionResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _relayHybridConnectionHybridConnectionsClientDiagnostics.CreateScope("RelayHybridConnectionCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _relayHybridConnectionHybridConnectionsRestClient.ListByNamespaceNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new RelayHybridConnectionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _relayHybridConnectionHybridConnectionsRestClient.CreateListByNamespaceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _relayHybridConnectionHybridConnectionsRestClient.CreateListByNamespaceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new RelayHybridConnectionResource(Client, RelayHybridConnectionData.DeserializeRelayHybridConnectionData(e)), _relayHybridConnectionHybridConnectionsClientDiagnostics, Pipeline, "RelayHybridConnectionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -228,37 +199,9 @@ namespace Azure.ResourceManager.Relay
         /// <returns> A collection of <see cref="RelayHybridConnectionResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<RelayHybridConnectionResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<RelayHybridConnectionResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _relayHybridConnectionHybridConnectionsClientDiagnostics.CreateScope("RelayHybridConnectionCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _relayHybridConnectionHybridConnectionsRestClient.ListByNamespace(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new RelayHybridConnectionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<RelayHybridConnectionResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _relayHybridConnectionHybridConnectionsClientDiagnostics.CreateScope("RelayHybridConnectionCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _relayHybridConnectionHybridConnectionsRestClient.ListByNamespaceNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new RelayHybridConnectionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _relayHybridConnectionHybridConnectionsRestClient.CreateListByNamespaceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _relayHybridConnectionHybridConnectionsRestClient.CreateListByNamespaceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new RelayHybridConnectionResource(Client, RelayHybridConnectionData.DeserializeRelayHybridConnectionData(e)), _relayHybridConnectionHybridConnectionsClientDiagnostics, Pipeline, "RelayHybridConnectionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

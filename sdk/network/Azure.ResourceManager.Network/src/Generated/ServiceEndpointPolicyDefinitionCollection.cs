@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -186,37 +185,9 @@ namespace Azure.ResourceManager.Network
         /// <returns> An async collection of <see cref="ServiceEndpointPolicyDefinitionResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ServiceEndpointPolicyDefinitionResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<ServiceEndpointPolicyDefinitionResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _serviceEndpointPolicyDefinitionClientDiagnostics.CreateScope("ServiceEndpointPolicyDefinitionCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _serviceEndpointPolicyDefinitionRestClient.ListByResourceGroupAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ServiceEndpointPolicyDefinitionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<ServiceEndpointPolicyDefinitionResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _serviceEndpointPolicyDefinitionClientDiagnostics.CreateScope("ServiceEndpointPolicyDefinitionCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _serviceEndpointPolicyDefinitionRestClient.ListByResourceGroupNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ServiceEndpointPolicyDefinitionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _serviceEndpointPolicyDefinitionRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _serviceEndpointPolicyDefinitionRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ServiceEndpointPolicyDefinitionResource(Client, ServiceEndpointPolicyDefinitionData.DeserializeServiceEndpointPolicyDefinitionData(e)), _serviceEndpointPolicyDefinitionClientDiagnostics, Pipeline, "ServiceEndpointPolicyDefinitionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -228,37 +199,9 @@ namespace Azure.ResourceManager.Network
         /// <returns> A collection of <see cref="ServiceEndpointPolicyDefinitionResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ServiceEndpointPolicyDefinitionResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<ServiceEndpointPolicyDefinitionResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _serviceEndpointPolicyDefinitionClientDiagnostics.CreateScope("ServiceEndpointPolicyDefinitionCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _serviceEndpointPolicyDefinitionRestClient.ListByResourceGroup(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ServiceEndpointPolicyDefinitionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<ServiceEndpointPolicyDefinitionResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _serviceEndpointPolicyDefinitionClientDiagnostics.CreateScope("ServiceEndpointPolicyDefinitionCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _serviceEndpointPolicyDefinitionRestClient.ListByResourceGroupNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ServiceEndpointPolicyDefinitionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _serviceEndpointPolicyDefinitionRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _serviceEndpointPolicyDefinitionRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ServiceEndpointPolicyDefinitionResource(Client, ServiceEndpointPolicyDefinitionData.DeserializeServiceEndpointPolicyDefinitionData(e)), _serviceEndpointPolicyDefinitionClientDiagnostics, Pipeline, "ServiceEndpointPolicyDefinitionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
