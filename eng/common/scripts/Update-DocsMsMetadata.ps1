@@ -193,7 +193,7 @@ function UpdateDocsMsMetadataForPackage($packageInfoJsonLocation) {
   $packageMetadataName = Split-Path $packageInfoJsonLocation -Leaf
   $packageInfoLocation = Join-Path $DocRepoLocation "metadata/$metadataMoniker"
   if (Test-Path "$packageInfoLocation/$packageMetadataName") {
-    Write-Host "The metadata json exists, updating..."
+    Write-Host "The docs metadata json $packageMetadataName exists, updating..."
     $docsMetadata = Get-Content "$packageInfoLocation/$packageMetadataName" -Raw | ConvertFrom-Json
     foreach ($property in $docsMetadata.PSObject.Properties) {
       if ($packageInfo.PSObject.Properties.Name -notcontains $property.Name) {
@@ -202,7 +202,7 @@ function UpdateDocsMsMetadataForPackage($packageInfoJsonLocation) {
     }
   }
   else {
-    Write-Host "The metadata json does not exist, creating new json..."
+    Write-Host "The docs metadata json $packageMetadataName does not exist, creating a new one to docs repo..."
     New-Item -ItemType Directory -Path $packageInfoLocation -Force
   }
   $packageInfoJson = ConvertTo-Json $packageInfo
