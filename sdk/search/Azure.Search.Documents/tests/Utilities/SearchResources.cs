@@ -270,13 +270,13 @@ namespace Azure.Search.Documents.Tests
         /// <returns>The shared TestResources context.</returns>
         public static async Task<SearchResources> GetSharedHotelsIndexAsync(SearchTestBase fixture, bool isSample = false)
         {
-            await SharedSearchResources.EnsureInitialized(async () => await CreateWithHotelsIndexAsync(fixture, isSample));
+            await SharedSearchResources.EnsureInitialized(async () => await CreateWithHotelsIndexAsync(fixture, isSample), isSample);
 
             // Clone it for the current fixture (note that setting these values
             // will create the recording ServiceName/IndexName/etc. variables)
             return new SearchResources(fixture)
             {
-                IndexName = SharedSearchResources.Search.IndexName,
+                IndexName = isSample ? SharedSearchResources.SearchResourcesForSamples.IndexName : SharedSearchResources.SearchResourcesForTests.IndexName,
             };
         }
         #endregion Create Test Resources
