@@ -380,37 +380,9 @@ namespace Azure.ResourceManager.Network
         /// <returns> An async collection of <see cref="VirtualNetworkUsage" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<VirtualNetworkUsage> GetUsageAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<VirtualNetworkUsage>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _virtualNetworkClientDiagnostics.CreateScope("VirtualNetworkResource.GetUsage");
-                scope.Start();
-                try
-                {
-                    var response = await _virtualNetworkRestClient.ListUsageAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<VirtualNetworkUsage>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _virtualNetworkClientDiagnostics.CreateScope("VirtualNetworkResource.GetUsage");
-                scope.Start();
-                try
-                {
-                    var response = await _virtualNetworkRestClient.ListUsageNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _virtualNetworkRestClient.CreateListUsageRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _virtualNetworkRestClient.CreateListUsageNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, VirtualNetworkUsage.DeserializeVirtualNetworkUsage, _virtualNetworkClientDiagnostics, Pipeline, "VirtualNetworkResource.GetUsage", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -422,37 +394,9 @@ namespace Azure.ResourceManager.Network
         /// <returns> A collection of <see cref="VirtualNetworkUsage" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<VirtualNetworkUsage> GetUsage(CancellationToken cancellationToken = default)
         {
-            Page<VirtualNetworkUsage> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _virtualNetworkClientDiagnostics.CreateScope("VirtualNetworkResource.GetUsage");
-                scope.Start();
-                try
-                {
-                    var response = _virtualNetworkRestClient.ListUsage(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<VirtualNetworkUsage> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _virtualNetworkClientDiagnostics.CreateScope("VirtualNetworkResource.GetUsage");
-                scope.Start();
-                try
-                {
-                    var response = _virtualNetworkRestClient.ListUsageNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _virtualNetworkRestClient.CreateListUsageRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _virtualNetworkRestClient.CreateListUsageNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, VirtualNetworkUsage.DeserializeVirtualNetworkUsage, _virtualNetworkClientDiagnostics, Pipeline, "VirtualNetworkResource.GetUsage", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

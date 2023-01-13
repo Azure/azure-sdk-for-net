@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -193,37 +192,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <returns> An async collection of <see cref="VaultSettingResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<VaultSettingResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<VaultSettingResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _vaultSettingReplicationVaultSettingClientDiagnostics.CreateScope("VaultSettingCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _vaultSettingReplicationVaultSettingRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, _resourceName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new VaultSettingResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<VaultSettingResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _vaultSettingReplicationVaultSettingClientDiagnostics.CreateScope("VaultSettingCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _vaultSettingReplicationVaultSettingRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, _resourceName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new VaultSettingResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _vaultSettingReplicationVaultSettingRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, _resourceName);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _vaultSettingReplicationVaultSettingRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, _resourceName);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new VaultSettingResource(Client, VaultSettingData.DeserializeVaultSettingData(e)), _vaultSettingReplicationVaultSettingClientDiagnostics, Pipeline, "VaultSettingCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -235,37 +206,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <returns> A collection of <see cref="VaultSettingResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<VaultSettingResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<VaultSettingResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _vaultSettingReplicationVaultSettingClientDiagnostics.CreateScope("VaultSettingCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _vaultSettingReplicationVaultSettingRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, _resourceName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new VaultSettingResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<VaultSettingResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _vaultSettingReplicationVaultSettingClientDiagnostics.CreateScope("VaultSettingCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _vaultSettingReplicationVaultSettingRestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, _resourceName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new VaultSettingResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _vaultSettingReplicationVaultSettingRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, _resourceName);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _vaultSettingReplicationVaultSettingRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, _resourceName);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new VaultSettingResource(Client, VaultSettingData.DeserializeVaultSettingData(e)), _vaultSettingReplicationVaultSettingClientDiagnostics, Pipeline, "VaultSettingCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

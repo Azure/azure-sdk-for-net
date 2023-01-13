@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -189,37 +188,9 @@ namespace Azure.ResourceManager.CustomerInsights
         /// <returns> An async collection of <see cref="ProfileResourceFormatResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ProfileResourceFormatResource> GetAllAsync(string localeCode = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<ProfileResourceFormatResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _profileResourceFormatProfilesClientDiagnostics.CreateScope("ProfileResourceFormatCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _profileResourceFormatProfilesRestClient.ListByHubAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, localeCode, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ProfileResourceFormatResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<ProfileResourceFormatResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _profileResourceFormatProfilesClientDiagnostics.CreateScope("ProfileResourceFormatCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _profileResourceFormatProfilesRestClient.ListByHubNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, localeCode, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ProfileResourceFormatResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _profileResourceFormatProfilesRestClient.CreateListByHubRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, localeCode);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _profileResourceFormatProfilesRestClient.CreateListByHubNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, localeCode);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ProfileResourceFormatResource(Client, ProfileResourceFormatData.DeserializeProfileResourceFormatData(e)), _profileResourceFormatProfilesClientDiagnostics, Pipeline, "ProfileResourceFormatCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -232,37 +203,9 @@ namespace Azure.ResourceManager.CustomerInsights
         /// <returns> A collection of <see cref="ProfileResourceFormatResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ProfileResourceFormatResource> GetAll(string localeCode = null, CancellationToken cancellationToken = default)
         {
-            Page<ProfileResourceFormatResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _profileResourceFormatProfilesClientDiagnostics.CreateScope("ProfileResourceFormatCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _profileResourceFormatProfilesRestClient.ListByHub(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, localeCode, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ProfileResourceFormatResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<ProfileResourceFormatResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _profileResourceFormatProfilesClientDiagnostics.CreateScope("ProfileResourceFormatCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _profileResourceFormatProfilesRestClient.ListByHubNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, localeCode, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ProfileResourceFormatResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _profileResourceFormatProfilesRestClient.CreateListByHubRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, localeCode);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _profileResourceFormatProfilesRestClient.CreateListByHubNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, localeCode);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ProfileResourceFormatResource(Client, ProfileResourceFormatData.DeserializeProfileResourceFormatData(e)), _profileResourceFormatProfilesClientDiagnostics, Pipeline, "ProfileResourceFormatCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

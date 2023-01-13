@@ -8,7 +8,6 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -110,37 +109,9 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <returns> An async collection of <see cref="ComplianceResultResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ComplianceResultResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<ComplianceResultResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _complianceResultClientDiagnostics.CreateScope("ComplianceResultCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _complianceResultRestClient.ListAsync(Id, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ComplianceResultResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<ComplianceResultResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _complianceResultClientDiagnostics.CreateScope("ComplianceResultCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _complianceResultRestClient.ListNextPageAsync(nextLink, Id, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ComplianceResultResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _complianceResultRestClient.CreateListRequest(Id);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _complianceResultRestClient.CreateListNextPageRequest(nextLink, Id);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ComplianceResultResource(Client, ComplianceResultData.DeserializeComplianceResultData(e)), _complianceResultClientDiagnostics, Pipeline, "ComplianceResultCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -152,37 +123,9 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <returns> A collection of <see cref="ComplianceResultResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ComplianceResultResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<ComplianceResultResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _complianceResultClientDiagnostics.CreateScope("ComplianceResultCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _complianceResultRestClient.List(Id, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ComplianceResultResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<ComplianceResultResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _complianceResultClientDiagnostics.CreateScope("ComplianceResultCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _complianceResultRestClient.ListNextPage(nextLink, Id, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ComplianceResultResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _complianceResultRestClient.CreateListRequest(Id);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _complianceResultRestClient.CreateListNextPageRequest(nextLink, Id);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ComplianceResultResource(Client, ComplianceResultData.DeserializeComplianceResultData(e)), _complianceResultClientDiagnostics, Pipeline, "ComplianceResultCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

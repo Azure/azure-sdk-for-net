@@ -16,10 +16,10 @@ namespace Azure.ResourceManager.Compute.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Source))
+            if (Optional.IsDefined(GallerySource))
             {
                 writer.WritePropertyName("source");
-                writer.WriteObjectValue(Source);
+                writer.WriteObjectValue(GallerySource);
             }
             if (Optional.IsDefined(OSDiskImage))
             {
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Compute.Models
 
         internal static GalleryImageVersionStorageProfile DeserializeGalleryImageVersionStorageProfile(JsonElement element)
         {
-            Optional<GalleryArtifactVersionSource> source = default;
+            Optional<GalleryArtifactVersionFullSource> source = default;
             Optional<GalleryOSDiskImage> osDiskImage = default;
             Optional<IList<GalleryDataDiskImage>> dataDiskImages = default;
             foreach (var property in element.EnumerateObject())
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Compute.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    source = GalleryArtifactVersionSource.DeserializeGalleryArtifactVersionSource(property.Value);
+                    source = GalleryArtifactVersionFullSource.DeserializeGalleryArtifactVersionFullSource(property.Value);
                     continue;
                 }
                 if (property.NameEquals("osDiskImage"))

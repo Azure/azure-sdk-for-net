@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -120,37 +119,9 @@ namespace Azure.ResourceManager.FluidRelay
         /// <returns> An async collection of <see cref="FluidRelayContainerResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<FluidRelayContainerResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<FluidRelayContainerResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _fluidRelayContainerClientDiagnostics.CreateScope("FluidRelayContainerCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _fluidRelayContainerRestClient.ListByFluidRelayServersAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new FluidRelayContainerResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<FluidRelayContainerResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _fluidRelayContainerClientDiagnostics.CreateScope("FluidRelayContainerCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _fluidRelayContainerRestClient.ListByFluidRelayServersNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new FluidRelayContainerResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _fluidRelayContainerRestClient.CreateListByFluidRelayServersRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _fluidRelayContainerRestClient.CreateListByFluidRelayServersNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new FluidRelayContainerResource(Client, FluidRelayContainerData.DeserializeFluidRelayContainerData(e)), _fluidRelayContainerClientDiagnostics, Pipeline, "FluidRelayContainerCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -162,37 +133,9 @@ namespace Azure.ResourceManager.FluidRelay
         /// <returns> A collection of <see cref="FluidRelayContainerResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<FluidRelayContainerResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<FluidRelayContainerResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _fluidRelayContainerClientDiagnostics.CreateScope("FluidRelayContainerCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _fluidRelayContainerRestClient.ListByFluidRelayServers(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new FluidRelayContainerResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<FluidRelayContainerResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _fluidRelayContainerClientDiagnostics.CreateScope("FluidRelayContainerCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _fluidRelayContainerRestClient.ListByFluidRelayServersNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new FluidRelayContainerResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _fluidRelayContainerRestClient.CreateListByFluidRelayServersRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _fluidRelayContainerRestClient.CreateListByFluidRelayServersNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new FluidRelayContainerResource(Client, FluidRelayContainerData.DeserializeFluidRelayContainerData(e)), _fluidRelayContainerClientDiagnostics, Pipeline, "FluidRelayContainerCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

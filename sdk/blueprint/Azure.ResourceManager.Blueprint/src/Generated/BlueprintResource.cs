@@ -7,7 +7,6 @@
 
 using System;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -335,37 +334,9 @@ namespace Azure.ResourceManager.Blueprint
         /// <returns> An async collection of <see cref="PublishedBlueprintResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<PublishedBlueprintResource> GetPublishedBlueprintsAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<PublishedBlueprintResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _publishedBlueprintClientDiagnostics.CreateScope("BlueprintResource.GetPublishedBlueprints");
-                scope.Start();
-                try
-                {
-                    var response = await _publishedBlueprintRestClient.ListAsync(Id.Parent, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new PublishedBlueprintResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<PublishedBlueprintResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _publishedBlueprintClientDiagnostics.CreateScope("BlueprintResource.GetPublishedBlueprints");
-                scope.Start();
-                try
-                {
-                    var response = await _publishedBlueprintRestClient.ListNextPageAsync(nextLink, Id.Parent, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new PublishedBlueprintResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _publishedBlueprintRestClient.CreateListRequest(Id.Parent, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _publishedBlueprintRestClient.CreateListNextPageRequest(nextLink, Id.Parent, Id.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new PublishedBlueprintResource(Client, PublishedBlueprintData.DeserializePublishedBlueprintData(e)), _publishedBlueprintClientDiagnostics, Pipeline, "BlueprintResource.GetPublishedBlueprints", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -377,37 +348,9 @@ namespace Azure.ResourceManager.Blueprint
         /// <returns> A collection of <see cref="PublishedBlueprintResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<PublishedBlueprintResource> GetPublishedBlueprints(CancellationToken cancellationToken = default)
         {
-            Page<PublishedBlueprintResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _publishedBlueprintClientDiagnostics.CreateScope("BlueprintResource.GetPublishedBlueprints");
-                scope.Start();
-                try
-                {
-                    var response = _publishedBlueprintRestClient.List(Id.Parent, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new PublishedBlueprintResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<PublishedBlueprintResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _publishedBlueprintClientDiagnostics.CreateScope("BlueprintResource.GetPublishedBlueprints");
-                scope.Start();
-                try
-                {
-                    var response = _publishedBlueprintRestClient.ListNextPage(nextLink, Id.Parent, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new PublishedBlueprintResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _publishedBlueprintRestClient.CreateListRequest(Id.Parent, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _publishedBlueprintRestClient.CreateListNextPageRequest(nextLink, Id.Parent, Id.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new PublishedBlueprintResource(Client, PublishedBlueprintData.DeserializePublishedBlueprintData(e)), _publishedBlueprintClientDiagnostics, Pipeline, "BlueprintResource.GetPublishedBlueprints", "value", "nextLink", cancellationToken);
         }
     }
 }

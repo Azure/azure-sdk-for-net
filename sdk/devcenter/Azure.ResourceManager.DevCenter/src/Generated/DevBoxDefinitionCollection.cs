@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -187,37 +186,9 @@ namespace Azure.ResourceManager.DevCenter
         /// <returns> An async collection of <see cref="DevBoxDefinitionResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DevBoxDefinitionResource> GetAllAsync(int? top = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<DevBoxDefinitionResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _devBoxDefinitionClientDiagnostics.CreateScope("DevBoxDefinitionCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _devBoxDefinitionRestClient.ListByDevCenterAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new DevBoxDefinitionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<DevBoxDefinitionResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _devBoxDefinitionClientDiagnostics.CreateScope("DevBoxDefinitionCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _devBoxDefinitionRestClient.ListByDevCenterNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new DevBoxDefinitionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _devBoxDefinitionRestClient.CreateListByDevCenterRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _devBoxDefinitionRestClient.CreateListByDevCenterNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DevBoxDefinitionResource(Client, DevBoxDefinitionData.DeserializeDevBoxDefinitionData(e)), _devBoxDefinitionClientDiagnostics, Pipeline, "DevBoxDefinitionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -230,37 +201,9 @@ namespace Azure.ResourceManager.DevCenter
         /// <returns> A collection of <see cref="DevBoxDefinitionResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DevBoxDefinitionResource> GetAll(int? top = null, CancellationToken cancellationToken = default)
         {
-            Page<DevBoxDefinitionResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _devBoxDefinitionClientDiagnostics.CreateScope("DevBoxDefinitionCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _devBoxDefinitionRestClient.ListByDevCenter(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new DevBoxDefinitionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<DevBoxDefinitionResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _devBoxDefinitionClientDiagnostics.CreateScope("DevBoxDefinitionCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _devBoxDefinitionRestClient.ListByDevCenterNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new DevBoxDefinitionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _devBoxDefinitionRestClient.CreateListByDevCenterRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _devBoxDefinitionRestClient.CreateListByDevCenterNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DevBoxDefinitionResource(Client, DevBoxDefinitionData.DeserializeDevBoxDefinitionData(e)), _devBoxDefinitionClientDiagnostics, Pipeline, "DevBoxDefinitionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

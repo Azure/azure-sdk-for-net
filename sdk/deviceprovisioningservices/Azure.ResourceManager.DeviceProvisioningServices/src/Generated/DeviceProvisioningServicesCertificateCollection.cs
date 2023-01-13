@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -190,22 +189,8 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         /// <returns> An async collection of <see cref="DeviceProvisioningServicesCertificateResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DeviceProvisioningServicesCertificateResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<DeviceProvisioningServicesCertificateResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _deviceProvisioningServicesCertificateDpsCertificateClientDiagnostics.CreateScope("DeviceProvisioningServicesCertificateCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _deviceProvisioningServicesCertificateDpsCertificateRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new DeviceProvisioningServicesCertificateResource(Client, value)), null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _deviceProvisioningServicesCertificateDpsCertificateRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new DeviceProvisioningServicesCertificateResource(Client, DeviceProvisioningServicesCertificateData.DeserializeDeviceProvisioningServicesCertificateData(e)), _deviceProvisioningServicesCertificateDpsCertificateClientDiagnostics, Pipeline, "DeviceProvisioningServicesCertificateCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -217,22 +202,8 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         /// <returns> A collection of <see cref="DeviceProvisioningServicesCertificateResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DeviceProvisioningServicesCertificateResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<DeviceProvisioningServicesCertificateResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _deviceProvisioningServicesCertificateDpsCertificateClientDiagnostics.CreateScope("DeviceProvisioningServicesCertificateCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _deviceProvisioningServicesCertificateDpsCertificateRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new DeviceProvisioningServicesCertificateResource(Client, value)), null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _deviceProvisioningServicesCertificateDpsCertificateRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new DeviceProvisioningServicesCertificateResource(Client, DeviceProvisioningServicesCertificateData.DeserializeDeviceProvisioningServicesCertificateData(e)), _deviceProvisioningServicesCertificateDpsCertificateClientDiagnostics, Pipeline, "DeviceProvisioningServicesCertificateCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>

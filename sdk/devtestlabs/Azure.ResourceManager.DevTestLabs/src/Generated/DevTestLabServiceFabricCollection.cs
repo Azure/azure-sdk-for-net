@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -192,37 +191,9 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <returns> An async collection of <see cref="DevTestLabServiceFabricResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DevTestLabServiceFabricResource> GetAllAsync(string expand = null, string filter = null, int? top = null, string orderby = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<DevTestLabServiceFabricResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _devTestLabServiceFabricServiceFabricsClientDiagnostics.CreateScope("DevTestLabServiceFabricCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _devTestLabServiceFabricServiceFabricsRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, expand, filter, top, orderby, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new DevTestLabServiceFabricResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<DevTestLabServiceFabricResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _devTestLabServiceFabricServiceFabricsClientDiagnostics.CreateScope("DevTestLabServiceFabricCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _devTestLabServiceFabricServiceFabricsRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, expand, filter, top, orderby, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new DevTestLabServiceFabricResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _devTestLabServiceFabricServiceFabricsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, expand, filter, top, orderby);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _devTestLabServiceFabricServiceFabricsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, expand, filter, top, orderby);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DevTestLabServiceFabricResource(Client, DevTestLabServiceFabricData.DeserializeDevTestLabServiceFabricData(e)), _devTestLabServiceFabricServiceFabricsClientDiagnostics, Pipeline, "DevTestLabServiceFabricCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -238,37 +209,9 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <returns> A collection of <see cref="DevTestLabServiceFabricResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DevTestLabServiceFabricResource> GetAll(string expand = null, string filter = null, int? top = null, string orderby = null, CancellationToken cancellationToken = default)
         {
-            Page<DevTestLabServiceFabricResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _devTestLabServiceFabricServiceFabricsClientDiagnostics.CreateScope("DevTestLabServiceFabricCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _devTestLabServiceFabricServiceFabricsRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, expand, filter, top, orderby, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new DevTestLabServiceFabricResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<DevTestLabServiceFabricResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _devTestLabServiceFabricServiceFabricsClientDiagnostics.CreateScope("DevTestLabServiceFabricCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _devTestLabServiceFabricServiceFabricsRestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, expand, filter, top, orderby, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new DevTestLabServiceFabricResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _devTestLabServiceFabricServiceFabricsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, expand, filter, top, orderby);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _devTestLabServiceFabricServiceFabricsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, expand, filter, top, orderby);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DevTestLabServiceFabricResource(Client, DevTestLabServiceFabricData.DeserializeDevTestLabServiceFabricData(e)), _devTestLabServiceFabricServiceFabricsClientDiagnostics, Pipeline, "DevTestLabServiceFabricCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

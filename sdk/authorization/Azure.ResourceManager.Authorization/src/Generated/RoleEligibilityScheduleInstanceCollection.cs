@@ -8,7 +8,6 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -111,37 +110,9 @@ namespace Azure.ResourceManager.Authorization
         /// <returns> An async collection of <see cref="RoleEligibilityScheduleInstanceResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<RoleEligibilityScheduleInstanceResource> GetAllAsync(string filter = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<RoleEligibilityScheduleInstanceResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _roleEligibilityScheduleInstanceClientDiagnostics.CreateScope("RoleEligibilityScheduleInstanceCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _roleEligibilityScheduleInstanceRestClient.ListForScopeAsync(Id, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new RoleEligibilityScheduleInstanceResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<RoleEligibilityScheduleInstanceResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _roleEligibilityScheduleInstanceClientDiagnostics.CreateScope("RoleEligibilityScheduleInstanceCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _roleEligibilityScheduleInstanceRestClient.ListForScopeNextPageAsync(nextLink, Id, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new RoleEligibilityScheduleInstanceResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _roleEligibilityScheduleInstanceRestClient.CreateListForScopeRequest(Id, filter);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _roleEligibilityScheduleInstanceRestClient.CreateListForScopeNextPageRequest(nextLink, Id, filter);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new RoleEligibilityScheduleInstanceResource(Client, RoleEligibilityScheduleInstanceData.DeserializeRoleEligibilityScheduleInstanceData(e)), _roleEligibilityScheduleInstanceClientDiagnostics, Pipeline, "RoleEligibilityScheduleInstanceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -154,37 +125,9 @@ namespace Azure.ResourceManager.Authorization
         /// <returns> A collection of <see cref="RoleEligibilityScheduleInstanceResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<RoleEligibilityScheduleInstanceResource> GetAll(string filter = null, CancellationToken cancellationToken = default)
         {
-            Page<RoleEligibilityScheduleInstanceResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _roleEligibilityScheduleInstanceClientDiagnostics.CreateScope("RoleEligibilityScheduleInstanceCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _roleEligibilityScheduleInstanceRestClient.ListForScope(Id, filter, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new RoleEligibilityScheduleInstanceResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<RoleEligibilityScheduleInstanceResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _roleEligibilityScheduleInstanceClientDiagnostics.CreateScope("RoleEligibilityScheduleInstanceCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _roleEligibilityScheduleInstanceRestClient.ListForScopeNextPage(nextLink, Id, filter, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new RoleEligibilityScheduleInstanceResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _roleEligibilityScheduleInstanceRestClient.CreateListForScopeRequest(Id, filter);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _roleEligibilityScheduleInstanceRestClient.CreateListForScopeNextPageRequest(nextLink, Id, filter);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new RoleEligibilityScheduleInstanceResource(Client, RoleEligibilityScheduleInstanceData.DeserializeRoleEligibilityScheduleInstanceData(e)), _roleEligibilityScheduleInstanceClientDiagnostics, Pipeline, "RoleEligibilityScheduleInstanceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
