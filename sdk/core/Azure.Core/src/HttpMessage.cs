@@ -247,10 +247,5 @@ namespace Azure.Core
                 set => throw CreateException();
             }
         }
-
-        /// <summary>
-        /// Exists as a private key entry into the <see cref="HttpMessage._properties"/> dictionary for stashing string keyed entries in the Type keyed dictionary.
-        /// </summary>
-        private class MessagePropertyKey { }
     }
 }
