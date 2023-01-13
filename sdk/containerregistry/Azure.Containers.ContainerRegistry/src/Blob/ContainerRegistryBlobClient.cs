@@ -246,18 +246,15 @@ namespace Azure.Containers.ContainerRegistry.Specialized
 
         private async Task<Response<UploadManifestResult>> UploadManifestInternalAsync(MemoryStream stream, UploadManifestOptions options, bool async, CancellationToken cancellationToken)
         {
-            string digest = BlobHelper.ComputeDigest(stream);
-            string tagOrDigest = options.Tag ?? digest;
+            string contentDigest = BlobHelper.ComputeDigest(stream);
+            string tagOrDigest = options.Tag ?? contentDigest;
 
             ResponseWithHeaders<ContainerRegistryCreateManifestHeaders> response = async ?
                 // TODO: media type should be configurable to support non-OCI types.
                 await _restClient.CreateManifestAsync(_repositoryName, tagOrDigest, stream, ManifestMediaType.OciManifest.ToString(), cancellationToken).ConfigureAwait(false) :
                 _restClient.CreateManifest(_repositoryName, tagOrDigest, stream, ManifestMediaType.OciManifest.ToString(), cancellationToken);
 
-            if (!ValidateDigest(digest, response.Headers.DockerContentDigest))
-            {
-                throw new RequestFailedException("The digest in the response does not match the digest of the uploaded manifest.");
-            }
+            ValidateDigest(contentDigest, response.Headers.DockerContentDigest);
 
             return Response.FromValue(new UploadManifestResult(response.Headers.DockerContentDigest), response.GetRawResponse());
         }
@@ -329,10 +326,7 @@ namespace Azure.Containers.ContainerRegistry.Specialized
                 ResponseWithHeaders<ContainerRegistryBlobCompleteUploadHeaders> completeUploadResult =
                     _blobRestClient.CompleteUpload(result.Digest, result.Location, null, cancellationToken);
 
-                if (!ValidateDigest(result.Digest, completeUploadResult.Headers.DockerContentDigest))
-                {
-                    throw new RequestFailedException("The digest in the response does not match the digest of the uploaded manifest.");
-                }
+                ValidateDigest(result.Digest, completeUploadResult.Headers.DockerContentDigest);
 
                 return Response.FromValue(new UploadBlobResult(completeUploadResult.Headers.DockerContentDigest, result.Size), completeUploadResult.GetRawResponse());
             }
@@ -368,10 +362,7 @@ namespace Azure.Containers.ContainerRegistry.Specialized
                 ResponseWithHeaders<ContainerRegistryBlobCompleteUploadHeaders> completeUploadResult =
                     await _blobRestClient.CompleteUploadAsync(result.Digest, result.Location, null, cancellationToken).ConfigureAwait(false);
 
-                if (!ValidateDigest(result.Digest, completeUploadResult.Headers.DockerContentDigest))
-                {
-                    throw new RequestFailedException("The digest in the response does not match the digest of the uploaded manifest.");
-                }
+                ValidateDigest(result.Digest, completeUploadResult.Headers.DockerContentDigest);
 
                 return Response.FromValue(new UploadBlobResult(completeUploadResult.Headers.DockerContentDigest, result.Size), completeUploadResult.GetRawResponse());
             }
@@ -504,15 +495,10 @@ namespace Azure.Containers.ContainerRegistry.Specialized
                 rawResponse.Headers.TryGetValue("Docker-Content-Digest", out var digest);
 
                 var contentDigest = BlobHelper.ComputeDigest(rawResponse.ContentStream);
-                if (!ValidateDigest(contentDigest, digest))
-                {
-                    throw new RequestFailedException("The requested digest does not match the digest of the received manifest.");
-                }
+                ValidateDigest(contentDigest, digest);
 
                 using var document = JsonDocument.Parse(rawResponse.Content);
                 var manifest = OciManifest.DeserializeOciManifest(document.RootElement);
-
-                rawResponse.ContentStream.Position = 0;
 
                 return Response.FromValue(new DownloadManifestResult(digest, manifest, rawResponse.Content), rawResponse);
             }
@@ -543,10 +529,7 @@ namespace Azure.Containers.ContainerRegistry.Specialized
                 rawResponse.Headers.TryGetValue("Docker-Content-Digest", out var digest);
 
                 var contentDigest = BlobHelper.ComputeDigest(rawResponse.ContentStream);
-                if (!ValidateDigest(contentDigest, digest))
-                {
-                    throw new RequestFailedException("The requested digest does not match the digest of the received manifest.");
-                }
+                ValidateDigest(contentDigest, digest);
 
                 using var document = JsonDocument.Parse(rawResponse.Content);
                 var manifest = OciManifest.DeserializeOciManifest(document.RootElement);
@@ -562,9 +545,12 @@ namespace Azure.Containers.ContainerRegistry.Specialized
             }
         }
 
-        private static bool ValidateDigest(string d1, string d2)
+        private static void ValidateDigest(string clientDigest, string serverDigest)
         {
-            return d1.Equals(d2, StringComparison.OrdinalIgnoreCase);
+            if (!clientDigest.Equals(serverDigest, StringComparison.OrdinalIgnoreCase))
+            {
+                throw new RequestFailedException("The server-computed digest does not match the client-computed digest.");
+            }
         }
 
         /// <summary>
@@ -627,15 +613,12 @@ namespace Azure.Containers.ContainerRegistry.Specialized
                 await _blobRestClient.GetBlobAsync(_repositoryName, digest, cancellationToken).ConfigureAwait(false) :
                 _blobRestClient.GetBlob(_repositoryName, digest, cancellationToken);
 
+            var contentDigest = BlobHelper.ComputeDigest(blobResult.Value);
+            ValidateDigest(contentDigest, digest);
+
             BinaryData data = async ?
                 await BinaryData.FromStreamAsync(blobResult.Value, cancellationToken).ConfigureAwait(false) :
                 BinaryData.FromStream(blobResult.Value);
-
-            var contentDigest = BlobHelper.ComputeDigest(data.ToStream());
-            if (!ValidateDigest(contentDigest, digest))
-            {
-                throw new RequestFailedException("The requested digest does not match the digest of the received manifest.");
-            }
 
             return Response.FromValue(new DownloadBlobResult(digest, data), blobResult.GetRawResponse());
         }
@@ -759,13 +742,9 @@ namespace Azure.Containers.ContainerRegistry.Specialized
 
                 // Complete hash computation.
                 sha256.TransformFinalBlock(buffer, 0, 0);
-
                 var computedDigest = BlobHelper.FormatDigest(sha256.Hash);
 
-                if (!ValidateDigest(computedDigest, digest))
-                {
-                    throw new RequestFailedException("The digest of the downloaded blob does not match the requested digest.");
-                }
+                ValidateDigest(computedDigest, digest);
 
                 // Return the last response received.
                 return result;
