@@ -1,6 +1,6 @@
 # Release History
 
-## 1.0.0-beta.2 (2022-12-01)
+## 1.0.0-beta.2 (2023-01-13)
 
 ### Features Added
 - Method Addded `Azure.Developer.LoadTesting.LoadTestingClient.LoadTestRunClient.ListMetricNamespaces`
