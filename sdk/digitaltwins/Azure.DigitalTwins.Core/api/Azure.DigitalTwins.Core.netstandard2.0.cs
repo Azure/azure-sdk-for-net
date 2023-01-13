@@ -116,7 +116,9 @@ namespace Azure.DigitalTwins.Core
         public Azure.DigitalTwins.Core.DigitalTwinsClientOptions.ServiceVersion Version { get { throw null; } }
         public enum ServiceVersion
         {
-            V2023_02_27_Preview = 1,
+            V2020_10_31 = 1,
+            V2022_05_31 = 2,
+            V2023_02_27_Preview = 3,
         }
     }
     public partial class DigitalTwinsEventRoute

@@ -21,11 +21,18 @@ namespace Azure.DigitalTwins.Core
         public enum ServiceVersion
         {
 #pragma warning disable CA1707 // Identifiers should not contain underscores
-
             /// <summary>
             /// 2020-10-31
             /// </summary>
-            V2023_02_27_Preview = 1
+            V2020_10_31 = 1,
+            /// <summary>
+            /// 2022-05-31
+            /// </summary>
+            V2022_05_31 = 2,
+            /// <summary>
+            /// 2023_02_27_Preview
+            /// </summary>
+            V2023_02_27_Preview = 3
 
 #pragma warning restore CA1707 // Identifiers should not contain underscores
         }
@@ -58,6 +65,8 @@ namespace Azure.DigitalTwins.Core
         {
             return Version switch
             {
+                ServiceVersion.V2020_10_31 => "2020-10-31",
+                ServiceVersion.V2022_05_31 => "2022-05-31",
                 ServiceVersion.V2023_02_27_Preview => "2023-02-27-preview",
                 _ => throw new ArgumentException(Version.ToString()),
             };
