@@ -298,37 +298,9 @@ namespace Azure.ResourceManager.AppService
         /// <returns> An async collection of <see cref="SiteConfigurationSnapshotInfo" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SiteConfigurationSnapshotInfo> GetConfigurationSnapshotInfoSlotAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<SiteConfigurationSnapshotInfo>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _siteSlotConfigSnapshotWebAppsClientDiagnostics.CreateScope("WebSiteSlotConfigResource.GetConfigurationSnapshotInfoSlot");
-                scope.Start();
-                try
-                {
-                    var response = await _siteSlotConfigSnapshotWebAppsRestClient.ListConfigurationSnapshotInfoSlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<SiteConfigurationSnapshotInfo>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _siteSlotConfigSnapshotWebAppsClientDiagnostics.CreateScope("WebSiteSlotConfigResource.GetConfigurationSnapshotInfoSlot");
-                scope.Start();
-                try
-                {
-                    var response = await _siteSlotConfigSnapshotWebAppsRestClient.ListConfigurationSnapshotInfoSlotNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _siteSlotConfigSnapshotWebAppsRestClient.CreateListConfigurationSnapshotInfoSlotRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _siteSlotConfigSnapshotWebAppsRestClient.CreateListConfigurationSnapshotInfoSlotNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, SiteConfigurationSnapshotInfo.DeserializeSiteConfigurationSnapshotInfo, _siteSlotConfigSnapshotWebAppsClientDiagnostics, Pipeline, "WebSiteSlotConfigResource.GetConfigurationSnapshotInfoSlot", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -340,37 +312,9 @@ namespace Azure.ResourceManager.AppService
         /// <returns> A collection of <see cref="SiteConfigurationSnapshotInfo" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SiteConfigurationSnapshotInfo> GetConfigurationSnapshotInfoSlot(CancellationToken cancellationToken = default)
         {
-            Page<SiteConfigurationSnapshotInfo> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _siteSlotConfigSnapshotWebAppsClientDiagnostics.CreateScope("WebSiteSlotConfigResource.GetConfigurationSnapshotInfoSlot");
-                scope.Start();
-                try
-                {
-                    var response = _siteSlotConfigSnapshotWebAppsRestClient.ListConfigurationSnapshotInfoSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<SiteConfigurationSnapshotInfo> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _siteSlotConfigSnapshotWebAppsClientDiagnostics.CreateScope("WebSiteSlotConfigResource.GetConfigurationSnapshotInfoSlot");
-                scope.Start();
-                try
-                {
-                    var response = _siteSlotConfigSnapshotWebAppsRestClient.ListConfigurationSnapshotInfoSlotNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _siteSlotConfigSnapshotWebAppsRestClient.CreateListConfigurationSnapshotInfoSlotRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _siteSlotConfigSnapshotWebAppsRestClient.CreateListConfigurationSnapshotInfoSlotNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, SiteConfigurationSnapshotInfo.DeserializeSiteConfigurationSnapshotInfo, _siteSlotConfigSnapshotWebAppsClientDiagnostics, Pipeline, "WebSiteSlotConfigResource.GetConfigurationSnapshotInfoSlot", "value", "nextLink", cancellationToken);
         }
     }
 }

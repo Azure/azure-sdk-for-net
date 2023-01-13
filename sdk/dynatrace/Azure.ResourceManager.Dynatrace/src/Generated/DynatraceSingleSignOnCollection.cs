@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -186,37 +185,9 @@ namespace Azure.ResourceManager.Dynatrace
         /// <returns> An async collection of <see cref="DynatraceSingleSignOnResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DynatraceSingleSignOnResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<DynatraceSingleSignOnResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _dynatraceSingleSignOnSingleSignOnClientDiagnostics.CreateScope("DynatraceSingleSignOnCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _dynatraceSingleSignOnSingleSignOnRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new DynatraceSingleSignOnResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<DynatraceSingleSignOnResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _dynatraceSingleSignOnSingleSignOnClientDiagnostics.CreateScope("DynatraceSingleSignOnCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _dynatraceSingleSignOnSingleSignOnRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new DynatraceSingleSignOnResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _dynatraceSingleSignOnSingleSignOnRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _dynatraceSingleSignOnSingleSignOnRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DynatraceSingleSignOnResource(Client, DynatraceSingleSignOnData.DeserializeDynatraceSingleSignOnData(e)), _dynatraceSingleSignOnSingleSignOnClientDiagnostics, Pipeline, "DynatraceSingleSignOnCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -228,37 +199,9 @@ namespace Azure.ResourceManager.Dynatrace
         /// <returns> A collection of <see cref="DynatraceSingleSignOnResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DynatraceSingleSignOnResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<DynatraceSingleSignOnResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _dynatraceSingleSignOnSingleSignOnClientDiagnostics.CreateScope("DynatraceSingleSignOnCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _dynatraceSingleSignOnSingleSignOnRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new DynatraceSingleSignOnResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<DynatraceSingleSignOnResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _dynatraceSingleSignOnSingleSignOnClientDiagnostics.CreateScope("DynatraceSingleSignOnCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _dynatraceSingleSignOnSingleSignOnRestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new DynatraceSingleSignOnResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _dynatraceSingleSignOnSingleSignOnRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _dynatraceSingleSignOnSingleSignOnRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DynatraceSingleSignOnResource(Client, DynatraceSingleSignOnData.DeserializeDynatraceSingleSignOnData(e)), _dynatraceSingleSignOnSingleSignOnClientDiagnostics, Pipeline, "DynatraceSingleSignOnCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

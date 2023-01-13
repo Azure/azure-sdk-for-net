@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -120,37 +119,9 @@ namespace Azure.ResourceManager.AppContainers
         /// <returns> An async collection of <see cref="ContainerAppDetectorResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ContainerAppDetectorResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<ContainerAppDetectorResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _containerAppDetectorContainerAppsDiagnosticsClientDiagnostics.CreateScope("ContainerAppDetectorCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _containerAppDetectorContainerAppsDiagnosticsRestClient.ListDetectorsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ContainerAppDetectorResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<ContainerAppDetectorResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _containerAppDetectorContainerAppsDiagnosticsClientDiagnostics.CreateScope("ContainerAppDetectorCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _containerAppDetectorContainerAppsDiagnosticsRestClient.ListDetectorsNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ContainerAppDetectorResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _containerAppDetectorContainerAppsDiagnosticsRestClient.CreateListDetectorsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _containerAppDetectorContainerAppsDiagnosticsRestClient.CreateListDetectorsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ContainerAppDetectorResource(Client, ContainerAppDiagnosticData.DeserializeContainerAppDiagnosticData(e)), _containerAppDetectorContainerAppsDiagnosticsClientDiagnostics, Pipeline, "ContainerAppDetectorCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -162,37 +133,9 @@ namespace Azure.ResourceManager.AppContainers
         /// <returns> A collection of <see cref="ContainerAppDetectorResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ContainerAppDetectorResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<ContainerAppDetectorResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _containerAppDetectorContainerAppsDiagnosticsClientDiagnostics.CreateScope("ContainerAppDetectorCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _containerAppDetectorContainerAppsDiagnosticsRestClient.ListDetectors(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ContainerAppDetectorResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<ContainerAppDetectorResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _containerAppDetectorContainerAppsDiagnosticsClientDiagnostics.CreateScope("ContainerAppDetectorCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _containerAppDetectorContainerAppsDiagnosticsRestClient.ListDetectorsNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ContainerAppDetectorResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _containerAppDetectorContainerAppsDiagnosticsRestClient.CreateListDetectorsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _containerAppDetectorContainerAppsDiagnosticsRestClient.CreateListDetectorsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ContainerAppDetectorResource(Client, ContainerAppDiagnosticData.DeserializeContainerAppDiagnosticData(e)), _containerAppDetectorContainerAppsDiagnosticsClientDiagnostics, Pipeline, "ContainerAppDetectorCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

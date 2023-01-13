@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -188,37 +187,9 @@ namespace Azure.ResourceManager.ConfidentialLedger
         /// <returns> An async collection of <see cref="ConfidentialLedgerResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ConfidentialLedgerResource> GetAllAsync(string filter = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<ConfidentialLedgerResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _confidentialLedgerLedgerClientDiagnostics.CreateScope("ConfidentialLedgerCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _confidentialLedgerLedgerRestClient.ListByResourceGroupAsync(Id.SubscriptionId, Id.ResourceGroupName, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ConfidentialLedgerResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<ConfidentialLedgerResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _confidentialLedgerLedgerClientDiagnostics.CreateScope("ConfidentialLedgerCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _confidentialLedgerLedgerRestClient.ListByResourceGroupNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ConfidentialLedgerResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _confidentialLedgerLedgerRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, filter);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _confidentialLedgerLedgerRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, filter);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ConfidentialLedgerResource(Client, ConfidentialLedgerData.DeserializeConfidentialLedgerData(e)), _confidentialLedgerLedgerClientDiagnostics, Pipeline, "ConfidentialLedgerCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -231,37 +202,9 @@ namespace Azure.ResourceManager.ConfidentialLedger
         /// <returns> A collection of <see cref="ConfidentialLedgerResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ConfidentialLedgerResource> GetAll(string filter = null, CancellationToken cancellationToken = default)
         {
-            Page<ConfidentialLedgerResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _confidentialLedgerLedgerClientDiagnostics.CreateScope("ConfidentialLedgerCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _confidentialLedgerLedgerRestClient.ListByResourceGroup(Id.SubscriptionId, Id.ResourceGroupName, filter, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ConfidentialLedgerResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<ConfidentialLedgerResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _confidentialLedgerLedgerClientDiagnostics.CreateScope("ConfidentialLedgerCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _confidentialLedgerLedgerRestClient.ListByResourceGroupNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, filter, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ConfidentialLedgerResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _confidentialLedgerLedgerRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, filter);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _confidentialLedgerLedgerRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, filter);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ConfidentialLedgerResource(Client, ConfidentialLedgerData.DeserializeConfidentialLedgerData(e)), _confidentialLedgerLedgerClientDiagnostics, Pipeline, "ConfidentialLedgerCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

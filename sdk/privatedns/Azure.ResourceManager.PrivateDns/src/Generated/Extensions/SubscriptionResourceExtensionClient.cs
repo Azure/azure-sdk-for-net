@@ -6,9 +6,7 @@
 #nullable disable
 
 using System;
-using System.Linq;
 using System.Threading;
-using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -53,37 +51,9 @@ namespace Azure.ResourceManager.PrivateDns
         /// <returns> An async collection of <see cref="PrivateDnsZoneResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<PrivateDnsZoneResource> GetPrivateDnsZonesAsync(int? top = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<PrivateDnsZoneResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = PrivateDnsZonePrivateZonesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetPrivateDnsZones");
-                scope.Start();
-                try
-                {
-                    var response = await PrivateDnsZonePrivateZonesRestClient.ListAsync(Id.SubscriptionId, top, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new PrivateDnsZoneResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<PrivateDnsZoneResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = PrivateDnsZonePrivateZonesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetPrivateDnsZones");
-                scope.Start();
-                try
-                {
-                    var response = await PrivateDnsZonePrivateZonesRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, top, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new PrivateDnsZoneResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => PrivateDnsZonePrivateZonesRestClient.CreateListRequest(Id.SubscriptionId, top);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => PrivateDnsZonePrivateZonesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, top);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new PrivateDnsZoneResource(Client, PrivateDnsZoneData.DeserializePrivateDnsZoneData(e)), PrivateDnsZonePrivateZonesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetPrivateDnsZones", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -96,37 +66,9 @@ namespace Azure.ResourceManager.PrivateDns
         /// <returns> A collection of <see cref="PrivateDnsZoneResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<PrivateDnsZoneResource> GetPrivateDnsZones(int? top = null, CancellationToken cancellationToken = default)
         {
-            Page<PrivateDnsZoneResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = PrivateDnsZonePrivateZonesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetPrivateDnsZones");
-                scope.Start();
-                try
-                {
-                    var response = PrivateDnsZonePrivateZonesRestClient.List(Id.SubscriptionId, top, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new PrivateDnsZoneResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<PrivateDnsZoneResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = PrivateDnsZonePrivateZonesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetPrivateDnsZones");
-                scope.Start();
-                try
-                {
-                    var response = PrivateDnsZonePrivateZonesRestClient.ListNextPage(nextLink, Id.SubscriptionId, top, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new PrivateDnsZoneResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => PrivateDnsZonePrivateZonesRestClient.CreateListRequest(Id.SubscriptionId, top);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => PrivateDnsZonePrivateZonesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, top);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new PrivateDnsZoneResource(Client, PrivateDnsZoneData.DeserializePrivateDnsZoneData(e)), PrivateDnsZonePrivateZonesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetPrivateDnsZones", "value", "nextLink", cancellationToken);
         }
     }
 }

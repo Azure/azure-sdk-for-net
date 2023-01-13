@@ -433,37 +433,9 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// <returns> An async collection of <see cref="NodeTypeAvailableSku" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<NodeTypeAvailableSku> GetAvailableSkusAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<NodeTypeAvailableSku>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _nodeTypeSkusClientDiagnostics.CreateScope("ServiceFabricManagedNodeTypeResource.GetAvailableSkus");
-                scope.Start();
-                try
-                {
-                    var response = await _nodeTypeSkusRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<NodeTypeAvailableSku>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _nodeTypeSkusClientDiagnostics.CreateScope("ServiceFabricManagedNodeTypeResource.GetAvailableSkus");
-                scope.Start();
-                try
-                {
-                    var response = await _nodeTypeSkusRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _nodeTypeSkusRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _nodeTypeSkusRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, NodeTypeAvailableSku.DeserializeNodeTypeAvailableSku, _nodeTypeSkusClientDiagnostics, Pipeline, "ServiceFabricManagedNodeTypeResource.GetAvailableSkus", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -475,37 +447,9 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// <returns> A collection of <see cref="NodeTypeAvailableSku" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<NodeTypeAvailableSku> GetAvailableSkus(CancellationToken cancellationToken = default)
         {
-            Page<NodeTypeAvailableSku> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _nodeTypeSkusClientDiagnostics.CreateScope("ServiceFabricManagedNodeTypeResource.GetAvailableSkus");
-                scope.Start();
-                try
-                {
-                    var response = _nodeTypeSkusRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<NodeTypeAvailableSku> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _nodeTypeSkusClientDiagnostics.CreateScope("ServiceFabricManagedNodeTypeResource.GetAvailableSkus");
-                scope.Start();
-                try
-                {
-                    var response = _nodeTypeSkusRestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _nodeTypeSkusRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _nodeTypeSkusRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, NodeTypeAvailableSku.DeserializeNodeTypeAvailableSku, _nodeTypeSkusClientDiagnostics, Pipeline, "ServiceFabricManagedNodeTypeResource.GetAvailableSkus", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

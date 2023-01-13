@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -186,37 +185,9 @@ namespace Azure.ResourceManager.Redis
         /// <returns> An async collection of <see cref="RedisFirewallRuleResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<RedisFirewallRuleResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<RedisFirewallRuleResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _redisFirewallRuleFirewallRulesClientDiagnostics.CreateScope("RedisFirewallRuleCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _redisFirewallRuleFirewallRulesRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new RedisFirewallRuleResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<RedisFirewallRuleResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _redisFirewallRuleFirewallRulesClientDiagnostics.CreateScope("RedisFirewallRuleCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _redisFirewallRuleFirewallRulesRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new RedisFirewallRuleResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _redisFirewallRuleFirewallRulesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _redisFirewallRuleFirewallRulesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new RedisFirewallRuleResource(Client, RedisFirewallRuleData.DeserializeRedisFirewallRuleData(e)), _redisFirewallRuleFirewallRulesClientDiagnostics, Pipeline, "RedisFirewallRuleCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -228,37 +199,9 @@ namespace Azure.ResourceManager.Redis
         /// <returns> A collection of <see cref="RedisFirewallRuleResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<RedisFirewallRuleResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<RedisFirewallRuleResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _redisFirewallRuleFirewallRulesClientDiagnostics.CreateScope("RedisFirewallRuleCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _redisFirewallRuleFirewallRulesRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new RedisFirewallRuleResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<RedisFirewallRuleResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _redisFirewallRuleFirewallRulesClientDiagnostics.CreateScope("RedisFirewallRuleCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _redisFirewallRuleFirewallRulesRestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new RedisFirewallRuleResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _redisFirewallRuleFirewallRulesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _redisFirewallRuleFirewallRulesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new RedisFirewallRuleResource(Client, RedisFirewallRuleData.DeserializeRedisFirewallRuleData(e)), _redisFirewallRuleFirewallRulesClientDiagnostics, Pipeline, "RedisFirewallRuleCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

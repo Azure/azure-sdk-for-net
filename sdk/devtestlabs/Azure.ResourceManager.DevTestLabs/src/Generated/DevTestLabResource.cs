@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -979,37 +980,9 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <returns> An async collection of <see cref="SubResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SubResource> GetVhdsAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<SubResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _devTestLabLabsClientDiagnostics.CreateScope("DevTestLabResource.GetVhds");
-                scope.Start();
-                try
-                {
-                    var response = await _devTestLabLabsRestClient.ListVhdsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<SubResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _devTestLabLabsClientDiagnostics.CreateScope("DevTestLabResource.GetVhds");
-                scope.Start();
-                try
-                {
-                    var response = await _devTestLabLabsRestClient.ListVhdsNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _devTestLabLabsRestClient.CreateListVhdsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _devTestLabLabsRestClient.CreateListVhdsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => JsonSerializer.Deserialize<SubResource>(e.GetRawText()), _devTestLabLabsClientDiagnostics, Pipeline, "DevTestLabResource.GetVhds", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -1021,37 +994,9 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <returns> A collection of <see cref="SubResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SubResource> GetVhds(CancellationToken cancellationToken = default)
         {
-            Page<SubResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _devTestLabLabsClientDiagnostics.CreateScope("DevTestLabResource.GetVhds");
-                scope.Start();
-                try
-                {
-                    var response = _devTestLabLabsRestClient.ListVhds(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<SubResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _devTestLabLabsClientDiagnostics.CreateScope("DevTestLabResource.GetVhds");
-                scope.Start();
-                try
-                {
-                    var response = _devTestLabLabsRestClient.ListVhdsNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _devTestLabLabsRestClient.CreateListVhdsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _devTestLabLabsRestClient.CreateListVhdsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => JsonSerializer.Deserialize<SubResource>(e.GetRawText()), _devTestLabLabsClientDiagnostics, Pipeline, "DevTestLabResource.GetVhds", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -1067,37 +1012,9 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <returns> An async collection of <see cref="DevTestLabGalleryImage" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DevTestLabGalleryImage> GetGalleryImagesAsync(string expand = null, string filter = null, int? top = null, string orderby = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<DevTestLabGalleryImage>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _galleryImagesClientDiagnostics.CreateScope("DevTestLabResource.GetGalleryImages");
-                scope.Start();
-                try
-                {
-                    var response = await _galleryImagesRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expand, filter, top, orderby, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<DevTestLabGalleryImage>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _galleryImagesClientDiagnostics.CreateScope("DevTestLabResource.GetGalleryImages");
-                scope.Start();
-                try
-                {
-                    var response = await _galleryImagesRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expand, filter, top, orderby, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _galleryImagesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expand, filter, top, orderby);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _galleryImagesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expand, filter, top, orderby);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, DevTestLabGalleryImage.DeserializeDevTestLabGalleryImage, _galleryImagesClientDiagnostics, Pipeline, "DevTestLabResource.GetGalleryImages", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -1113,37 +1030,9 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <returns> A collection of <see cref="DevTestLabGalleryImage" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DevTestLabGalleryImage> GetGalleryImages(string expand = null, string filter = null, int? top = null, string orderby = null, CancellationToken cancellationToken = default)
         {
-            Page<DevTestLabGalleryImage> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _galleryImagesClientDiagnostics.CreateScope("DevTestLabResource.GetGalleryImages");
-                scope.Start();
-                try
-                {
-                    var response = _galleryImagesRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expand, filter, top, orderby, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<DevTestLabGalleryImage> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _galleryImagesClientDiagnostics.CreateScope("DevTestLabResource.GetGalleryImages");
-                scope.Start();
-                try
-                {
-                    var response = _galleryImagesRestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expand, filter, top, orderby, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _galleryImagesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expand, filter, top, orderby);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _galleryImagesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expand, filter, top, orderby);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, DevTestLabGalleryImage.DeserializeDevTestLabGalleryImage, _galleryImagesClientDiagnostics, Pipeline, "DevTestLabResource.GetGalleryImages", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

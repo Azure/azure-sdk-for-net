@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -186,37 +185,9 @@ namespace Azure.ResourceManager.Avs
         /// <returns> An async collection of <see cref="AvsCloudLinkResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<AvsCloudLinkResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<AvsCloudLinkResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _avsCloudLinkCloudLinksClientDiagnostics.CreateScope("AvsCloudLinkCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _avsCloudLinkCloudLinksRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new AvsCloudLinkResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<AvsCloudLinkResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _avsCloudLinkCloudLinksClientDiagnostics.CreateScope("AvsCloudLinkCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _avsCloudLinkCloudLinksRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new AvsCloudLinkResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _avsCloudLinkCloudLinksRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _avsCloudLinkCloudLinksRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new AvsCloudLinkResource(Client, AvsCloudLinkData.DeserializeAvsCloudLinkData(e)), _avsCloudLinkCloudLinksClientDiagnostics, Pipeline, "AvsCloudLinkCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -228,37 +199,9 @@ namespace Azure.ResourceManager.Avs
         /// <returns> A collection of <see cref="AvsCloudLinkResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<AvsCloudLinkResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<AvsCloudLinkResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _avsCloudLinkCloudLinksClientDiagnostics.CreateScope("AvsCloudLinkCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _avsCloudLinkCloudLinksRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new AvsCloudLinkResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<AvsCloudLinkResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _avsCloudLinkCloudLinksClientDiagnostics.CreateScope("AvsCloudLinkCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _avsCloudLinkCloudLinksRestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new AvsCloudLinkResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _avsCloudLinkCloudLinksRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _avsCloudLinkCloudLinksRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new AvsCloudLinkResource(Client, AvsCloudLinkData.DeserializeAvsCloudLinkData(e)), _avsCloudLinkCloudLinksClientDiagnostics, Pipeline, "AvsCloudLinkCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

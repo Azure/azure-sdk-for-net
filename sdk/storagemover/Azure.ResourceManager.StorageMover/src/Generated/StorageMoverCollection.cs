@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -187,37 +186,9 @@ namespace Azure.ResourceManager.StorageMover
         /// <returns> An async collection of <see cref="StorageMoverResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<StorageMoverResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<StorageMoverResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _storageMoverClientDiagnostics.CreateScope("StorageMoverCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _storageMoverRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new StorageMoverResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<StorageMoverResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _storageMoverClientDiagnostics.CreateScope("StorageMoverCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _storageMoverRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new StorageMoverResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _storageMoverRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _storageMoverRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new StorageMoverResource(Client, StorageMoverData.DeserializeStorageMoverData(e)), _storageMoverClientDiagnostics, Pipeline, "StorageMoverCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -229,37 +200,9 @@ namespace Azure.ResourceManager.StorageMover
         /// <returns> A collection of <see cref="StorageMoverResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<StorageMoverResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<StorageMoverResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _storageMoverClientDiagnostics.CreateScope("StorageMoverCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _storageMoverRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new StorageMoverResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<StorageMoverResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _storageMoverClientDiagnostics.CreateScope("StorageMoverCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _storageMoverRestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new StorageMoverResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _storageMoverRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _storageMoverRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new StorageMoverResource(Client, StorageMoverData.DeserializeStorageMoverData(e)), _storageMoverClientDiagnostics, Pipeline, "StorageMoverCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

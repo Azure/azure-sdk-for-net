@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -120,22 +119,8 @@ namespace Azure.ResourceManager.Monitor
         /// <returns> An async collection of <see cref="MonitorPrivateLinkResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<MonitorPrivateLinkResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<MonitorPrivateLinkResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _monitorPrivateLinkResourcePrivateLinkResourcesClientDiagnostics.CreateScope("MonitorPrivateLinkResourceCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _monitorPrivateLinkResourcePrivateLinkResourcesRestClient.ListByPrivateLinkScopeAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new MonitorPrivateLinkResource(Client, value)), null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _monitorPrivateLinkResourcePrivateLinkResourcesRestClient.CreateListByPrivateLinkScopeRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new MonitorPrivateLinkResource(Client, MonitorPrivateLinkResourceData.DeserializeMonitorPrivateLinkResourceData(e)), _monitorPrivateLinkResourcePrivateLinkResourcesClientDiagnostics, Pipeline, "MonitorPrivateLinkResourceCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -147,22 +132,8 @@ namespace Azure.ResourceManager.Monitor
         /// <returns> A collection of <see cref="MonitorPrivateLinkResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<MonitorPrivateLinkResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<MonitorPrivateLinkResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _monitorPrivateLinkResourcePrivateLinkResourcesClientDiagnostics.CreateScope("MonitorPrivateLinkResourceCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _monitorPrivateLinkResourcePrivateLinkResourcesRestClient.ListByPrivateLinkScope(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new MonitorPrivateLinkResource(Client, value)), null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _monitorPrivateLinkResourcePrivateLinkResourcesRestClient.CreateListByPrivateLinkScopeRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new MonitorPrivateLinkResource(Client, MonitorPrivateLinkResourceData.DeserializeMonitorPrivateLinkResourceData(e)), _monitorPrivateLinkResourcePrivateLinkResourcesClientDiagnostics, Pipeline, "MonitorPrivateLinkResourceCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>

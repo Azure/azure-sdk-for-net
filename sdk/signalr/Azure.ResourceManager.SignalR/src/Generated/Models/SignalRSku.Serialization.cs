@@ -14,14 +14,19 @@ namespace Azure.ResourceManager.SignalR.Models
     {
         internal static SignalRSku DeserializeSignalRSku(JsonElement element)
         {
-            Optional<string> resourceType = default;
-            Optional<ResourceSku> sku = default;
-            Optional<SkuCapacity> capacity = default;
+            Optional<ResourceType> resourceType = default;
+            Optional<SignalRResourceSku> sku = default;
+            Optional<SignalRSkuCapacity> capacity = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("resourceType"))
                 {
-                    resourceType = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    resourceType = new ResourceType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("sku"))
@@ -31,7 +36,7 @@ namespace Azure.ResourceManager.SignalR.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    sku = ResourceSku.DeserializeResourceSku(property.Value);
+                    sku = SignalRResourceSku.DeserializeSignalRResourceSku(property.Value);
                     continue;
                 }
                 if (property.NameEquals("capacity"))
@@ -41,11 +46,11 @@ namespace Azure.ResourceManager.SignalR.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    capacity = SkuCapacity.DeserializeSkuCapacity(property.Value);
+                    capacity = SignalRSkuCapacity.DeserializeSignalRSkuCapacity(property.Value);
                     continue;
                 }
             }
-            return new SignalRSku(resourceType.Value, sku.Value, capacity.Value);
+            return new SignalRSku(Optional.ToNullable(resourceType), sku.Value, capacity.Value);
         }
     }
 }

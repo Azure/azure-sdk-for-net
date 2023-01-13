@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -121,37 +120,9 @@ namespace Azure.ResourceManager.Sql
         /// <returns> An async collection of <see cref="ManagedDatabaseTableResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ManagedDatabaseTableResource> GetAllAsync(string filter = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<ManagedDatabaseTableResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _managedDatabaseTableClientDiagnostics.CreateScope("ManagedDatabaseTableCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _managedDatabaseTableRestClient.ListBySchemaAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ManagedDatabaseTableResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<ManagedDatabaseTableResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _managedDatabaseTableClientDiagnostics.CreateScope("ManagedDatabaseTableCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _managedDatabaseTableRestClient.ListBySchemaNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ManagedDatabaseTableResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _managedDatabaseTableRestClient.CreateListBySchemaRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, filter);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _managedDatabaseTableRestClient.CreateListBySchemaNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, filter);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ManagedDatabaseTableResource(Client, DatabaseTableData.DeserializeDatabaseTableData(e)), _managedDatabaseTableClientDiagnostics, Pipeline, "ManagedDatabaseTableCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -164,37 +135,9 @@ namespace Azure.ResourceManager.Sql
         /// <returns> A collection of <see cref="ManagedDatabaseTableResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ManagedDatabaseTableResource> GetAll(string filter = null, CancellationToken cancellationToken = default)
         {
-            Page<ManagedDatabaseTableResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _managedDatabaseTableClientDiagnostics.CreateScope("ManagedDatabaseTableCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _managedDatabaseTableRestClient.ListBySchema(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, filter, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ManagedDatabaseTableResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<ManagedDatabaseTableResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _managedDatabaseTableClientDiagnostics.CreateScope("ManagedDatabaseTableCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _managedDatabaseTableRestClient.ListBySchemaNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, filter, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ManagedDatabaseTableResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _managedDatabaseTableRestClient.CreateListBySchemaRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, filter);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _managedDatabaseTableRestClient.CreateListBySchemaNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, filter);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ManagedDatabaseTableResource(Client, DatabaseTableData.DeserializeDatabaseTableData(e)), _managedDatabaseTableClientDiagnostics, Pipeline, "ManagedDatabaseTableCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

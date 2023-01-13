@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -186,37 +185,9 @@ namespace Azure.ResourceManager.Dynatrace
         /// <returns> An async collection of <see cref="DynatraceTagRuleResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DynatraceTagRuleResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<DynatraceTagRuleResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _dynatraceTagRuleTagRulesClientDiagnostics.CreateScope("DynatraceTagRuleCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _dynatraceTagRuleTagRulesRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new DynatraceTagRuleResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<DynatraceTagRuleResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _dynatraceTagRuleTagRulesClientDiagnostics.CreateScope("DynatraceTagRuleCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _dynatraceTagRuleTagRulesRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new DynatraceTagRuleResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _dynatraceTagRuleTagRulesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _dynatraceTagRuleTagRulesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DynatraceTagRuleResource(Client, DynatraceTagRuleData.DeserializeDynatraceTagRuleData(e)), _dynatraceTagRuleTagRulesClientDiagnostics, Pipeline, "DynatraceTagRuleCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -228,37 +199,9 @@ namespace Azure.ResourceManager.Dynatrace
         /// <returns> A collection of <see cref="DynatraceTagRuleResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DynatraceTagRuleResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<DynatraceTagRuleResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _dynatraceTagRuleTagRulesClientDiagnostics.CreateScope("DynatraceTagRuleCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _dynatraceTagRuleTagRulesRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new DynatraceTagRuleResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<DynatraceTagRuleResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _dynatraceTagRuleTagRulesClientDiagnostics.CreateScope("DynatraceTagRuleCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _dynatraceTagRuleTagRulesRestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new DynatraceTagRuleResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _dynatraceTagRuleTagRulesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _dynatraceTagRuleTagRulesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DynatraceTagRuleResource(Client, DynatraceTagRuleData.DeserializeDynatraceTagRuleData(e)), _dynatraceTagRuleTagRulesClientDiagnostics, Pipeline, "DynatraceTagRuleCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

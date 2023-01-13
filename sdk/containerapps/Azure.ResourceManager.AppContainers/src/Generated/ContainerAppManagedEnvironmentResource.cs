@@ -461,37 +461,9 @@ namespace Azure.ResourceManager.AppContainers
         /// <returns> An async collection of <see cref="ContainerAppWorkloadProfileState" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ContainerAppWorkloadProfileState> GetWorkloadProfileStatesAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<ContainerAppWorkloadProfileState>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _containerAppManagedEnvironmentManagedEnvironmentsClientDiagnostics.CreateScope("ContainerAppManagedEnvironmentResource.GetWorkloadProfileStates");
-                scope.Start();
-                try
-                {
-                    var response = await _containerAppManagedEnvironmentManagedEnvironmentsRestClient.ListWorkloadProfileStatesAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<ContainerAppWorkloadProfileState>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _containerAppManagedEnvironmentManagedEnvironmentsClientDiagnostics.CreateScope("ContainerAppManagedEnvironmentResource.GetWorkloadProfileStates");
-                scope.Start();
-                try
-                {
-                    var response = await _containerAppManagedEnvironmentManagedEnvironmentsRestClient.ListWorkloadProfileStatesNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _containerAppManagedEnvironmentManagedEnvironmentsRestClient.CreateListWorkloadProfileStatesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _containerAppManagedEnvironmentManagedEnvironmentsRestClient.CreateListWorkloadProfileStatesNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, ContainerAppWorkloadProfileState.DeserializeContainerAppWorkloadProfileState, _containerAppManagedEnvironmentManagedEnvironmentsClientDiagnostics, Pipeline, "ContainerAppManagedEnvironmentResource.GetWorkloadProfileStates", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -503,37 +475,9 @@ namespace Azure.ResourceManager.AppContainers
         /// <returns> A collection of <see cref="ContainerAppWorkloadProfileState" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ContainerAppWorkloadProfileState> GetWorkloadProfileStates(CancellationToken cancellationToken = default)
         {
-            Page<ContainerAppWorkloadProfileState> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _containerAppManagedEnvironmentManagedEnvironmentsClientDiagnostics.CreateScope("ContainerAppManagedEnvironmentResource.GetWorkloadProfileStates");
-                scope.Start();
-                try
-                {
-                    var response = _containerAppManagedEnvironmentManagedEnvironmentsRestClient.ListWorkloadProfileStates(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<ContainerAppWorkloadProfileState> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _containerAppManagedEnvironmentManagedEnvironmentsClientDiagnostics.CreateScope("ContainerAppManagedEnvironmentResource.GetWorkloadProfileStates");
-                scope.Start();
-                try
-                {
-                    var response = _containerAppManagedEnvironmentManagedEnvironmentsRestClient.ListWorkloadProfileStatesNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _containerAppManagedEnvironmentManagedEnvironmentsRestClient.CreateListWorkloadProfileStatesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _containerAppManagedEnvironmentManagedEnvironmentsRestClient.CreateListWorkloadProfileStatesNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, ContainerAppWorkloadProfileState.DeserializeContainerAppWorkloadProfileState, _containerAppManagedEnvironmentManagedEnvironmentsClientDiagnostics, Pipeline, "ContainerAppManagedEnvironmentResource.GetWorkloadProfileStates", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
