@@ -11,8 +11,9 @@ using Azure;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager;
+using Azure.ResourceManager.Relay;
 
-namespace Azure.ResourceManager.Relay
+namespace Azure.ResourceManager.Relay.Samples
 {
     public partial class Sample_RelayHybridConnectionCollection
     {
@@ -24,8 +25,10 @@ namespace Azure.ResourceManager.Relay
             // Generated from example definition: specification/relay/resource-manager/Microsoft.Relay/stable/2021-11-01/examples/HybridConnection/RelayHybridConnectionListAll.json
             // this example is just showing the usage of "HybridConnections_ListByNamespace" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this RelayNamespaceResource created on azure
             // for more information of creating RelayNamespaceResource, please refer to the document of RelayNamespaceResource
@@ -59,8 +62,10 @@ namespace Azure.ResourceManager.Relay
             // Generated from example definition: specification/relay/resource-manager/Microsoft.Relay/stable/2021-11-01/examples/HybridConnection/RelayHybridConnectionCreate.json
             // this example is just showing the usage of "HybridConnections_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this RelayNamespaceResource created on azure
             // for more information of creating RelayNamespaceResource, please refer to the document of RelayNamespaceResource
@@ -97,8 +102,10 @@ namespace Azure.ResourceManager.Relay
             // Generated from example definition: specification/relay/resource-manager/Microsoft.Relay/stable/2021-11-01/examples/HybridConnection/RelayHybridConnectionGet.json
             // this example is just showing the usage of "HybridConnections_Get" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this RelayNamespaceResource created on azure
             // for more information of creating RelayNamespaceResource, please refer to the document of RelayNamespaceResource
@@ -130,8 +137,10 @@ namespace Azure.ResourceManager.Relay
             // Generated from example definition: specification/relay/resource-manager/Microsoft.Relay/stable/2021-11-01/examples/HybridConnection/RelayHybridConnectionGet.json
             // this example is just showing the usage of "HybridConnections_Get" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this RelayNamespaceResource created on azure
             // for more information of creating RelayNamespaceResource, please refer to the document of RelayNamespaceResource

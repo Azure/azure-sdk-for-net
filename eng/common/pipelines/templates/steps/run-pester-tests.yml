@@ -1,0 +1,55 @@
+parameters:
+  - name: TargetDirectory
+    type: string
+  - name: CustomTestSteps
+    type: object
+    default: []
+  - name: EnvVars
+    type: object
+    default: {}
+  - name: TargetTags
+    type: string
+    default: ''
+
+steps:
+  - pwsh: |
+     Install-Module -Name Pester -Force
+    displayName: Install Pester
+
+   # default test steps
+  - ${{ if eq(length(parameters.CustomTestSteps), 0) }}:
+    - pwsh: |
+        $tags = "${{ parameters.TargetTags }}" -Split "," | ForEach-Object { return $_.Trim() }
+
+        $config = New-PesterConfiguration
+        $config.CodeCoverage.Enabled = $true
+        $config.TestResult.Enabled = $true
+        $config.Run.PassThru = $true
+
+        if ($tags) {
+          $config.Filter.Tag = $tags
+        }
+
+        Invoke-Pester -Configuration $config
+      displayName: Run Tests
+      env: ${{ parameters.EnvVars }}
+      workingDirectory: $(Build.SourcesDirectory)/${{ parameters.TargetDirectory }}
+
+  - ${{ if not(eq(length(parameters.CustomTestSteps), 0)) }}:
+    - ${{ parameters.CustomTestSteps }}
+
+  - task: PublishTestResults@2
+    displayName: 'Publish Test Results'
+    condition: succeededOrFailed()
+    inputs:
+      testResultsFormat: 'NUnit'
+      testResultsFiles: $(Build.SourcesDirectory)/${{ parameters.TargetDirectory }}/testResults.xml
+      testRunTitle: '$(System.StageName)_$(Agent.JobName)_Tests'
+
+  - task: PublishCodeCoverageResults@1
+    displayName: 'Publish Code Coverage to Azure DevOps'
+    condition: succeededOrFailed()
+    inputs:
+      codeCoverageTool: 'JaCoCo'
+      summaryFileLocation: '$(Build.SourcesDirectory)/${{ parameters.TargetDirectory }}/coverage.xml'
+      pathToSources: '$(Build.SourcesDirectory)/${{ parameters.TargetDirectory }}'

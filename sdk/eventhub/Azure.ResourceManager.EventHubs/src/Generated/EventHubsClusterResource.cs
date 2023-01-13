@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -263,22 +264,8 @@ namespace Azure.ResourceManager.EventHubs
         /// <returns> An async collection of <see cref="SubResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SubResource> GetNamespacesAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<SubResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _eventHubsClusterClustersClientDiagnostics.CreateScope("EventHubsClusterResource.GetNamespaces");
-                scope.Start();
-                try
-                {
-                    var response = await _eventHubsClusterClustersRestClient.ListNamespacesAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _eventHubsClusterClustersRestClient.CreateListNamespacesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => JsonSerializer.Deserialize<SubResource>(e.GetRawText()), _eventHubsClusterClustersClientDiagnostics, Pipeline, "EventHubsClusterResource.GetNamespaces", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -290,22 +277,8 @@ namespace Azure.ResourceManager.EventHubs
         /// <returns> A collection of <see cref="SubResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SubResource> GetNamespaces(CancellationToken cancellationToken = default)
         {
-            Page<SubResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _eventHubsClusterClustersClientDiagnostics.CreateScope("EventHubsClusterResource.GetNamespaces");
-                scope.Start();
-                try
-                {
-                    var response = _eventHubsClusterClustersRestClient.ListNamespaces(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _eventHubsClusterClustersRestClient.CreateListNamespacesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => JsonSerializer.Deserialize<SubResource>(e.GetRawText()), _eventHubsClusterClustersClientDiagnostics, Pipeline, "EventHubsClusterResource.GetNamespaces", "value", null, cancellationToken);
         }
 
         /// <summary>

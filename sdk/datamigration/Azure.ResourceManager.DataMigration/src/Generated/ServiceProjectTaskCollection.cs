@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -189,37 +188,9 @@ namespace Azure.ResourceManager.DataMigration
         /// <returns> An async collection of <see cref="ServiceProjectTaskResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ServiceProjectTaskResource> GetAllAsync(string taskType = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<ServiceProjectTaskResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _serviceProjectTaskTasksClientDiagnostics.CreateScope("ServiceProjectTaskCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _serviceProjectTaskTasksRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, taskType, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ServiceProjectTaskResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<ServiceProjectTaskResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _serviceProjectTaskTasksClientDiagnostics.CreateScope("ServiceProjectTaskCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _serviceProjectTaskTasksRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, taskType, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ServiceProjectTaskResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _serviceProjectTaskTasksRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, taskType);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _serviceProjectTaskTasksRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, taskType);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ServiceProjectTaskResource(Client, ProjectTaskData.DeserializeProjectTaskData(e)), _serviceProjectTaskTasksClientDiagnostics, Pipeline, "ServiceProjectTaskCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -232,37 +203,9 @@ namespace Azure.ResourceManager.DataMigration
         /// <returns> A collection of <see cref="ServiceProjectTaskResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ServiceProjectTaskResource> GetAll(string taskType = null, CancellationToken cancellationToken = default)
         {
-            Page<ServiceProjectTaskResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _serviceProjectTaskTasksClientDiagnostics.CreateScope("ServiceProjectTaskCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _serviceProjectTaskTasksRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, taskType, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ServiceProjectTaskResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<ServiceProjectTaskResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _serviceProjectTaskTasksClientDiagnostics.CreateScope("ServiceProjectTaskCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _serviceProjectTaskTasksRestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, taskType, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ServiceProjectTaskResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _serviceProjectTaskTasksRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, taskType);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _serviceProjectTaskTasksRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, taskType);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ServiceProjectTaskResource(Client, ProjectTaskData.DeserializeProjectTaskData(e)), _serviceProjectTaskTasksClientDiagnostics, Pipeline, "ServiceProjectTaskCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

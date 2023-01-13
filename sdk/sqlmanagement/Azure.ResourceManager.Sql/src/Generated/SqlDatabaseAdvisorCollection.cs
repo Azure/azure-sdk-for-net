@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -121,22 +120,8 @@ namespace Azure.ResourceManager.Sql
         /// <returns> An async collection of <see cref="SqlDatabaseAdvisorResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SqlDatabaseAdvisorResource> GetAllAsync(string expand = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<SqlDatabaseAdvisorResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _sqlDatabaseAdvisorDatabaseAdvisorsClientDiagnostics.CreateScope("SqlDatabaseAdvisorCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _sqlDatabaseAdvisorDatabaseAdvisorsRestClient.ListByDatabaseAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Select(value => new SqlDatabaseAdvisorResource(Client, value)), null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _sqlDatabaseAdvisorDatabaseAdvisorsRestClient.CreateListByDatabaseRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, expand);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new SqlDatabaseAdvisorResource(Client, SqlAdvisorData.DeserializeSqlAdvisorData(e)), _sqlDatabaseAdvisorDatabaseAdvisorsClientDiagnostics, Pipeline, "SqlDatabaseAdvisorCollection.GetAll", "", null, cancellationToken);
         }
 
         /// <summary>
@@ -149,22 +134,8 @@ namespace Azure.ResourceManager.Sql
         /// <returns> A collection of <see cref="SqlDatabaseAdvisorResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SqlDatabaseAdvisorResource> GetAll(string expand = null, CancellationToken cancellationToken = default)
         {
-            Page<SqlDatabaseAdvisorResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _sqlDatabaseAdvisorDatabaseAdvisorsClientDiagnostics.CreateScope("SqlDatabaseAdvisorCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _sqlDatabaseAdvisorDatabaseAdvisorsRestClient.ListByDatabase(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, expand, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Select(value => new SqlDatabaseAdvisorResource(Client, value)), null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _sqlDatabaseAdvisorDatabaseAdvisorsRestClient.CreateListByDatabaseRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, expand);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new SqlDatabaseAdvisorResource(Client, SqlAdvisorData.DeserializeSqlAdvisorData(e)), _sqlDatabaseAdvisorDatabaseAdvisorsClientDiagnostics, Pipeline, "SqlDatabaseAdvisorCollection.GetAll", "", null, cancellationToken);
         }
 
         /// <summary>

@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -262,22 +261,8 @@ namespace Azure.ResourceManager.Resources
         /// <returns> An async collection of <see cref="ScriptLogResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ScriptLogResource> GetLogsAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<ScriptLogResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _scriptLogDeploymentScriptsClientDiagnostics.CreateScope("ArmDeploymentScriptResource.GetLogs");
-                scope.Start();
-                try
-                {
-                    var response = await _scriptLogDeploymentScriptsRestClient.GetLogsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ScriptLogResource(Client, value)), null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
+            Core.HttpMessage FirstPageRequest(int? pageSizeHint) => _scriptLogDeploymentScriptsRestClient.CreateGetLogsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new ScriptLogResource(Client, ScriptLogData.DeserializeScriptLogData(e)), _scriptLogDeploymentScriptsClientDiagnostics, Pipeline, "ArmDeploymentScriptResource.GetLogs", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -289,22 +274,8 @@ namespace Azure.ResourceManager.Resources
         /// <returns> A collection of <see cref="ScriptLogResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ScriptLogResource> GetLogs(CancellationToken cancellationToken = default)
         {
-            Page<ScriptLogResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _scriptLogDeploymentScriptsClientDiagnostics.CreateScope("ArmDeploymentScriptResource.GetLogs");
-                scope.Start();
-                try
-                {
-                    var response = _scriptLogDeploymentScriptsRestClient.GetLogs(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ScriptLogResource(Client, value)), null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
+            Core.HttpMessage FirstPageRequest(int? pageSizeHint) => _scriptLogDeploymentScriptsRestClient.CreateGetLogsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new ScriptLogResource(Client, ScriptLogData.DeserializeScriptLogData(e)), _scriptLogDeploymentScriptsClientDiagnostics, Pipeline, "ArmDeploymentScriptResource.GetLogs", "value", null, cancellationToken);
         }
 
         /// <summary>

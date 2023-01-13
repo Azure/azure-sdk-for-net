@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -187,37 +186,9 @@ namespace Azure.ResourceManager.Automation
         /// <returns> An async collection of <see cref="AutomationAccountModuleResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<AutomationAccountModuleResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<AutomationAccountModuleResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _automationAccountModuleModuleClientDiagnostics.CreateScope("AutomationAccountModuleCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _automationAccountModuleModuleRestClient.ListByAutomationAccountAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new AutomationAccountModuleResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<AutomationAccountModuleResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _automationAccountModuleModuleClientDiagnostics.CreateScope("AutomationAccountModuleCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _automationAccountModuleModuleRestClient.ListByAutomationAccountNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new AutomationAccountModuleResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _automationAccountModuleModuleRestClient.CreateListByAutomationAccountRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _automationAccountModuleModuleRestClient.CreateListByAutomationAccountNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new AutomationAccountModuleResource(Client, AutomationModuleData.DeserializeAutomationModuleData(e)), _automationAccountModuleModuleClientDiagnostics, Pipeline, "AutomationAccountModuleCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -229,37 +200,9 @@ namespace Azure.ResourceManager.Automation
         /// <returns> A collection of <see cref="AutomationAccountModuleResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<AutomationAccountModuleResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<AutomationAccountModuleResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _automationAccountModuleModuleClientDiagnostics.CreateScope("AutomationAccountModuleCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _automationAccountModuleModuleRestClient.ListByAutomationAccount(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new AutomationAccountModuleResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<AutomationAccountModuleResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _automationAccountModuleModuleClientDiagnostics.CreateScope("AutomationAccountModuleCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _automationAccountModuleModuleRestClient.ListByAutomationAccountNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new AutomationAccountModuleResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _automationAccountModuleModuleRestClient.CreateListByAutomationAccountRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _automationAccountModuleModuleRestClient.CreateListByAutomationAccountNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new AutomationAccountModuleResource(Client, AutomationModuleData.DeserializeAutomationModuleData(e)), _automationAccountModuleModuleClientDiagnostics, Pipeline, "AutomationAccountModuleCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

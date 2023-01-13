@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -113,37 +112,9 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <returns> An async collection of <see cref="SecurityCenterLocationResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SecurityCenterLocationResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<SecurityCenterLocationResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _securityCenterLocationLocationsClientDiagnostics.CreateScope("SecurityCenterLocationCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _securityCenterLocationLocationsRestClient.ListAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new SecurityCenterLocationResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<SecurityCenterLocationResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _securityCenterLocationLocationsClientDiagnostics.CreateScope("SecurityCenterLocationCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _securityCenterLocationLocationsRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new SecurityCenterLocationResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _securityCenterLocationLocationsRestClient.CreateListRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _securityCenterLocationLocationsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SecurityCenterLocationResource(Client, SecurityCenterLocationData.DeserializeSecurityCenterLocationData(e)), _securityCenterLocationLocationsClientDiagnostics, Pipeline, "SecurityCenterLocationCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -155,37 +126,9 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <returns> A collection of <see cref="SecurityCenterLocationResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SecurityCenterLocationResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<SecurityCenterLocationResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _securityCenterLocationLocationsClientDiagnostics.CreateScope("SecurityCenterLocationCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _securityCenterLocationLocationsRestClient.List(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new SecurityCenterLocationResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<SecurityCenterLocationResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _securityCenterLocationLocationsClientDiagnostics.CreateScope("SecurityCenterLocationCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _securityCenterLocationLocationsRestClient.ListNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new SecurityCenterLocationResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _securityCenterLocationLocationsRestClient.CreateListRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _securityCenterLocationLocationsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SecurityCenterLocationResource(Client, SecurityCenterLocationData.DeserializeSecurityCenterLocationData(e)), _securityCenterLocationLocationsClientDiagnostics, Pipeline, "SecurityCenterLocationCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

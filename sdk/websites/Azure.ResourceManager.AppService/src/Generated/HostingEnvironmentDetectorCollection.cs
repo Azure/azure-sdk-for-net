@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -126,37 +125,9 @@ namespace Azure.ResourceManager.AppService
         /// <returns> An async collection of <see cref="HostingEnvironmentDetectorResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<HostingEnvironmentDetectorResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<HostingEnvironmentDetectorResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _hostingEnvironmentDetectorDiagnosticsClientDiagnostics.CreateScope("HostingEnvironmentDetectorCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _hostingEnvironmentDetectorDiagnosticsRestClient.ListHostingEnvironmentDetectorResponsesAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new HostingEnvironmentDetectorResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<HostingEnvironmentDetectorResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _hostingEnvironmentDetectorDiagnosticsClientDiagnostics.CreateScope("HostingEnvironmentDetectorCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _hostingEnvironmentDetectorDiagnosticsRestClient.ListHostingEnvironmentDetectorResponsesNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new HostingEnvironmentDetectorResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _hostingEnvironmentDetectorDiagnosticsRestClient.CreateListHostingEnvironmentDetectorResponsesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _hostingEnvironmentDetectorDiagnosticsRestClient.CreateListHostingEnvironmentDetectorResponsesNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new HostingEnvironmentDetectorResource(Client, AppServiceDetectorData.DeserializeAppServiceDetectorData(e)), _hostingEnvironmentDetectorDiagnosticsClientDiagnostics, Pipeline, "HostingEnvironmentDetectorCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -168,37 +139,9 @@ namespace Azure.ResourceManager.AppService
         /// <returns> A collection of <see cref="HostingEnvironmentDetectorResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<HostingEnvironmentDetectorResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<HostingEnvironmentDetectorResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _hostingEnvironmentDetectorDiagnosticsClientDiagnostics.CreateScope("HostingEnvironmentDetectorCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _hostingEnvironmentDetectorDiagnosticsRestClient.ListHostingEnvironmentDetectorResponses(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new HostingEnvironmentDetectorResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<HostingEnvironmentDetectorResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _hostingEnvironmentDetectorDiagnosticsClientDiagnostics.CreateScope("HostingEnvironmentDetectorCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _hostingEnvironmentDetectorDiagnosticsRestClient.ListHostingEnvironmentDetectorResponsesNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new HostingEnvironmentDetectorResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _hostingEnvironmentDetectorDiagnosticsRestClient.CreateListHostingEnvironmentDetectorResponsesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _hostingEnvironmentDetectorDiagnosticsRestClient.CreateListHostingEnvironmentDetectorResponsesNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new HostingEnvironmentDetectorResource(Client, AppServiceDetectorData.DeserializeAppServiceDetectorData(e)), _hostingEnvironmentDetectorDiagnosticsClientDiagnostics, Pipeline, "HostingEnvironmentDetectorCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
