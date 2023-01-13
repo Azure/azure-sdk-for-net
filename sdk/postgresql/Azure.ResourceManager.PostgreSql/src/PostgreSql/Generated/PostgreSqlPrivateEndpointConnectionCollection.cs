@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -186,37 +185,9 @@ namespace Azure.ResourceManager.PostgreSql
         /// <returns> An async collection of <see cref="PostgreSqlPrivateEndpointConnectionResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<PostgreSqlPrivateEndpointConnectionResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<PostgreSqlPrivateEndpointConnectionResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _postgreSqlPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics.CreateScope("PostgreSqlPrivateEndpointConnectionCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _postgreSqlPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.ListByServerAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new PostgreSqlPrivateEndpointConnectionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<PostgreSqlPrivateEndpointConnectionResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _postgreSqlPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics.CreateScope("PostgreSqlPrivateEndpointConnectionCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _postgreSqlPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.ListByServerNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new PostgreSqlPrivateEndpointConnectionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _postgreSqlPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateListByServerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _postgreSqlPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateListByServerNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new PostgreSqlPrivateEndpointConnectionResource(Client, PostgreSqlPrivateEndpointConnectionData.DeserializePostgreSqlPrivateEndpointConnectionData(e)), _postgreSqlPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics, Pipeline, "PostgreSqlPrivateEndpointConnectionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -228,37 +199,9 @@ namespace Azure.ResourceManager.PostgreSql
         /// <returns> A collection of <see cref="PostgreSqlPrivateEndpointConnectionResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<PostgreSqlPrivateEndpointConnectionResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<PostgreSqlPrivateEndpointConnectionResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _postgreSqlPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics.CreateScope("PostgreSqlPrivateEndpointConnectionCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _postgreSqlPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.ListByServer(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new PostgreSqlPrivateEndpointConnectionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<PostgreSqlPrivateEndpointConnectionResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _postgreSqlPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics.CreateScope("PostgreSqlPrivateEndpointConnectionCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _postgreSqlPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.ListByServerNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new PostgreSqlPrivateEndpointConnectionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _postgreSqlPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateListByServerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _postgreSqlPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateListByServerNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new PostgreSqlPrivateEndpointConnectionResource(Client, PostgreSqlPrivateEndpointConnectionData.DeserializePostgreSqlPrivateEndpointConnectionData(e)), _postgreSqlPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics, Pipeline, "PostgreSqlPrivateEndpointConnectionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

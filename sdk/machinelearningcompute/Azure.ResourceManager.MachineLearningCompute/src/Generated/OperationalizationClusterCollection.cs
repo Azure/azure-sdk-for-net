@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -188,37 +187,9 @@ namespace Azure.ResourceManager.MachineLearningCompute
         /// <returns> An async collection of <see cref="OperationalizationClusterResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<OperationalizationClusterResource> GetAllAsync(string skiptoken = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<OperationalizationClusterResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _operationalizationClusterClientDiagnostics.CreateScope("OperationalizationClusterCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _operationalizationClusterRestClient.ListByResourceGroupAsync(Id.SubscriptionId, Id.ResourceGroupName, skiptoken, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new OperationalizationClusterResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<OperationalizationClusterResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _operationalizationClusterClientDiagnostics.CreateScope("OperationalizationClusterCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _operationalizationClusterRestClient.ListByResourceGroupNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, skiptoken, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new OperationalizationClusterResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _operationalizationClusterRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, skiptoken);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _operationalizationClusterRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, skiptoken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new OperationalizationClusterResource(Client, OperationalizationClusterData.DeserializeOperationalizationClusterData(e)), _operationalizationClusterClientDiagnostics, Pipeline, "OperationalizationClusterCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -231,37 +202,9 @@ namespace Azure.ResourceManager.MachineLearningCompute
         /// <returns> A collection of <see cref="OperationalizationClusterResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<OperationalizationClusterResource> GetAll(string skiptoken = null, CancellationToken cancellationToken = default)
         {
-            Page<OperationalizationClusterResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _operationalizationClusterClientDiagnostics.CreateScope("OperationalizationClusterCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _operationalizationClusterRestClient.ListByResourceGroup(Id.SubscriptionId, Id.ResourceGroupName, skiptoken, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new OperationalizationClusterResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<OperationalizationClusterResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _operationalizationClusterClientDiagnostics.CreateScope("OperationalizationClusterCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _operationalizationClusterRestClient.ListByResourceGroupNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, skiptoken, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new OperationalizationClusterResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _operationalizationClusterRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, skiptoken);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _operationalizationClusterRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, skiptoken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new OperationalizationClusterResource(Client, OperationalizationClusterData.DeserializeOperationalizationClusterData(e)), _operationalizationClusterClientDiagnostics, Pipeline, "OperationalizationClusterCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

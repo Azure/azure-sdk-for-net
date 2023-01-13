@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -116,22 +115,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <returns> An async collection of <see cref="ReplicationEligibilityResultResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ReplicationEligibilityResultResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<ReplicationEligibilityResultResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _replicationEligibilityResultClientDiagnostics.CreateScope("ReplicationEligibilityResultCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _replicationEligibilityResultRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, _virtualMachineName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ReplicationEligibilityResultResource(Client, value)), null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _replicationEligibilityResultRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, _virtualMachineName);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new ReplicationEligibilityResultResource(Client, ReplicationEligibilityResultData.DeserializeReplicationEligibilityResultData(e)), _replicationEligibilityResultClientDiagnostics, Pipeline, "ReplicationEligibilityResultCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -143,22 +128,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <returns> A collection of <see cref="ReplicationEligibilityResultResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ReplicationEligibilityResultResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<ReplicationEligibilityResultResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _replicationEligibilityResultClientDiagnostics.CreateScope("ReplicationEligibilityResultCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _replicationEligibilityResultRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, _virtualMachineName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ReplicationEligibilityResultResource(Client, value)), null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _replicationEligibilityResultRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, _virtualMachineName);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new ReplicationEligibilityResultResource(Client, ReplicationEligibilityResultData.DeserializeReplicationEligibilityResultData(e)), _replicationEligibilityResultClientDiagnostics, Pipeline, "ReplicationEligibilityResultCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>

@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -187,22 +186,8 @@ namespace Azure.ResourceManager.CosmosDB
         /// <returns> An async collection of <see cref="CassandraTableResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<CassandraTableResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<CassandraTableResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _cassandraTableCassandraResourcesClientDiagnostics.CreateScope("CassandraTableCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _cassandraTableCassandraResourcesRestClient.ListCassandraTablesAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new CassandraTableResource(Client, value)), null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _cassandraTableCassandraResourcesRestClient.CreateListCassandraTablesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new CassandraTableResource(Client, CassandraTableData.DeserializeCassandraTableData(e)), _cassandraTableCassandraResourcesClientDiagnostics, Pipeline, "CassandraTableCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -214,22 +199,8 @@ namespace Azure.ResourceManager.CosmosDB
         /// <returns> A collection of <see cref="CassandraTableResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<CassandraTableResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<CassandraTableResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _cassandraTableCassandraResourcesClientDiagnostics.CreateScope("CassandraTableCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _cassandraTableCassandraResourcesRestClient.ListCassandraTables(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new CassandraTableResource(Client, value)), null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _cassandraTableCassandraResourcesRestClient.CreateListCassandraTablesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new CassandraTableResource(Client, CassandraTableData.DeserializeCassandraTableData(e)), _cassandraTableCassandraResourcesClientDiagnostics, Pipeline, "CassandraTableCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>

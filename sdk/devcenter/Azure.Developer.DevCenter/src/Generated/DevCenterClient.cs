@@ -6,9 +6,6 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
-using System.Runtime.CompilerServices;
-using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
@@ -133,24 +130,9 @@ namespace Azure.Developer.DevCenter
         /// <include file="Docs/DevCenterClient.xml" path="doc/members/member[@name='GetProjectsAsync(String,Int32,RequestContext)']/*" />
         public virtual AsyncPageable<BinaryData> GetProjectsAsync(string filter = null, int? maxCount = null, RequestContext context = null)
         {
-            return GetProjectsImplementationAsync("DevCenterClient.GetProjects", filter, maxCount, context);
-        }
-
-        private AsyncPageable<BinaryData> GetProjectsImplementationAsync(string diagnosticsScopeName, string filter, int? maxCount, RequestContext context)
-        {
-            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, ClientDiagnostics, diagnosticsScopeName);
-            async IAsyncEnumerable<Page<BinaryData>> CreateEnumerableAsync(string nextLink, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken = default)
-            {
-                do
-                {
-                    var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetProjectsRequest(filter, maxCount, context)
-                        : CreateGetProjectsNextPageRequest(nextLink, filter, maxCount, context);
-                    var page = await LowLevelPageableHelpers.ProcessMessageAsync(_pipeline, message, context, "value", "nextLink", cancellationToken).ConfigureAwait(false);
-                    nextLink = page.ContinuationToken;
-                    yield return page;
-                } while (!string.IsNullOrEmpty(nextLink));
-            }
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetProjectsRequest(filter, maxCount, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetProjectsNextPageRequest(nextLink, filter, maxCount, context);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "DevCenterClient.GetProjects", "value", "nextLink", context);
         }
 
         /// <summary> Lists all projects. </summary>
@@ -162,24 +144,9 @@ namespace Azure.Developer.DevCenter
         /// <include file="Docs/DevCenterClient.xml" path="doc/members/member[@name='GetProjects(String,Int32,RequestContext)']/*" />
         public virtual Pageable<BinaryData> GetProjects(string filter = null, int? maxCount = null, RequestContext context = null)
         {
-            return GetProjectsImplementation("DevCenterClient.GetProjects", filter, maxCount, context);
-        }
-
-        private Pageable<BinaryData> GetProjectsImplementation(string diagnosticsScopeName, string filter, int? maxCount, RequestContext context)
-        {
-            return PageableHelpers.CreatePageable(CreateEnumerable, ClientDiagnostics, diagnosticsScopeName);
-            IEnumerable<Page<BinaryData>> CreateEnumerable(string nextLink, int? pageSizeHint)
-            {
-                do
-                {
-                    var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetProjectsRequest(filter, maxCount, context)
-                        : CreateGetProjectsNextPageRequest(nextLink, filter, maxCount, context);
-                    var page = LowLevelPageableHelpers.ProcessMessage(_pipeline, message, context, "value", "nextLink");
-                    nextLink = page.ContinuationToken;
-                    yield return page;
-                } while (!string.IsNullOrEmpty(nextLink));
-            }
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetProjectsRequest(filter, maxCount, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetProjectsNextPageRequest(nextLink, filter, maxCount, context);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "DevCenterClient.GetProjects", "value", "nextLink", context);
         }
 
         /// <summary> Lists Dev Boxes that the caller has access to in the DevCenter. </summary>
@@ -191,24 +158,9 @@ namespace Azure.Developer.DevCenter
         /// <include file="Docs/DevCenterClient.xml" path="doc/members/member[@name='GetAllDevBoxesAsync(String,Int32,RequestContext)']/*" />
         public virtual AsyncPageable<BinaryData> GetAllDevBoxesAsync(string filter = null, int? maxCount = null, RequestContext context = null)
         {
-            return GetAllDevBoxesImplementationAsync("DevCenterClient.GetAllDevBoxes", filter, maxCount, context);
-        }
-
-        private AsyncPageable<BinaryData> GetAllDevBoxesImplementationAsync(string diagnosticsScopeName, string filter, int? maxCount, RequestContext context)
-        {
-            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, ClientDiagnostics, diagnosticsScopeName);
-            async IAsyncEnumerable<Page<BinaryData>> CreateEnumerableAsync(string nextLink, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken = default)
-            {
-                do
-                {
-                    var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetAllDevBoxesRequest(filter, maxCount, context)
-                        : CreateGetAllDevBoxesNextPageRequest(nextLink, filter, maxCount, context);
-                    var page = await LowLevelPageableHelpers.ProcessMessageAsync(_pipeline, message, context, "value", "nextLink", cancellationToken).ConfigureAwait(false);
-                    nextLink = page.ContinuationToken;
-                    yield return page;
-                } while (!string.IsNullOrEmpty(nextLink));
-            }
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetAllDevBoxesRequest(filter, maxCount, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetAllDevBoxesNextPageRequest(nextLink, filter, maxCount, context);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "DevCenterClient.GetAllDevBoxes", "value", "nextLink", context);
         }
 
         /// <summary> Lists Dev Boxes that the caller has access to in the DevCenter. </summary>
@@ -220,24 +172,9 @@ namespace Azure.Developer.DevCenter
         /// <include file="Docs/DevCenterClient.xml" path="doc/members/member[@name='GetAllDevBoxes(String,Int32,RequestContext)']/*" />
         public virtual Pageable<BinaryData> GetAllDevBoxes(string filter = null, int? maxCount = null, RequestContext context = null)
         {
-            return GetAllDevBoxesImplementation("DevCenterClient.GetAllDevBoxes", filter, maxCount, context);
-        }
-
-        private Pageable<BinaryData> GetAllDevBoxesImplementation(string diagnosticsScopeName, string filter, int? maxCount, RequestContext context)
-        {
-            return PageableHelpers.CreatePageable(CreateEnumerable, ClientDiagnostics, diagnosticsScopeName);
-            IEnumerable<Page<BinaryData>> CreateEnumerable(string nextLink, int? pageSizeHint)
-            {
-                do
-                {
-                    var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetAllDevBoxesRequest(filter, maxCount, context)
-                        : CreateGetAllDevBoxesNextPageRequest(nextLink, filter, maxCount, context);
-                    var page = LowLevelPageableHelpers.ProcessMessage(_pipeline, message, context, "value", "nextLink");
-                    nextLink = page.ContinuationToken;
-                    yield return page;
-                } while (!string.IsNullOrEmpty(nextLink));
-            }
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetAllDevBoxesRequest(filter, maxCount, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetAllDevBoxesNextPageRequest(nextLink, filter, maxCount, context);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "DevCenterClient.GetAllDevBoxes", "value", "nextLink", context);
         }
 
         /// <summary> Lists Dev Boxes in the Dev Center for a particular user. </summary>
@@ -254,24 +191,9 @@ namespace Azure.Developer.DevCenter
         {
             Argument.AssertNotNullOrEmpty(userId, nameof(userId));
 
-            return GetAllDevBoxesByUserImplementationAsync("DevCenterClient.GetAllDevBoxesByUser", userId, filter, maxCount, context);
-        }
-
-        private AsyncPageable<BinaryData> GetAllDevBoxesByUserImplementationAsync(string diagnosticsScopeName, string userId, string filter, int? maxCount, RequestContext context)
-        {
-            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, ClientDiagnostics, diagnosticsScopeName);
-            async IAsyncEnumerable<Page<BinaryData>> CreateEnumerableAsync(string nextLink, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken = default)
-            {
-                do
-                {
-                    var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetAllDevBoxesByUserRequest(userId, filter, maxCount, context)
-                        : CreateGetAllDevBoxesByUserNextPageRequest(nextLink, userId, filter, maxCount, context);
-                    var page = await LowLevelPageableHelpers.ProcessMessageAsync(_pipeline, message, context, "value", "nextLink", cancellationToken).ConfigureAwait(false);
-                    nextLink = page.ContinuationToken;
-                    yield return page;
-                } while (!string.IsNullOrEmpty(nextLink));
-            }
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetAllDevBoxesByUserRequest(userId, filter, maxCount, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetAllDevBoxesByUserNextPageRequest(nextLink, userId, filter, maxCount, context);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "DevCenterClient.GetAllDevBoxesByUser", "value", "nextLink", context);
         }
 
         /// <summary> Lists Dev Boxes in the Dev Center for a particular user. </summary>
@@ -288,24 +210,9 @@ namespace Azure.Developer.DevCenter
         {
             Argument.AssertNotNullOrEmpty(userId, nameof(userId));
 
-            return GetAllDevBoxesByUserImplementation("DevCenterClient.GetAllDevBoxesByUser", userId, filter, maxCount, context);
-        }
-
-        private Pageable<BinaryData> GetAllDevBoxesByUserImplementation(string diagnosticsScopeName, string userId, string filter, int? maxCount, RequestContext context)
-        {
-            return PageableHelpers.CreatePageable(CreateEnumerable, ClientDiagnostics, diagnosticsScopeName);
-            IEnumerable<Page<BinaryData>> CreateEnumerable(string nextLink, int? pageSizeHint)
-            {
-                do
-                {
-                    var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetAllDevBoxesByUserRequest(userId, filter, maxCount, context)
-                        : CreateGetAllDevBoxesByUserNextPageRequest(nextLink, userId, filter, maxCount, context);
-                    var page = LowLevelPageableHelpers.ProcessMessage(_pipeline, message, context, "value", "nextLink");
-                    nextLink = page.ContinuationToken;
-                    yield return page;
-                } while (!string.IsNullOrEmpty(nextLink));
-            }
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetAllDevBoxesByUserRequest(userId, filter, maxCount, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetAllDevBoxesByUserNextPageRequest(nextLink, userId, filter, maxCount, context);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "DevCenterClient.GetAllDevBoxesByUser", "value", "nextLink", context);
         }
 
         internal HttpMessage CreateGetProjectsRequest(string filter, int? maxCount, RequestContext context)

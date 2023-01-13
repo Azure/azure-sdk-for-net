@@ -8,7 +8,6 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -173,37 +172,9 @@ namespace Azure.ResourceManager.Authorization
         /// <returns> An async collection of <see cref="AuthorizationRoleDefinitionResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<AuthorizationRoleDefinitionResource> GetAllAsync(string filter = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<AuthorizationRoleDefinitionResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _authorizationRoleDefinitionRoleDefinitionsClientDiagnostics.CreateScope("AuthorizationRoleDefinitionCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _authorizationRoleDefinitionRoleDefinitionsRestClient.ListAsync(Id, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new AuthorizationRoleDefinitionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<AuthorizationRoleDefinitionResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _authorizationRoleDefinitionRoleDefinitionsClientDiagnostics.CreateScope("AuthorizationRoleDefinitionCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _authorizationRoleDefinitionRoleDefinitionsRestClient.ListNextPageAsync(nextLink, Id, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new AuthorizationRoleDefinitionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _authorizationRoleDefinitionRoleDefinitionsRestClient.CreateListRequest(Id, filter);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _authorizationRoleDefinitionRoleDefinitionsRestClient.CreateListNextPageRequest(nextLink, Id, filter);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new AuthorizationRoleDefinitionResource(Client, AuthorizationRoleDefinitionData.DeserializeAuthorizationRoleDefinitionData(e)), _authorizationRoleDefinitionRoleDefinitionsClientDiagnostics, Pipeline, "AuthorizationRoleDefinitionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -216,37 +187,9 @@ namespace Azure.ResourceManager.Authorization
         /// <returns> A collection of <see cref="AuthorizationRoleDefinitionResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<AuthorizationRoleDefinitionResource> GetAll(string filter = null, CancellationToken cancellationToken = default)
         {
-            Page<AuthorizationRoleDefinitionResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _authorizationRoleDefinitionRoleDefinitionsClientDiagnostics.CreateScope("AuthorizationRoleDefinitionCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _authorizationRoleDefinitionRoleDefinitionsRestClient.List(Id, filter, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new AuthorizationRoleDefinitionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<AuthorizationRoleDefinitionResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _authorizationRoleDefinitionRoleDefinitionsClientDiagnostics.CreateScope("AuthorizationRoleDefinitionCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _authorizationRoleDefinitionRoleDefinitionsRestClient.ListNextPage(nextLink, Id, filter, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new AuthorizationRoleDefinitionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _authorizationRoleDefinitionRoleDefinitionsRestClient.CreateListRequest(Id, filter);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _authorizationRoleDefinitionRoleDefinitionsRestClient.CreateListNextPageRequest(nextLink, Id, filter);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new AuthorizationRoleDefinitionResource(Client, AuthorizationRoleDefinitionData.DeserializeAuthorizationRoleDefinitionData(e)), _authorizationRoleDefinitionRoleDefinitionsClientDiagnostics, Pipeline, "AuthorizationRoleDefinitionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

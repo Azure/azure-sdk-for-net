@@ -11,9 +11,10 @@ using Azure;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager;
+using Azure.ResourceManager.EventHubs;
 using Azure.ResourceManager.EventHubs.Models;
 
-namespace Azure.ResourceManager.EventHubs
+namespace Azure.ResourceManager.EventHubs.Samples
 {
     public partial class Sample_EventHubsNamespaceAuthorizationRuleResource
     {
@@ -22,11 +23,13 @@ namespace Azure.ResourceManager.EventHubs
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Update_NameSpaceAuthorizationRuleCreate()
         {
-            // Generated from example definition: specification/eventhub/resource-manager/Microsoft.EventHub/stable/2021-11-01/examples/NameSpaces/EHNameSpaceAuthorizationRuleCreate.json
+            // Generated from example definition: specification/eventhub/resource-manager/Microsoft.EventHub/preview/2022-01-01-preview/examples/NameSpaces/EHNameSpaceAuthorizationRuleCreate.json
             // this example is just showing the usage of "Namespaces_CreateOrUpdateAuthorizationRule" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this EventHubsNamespaceAuthorizationRuleResource created on azure
             // for more information of creating EventHubsNamespaceAuthorizationRuleResource, please refer to the document of EventHubsNamespaceAuthorizationRuleResource
@@ -60,11 +63,13 @@ EventHubsAccessRight.Listen,EventHubsAccessRight.Send
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Delete_NameSpaceAuthorizationRuleDelete()
         {
-            // Generated from example definition: specification/eventhub/resource-manager/Microsoft.EventHub/stable/2021-11-01/examples/NameSpaces/EHNameSpaceAuthorizationRuleDelete.json
+            // Generated from example definition: specification/eventhub/resource-manager/Microsoft.EventHub/preview/2022-01-01-preview/examples/NameSpaces/EHNameSpaceAuthorizationRuleDelete.json
             // this example is just showing the usage of "Namespaces_DeleteAuthorizationRule" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this EventHubsNamespaceAuthorizationRuleResource created on azure
             // for more information of creating EventHubsNamespaceAuthorizationRuleResource, please refer to the document of EventHubsNamespaceAuthorizationRuleResource
@@ -86,11 +91,13 @@ EventHubsAccessRight.Listen,EventHubsAccessRight.Send
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_NameSpaceAuthorizationRuleGet()
         {
-            // Generated from example definition: specification/eventhub/resource-manager/Microsoft.EventHub/stable/2021-11-01/examples/NameSpaces/EHNameSpaceAuthorizationRuleGet.json
+            // Generated from example definition: specification/eventhub/resource-manager/Microsoft.EventHub/preview/2022-01-01-preview/examples/NameSpaces/EHNameSpaceAuthorizationRuleGet.json
             // this example is just showing the usage of "Namespaces_GetAuthorizationRule" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this EventHubsNamespaceAuthorizationRuleResource created on azure
             // for more information of creating EventHubsNamespaceAuthorizationRuleResource, please refer to the document of EventHubsNamespaceAuthorizationRuleResource
@@ -116,11 +123,13 @@ EventHubsAccessRight.Listen,EventHubsAccessRight.Send
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetKeys_NameSpaceAuthorizationRuleListKey()
         {
-            // Generated from example definition: specification/eventhub/resource-manager/Microsoft.EventHub/stable/2021-11-01/examples/NameSpaces/EHNameSpaceAuthorizationRuleListKey.json
+            // Generated from example definition: specification/eventhub/resource-manager/Microsoft.EventHub/preview/2022-01-01-preview/examples/NameSpaces/EHNameSpaceAuthorizationRuleListKey.json
             // this example is just showing the usage of "Namespaces_ListKeys" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this EventHubsNamespaceAuthorizationRuleResource created on azure
             // for more information of creating EventHubsNamespaceAuthorizationRuleResource, please refer to the document of EventHubsNamespaceAuthorizationRuleResource
@@ -142,11 +151,13 @@ EventHubsAccessRight.Listen,EventHubsAccessRight.Send
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task RegenerateKeys_NameSpaceAuthorizationRuleRegenerateKey()
         {
-            // Generated from example definition: specification/eventhub/resource-manager/Microsoft.EventHub/stable/2021-11-01/examples/NameSpaces/EHNameSpaceAuthorizationRuleRegenerateKey.json
+            // Generated from example definition: specification/eventhub/resource-manager/Microsoft.EventHub/preview/2022-01-01-preview/examples/NameSpaces/EHNameSpaceAuthorizationRuleRegenerateKey.json
             // this example is just showing the usage of "Namespaces_RegenerateKeys" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this EventHubsNamespaceAuthorizationRuleResource created on azure
             // for more information of creating EventHubsNamespaceAuthorizationRuleResource, please refer to the document of EventHubsNamespaceAuthorizationRuleResource

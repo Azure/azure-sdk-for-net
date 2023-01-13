@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -121,37 +120,9 @@ namespace Azure.ResourceManager.Resources
         /// <returns> An async collection of <see cref="DataPolicyManifestResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DataPolicyManifestResource> GetAllAsync(string filter = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<DataPolicyManifestResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _dataPolicyManifestClientDiagnostics.CreateScope("DataPolicyManifestCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _dataPolicyManifestRestClient.ListAsync(filter, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new DataPolicyManifestResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<DataPolicyManifestResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _dataPolicyManifestClientDiagnostics.CreateScope("DataPolicyManifestCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _dataPolicyManifestRestClient.ListNextPageAsync(nextLink, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new DataPolicyManifestResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _dataPolicyManifestRestClient.CreateListRequest(filter);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _dataPolicyManifestRestClient.CreateListNextPageRequest(nextLink, filter);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DataPolicyManifestResource(Client, DataPolicyManifestData.DeserializeDataPolicyManifestData(e)), _dataPolicyManifestClientDiagnostics, Pipeline, "DataPolicyManifestCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -164,37 +135,9 @@ namespace Azure.ResourceManager.Resources
         /// <returns> A collection of <see cref="DataPolicyManifestResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DataPolicyManifestResource> GetAll(string filter = null, CancellationToken cancellationToken = default)
         {
-            Page<DataPolicyManifestResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _dataPolicyManifestClientDiagnostics.CreateScope("DataPolicyManifestCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _dataPolicyManifestRestClient.List(filter, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new DataPolicyManifestResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<DataPolicyManifestResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _dataPolicyManifestClientDiagnostics.CreateScope("DataPolicyManifestCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _dataPolicyManifestRestClient.ListNextPage(nextLink, filter, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new DataPolicyManifestResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _dataPolicyManifestRestClient.CreateListRequest(filter);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _dataPolicyManifestRestClient.CreateListNextPageRequest(nextLink, filter);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DataPolicyManifestResource(Client, DataPolicyManifestData.DeserializeDataPolicyManifestData(e)), _dataPolicyManifestClientDiagnostics, Pipeline, "DataPolicyManifestCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

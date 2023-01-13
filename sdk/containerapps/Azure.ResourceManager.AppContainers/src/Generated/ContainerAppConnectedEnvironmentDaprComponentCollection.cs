@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -186,37 +185,9 @@ namespace Azure.ResourceManager.AppContainers
         /// <returns> An async collection of <see cref="ContainerAppConnectedEnvironmentDaprComponentResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ContainerAppConnectedEnvironmentDaprComponentResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<ContainerAppConnectedEnvironmentDaprComponentResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _containerAppConnectedEnvironmentDaprComponentConnectedEnvironmentsDaprComponentsClientDiagnostics.CreateScope("ContainerAppConnectedEnvironmentDaprComponentCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _containerAppConnectedEnvironmentDaprComponentConnectedEnvironmentsDaprComponentsRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ContainerAppConnectedEnvironmentDaprComponentResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<ContainerAppConnectedEnvironmentDaprComponentResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _containerAppConnectedEnvironmentDaprComponentConnectedEnvironmentsDaprComponentsClientDiagnostics.CreateScope("ContainerAppConnectedEnvironmentDaprComponentCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _containerAppConnectedEnvironmentDaprComponentConnectedEnvironmentsDaprComponentsRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ContainerAppConnectedEnvironmentDaprComponentResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _containerAppConnectedEnvironmentDaprComponentConnectedEnvironmentsDaprComponentsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _containerAppConnectedEnvironmentDaprComponentConnectedEnvironmentsDaprComponentsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ContainerAppConnectedEnvironmentDaprComponentResource(Client, ContainerAppDaprComponentData.DeserializeContainerAppDaprComponentData(e)), _containerAppConnectedEnvironmentDaprComponentConnectedEnvironmentsDaprComponentsClientDiagnostics, Pipeline, "ContainerAppConnectedEnvironmentDaprComponentCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -228,37 +199,9 @@ namespace Azure.ResourceManager.AppContainers
         /// <returns> A collection of <see cref="ContainerAppConnectedEnvironmentDaprComponentResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ContainerAppConnectedEnvironmentDaprComponentResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<ContainerAppConnectedEnvironmentDaprComponentResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _containerAppConnectedEnvironmentDaprComponentConnectedEnvironmentsDaprComponentsClientDiagnostics.CreateScope("ContainerAppConnectedEnvironmentDaprComponentCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _containerAppConnectedEnvironmentDaprComponentConnectedEnvironmentsDaprComponentsRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ContainerAppConnectedEnvironmentDaprComponentResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<ContainerAppConnectedEnvironmentDaprComponentResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _containerAppConnectedEnvironmentDaprComponentConnectedEnvironmentsDaprComponentsClientDiagnostics.CreateScope("ContainerAppConnectedEnvironmentDaprComponentCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _containerAppConnectedEnvironmentDaprComponentConnectedEnvironmentsDaprComponentsRestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ContainerAppConnectedEnvironmentDaprComponentResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _containerAppConnectedEnvironmentDaprComponentConnectedEnvironmentsDaprComponentsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _containerAppConnectedEnvironmentDaprComponentConnectedEnvironmentsDaprComponentsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ContainerAppConnectedEnvironmentDaprComponentResource(Client, ContainerAppDaprComponentData.DeserializeContainerAppDaprComponentData(e)), _containerAppConnectedEnvironmentDaprComponentConnectedEnvironmentsDaprComponentsClientDiagnostics, Pipeline, "ContainerAppConnectedEnvironmentDaprComponentCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

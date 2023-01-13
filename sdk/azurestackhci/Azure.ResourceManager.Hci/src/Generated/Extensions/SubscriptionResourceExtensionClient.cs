@@ -6,9 +6,7 @@
 #nullable disable
 
 using System;
-using System.Linq;
 using System.Threading;
-using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -52,37 +50,9 @@ namespace Azure.ResourceManager.Hci
         /// <returns> An async collection of <see cref="HciClusterResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<HciClusterResource> GetHciClustersAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<HciClusterResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = HciClusterClustersClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetHciClusters");
-                scope.Start();
-                try
-                {
-                    var response = await HciClusterClustersRestClient.ListBySubscriptionAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new HciClusterResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<HciClusterResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = HciClusterClustersClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetHciClusters");
-                scope.Start();
-                try
-                {
-                    var response = await HciClusterClustersRestClient.ListBySubscriptionNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new HciClusterResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => HciClusterClustersRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => HciClusterClustersRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new HciClusterResource(Client, HciClusterData.DeserializeHciClusterData(e)), HciClusterClustersClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetHciClusters", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -94,37 +64,9 @@ namespace Azure.ResourceManager.Hci
         /// <returns> A collection of <see cref="HciClusterResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<HciClusterResource> GetHciClusters(CancellationToken cancellationToken = default)
         {
-            Page<HciClusterResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = HciClusterClustersClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetHciClusters");
-                scope.Start();
-                try
-                {
-                    var response = HciClusterClustersRestClient.ListBySubscription(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new HciClusterResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<HciClusterResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = HciClusterClustersClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetHciClusters");
-                scope.Start();
-                try
-                {
-                    var response = HciClusterClustersRestClient.ListBySubscriptionNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new HciClusterResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => HciClusterClustersRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => HciClusterClustersRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new HciClusterResource(Client, HciClusterData.DeserializeHciClusterData(e)), HciClusterClustersClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetHciClusters", "value", "nextLink", cancellationToken);
         }
     }
 }

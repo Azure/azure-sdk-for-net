@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -187,37 +186,9 @@ namespace Azure.ResourceManager.DataLakeAnalytics
         /// <returns> An async collection of <see cref="DataLakeAnalyticsFirewallRuleResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DataLakeAnalyticsFirewallRuleResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<DataLakeAnalyticsFirewallRuleResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _dataLakeAnalyticsFirewallRuleFirewallRulesClientDiagnostics.CreateScope("DataLakeAnalyticsFirewallRuleCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _dataLakeAnalyticsFirewallRuleFirewallRulesRestClient.ListByAccountAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new DataLakeAnalyticsFirewallRuleResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<DataLakeAnalyticsFirewallRuleResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _dataLakeAnalyticsFirewallRuleFirewallRulesClientDiagnostics.CreateScope("DataLakeAnalyticsFirewallRuleCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _dataLakeAnalyticsFirewallRuleFirewallRulesRestClient.ListByAccountNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new DataLakeAnalyticsFirewallRuleResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _dataLakeAnalyticsFirewallRuleFirewallRulesRestClient.CreateListByAccountRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _dataLakeAnalyticsFirewallRuleFirewallRulesRestClient.CreateListByAccountNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DataLakeAnalyticsFirewallRuleResource(Client, DataLakeAnalyticsFirewallRuleData.DeserializeDataLakeAnalyticsFirewallRuleData(e)), _dataLakeAnalyticsFirewallRuleFirewallRulesClientDiagnostics, Pipeline, "DataLakeAnalyticsFirewallRuleCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -229,37 +200,9 @@ namespace Azure.ResourceManager.DataLakeAnalytics
         /// <returns> A collection of <see cref="DataLakeAnalyticsFirewallRuleResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DataLakeAnalyticsFirewallRuleResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<DataLakeAnalyticsFirewallRuleResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _dataLakeAnalyticsFirewallRuleFirewallRulesClientDiagnostics.CreateScope("DataLakeAnalyticsFirewallRuleCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _dataLakeAnalyticsFirewallRuleFirewallRulesRestClient.ListByAccount(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new DataLakeAnalyticsFirewallRuleResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<DataLakeAnalyticsFirewallRuleResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _dataLakeAnalyticsFirewallRuleFirewallRulesClientDiagnostics.CreateScope("DataLakeAnalyticsFirewallRuleCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _dataLakeAnalyticsFirewallRuleFirewallRulesRestClient.ListByAccountNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new DataLakeAnalyticsFirewallRuleResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _dataLakeAnalyticsFirewallRuleFirewallRulesRestClient.CreateListByAccountRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _dataLakeAnalyticsFirewallRuleFirewallRulesRestClient.CreateListByAccountNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DataLakeAnalyticsFirewallRuleResource(Client, DataLakeAnalyticsFirewallRuleData.DeserializeDataLakeAnalyticsFirewallRuleData(e)), _dataLakeAnalyticsFirewallRuleFirewallRulesClientDiagnostics, Pipeline, "DataLakeAnalyticsFirewallRuleCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

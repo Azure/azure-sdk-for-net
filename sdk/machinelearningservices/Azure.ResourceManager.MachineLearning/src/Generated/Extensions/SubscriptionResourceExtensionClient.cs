@@ -6,9 +6,7 @@
 #nullable disable
 
 using System;
-using System.Linq;
 using System.Threading;
-using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -66,37 +64,9 @@ namespace Azure.ResourceManager.MachineLearning
         /// <returns> An async collection of <see cref="MachineLearningWorkspaceResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<MachineLearningWorkspaceResource> GetMachineLearningWorkspacesAsync(string skip = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<MachineLearningWorkspaceResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = MachineLearningWorkspaceWorkspacesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetMachineLearningWorkspaces");
-                scope.Start();
-                try
-                {
-                    var response = await MachineLearningWorkspaceWorkspacesRestClient.ListBySubscriptionAsync(Id.SubscriptionId, skip, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new MachineLearningWorkspaceResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<MachineLearningWorkspaceResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = MachineLearningWorkspaceWorkspacesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetMachineLearningWorkspaces");
-                scope.Start();
-                try
-                {
-                    var response = await MachineLearningWorkspaceWorkspacesRestClient.ListBySubscriptionNextPageAsync(nextLink, Id.SubscriptionId, skip, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new MachineLearningWorkspaceResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => MachineLearningWorkspaceWorkspacesRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, skip);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => MachineLearningWorkspaceWorkspacesRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, skip);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new MachineLearningWorkspaceResource(Client, MachineLearningWorkspaceData.DeserializeMachineLearningWorkspaceData(e)), MachineLearningWorkspaceWorkspacesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetMachineLearningWorkspaces", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -109,37 +79,9 @@ namespace Azure.ResourceManager.MachineLearning
         /// <returns> A collection of <see cref="MachineLearningWorkspaceResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<MachineLearningWorkspaceResource> GetMachineLearningWorkspaces(string skip = null, CancellationToken cancellationToken = default)
         {
-            Page<MachineLearningWorkspaceResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = MachineLearningWorkspaceWorkspacesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetMachineLearningWorkspaces");
-                scope.Start();
-                try
-                {
-                    var response = MachineLearningWorkspaceWorkspacesRestClient.ListBySubscription(Id.SubscriptionId, skip, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new MachineLearningWorkspaceResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<MachineLearningWorkspaceResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = MachineLearningWorkspaceWorkspacesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetMachineLearningWorkspaces");
-                scope.Start();
-                try
-                {
-                    var response = MachineLearningWorkspaceWorkspacesRestClient.ListBySubscriptionNextPage(nextLink, Id.SubscriptionId, skip, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new MachineLearningWorkspaceResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => MachineLearningWorkspaceWorkspacesRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, skip);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => MachineLearningWorkspaceWorkspacesRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, skip);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new MachineLearningWorkspaceResource(Client, MachineLearningWorkspaceData.DeserializeMachineLearningWorkspaceData(e)), MachineLearningWorkspaceWorkspacesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetMachineLearningWorkspaces", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -152,37 +94,9 @@ namespace Azure.ResourceManager.MachineLearning
         /// <returns> An async collection of <see cref="MachineLearningUsage" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<MachineLearningUsage> GetMachineLearningUsagesAsync(AzureLocation location, CancellationToken cancellationToken = default)
         {
-            async Task<Page<MachineLearningUsage>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = UsagesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetMachineLearningUsages");
-                scope.Start();
-                try
-                {
-                    var response = await UsagesRestClient.ListAsync(Id.SubscriptionId, location, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<MachineLearningUsage>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = UsagesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetMachineLearningUsages");
-                scope.Start();
-                try
-                {
-                    var response = await UsagesRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, location, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => UsagesRestClient.CreateListRequest(Id.SubscriptionId, location);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => UsagesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, location);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, MachineLearningUsage.DeserializeMachineLearningUsage, UsagesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetMachineLearningUsages", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -195,37 +109,9 @@ namespace Azure.ResourceManager.MachineLearning
         /// <returns> A collection of <see cref="MachineLearningUsage" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<MachineLearningUsage> GetMachineLearningUsages(AzureLocation location, CancellationToken cancellationToken = default)
         {
-            Page<MachineLearningUsage> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = UsagesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetMachineLearningUsages");
-                scope.Start();
-                try
-                {
-                    var response = UsagesRestClient.List(Id.SubscriptionId, location, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<MachineLearningUsage> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = UsagesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetMachineLearningUsages");
-                scope.Start();
-                try
-                {
-                    var response = UsagesRestClient.ListNextPage(nextLink, Id.SubscriptionId, location, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => UsagesRestClient.CreateListRequest(Id.SubscriptionId, location);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => UsagesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, location);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, MachineLearningUsage.DeserializeMachineLearningUsage, UsagesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetMachineLearningUsages", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -238,22 +124,8 @@ namespace Azure.ResourceManager.MachineLearning
         /// <returns> An async collection of <see cref="MachineLearningVmSize" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<MachineLearningVmSize> GetMachineLearningVmSizesAsync(AzureLocation location, CancellationToken cancellationToken = default)
         {
-            async Task<Page<MachineLearningVmSize>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = VirtualMachineSizesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetMachineLearningVmSizes");
-                scope.Start();
-                try
-                {
-                    var response = await VirtualMachineSizesRestClient.ListAsync(Id.SubscriptionId, location, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => VirtualMachineSizesRestClient.CreateListRequest(Id.SubscriptionId, location);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, MachineLearningVmSize.DeserializeMachineLearningVmSize, VirtualMachineSizesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetMachineLearningVmSizes", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -266,22 +138,8 @@ namespace Azure.ResourceManager.MachineLearning
         /// <returns> A collection of <see cref="MachineLearningVmSize" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<MachineLearningVmSize> GetMachineLearningVmSizes(AzureLocation location, CancellationToken cancellationToken = default)
         {
-            Page<MachineLearningVmSize> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = VirtualMachineSizesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetMachineLearningVmSizes");
-                scope.Start();
-                try
-                {
-                    var response = VirtualMachineSizesRestClient.List(Id.SubscriptionId, location, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => VirtualMachineSizesRestClient.CreateListRequest(Id.SubscriptionId, location);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, MachineLearningVmSize.DeserializeMachineLearningVmSize, VirtualMachineSizesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetMachineLearningVmSizes", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -295,22 +153,8 @@ namespace Azure.ResourceManager.MachineLearning
         /// <returns> An async collection of <see cref="MachineLearningWorkspaceQuotaUpdate" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<MachineLearningWorkspaceQuotaUpdate> UpdateMachineLearningQuotasAsync(AzureLocation location, MachineLearningQuotaUpdateContent content, CancellationToken cancellationToken = default)
         {
-            async Task<Page<MachineLearningWorkspaceQuotaUpdate>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = QuotasClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.UpdateMachineLearningQuotas");
-                scope.Start();
-                try
-                {
-                    var response = await QuotasRestClient.UpdateAsync(Id.SubscriptionId, location, content, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => QuotasRestClient.CreateUpdateRequest(Id.SubscriptionId, location, content);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, MachineLearningWorkspaceQuotaUpdate.DeserializeMachineLearningWorkspaceQuotaUpdate, QuotasClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.UpdateMachineLearningQuotas", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -324,22 +168,8 @@ namespace Azure.ResourceManager.MachineLearning
         /// <returns> A collection of <see cref="MachineLearningWorkspaceQuotaUpdate" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<MachineLearningWorkspaceQuotaUpdate> UpdateMachineLearningQuotas(AzureLocation location, MachineLearningQuotaUpdateContent content, CancellationToken cancellationToken = default)
         {
-            Page<MachineLearningWorkspaceQuotaUpdate> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = QuotasClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.UpdateMachineLearningQuotas");
-                scope.Start();
-                try
-                {
-                    var response = QuotasRestClient.Update(Id.SubscriptionId, location, content, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => QuotasRestClient.CreateUpdateRequest(Id.SubscriptionId, location, content);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, MachineLearningWorkspaceQuotaUpdate.DeserializeMachineLearningWorkspaceQuotaUpdate, QuotasClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.UpdateMachineLearningQuotas", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -352,37 +182,9 @@ namespace Azure.ResourceManager.MachineLearning
         /// <returns> An async collection of <see cref="MachineLearningResourceQuota" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<MachineLearningResourceQuota> GetMachineLearningQuotasAsync(AzureLocation location, CancellationToken cancellationToken = default)
         {
-            async Task<Page<MachineLearningResourceQuota>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = QuotasClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetMachineLearningQuotas");
-                scope.Start();
-                try
-                {
-                    var response = await QuotasRestClient.ListAsync(Id.SubscriptionId, location, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<MachineLearningResourceQuota>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = QuotasClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetMachineLearningQuotas");
-                scope.Start();
-                try
-                {
-                    var response = await QuotasRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, location, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => QuotasRestClient.CreateListRequest(Id.SubscriptionId, location);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => QuotasRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, location);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, MachineLearningResourceQuota.DeserializeMachineLearningResourceQuota, QuotasClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetMachineLearningQuotas", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -395,37 +197,9 @@ namespace Azure.ResourceManager.MachineLearning
         /// <returns> A collection of <see cref="MachineLearningResourceQuota" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<MachineLearningResourceQuota> GetMachineLearningQuotas(AzureLocation location, CancellationToken cancellationToken = default)
         {
-            Page<MachineLearningResourceQuota> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = QuotasClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetMachineLearningQuotas");
-                scope.Start();
-                try
-                {
-                    var response = QuotasRestClient.List(Id.SubscriptionId, location, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<MachineLearningResourceQuota> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = QuotasClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetMachineLearningQuotas");
-                scope.Start();
-                try
-                {
-                    var response = QuotasRestClient.ListNextPage(nextLink, Id.SubscriptionId, location, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => QuotasRestClient.CreateListRequest(Id.SubscriptionId, location);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => QuotasRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, location);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, MachineLearningResourceQuota.DeserializeMachineLearningResourceQuota, QuotasClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetMachineLearningQuotas", "value", "nextLink", cancellationToken);
         }
     }
 }

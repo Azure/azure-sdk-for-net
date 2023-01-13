@@ -371,37 +371,9 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         /// <returns> An async collection of <see cref="DeviceProvisioningServicesSkuDefinition" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DeviceProvisioningServicesSkuDefinition> GetValidSkusAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<DeviceProvisioningServicesSkuDefinition>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _deviceProvisioningServiceIotDpsResourceClientDiagnostics.CreateScope("DeviceProvisioningServiceResource.GetValidSkus");
-                scope.Start();
-                try
-                {
-                    var response = await _deviceProvisioningServiceIotDpsResourceRestClient.ListValidSkusAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<DeviceProvisioningServicesSkuDefinition>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _deviceProvisioningServiceIotDpsResourceClientDiagnostics.CreateScope("DeviceProvisioningServiceResource.GetValidSkus");
-                scope.Start();
-                try
-                {
-                    var response = await _deviceProvisioningServiceIotDpsResourceRestClient.ListValidSkusNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _deviceProvisioningServiceIotDpsResourceRestClient.CreateListValidSkusRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _deviceProvisioningServiceIotDpsResourceRestClient.CreateListValidSkusNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, DeviceProvisioningServicesSkuDefinition.DeserializeDeviceProvisioningServicesSkuDefinition, _deviceProvisioningServiceIotDpsResourceClientDiagnostics, Pipeline, "DeviceProvisioningServiceResource.GetValidSkus", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -413,37 +385,9 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         /// <returns> A collection of <see cref="DeviceProvisioningServicesSkuDefinition" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DeviceProvisioningServicesSkuDefinition> GetValidSkus(CancellationToken cancellationToken = default)
         {
-            Page<DeviceProvisioningServicesSkuDefinition> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _deviceProvisioningServiceIotDpsResourceClientDiagnostics.CreateScope("DeviceProvisioningServiceResource.GetValidSkus");
-                scope.Start();
-                try
-                {
-                    var response = _deviceProvisioningServiceIotDpsResourceRestClient.ListValidSkus(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<DeviceProvisioningServicesSkuDefinition> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _deviceProvisioningServiceIotDpsResourceClientDiagnostics.CreateScope("DeviceProvisioningServiceResource.GetValidSkus");
-                scope.Start();
-                try
-                {
-                    var response = _deviceProvisioningServiceIotDpsResourceRestClient.ListValidSkusNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _deviceProvisioningServiceIotDpsResourceRestClient.CreateListValidSkusRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _deviceProvisioningServiceIotDpsResourceRestClient.CreateListValidSkusNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, DeviceProvisioningServicesSkuDefinition.DeserializeDeviceProvisioningServicesSkuDefinition, _deviceProvisioningServiceIotDpsResourceClientDiagnostics, Pipeline, "DeviceProvisioningServiceResource.GetValidSkus", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -455,37 +399,9 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         /// <returns> An async collection of <see cref="DeviceProvisioningServicesSharedAccessKey" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DeviceProvisioningServicesSharedAccessKey> GetKeysAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<DeviceProvisioningServicesSharedAccessKey>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _deviceProvisioningServiceIotDpsResourceClientDiagnostics.CreateScope("DeviceProvisioningServiceResource.GetKeys");
-                scope.Start();
-                try
-                {
-                    var response = await _deviceProvisioningServiceIotDpsResourceRestClient.ListKeysAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<DeviceProvisioningServicesSharedAccessKey>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _deviceProvisioningServiceIotDpsResourceClientDiagnostics.CreateScope("DeviceProvisioningServiceResource.GetKeys");
-                scope.Start();
-                try
-                {
-                    var response = await _deviceProvisioningServiceIotDpsResourceRestClient.ListKeysNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _deviceProvisioningServiceIotDpsResourceRestClient.CreateListKeysRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _deviceProvisioningServiceIotDpsResourceRestClient.CreateListKeysNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, DeviceProvisioningServicesSharedAccessKey.DeserializeDeviceProvisioningServicesSharedAccessKey, _deviceProvisioningServiceIotDpsResourceClientDiagnostics, Pipeline, "DeviceProvisioningServiceResource.GetKeys", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -497,37 +413,9 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         /// <returns> A collection of <see cref="DeviceProvisioningServicesSharedAccessKey" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DeviceProvisioningServicesSharedAccessKey> GetKeys(CancellationToken cancellationToken = default)
         {
-            Page<DeviceProvisioningServicesSharedAccessKey> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _deviceProvisioningServiceIotDpsResourceClientDiagnostics.CreateScope("DeviceProvisioningServiceResource.GetKeys");
-                scope.Start();
-                try
-                {
-                    var response = _deviceProvisioningServiceIotDpsResourceRestClient.ListKeys(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<DeviceProvisioningServicesSharedAccessKey> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _deviceProvisioningServiceIotDpsResourceClientDiagnostics.CreateScope("DeviceProvisioningServiceResource.GetKeys");
-                scope.Start();
-                try
-                {
-                    var response = _deviceProvisioningServiceIotDpsResourceRestClient.ListKeysNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _deviceProvisioningServiceIotDpsResourceRestClient.CreateListKeysRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _deviceProvisioningServiceIotDpsResourceRestClient.CreateListKeysNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, DeviceProvisioningServicesSharedAccessKey.DeserializeDeviceProvisioningServicesSharedAccessKey, _deviceProvisioningServiceIotDpsResourceClientDiagnostics, Pipeline, "DeviceProvisioningServiceResource.GetKeys", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

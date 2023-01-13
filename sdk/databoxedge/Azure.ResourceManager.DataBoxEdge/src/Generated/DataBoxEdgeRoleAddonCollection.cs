@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -186,37 +185,9 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// <returns> An async collection of <see cref="DataBoxEdgeRoleAddonResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DataBoxEdgeRoleAddonResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<DataBoxEdgeRoleAddonResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _dataBoxEdgeRoleAddonAddonsClientDiagnostics.CreateScope("DataBoxEdgeRoleAddonCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _dataBoxEdgeRoleAddonAddonsRestClient.ListByRoleAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new DataBoxEdgeRoleAddonResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<DataBoxEdgeRoleAddonResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _dataBoxEdgeRoleAddonAddonsClientDiagnostics.CreateScope("DataBoxEdgeRoleAddonCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _dataBoxEdgeRoleAddonAddonsRestClient.ListByRoleNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new DataBoxEdgeRoleAddonResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _dataBoxEdgeRoleAddonAddonsRestClient.CreateListByRoleRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _dataBoxEdgeRoleAddonAddonsRestClient.CreateListByRoleNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DataBoxEdgeRoleAddonResource(Client, DataBoxEdgeRoleAddonData.DeserializeDataBoxEdgeRoleAddonData(e)), _dataBoxEdgeRoleAddonAddonsClientDiagnostics, Pipeline, "DataBoxEdgeRoleAddonCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -228,37 +199,9 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// <returns> A collection of <see cref="DataBoxEdgeRoleAddonResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DataBoxEdgeRoleAddonResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<DataBoxEdgeRoleAddonResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _dataBoxEdgeRoleAddonAddonsClientDiagnostics.CreateScope("DataBoxEdgeRoleAddonCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _dataBoxEdgeRoleAddonAddonsRestClient.ListByRole(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new DataBoxEdgeRoleAddonResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<DataBoxEdgeRoleAddonResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _dataBoxEdgeRoleAddonAddonsClientDiagnostics.CreateScope("DataBoxEdgeRoleAddonCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _dataBoxEdgeRoleAddonAddonsRestClient.ListByRoleNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new DataBoxEdgeRoleAddonResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _dataBoxEdgeRoleAddonAddonsRestClient.CreateListByRoleRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _dataBoxEdgeRoleAddonAddonsRestClient.CreateListByRoleNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DataBoxEdgeRoleAddonResource(Client, DataBoxEdgeRoleAddonData.DeserializeDataBoxEdgeRoleAddonData(e)), _dataBoxEdgeRoleAddonAddonsClientDiagnostics, Pipeline, "DataBoxEdgeRoleAddonCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

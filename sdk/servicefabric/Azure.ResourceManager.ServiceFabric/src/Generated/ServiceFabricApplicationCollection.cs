@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -186,22 +185,8 @@ namespace Azure.ResourceManager.ServiceFabric
         /// <returns> An async collection of <see cref="ServiceFabricApplicationResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ServiceFabricApplicationResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<ServiceFabricApplicationResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _serviceFabricApplicationApplicationsClientDiagnostics.CreateScope("ServiceFabricApplicationCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _serviceFabricApplicationApplicationsRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ServiceFabricApplicationResource(Client, value)), null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _serviceFabricApplicationApplicationsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new ServiceFabricApplicationResource(Client, ServiceFabricApplicationData.DeserializeServiceFabricApplicationData(e)), _serviceFabricApplicationApplicationsClientDiagnostics, Pipeline, "ServiceFabricApplicationCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -213,22 +198,8 @@ namespace Azure.ResourceManager.ServiceFabric
         /// <returns> A collection of <see cref="ServiceFabricApplicationResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ServiceFabricApplicationResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<ServiceFabricApplicationResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _serviceFabricApplicationApplicationsClientDiagnostics.CreateScope("ServiceFabricApplicationCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _serviceFabricApplicationApplicationsRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ServiceFabricApplicationResource(Client, value)), null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _serviceFabricApplicationApplicationsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new ServiceFabricApplicationResource(Client, ServiceFabricApplicationData.DeserializeServiceFabricApplicationData(e)), _serviceFabricApplicationApplicationsClientDiagnostics, Pipeline, "ServiceFabricApplicationCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
