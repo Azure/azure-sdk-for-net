@@ -16,16 +16,23 @@ namespace Azure.Developer.LoadTesting.Tests.Samples
         {
             #region Snippet:Azure_Developer_LoadTesting_CreateAdminClient
 
+#if SNIPPT
+            // The data-plane endpoint is obtained from Control Plane APIs with "https://"
+            Uri endpointUrl = new Uri("https://data-plane-guid.region.cnt-prod.loadtesting.azure.com");
+            TokenCredential credential = new DefaultAzureCredential();
+#else
             string endpoint = TestEnvironment.Endpoint;
-            Uri enpointUrl = new Uri("https://"+endpoint);
+            Uri endpointUrl = new Uri("https://" + endpoint);
             TokenCredential credential = TestEnvironment.Credential;
+#endif
 
             // creating LoadTesting Administration Client
-            LoadTestAdministrationClient loadTestAdministrationClient = new LoadTestAdministrationClient(enpointUrl, credential);
-            #endregion
+            LoadTestAdministrationClient loadTestAdministrationClient = new LoadTestAdministrationClient(endpointUrl, credential);
+#endregion
 
-            #region Snippet:Azure_Developer_LoadTesting_CreateOrUpdateTest
+#region Snippet:Azure_Developer_LoadTesting_CreateOrUpdateTest
             string testId = "my-test-id";
+            Uri keyVaultSecretUrl = new Uri("https://sdk-testing-keyvault.vault.azure.net/secrets/sdk-secret");
 
             // all data needs to be passed while creating a loadtest
             var data = new
@@ -41,7 +48,7 @@ namespace Azure.Developer.LoadTesting.Tests.Samples
                 {
                     secret1 = new
                     {
-                        value = "https://sdk-testing-keyvault.vault.azure.net/secrets/sdk-secret",
+                        value = keyVaultSecretUrl.ToString(),
                         type = "AKV_SECRET_URI"
                     }
                 },
@@ -88,7 +95,7 @@ namespace Azure.Developer.LoadTesting.Tests.Samples
             {
                 Console.WriteLine(ex.Message);
             }
-            #endregion
+#endregion
         }
     }
 }

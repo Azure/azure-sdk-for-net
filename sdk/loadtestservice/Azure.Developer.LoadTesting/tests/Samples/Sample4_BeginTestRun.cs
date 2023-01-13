@@ -16,9 +16,15 @@ namespace Azure.Developer.LoadTesting.Tests.Samples
         public void BeginTestRun()
         {
             #region Snippet:Azure_Developer_LoadTesting_CreateTestRunClient
+#if SNIPPT
+            // The data-plane endpoint is obtained from Control Plane APIs with "https://"
+            Uri endpointUrl = new Uri("https://data-plane-guid.region.cnt-prod.loadtesting.azure.com");
+            TokenCredential credential = new DefaultAzureCredential();
+#else
             string endpoint = TestEnvironment.Endpoint;
-            Uri enpointUrl = new Uri("https://" + endpoint);
+            Uri endpointUrl = new Uri("https://" + endpoint);
             TokenCredential credential = TestEnvironment.Credential;
+#endif
 
             // creating LoadTesting TestRun Client
             LoadTestRunClient loadTestRunClient = new LoadTestRunClient(enpointUrl, credential);
