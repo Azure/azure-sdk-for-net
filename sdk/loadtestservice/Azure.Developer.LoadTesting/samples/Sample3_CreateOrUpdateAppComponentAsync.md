@@ -6,9 +6,9 @@ The sample below demonstrates how to create or update app components using `Load
 
 ## Create LoadTestAdministrationClient
 ```C# Snippet:Azure_Developer_LoadTesting_CreateAdminClient
-string endpoint = TestEnvironment.Endpoint;
-Uri endpointUrl = new Uri("https://" + endpoint);
-TokenCredential credential = TestEnvironment.Credential;
+// The data-plane endpoint is obtained from Control Plane APIs with "https://"
+Uri endpointUrl = new Uri("https://data-plane-guid.region.cnt-prod.loadtesting.azure.com");
+TokenCredential credential = new DefaultAzureCredential();
 
 // creating LoadTesting Administration Client
 LoadTestAdministrationClient loadTestAdministrationClient = new LoadTestAdministrationClient(endpointUrl, credential);

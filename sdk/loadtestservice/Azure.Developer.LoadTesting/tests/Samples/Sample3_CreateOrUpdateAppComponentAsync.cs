@@ -16,7 +16,7 @@ namespace Azure.Developer.LoadTesting.Tests.Samples
         [AsyncOnly]
         public async Task CreateOrUpdateAppComponentAsync()
         {
-#if SNIPPT
+#if SNIPPET
             // The data-plane endpoint is obtained from Control Plane APIs with "https://"
             Uri endpointUrl = new Uri("https://data-plane-guid.region.cnt-prod.loadtesting.azure.com");
             TokenCredential credential = new DefaultAzureCredential();

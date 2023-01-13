@@ -16,7 +16,7 @@ namespace Azure.Developer.LoadTesting.Tests.Samples
         [SyncOnly]
         public void GetMetrics()
         {
-#if SNIPPT
+#if SNIPPET
             // The data-plane endpoint is obtained from Control Plane APIs with "https://"
             Uri endpointUrl = new Uri("https://data-plane-guid.region.cnt-prod.loadtesting.azure.com");
             TokenCredential credential = new DefaultAzureCredential();

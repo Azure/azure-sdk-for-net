@@ -7,9 +7,9 @@ The sample below demonstrates how to run a load test using `LoadTestRunClient`.
 
 ## Create TestRunClient
 ```C# Snippet:Azure_Developer_LoadTesting_CreateTestRunClient
-string endpoint = TestEnvironment.Endpoint;
-Uri endpointUrl = new Uri("https://" + endpoint);
-TokenCredential credential = TestEnvironment.Credential;
+// The data-plane endpoint is obtained from Control Plane APIs with "https://"
+Uri endpointUrl = new Uri("https://data-plane-guid.region.cnt-prod.loadtesting.azure.com");
+TokenCredential credential = new DefaultAzureCredential();
 
 // creating LoadTesting TestRun Client
 LoadTestRunClient loadTestRunClient = new LoadTestRunClient(endpointUrl, credential);
