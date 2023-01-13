@@ -8,7 +8,6 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -110,22 +109,8 @@ namespace Azure.ResourceManager.Monitor
         /// <returns> An async collection of <see cref="DiagnosticSettingsCategoryResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DiagnosticSettingsCategoryResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<DiagnosticSettingsCategoryResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _diagnosticSettingsCategoryClientDiagnostics.CreateScope("DiagnosticSettingsCategoryCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _diagnosticSettingsCategoryRestClient.ListAsync(Id, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new DiagnosticSettingsCategoryResource(Client, value)), null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _diagnosticSettingsCategoryRestClient.CreateListRequest(Id);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new DiagnosticSettingsCategoryResource(Client, DiagnosticSettingsCategoryData.DeserializeDiagnosticSettingsCategoryData(e)), _diagnosticSettingsCategoryClientDiagnostics, Pipeline, "DiagnosticSettingsCategoryCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -137,22 +122,8 @@ namespace Azure.ResourceManager.Monitor
         /// <returns> A collection of <see cref="DiagnosticSettingsCategoryResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DiagnosticSettingsCategoryResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<DiagnosticSettingsCategoryResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _diagnosticSettingsCategoryClientDiagnostics.CreateScope("DiagnosticSettingsCategoryCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _diagnosticSettingsCategoryRestClient.List(Id, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new DiagnosticSettingsCategoryResource(Client, value)), null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _diagnosticSettingsCategoryRestClient.CreateListRequest(Id);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new DiagnosticSettingsCategoryResource(Client, DiagnosticSettingsCategoryData.DeserializeDiagnosticSettingsCategoryData(e)), _diagnosticSettingsCategoryClientDiagnostics, Pipeline, "DiagnosticSettingsCategoryCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>

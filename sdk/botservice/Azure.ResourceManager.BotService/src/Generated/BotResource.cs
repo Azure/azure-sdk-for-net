@@ -467,22 +467,8 @@ namespace Azure.ResourceManager.BotService
         /// <returns> An async collection of <see cref="BotServicePrivateLinkResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<BotServicePrivateLinkResource> GetPrivateLinkResourcesByBotResourceAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<BotServicePrivateLinkResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _privateLinkResourcesClientDiagnostics.CreateScope("BotResource.GetPrivateLinkResourcesByBotResource");
-                scope.Start();
-                try
-                {
-                    var response = await _privateLinkResourcesRestClient.ListByBotResourceAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _privateLinkResourcesRestClient.CreateListByBotResourceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, BotServicePrivateLinkResource.DeserializeBotServicePrivateLinkResource, _privateLinkResourcesClientDiagnostics, Pipeline, "BotResource.GetPrivateLinkResourcesByBotResource", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -494,22 +480,8 @@ namespace Azure.ResourceManager.BotService
         /// <returns> A collection of <see cref="BotServicePrivateLinkResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<BotServicePrivateLinkResource> GetPrivateLinkResourcesByBotResource(CancellationToken cancellationToken = default)
         {
-            Page<BotServicePrivateLinkResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _privateLinkResourcesClientDiagnostics.CreateScope("BotResource.GetPrivateLinkResourcesByBotResource");
-                scope.Start();
-                try
-                {
-                    var response = _privateLinkResourcesRestClient.ListByBotResource(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _privateLinkResourcesRestClient.CreateListByBotResourceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, BotServicePrivateLinkResource.DeserializeBotServicePrivateLinkResource, _privateLinkResourcesClientDiagnostics, Pipeline, "BotResource.GetPrivateLinkResourcesByBotResource", "value", null, cancellationToken);
         }
 
         /// <summary>

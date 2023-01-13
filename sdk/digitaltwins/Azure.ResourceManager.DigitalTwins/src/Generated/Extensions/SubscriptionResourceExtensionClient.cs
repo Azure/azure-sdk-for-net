@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -53,37 +52,9 @@ namespace Azure.ResourceManager.DigitalTwins
         /// <returns> An async collection of <see cref="DigitalTwinsDescriptionResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DigitalTwinsDescriptionResource> GetDigitalTwinsDescriptionsAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<DigitalTwinsDescriptionResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = DigitalTwinsDescriptionDigitalTwinsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetDigitalTwinsDescriptions");
-                scope.Start();
-                try
-                {
-                    var response = await DigitalTwinsDescriptionDigitalTwinsRestClient.ListAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new DigitalTwinsDescriptionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<DigitalTwinsDescriptionResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = DigitalTwinsDescriptionDigitalTwinsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetDigitalTwinsDescriptions");
-                scope.Start();
-                try
-                {
-                    var response = await DigitalTwinsDescriptionDigitalTwinsRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new DigitalTwinsDescriptionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => DigitalTwinsDescriptionDigitalTwinsRestClient.CreateListRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DigitalTwinsDescriptionDigitalTwinsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DigitalTwinsDescriptionResource(Client, DigitalTwinsDescriptionData.DeserializeDigitalTwinsDescriptionData(e)), DigitalTwinsDescriptionDigitalTwinsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetDigitalTwinsDescriptions", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -95,37 +66,9 @@ namespace Azure.ResourceManager.DigitalTwins
         /// <returns> A collection of <see cref="DigitalTwinsDescriptionResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DigitalTwinsDescriptionResource> GetDigitalTwinsDescriptions(CancellationToken cancellationToken = default)
         {
-            Page<DigitalTwinsDescriptionResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = DigitalTwinsDescriptionDigitalTwinsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetDigitalTwinsDescriptions");
-                scope.Start();
-                try
-                {
-                    var response = DigitalTwinsDescriptionDigitalTwinsRestClient.List(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new DigitalTwinsDescriptionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<DigitalTwinsDescriptionResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = DigitalTwinsDescriptionDigitalTwinsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetDigitalTwinsDescriptions");
-                scope.Start();
-                try
-                {
-                    var response = DigitalTwinsDescriptionDigitalTwinsRestClient.ListNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new DigitalTwinsDescriptionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => DigitalTwinsDescriptionDigitalTwinsRestClient.CreateListRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DigitalTwinsDescriptionDigitalTwinsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DigitalTwinsDescriptionResource(Client, DigitalTwinsDescriptionData.DeserializeDigitalTwinsDescriptionData(e)), DigitalTwinsDescriptionDigitalTwinsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetDigitalTwinsDescriptions", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

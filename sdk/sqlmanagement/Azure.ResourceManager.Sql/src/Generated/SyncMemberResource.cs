@@ -256,37 +256,9 @@ namespace Azure.ResourceManager.Sql
         /// <returns> An async collection of <see cref="SyncFullSchemaProperties" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SyncFullSchemaProperties> GetMemberSchemasAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<SyncFullSchemaProperties>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _syncMemberClientDiagnostics.CreateScope("SyncMemberResource.GetMemberSchemas");
-                scope.Start();
-                try
-                {
-                    var response = await _syncMemberRestClient.ListMemberSchemasAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<SyncFullSchemaProperties>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _syncMemberClientDiagnostics.CreateScope("SyncMemberResource.GetMemberSchemas");
-                scope.Start();
-                try
-                {
-                    var response = await _syncMemberRestClient.ListMemberSchemasNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _syncMemberRestClient.CreateListMemberSchemasRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _syncMemberRestClient.CreateListMemberSchemasNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, SyncFullSchemaProperties.DeserializeSyncFullSchemaProperties, _syncMemberClientDiagnostics, Pipeline, "SyncMemberResource.GetMemberSchemas", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -298,37 +270,9 @@ namespace Azure.ResourceManager.Sql
         /// <returns> A collection of <see cref="SyncFullSchemaProperties" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SyncFullSchemaProperties> GetMemberSchemas(CancellationToken cancellationToken = default)
         {
-            Page<SyncFullSchemaProperties> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _syncMemberClientDiagnostics.CreateScope("SyncMemberResource.GetMemberSchemas");
-                scope.Start();
-                try
-                {
-                    var response = _syncMemberRestClient.ListMemberSchemas(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<SyncFullSchemaProperties> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _syncMemberClientDiagnostics.CreateScope("SyncMemberResource.GetMemberSchemas");
-                scope.Start();
-                try
-                {
-                    var response = _syncMemberRestClient.ListMemberSchemasNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _syncMemberRestClient.CreateListMemberSchemasRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _syncMemberRestClient.CreateListMemberSchemasNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, SyncFullSchemaProperties.DeserializeSyncFullSchemaProperties, _syncMemberClientDiagnostics, Pipeline, "SyncMemberResource.GetMemberSchemas", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

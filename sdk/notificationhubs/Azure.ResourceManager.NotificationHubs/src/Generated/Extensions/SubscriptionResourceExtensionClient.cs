@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -99,37 +98,9 @@ namespace Azure.ResourceManager.NotificationHubs
         /// <returns> An async collection of <see cref="NotificationHubNamespaceResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<NotificationHubNamespaceResource> GetNotificationHubNamespacesAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<NotificationHubNamespaceResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = NotificationHubNamespaceNamespacesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetNotificationHubNamespaces");
-                scope.Start();
-                try
-                {
-                    var response = await NotificationHubNamespaceNamespacesRestClient.ListAllAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new NotificationHubNamespaceResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<NotificationHubNamespaceResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = NotificationHubNamespaceNamespacesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetNotificationHubNamespaces");
-                scope.Start();
-                try
-                {
-                    var response = await NotificationHubNamespaceNamespacesRestClient.ListAllNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new NotificationHubNamespaceResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => NotificationHubNamespaceNamespacesRestClient.CreateListAllRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => NotificationHubNamespaceNamespacesRestClient.CreateListAllNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new NotificationHubNamespaceResource(Client, NotificationHubNamespaceData.DeserializeNotificationHubNamespaceData(e)), NotificationHubNamespaceNamespacesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetNotificationHubNamespaces", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -141,37 +112,9 @@ namespace Azure.ResourceManager.NotificationHubs
         /// <returns> A collection of <see cref="NotificationHubNamespaceResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<NotificationHubNamespaceResource> GetNotificationHubNamespaces(CancellationToken cancellationToken = default)
         {
-            Page<NotificationHubNamespaceResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = NotificationHubNamespaceNamespacesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetNotificationHubNamespaces");
-                scope.Start();
-                try
-                {
-                    var response = NotificationHubNamespaceNamespacesRestClient.ListAll(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new NotificationHubNamespaceResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<NotificationHubNamespaceResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = NotificationHubNamespaceNamespacesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetNotificationHubNamespaces");
-                scope.Start();
-                try
-                {
-                    var response = NotificationHubNamespaceNamespacesRestClient.ListAllNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new NotificationHubNamespaceResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => NotificationHubNamespaceNamespacesRestClient.CreateListAllRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => NotificationHubNamespaceNamespacesRestClient.CreateListAllNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new NotificationHubNamespaceResource(Client, NotificationHubNamespaceData.DeserializeNotificationHubNamespaceData(e)), NotificationHubNamespaceNamespacesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetNotificationHubNamespaces", "value", "nextLink", cancellationToken);
         }
     }
 }

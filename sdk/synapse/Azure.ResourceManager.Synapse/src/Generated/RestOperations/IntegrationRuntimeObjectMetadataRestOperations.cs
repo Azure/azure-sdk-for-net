@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Synapse
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
-        internal HttpMessage CreateListRequest(string subscriptionId, string resourceGroupName, string workspaceName, string integrationRuntimeName, GetSsisObjectMetadataContent content)
+        internal HttpMessage CreateListRequest(string subscriptionId, string resourceGroupName, string workspaceName, string integrationRuntimeName, SynapseGetSsisObjectMetadataContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.Synapse
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="integrationRuntimeName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="integrationRuntimeName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<SsisObjectMetadataListResponse>> ListAsync(string subscriptionId, string resourceGroupName, string workspaceName, string integrationRuntimeName, GetSsisObjectMetadataContent content = null, CancellationToken cancellationToken = default)
+        public async Task<Response<SynapseSsisObjectMetadataListResult>> ListAsync(string subscriptionId, string resourceGroupName, string workspaceName, string integrationRuntimeName, SynapseGetSsisObjectMetadataContent content = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -89,9 +89,9 @@ namespace Azure.ResourceManager.Synapse
             {
                 case 200:
                     {
-                        SsisObjectMetadataListResponse value = default;
+                        SynapseSsisObjectMetadataListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = SsisObjectMetadataListResponse.DeserializeSsisObjectMetadataListResponse(document.RootElement);
+                        value = SynapseSsisObjectMetadataListResult.DeserializeSynapseSsisObjectMetadataListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.Synapse
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="integrationRuntimeName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="integrationRuntimeName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<SsisObjectMetadataListResponse> List(string subscriptionId, string resourceGroupName, string workspaceName, string integrationRuntimeName, GetSsisObjectMetadataContent content = null, CancellationToken cancellationToken = default)
+        public Response<SynapseSsisObjectMetadataListResult> List(string subscriptionId, string resourceGroupName, string workspaceName, string integrationRuntimeName, SynapseGetSsisObjectMetadataContent content = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -121,9 +121,9 @@ namespace Azure.ResourceManager.Synapse
             {
                 case 200:
                     {
-                        SsisObjectMetadataListResponse value = default;
+                        SynapseSsisObjectMetadataListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = SsisObjectMetadataListResponse.DeserializeSsisObjectMetadataListResponse(document.RootElement);
+                        value = SynapseSsisObjectMetadataListResult.DeserializeSynapseSsisObjectMetadataListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

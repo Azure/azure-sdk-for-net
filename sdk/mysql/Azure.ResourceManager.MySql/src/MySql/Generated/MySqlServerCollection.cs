@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -192,22 +191,8 @@ namespace Azure.ResourceManager.MySql
         /// <returns> An async collection of <see cref="MySqlServerResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<MySqlServerResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<MySqlServerResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _mySqlServerServersClientDiagnostics.CreateScope("MySqlServerCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _mySqlServerServersRestClient.ListByResourceGroupAsync(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new MySqlServerResource(Client, value)), null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _mySqlServerServersRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new MySqlServerResource(Client, MySqlServerData.DeserializeMySqlServerData(e)), _mySqlServerServersClientDiagnostics, Pipeline, "MySqlServerCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -219,22 +204,8 @@ namespace Azure.ResourceManager.MySql
         /// <returns> A collection of <see cref="MySqlServerResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<MySqlServerResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<MySqlServerResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _mySqlServerServersClientDiagnostics.CreateScope("MySqlServerCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _mySqlServerServersRestClient.ListByResourceGroup(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new MySqlServerResource(Client, value)), null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _mySqlServerServersRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new MySqlServerResource(Client, MySqlServerData.DeserializeMySqlServerData(e)), _mySqlServerServersClientDiagnostics, Pipeline, "MySqlServerCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -251,22 +222,8 @@ namespace Azure.ResourceManager.MySql
         {
             Argument.AssertNotNullOrEmpty(serverName, nameof(serverName));
 
-            async Task<Page<MySqlServerResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _replicasClientDiagnostics.CreateScope("MySqlServerCollection.GetReplicas");
-                scope.Start();
-                try
-                {
-                    var response = await _replicasRestClient.ListByServerAsync(Id.SubscriptionId, Id.ResourceGroupName, serverName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new MySqlServerResource(Client, value)), null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _replicasRestClient.CreateListByServerRequest(Id.SubscriptionId, Id.ResourceGroupName, serverName);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new MySqlServerResource(Client, MySqlServerData.DeserializeMySqlServerData(e)), _replicasClientDiagnostics, Pipeline, "MySqlServerCollection.GetReplicas", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -283,22 +240,8 @@ namespace Azure.ResourceManager.MySql
         {
             Argument.AssertNotNullOrEmpty(serverName, nameof(serverName));
 
-            Page<MySqlServerResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _replicasClientDiagnostics.CreateScope("MySqlServerCollection.GetReplicas");
-                scope.Start();
-                try
-                {
-                    var response = _replicasRestClient.ListByServer(Id.SubscriptionId, Id.ResourceGroupName, serverName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new MySqlServerResource(Client, value)), null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _replicasRestClient.CreateListByServerRequest(Id.SubscriptionId, Id.ResourceGroupName, serverName);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new MySqlServerResource(Client, MySqlServerData.DeserializeMySqlServerData(e)), _replicasClientDiagnostics, Pipeline, "MySqlServerCollection.GetReplicas", "value", null, cancellationToken);
         }
 
         /// <summary>

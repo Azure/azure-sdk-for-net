@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -187,22 +186,8 @@ namespace Azure.ResourceManager.DeploymentManager
         /// <returns> An async collection of <see cref="ServiceTopologyResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ServiceTopologyResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<ServiceTopologyResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _serviceTopologyResourceServiceTopologiesClientDiagnostics.CreateScope("ServiceTopologyResourceCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _serviceTopologyResourceServiceTopologiesRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Select(value => new ServiceTopologyResource(Client, value)), null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _serviceTopologyResourceServiceTopologiesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new ServiceTopologyResource(Client, ServiceTopologyResourceData.DeserializeServiceTopologyResourceData(e)), _serviceTopologyResourceServiceTopologiesClientDiagnostics, Pipeline, "ServiceTopologyResourceCollection.GetAll", "", null, cancellationToken);
         }
 
         /// <summary>
@@ -214,22 +199,8 @@ namespace Azure.ResourceManager.DeploymentManager
         /// <returns> A collection of <see cref="ServiceTopologyResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ServiceTopologyResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<ServiceTopologyResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _serviceTopologyResourceServiceTopologiesClientDiagnostics.CreateScope("ServiceTopologyResourceCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _serviceTopologyResourceServiceTopologiesRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Select(value => new ServiceTopologyResource(Client, value)), null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _serviceTopologyResourceServiceTopologiesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new ServiceTopologyResource(Client, ServiceTopologyResourceData.DeserializeServiceTopologyResourceData(e)), _serviceTopologyResourceServiceTopologiesClientDiagnostics, Pipeline, "ServiceTopologyResourceCollection.GetAll", "", null, cancellationToken);
         }
 
         /// <summary>

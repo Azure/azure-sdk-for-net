@@ -158,6 +158,11 @@ namespace Azure.ResourceManager.Sql.Models
                 writer.WritePropertyName("federatedClientId");
                 writer.WriteStringValue(FederatedClientId.Value);
             }
+            if (Optional.IsDefined(PreferredEnclaveType))
+            {
+                writer.WritePropertyName("preferredEnclaveType");
+                writer.WriteStringValue(PreferredEnclaveType.Value.ToString());
+            }
             writer.WriteEndObject();
             writer.WriteEndObject();
         }

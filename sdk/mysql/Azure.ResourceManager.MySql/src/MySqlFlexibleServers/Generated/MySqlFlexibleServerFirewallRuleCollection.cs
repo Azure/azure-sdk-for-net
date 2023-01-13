@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -186,37 +185,9 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// <returns> An async collection of <see cref="MySqlFlexibleServerFirewallRuleResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<MySqlFlexibleServerFirewallRuleResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<MySqlFlexibleServerFirewallRuleResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _mySqlFlexibleServerFirewallRuleFirewallRulesClientDiagnostics.CreateScope("MySqlFlexibleServerFirewallRuleCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _mySqlFlexibleServerFirewallRuleFirewallRulesRestClient.ListByServerAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new MySqlFlexibleServerFirewallRuleResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<MySqlFlexibleServerFirewallRuleResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _mySqlFlexibleServerFirewallRuleFirewallRulesClientDiagnostics.CreateScope("MySqlFlexibleServerFirewallRuleCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _mySqlFlexibleServerFirewallRuleFirewallRulesRestClient.ListByServerNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new MySqlFlexibleServerFirewallRuleResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _mySqlFlexibleServerFirewallRuleFirewallRulesRestClient.CreateListByServerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _mySqlFlexibleServerFirewallRuleFirewallRulesRestClient.CreateListByServerNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new MySqlFlexibleServerFirewallRuleResource(Client, MySqlFlexibleServerFirewallRuleData.DeserializeMySqlFlexibleServerFirewallRuleData(e)), _mySqlFlexibleServerFirewallRuleFirewallRulesClientDiagnostics, Pipeline, "MySqlFlexibleServerFirewallRuleCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -228,37 +199,9 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// <returns> A collection of <see cref="MySqlFlexibleServerFirewallRuleResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<MySqlFlexibleServerFirewallRuleResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<MySqlFlexibleServerFirewallRuleResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _mySqlFlexibleServerFirewallRuleFirewallRulesClientDiagnostics.CreateScope("MySqlFlexibleServerFirewallRuleCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _mySqlFlexibleServerFirewallRuleFirewallRulesRestClient.ListByServer(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new MySqlFlexibleServerFirewallRuleResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<MySqlFlexibleServerFirewallRuleResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _mySqlFlexibleServerFirewallRuleFirewallRulesClientDiagnostics.CreateScope("MySqlFlexibleServerFirewallRuleCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _mySqlFlexibleServerFirewallRuleFirewallRulesRestClient.ListByServerNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new MySqlFlexibleServerFirewallRuleResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _mySqlFlexibleServerFirewallRuleFirewallRulesRestClient.CreateListByServerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _mySqlFlexibleServerFirewallRuleFirewallRulesRestClient.CreateListByServerNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new MySqlFlexibleServerFirewallRuleResource(Client, MySqlFlexibleServerFirewallRuleData.DeserializeMySqlFlexibleServerFirewallRuleData(e)), _mySqlFlexibleServerFirewallRuleFirewallRulesClientDiagnostics, Pipeline, "MySqlFlexibleServerFirewallRuleCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

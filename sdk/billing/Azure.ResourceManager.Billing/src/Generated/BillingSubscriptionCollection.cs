@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -126,37 +125,9 @@ namespace Azure.ResourceManager.Billing
         /// <returns> An async collection of <see cref="BillingSubscriptionResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<BillingSubscriptionResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<BillingSubscriptionResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _billingSubscriptionClientDiagnostics.CreateScope("BillingSubscriptionCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _billingSubscriptionRestClient.ListByBillingAccountAsync(_billingAccountName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new BillingSubscriptionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<BillingSubscriptionResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _billingSubscriptionClientDiagnostics.CreateScope("BillingSubscriptionCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _billingSubscriptionRestClient.ListByBillingAccountNextPageAsync(nextLink, _billingAccountName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new BillingSubscriptionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _billingSubscriptionRestClient.CreateListByBillingAccountRequest(_billingAccountName);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _billingSubscriptionRestClient.CreateListByBillingAccountNextPageRequest(nextLink, _billingAccountName);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new BillingSubscriptionResource(Client, BillingSubscriptionData.DeserializeBillingSubscriptionData(e)), _billingSubscriptionClientDiagnostics, Pipeline, "BillingSubscriptionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -168,37 +139,9 @@ namespace Azure.ResourceManager.Billing
         /// <returns> A collection of <see cref="BillingSubscriptionResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<BillingSubscriptionResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<BillingSubscriptionResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _billingSubscriptionClientDiagnostics.CreateScope("BillingSubscriptionCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _billingSubscriptionRestClient.ListByBillingAccount(_billingAccountName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new BillingSubscriptionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<BillingSubscriptionResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _billingSubscriptionClientDiagnostics.CreateScope("BillingSubscriptionCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _billingSubscriptionRestClient.ListByBillingAccountNextPage(nextLink, _billingAccountName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new BillingSubscriptionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _billingSubscriptionRestClient.CreateListByBillingAccountRequest(_billingAccountName);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _billingSubscriptionRestClient.CreateListByBillingAccountNextPageRequest(nextLink, _billingAccountName);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new BillingSubscriptionResource(Client, BillingSubscriptionData.DeserializeBillingSubscriptionData(e)), _billingSubscriptionClientDiagnostics, Pipeline, "BillingSubscriptionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

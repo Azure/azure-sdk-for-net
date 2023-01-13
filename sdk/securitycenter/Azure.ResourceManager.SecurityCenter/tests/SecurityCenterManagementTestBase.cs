@@ -116,33 +116,43 @@ namespace Azure.ResourceManager.SecurityCenter.Tests
 
         protected async Task<VirtualMachineResource> CreateVirtualMachine(ResourceGroupResource resourceGroup, ResourceIdentifier networkInterfaceIP, string vmName)
         {
-            string adminUsername = "adminUser";
-            VirtualMachineCollection vmCollection = resourceGroup.GetVirtualMachines();
-            VirtualMachineData input = new VirtualMachineData(resourceGroup.Data.Location)
+            if (Mode == RecordedTestMode.Playback)
             {
-                HardwareProfile = new VirtualMachineHardwareProfile()
+                var vmId = VirtualMachineResource.CreateResourceIdentifier(resourceGroup.Id.SubscriptionId, resourceGroup.Id.Name, vmName);
+
+                return Client.GetVirtualMachineResource(vmId);
+            }
+            else
+            {
+                using (Recording.DisableRecording())
                 {
-                    VmSize = VirtualMachineSizeType.StandardF2
-                },
-                OSProfile = new VirtualMachineOSProfile()
-                {
-                    AdminUsername = adminUsername,
-                    ComputerName = vmName,
-                    LinuxConfiguration = new LinuxConfiguration()
+                    string adminUsername = "adminUser";
+                    VirtualMachineCollection vmCollection = resourceGroup.GetVirtualMachines();
+                    VirtualMachineData input = new VirtualMachineData(resourceGroup.Data.Location)
                     {
-                        DisablePasswordAuthentication = true,
-                        SshPublicKeys = {
+                        HardwareProfile = new VirtualMachineHardwareProfile()
+                        {
+                            VmSize = VirtualMachineSizeType.StandardF2
+                        },
+                        OSProfile = new VirtualMachineOSProfile()
+                        {
+                            AdminUsername = adminUsername,
+                            ComputerName = vmName,
+                            LinuxConfiguration = new LinuxConfiguration()
+                            {
+                                DisablePasswordAuthentication = true,
+                                SshPublicKeys = {
                             new SshPublicKeyConfiguration()
                             {
                                 Path = $"/home/{adminUsername}/.ssh/authorized_keys",
                                 KeyData = dummySSHKey,
                             }
                         }
-                    }
-                },
-                NetworkProfile = new VirtualMachineNetworkProfile()
-                {
-                    NetworkInterfaces =
+                            }
+                        },
+                        NetworkProfile = new VirtualMachineNetworkProfile()
+                        {
+                            NetworkInterfaces =
                     {
                         new VirtualMachineNetworkInterfaceReference()
                         {
@@ -150,29 +160,31 @@ namespace Azure.ResourceManager.SecurityCenter.Tests
                             Primary = true,
                         }
                     }
-                },
-                StorageProfile = new VirtualMachineStorageProfile()
-                {
-                    OSDisk = new VirtualMachineOSDisk(DiskCreateOptionType.FromImage)
-                    {
-                        OSType = SupportedOperatingSystemType.Linux,
-                        Caching = CachingType.ReadWrite,
-                        ManagedDisk = new VirtualMachineManagedDisk()
+                        },
+                        StorageProfile = new VirtualMachineStorageProfile()
                         {
-                            StorageAccountType = StorageAccountType.StandardLrs
+                            OSDisk = new VirtualMachineOSDisk(DiskCreateOptionType.FromImage)
+                            {
+                                OSType = SupportedOperatingSystemType.Linux,
+                                Caching = CachingType.ReadWrite,
+                                ManagedDisk = new VirtualMachineManagedDisk()
+                                {
+                                    StorageAccountType = StorageAccountType.StandardLrs
+                                }
+                            },
+                            ImageReference = new ImageReference()
+                            {
+                                Publisher = "Canonical",
+                                Offer = "UbuntuServer",
+                                Sku = "16.04-LTS",
+                                Version = "latest",
+                            }
                         }
-                    },
-                    ImageReference = new ImageReference()
-                    {
-                        Publisher = "Canonical",
-                        Offer = "UbuntuServer",
-                        Sku = "16.04-LTS",
-                        Version = "latest",
-                    }
+                    };
+                    ArmOperation<VirtualMachineResource> lro = await vmCollection.CreateOrUpdateAsync(WaitUntil.Completed, vmName, input);
+                    return lro.Value;
                 }
-            };
-            ArmOperation<VirtualMachineResource> lro = await vmCollection.CreateOrUpdateAsync(WaitUntil.Completed, vmName, input);
-            return lro.Value;
+            }
         }
 
         protected async Task<LogicWorkflowResource> CreateLogicWorkFlow(ResourceGroupResource resourceGroup)

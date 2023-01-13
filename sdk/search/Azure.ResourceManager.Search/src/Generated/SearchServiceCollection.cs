@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -193,37 +192,9 @@ namespace Azure.ResourceManager.Search
         /// <returns> An async collection of <see cref="SearchServiceResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SearchServiceResource> GetAllAsync(SearchManagementRequestOptions searchManagementRequestOptions = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<SearchServiceResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _searchServiceServicesClientDiagnostics.CreateScope("SearchServiceCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _searchServiceServicesRestClient.ListByResourceGroupAsync(Id.SubscriptionId, Id.ResourceGroupName, searchManagementRequestOptions, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new SearchServiceResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<SearchServiceResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _searchServiceServicesClientDiagnostics.CreateScope("SearchServiceCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _searchServiceServicesRestClient.ListByResourceGroupNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, searchManagementRequestOptions, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new SearchServiceResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _searchServiceServicesRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, searchManagementRequestOptions);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _searchServiceServicesRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, searchManagementRequestOptions);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SearchServiceResource(Client, SearchServiceData.DeserializeSearchServiceData(e)), _searchServiceServicesClientDiagnostics, Pipeline, "SearchServiceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -236,37 +207,9 @@ namespace Azure.ResourceManager.Search
         /// <returns> A collection of <see cref="SearchServiceResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SearchServiceResource> GetAll(SearchManagementRequestOptions searchManagementRequestOptions = null, CancellationToken cancellationToken = default)
         {
-            Page<SearchServiceResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _searchServiceServicesClientDiagnostics.CreateScope("SearchServiceCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _searchServiceServicesRestClient.ListByResourceGroup(Id.SubscriptionId, Id.ResourceGroupName, searchManagementRequestOptions, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new SearchServiceResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<SearchServiceResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _searchServiceServicesClientDiagnostics.CreateScope("SearchServiceCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _searchServiceServicesRestClient.ListByResourceGroupNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, searchManagementRequestOptions, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new SearchServiceResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _searchServiceServicesRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, searchManagementRequestOptions);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _searchServiceServicesRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, searchManagementRequestOptions);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SearchServiceResource(Client, SearchServiceData.DeserializeSearchServiceData(e)), _searchServiceServicesClientDiagnostics, Pipeline, "SearchServiceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

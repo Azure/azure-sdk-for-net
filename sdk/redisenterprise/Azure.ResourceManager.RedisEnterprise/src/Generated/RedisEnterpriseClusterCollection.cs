@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -187,37 +186,9 @@ namespace Azure.ResourceManager.RedisEnterprise
         /// <returns> An async collection of <see cref="RedisEnterpriseClusterResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<RedisEnterpriseClusterResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<RedisEnterpriseClusterResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _redisEnterpriseClusterRedisEnterpriseClientDiagnostics.CreateScope("RedisEnterpriseClusterCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _redisEnterpriseClusterRedisEnterpriseRestClient.ListByResourceGroupAsync(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new RedisEnterpriseClusterResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<RedisEnterpriseClusterResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _redisEnterpriseClusterRedisEnterpriseClientDiagnostics.CreateScope("RedisEnterpriseClusterCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _redisEnterpriseClusterRedisEnterpriseRestClient.ListByResourceGroupNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new RedisEnterpriseClusterResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _redisEnterpriseClusterRedisEnterpriseRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _redisEnterpriseClusterRedisEnterpriseRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new RedisEnterpriseClusterResource(Client, RedisEnterpriseClusterData.DeserializeRedisEnterpriseClusterData(e)), _redisEnterpriseClusterRedisEnterpriseClientDiagnostics, Pipeline, "RedisEnterpriseClusterCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -229,37 +200,9 @@ namespace Azure.ResourceManager.RedisEnterprise
         /// <returns> A collection of <see cref="RedisEnterpriseClusterResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<RedisEnterpriseClusterResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<RedisEnterpriseClusterResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _redisEnterpriseClusterRedisEnterpriseClientDiagnostics.CreateScope("RedisEnterpriseClusterCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _redisEnterpriseClusterRedisEnterpriseRestClient.ListByResourceGroup(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new RedisEnterpriseClusterResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<RedisEnterpriseClusterResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _redisEnterpriseClusterRedisEnterpriseClientDiagnostics.CreateScope("RedisEnterpriseClusterCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _redisEnterpriseClusterRedisEnterpriseRestClient.ListByResourceGroupNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new RedisEnterpriseClusterResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _redisEnterpriseClusterRedisEnterpriseRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _redisEnterpriseClusterRedisEnterpriseRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new RedisEnterpriseClusterResource(Client, RedisEnterpriseClusterData.DeserializeRedisEnterpriseClusterData(e)), _redisEnterpriseClusterRedisEnterpriseClientDiagnostics, Pipeline, "RedisEnterpriseClusterCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
