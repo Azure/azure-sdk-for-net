@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    internal partial class UnknownSecurityInsightsAutomationRuleAction : IUtf8JsonSerializable
+    internal partial class UnknownAutomationRuleAction : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -22,10 +22,10 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             writer.WriteEndObject();
         }
 
-        internal static UnknownSecurityInsightsAutomationRuleAction DeserializeUnknownSecurityInsightsAutomationRuleAction(JsonElement element)
+        internal static UnknownAutomationRuleAction DeserializeUnknownAutomationRuleAction(JsonElement element)
         {
             int order = default;
-            ActionType actionType = default;
+            ActionType actionType = "Unknown";
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("order"))
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     continue;
                 }
             }
-            return new UnknownSecurityInsightsAutomationRuleAction(order, actionType);
+            return new UnknownAutomationRuleAction(order, actionType);
         }
     }
 }
