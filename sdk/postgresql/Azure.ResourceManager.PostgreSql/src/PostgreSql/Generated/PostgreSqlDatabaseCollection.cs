@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -186,22 +185,8 @@ namespace Azure.ResourceManager.PostgreSql
         /// <returns> An async collection of <see cref="PostgreSqlDatabaseResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<PostgreSqlDatabaseResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<PostgreSqlDatabaseResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _postgreSqlDatabaseDatabasesClientDiagnostics.CreateScope("PostgreSqlDatabaseCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _postgreSqlDatabaseDatabasesRestClient.ListByServerAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new PostgreSqlDatabaseResource(Client, value)), null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _postgreSqlDatabaseDatabasesRestClient.CreateListByServerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new PostgreSqlDatabaseResource(Client, PostgreSqlDatabaseData.DeserializePostgreSqlDatabaseData(e)), _postgreSqlDatabaseDatabasesClientDiagnostics, Pipeline, "PostgreSqlDatabaseCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -213,22 +198,8 @@ namespace Azure.ResourceManager.PostgreSql
         /// <returns> A collection of <see cref="PostgreSqlDatabaseResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<PostgreSqlDatabaseResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<PostgreSqlDatabaseResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _postgreSqlDatabaseDatabasesClientDiagnostics.CreateScope("PostgreSqlDatabaseCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _postgreSqlDatabaseDatabasesRestClient.ListByServer(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new PostgreSqlDatabaseResource(Client, value)), null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _postgreSqlDatabaseDatabasesRestClient.CreateListByServerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new PostgreSqlDatabaseResource(Client, PostgreSqlDatabaseData.DeserializePostgreSqlDatabaseData(e)), _postgreSqlDatabaseDatabasesClientDiagnostics, Pipeline, "PostgreSqlDatabaseCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>

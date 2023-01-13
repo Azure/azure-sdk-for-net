@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -121,22 +120,8 @@ namespace Azure.ResourceManager.Maintenance
         /// <returns> An async collection of <see cref="MaintenancePublicConfigurationResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<MaintenancePublicConfigurationResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<MaintenancePublicConfigurationResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _maintenancePublicConfigurationPublicMaintenanceConfigurationsClientDiagnostics.CreateScope("MaintenancePublicConfigurationCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _maintenancePublicConfigurationPublicMaintenanceConfigurationsRestClient.ListAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new MaintenancePublicConfigurationResource(Client, value)), null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _maintenancePublicConfigurationPublicMaintenanceConfigurationsRestClient.CreateListRequest(Id.SubscriptionId);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new MaintenancePublicConfigurationResource(Client, MaintenanceConfigurationData.DeserializeMaintenanceConfigurationData(e)), _maintenancePublicConfigurationPublicMaintenanceConfigurationsClientDiagnostics, Pipeline, "MaintenancePublicConfigurationCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -148,22 +133,8 @@ namespace Azure.ResourceManager.Maintenance
         /// <returns> A collection of <see cref="MaintenancePublicConfigurationResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<MaintenancePublicConfigurationResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<MaintenancePublicConfigurationResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _maintenancePublicConfigurationPublicMaintenanceConfigurationsClientDiagnostics.CreateScope("MaintenancePublicConfigurationCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _maintenancePublicConfigurationPublicMaintenanceConfigurationsRestClient.List(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new MaintenancePublicConfigurationResource(Client, value)), null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _maintenancePublicConfigurationPublicMaintenanceConfigurationsRestClient.CreateListRequest(Id.SubscriptionId);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new MaintenancePublicConfigurationResource(Client, MaintenanceConfigurationData.DeserializeMaintenanceConfigurationData(e)), _maintenancePublicConfigurationPublicMaintenanceConfigurationsClientDiagnostics, Pipeline, "MaintenancePublicConfigurationCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>

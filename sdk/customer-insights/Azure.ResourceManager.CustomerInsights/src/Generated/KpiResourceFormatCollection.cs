@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -186,37 +185,9 @@ namespace Azure.ResourceManager.CustomerInsights
         /// <returns> An async collection of <see cref="KpiResourceFormatResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<KpiResourceFormatResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<KpiResourceFormatResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _kpiResourceFormatKpiClientDiagnostics.CreateScope("KpiResourceFormatCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _kpiResourceFormatKpiRestClient.ListByHubAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new KpiResourceFormatResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<KpiResourceFormatResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _kpiResourceFormatKpiClientDiagnostics.CreateScope("KpiResourceFormatCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _kpiResourceFormatKpiRestClient.ListByHubNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new KpiResourceFormatResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _kpiResourceFormatKpiRestClient.CreateListByHubRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _kpiResourceFormatKpiRestClient.CreateListByHubNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new KpiResourceFormatResource(Client, KpiResourceFormatData.DeserializeKpiResourceFormatData(e)), _kpiResourceFormatKpiClientDiagnostics, Pipeline, "KpiResourceFormatCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -228,37 +199,9 @@ namespace Azure.ResourceManager.CustomerInsights
         /// <returns> A collection of <see cref="KpiResourceFormatResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<KpiResourceFormatResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<KpiResourceFormatResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _kpiResourceFormatKpiClientDiagnostics.CreateScope("KpiResourceFormatCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _kpiResourceFormatKpiRestClient.ListByHub(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new KpiResourceFormatResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<KpiResourceFormatResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _kpiResourceFormatKpiClientDiagnostics.CreateScope("KpiResourceFormatCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _kpiResourceFormatKpiRestClient.ListByHubNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new KpiResourceFormatResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _kpiResourceFormatKpiRestClient.CreateListByHubRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _kpiResourceFormatKpiRestClient.CreateListByHubNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new KpiResourceFormatResource(Client, KpiResourceFormatData.DeserializeKpiResourceFormatData(e)), _kpiResourceFormatKpiClientDiagnostics, Pipeline, "KpiResourceFormatCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

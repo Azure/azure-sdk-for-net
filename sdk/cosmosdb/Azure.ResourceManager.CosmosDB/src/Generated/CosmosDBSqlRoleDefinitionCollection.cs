@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -187,22 +186,8 @@ namespace Azure.ResourceManager.CosmosDB
         /// <returns> An async collection of <see cref="CosmosDBSqlRoleDefinitionResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<CosmosDBSqlRoleDefinitionResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<CosmosDBSqlRoleDefinitionResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _cosmosDBSqlRoleDefinitionSqlResourcesClientDiagnostics.CreateScope("CosmosDBSqlRoleDefinitionCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _cosmosDBSqlRoleDefinitionSqlResourcesRestClient.ListSqlRoleDefinitionsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new CosmosDBSqlRoleDefinitionResource(Client, value)), null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _cosmosDBSqlRoleDefinitionSqlResourcesRestClient.CreateListSqlRoleDefinitionsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new CosmosDBSqlRoleDefinitionResource(Client, CosmosDBSqlRoleDefinitionData.DeserializeCosmosDBSqlRoleDefinitionData(e)), _cosmosDBSqlRoleDefinitionSqlResourcesClientDiagnostics, Pipeline, "CosmosDBSqlRoleDefinitionCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -214,22 +199,8 @@ namespace Azure.ResourceManager.CosmosDB
         /// <returns> A collection of <see cref="CosmosDBSqlRoleDefinitionResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<CosmosDBSqlRoleDefinitionResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<CosmosDBSqlRoleDefinitionResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _cosmosDBSqlRoleDefinitionSqlResourcesClientDiagnostics.CreateScope("CosmosDBSqlRoleDefinitionCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _cosmosDBSqlRoleDefinitionSqlResourcesRestClient.ListSqlRoleDefinitions(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new CosmosDBSqlRoleDefinitionResource(Client, value)), null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _cosmosDBSqlRoleDefinitionSqlResourcesRestClient.CreateListSqlRoleDefinitionsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new CosmosDBSqlRoleDefinitionResource(Client, CosmosDBSqlRoleDefinitionData.DeserializeCosmosDBSqlRoleDefinitionData(e)), _cosmosDBSqlRoleDefinitionSqlResourcesClientDiagnostics, Pipeline, "CosmosDBSqlRoleDefinitionCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>

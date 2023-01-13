@@ -8,7 +8,6 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -177,37 +176,9 @@ namespace Azure.ResourceManager.Resources
         /// <returns> An async collection of <see cref="ManagementLockResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ManagementLockResource> GetAllAsync(string filter = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<ManagementLockResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _managementLockClientDiagnostics.CreateScope("ManagementLockCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _managementLockRestClient.ListByScopeAsync(Id, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ManagementLockResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<ManagementLockResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _managementLockClientDiagnostics.CreateScope("ManagementLockCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _managementLockRestClient.ListByScopeNextPageAsync(nextLink, Id, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ManagementLockResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _managementLockRestClient.CreateListByScopeRequest(Id, filter);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _managementLockRestClient.CreateListByScopeNextPageRequest(nextLink, Id, filter);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ManagementLockResource(Client, ManagementLockData.DeserializeManagementLockData(e)), _managementLockClientDiagnostics, Pipeline, "ManagementLockCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -220,37 +191,9 @@ namespace Azure.ResourceManager.Resources
         /// <returns> A collection of <see cref="ManagementLockResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ManagementLockResource> GetAll(string filter = null, CancellationToken cancellationToken = default)
         {
-            Page<ManagementLockResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _managementLockClientDiagnostics.CreateScope("ManagementLockCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _managementLockRestClient.ListByScope(Id, filter, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ManagementLockResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<ManagementLockResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _managementLockClientDiagnostics.CreateScope("ManagementLockCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _managementLockRestClient.ListByScopeNextPage(nextLink, Id, filter, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ManagementLockResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _managementLockRestClient.CreateListByScopeRequest(Id, filter);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _managementLockRestClient.CreateListByScopeNextPageRequest(nextLink, Id, filter);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ManagementLockResource(Client, ManagementLockData.DeserializeManagementLockData(e)), _managementLockClientDiagnostics, Pipeline, "ManagementLockCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

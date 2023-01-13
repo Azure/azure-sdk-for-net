@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -187,37 +186,9 @@ namespace Azure.ResourceManager.Communication
         /// <returns> An async collection of <see cref="EmailServiceResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<EmailServiceResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<EmailServiceResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _emailServiceResourceEmailServicesClientDiagnostics.CreateScope("EmailServiceResourceCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _emailServiceResourceEmailServicesRestClient.ListByResourceGroupAsync(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new EmailServiceResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<EmailServiceResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _emailServiceResourceEmailServicesClientDiagnostics.CreateScope("EmailServiceResourceCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _emailServiceResourceEmailServicesRestClient.ListByResourceGroupNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new EmailServiceResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _emailServiceResourceEmailServicesRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _emailServiceResourceEmailServicesRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new EmailServiceResource(Client, EmailServiceResourceData.DeserializeEmailServiceResourceData(e)), _emailServiceResourceEmailServicesClientDiagnostics, Pipeline, "EmailServiceResourceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -229,37 +200,9 @@ namespace Azure.ResourceManager.Communication
         /// <returns> A collection of <see cref="EmailServiceResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<EmailServiceResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<EmailServiceResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _emailServiceResourceEmailServicesClientDiagnostics.CreateScope("EmailServiceResourceCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _emailServiceResourceEmailServicesRestClient.ListByResourceGroup(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new EmailServiceResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<EmailServiceResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _emailServiceResourceEmailServicesClientDiagnostics.CreateScope("EmailServiceResourceCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _emailServiceResourceEmailServicesRestClient.ListByResourceGroupNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new EmailServiceResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _emailServiceResourceEmailServicesRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _emailServiceResourceEmailServicesRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new EmailServiceResource(Client, EmailServiceResourceData.DeserializeEmailServiceResourceData(e)), _emailServiceResourceEmailServicesClientDiagnostics, Pipeline, "EmailServiceResourceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

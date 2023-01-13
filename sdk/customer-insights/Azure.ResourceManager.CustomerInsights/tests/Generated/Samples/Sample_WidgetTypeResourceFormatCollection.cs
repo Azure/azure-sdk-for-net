@@ -10,8 +10,9 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager;
+using Azure.ResourceManager.CustomerInsights;
 
-namespace Azure.ResourceManager.CustomerInsights
+namespace Azure.ResourceManager.CustomerInsights.Samples
 {
     public partial class Sample_WidgetTypeResourceFormatCollection
     {
@@ -23,8 +24,10 @@ namespace Azure.ResourceManager.CustomerInsights
             // Generated from example definition: specification/customer-insights/resource-manager/Microsoft.CustomerInsights/stable/2017-04-26/examples/WidgetTypesListByHub.json
             // this example is just showing the usage of "WidgetTypes_ListByHub" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this HubResource created on azure
             // for more information of creating HubResource, please refer to the document of HubResource
@@ -58,8 +61,10 @@ namespace Azure.ResourceManager.CustomerInsights
             // Generated from example definition: specification/customer-insights/resource-manager/Microsoft.CustomerInsights/stable/2017-04-26/examples/WidgetTypesGet.json
             // this example is just showing the usage of "WidgetTypes_Get" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this HubResource created on azure
             // for more information of creating HubResource, please refer to the document of HubResource
@@ -91,8 +96,10 @@ namespace Azure.ResourceManager.CustomerInsights
             // Generated from example definition: specification/customer-insights/resource-manager/Microsoft.CustomerInsights/stable/2017-04-26/examples/WidgetTypesGet.json
             // this example is just showing the usage of "WidgetTypes_Get" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this HubResource created on azure
             // for more information of creating HubResource, please refer to the document of HubResource

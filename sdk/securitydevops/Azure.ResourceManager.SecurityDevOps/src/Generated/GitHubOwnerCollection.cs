@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -186,37 +185,9 @@ namespace Azure.ResourceManager.SecurityDevOps
         /// <returns> An async collection of <see cref="GitHubOwnerResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<GitHubOwnerResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<GitHubOwnerResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _gitHubOwnerClientDiagnostics.CreateScope("GitHubOwnerCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _gitHubOwnerRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new GitHubOwnerResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<GitHubOwnerResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _gitHubOwnerClientDiagnostics.CreateScope("GitHubOwnerCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _gitHubOwnerRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new GitHubOwnerResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _gitHubOwnerRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _gitHubOwnerRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new GitHubOwnerResource(Client, GitHubOwnerData.DeserializeGitHubOwnerData(e)), _gitHubOwnerClientDiagnostics, Pipeline, "GitHubOwnerCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -228,37 +199,9 @@ namespace Azure.ResourceManager.SecurityDevOps
         /// <returns> A collection of <see cref="GitHubOwnerResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<GitHubOwnerResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<GitHubOwnerResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _gitHubOwnerClientDiagnostics.CreateScope("GitHubOwnerCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _gitHubOwnerRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new GitHubOwnerResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<GitHubOwnerResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _gitHubOwnerClientDiagnostics.CreateScope("GitHubOwnerCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _gitHubOwnerRestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new GitHubOwnerResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _gitHubOwnerRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _gitHubOwnerRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new GitHubOwnerResource(Client, GitHubOwnerData.DeserializeGitHubOwnerData(e)), _gitHubOwnerClientDiagnostics, Pipeline, "GitHubOwnerCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

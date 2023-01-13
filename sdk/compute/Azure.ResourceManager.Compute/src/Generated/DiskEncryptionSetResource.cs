@@ -258,37 +258,9 @@ namespace Azure.ResourceManager.Compute
         /// <returns> An async collection of <see cref="string" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<string> GetAssociatedResourcesAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<string>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _diskEncryptionSetClientDiagnostics.CreateScope("DiskEncryptionSetResource.GetAssociatedResources");
-                scope.Start();
-                try
-                {
-                    var response = await _diskEncryptionSetRestClient.ListAssociatedResourcesAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<string>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _diskEncryptionSetClientDiagnostics.CreateScope("DiskEncryptionSetResource.GetAssociatedResources");
-                scope.Start();
-                try
-                {
-                    var response = await _diskEncryptionSetRestClient.ListAssociatedResourcesNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _diskEncryptionSetRestClient.CreateListAssociatedResourcesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _diskEncryptionSetRestClient.CreateListAssociatedResourcesNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => e.GetString(), _diskEncryptionSetClientDiagnostics, Pipeline, "DiskEncryptionSetResource.GetAssociatedResources", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -300,37 +272,9 @@ namespace Azure.ResourceManager.Compute
         /// <returns> A collection of <see cref="string" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<string> GetAssociatedResources(CancellationToken cancellationToken = default)
         {
-            Page<string> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _diskEncryptionSetClientDiagnostics.CreateScope("DiskEncryptionSetResource.GetAssociatedResources");
-                scope.Start();
-                try
-                {
-                    var response = _diskEncryptionSetRestClient.ListAssociatedResources(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<string> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _diskEncryptionSetClientDiagnostics.CreateScope("DiskEncryptionSetResource.GetAssociatedResources");
-                scope.Start();
-                try
-                {
-                    var response = _diskEncryptionSetRestClient.ListAssociatedResourcesNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _diskEncryptionSetRestClient.CreateListAssociatedResourcesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _diskEncryptionSetRestClient.CreateListAssociatedResourcesNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => e.GetString(), _diskEncryptionSetClientDiagnostics, Pipeline, "DiskEncryptionSetResource.GetAssociatedResources", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

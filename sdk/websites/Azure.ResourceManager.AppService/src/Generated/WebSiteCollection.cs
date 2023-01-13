@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -188,37 +187,9 @@ namespace Azure.ResourceManager.AppService
         /// <returns> An async collection of <see cref="WebSiteResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<WebSiteResource> GetAllAsync(bool? includeSlots = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<WebSiteResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _webSiteWebAppsClientDiagnostics.CreateScope("WebSiteCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _webSiteWebAppsRestClient.ListByResourceGroupAsync(Id.SubscriptionId, Id.ResourceGroupName, includeSlots, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new WebSiteResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<WebSiteResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _webSiteWebAppsClientDiagnostics.CreateScope("WebSiteCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _webSiteWebAppsRestClient.ListByResourceGroupNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, includeSlots, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new WebSiteResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _webSiteWebAppsRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, includeSlots);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _webSiteWebAppsRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, includeSlots);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new WebSiteResource(Client, WebSiteData.DeserializeWebSiteData(e)), _webSiteWebAppsClientDiagnostics, Pipeline, "WebSiteCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -231,37 +202,9 @@ namespace Azure.ResourceManager.AppService
         /// <returns> A collection of <see cref="WebSiteResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<WebSiteResource> GetAll(bool? includeSlots = null, CancellationToken cancellationToken = default)
         {
-            Page<WebSiteResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _webSiteWebAppsClientDiagnostics.CreateScope("WebSiteCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _webSiteWebAppsRestClient.ListByResourceGroup(Id.SubscriptionId, Id.ResourceGroupName, includeSlots, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new WebSiteResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<WebSiteResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _webSiteWebAppsClientDiagnostics.CreateScope("WebSiteCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _webSiteWebAppsRestClient.ListByResourceGroupNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, includeSlots, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new WebSiteResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _webSiteWebAppsRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, includeSlots);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _webSiteWebAppsRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, includeSlots);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new WebSiteResource(Client, WebSiteData.DeserializeWebSiteData(e)), _webSiteWebAppsClientDiagnostics, Pipeline, "WebSiteCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

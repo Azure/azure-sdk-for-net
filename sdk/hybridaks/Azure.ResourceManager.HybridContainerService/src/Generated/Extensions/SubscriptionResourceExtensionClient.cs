@@ -6,9 +6,7 @@
 #nullable disable
 
 using System;
-using System.Linq;
 using System.Threading;
-using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -60,37 +58,9 @@ namespace Azure.ResourceManager.HybridContainerService
         /// <returns> An async collection of <see cref="ProvisionedClusterResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ProvisionedClusterResource> GetProvisionedClustersAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<ProvisionedClusterResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = ProvisionedClusterClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetProvisionedClusters");
-                scope.Start();
-                try
-                {
-                    var response = await ProvisionedClusterRestClient.ListBySubscriptionAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ProvisionedClusterResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<ProvisionedClusterResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = ProvisionedClusterClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetProvisionedClusters");
-                scope.Start();
-                try
-                {
-                    var response = await ProvisionedClusterRestClient.ListBySubscriptionNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ProvisionedClusterResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => ProvisionedClusterRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ProvisionedClusterRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ProvisionedClusterResource(Client, ProvisionedClusterData.DeserializeProvisionedClusterData(e)), ProvisionedClusterClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetProvisionedClusters", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -102,37 +72,9 @@ namespace Azure.ResourceManager.HybridContainerService
         /// <returns> A collection of <see cref="ProvisionedClusterResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ProvisionedClusterResource> GetProvisionedClusters(CancellationToken cancellationToken = default)
         {
-            Page<ProvisionedClusterResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = ProvisionedClusterClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetProvisionedClusters");
-                scope.Start();
-                try
-                {
-                    var response = ProvisionedClusterRestClient.ListBySubscription(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ProvisionedClusterResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<ProvisionedClusterResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = ProvisionedClusterClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetProvisionedClusters");
-                scope.Start();
-                try
-                {
-                    var response = ProvisionedClusterRestClient.ListBySubscriptionNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ProvisionedClusterResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => ProvisionedClusterRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ProvisionedClusterRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ProvisionedClusterResource(Client, ProvisionedClusterData.DeserializeProvisionedClusterData(e)), ProvisionedClusterClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetProvisionedClusters", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -144,37 +86,9 @@ namespace Azure.ResourceManager.HybridContainerService
         /// <returns> An async collection of <see cref="HybridContainerServiceVirtualNetworkResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<HybridContainerServiceVirtualNetworkResource> GetHybridContainerServiceVirtualNetworksAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<HybridContainerServiceVirtualNetworkResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = HybridContainerServiceVirtualNetworkvirtualNetworksClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetHybridContainerServiceVirtualNetworks");
-                scope.Start();
-                try
-                {
-                    var response = await HybridContainerServiceVirtualNetworkvirtualNetworksRestClient.ListBySubscriptionAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new HybridContainerServiceVirtualNetworkResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<HybridContainerServiceVirtualNetworkResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = HybridContainerServiceVirtualNetworkvirtualNetworksClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetHybridContainerServiceVirtualNetworks");
-                scope.Start();
-                try
-                {
-                    var response = await HybridContainerServiceVirtualNetworkvirtualNetworksRestClient.ListBySubscriptionNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new HybridContainerServiceVirtualNetworkResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => HybridContainerServiceVirtualNetworkvirtualNetworksRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => HybridContainerServiceVirtualNetworkvirtualNetworksRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new HybridContainerServiceVirtualNetworkResource(Client, HybridContainerServiceVirtualNetworkData.DeserializeHybridContainerServiceVirtualNetworkData(e)), HybridContainerServiceVirtualNetworkvirtualNetworksClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetHybridContainerServiceVirtualNetworks", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -186,37 +100,9 @@ namespace Azure.ResourceManager.HybridContainerService
         /// <returns> A collection of <see cref="HybridContainerServiceVirtualNetworkResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<HybridContainerServiceVirtualNetworkResource> GetHybridContainerServiceVirtualNetworks(CancellationToken cancellationToken = default)
         {
-            Page<HybridContainerServiceVirtualNetworkResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = HybridContainerServiceVirtualNetworkvirtualNetworksClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetHybridContainerServiceVirtualNetworks");
-                scope.Start();
-                try
-                {
-                    var response = HybridContainerServiceVirtualNetworkvirtualNetworksRestClient.ListBySubscription(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new HybridContainerServiceVirtualNetworkResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<HybridContainerServiceVirtualNetworkResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = HybridContainerServiceVirtualNetworkvirtualNetworksClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetHybridContainerServiceVirtualNetworks");
-                scope.Start();
-                try
-                {
-                    var response = HybridContainerServiceVirtualNetworkvirtualNetworksRestClient.ListBySubscriptionNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new HybridContainerServiceVirtualNetworkResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => HybridContainerServiceVirtualNetworkvirtualNetworksRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => HybridContainerServiceVirtualNetworkvirtualNetworksRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new HybridContainerServiceVirtualNetworkResource(Client, HybridContainerServiceVirtualNetworkData.DeserializeHybridContainerServiceVirtualNetworkData(e)), HybridContainerServiceVirtualNetworkvirtualNetworksClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetHybridContainerServiceVirtualNetworks", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -228,37 +114,9 @@ namespace Azure.ResourceManager.HybridContainerService
         /// <returns> An async collection of <see cref="StorageSpaceResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<StorageSpaceResource> GetStorageSpacesAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<StorageSpaceResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = StorageSpacestorageSpacesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetStorageSpaces");
-                scope.Start();
-                try
-                {
-                    var response = await StorageSpacestorageSpacesRestClient.ListBySubscriptionAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new StorageSpaceResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<StorageSpaceResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = StorageSpacestorageSpacesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetStorageSpaces");
-                scope.Start();
-                try
-                {
-                    var response = await StorageSpacestorageSpacesRestClient.ListBySubscriptionNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new StorageSpaceResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => StorageSpacestorageSpacesRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => StorageSpacestorageSpacesRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new StorageSpaceResource(Client, StorageSpaceData.DeserializeStorageSpaceData(e)), StorageSpacestorageSpacesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetStorageSpaces", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -270,37 +128,9 @@ namespace Azure.ResourceManager.HybridContainerService
         /// <returns> A collection of <see cref="StorageSpaceResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<StorageSpaceResource> GetStorageSpaces(CancellationToken cancellationToken = default)
         {
-            Page<StorageSpaceResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = StorageSpacestorageSpacesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetStorageSpaces");
-                scope.Start();
-                try
-                {
-                    var response = StorageSpacestorageSpacesRestClient.ListBySubscription(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new StorageSpaceResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<StorageSpaceResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = StorageSpacestorageSpacesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetStorageSpaces");
-                scope.Start();
-                try
-                {
-                    var response = StorageSpacestorageSpacesRestClient.ListBySubscriptionNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new StorageSpaceResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => StorageSpacestorageSpacesRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => StorageSpacestorageSpacesRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new StorageSpaceResource(Client, StorageSpaceData.DeserializeStorageSpaceData(e)), StorageSpacestorageSpacesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetStorageSpaces", "value", "nextLink", cancellationToken);
         }
     }
 }

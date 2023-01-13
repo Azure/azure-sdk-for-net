@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -186,22 +185,8 @@ namespace Azure.ResourceManager.MySql
         /// <returns> An async collection of <see cref="MySqlDatabaseResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<MySqlDatabaseResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<MySqlDatabaseResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _mySqlDatabaseDatabasesClientDiagnostics.CreateScope("MySqlDatabaseCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _mySqlDatabaseDatabasesRestClient.ListByServerAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new MySqlDatabaseResource(Client, value)), null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _mySqlDatabaseDatabasesRestClient.CreateListByServerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new MySqlDatabaseResource(Client, MySqlDatabaseData.DeserializeMySqlDatabaseData(e)), _mySqlDatabaseDatabasesClientDiagnostics, Pipeline, "MySqlDatabaseCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -213,22 +198,8 @@ namespace Azure.ResourceManager.MySql
         /// <returns> A collection of <see cref="MySqlDatabaseResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<MySqlDatabaseResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<MySqlDatabaseResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _mySqlDatabaseDatabasesClientDiagnostics.CreateScope("MySqlDatabaseCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _mySqlDatabaseDatabasesRestClient.ListByServer(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new MySqlDatabaseResource(Client, value)), null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _mySqlDatabaseDatabasesRestClient.CreateListByServerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new MySqlDatabaseResource(Client, MySqlDatabaseData.DeserializeMySqlDatabaseData(e)), _mySqlDatabaseDatabasesClientDiagnostics, Pipeline, "MySqlDatabaseCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>

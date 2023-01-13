@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -127,37 +126,9 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <returns> An async collection of <see cref="DeletedAppConfigurationStoreResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DeletedAppConfigurationStoreResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<DeletedAppConfigurationStoreResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _configurationStoresClientDiagnostics.CreateScope("DeletedAppConfigurationStoreCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _configurationStoresRestClient.ListDeletedAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new DeletedAppConfigurationStoreResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<DeletedAppConfigurationStoreResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _configurationStoresClientDiagnostics.CreateScope("DeletedAppConfigurationStoreCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _configurationStoresRestClient.ListDeletedNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new DeletedAppConfigurationStoreResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _configurationStoresRestClient.CreateListDeletedRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _configurationStoresRestClient.CreateListDeletedNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DeletedAppConfigurationStoreResource(Client, DeletedAppConfigurationStoreData.DeserializeDeletedAppConfigurationStoreData(e)), _configurationStoresClientDiagnostics, Pipeline, "DeletedAppConfigurationStoreCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -169,37 +140,9 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <returns> A collection of <see cref="DeletedAppConfigurationStoreResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DeletedAppConfigurationStoreResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<DeletedAppConfigurationStoreResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _configurationStoresClientDiagnostics.CreateScope("DeletedAppConfigurationStoreCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _configurationStoresRestClient.ListDeleted(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new DeletedAppConfigurationStoreResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<DeletedAppConfigurationStoreResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _configurationStoresClientDiagnostics.CreateScope("DeletedAppConfigurationStoreCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _configurationStoresRestClient.ListDeletedNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new DeletedAppConfigurationStoreResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _configurationStoresRestClient.CreateListDeletedRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _configurationStoresRestClient.CreateListDeletedNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DeletedAppConfigurationStoreResource(Client, DeletedAppConfigurationStoreData.DeserializeDeletedAppConfigurationStoreData(e)), _configurationStoresClientDiagnostics, Pipeline, "DeletedAppConfigurationStoreCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

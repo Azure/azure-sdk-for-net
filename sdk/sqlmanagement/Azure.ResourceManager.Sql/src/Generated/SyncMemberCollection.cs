@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -186,37 +185,9 @@ namespace Azure.ResourceManager.Sql
         /// <returns> An async collection of <see cref="SyncMemberResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SyncMemberResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<SyncMemberResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _syncMemberClientDiagnostics.CreateScope("SyncMemberCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _syncMemberRestClient.ListBySyncGroupAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new SyncMemberResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<SyncMemberResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _syncMemberClientDiagnostics.CreateScope("SyncMemberCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _syncMemberRestClient.ListBySyncGroupNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new SyncMemberResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _syncMemberRestClient.CreateListBySyncGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _syncMemberRestClient.CreateListBySyncGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SyncMemberResource(Client, SyncMemberData.DeserializeSyncMemberData(e)), _syncMemberClientDiagnostics, Pipeline, "SyncMemberCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -228,37 +199,9 @@ namespace Azure.ResourceManager.Sql
         /// <returns> A collection of <see cref="SyncMemberResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SyncMemberResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<SyncMemberResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _syncMemberClientDiagnostics.CreateScope("SyncMemberCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _syncMemberRestClient.ListBySyncGroup(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new SyncMemberResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<SyncMemberResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _syncMemberClientDiagnostics.CreateScope("SyncMemberCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _syncMemberRestClient.ListBySyncGroupNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new SyncMemberResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _syncMemberRestClient.CreateListBySyncGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _syncMemberRestClient.CreateListBySyncGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SyncMemberResource(Client, SyncMemberData.DeserializeSyncMemberData(e)), _syncMemberClientDiagnostics, Pipeline, "SyncMemberCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

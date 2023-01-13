@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -186,37 +185,9 @@ namespace Azure.ResourceManager.AppService
         /// <returns> An async collection of <see cref="SiteSlotHostNameBindingResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SiteSlotHostNameBindingResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<SiteSlotHostNameBindingResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _siteSlotHostNameBindingWebAppsClientDiagnostics.CreateScope("SiteSlotHostNameBindingCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _siteSlotHostNameBindingWebAppsRestClient.ListHostNameBindingsSlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new SiteSlotHostNameBindingResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<SiteSlotHostNameBindingResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _siteSlotHostNameBindingWebAppsClientDiagnostics.CreateScope("SiteSlotHostNameBindingCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _siteSlotHostNameBindingWebAppsRestClient.ListHostNameBindingsSlotNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new SiteSlotHostNameBindingResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _siteSlotHostNameBindingWebAppsRestClient.CreateListHostNameBindingsSlotRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _siteSlotHostNameBindingWebAppsRestClient.CreateListHostNameBindingsSlotNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SiteSlotHostNameBindingResource(Client, HostNameBindingData.DeserializeHostNameBindingData(e)), _siteSlotHostNameBindingWebAppsClientDiagnostics, Pipeline, "SiteSlotHostNameBindingCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -228,37 +199,9 @@ namespace Azure.ResourceManager.AppService
         /// <returns> A collection of <see cref="SiteSlotHostNameBindingResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SiteSlotHostNameBindingResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<SiteSlotHostNameBindingResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _siteSlotHostNameBindingWebAppsClientDiagnostics.CreateScope("SiteSlotHostNameBindingCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _siteSlotHostNameBindingWebAppsRestClient.ListHostNameBindingsSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new SiteSlotHostNameBindingResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<SiteSlotHostNameBindingResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _siteSlotHostNameBindingWebAppsClientDiagnostics.CreateScope("SiteSlotHostNameBindingCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _siteSlotHostNameBindingWebAppsRestClient.ListHostNameBindingsSlotNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new SiteSlotHostNameBindingResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _siteSlotHostNameBindingWebAppsRestClient.CreateListHostNameBindingsSlotRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _siteSlotHostNameBindingWebAppsRestClient.CreateListHostNameBindingsSlotNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SiteSlotHostNameBindingResource(Client, HostNameBindingData.DeserializeHostNameBindingData(e)), _siteSlotHostNameBindingWebAppsClientDiagnostics, Pipeline, "SiteSlotHostNameBindingCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

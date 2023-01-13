@@ -1,7 +1,25 @@
 # Release History
 
-## 1.1.0-beta.3 (Unreleased)
+## 1.1.0-beta.4 (Unreleased)
+
 ### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
+## 1.1.0-beta.3 (2023-01-10)
+- Adds support for Azure Communication Services Phone Numbers Browse API Methods.
+
+### Features Added
+- Added support for API version `2022-12-01`, giving users the ability to: 
+  - Get all supported countries
+  - Get all supported localities given a country code.
+  - Get all Toll-Free area codes from a given country code.
+  - Get all Geographic area codes from a given country code / locality.
+  - Get all offerings from a given country code.
 - Added new SIP routing client for handling Direct routing numbers.
 
 ## 1.1.0-beta.2 (2022-03-30)

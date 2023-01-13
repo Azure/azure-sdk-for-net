@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -189,37 +188,9 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <returns> An async collection of <see cref="EdgeOrderAddressResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<EdgeOrderAddressResource> GetAllAsync(string filter = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<EdgeOrderAddressResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _edgeOrderAddressClientDiagnostics.CreateScope("EdgeOrderAddressCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _edgeOrderAddressRestClient.ListAddressesAtResourceGroupLevelAsync(Id.SubscriptionId, Id.ResourceGroupName, filter, skipToken, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new EdgeOrderAddressResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<EdgeOrderAddressResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _edgeOrderAddressClientDiagnostics.CreateScope("EdgeOrderAddressCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _edgeOrderAddressRestClient.ListAddressesAtResourceGroupLevelNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, filter, skipToken, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new EdgeOrderAddressResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _edgeOrderAddressRestClient.CreateListAddressesAtResourceGroupLevelRequest(Id.SubscriptionId, Id.ResourceGroupName, filter, skipToken);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _edgeOrderAddressRestClient.CreateListAddressesAtResourceGroupLevelNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, filter, skipToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new EdgeOrderAddressResource(Client, EdgeOrderAddressData.DeserializeEdgeOrderAddressData(e)), _edgeOrderAddressClientDiagnostics, Pipeline, "EdgeOrderAddressCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -233,37 +204,9 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <returns> A collection of <see cref="EdgeOrderAddressResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<EdgeOrderAddressResource> GetAll(string filter = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            Page<EdgeOrderAddressResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _edgeOrderAddressClientDiagnostics.CreateScope("EdgeOrderAddressCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _edgeOrderAddressRestClient.ListAddressesAtResourceGroupLevel(Id.SubscriptionId, Id.ResourceGroupName, filter, skipToken, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new EdgeOrderAddressResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<EdgeOrderAddressResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _edgeOrderAddressClientDiagnostics.CreateScope("EdgeOrderAddressCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _edgeOrderAddressRestClient.ListAddressesAtResourceGroupLevelNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, filter, skipToken, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new EdgeOrderAddressResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _edgeOrderAddressRestClient.CreateListAddressesAtResourceGroupLevelRequest(Id.SubscriptionId, Id.ResourceGroupName, filter, skipToken);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _edgeOrderAddressRestClient.CreateListAddressesAtResourceGroupLevelNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, filter, skipToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new EdgeOrderAddressResource(Client, EdgeOrderAddressData.DeserializeEdgeOrderAddressData(e)), _edgeOrderAddressClientDiagnostics, Pipeline, "EdgeOrderAddressCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

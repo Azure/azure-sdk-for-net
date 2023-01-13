@@ -292,22 +292,8 @@ namespace Azure.ResourceManager.AppPlatform
         /// <returns> An async collection of <see cref="ResourceIdentifier" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ResourceIdentifier> GetDeploymentsAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<ResourceIdentifier>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _appPlatformBuilderBuildServiceBuilderClientDiagnostics.CreateScope("AppPlatformBuilderResource.GetDeployments");
-                scope.Start();
-                try
-                {
-                    var response = await _appPlatformBuilderBuildServiceBuilderRestClient.ListDeploymentsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Deployments, null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _appPlatformBuilderBuildServiceBuilderRestClient.CreateListDeploymentsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new ResourceIdentifier(e.GetString()), _appPlatformBuilderBuildServiceBuilderClientDiagnostics, Pipeline, "AppPlatformBuilderResource.GetDeployments", "deployments", null, cancellationToken);
         }
 
         /// <summary>
@@ -319,22 +305,8 @@ namespace Azure.ResourceManager.AppPlatform
         /// <returns> A collection of <see cref="ResourceIdentifier" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ResourceIdentifier> GetDeployments(CancellationToken cancellationToken = default)
         {
-            Page<ResourceIdentifier> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _appPlatformBuilderBuildServiceBuilderClientDiagnostics.CreateScope("AppPlatformBuilderResource.GetDeployments");
-                scope.Start();
-                try
-                {
-                    var response = _appPlatformBuilderBuildServiceBuilderRestClient.ListDeployments(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Deployments, null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _appPlatformBuilderBuildServiceBuilderRestClient.CreateListDeploymentsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new ResourceIdentifier(e.GetString()), _appPlatformBuilderBuildServiceBuilderClientDiagnostics, Pipeline, "AppPlatformBuilderResource.GetDeployments", "deployments", null, cancellationToken);
         }
     }
 }

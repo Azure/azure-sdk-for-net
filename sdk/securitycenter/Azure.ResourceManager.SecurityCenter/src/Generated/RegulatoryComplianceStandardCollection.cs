@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -122,37 +121,9 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <returns> An async collection of <see cref="RegulatoryComplianceStandardResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<RegulatoryComplianceStandardResource> GetAllAsync(string filter = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<RegulatoryComplianceStandardResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _regulatoryComplianceStandardClientDiagnostics.CreateScope("RegulatoryComplianceStandardCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _regulatoryComplianceStandardRestClient.ListAsync(Id.SubscriptionId, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new RegulatoryComplianceStandardResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<RegulatoryComplianceStandardResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _regulatoryComplianceStandardClientDiagnostics.CreateScope("RegulatoryComplianceStandardCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _regulatoryComplianceStandardRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new RegulatoryComplianceStandardResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _regulatoryComplianceStandardRestClient.CreateListRequest(Id.SubscriptionId, filter);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _regulatoryComplianceStandardRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, filter);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new RegulatoryComplianceStandardResource(Client, RegulatoryComplianceStandardData.DeserializeRegulatoryComplianceStandardData(e)), _regulatoryComplianceStandardClientDiagnostics, Pipeline, "RegulatoryComplianceStandardCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -165,37 +136,9 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <returns> A collection of <see cref="RegulatoryComplianceStandardResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<RegulatoryComplianceStandardResource> GetAll(string filter = null, CancellationToken cancellationToken = default)
         {
-            Page<RegulatoryComplianceStandardResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _regulatoryComplianceStandardClientDiagnostics.CreateScope("RegulatoryComplianceStandardCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _regulatoryComplianceStandardRestClient.List(Id.SubscriptionId, filter, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new RegulatoryComplianceStandardResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<RegulatoryComplianceStandardResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _regulatoryComplianceStandardClientDiagnostics.CreateScope("RegulatoryComplianceStandardCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _regulatoryComplianceStandardRestClient.ListNextPage(nextLink, Id.SubscriptionId, filter, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new RegulatoryComplianceStandardResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _regulatoryComplianceStandardRestClient.CreateListRequest(Id.SubscriptionId, filter);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _regulatoryComplianceStandardRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, filter);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new RegulatoryComplianceStandardResource(Client, RegulatoryComplianceStandardData.DeserializeRegulatoryComplianceStandardData(e)), _regulatoryComplianceStandardClientDiagnostics, Pipeline, "RegulatoryComplianceStandardCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

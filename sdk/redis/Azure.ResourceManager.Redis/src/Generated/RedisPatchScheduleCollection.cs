@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -175,37 +174,9 @@ namespace Azure.ResourceManager.Redis
         /// <returns> An async collection of <see cref="RedisPatchScheduleResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<RedisPatchScheduleResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<RedisPatchScheduleResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _redisPatchSchedulePatchSchedulesClientDiagnostics.CreateScope("RedisPatchScheduleCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _redisPatchSchedulePatchSchedulesRestClient.ListByRedisResourceAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new RedisPatchScheduleResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<RedisPatchScheduleResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _redisPatchSchedulePatchSchedulesClientDiagnostics.CreateScope("RedisPatchScheduleCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _redisPatchSchedulePatchSchedulesRestClient.ListByRedisResourceNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new RedisPatchScheduleResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _redisPatchSchedulePatchSchedulesRestClient.CreateListByRedisResourceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _redisPatchSchedulePatchSchedulesRestClient.CreateListByRedisResourceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new RedisPatchScheduleResource(Client, RedisPatchScheduleData.DeserializeRedisPatchScheduleData(e)), _redisPatchSchedulePatchSchedulesClientDiagnostics, Pipeline, "RedisPatchScheduleCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -217,37 +188,9 @@ namespace Azure.ResourceManager.Redis
         /// <returns> A collection of <see cref="RedisPatchScheduleResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<RedisPatchScheduleResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<RedisPatchScheduleResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _redisPatchSchedulePatchSchedulesClientDiagnostics.CreateScope("RedisPatchScheduleCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _redisPatchSchedulePatchSchedulesRestClient.ListByRedisResource(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new RedisPatchScheduleResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<RedisPatchScheduleResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _redisPatchSchedulePatchSchedulesClientDiagnostics.CreateScope("RedisPatchScheduleCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _redisPatchSchedulePatchSchedulesRestClient.ListByRedisResourceNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new RedisPatchScheduleResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _redisPatchSchedulePatchSchedulesRestClient.CreateListByRedisResourceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _redisPatchSchedulePatchSchedulesRestClient.CreateListByRedisResourceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new RedisPatchScheduleResource(Client, RedisPatchScheduleData.DeserializeRedisPatchScheduleData(e)), _redisPatchSchedulePatchSchedulesClientDiagnostics, Pipeline, "RedisPatchScheduleCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

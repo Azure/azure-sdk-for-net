@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -187,37 +186,9 @@ namespace Azure.ResourceManager.FrontDoor
         /// <returns> An async collection of <see cref="FrontDoorResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<FrontDoorResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<FrontDoorResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _frontDoorClientDiagnostics.CreateScope("FrontDoorCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _frontDoorRestClient.ListByResourceGroupAsync(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new FrontDoorResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<FrontDoorResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _frontDoorClientDiagnostics.CreateScope("FrontDoorCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _frontDoorRestClient.ListByResourceGroupNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new FrontDoorResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _frontDoorRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _frontDoorRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new FrontDoorResource(Client, FrontDoorData.DeserializeFrontDoorData(e)), _frontDoorClientDiagnostics, Pipeline, "FrontDoorCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -229,37 +200,9 @@ namespace Azure.ResourceManager.FrontDoor
         /// <returns> A collection of <see cref="FrontDoorResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<FrontDoorResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<FrontDoorResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _frontDoorClientDiagnostics.CreateScope("FrontDoorCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _frontDoorRestClient.ListByResourceGroup(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new FrontDoorResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<FrontDoorResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _frontDoorClientDiagnostics.CreateScope("FrontDoorCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _frontDoorRestClient.ListByResourceGroupNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new FrontDoorResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _frontDoorRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _frontDoorRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new FrontDoorResource(Client, FrontDoorData.DeserializeFrontDoorData(e)), _frontDoorClientDiagnostics, Pipeline, "FrontDoorCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

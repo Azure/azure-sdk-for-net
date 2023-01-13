@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -976,37 +975,9 @@ namespace Azure.ResourceManager.Sql
         /// <returns> An async collection of <see cref="SqlServerTrustGroupResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SqlServerTrustGroupResource> GetSqlServerTrustGroupsAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<SqlServerTrustGroupResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _sqlServerTrustGroupServerTrustGroupsClientDiagnostics.CreateScope("ManagedInstanceResource.GetSqlServerTrustGroups");
-                scope.Start();
-                try
-                {
-                    var response = await _sqlServerTrustGroupServerTrustGroupsRestClient.ListByInstanceAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new SqlServerTrustGroupResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<SqlServerTrustGroupResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _sqlServerTrustGroupServerTrustGroupsClientDiagnostics.CreateScope("ManagedInstanceResource.GetSqlServerTrustGroups");
-                scope.Start();
-                try
-                {
-                    var response = await _sqlServerTrustGroupServerTrustGroupsRestClient.ListByInstanceNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new SqlServerTrustGroupResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _sqlServerTrustGroupServerTrustGroupsRestClient.CreateListByInstanceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _sqlServerTrustGroupServerTrustGroupsRestClient.CreateListByInstanceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SqlServerTrustGroupResource(Client, SqlServerTrustGroupData.DeserializeSqlServerTrustGroupData(e)), _sqlServerTrustGroupServerTrustGroupsClientDiagnostics, Pipeline, "ManagedInstanceResource.GetSqlServerTrustGroups", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -1018,37 +989,9 @@ namespace Azure.ResourceManager.Sql
         /// <returns> A collection of <see cref="SqlServerTrustGroupResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SqlServerTrustGroupResource> GetSqlServerTrustGroups(CancellationToken cancellationToken = default)
         {
-            Page<SqlServerTrustGroupResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _sqlServerTrustGroupServerTrustGroupsClientDiagnostics.CreateScope("ManagedInstanceResource.GetSqlServerTrustGroups");
-                scope.Start();
-                try
-                {
-                    var response = _sqlServerTrustGroupServerTrustGroupsRestClient.ListByInstance(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new SqlServerTrustGroupResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<SqlServerTrustGroupResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _sqlServerTrustGroupServerTrustGroupsClientDiagnostics.CreateScope("ManagedInstanceResource.GetSqlServerTrustGroups");
-                scope.Start();
-                try
-                {
-                    var response = _sqlServerTrustGroupServerTrustGroupsRestClient.ListByInstanceNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new SqlServerTrustGroupResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _sqlServerTrustGroupServerTrustGroupsRestClient.CreateListByInstanceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _sqlServerTrustGroupServerTrustGroupsRestClient.CreateListByInstanceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SqlServerTrustGroupResource(Client, SqlServerTrustGroupData.DeserializeSqlServerTrustGroupData(e)), _sqlServerTrustGroupServerTrustGroupsClientDiagnostics, Pipeline, "ManagedInstanceResource.GetSqlServerTrustGroups", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -1067,37 +1010,9 @@ namespace Azure.ResourceManager.Sql
         /// <returns> An async collection of <see cref="TopQueries" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<TopQueries> GetTopQueriesAsync(int? numberOfQueries = null, string databases = null, string startTime = null, string endTime = null, QueryTimeGrainType? interval = null, AggregationFunctionType? aggregationFunction = null, SqlMetricType? observationMetric = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<TopQueries>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _managedInstanceClientDiagnostics.CreateScope("ManagedInstanceResource.GetTopQueries");
-                scope.Start();
-                try
-                {
-                    var response = await _managedInstanceRestClient.ListByManagedInstanceAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, numberOfQueries, databases, startTime, endTime, interval, aggregationFunction, observationMetric, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<TopQueries>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _managedInstanceClientDiagnostics.CreateScope("ManagedInstanceResource.GetTopQueries");
-                scope.Start();
-                try
-                {
-                    var response = await _managedInstanceRestClient.ListByManagedInstanceNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, numberOfQueries, databases, startTime, endTime, interval, aggregationFunction, observationMetric, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _managedInstanceRestClient.CreateListByManagedInstanceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, numberOfQueries, databases, startTime, endTime, interval, aggregationFunction, observationMetric);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _managedInstanceRestClient.CreateListByManagedInstanceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, numberOfQueries, databases, startTime, endTime, interval, aggregationFunction, observationMetric);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, TopQueries.DeserializeTopQueries, _managedInstanceClientDiagnostics, Pipeline, "ManagedInstanceResource.GetTopQueries", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -1116,37 +1031,9 @@ namespace Azure.ResourceManager.Sql
         /// <returns> A collection of <see cref="TopQueries" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<TopQueries> GetTopQueries(int? numberOfQueries = null, string databases = null, string startTime = null, string endTime = null, QueryTimeGrainType? interval = null, AggregationFunctionType? aggregationFunction = null, SqlMetricType? observationMetric = null, CancellationToken cancellationToken = default)
         {
-            Page<TopQueries> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _managedInstanceClientDiagnostics.CreateScope("ManagedInstanceResource.GetTopQueries");
-                scope.Start();
-                try
-                {
-                    var response = _managedInstanceRestClient.ListByManagedInstance(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, numberOfQueries, databases, startTime, endTime, interval, aggregationFunction, observationMetric, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<TopQueries> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _managedInstanceClientDiagnostics.CreateScope("ManagedInstanceResource.GetTopQueries");
-                scope.Start();
-                try
-                {
-                    var response = _managedInstanceRestClient.ListByManagedInstanceNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, numberOfQueries, databases, startTime, endTime, interval, aggregationFunction, observationMetric, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _managedInstanceRestClient.CreateListByManagedInstanceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, numberOfQueries, databases, startTime, endTime, interval, aggregationFunction, observationMetric);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _managedInstanceRestClient.CreateListByManagedInstanceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, numberOfQueries, databases, startTime, endTime, interval, aggregationFunction, observationMetric);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, TopQueries.DeserializeTopQueries, _managedInstanceClientDiagnostics, Pipeline, "ManagedInstanceResource.GetTopQueries", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -1212,37 +1099,9 @@ namespace Azure.ResourceManager.Sql
         /// <returns> An async collection of <see cref="ManagedDatabaseResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ManagedDatabaseResource> GetInaccessibleManagedDatabasesAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<ManagedDatabaseResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _managedDatabaseClientDiagnostics.CreateScope("ManagedInstanceResource.GetInaccessibleManagedDatabases");
-                scope.Start();
-                try
-                {
-                    var response = await _managedDatabaseRestClient.ListInaccessibleByInstanceAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ManagedDatabaseResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<ManagedDatabaseResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _managedDatabaseClientDiagnostics.CreateScope("ManagedInstanceResource.GetInaccessibleManagedDatabases");
-                scope.Start();
-                try
-                {
-                    var response = await _managedDatabaseRestClient.ListInaccessibleByInstanceNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ManagedDatabaseResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _managedDatabaseRestClient.CreateListInaccessibleByInstanceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _managedDatabaseRestClient.CreateListInaccessibleByInstanceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ManagedDatabaseResource(Client, ManagedDatabaseData.DeserializeManagedDatabaseData(e)), _managedDatabaseClientDiagnostics, Pipeline, "ManagedInstanceResource.GetInaccessibleManagedDatabases", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -1254,37 +1113,9 @@ namespace Azure.ResourceManager.Sql
         /// <returns> A collection of <see cref="ManagedDatabaseResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ManagedDatabaseResource> GetInaccessibleManagedDatabases(CancellationToken cancellationToken = default)
         {
-            Page<ManagedDatabaseResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _managedDatabaseClientDiagnostics.CreateScope("ManagedInstanceResource.GetInaccessibleManagedDatabases");
-                scope.Start();
-                try
-                {
-                    var response = _managedDatabaseRestClient.ListInaccessibleByInstance(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ManagedDatabaseResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<ManagedDatabaseResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _managedDatabaseClientDiagnostics.CreateScope("ManagedInstanceResource.GetInaccessibleManagedDatabases");
-                scope.Start();
-                try
-                {
-                    var response = _managedDatabaseRestClient.ListInaccessibleByInstanceNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ManagedDatabaseResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _managedDatabaseRestClient.CreateListInaccessibleByInstanceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _managedDatabaseRestClient.CreateListInaccessibleByInstanceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ManagedDatabaseResource(Client, ManagedDatabaseData.DeserializeManagedDatabaseData(e)), _managedDatabaseClientDiagnostics, Pipeline, "ManagedInstanceResource.GetInaccessibleManagedDatabases", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

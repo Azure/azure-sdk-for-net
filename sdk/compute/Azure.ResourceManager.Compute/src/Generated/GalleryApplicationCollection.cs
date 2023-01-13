@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -186,37 +185,9 @@ namespace Azure.ResourceManager.Compute
         /// <returns> An async collection of <see cref="GalleryApplicationResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<GalleryApplicationResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<GalleryApplicationResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _galleryApplicationClientDiagnostics.CreateScope("GalleryApplicationCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _galleryApplicationRestClient.ListByGalleryAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new GalleryApplicationResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<GalleryApplicationResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _galleryApplicationClientDiagnostics.CreateScope("GalleryApplicationCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _galleryApplicationRestClient.ListByGalleryNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new GalleryApplicationResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _galleryApplicationRestClient.CreateListByGalleryRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _galleryApplicationRestClient.CreateListByGalleryNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new GalleryApplicationResource(Client, GalleryApplicationData.DeserializeGalleryApplicationData(e)), _galleryApplicationClientDiagnostics, Pipeline, "GalleryApplicationCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -228,37 +199,9 @@ namespace Azure.ResourceManager.Compute
         /// <returns> A collection of <see cref="GalleryApplicationResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<GalleryApplicationResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<GalleryApplicationResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _galleryApplicationClientDiagnostics.CreateScope("GalleryApplicationCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _galleryApplicationRestClient.ListByGallery(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new GalleryApplicationResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<GalleryApplicationResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _galleryApplicationClientDiagnostics.CreateScope("GalleryApplicationCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _galleryApplicationRestClient.ListByGalleryNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new GalleryApplicationResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _galleryApplicationRestClient.CreateListByGalleryRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _galleryApplicationRestClient.CreateListByGalleryNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new GalleryApplicationResource(Client, GalleryApplicationData.DeserializeGalleryApplicationData(e)), _galleryApplicationClientDiagnostics, Pipeline, "GalleryApplicationCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

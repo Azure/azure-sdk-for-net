@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -433,37 +432,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            async Task<Page<RecoveryPointResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _recoveryPointsRecommendedForMoveClientDiagnostics.CreateScope("ProtectedItemResource.GetRecoveryPointsRecommendedForMoves");
-                scope.Start();
-                try
-                {
-                    var response = await _recoveryPointsRecommendedForMoveRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, content, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new RecoveryPointResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<RecoveryPointResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _recoveryPointsRecommendedForMoveClientDiagnostics.CreateScope("ProtectedItemResource.GetRecoveryPointsRecommendedForMoves");
-                scope.Start();
-                try
-                {
-                    var response = await _recoveryPointsRecommendedForMoveRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, content, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new RecoveryPointResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _recoveryPointsRecommendedForMoveRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, content);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _recoveryPointsRecommendedForMoveRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, content);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new RecoveryPointResource(Client, RecoveryPointResourceData.DeserializeRecoveryPointResourceData(e)), _recoveryPointsRecommendedForMoveClientDiagnostics, Pipeline, "ProtectedItemResource.GetRecoveryPointsRecommendedForMoves", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -479,37 +450,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            Page<RecoveryPointResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _recoveryPointsRecommendedForMoveClientDiagnostics.CreateScope("ProtectedItemResource.GetRecoveryPointsRecommendedForMoves");
-                scope.Start();
-                try
-                {
-                    var response = _recoveryPointsRecommendedForMoveRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, content, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new RecoveryPointResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<RecoveryPointResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _recoveryPointsRecommendedForMoveClientDiagnostics.CreateScope("ProtectedItemResource.GetRecoveryPointsRecommendedForMoves");
-                scope.Start();
-                try
-                {
-                    var response = _recoveryPointsRecommendedForMoveRestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, content, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new RecoveryPointResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _recoveryPointsRecommendedForMoveRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, content);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _recoveryPointsRecommendedForMoveRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, content);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new RecoveryPointResource(Client, RecoveryPointResourceData.DeserializeRecoveryPointResourceData(e)), _recoveryPointsRecommendedForMoveClientDiagnostics, Pipeline, "ProtectedItemResource.GetRecoveryPointsRecommendedForMoves", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

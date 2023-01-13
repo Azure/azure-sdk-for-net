@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -305,37 +304,9 @@ namespace Azure.ResourceManager.SecurityDevOps
         /// <returns> An async collection of <see cref="GitHubRepoResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<GitHubRepoResource> GetGitHubReposByConnectorAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<GitHubRepoResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _gitHubRepoClientDiagnostics.CreateScope("GitHubConnectorResource.GetGitHubReposByConnector");
-                scope.Start();
-                try
-                {
-                    var response = await _gitHubRepoRestClient.ListByConnectorAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new GitHubRepoResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<GitHubRepoResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _gitHubRepoClientDiagnostics.CreateScope("GitHubConnectorResource.GetGitHubReposByConnector");
-                scope.Start();
-                try
-                {
-                    var response = await _gitHubRepoRestClient.ListByConnectorNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new GitHubRepoResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _gitHubRepoRestClient.CreateListByConnectorRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _gitHubRepoRestClient.CreateListByConnectorNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new GitHubRepoResource(Client, GitHubRepoData.DeserializeGitHubRepoData(e)), _gitHubRepoClientDiagnostics, Pipeline, "GitHubConnectorResource.GetGitHubReposByConnector", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -347,37 +318,9 @@ namespace Azure.ResourceManager.SecurityDevOps
         /// <returns> A collection of <see cref="GitHubRepoResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<GitHubRepoResource> GetGitHubReposByConnector(CancellationToken cancellationToken = default)
         {
-            Page<GitHubRepoResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _gitHubRepoClientDiagnostics.CreateScope("GitHubConnectorResource.GetGitHubReposByConnector");
-                scope.Start();
-                try
-                {
-                    var response = _gitHubRepoRestClient.ListByConnector(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new GitHubRepoResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<GitHubRepoResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _gitHubRepoClientDiagnostics.CreateScope("GitHubConnectorResource.GetGitHubReposByConnector");
-                scope.Start();
-                try
-                {
-                    var response = _gitHubRepoRestClient.ListByConnectorNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new GitHubRepoResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _gitHubRepoRestClient.CreateListByConnectorRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _gitHubRepoRestClient.CreateListByConnectorNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new GitHubRepoResource(Client, GitHubRepoData.DeserializeGitHubRepoData(e)), _gitHubRepoClientDiagnostics, Pipeline, "GitHubConnectorResource.GetGitHubReposByConnector", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -389,22 +332,8 @@ namespace Azure.ResourceManager.SecurityDevOps
         /// <returns> An async collection of <see cref="GitHubConnectorStats" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<GitHubConnectorStats> GetGitHubConnectorStatsAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<GitHubConnectorStats>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _gitHubConnectorStatsClientDiagnostics.CreateScope("GitHubConnectorResource.GetGitHubConnectorStats");
-                scope.Start();
-                try
-                {
-                    var response = await _gitHubConnectorStatsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _gitHubConnectorStatsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, GitHubConnectorStats.DeserializeGitHubConnectorStats, _gitHubConnectorStatsClientDiagnostics, Pipeline, "GitHubConnectorResource.GetGitHubConnectorStats", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -416,22 +345,8 @@ namespace Azure.ResourceManager.SecurityDevOps
         /// <returns> A collection of <see cref="GitHubConnectorStats" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<GitHubConnectorStats> GetGitHubConnectorStats(CancellationToken cancellationToken = default)
         {
-            Page<GitHubConnectorStats> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _gitHubConnectorStatsClientDiagnostics.CreateScope("GitHubConnectorResource.GetGitHubConnectorStats");
-                scope.Start();
-                try
-                {
-                    var response = _gitHubConnectorStatsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _gitHubConnectorStatsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, GitHubConnectorStats.DeserializeGitHubConnectorStats, _gitHubConnectorStatsClientDiagnostics, Pipeline, "GitHubConnectorResource.GetGitHubConnectorStats", "value", null, cancellationToken);
         }
 
         /// <summary>

@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Synapse
     /// A Class representing a SynapsePrivateEndpointConnection along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="SynapsePrivateEndpointConnectionResource" />
     /// from an instance of <see cref="ArmClient" /> using the GetSynapsePrivateEndpointConnectionResource method.
-    /// Otherwise you can get one from its parent resource <see cref="WorkspaceResource" /> using the GetSynapsePrivateEndpointConnection method.
+    /// Otherwise you can get one from its parent resource <see cref="SynapseWorkspaceResource" /> using the GetSynapsePrivateEndpointConnection method.
     /// </summary>
     public partial class SynapsePrivateEndpointConnectionResource : ArmResource
     {
