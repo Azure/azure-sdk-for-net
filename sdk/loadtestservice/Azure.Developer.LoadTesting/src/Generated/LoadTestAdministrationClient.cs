@@ -23,7 +23,7 @@ namespace Azure.Developer.LoadTesting
         private static readonly string[] AuthorizationScopes = new string[] { "https://cnt-prod.loadtesting.azure.com/.default" };
         private readonly TokenCredential _tokenCredential;
         private readonly HttpPipeline _pipeline;
-        private readonly string _endpoint;
+        private readonly Uri _endpoint;
         private readonly string _apiVersion;
 
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
@@ -41,7 +41,7 @@ namespace Azure.Developer.LoadTesting
         /// <param name="endpoint"> URL to perform data plane API operations on the resource. </param>
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
-        public LoadTestAdministrationClient(string endpoint, TokenCredential credential) : this(endpoint, credential, new LoadTestingClientOptions())
+        public LoadTestAdministrationClient(Uri endpoint, TokenCredential credential) : this(endpoint, credential, new LoadTestingClientOptions())
         {
         }
 
@@ -50,7 +50,7 @@ namespace Azure.Developer.LoadTesting
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
         /// <param name="options"> The options for configuring the client. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
-        public LoadTestAdministrationClient(string endpoint, TokenCredential credential, LoadTestingClientOptions options)
+        public LoadTestAdministrationClient(Uri endpoint, TokenCredential credential, LoadTestingClientOptions options)
         {
             Argument.AssertNotNull(endpoint, nameof(endpoint));
             Argument.AssertNotNull(credential, nameof(credential));
@@ -618,18 +618,17 @@ namespace Azure.Developer.LoadTesting
         /// <param name="search"> Prefix based, case sensitive search on searchable fields - displayName, createdBy. For example, to search for a test, with display name is Login Test, the search parameter can be Login. </param>
         /// <param name="lastModifiedStartTime"> Start DateTime(ISO 8601 literal format) of the last updated time range to filter tests. </param>
         /// <param name="lastModifiedEndTime"> End DateTime(ISO 8601 literal format) of the last updated time range to filter tests. </param>
-        /// <param name="continuationToken"> Continuation token to get the next page of response. </param>
         /// <param name="maxpagesize"> Number of results in response. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <include file="Docs/LoadTestAdministrationClient.xml" path="doc/members/member[@name='GetTestsAsync(String,String,DateTimeOffset,DateTimeOffset,String,Int32,RequestContext)']/*" />
-        public virtual AsyncPageable<BinaryData> GetTestsAsync(string orderby = null, string search = null, DateTimeOffset? lastModifiedStartTime = null, DateTimeOffset? lastModifiedEndTime = null, string continuationToken = null, int? maxpagesize = null, RequestContext context = null)
+        /// <include file="Docs/LoadTestAdministrationClient.xml" path="doc/members/member[@name='GetTestsAsync(String,String,DateTimeOffset,DateTimeOffset,Int32,RequestContext)']/*" />
+        public virtual AsyncPageable<BinaryData> GetTestsAsync(string orderby = null, string search = null, DateTimeOffset? lastModifiedStartTime = null, DateTimeOffset? lastModifiedEndTime = null, int? maxpagesize = null, RequestContext context = null)
         {
-            return GetTestsImplementationAsync("LoadTestAdministrationClient.GetTests", orderby, search, lastModifiedStartTime, lastModifiedEndTime, continuationToken, maxpagesize, context);
+            return GetTestsImplementationAsync("LoadTestAdministrationClient.GetTests", orderby, search, lastModifiedStartTime, lastModifiedEndTime, maxpagesize, context);
         }
 
-        private AsyncPageable<BinaryData> GetTestsImplementationAsync(string diagnosticsScopeName, string orderby, string search, DateTimeOffset? lastModifiedStartTime, DateTimeOffset? lastModifiedEndTime, string continuationToken, int? maxpagesize, RequestContext context)
+        private AsyncPageable<BinaryData> GetTestsImplementationAsync(string diagnosticsScopeName, string orderby, string search, DateTimeOffset? lastModifiedStartTime, DateTimeOffset? lastModifiedEndTime, int? maxpagesize, RequestContext context)
         {
             return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, ClientDiagnostics, diagnosticsScopeName);
             async IAsyncEnumerable<Page<BinaryData>> CreateEnumerableAsync(string nextLink, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken = default)
@@ -637,8 +636,8 @@ namespace Azure.Developer.LoadTesting
                 do
                 {
                     var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetTestsRequest(orderby, search, lastModifiedStartTime, lastModifiedEndTime, continuationToken, maxpagesize, context)
-                        : CreateGetTestsNextPageRequest(nextLink, orderby, search, lastModifiedStartTime, lastModifiedEndTime, continuationToken, maxpagesize, context);
+                        ? CreateGetTestsRequest(orderby, search, lastModifiedStartTime, lastModifiedEndTime, maxpagesize, context)
+                        : CreateGetTestsNextPageRequest(nextLink, orderby, search, lastModifiedStartTime, lastModifiedEndTime, maxpagesize, context);
                     var page = await LowLevelPageableHelpers.ProcessMessageAsync(_pipeline, message, context, "value", "nextLink", cancellationToken).ConfigureAwait(false);
                     nextLink = page.ContinuationToken;
                     yield return page;
@@ -651,18 +650,17 @@ namespace Azure.Developer.LoadTesting
         /// <param name="search"> Prefix based, case sensitive search on searchable fields - displayName, createdBy. For example, to search for a test, with display name is Login Test, the search parameter can be Login. </param>
         /// <param name="lastModifiedStartTime"> Start DateTime(ISO 8601 literal format) of the last updated time range to filter tests. </param>
         /// <param name="lastModifiedEndTime"> End DateTime(ISO 8601 literal format) of the last updated time range to filter tests. </param>
-        /// <param name="continuationToken"> Continuation token to get the next page of response. </param>
         /// <param name="maxpagesize"> Number of results in response. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <include file="Docs/LoadTestAdministrationClient.xml" path="doc/members/member[@name='GetTests(String,String,DateTimeOffset,DateTimeOffset,String,Int32,RequestContext)']/*" />
-        public virtual Pageable<BinaryData> GetTests(string orderby = null, string search = null, DateTimeOffset? lastModifiedStartTime = null, DateTimeOffset? lastModifiedEndTime = null, string continuationToken = null, int? maxpagesize = null, RequestContext context = null)
+        /// <include file="Docs/LoadTestAdministrationClient.xml" path="doc/members/member[@name='GetTests(String,String,DateTimeOffset,DateTimeOffset,Int32,RequestContext)']/*" />
+        public virtual Pageable<BinaryData> GetTests(string orderby = null, string search = null, DateTimeOffset? lastModifiedStartTime = null, DateTimeOffset? lastModifiedEndTime = null, int? maxpagesize = null, RequestContext context = null)
         {
-            return GetTestsImplementation("LoadTestAdministrationClient.GetTests", orderby, search, lastModifiedStartTime, lastModifiedEndTime, continuationToken, maxpagesize, context);
+            return GetTestsImplementation("LoadTestAdministrationClient.GetTests", orderby, search, lastModifiedStartTime, lastModifiedEndTime, maxpagesize, context);
         }
 
-        private Pageable<BinaryData> GetTestsImplementation(string diagnosticsScopeName, string orderby, string search, DateTimeOffset? lastModifiedStartTime, DateTimeOffset? lastModifiedEndTime, string continuationToken, int? maxpagesize, RequestContext context)
+        private Pageable<BinaryData> GetTestsImplementation(string diagnosticsScopeName, string orderby, string search, DateTimeOffset? lastModifiedStartTime, DateTimeOffset? lastModifiedEndTime, int? maxpagesize, RequestContext context)
         {
             return PageableHelpers.CreatePageable(CreateEnumerable, ClientDiagnostics, diagnosticsScopeName);
             IEnumerable<Page<BinaryData>> CreateEnumerable(string nextLink, int? pageSizeHint)
@@ -670,8 +668,8 @@ namespace Azure.Developer.LoadTesting
                 do
                 {
                     var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetTestsRequest(orderby, search, lastModifiedStartTime, lastModifiedEndTime, continuationToken, maxpagesize, context)
-                        : CreateGetTestsNextPageRequest(nextLink, orderby, search, lastModifiedStartTime, lastModifiedEndTime, continuationToken, maxpagesize, context);
+                        ? CreateGetTestsRequest(orderby, search, lastModifiedStartTime, lastModifiedEndTime, maxpagesize, context)
+                        : CreateGetTestsNextPageRequest(nextLink, orderby, search, lastModifiedStartTime, lastModifiedEndTime, maxpagesize, context);
                     var page = LowLevelPageableHelpers.ProcessMessage(_pipeline, message, context, "value", "nextLink");
                     nextLink = page.ContinuationToken;
                     yield return page;
@@ -681,21 +679,20 @@ namespace Azure.Developer.LoadTesting
 
         /// <summary> Get all test files. </summary>
         /// <param name="testId"> Unique name for the load test, must contain only lower-case alphabetic, numeric, underscore or hyphen characters. </param>
-        /// <param name="continuationToken"> Continuation token to get the next page of response. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="testId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="testId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <include file="Docs/LoadTestAdministrationClient.xml" path="doc/members/member[@name='GetTestFilesAsync(String,String,RequestContext)']/*" />
-        public virtual AsyncPageable<BinaryData> GetTestFilesAsync(string testId, string continuationToken = null, RequestContext context = null)
+        /// <include file="Docs/LoadTestAdministrationClient.xml" path="doc/members/member[@name='GetTestFilesAsync(String,RequestContext)']/*" />
+        public virtual AsyncPageable<BinaryData> GetTestFilesAsync(string testId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(testId, nameof(testId));
 
-            return GetTestFilesImplementationAsync("LoadTestAdministrationClient.GetTestFiles", testId, continuationToken, context);
+            return GetTestFilesImplementationAsync("LoadTestAdministrationClient.GetTestFiles", testId, context);
         }
 
-        private AsyncPageable<BinaryData> GetTestFilesImplementationAsync(string diagnosticsScopeName, string testId, string continuationToken, RequestContext context)
+        private AsyncPageable<BinaryData> GetTestFilesImplementationAsync(string diagnosticsScopeName, string testId, RequestContext context)
         {
             return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, ClientDiagnostics, diagnosticsScopeName);
             async IAsyncEnumerable<Page<BinaryData>> CreateEnumerableAsync(string nextLink, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken = default)
@@ -703,8 +700,8 @@ namespace Azure.Developer.LoadTesting
                 do
                 {
                     var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetTestFilesRequest(testId, continuationToken, context)
-                        : CreateGetTestFilesNextPageRequest(nextLink, testId, continuationToken, context);
+                        ? CreateGetTestFilesRequest(testId, context)
+                        : CreateGetTestFilesNextPageRequest(nextLink, testId, context);
                     var page = await LowLevelPageableHelpers.ProcessMessageAsync(_pipeline, message, context, "value", "nextLink", cancellationToken).ConfigureAwait(false);
                     nextLink = page.ContinuationToken;
                     yield return page;
@@ -714,21 +711,20 @@ namespace Azure.Developer.LoadTesting
 
         /// <summary> Get all test files. </summary>
         /// <param name="testId"> Unique name for the load test, must contain only lower-case alphabetic, numeric, underscore or hyphen characters. </param>
-        /// <param name="continuationToken"> Continuation token to get the next page of response. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="testId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="testId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <include file="Docs/LoadTestAdministrationClient.xml" path="doc/members/member[@name='GetTestFiles(String,String,RequestContext)']/*" />
-        public virtual Pageable<BinaryData> GetTestFiles(string testId, string continuationToken = null, RequestContext context = null)
+        /// <include file="Docs/LoadTestAdministrationClient.xml" path="doc/members/member[@name='GetTestFiles(String,RequestContext)']/*" />
+        public virtual Pageable<BinaryData> GetTestFiles(string testId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(testId, nameof(testId));
 
-            return GetTestFilesImplementation("LoadTestAdministrationClient.GetTestFiles", testId, continuationToken, context);
+            return GetTestFilesImplementation("LoadTestAdministrationClient.GetTestFiles", testId, context);
         }
 
-        private Pageable<BinaryData> GetTestFilesImplementation(string diagnosticsScopeName, string testId, string continuationToken, RequestContext context)
+        private Pageable<BinaryData> GetTestFilesImplementation(string diagnosticsScopeName, string testId, RequestContext context)
         {
             return PageableHelpers.CreatePageable(CreateEnumerable, ClientDiagnostics, diagnosticsScopeName);
             IEnumerable<Page<BinaryData>> CreateEnumerable(string nextLink, int? pageSizeHint)
@@ -736,8 +732,8 @@ namespace Azure.Developer.LoadTesting
                 do
                 {
                     var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetTestFilesRequest(testId, continuationToken, context)
-                        : CreateGetTestFilesNextPageRequest(nextLink, testId, continuationToken, context);
+                        ? CreateGetTestFilesRequest(testId, context)
+                        : CreateGetTestFilesNextPageRequest(nextLink, testId, context);
                     var page = LowLevelPageableHelpers.ProcessMessage(_pipeline, message, context, "value", "nextLink");
                     nextLink = page.ContinuationToken;
                     yield return page;
@@ -752,7 +748,7 @@ namespace Azure.Developer.LoadTesting
             request.Method = RequestMethod.Patch;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw("https://", false);
-            uri.AppendRaw(_endpoint, false);
+            uri.Reset(_endpoint);
             uri.AppendPath("/tests/", false);
             uri.AppendPath(testId, true);
             uri.AppendQuery("api-version", _apiVersion, true);
@@ -770,7 +766,7 @@ namespace Azure.Developer.LoadTesting
             request.Method = RequestMethod.Delete;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw("https://", false);
-            uri.AppendRaw(_endpoint, false);
+            uri.Reset(_endpoint);
             uri.AppendPath("/tests/", false);
             uri.AppendPath(testId, true);
             uri.AppendQuery("api-version", _apiVersion, true);
@@ -786,7 +782,7 @@ namespace Azure.Developer.LoadTesting
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw("https://", false);
-            uri.AppendRaw(_endpoint, false);
+            uri.Reset(_endpoint);
             uri.AppendPath("/tests/", false);
             uri.AppendPath(testId, true);
             uri.AppendQuery("api-version", _apiVersion, true);
@@ -795,14 +791,14 @@ namespace Azure.Developer.LoadTesting
             return message;
         }
 
-        internal HttpMessage CreateGetTestsRequest(string orderby, string search, DateTimeOffset? lastModifiedStartTime, DateTimeOffset? lastModifiedEndTime, string continuationToken, int? maxpagesize, RequestContext context)
+        internal HttpMessage CreateGetTestsRequest(string orderby, string search, DateTimeOffset? lastModifiedStartTime, DateTimeOffset? lastModifiedEndTime, int? maxpagesize, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw("https://", false);
-            uri.AppendRaw(_endpoint, false);
+            uri.Reset(_endpoint);
             uri.AppendPath("/tests", false);
             if (orderby != null)
             {
@@ -819,10 +815,6 @@ namespace Azure.Developer.LoadTesting
             if (lastModifiedEndTime != null)
             {
                 uri.AppendQuery("lastModifiedEndTime", lastModifiedEndTime.Value, "O", true);
-            }
-            if (continuationToken != null)
-            {
-                uri.AppendQuery("continuationToken", continuationToken, true);
             }
             if (maxpagesize != null)
             {
@@ -841,7 +833,7 @@ namespace Azure.Developer.LoadTesting
             request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw("https://", false);
-            uri.AppendRaw(_endpoint, false);
+            uri.Reset(_endpoint);
             uri.AppendPath("/tests/", false);
             uri.AppendPath(testId, true);
             uri.AppendPath("/files/", false);
@@ -865,7 +857,7 @@ namespace Azure.Developer.LoadTesting
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw("https://", false);
-            uri.AppendRaw(_endpoint, false);
+            uri.Reset(_endpoint);
             uri.AppendPath("/tests/", false);
             uri.AppendPath(testId, true);
             uri.AppendPath("/files/", false);
@@ -883,7 +875,7 @@ namespace Azure.Developer.LoadTesting
             request.Method = RequestMethod.Delete;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw("https://", false);
-            uri.AppendRaw(_endpoint, false);
+            uri.Reset(_endpoint);
             uri.AppendPath("/tests/", false);
             uri.AppendPath(testId, true);
             uri.AppendPath("/files/", false);
@@ -894,21 +886,17 @@ namespace Azure.Developer.LoadTesting
             return message;
         }
 
-        internal HttpMessage CreateGetTestFilesRequest(string testId, string continuationToken, RequestContext context)
+        internal HttpMessage CreateGetTestFilesRequest(string testId, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw("https://", false);
-            uri.AppendRaw(_endpoint, false);
+            uri.Reset(_endpoint);
             uri.AppendPath("/tests/", false);
             uri.AppendPath(testId, true);
             uri.AppendPath("/files", false);
-            if (continuationToken != null)
-            {
-                uri.AppendQuery("continuationToken", continuationToken, true);
-            }
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -922,7 +910,7 @@ namespace Azure.Developer.LoadTesting
             request.Method = RequestMethod.Patch;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw("https://", false);
-            uri.AppendRaw(_endpoint, false);
+            uri.Reset(_endpoint);
             uri.AppendPath("/tests/", false);
             uri.AppendPath(testId, true);
             uri.AppendPath("/app-components", false);
@@ -941,7 +929,7 @@ namespace Azure.Developer.LoadTesting
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw("https://", false);
-            uri.AppendRaw(_endpoint, false);
+            uri.Reset(_endpoint);
             uri.AppendPath("/tests/", false);
             uri.AppendPath(testId, true);
             uri.AppendPath("/app-components", false);
@@ -958,7 +946,7 @@ namespace Azure.Developer.LoadTesting
             request.Method = RequestMethod.Patch;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw("https://", false);
-            uri.AppendRaw(_endpoint, false);
+            uri.Reset(_endpoint);
             uri.AppendPath("/tests/", false);
             uri.AppendPath(testId, true);
             uri.AppendPath("/server-metrics-config", false);
@@ -977,7 +965,7 @@ namespace Azure.Developer.LoadTesting
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw("https://", false);
-            uri.AppendRaw(_endpoint, false);
+            uri.Reset(_endpoint);
             uri.AppendPath("/tests/", false);
             uri.AppendPath(testId, true);
             uri.AppendPath("/server-metrics-config", false);
@@ -987,28 +975,28 @@ namespace Azure.Developer.LoadTesting
             return message;
         }
 
-        internal HttpMessage CreateGetTestsNextPageRequest(string nextLink, string orderby, string search, DateTimeOffset? lastModifiedStartTime, DateTimeOffset? lastModifiedEndTime, string continuationToken, int? maxpagesize, RequestContext context)
+        internal HttpMessage CreateGetTestsNextPageRequest(string nextLink, string orderby, string search, DateTimeOffset? lastModifiedStartTime, DateTimeOffset? lastModifiedEndTime, int? maxpagesize, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw("https://", false);
-            uri.AppendRaw(_endpoint, false);
+            uri.Reset(_endpoint);
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
         }
 
-        internal HttpMessage CreateGetTestFilesNextPageRequest(string nextLink, string testId, string continuationToken, RequestContext context)
+        internal HttpMessage CreateGetTestFilesNextPageRequest(string nextLink, string testId, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw("https://", false);
-            uri.AppendRaw(_endpoint, false);
+            uri.Reset(_endpoint);
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
