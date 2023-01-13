@@ -12,10 +12,11 @@ using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.ResourceMover;
 using Azure.ResourceManager.ResourceMover.Models;
 using Azure.ResourceManager.Resources;
 
-namespace Azure.ResourceManager.ResourceMover
+namespace Azure.ResourceManager.ResourceMover.Samples
 {
     public partial class Sample_MoverResourceSetResource
     {
@@ -27,8 +28,10 @@ namespace Azure.ResourceManager.ResourceMover
             // Generated from example definition: specification/resourcemover/resource-manager/Microsoft.Migrate/stable/2021-08-01/examples/MoveCollections_Update.json
             // this example is just showing the usage of "MoveCollections_Update" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this MoverResourceSetResource created on azure
             // for more information of creating MoverResourceSetResource, please refer to the document of MoverResourceSetResource
@@ -64,8 +67,10 @@ namespace Azure.ResourceManager.ResourceMover
             // Generated from example definition: specification/resourcemover/resource-manager/Microsoft.Migrate/stable/2021-08-01/examples/MoveCollections_Get.json
             // this example is just showing the usage of "MoveCollections_Get" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this MoverResourceSetResource created on azure
             // for more information of creating MoverResourceSetResource, please refer to the document of MoverResourceSetResource
@@ -93,8 +98,10 @@ namespace Azure.ResourceManager.ResourceMover
             // Generated from example definition: specification/resourcemover/resource-manager/Microsoft.Migrate/stable/2021-08-01/examples/MoveCollections_Prepare.json
             // this example is just showing the usage of "MoveCollections_Prepare" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this MoverResourceSetResource created on azure
             // for more information of creating MoverResourceSetResource, please refer to the document of MoverResourceSetResource
@@ -126,8 +133,10 @@ new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/Micros
             // Generated from example definition: specification/resourcemover/resource-manager/Microsoft.Migrate/stable/2021-08-01/examples/MoveCollections_InitiateMove.json
             // this example is just showing the usage of "MoveCollections_InitiateMove" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this MoverResourceSetResource created on azure
             // for more information of creating MoverResourceSetResource, please refer to the document of MoverResourceSetResource
@@ -159,8 +168,10 @@ new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/Micros
             // Generated from example definition: specification/resourcemover/resource-manager/Microsoft.Migrate/stable/2021-08-01/examples/MoveCollections_Commit.json
             // this example is just showing the usage of "MoveCollections_Commit" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this MoverResourceSetResource created on azure
             // for more information of creating MoverResourceSetResource, please refer to the document of MoverResourceSetResource
@@ -192,8 +203,10 @@ new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/Micros
             // Generated from example definition: specification/resourcemover/resource-manager/Microsoft.Migrate/stable/2021-08-01/examples/MoveCollections_Discard.json
             // this example is just showing the usage of "MoveCollections_Discard" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this MoverResourceSetResource created on azure
             // for more information of creating MoverResourceSetResource, please refer to the document of MoverResourceSetResource
@@ -225,8 +238,10 @@ new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/Micros
             // Generated from example definition: specification/resourcemover/resource-manager/Microsoft.Migrate/stable/2021-08-01/examples/MoveCollections_ResolveDependencies.json
             // this example is just showing the usage of "MoveCollections_ResolveDependencies" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this MoverResourceSetResource created on azure
             // for more information of creating MoverResourceSetResource, please refer to the document of MoverResourceSetResource
@@ -251,8 +266,10 @@ new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/Micros
             // Generated from example definition: specification/resourcemover/resource-manager/Microsoft.Migrate/stable/2021-08-01/examples/MoveCollections_BulkRemove.json
             // this example is just showing the usage of "MoveCollections_BulkRemove" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this MoverResourceSetResource created on azure
             // for more information of creating MoverResourceSetResource, please refer to the document of MoverResourceSetResource
@@ -285,8 +302,10 @@ new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/Micros
             // Generated from example definition: specification/resourcemover/resource-manager/Microsoft.Migrate/stable/2021-08-01/examples/MoveCollections_ListMoveCollectionsBySubscription.json
             // this example is just showing the usage of "MoveCollections_ListMoveCollectionsBySubscription" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this SubscriptionResource created on azure
             // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
@@ -315,8 +334,10 @@ new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/Micros
             // Generated from example definition: specification/resourcemover/resource-manager/Microsoft.Migrate/stable/2021-08-01/examples/RequiredFor_Get.json
             // this example is just showing the usage of "MoveCollections_ListRequiredFor" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this MoverResourceSetResource created on azure
             // for more information of creating MoverResourceSetResource, please refer to the document of MoverResourceSetResource
@@ -341,8 +362,10 @@ new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/Micros
             // Generated from example definition: specification/resourcemover/resource-manager/Microsoft.Migrate/stable/2021-08-01/examples/UnresolvedDependencies_Get.json
             // this example is just showing the usage of "UnresolvedDependencies_Get" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this MoverResourceSetResource created on azure
             // for more information of creating MoverResourceSetResource, please refer to the document of MoverResourceSetResource
