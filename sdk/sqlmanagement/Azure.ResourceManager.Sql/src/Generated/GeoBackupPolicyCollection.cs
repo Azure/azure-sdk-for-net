@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -175,22 +174,8 @@ namespace Azure.ResourceManager.Sql
         /// <returns> An async collection of <see cref="GeoBackupPolicyResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<GeoBackupPolicyResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<GeoBackupPolicyResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _geoBackupPolicyClientDiagnostics.CreateScope("GeoBackupPolicyCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _geoBackupPolicyRestClient.ListByDatabaseAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new GeoBackupPolicyResource(Client, value)), null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _geoBackupPolicyRestClient.CreateListByDatabaseRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new GeoBackupPolicyResource(Client, GeoBackupPolicyData.DeserializeGeoBackupPolicyData(e)), _geoBackupPolicyClientDiagnostics, Pipeline, "GeoBackupPolicyCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -202,22 +187,8 @@ namespace Azure.ResourceManager.Sql
         /// <returns> A collection of <see cref="GeoBackupPolicyResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<GeoBackupPolicyResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<GeoBackupPolicyResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _geoBackupPolicyClientDiagnostics.CreateScope("GeoBackupPolicyCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _geoBackupPolicyRestClient.ListByDatabase(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new GeoBackupPolicyResource(Client, value)), null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _geoBackupPolicyRestClient.CreateListByDatabaseRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new GeoBackupPolicyResource(Client, GeoBackupPolicyData.DeserializeGeoBackupPolicyData(e)), _geoBackupPolicyClientDiagnostics, Pipeline, "GeoBackupPolicyCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>

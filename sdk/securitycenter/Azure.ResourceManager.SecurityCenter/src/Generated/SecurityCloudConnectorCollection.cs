@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -187,37 +186,9 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <returns> An async collection of <see cref="SecurityCloudConnectorResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SecurityCloudConnectorResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<SecurityCloudConnectorResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _securityCloudConnectorConnectorsClientDiagnostics.CreateScope("SecurityCloudConnectorCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _securityCloudConnectorConnectorsRestClient.ListAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new SecurityCloudConnectorResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<SecurityCloudConnectorResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _securityCloudConnectorConnectorsClientDiagnostics.CreateScope("SecurityCloudConnectorCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _securityCloudConnectorConnectorsRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new SecurityCloudConnectorResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _securityCloudConnectorConnectorsRestClient.CreateListRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _securityCloudConnectorConnectorsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SecurityCloudConnectorResource(Client, SecurityCloudConnectorData.DeserializeSecurityCloudConnectorData(e)), _securityCloudConnectorConnectorsClientDiagnostics, Pipeline, "SecurityCloudConnectorCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -229,37 +200,9 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <returns> A collection of <see cref="SecurityCloudConnectorResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SecurityCloudConnectorResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<SecurityCloudConnectorResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _securityCloudConnectorConnectorsClientDiagnostics.CreateScope("SecurityCloudConnectorCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _securityCloudConnectorConnectorsRestClient.List(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new SecurityCloudConnectorResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<SecurityCloudConnectorResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _securityCloudConnectorConnectorsClientDiagnostics.CreateScope("SecurityCloudConnectorCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _securityCloudConnectorConnectorsRestClient.ListNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new SecurityCloudConnectorResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _securityCloudConnectorConnectorsRestClient.CreateListRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _securityCloudConnectorConnectorsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SecurityCloudConnectorResource(Client, SecurityCloudConnectorData.DeserializeSecurityCloudConnectorData(e)), _securityCloudConnectorConnectorsClientDiagnostics, Pipeline, "SecurityCloudConnectorCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

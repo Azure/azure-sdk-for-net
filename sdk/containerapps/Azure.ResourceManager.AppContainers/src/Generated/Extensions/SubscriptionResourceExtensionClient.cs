@@ -6,9 +6,7 @@
 #nullable disable
 
 using System;
-using System.Linq;
 using System.Threading;
-using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -70,37 +68,9 @@ namespace Azure.ResourceManager.AppContainers
         /// <returns> An async collection of <see cref="ContainerAppAvailableWorkloadProfile" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ContainerAppAvailableWorkloadProfile> GetAvailableWorkloadProfilesAsync(AzureLocation location, CancellationToken cancellationToken = default)
         {
-            async Task<Page<ContainerAppAvailableWorkloadProfile>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = AvailableWorkloadProfilesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetAvailableWorkloadProfiles");
-                scope.Start();
-                try
-                {
-                    var response = await AvailableWorkloadProfilesRestClient.GetAsync(Id.SubscriptionId, location, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<ContainerAppAvailableWorkloadProfile>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = AvailableWorkloadProfilesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetAvailableWorkloadProfiles");
-                scope.Start();
-                try
-                {
-                    var response = await AvailableWorkloadProfilesRestClient.GetNextPageAsync(nextLink, Id.SubscriptionId, location, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => AvailableWorkloadProfilesRestClient.CreateGetRequest(Id.SubscriptionId, location);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => AvailableWorkloadProfilesRestClient.CreateGetNextPageRequest(nextLink, Id.SubscriptionId, location);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, ContainerAppAvailableWorkloadProfile.DeserializeContainerAppAvailableWorkloadProfile, AvailableWorkloadProfilesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetAvailableWorkloadProfiles", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -113,37 +83,9 @@ namespace Azure.ResourceManager.AppContainers
         /// <returns> A collection of <see cref="ContainerAppAvailableWorkloadProfile" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ContainerAppAvailableWorkloadProfile> GetAvailableWorkloadProfiles(AzureLocation location, CancellationToken cancellationToken = default)
         {
-            Page<ContainerAppAvailableWorkloadProfile> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = AvailableWorkloadProfilesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetAvailableWorkloadProfiles");
-                scope.Start();
-                try
-                {
-                    var response = AvailableWorkloadProfilesRestClient.Get(Id.SubscriptionId, location, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<ContainerAppAvailableWorkloadProfile> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = AvailableWorkloadProfilesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetAvailableWorkloadProfiles");
-                scope.Start();
-                try
-                {
-                    var response = AvailableWorkloadProfilesRestClient.GetNextPage(nextLink, Id.SubscriptionId, location, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => AvailableWorkloadProfilesRestClient.CreateGetRequest(Id.SubscriptionId, location);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => AvailableWorkloadProfilesRestClient.CreateGetNextPageRequest(nextLink, Id.SubscriptionId, location);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, ContainerAppAvailableWorkloadProfile.DeserializeContainerAppAvailableWorkloadProfile, AvailableWorkloadProfilesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetAvailableWorkloadProfiles", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -156,22 +98,8 @@ namespace Azure.ResourceManager.AppContainers
         /// <returns> An async collection of <see cref="ContainerAppBillingMeter" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ContainerAppBillingMeter> GetBillingMetersAsync(AzureLocation location, CancellationToken cancellationToken = default)
         {
-            async Task<Page<ContainerAppBillingMeter>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = BillingMetersClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetBillingMeters");
-                scope.Start();
-                try
-                {
-                    var response = await BillingMetersRestClient.GetAsync(Id.SubscriptionId, location, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => BillingMetersRestClient.CreateGetRequest(Id.SubscriptionId, location);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, ContainerAppBillingMeter.DeserializeContainerAppBillingMeter, BillingMetersClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetBillingMeters", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -184,22 +112,8 @@ namespace Azure.ResourceManager.AppContainers
         /// <returns> A collection of <see cref="ContainerAppBillingMeter" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ContainerAppBillingMeter> GetBillingMeters(AzureLocation location, CancellationToken cancellationToken = default)
         {
-            Page<ContainerAppBillingMeter> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = BillingMetersClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetBillingMeters");
-                scope.Start();
-                try
-                {
-                    var response = BillingMetersRestClient.Get(Id.SubscriptionId, location, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => BillingMetersRestClient.CreateGetRequest(Id.SubscriptionId, location);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, ContainerAppBillingMeter.DeserializeContainerAppBillingMeter, BillingMetersClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetBillingMeters", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -211,37 +125,9 @@ namespace Azure.ResourceManager.AppContainers
         /// <returns> An async collection of <see cref="ContainerAppConnectedEnvironmentResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ContainerAppConnectedEnvironmentResource> GetContainerAppConnectedEnvironmentsAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<ContainerAppConnectedEnvironmentResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = ContainerAppConnectedEnvironmentConnectedEnvironmentsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetContainerAppConnectedEnvironments");
-                scope.Start();
-                try
-                {
-                    var response = await ContainerAppConnectedEnvironmentConnectedEnvironmentsRestClient.ListBySubscriptionAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ContainerAppConnectedEnvironmentResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<ContainerAppConnectedEnvironmentResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = ContainerAppConnectedEnvironmentConnectedEnvironmentsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetContainerAppConnectedEnvironments");
-                scope.Start();
-                try
-                {
-                    var response = await ContainerAppConnectedEnvironmentConnectedEnvironmentsRestClient.ListBySubscriptionNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ContainerAppConnectedEnvironmentResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => ContainerAppConnectedEnvironmentConnectedEnvironmentsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ContainerAppConnectedEnvironmentConnectedEnvironmentsRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ContainerAppConnectedEnvironmentResource(Client, ContainerAppConnectedEnvironmentData.DeserializeContainerAppConnectedEnvironmentData(e)), ContainerAppConnectedEnvironmentConnectedEnvironmentsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetContainerAppConnectedEnvironments", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -253,37 +139,9 @@ namespace Azure.ResourceManager.AppContainers
         /// <returns> A collection of <see cref="ContainerAppConnectedEnvironmentResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ContainerAppConnectedEnvironmentResource> GetContainerAppConnectedEnvironments(CancellationToken cancellationToken = default)
         {
-            Page<ContainerAppConnectedEnvironmentResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = ContainerAppConnectedEnvironmentConnectedEnvironmentsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetContainerAppConnectedEnvironments");
-                scope.Start();
-                try
-                {
-                    var response = ContainerAppConnectedEnvironmentConnectedEnvironmentsRestClient.ListBySubscription(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ContainerAppConnectedEnvironmentResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<ContainerAppConnectedEnvironmentResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = ContainerAppConnectedEnvironmentConnectedEnvironmentsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetContainerAppConnectedEnvironments");
-                scope.Start();
-                try
-                {
-                    var response = ContainerAppConnectedEnvironmentConnectedEnvironmentsRestClient.ListBySubscriptionNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ContainerAppConnectedEnvironmentResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => ContainerAppConnectedEnvironmentConnectedEnvironmentsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ContainerAppConnectedEnvironmentConnectedEnvironmentsRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ContainerAppConnectedEnvironmentResource(Client, ContainerAppConnectedEnvironmentData.DeserializeContainerAppConnectedEnvironmentData(e)), ContainerAppConnectedEnvironmentConnectedEnvironmentsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetContainerAppConnectedEnvironments", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -295,37 +153,9 @@ namespace Azure.ResourceManager.AppContainers
         /// <returns> An async collection of <see cref="ContainerAppResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ContainerAppResource> GetContainerAppsAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<ContainerAppResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = ContainerAppClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetContainerApps");
-                scope.Start();
-                try
-                {
-                    var response = await ContainerAppRestClient.ListBySubscriptionAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ContainerAppResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<ContainerAppResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = ContainerAppClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetContainerApps");
-                scope.Start();
-                try
-                {
-                    var response = await ContainerAppRestClient.ListBySubscriptionNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ContainerAppResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => ContainerAppRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ContainerAppRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ContainerAppResource(Client, ContainerAppData.DeserializeContainerAppData(e)), ContainerAppClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetContainerApps", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -337,37 +167,9 @@ namespace Azure.ResourceManager.AppContainers
         /// <returns> A collection of <see cref="ContainerAppResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ContainerAppResource> GetContainerApps(CancellationToken cancellationToken = default)
         {
-            Page<ContainerAppResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = ContainerAppClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetContainerApps");
-                scope.Start();
-                try
-                {
-                    var response = ContainerAppRestClient.ListBySubscription(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ContainerAppResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<ContainerAppResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = ContainerAppClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetContainerApps");
-                scope.Start();
-                try
-                {
-                    var response = ContainerAppRestClient.ListBySubscriptionNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ContainerAppResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => ContainerAppRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ContainerAppRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ContainerAppResource(Client, ContainerAppData.DeserializeContainerAppData(e)), ContainerAppClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetContainerApps", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -379,37 +181,9 @@ namespace Azure.ResourceManager.AppContainers
         /// <returns> An async collection of <see cref="ContainerAppManagedEnvironmentResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ContainerAppManagedEnvironmentResource> GetContainerAppManagedEnvironmentsAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<ContainerAppManagedEnvironmentResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = ContainerAppManagedEnvironmentManagedEnvironmentsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetContainerAppManagedEnvironments");
-                scope.Start();
-                try
-                {
-                    var response = await ContainerAppManagedEnvironmentManagedEnvironmentsRestClient.ListBySubscriptionAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ContainerAppManagedEnvironmentResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<ContainerAppManagedEnvironmentResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = ContainerAppManagedEnvironmentManagedEnvironmentsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetContainerAppManagedEnvironments");
-                scope.Start();
-                try
-                {
-                    var response = await ContainerAppManagedEnvironmentManagedEnvironmentsRestClient.ListBySubscriptionNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ContainerAppManagedEnvironmentResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => ContainerAppManagedEnvironmentManagedEnvironmentsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ContainerAppManagedEnvironmentManagedEnvironmentsRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ContainerAppManagedEnvironmentResource(Client, ContainerAppManagedEnvironmentData.DeserializeContainerAppManagedEnvironmentData(e)), ContainerAppManagedEnvironmentManagedEnvironmentsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetContainerAppManagedEnvironments", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -421,37 +195,9 @@ namespace Azure.ResourceManager.AppContainers
         /// <returns> A collection of <see cref="ContainerAppManagedEnvironmentResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ContainerAppManagedEnvironmentResource> GetContainerAppManagedEnvironments(CancellationToken cancellationToken = default)
         {
-            Page<ContainerAppManagedEnvironmentResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = ContainerAppManagedEnvironmentManagedEnvironmentsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetContainerAppManagedEnvironments");
-                scope.Start();
-                try
-                {
-                    var response = ContainerAppManagedEnvironmentManagedEnvironmentsRestClient.ListBySubscription(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ContainerAppManagedEnvironmentResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<ContainerAppManagedEnvironmentResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = ContainerAppManagedEnvironmentManagedEnvironmentsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetContainerAppManagedEnvironments");
-                scope.Start();
-                try
-                {
-                    var response = ContainerAppManagedEnvironmentManagedEnvironmentsRestClient.ListBySubscriptionNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ContainerAppManagedEnvironmentResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => ContainerAppManagedEnvironmentManagedEnvironmentsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ContainerAppManagedEnvironmentManagedEnvironmentsRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ContainerAppManagedEnvironmentResource(Client, ContainerAppManagedEnvironmentData.DeserializeContainerAppManagedEnvironmentData(e)), ContainerAppManagedEnvironmentManagedEnvironmentsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetContainerAppManagedEnvironments", "value", "nextLink", cancellationToken);
         }
     }
 }

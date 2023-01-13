@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -186,37 +185,9 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <returns> An async collection of <see cref="ContainerRegistryTaskResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ContainerRegistryTaskResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<ContainerRegistryTaskResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _containerRegistryTaskTasksClientDiagnostics.CreateScope("ContainerRegistryTaskCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _containerRegistryTaskTasksRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ContainerRegistryTaskResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<ContainerRegistryTaskResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _containerRegistryTaskTasksClientDiagnostics.CreateScope("ContainerRegistryTaskCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _containerRegistryTaskTasksRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ContainerRegistryTaskResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _containerRegistryTaskTasksRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _containerRegistryTaskTasksRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ContainerRegistryTaskResource(Client, ContainerRegistryTaskData.DeserializeContainerRegistryTaskData(e)), _containerRegistryTaskTasksClientDiagnostics, Pipeline, "ContainerRegistryTaskCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -228,37 +199,9 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <returns> A collection of <see cref="ContainerRegistryTaskResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ContainerRegistryTaskResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<ContainerRegistryTaskResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _containerRegistryTaskTasksClientDiagnostics.CreateScope("ContainerRegistryTaskCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _containerRegistryTaskTasksRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ContainerRegistryTaskResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<ContainerRegistryTaskResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _containerRegistryTaskTasksClientDiagnostics.CreateScope("ContainerRegistryTaskCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _containerRegistryTaskTasksRestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ContainerRegistryTaskResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _containerRegistryTaskTasksRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _containerRegistryTaskTasksRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ContainerRegistryTaskResource(Client, ContainerRegistryTaskData.DeserializeContainerRegistryTaskData(e)), _containerRegistryTaskTasksClientDiagnostics, Pipeline, "ContainerRegistryTaskCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

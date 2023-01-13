@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -68,37 +67,9 @@ namespace Azure.ResourceManager.ApiManagement
         /// <returns> An async collection of <see cref="ApiManagementDeletedServiceResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ApiManagementDeletedServiceResource> GetApiManagementDeletedServicesAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<ApiManagementDeletedServiceResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = ApiManagementDeletedServiceDeletedServicesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetApiManagementDeletedServices");
-                scope.Start();
-                try
-                {
-                    var response = await ApiManagementDeletedServiceDeletedServicesRestClient.ListBySubscriptionAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ApiManagementDeletedServiceResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<ApiManagementDeletedServiceResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = ApiManagementDeletedServiceDeletedServicesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetApiManagementDeletedServices");
-                scope.Start();
-                try
-                {
-                    var response = await ApiManagementDeletedServiceDeletedServicesRestClient.ListBySubscriptionNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ApiManagementDeletedServiceResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => ApiManagementDeletedServiceDeletedServicesRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ApiManagementDeletedServiceDeletedServicesRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ApiManagementDeletedServiceResource(Client, ApiManagementDeletedServiceData.DeserializeApiManagementDeletedServiceData(e)), ApiManagementDeletedServiceDeletedServicesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetApiManagementDeletedServices", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -110,37 +81,9 @@ namespace Azure.ResourceManager.ApiManagement
         /// <returns> A collection of <see cref="ApiManagementDeletedServiceResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ApiManagementDeletedServiceResource> GetApiManagementDeletedServices(CancellationToken cancellationToken = default)
         {
-            Page<ApiManagementDeletedServiceResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = ApiManagementDeletedServiceDeletedServicesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetApiManagementDeletedServices");
-                scope.Start();
-                try
-                {
-                    var response = ApiManagementDeletedServiceDeletedServicesRestClient.ListBySubscription(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ApiManagementDeletedServiceResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<ApiManagementDeletedServiceResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = ApiManagementDeletedServiceDeletedServicesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetApiManagementDeletedServices");
-                scope.Start();
-                try
-                {
-                    var response = ApiManagementDeletedServiceDeletedServicesRestClient.ListBySubscriptionNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ApiManagementDeletedServiceResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => ApiManagementDeletedServiceDeletedServicesRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ApiManagementDeletedServiceDeletedServicesRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ApiManagementDeletedServiceResource(Client, ApiManagementDeletedServiceData.DeserializeApiManagementDeletedServiceData(e)), ApiManagementDeletedServiceDeletedServicesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetApiManagementDeletedServices", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -152,37 +95,9 @@ namespace Azure.ResourceManager.ApiManagement
         /// <returns> An async collection of <see cref="ApiManagementServiceResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ApiManagementServiceResource> GetApiManagementServicesAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<ApiManagementServiceResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = ApiManagementServiceClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetApiManagementServices");
-                scope.Start();
-                try
-                {
-                    var response = await ApiManagementServiceRestClient.ListAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ApiManagementServiceResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<ApiManagementServiceResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = ApiManagementServiceClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetApiManagementServices");
-                scope.Start();
-                try
-                {
-                    var response = await ApiManagementServiceRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ApiManagementServiceResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => ApiManagementServiceRestClient.CreateListRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ApiManagementServiceRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ApiManagementServiceResource(Client, ApiManagementServiceData.DeserializeApiManagementServiceData(e)), ApiManagementServiceClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetApiManagementServices", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -194,37 +109,9 @@ namespace Azure.ResourceManager.ApiManagement
         /// <returns> A collection of <see cref="ApiManagementServiceResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ApiManagementServiceResource> GetApiManagementServices(CancellationToken cancellationToken = default)
         {
-            Page<ApiManagementServiceResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = ApiManagementServiceClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetApiManagementServices");
-                scope.Start();
-                try
-                {
-                    var response = ApiManagementServiceRestClient.List(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ApiManagementServiceResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<ApiManagementServiceResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = ApiManagementServiceClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetApiManagementServices");
-                scope.Start();
-                try
-                {
-                    var response = ApiManagementServiceRestClient.ListNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ApiManagementServiceResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => ApiManagementServiceRestClient.CreateListRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ApiManagementServiceRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ApiManagementServiceResource(Client, ApiManagementServiceData.DeserializeApiManagementServiceData(e)), ApiManagementServiceClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetApiManagementServices", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -326,37 +213,9 @@ namespace Azure.ResourceManager.ApiManagement
         /// <returns> An async collection of <see cref="ApiManagementSku" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ApiManagementSku> GetApiManagementSkusAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<ApiManagementSku>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = ApiManagementSkusClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetApiManagementSkus");
-                scope.Start();
-                try
-                {
-                    var response = await ApiManagementSkusRestClient.ListAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<ApiManagementSku>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = ApiManagementSkusClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetApiManagementSkus");
-                scope.Start();
-                try
-                {
-                    var response = await ApiManagementSkusRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => ApiManagementSkusRestClient.CreateListRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ApiManagementSkusRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, ApiManagementSku.DeserializeApiManagementSku, ApiManagementSkusClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetApiManagementSkus", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -368,37 +227,9 @@ namespace Azure.ResourceManager.ApiManagement
         /// <returns> A collection of <see cref="ApiManagementSku" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ApiManagementSku> GetApiManagementSkus(CancellationToken cancellationToken = default)
         {
-            Page<ApiManagementSku> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = ApiManagementSkusClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetApiManagementSkus");
-                scope.Start();
-                try
-                {
-                    var response = ApiManagementSkusRestClient.List(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<ApiManagementSku> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = ApiManagementSkusClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetApiManagementSkus");
-                scope.Start();
-                try
-                {
-                    var response = ApiManagementSkusRestClient.ListNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => ApiManagementSkusRestClient.CreateListRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ApiManagementSkusRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, ApiManagementSku.DeserializeApiManagementSku, ApiManagementSkusClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetApiManagementSkus", "value", "nextLink", cancellationToken);
         }
     }
 }

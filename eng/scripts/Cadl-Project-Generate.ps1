@@ -42,20 +42,28 @@ $npmWorkingDir = Resolve-Path $tempFolder/$innerFolder
 $mainCadlFile = If (Test-Path "$npmWorkingDir/client.cadl") { Resolve-Path "$npmWorkingDir/client.cadl" } Else { Resolve-Path "$npmWorkingDir/main.cadl"}
 $resolvedProjectDirectory = Resolve-Path "$ProjectDirectory/src"
 
+$HasEmitterOutputDir = $false;
 if (Test-Path "$npmWorkingDir/cadl-project.yaml") {
     $cadlProjectYaml = Get-Content -Path "$npmWorkingDir/cadl-project.yaml" -Raw
     $yml = ConvertFrom-YAML $cadlProjectYaml
-    if ( $yml["emitters"]["@azure-tools/cadl-csharp"]["sdk-folder"]) {
-        $yml["emitters"]["@azure-tools/cadl-csharp"]["sdk-folder"] = ""
+    if ($yml -And $yml["options"] -And $yml["options"]["@azure-tools/cadl-csharp"] -And $yml["options"]["@azure-tools/cadl-csharp"]["emitter-output-dir"]) {
+        $HasEmitterOutputDir = $true
     }
-    (ConvertTo-Yaml $yml) | Out-File "$npmWorkingDir/cadl-project.yaml"
 }
 
 try {
     Push-Location $npmWorkingDir
     NpmInstallForProject $npmWorkingDir
-    Write-Host("npx cadl compile $mainCadlFile --emit `"`@azure-tools/cadl-csharp`" --output-path `"$resolvedProjectDirectory`"")
-    npx cadl compile $mainCadlFile --emit "@azure-tools/cadl-csharp" --output-path "$resolvedProjectDirectory"
+    if ($HasEmitterOutputDir) {
+        $csharpSdkFolder = (Join-Path $ProjectDirectory ".." ".." "..")
+        $csharpSdkFolder = Resolve-Path $csharpSdkFolder
+        Write-Host("npx cadl compile $mainCadlFile --emit `"`@azure-tools/cadl-csharp`" --arg `"csharp-sdk-folder=$csharpSdkFolder`"")
+        npx cadl compile $mainCadlFile --emit "@azure-tools/cadl-csharp" --arg "csharp-sdk-folder=$csharpSdkFolder"
+    } else {
+        Write-Host("npx cadl compile $mainCadlFile --emit `"`@azure-tools/cadl-csharp`" --option `"@azure-tools/cadl-csharp.emitter-output-dir=$resolvedProjectDirectory`"")
+        npx cadl compile $mainCadlFile --emit "@azure-tools/cadl-csharp" --option @azure-tools/cadl-csharp.emitter-output-dir=$resolvedProjectDirectory
+    }
+    if ($LASTEXITCODE) { exit $LASTEXITCODE }
 }
 finally {
     Pop-Location

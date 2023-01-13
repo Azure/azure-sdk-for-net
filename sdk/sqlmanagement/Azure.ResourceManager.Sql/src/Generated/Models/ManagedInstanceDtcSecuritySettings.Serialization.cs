@@ -30,15 +30,15 @@ namespace Azure.ResourceManager.Sql.Models
                 writer.WritePropertyName("snaLu6point2TransactionsEnabled");
                 writer.WriteBooleanValue(SnaLu6Point2TransactionsEnabled.Value);
             }
-            if (Optional.IsDefined(XaTransactionsDefaultTimeout))
+            if (Optional.IsDefined(XATransactionsDefaultTimeoutInSeconds))
             {
                 writer.WritePropertyName("xaTransactionsDefaultTimeout");
-                writer.WriteNumberValue(XaTransactionsDefaultTimeout.Value);
+                writer.WriteNumberValue(XATransactionsDefaultTimeoutInSeconds.Value);
             }
-            if (Optional.IsDefined(XaTransactionsMaximumTimeout))
+            if (Optional.IsDefined(XATransactionsMaximumTimeoutInSeconds))
             {
                 writer.WritePropertyName("xaTransactionsMaximumTimeout");
-                writer.WriteNumberValue(XaTransactionsMaximumTimeout.Value);
+                writer.WriteNumberValue(XATransactionsMaximumTimeoutInSeconds.Value);
             }
             writer.WriteEndObject();
         }

@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -182,37 +181,9 @@ namespace Azure.ResourceManager.AppService
         /// <returns> An async collection of <see cref="WebSiteSlotExtensionResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<WebSiteSlotExtensionResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<WebSiteSlotExtensionResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _webSiteSlotExtensionWebAppsClientDiagnostics.CreateScope("WebSiteSlotExtensionCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _webSiteSlotExtensionWebAppsRestClient.ListSiteExtensionsSlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new WebSiteSlotExtensionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<WebSiteSlotExtensionResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _webSiteSlotExtensionWebAppsClientDiagnostics.CreateScope("WebSiteSlotExtensionCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _webSiteSlotExtensionWebAppsRestClient.ListSiteExtensionsSlotNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new WebSiteSlotExtensionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _webSiteSlotExtensionWebAppsRestClient.CreateListSiteExtensionsSlotRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _webSiteSlotExtensionWebAppsRestClient.CreateListSiteExtensionsSlotNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new WebSiteSlotExtensionResource(Client, SiteExtensionInfoData.DeserializeSiteExtensionInfoData(e)), _webSiteSlotExtensionWebAppsClientDiagnostics, Pipeline, "WebSiteSlotExtensionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -224,37 +195,9 @@ namespace Azure.ResourceManager.AppService
         /// <returns> A collection of <see cref="WebSiteSlotExtensionResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<WebSiteSlotExtensionResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<WebSiteSlotExtensionResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _webSiteSlotExtensionWebAppsClientDiagnostics.CreateScope("WebSiteSlotExtensionCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _webSiteSlotExtensionWebAppsRestClient.ListSiteExtensionsSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new WebSiteSlotExtensionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<WebSiteSlotExtensionResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _webSiteSlotExtensionWebAppsClientDiagnostics.CreateScope("WebSiteSlotExtensionCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _webSiteSlotExtensionWebAppsRestClient.ListSiteExtensionsSlotNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new WebSiteSlotExtensionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _webSiteSlotExtensionWebAppsRestClient.CreateListSiteExtensionsSlotRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _webSiteSlotExtensionWebAppsRestClient.CreateListSiteExtensionsSlotNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new WebSiteSlotExtensionResource(Client, SiteExtensionInfoData.DeserializeSiteExtensionInfoData(e)), _webSiteSlotExtensionWebAppsClientDiagnostics, Pipeline, "WebSiteSlotExtensionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

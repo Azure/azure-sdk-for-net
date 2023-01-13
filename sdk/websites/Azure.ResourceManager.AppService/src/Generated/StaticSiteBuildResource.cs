@@ -337,37 +337,9 @@ namespace Azure.ResourceManager.AppService
         /// <returns> An async collection of <see cref="StaticSiteFunctionOverview" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<StaticSiteFunctionOverview> GetFunctionsAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<StaticSiteFunctionOverview>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _staticSiteBuildStaticSitesClientDiagnostics.CreateScope("StaticSiteBuildResource.GetFunctions");
-                scope.Start();
-                try
-                {
-                    var response = await _staticSiteBuildStaticSitesRestClient.ListStaticSiteBuildFunctionsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<StaticSiteFunctionOverview>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _staticSiteBuildStaticSitesClientDiagnostics.CreateScope("StaticSiteBuildResource.GetFunctions");
-                scope.Start();
-                try
-                {
-                    var response = await _staticSiteBuildStaticSitesRestClient.ListStaticSiteBuildFunctionsNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _staticSiteBuildStaticSitesRestClient.CreateListStaticSiteBuildFunctionsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _staticSiteBuildStaticSitesRestClient.CreateListStaticSiteBuildFunctionsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, StaticSiteFunctionOverview.DeserializeStaticSiteFunctionOverview, _staticSiteBuildStaticSitesClientDiagnostics, Pipeline, "StaticSiteBuildResource.GetFunctions", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -379,37 +351,9 @@ namespace Azure.ResourceManager.AppService
         /// <returns> A collection of <see cref="StaticSiteFunctionOverview" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<StaticSiteFunctionOverview> GetFunctions(CancellationToken cancellationToken = default)
         {
-            Page<StaticSiteFunctionOverview> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _staticSiteBuildStaticSitesClientDiagnostics.CreateScope("StaticSiteBuildResource.GetFunctions");
-                scope.Start();
-                try
-                {
-                    var response = _staticSiteBuildStaticSitesRestClient.ListStaticSiteBuildFunctions(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<StaticSiteFunctionOverview> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _staticSiteBuildStaticSitesClientDiagnostics.CreateScope("StaticSiteBuildResource.GetFunctions");
-                scope.Start();
-                try
-                {
-                    var response = _staticSiteBuildStaticSitesRestClient.ListStaticSiteBuildFunctionsNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _staticSiteBuildStaticSitesRestClient.CreateListStaticSiteBuildFunctionsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _staticSiteBuildStaticSitesRestClient.CreateListStaticSiteBuildFunctionsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, StaticSiteFunctionOverview.DeserializeStaticSiteFunctionOverview, _staticSiteBuildStaticSitesClientDiagnostics, Pipeline, "StaticSiteBuildResource.GetFunctions", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

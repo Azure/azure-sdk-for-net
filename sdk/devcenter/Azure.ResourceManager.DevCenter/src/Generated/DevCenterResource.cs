@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -450,37 +449,9 @@ namespace Azure.ResourceManager.DevCenter
         /// <returns> An async collection of <see cref="ImageResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ImageResource> GetImagesAsync(int? top = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<ImageResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _imageClientDiagnostics.CreateScope("DevCenterResource.GetImages");
-                scope.Start();
-                try
-                {
-                    var response = await _imageRestClient.ListByDevCenterAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ImageResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<ImageResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _imageClientDiagnostics.CreateScope("DevCenterResource.GetImages");
-                scope.Start();
-                try
-                {
-                    var response = await _imageRestClient.ListByDevCenterNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ImageResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _imageRestClient.CreateListByDevCenterRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _imageRestClient.CreateListByDevCenterNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ImageResource(Client, ImageData.DeserializeImageData(e)), _imageClientDiagnostics, Pipeline, "DevCenterResource.GetImages", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -493,37 +464,9 @@ namespace Azure.ResourceManager.DevCenter
         /// <returns> A collection of <see cref="ImageResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ImageResource> GetImages(int? top = null, CancellationToken cancellationToken = default)
         {
-            Page<ImageResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _imageClientDiagnostics.CreateScope("DevCenterResource.GetImages");
-                scope.Start();
-                try
-                {
-                    var response = _imageRestClient.ListByDevCenter(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ImageResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<ImageResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _imageClientDiagnostics.CreateScope("DevCenterResource.GetImages");
-                scope.Start();
-                try
-                {
-                    var response = _imageRestClient.ListByDevCenterNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ImageResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _imageRestClient.CreateListByDevCenterRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _imageRestClient.CreateListByDevCenterNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ImageResource(Client, ImageData.DeserializeImageData(e)), _imageClientDiagnostics, Pipeline, "DevCenterResource.GetImages", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

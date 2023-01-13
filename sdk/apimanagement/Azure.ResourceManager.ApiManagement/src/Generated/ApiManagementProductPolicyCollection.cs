@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -179,22 +178,8 @@ namespace Azure.ResourceManager.ApiManagement
         /// <returns> An async collection of <see cref="ApiManagementProductPolicyResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ApiManagementProductPolicyResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<ApiManagementProductPolicyResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _apiManagementProductPolicyProductPolicyClientDiagnostics.CreateScope("ApiManagementProductPolicyCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _apiManagementProductPolicyProductPolicyRestClient.ListByProductAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ApiManagementProductPolicyResource(Client, value)), null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _apiManagementProductPolicyProductPolicyRestClient.CreateListByProductRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new ApiManagementProductPolicyResource(Client, PolicyContractData.DeserializePolicyContractData(e)), _apiManagementProductPolicyProductPolicyClientDiagnostics, Pipeline, "ApiManagementProductPolicyCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -206,22 +191,8 @@ namespace Azure.ResourceManager.ApiManagement
         /// <returns> A collection of <see cref="ApiManagementProductPolicyResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ApiManagementProductPolicyResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<ApiManagementProductPolicyResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _apiManagementProductPolicyProductPolicyClientDiagnostics.CreateScope("ApiManagementProductPolicyCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _apiManagementProductPolicyProductPolicyRestClient.ListByProduct(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ApiManagementProductPolicyResource(Client, value)), null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _apiManagementProductPolicyProductPolicyRestClient.CreateListByProductRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new ApiManagementProductPolicyResource(Client, PolicyContractData.DeserializePolicyContractData(e)), _apiManagementProductPolicyProductPolicyClientDiagnostics, Pipeline, "ApiManagementProductPolicyCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>

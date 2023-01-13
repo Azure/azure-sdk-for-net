@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -188,37 +187,9 @@ namespace Azure.ResourceManager.DevCenter
         /// <returns> An async collection of <see cref="NetworkConnectionResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<NetworkConnectionResource> GetAllAsync(int? top = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<NetworkConnectionResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _networkConnectionClientDiagnostics.CreateScope("NetworkConnectionCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _networkConnectionRestClient.ListByResourceGroupAsync(Id.SubscriptionId, Id.ResourceGroupName, top, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new NetworkConnectionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<NetworkConnectionResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _networkConnectionClientDiagnostics.CreateScope("NetworkConnectionCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _networkConnectionRestClient.ListByResourceGroupNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, top, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new NetworkConnectionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _networkConnectionRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, top);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _networkConnectionRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, top);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new NetworkConnectionResource(Client, NetworkConnectionData.DeserializeNetworkConnectionData(e)), _networkConnectionClientDiagnostics, Pipeline, "NetworkConnectionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -231,37 +202,9 @@ namespace Azure.ResourceManager.DevCenter
         /// <returns> A collection of <see cref="NetworkConnectionResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<NetworkConnectionResource> GetAll(int? top = null, CancellationToken cancellationToken = default)
         {
-            Page<NetworkConnectionResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _networkConnectionClientDiagnostics.CreateScope("NetworkConnectionCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _networkConnectionRestClient.ListByResourceGroup(Id.SubscriptionId, Id.ResourceGroupName, top, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new NetworkConnectionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<NetworkConnectionResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _networkConnectionClientDiagnostics.CreateScope("NetworkConnectionCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _networkConnectionRestClient.ListByResourceGroupNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, top, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new NetworkConnectionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _networkConnectionRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, top);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _networkConnectionRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, top);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new NetworkConnectionResource(Client, NetworkConnectionData.DeserializeNetworkConnectionData(e)), _networkConnectionClientDiagnostics, Pipeline, "NetworkConnectionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

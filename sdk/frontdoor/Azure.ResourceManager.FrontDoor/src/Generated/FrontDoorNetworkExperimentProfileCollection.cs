@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -187,37 +186,9 @@ namespace Azure.ResourceManager.FrontDoor
         /// <returns> An async collection of <see cref="FrontDoorNetworkExperimentProfileResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<FrontDoorNetworkExperimentProfileResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<FrontDoorNetworkExperimentProfileResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _frontDoorNetworkExperimentProfileNetworkExperimentProfilesClientDiagnostics.CreateScope("FrontDoorNetworkExperimentProfileCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _frontDoorNetworkExperimentProfileNetworkExperimentProfilesRestClient.ListByResourceGroupAsync(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new FrontDoorNetworkExperimentProfileResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<FrontDoorNetworkExperimentProfileResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _frontDoorNetworkExperimentProfileNetworkExperimentProfilesClientDiagnostics.CreateScope("FrontDoorNetworkExperimentProfileCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _frontDoorNetworkExperimentProfileNetworkExperimentProfilesRestClient.ListByResourceGroupNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new FrontDoorNetworkExperimentProfileResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _frontDoorNetworkExperimentProfileNetworkExperimentProfilesRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _frontDoorNetworkExperimentProfileNetworkExperimentProfilesRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new FrontDoorNetworkExperimentProfileResource(Client, FrontDoorNetworkExperimentProfileData.DeserializeFrontDoorNetworkExperimentProfileData(e)), _frontDoorNetworkExperimentProfileNetworkExperimentProfilesClientDiagnostics, Pipeline, "FrontDoorNetworkExperimentProfileCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -229,37 +200,9 @@ namespace Azure.ResourceManager.FrontDoor
         /// <returns> A collection of <see cref="FrontDoorNetworkExperimentProfileResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<FrontDoorNetworkExperimentProfileResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<FrontDoorNetworkExperimentProfileResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _frontDoorNetworkExperimentProfileNetworkExperimentProfilesClientDiagnostics.CreateScope("FrontDoorNetworkExperimentProfileCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _frontDoorNetworkExperimentProfileNetworkExperimentProfilesRestClient.ListByResourceGroup(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new FrontDoorNetworkExperimentProfileResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<FrontDoorNetworkExperimentProfileResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _frontDoorNetworkExperimentProfileNetworkExperimentProfilesClientDiagnostics.CreateScope("FrontDoorNetworkExperimentProfileCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _frontDoorNetworkExperimentProfileNetworkExperimentProfilesRestClient.ListByResourceGroupNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new FrontDoorNetworkExperimentProfileResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _frontDoorNetworkExperimentProfileNetworkExperimentProfilesRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _frontDoorNetworkExperimentProfileNetworkExperimentProfilesRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new FrontDoorNetworkExperimentProfileResource(Client, FrontDoorNetworkExperimentProfileData.DeserializeFrontDoorNetworkExperimentProfileData(e)), _frontDoorNetworkExperimentProfileNetworkExperimentProfilesClientDiagnostics, Pipeline, "FrontDoorNetworkExperimentProfileCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
