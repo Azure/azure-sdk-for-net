@@ -1,5 +1,10 @@
 # Release History
 
+## 1.8.1 (2023-01-13)
+
+### Bugs Fixed
+- Fixed an issue when using `ManagedIdentityCredential` in combination with authorities other than Azure public cloud that resulted in a incorrect instance metadata validation error. [#32498](https://github.com/Azure/azure-sdk-for-net/issues/32498)
+
 ## 1.8.0 (2022-11-08)
 
 ### Bugs Fixed
