@@ -13,7 +13,7 @@ using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.ServiceFabric.Models;
 
-namespace Azure.ResourceManager.ServiceFabric
+namespace Azure.ResourceManager.ServiceFabric.Samples
 {
     public partial class Sample_SubscriptionResourceExtensions
     {
@@ -25,8 +25,10 @@ namespace Azure.ResourceManager.ServiceFabric
             // Generated from example definition: specification/servicefabric/resource-manager/Microsoft.ServiceFabric/stable/2021-06-01/examples/ClusterVersionsGet_example.json
             // this example is just showing the usage of "ClusterVersions_Get" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this SubscriptionResource created on azure
             // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
@@ -53,8 +55,10 @@ namespace Azure.ResourceManager.ServiceFabric
             // Generated from example definition: specification/servicefabric/resource-manager/Microsoft.ServiceFabric/stable/2021-06-01/examples/ClusterVersionsGetByEnvironment_example.json
             // this example is just showing the usage of "ClusterVersions_GetByEnvironment" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this SubscriptionResource created on azure
             // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
@@ -82,8 +86,10 @@ namespace Azure.ResourceManager.ServiceFabric
             // Generated from example definition: specification/servicefabric/resource-manager/Microsoft.ServiceFabric/stable/2021-06-01/examples/ClusterVersionsList_example.json
             // this example is just showing the usage of "ClusterVersions_List" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this SubscriptionResource created on azure
             // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
@@ -109,8 +115,10 @@ namespace Azure.ResourceManager.ServiceFabric
             // Generated from example definition: specification/servicefabric/resource-manager/Microsoft.ServiceFabric/stable/2021-06-01/examples/ClusterVersionsListByEnvironment.json
             // this example is just showing the usage of "ClusterVersions_ListByEnvironment" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this SubscriptionResource created on azure
             // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource

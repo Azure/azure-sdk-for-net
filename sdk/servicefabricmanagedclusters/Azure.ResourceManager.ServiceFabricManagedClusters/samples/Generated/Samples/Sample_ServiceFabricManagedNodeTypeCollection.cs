@@ -13,9 +13,10 @@ using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Resources.Models;
+using Azure.ResourceManager.ServiceFabricManagedClusters;
 using Azure.ResourceManager.ServiceFabricManagedClusters.Models;
 
-namespace Azure.ResourceManager.ServiceFabricManagedClusters
+namespace Azure.ResourceManager.ServiceFabricManagedClusters.Samples
 {
     public partial class Sample_ServiceFabricManagedNodeTypeCollection
     {
@@ -27,8 +28,10 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
             // Generated from example definition: specification/servicefabricmanagedclusters/resource-manager/Microsoft.ServiceFabric/stable/2022-01-01/examples/NodeTypeListOperation_example.json
             // this example is just showing the usage of "NodeTypes_ListByManagedClusters" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this ServiceFabricManagedClusterResource created on azure
             // for more information of creating ServiceFabricManagedClusterResource, please refer to the document of ServiceFabricManagedClusterResource
@@ -62,8 +65,10 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
             // Generated from example definition: specification/servicefabricmanagedclusters/resource-manager/Microsoft.ServiceFabric/stable/2022-01-01/examples/NodeTypeGetOperation_example.json
             // this example is just showing the usage of "NodeTypes_Get" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this ServiceFabricManagedClusterResource created on azure
             // for more information of creating ServiceFabricManagedClusterResource, please refer to the document of ServiceFabricManagedClusterResource
@@ -95,8 +100,10 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
             // Generated from example definition: specification/servicefabricmanagedclusters/resource-manager/Microsoft.ServiceFabric/stable/2022-01-01/examples/NodeTypeGetOperation_example.json
             // this example is just showing the usage of "NodeTypes_Get" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this ServiceFabricManagedClusterResource created on azure
             // for more information of creating ServiceFabricManagedClusterResource, please refer to the document of ServiceFabricManagedClusterResource
@@ -124,8 +131,10 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
             // Generated from example definition: specification/servicefabricmanagedclusters/resource-manager/Microsoft.ServiceFabric/stable/2022-01-01/examples/NodeTypePutOperationAutoScale_example.json
             // this example is just showing the usage of "NodeTypes_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this ServiceFabricManagedClusterResource created on azure
             // for more information of creating ServiceFabricManagedClusterResource, please refer to the document of ServiceFabricManagedClusterResource
@@ -206,8 +215,10 @@ new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/reso
             // Generated from example definition: specification/servicefabricmanagedclusters/resource-manager/Microsoft.ServiceFabric/stable/2022-01-01/examples/NodeTypePutOperation_example_max.json
             // this example is just showing the usage of "NodeTypes_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this ServiceFabricManagedClusterResource created on azure
             // for more information of creating ServiceFabricManagedClusterResource, please refer to the document of ServiceFabricManagedClusterResource
@@ -306,8 +317,10 @@ new NodeTypeVmssDataDisk(1,256,ServiceFabricManagedDataDiskType.StandardSsdLrs,"
             // Generated from example definition: specification/servicefabricmanagedclusters/resource-manager/Microsoft.ServiceFabric/stable/2022-01-01/examples/NodeTypePutOperation_example_min.json
             // this example is just showing the usage of "NodeTypes_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this ServiceFabricManagedClusterResource created on azure
             // for more information of creating ServiceFabricManagedClusterResource, please refer to the document of ServiceFabricManagedClusterResource
@@ -351,8 +364,10 @@ new NodeTypeVmssDataDisk(1,256,ServiceFabricManagedDataDiskType.StandardSsdLrs,"
             // Generated from example definition: specification/servicefabricmanagedclusters/resource-manager/Microsoft.ServiceFabric/stable/2022-01-01/examples/NodeTypePutOperationStateless_example.json
             // this example is just showing the usage of "NodeTypes_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this ServiceFabricManagedClusterResource created on azure
             // for more information of creating ServiceFabricManagedClusterResource, please refer to the document of ServiceFabricManagedClusterResource

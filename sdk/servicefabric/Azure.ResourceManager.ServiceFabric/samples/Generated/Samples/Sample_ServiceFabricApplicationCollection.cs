@@ -11,9 +11,10 @@ using Azure;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager;
+using Azure.ResourceManager.ServiceFabric;
 using Azure.ResourceManager.ServiceFabric.Models;
 
-namespace Azure.ResourceManager.ServiceFabric
+namespace Azure.ResourceManager.ServiceFabric.Samples
 {
     public partial class Sample_ServiceFabricApplicationCollection
     {
@@ -25,8 +26,10 @@ namespace Azure.ResourceManager.ServiceFabric
             // Generated from example definition: specification/servicefabric/resource-manager/Microsoft.ServiceFabric/stable/2021-06-01/examples/ApplicationGetOperation_example.json
             // this example is just showing the usage of "Applications_Get" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this ServiceFabricClusterResource created on azure
             // for more information of creating ServiceFabricClusterResource, please refer to the document of ServiceFabricClusterResource
@@ -58,8 +61,10 @@ namespace Azure.ResourceManager.ServiceFabric
             // Generated from example definition: specification/servicefabric/resource-manager/Microsoft.ServiceFabric/stable/2021-06-01/examples/ApplicationGetOperation_example.json
             // this example is just showing the usage of "Applications_Get" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this ServiceFabricClusterResource created on azure
             // for more information of creating ServiceFabricClusterResource, please refer to the document of ServiceFabricClusterResource
@@ -87,8 +92,10 @@ namespace Azure.ResourceManager.ServiceFabric
             // Generated from example definition: specification/servicefabric/resource-manager/Microsoft.ServiceFabric/stable/2021-06-01/examples/ApplicationPutOperation_example_max.json
             // this example is just showing the usage of "Applications_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this ServiceFabricClusterResource created on azure
             // for more information of creating ServiceFabricClusterResource, please refer to the document of ServiceFabricClusterResource
@@ -172,8 +179,10 @@ TotalApplicationCapacity = 5,
             // Generated from example definition: specification/servicefabric/resource-manager/Microsoft.ServiceFabric/stable/2021-06-01/examples/ApplicationPutOperation_example_min.json
             // this example is just showing the usage of "Applications_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this ServiceFabricClusterResource created on azure
             // for more information of creating ServiceFabricClusterResource, please refer to the document of ServiceFabricClusterResource
@@ -215,8 +224,10 @@ TotalApplicationCapacity = 5,
             // Generated from example definition: specification/servicefabric/resource-manager/Microsoft.ServiceFabric/stable/2021-06-01/examples/ApplicationPutOperation_recreate_example.json
             // this example is just showing the usage of "Applications_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this ServiceFabricClusterResource created on azure
             // for more information of creating ServiceFabricClusterResource, please refer to the document of ServiceFabricClusterResource
@@ -265,8 +276,10 @@ TotalApplicationCapacity = 5,
             // Generated from example definition: specification/servicefabric/resource-manager/Microsoft.ServiceFabric/stable/2021-06-01/examples/ApplicationListOperation_example.json
             // this example is just showing the usage of "Applications_List" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this ServiceFabricClusterResource created on azure
             // for more information of creating ServiceFabricClusterResource, please refer to the document of ServiceFabricClusterResource
