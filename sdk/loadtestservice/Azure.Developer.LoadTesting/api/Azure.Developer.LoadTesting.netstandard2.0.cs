@@ -15,8 +15,8 @@ namespace Azure.Developer.LoadTesting
     public partial class LoadTestAdministrationClient
     {
         protected LoadTestAdministrationClient() { }
-        public LoadTestAdministrationClient(System.Uri endpoint, Azure.Core.TokenCredential credential) { }
-        public LoadTestAdministrationClient(System.Uri endpoint, Azure.Core.TokenCredential credential, Azure.Developer.LoadTesting.LoadTestingClientOptions options) { }
+        public LoadTestAdministrationClient(string endpoint, Azure.Core.TokenCredential credential) { }
+        public LoadTestAdministrationClient(string endpoint, Azure.Core.TokenCredential credential, Azure.Developer.LoadTesting.LoadTestingClientOptions options) { }
         public virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
         public virtual Azure.Developer.LoadTesting.FileUploadOperation BeginUploadTestFile(Azure.WaitUntil waitUntil, string testId, string fileName, Azure.Core.RequestContent content, System.TimeSpan? timeSpan = default(System.TimeSpan?), string fileType = null, Azure.RequestContext context = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Developer.LoadTesting.FileUploadOperation> BeginUploadTestFileAsync(Azure.WaitUntil waitUntil, string testId, string fileName, Azure.Core.RequestContent content, System.TimeSpan? timeSpan = default(System.TimeSpan?), string fileType = null, Azure.RequestContext context = null) { throw null; }
@@ -56,8 +56,8 @@ namespace Azure.Developer.LoadTesting
     public partial class LoadTestRunClient
     {
         protected LoadTestRunClient() { }
-        public LoadTestRunClient(System.Uri endpoint, Azure.Core.TokenCredential credential) { }
-        public LoadTestRunClient(System.Uri endpoint, Azure.Core.TokenCredential credential, Azure.Developer.LoadTesting.LoadTestingClientOptions options) { }
+        public LoadTestRunClient(string endpoint, Azure.Core.TokenCredential credential) { }
+        public LoadTestRunClient(string endpoint, Azure.Core.TokenCredential credential, Azure.Developer.LoadTesting.LoadTestingClientOptions options) { }
         public virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
         public virtual Azure.Developer.LoadTesting.TestRunOperation BeginTestRun(Azure.WaitUntil waitUntil, string testRunId, Azure.Core.RequestContent content, System.TimeSpan? timeSpan = default(System.TimeSpan?), string oldTestRunId = null, Azure.RequestContext context = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Developer.LoadTesting.TestRunOperation> BeginTestRunAsync(Azure.WaitUntil waitUntil, string testRunId, Azure.Core.RequestContent content, System.TimeSpan? timeSpan = default(System.TimeSpan?), string oldTestRunId = null, Azure.RequestContext context = null) { throw null; }

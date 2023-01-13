@@ -6,8 +6,7 @@
 This sample shows how to call CreateOrUpdateTestRunAsync with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new LoadTestRunClient(endpoint, credential);
+var client = new LoadTestRunClient("<https://my-service.azure.com>", credential);
 
 var data = new {};
 
@@ -19,8 +18,7 @@ Console.WriteLine(result.ToString());
 This sample shows how to call CreateOrUpdateTestRunAsync with all parameters and request content, and how to parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new LoadTestRunClient(endpoint, credential);
+var client = new LoadTestRunClient("<https://my-service.azure.com>", credential);
 
 var data = new {
     passFailCriteria = new {
@@ -317,8 +315,7 @@ Schema for <c>TestRun</c>:
 This sample shows how to call CreateOrUpdateTestRun with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new LoadTestRunClient(endpoint, credential);
+var client = new LoadTestRunClient("<https://my-service.azure.com>", credential);
 
 var data = new {};
 
@@ -330,8 +327,7 @@ Console.WriteLine(result.ToString());
 This sample shows how to call CreateOrUpdateTestRun with all parameters and request content, and how to parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new LoadTestRunClient(endpoint, credential);
+var client = new LoadTestRunClient("<https://my-service.azure.com>", credential);
 
 var data = new {
     passFailCriteria = new {
@@ -628,8 +624,7 @@ Schema for <c>TestRun</c>:
 This sample shows how to call GetTestRunAsync with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new LoadTestRunClient(endpoint, credential);
+var client = new LoadTestRunClient("<https://my-service.azure.com>", credential);
 
 Response response = await client.GetTestRunAsync("<testRunId>");
 
@@ -812,8 +807,7 @@ Schema for <c>TestRun</c>:
 This sample shows how to call GetTestRun with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new LoadTestRunClient(endpoint, credential);
+var client = new LoadTestRunClient("<https://my-service.azure.com>", credential);
 
 Response response = client.GetTestRun("<testRunId>");
 
@@ -996,8 +990,7 @@ Schema for <c>TestRun</c>:
 This sample shows how to call DeleteTestRunAsync with required parameters.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new LoadTestRunClient(endpoint, credential);
+var client = new LoadTestRunClient("<https://my-service.azure.com>", credential);
 
 Response response = await client.DeleteTestRunAsync("<testRunId>");
 Console.WriteLine(response.Status);
@@ -1009,8 +1002,7 @@ Console.WriteLine(response.Status);
 This sample shows how to call DeleteTestRun with required parameters.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new LoadTestRunClient(endpoint, credential);
+var client = new LoadTestRunClient("<https://my-service.azure.com>", credential);
 
 Response response = client.DeleteTestRun("<testRunId>");
 Console.WriteLine(response.Status);
@@ -1022,8 +1014,7 @@ Console.WriteLine(response.Status);
 This sample shows how to call GetTestRunFileAsync with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new LoadTestRunClient(endpoint, credential);
+var client = new LoadTestRunClient("<https://my-service.azure.com>", credential);
 
 Response response = await client.GetTestRunFileAsync("<testRunId>", "<fileName>");
 
@@ -1059,8 +1050,7 @@ Schema for <c>FileInfo</c>:
 This sample shows how to call GetTestRunFile with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new LoadTestRunClient(endpoint, credential);
+var client = new LoadTestRunClient("<https://my-service.azure.com>", credential);
 
 Response response = client.GetTestRunFile("<testRunId>", "<fileName>");
 
@@ -1096,8 +1086,7 @@ Schema for <c>FileInfo</c>:
 This sample shows how to call StopTestRunAsync with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new LoadTestRunClient(endpoint, credential);
+var client = new LoadTestRunClient("<https://my-service.azure.com>", credential);
 
 Response response = await client.StopTestRunAsync("<testRunId>");
 
@@ -1280,8 +1269,7 @@ Schema for <c>TestRun</c>:
 This sample shows how to call StopTestRun with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new LoadTestRunClient(endpoint, credential);
+var client = new LoadTestRunClient("<https://my-service.azure.com>", credential);
 
 Response response = client.StopTestRun("<testRunId>");
 
@@ -1464,8 +1452,7 @@ Schema for <c>TestRun</c>:
 This sample shows how to call GetMetricNamespacesAsync with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new LoadTestRunClient(endpoint, credential);
+var client = new LoadTestRunClient("<https://my-service.azure.com>", credential);
 
 Response response = await client.GetMetricNamespacesAsync("<testRunId>");
 
@@ -1497,8 +1484,7 @@ Schema for <c>MetricNamespaceCollection</c>:
 This sample shows how to call GetMetricNamespaces with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new LoadTestRunClient(endpoint, credential);
+var client = new LoadTestRunClient("<https://my-service.azure.com>", credential);
 
 Response response = client.GetMetricNamespaces("<testRunId>");
 
@@ -1530,8 +1516,7 @@ Schema for <c>MetricNamespaceCollection</c>:
 This sample shows how to call GetMetricDefinitionsAsync with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new LoadTestRunClient(endpoint, credential);
+var client = new LoadTestRunClient("<https://my-service.azure.com>", credential);
 
 Response response = await client.GetMetricDefinitionsAsync("<testRunId>", "<metricNamespace>");
 
@@ -1585,8 +1570,7 @@ Schema for <c>MetricDefinitionCollection</c>:
 This sample shows how to call GetMetricDefinitions with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new LoadTestRunClient(endpoint, credential);
+var client = new LoadTestRunClient("<https://my-service.azure.com>", credential);
 
 Response response = client.GetMetricDefinitions("<testRunId>", "<metricNamespace>");
 
@@ -1640,8 +1624,7 @@ Schema for <c>MetricDefinitionCollection</c>:
 This sample shows how to call CreateOrUpdateAppComponentsAsync with required parameters and request content and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new LoadTestRunClient(endpoint, credential);
+var client = new LoadTestRunClient("<https://my-service.azure.com>", credential);
 
 var data = new {
     components = new {
@@ -1707,8 +1690,7 @@ Schema for <c>TestRunAppComponents</c>:
 This sample shows how to call CreateOrUpdateAppComponents with required parameters and request content and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new LoadTestRunClient(endpoint, credential);
+var client = new LoadTestRunClient("<https://my-service.azure.com>", credential);
 
 var data = new {
     components = new {
@@ -1774,8 +1756,7 @@ Schema for <c>TestRunAppComponents</c>:
 This sample shows how to call GetAppComponentsAsync with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new LoadTestRunClient(endpoint, credential);
+var client = new LoadTestRunClient("<https://my-service.azure.com>", credential);
 
 Response response = await client.GetAppComponentsAsync("<testRunId>");
 
@@ -1817,8 +1798,7 @@ Schema for <c>TestRunAppComponents</c>:
 This sample shows how to call GetAppComponents with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new LoadTestRunClient(endpoint, credential);
+var client = new LoadTestRunClient("<https://my-service.azure.com>", credential);
 
 Response response = client.GetAppComponents("<testRunId>");
 
@@ -1860,8 +1840,7 @@ Schema for <c>TestRunAppComponents</c>:
 This sample shows how to call CreateOrUpdateServerMetricsConfigAsync with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new LoadTestRunClient(endpoint, credential);
+var client = new LoadTestRunClient("<https://my-service.azure.com>", credential);
 
 var data = new {};
 
@@ -1873,8 +1852,7 @@ Console.WriteLine(result.ToString());
 This sample shows how to call CreateOrUpdateServerMetricsConfigAsync with all parameters and request content, and how to parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new LoadTestRunClient(endpoint, credential);
+var client = new LoadTestRunClient("<https://my-service.azure.com>", credential);
 
 var data = new {
     metrics = new {
@@ -1944,8 +1922,7 @@ Schema for <c>TestRunServerMetricConfig</c>:
 This sample shows how to call CreateOrUpdateServerMetricsConfig with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new LoadTestRunClient(endpoint, credential);
+var client = new LoadTestRunClient("<https://my-service.azure.com>", credential);
 
 var data = new {};
 
@@ -1957,8 +1934,7 @@ Console.WriteLine(result.ToString());
 This sample shows how to call CreateOrUpdateServerMetricsConfig with all parameters and request content, and how to parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new LoadTestRunClient(endpoint, credential);
+var client = new LoadTestRunClient("<https://my-service.azure.com>", credential);
 
 var data = new {
     metrics = new {
@@ -2028,8 +2004,7 @@ Schema for <c>TestRunServerMetricConfig</c>:
 This sample shows how to call GetServerMetricsConfigAsync with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new LoadTestRunClient(endpoint, credential);
+var client = new LoadTestRunClient("<https://my-service.azure.com>", credential);
 
 Response response = await client.GetServerMetricsConfigAsync("<testRunId>");
 
@@ -2072,8 +2047,7 @@ Schema for <c>TestRunServerMetricConfig</c>:
 This sample shows how to call GetServerMetricsConfig with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new LoadTestRunClient(endpoint, credential);
+var client = new LoadTestRunClient("<https://my-service.azure.com>", credential);
 
 Response response = client.GetServerMetricsConfig("<testRunId>");
 
@@ -2116,8 +2090,7 @@ Schema for <c>TestRunServerMetricConfig</c>:
 This sample shows how to call GetTestRunsAsync and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new LoadTestRunClient(endpoint, credential);
+var client = new LoadTestRunClient("<https://my-service.azure.com>", credential);
 
 await foreach (var data in client.GetTestRunsAsync())
 {
@@ -2128,8 +2101,7 @@ await foreach (var data in client.GetTestRunsAsync())
 This sample shows how to call GetTestRunsAsync with all parameters, and how to parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new LoadTestRunClient(endpoint, credential);
+var client = new LoadTestRunClient("<https://my-service.azure.com>", credential);
 
 await foreach (var data in client.GetTestRunsAsync("<orderby>", "<continuationToken>", "<search>", "<testId>", DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, "<status>", 1234))
 {
@@ -2313,8 +2285,7 @@ Schema for <c>TestRunsListValue</c>:
 This sample shows how to call GetTestRuns and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new LoadTestRunClient(endpoint, credential);
+var client = new LoadTestRunClient("<https://my-service.azure.com>", credential);
 
 foreach (var data in client.GetTestRuns())
 {
@@ -2325,8 +2296,7 @@ foreach (var data in client.GetTestRuns())
 This sample shows how to call GetTestRuns with all parameters, and how to parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new LoadTestRunClient(endpoint, credential);
+var client = new LoadTestRunClient("<https://my-service.azure.com>", credential);
 
 foreach (var data in client.GetTestRuns("<orderby>", "<continuationToken>", "<search>", "<testId>", DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, "<status>", 1234))
 {
@@ -2510,8 +2480,7 @@ Schema for <c>TestRunsListValue</c>:
 This sample shows how to call GetMetricsAsync with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new LoadTestRunClient(endpoint, credential);
+var client = new LoadTestRunClient("<https://my-service.azure.com>", credential);
 
 var data = new {};
 
@@ -2524,8 +2493,7 @@ await foreach (var data in client.GetMetricsAsync("<testRunId>", "<metricname>",
 This sample shows how to call GetMetricsAsync with all parameters and request content, and how to parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new LoadTestRunClient(endpoint, credential);
+var client = new LoadTestRunClient("<https://my-service.azure.com>", credential);
 
 var data = new {
     filters = new[] {
@@ -2590,8 +2558,7 @@ Schema for <c>MetricsValue</c>:
 This sample shows how to call GetMetrics with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new LoadTestRunClient(endpoint, credential);
+var client = new LoadTestRunClient("<https://my-service.azure.com>", credential);
 
 var data = new {};
 
@@ -2604,8 +2571,7 @@ foreach (var data in client.GetMetrics("<testRunId>", "<metricname>", "<metricNa
 This sample shows how to call GetMetrics with all parameters and request content, and how to parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new LoadTestRunClient(endpoint, credential);
+var client = new LoadTestRunClient("<https://my-service.azure.com>", credential);
 
 var data = new {
     filters = new[] {
@@ -2670,8 +2636,7 @@ Schema for <c>MetricsValue</c>:
 This sample shows how to call GetMetricDimensionValuesAsync with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new LoadTestRunClient(endpoint, credential);
+var client = new LoadTestRunClient("<https://my-service.azure.com>", credential);
 
 await foreach (var data in client.GetMetricDimensionValuesAsync("<testRunId>", "<name>", "<metricname>", "<metricNamespace>", "<timespan>"))
 {
@@ -2682,8 +2647,7 @@ await foreach (var data in client.GetMetricDimensionValuesAsync("<testRunId>", "
 This sample shows how to call GetMetricDimensionValuesAsync with all parameters, and how to parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new LoadTestRunClient(endpoint, credential);
+var client = new LoadTestRunClient("<https://my-service.azure.com>", credential);
 
 await foreach (var data in client.GetMetricDimensionValuesAsync("<testRunId>", "<name>", "<metricname>", "<metricNamespace>", "<timespan>", "<interval>"))
 {
@@ -2698,8 +2662,7 @@ await foreach (var data in client.GetMetricDimensionValuesAsync("<testRunId>", "
 This sample shows how to call GetMetricDimensionValues with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new LoadTestRunClient(endpoint, credential);
+var client = new LoadTestRunClient("<https://my-service.azure.com>", credential);
 
 foreach (var data in client.GetMetricDimensionValues("<testRunId>", "<name>", "<metricname>", "<metricNamespace>", "<timespan>"))
 {
@@ -2710,8 +2673,7 @@ foreach (var data in client.GetMetricDimensionValues("<testRunId>", "<name>", "<
 This sample shows how to call GetMetricDimensionValues with all parameters, and how to parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new LoadTestRunClient(endpoint, credential);
+var client = new LoadTestRunClient("<https://my-service.azure.com>", credential);
 
 foreach (var data in client.GetMetricDimensionValues("<testRunId>", "<name>", "<metricname>", "<metricNamespace>", "<timespan>", "<interval>"))
 {
