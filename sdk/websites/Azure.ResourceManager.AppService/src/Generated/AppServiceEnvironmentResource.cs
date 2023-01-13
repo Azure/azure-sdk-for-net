@@ -7,7 +7,6 @@
 
 using System;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -433,37 +432,9 @@ namespace Azure.ResourceManager.AppService
         /// <returns> An async collection of <see cref="StampCapacity" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<StampCapacity> GetCapacitiesAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<StampCapacity>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _appServiceEnvironmentClientDiagnostics.CreateScope("AppServiceEnvironmentResource.GetCapacities");
-                scope.Start();
-                try
-                {
-                    var response = await _appServiceEnvironmentRestClient.ListCapacitiesAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<StampCapacity>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _appServiceEnvironmentClientDiagnostics.CreateScope("AppServiceEnvironmentResource.GetCapacities");
-                scope.Start();
-                try
-                {
-                    var response = await _appServiceEnvironmentRestClient.ListCapacitiesNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _appServiceEnvironmentRestClient.CreateListCapacitiesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _appServiceEnvironmentRestClient.CreateListCapacitiesNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, StampCapacity.DeserializeStampCapacity, _appServiceEnvironmentClientDiagnostics, Pipeline, "AppServiceEnvironmentResource.GetCapacities", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -475,37 +446,9 @@ namespace Azure.ResourceManager.AppService
         /// <returns> A collection of <see cref="StampCapacity" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<StampCapacity> GetCapacities(CancellationToken cancellationToken = default)
         {
-            Page<StampCapacity> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _appServiceEnvironmentClientDiagnostics.CreateScope("AppServiceEnvironmentResource.GetCapacities");
-                scope.Start();
-                try
-                {
-                    var response = _appServiceEnvironmentRestClient.ListCapacities(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<StampCapacity> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _appServiceEnvironmentClientDiagnostics.CreateScope("AppServiceEnvironmentResource.GetCapacities");
-                scope.Start();
-                try
-                {
-                    var response = _appServiceEnvironmentRestClient.ListCapacitiesNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _appServiceEnvironmentRestClient.CreateListCapacitiesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _appServiceEnvironmentRestClient.CreateListCapacitiesNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, StampCapacity.DeserializeStampCapacity, _appServiceEnvironmentClientDiagnostics, Pipeline, "AppServiceEnvironmentResource.GetCapacities", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -561,22 +504,8 @@ namespace Azure.ResourceManager.AppService
         /// <returns> An async collection of <see cref="HostingEnvironmentDiagnostics" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<HostingEnvironmentDiagnostics> GetDiagnosticsAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<HostingEnvironmentDiagnostics>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _appServiceEnvironmentClientDiagnostics.CreateScope("AppServiceEnvironmentResource.GetDiagnostics");
-                scope.Start();
-                try
-                {
-                    var response = await _appServiceEnvironmentRestClient.ListDiagnosticsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value, null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _appServiceEnvironmentRestClient.CreateListDiagnosticsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, HostingEnvironmentDiagnostics.DeserializeHostingEnvironmentDiagnostics, _appServiceEnvironmentClientDiagnostics, Pipeline, "AppServiceEnvironmentResource.GetDiagnostics", "", null, cancellationToken);
         }
 
         /// <summary>
@@ -588,22 +517,8 @@ namespace Azure.ResourceManager.AppService
         /// <returns> A collection of <see cref="HostingEnvironmentDiagnostics" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<HostingEnvironmentDiagnostics> GetDiagnostics(CancellationToken cancellationToken = default)
         {
-            Page<HostingEnvironmentDiagnostics> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _appServiceEnvironmentClientDiagnostics.CreateScope("AppServiceEnvironmentResource.GetDiagnostics");
-                scope.Start();
-                try
-                {
-                    var response = _appServiceEnvironmentRestClient.ListDiagnostics(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value, null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _appServiceEnvironmentRestClient.CreateListDiagnosticsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, HostingEnvironmentDiagnostics.DeserializeHostingEnvironmentDiagnostics, _appServiceEnvironmentClientDiagnostics, Pipeline, "AppServiceEnvironmentResource.GetDiagnostics", "", null, cancellationToken);
         }
 
         /// <summary>
@@ -669,37 +584,9 @@ namespace Azure.ResourceManager.AppService
         /// <returns> An async collection of <see cref="InboundEnvironmentEndpoint" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<InboundEnvironmentEndpoint> GetInboundNetworkDependenciesEndpointsAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<InboundEnvironmentEndpoint>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _appServiceEnvironmentClientDiagnostics.CreateScope("AppServiceEnvironmentResource.GetInboundNetworkDependenciesEndpoints");
-                scope.Start();
-                try
-                {
-                    var response = await _appServiceEnvironmentRestClient.GetInboundNetworkDependenciesEndpointsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<InboundEnvironmentEndpoint>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _appServiceEnvironmentClientDiagnostics.CreateScope("AppServiceEnvironmentResource.GetInboundNetworkDependenciesEndpoints");
-                scope.Start();
-                try
-                {
-                    var response = await _appServiceEnvironmentRestClient.GetInboundNetworkDependenciesEndpointsNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _appServiceEnvironmentRestClient.CreateGetInboundNetworkDependenciesEndpointsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _appServiceEnvironmentRestClient.CreateGetInboundNetworkDependenciesEndpointsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, InboundEnvironmentEndpoint.DeserializeInboundEnvironmentEndpoint, _appServiceEnvironmentClientDiagnostics, Pipeline, "AppServiceEnvironmentResource.GetInboundNetworkDependenciesEndpoints", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -711,37 +598,9 @@ namespace Azure.ResourceManager.AppService
         /// <returns> A collection of <see cref="InboundEnvironmentEndpoint" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<InboundEnvironmentEndpoint> GetInboundNetworkDependenciesEndpoints(CancellationToken cancellationToken = default)
         {
-            Page<InboundEnvironmentEndpoint> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _appServiceEnvironmentClientDiagnostics.CreateScope("AppServiceEnvironmentResource.GetInboundNetworkDependenciesEndpoints");
-                scope.Start();
-                try
-                {
-                    var response = _appServiceEnvironmentRestClient.GetInboundNetworkDependenciesEndpoints(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<InboundEnvironmentEndpoint> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _appServiceEnvironmentClientDiagnostics.CreateScope("AppServiceEnvironmentResource.GetInboundNetworkDependenciesEndpoints");
-                scope.Start();
-                try
-                {
-                    var response = _appServiceEnvironmentRestClient.GetInboundNetworkDependenciesEndpointsNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _appServiceEnvironmentRestClient.CreateGetInboundNetworkDependenciesEndpointsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _appServiceEnvironmentRestClient.CreateGetInboundNetworkDependenciesEndpointsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, InboundEnvironmentEndpoint.DeserializeInboundEnvironmentEndpoint, _appServiceEnvironmentClientDiagnostics, Pipeline, "AppServiceEnvironmentResource.GetInboundNetworkDependenciesEndpoints", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -753,22 +612,8 @@ namespace Azure.ResourceManager.AppService
         /// <returns> An async collection of <see cref="AppServiceOperation" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<AppServiceOperation> GetOperationsAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<AppServiceOperation>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _appServiceEnvironmentClientDiagnostics.CreateScope("AppServiceEnvironmentResource.GetOperations");
-                scope.Start();
-                try
-                {
-                    var response = await _appServiceEnvironmentRestClient.ListOperationsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value, null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _appServiceEnvironmentRestClient.CreateListOperationsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, AppServiceOperation.DeserializeAppServiceOperation, _appServiceEnvironmentClientDiagnostics, Pipeline, "AppServiceEnvironmentResource.GetOperations", "", null, cancellationToken);
         }
 
         /// <summary>
@@ -780,22 +625,8 @@ namespace Azure.ResourceManager.AppService
         /// <returns> A collection of <see cref="AppServiceOperation" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<AppServiceOperation> GetOperations(CancellationToken cancellationToken = default)
         {
-            Page<AppServiceOperation> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _appServiceEnvironmentClientDiagnostics.CreateScope("AppServiceEnvironmentResource.GetOperations");
-                scope.Start();
-                try
-                {
-                    var response = _appServiceEnvironmentRestClient.ListOperations(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value, null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _appServiceEnvironmentRestClient.CreateListOperationsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, AppServiceOperation.DeserializeAppServiceOperation, _appServiceEnvironmentClientDiagnostics, Pipeline, "AppServiceEnvironmentResource.GetOperations", "", null, cancellationToken);
         }
 
         /// <summary>
@@ -807,37 +638,9 @@ namespace Azure.ResourceManager.AppService
         /// <returns> An async collection of <see cref="OutboundEnvironmentEndpoint" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<OutboundEnvironmentEndpoint> GetOutboundNetworkDependenciesEndpointsAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<OutboundEnvironmentEndpoint>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _appServiceEnvironmentClientDiagnostics.CreateScope("AppServiceEnvironmentResource.GetOutboundNetworkDependenciesEndpoints");
-                scope.Start();
-                try
-                {
-                    var response = await _appServiceEnvironmentRestClient.GetOutboundNetworkDependenciesEndpointsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<OutboundEnvironmentEndpoint>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _appServiceEnvironmentClientDiagnostics.CreateScope("AppServiceEnvironmentResource.GetOutboundNetworkDependenciesEndpoints");
-                scope.Start();
-                try
-                {
-                    var response = await _appServiceEnvironmentRestClient.GetOutboundNetworkDependenciesEndpointsNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _appServiceEnvironmentRestClient.CreateGetOutboundNetworkDependenciesEndpointsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _appServiceEnvironmentRestClient.CreateGetOutboundNetworkDependenciesEndpointsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, OutboundEnvironmentEndpoint.DeserializeOutboundEnvironmentEndpoint, _appServiceEnvironmentClientDiagnostics, Pipeline, "AppServiceEnvironmentResource.GetOutboundNetworkDependenciesEndpoints", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -849,37 +652,9 @@ namespace Azure.ResourceManager.AppService
         /// <returns> A collection of <see cref="OutboundEnvironmentEndpoint" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<OutboundEnvironmentEndpoint> GetOutboundNetworkDependenciesEndpoints(CancellationToken cancellationToken = default)
         {
-            Page<OutboundEnvironmentEndpoint> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _appServiceEnvironmentClientDiagnostics.CreateScope("AppServiceEnvironmentResource.GetOutboundNetworkDependenciesEndpoints");
-                scope.Start();
-                try
-                {
-                    var response = _appServiceEnvironmentRestClient.GetOutboundNetworkDependenciesEndpoints(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<OutboundEnvironmentEndpoint> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _appServiceEnvironmentClientDiagnostics.CreateScope("AppServiceEnvironmentResource.GetOutboundNetworkDependenciesEndpoints");
-                scope.Start();
-                try
-                {
-                    var response = _appServiceEnvironmentRestClient.GetOutboundNetworkDependenciesEndpointsNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _appServiceEnvironmentRestClient.CreateGetOutboundNetworkDependenciesEndpointsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _appServiceEnvironmentRestClient.CreateGetOutboundNetworkDependenciesEndpointsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, OutboundEnvironmentEndpoint.DeserializeOutboundEnvironmentEndpoint, _appServiceEnvironmentClientDiagnostics, Pipeline, "AppServiceEnvironmentResource.GetOutboundNetworkDependenciesEndpoints", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -891,22 +666,8 @@ namespace Azure.ResourceManager.AppService
         /// <returns> An async collection of <see cref="AppServicePrivateLinkResourceData" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<AppServicePrivateLinkResourceData> GetPrivateLinkResourcesAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<AppServicePrivateLinkResourceData>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _appServiceEnvironmentClientDiagnostics.CreateScope("AppServiceEnvironmentResource.GetPrivateLinkResources");
-                scope.Start();
-                try
-                {
-                    var response = await _appServiceEnvironmentRestClient.GetPrivateLinkResourcesAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _appServiceEnvironmentRestClient.CreateGetPrivateLinkResourcesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, AppServicePrivateLinkResourceData.DeserializeAppServicePrivateLinkResourceData, _appServiceEnvironmentClientDiagnostics, Pipeline, "AppServiceEnvironmentResource.GetPrivateLinkResources", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -918,22 +679,8 @@ namespace Azure.ResourceManager.AppService
         /// <returns> A collection of <see cref="AppServicePrivateLinkResourceData" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<AppServicePrivateLinkResourceData> GetPrivateLinkResources(CancellationToken cancellationToken = default)
         {
-            Page<AppServicePrivateLinkResourceData> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _appServiceEnvironmentClientDiagnostics.CreateScope("AppServiceEnvironmentResource.GetPrivateLinkResources");
-                scope.Start();
-                try
-                {
-                    var response = _appServiceEnvironmentRestClient.GetPrivateLinkResources(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _appServiceEnvironmentRestClient.CreateGetPrivateLinkResourcesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, AppServicePrivateLinkResourceData.DeserializeAppServicePrivateLinkResourceData, _appServiceEnvironmentClientDiagnostics, Pipeline, "AppServiceEnvironmentResource.GetPrivateLinkResources", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -989,37 +736,9 @@ namespace Azure.ResourceManager.AppService
         /// <returns> An async collection of <see cref="AppServicePlanResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<AppServicePlanResource> GetAppServicePlansAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<AppServicePlanResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _appServiceEnvironmentClientDiagnostics.CreateScope("AppServiceEnvironmentResource.GetAppServicePlans");
-                scope.Start();
-                try
-                {
-                    var response = await _appServiceEnvironmentRestClient.ListAppServicePlansAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new AppServicePlanResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<AppServicePlanResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _appServiceEnvironmentClientDiagnostics.CreateScope("AppServiceEnvironmentResource.GetAppServicePlans");
-                scope.Start();
-                try
-                {
-                    var response = await _appServiceEnvironmentRestClient.ListAppServicePlansNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new AppServicePlanResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _appServiceEnvironmentRestClient.CreateListAppServicePlansRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _appServiceEnvironmentRestClient.CreateListAppServicePlansNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new AppServicePlanResource(Client, AppServicePlanData.DeserializeAppServicePlanData(e)), _appServiceEnvironmentClientDiagnostics, Pipeline, "AppServiceEnvironmentResource.GetAppServicePlans", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -1031,37 +750,9 @@ namespace Azure.ResourceManager.AppService
         /// <returns> A collection of <see cref="AppServicePlanResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<AppServicePlanResource> GetAppServicePlans(CancellationToken cancellationToken = default)
         {
-            Page<AppServicePlanResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _appServiceEnvironmentClientDiagnostics.CreateScope("AppServiceEnvironmentResource.GetAppServicePlans");
-                scope.Start();
-                try
-                {
-                    var response = _appServiceEnvironmentRestClient.ListAppServicePlans(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new AppServicePlanResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<AppServicePlanResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _appServiceEnvironmentClientDiagnostics.CreateScope("AppServiceEnvironmentResource.GetAppServicePlans");
-                scope.Start();
-                try
-                {
-                    var response = _appServiceEnvironmentRestClient.ListAppServicePlansNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new AppServicePlanResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _appServiceEnvironmentRestClient.CreateListAppServicePlansRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _appServiceEnvironmentRestClient.CreateListAppServicePlansNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new AppServicePlanResource(Client, AppServicePlanData.DeserializeAppServicePlanData(e)), _appServiceEnvironmentClientDiagnostics, Pipeline, "AppServiceEnvironmentResource.GetAppServicePlans", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -1074,37 +765,9 @@ namespace Azure.ResourceManager.AppService
         /// <returns> An async collection of <see cref="CsmUsageQuota" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<CsmUsageQuota> GetUsagesAsync(string filter = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<CsmUsageQuota>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _appServiceEnvironmentClientDiagnostics.CreateScope("AppServiceEnvironmentResource.GetUsages");
-                scope.Start();
-                try
-                {
-                    var response = await _appServiceEnvironmentRestClient.ListUsagesAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<CsmUsageQuota>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _appServiceEnvironmentClientDiagnostics.CreateScope("AppServiceEnvironmentResource.GetUsages");
-                scope.Start();
-                try
-                {
-                    var response = await _appServiceEnvironmentRestClient.ListUsagesNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _appServiceEnvironmentRestClient.CreateListUsagesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _appServiceEnvironmentRestClient.CreateListUsagesNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, CsmUsageQuota.DeserializeCsmUsageQuota, _appServiceEnvironmentClientDiagnostics, Pipeline, "AppServiceEnvironmentResource.GetUsages", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -1117,37 +780,9 @@ namespace Azure.ResourceManager.AppService
         /// <returns> A collection of <see cref="CsmUsageQuota" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<CsmUsageQuota> GetUsages(string filter = null, CancellationToken cancellationToken = default)
         {
-            Page<CsmUsageQuota> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _appServiceEnvironmentClientDiagnostics.CreateScope("AppServiceEnvironmentResource.GetUsages");
-                scope.Start();
-                try
-                {
-                    var response = _appServiceEnvironmentRestClient.ListUsages(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<CsmUsageQuota> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _appServiceEnvironmentClientDiagnostics.CreateScope("AppServiceEnvironmentResource.GetUsages");
-                scope.Start();
-                try
-                {
-                    var response = _appServiceEnvironmentRestClient.ListUsagesNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _appServiceEnvironmentRestClient.CreateListUsagesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _appServiceEnvironmentRestClient.CreateListUsagesNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, CsmUsageQuota.DeserializeCsmUsageQuota, _appServiceEnvironmentClientDiagnostics, Pipeline, "AppServiceEnvironmentResource.GetUsages", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -1161,37 +796,9 @@ namespace Azure.ResourceManager.AppService
         /// <returns> An async collection of <see cref="AppServiceRecommendation" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<AppServiceRecommendation> GetHistoryForHostingEnvironmentRecommendationsAsync(bool? expiredOnly = null, string filter = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<AppServiceRecommendation>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _recommendationsClientDiagnostics.CreateScope("AppServiceEnvironmentResource.GetHistoryForHostingEnvironmentRecommendations");
-                scope.Start();
-                try
-                {
-                    var response = await _recommendationsRestClient.ListHistoryForHostingEnvironmentAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expiredOnly, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<AppServiceRecommendation>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _recommendationsClientDiagnostics.CreateScope("AppServiceEnvironmentResource.GetHistoryForHostingEnvironmentRecommendations");
-                scope.Start();
-                try
-                {
-                    var response = await _recommendationsRestClient.ListHistoryForHostingEnvironmentNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expiredOnly, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _recommendationsRestClient.CreateListHistoryForHostingEnvironmentRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expiredOnly, filter);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _recommendationsRestClient.CreateListHistoryForHostingEnvironmentNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expiredOnly, filter);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, AppServiceRecommendation.DeserializeAppServiceRecommendation, _recommendationsClientDiagnostics, Pipeline, "AppServiceEnvironmentResource.GetHistoryForHostingEnvironmentRecommendations", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -1205,37 +812,9 @@ namespace Azure.ResourceManager.AppService
         /// <returns> A collection of <see cref="AppServiceRecommendation" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<AppServiceRecommendation> GetHistoryForHostingEnvironmentRecommendations(bool? expiredOnly = null, string filter = null, CancellationToken cancellationToken = default)
         {
-            Page<AppServiceRecommendation> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _recommendationsClientDiagnostics.CreateScope("AppServiceEnvironmentResource.GetHistoryForHostingEnvironmentRecommendations");
-                scope.Start();
-                try
-                {
-                    var response = _recommendationsRestClient.ListHistoryForHostingEnvironment(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expiredOnly, filter, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<AppServiceRecommendation> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _recommendationsClientDiagnostics.CreateScope("AppServiceEnvironmentResource.GetHistoryForHostingEnvironmentRecommendations");
-                scope.Start();
-                try
-                {
-                    var response = _recommendationsRestClient.ListHistoryForHostingEnvironmentNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expiredOnly, filter, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _recommendationsRestClient.CreateListHistoryForHostingEnvironmentRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expiredOnly, filter);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _recommendationsRestClient.CreateListHistoryForHostingEnvironmentNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expiredOnly, filter);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, AppServiceRecommendation.DeserializeAppServiceRecommendation, _recommendationsClientDiagnostics, Pipeline, "AppServiceEnvironmentResource.GetHistoryForHostingEnvironmentRecommendations", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -1249,37 +828,9 @@ namespace Azure.ResourceManager.AppService
         /// <returns> An async collection of <see cref="AppServiceRecommendation" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<AppServiceRecommendation> GetRecommendedRulesForHostingEnvironmentRecommendationsAsync(bool? featured = null, string filter = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<AppServiceRecommendation>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _hostingEnvironmentRecommendationRecommendationsClientDiagnostics.CreateScope("AppServiceEnvironmentResource.GetRecommendedRulesForHostingEnvironmentRecommendations");
-                scope.Start();
-                try
-                {
-                    var response = await _hostingEnvironmentRecommendationRecommendationsRestClient.ListRecommendedRulesForHostingEnvironmentAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, featured, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<AppServiceRecommendation>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _hostingEnvironmentRecommendationRecommendationsClientDiagnostics.CreateScope("AppServiceEnvironmentResource.GetRecommendedRulesForHostingEnvironmentRecommendations");
-                scope.Start();
-                try
-                {
-                    var response = await _hostingEnvironmentRecommendationRecommendationsRestClient.ListRecommendedRulesForHostingEnvironmentNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, featured, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _hostingEnvironmentRecommendationRecommendationsRestClient.CreateListRecommendedRulesForHostingEnvironmentRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, featured, filter);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _hostingEnvironmentRecommendationRecommendationsRestClient.CreateListRecommendedRulesForHostingEnvironmentNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, featured, filter);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, AppServiceRecommendation.DeserializeAppServiceRecommendation, _hostingEnvironmentRecommendationRecommendationsClientDiagnostics, Pipeline, "AppServiceEnvironmentResource.GetRecommendedRulesForHostingEnvironmentRecommendations", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -1293,37 +844,9 @@ namespace Azure.ResourceManager.AppService
         /// <returns> A collection of <see cref="AppServiceRecommendation" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<AppServiceRecommendation> GetRecommendedRulesForHostingEnvironmentRecommendations(bool? featured = null, string filter = null, CancellationToken cancellationToken = default)
         {
-            Page<AppServiceRecommendation> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _hostingEnvironmentRecommendationRecommendationsClientDiagnostics.CreateScope("AppServiceEnvironmentResource.GetRecommendedRulesForHostingEnvironmentRecommendations");
-                scope.Start();
-                try
-                {
-                    var response = _hostingEnvironmentRecommendationRecommendationsRestClient.ListRecommendedRulesForHostingEnvironment(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, featured, filter, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<AppServiceRecommendation> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _hostingEnvironmentRecommendationRecommendationsClientDiagnostics.CreateScope("AppServiceEnvironmentResource.GetRecommendedRulesForHostingEnvironmentRecommendations");
-                scope.Start();
-                try
-                {
-                    var response = _hostingEnvironmentRecommendationRecommendationsRestClient.ListRecommendedRulesForHostingEnvironmentNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, featured, filter, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _hostingEnvironmentRecommendationRecommendationsRestClient.CreateListRecommendedRulesForHostingEnvironmentRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, featured, filter);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _hostingEnvironmentRecommendationRecommendationsRestClient.CreateListRecommendedRulesForHostingEnvironmentNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, featured, filter);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, AppServiceRecommendation.DeserializeAppServiceRecommendation, _hostingEnvironmentRecommendationRecommendationsClientDiagnostics, Pipeline, "AppServiceEnvironmentResource.GetRecommendedRulesForHostingEnvironmentRecommendations", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

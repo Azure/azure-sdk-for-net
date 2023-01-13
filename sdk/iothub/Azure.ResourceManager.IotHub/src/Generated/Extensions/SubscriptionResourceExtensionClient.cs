@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -57,37 +56,9 @@ namespace Azure.ResourceManager.IotHub
         /// <returns> An async collection of <see cref="IotHubDescriptionResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<IotHubDescriptionResource> GetIotHubDescriptionsAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<IotHubDescriptionResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = IotHubDescriptionIotHubResourceClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetIotHubDescriptions");
-                scope.Start();
-                try
-                {
-                    var response = await IotHubDescriptionIotHubResourceRestClient.ListBySubscriptionAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new IotHubDescriptionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<IotHubDescriptionResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = IotHubDescriptionIotHubResourceClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetIotHubDescriptions");
-                scope.Start();
-                try
-                {
-                    var response = await IotHubDescriptionIotHubResourceRestClient.ListBySubscriptionNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new IotHubDescriptionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => IotHubDescriptionIotHubResourceRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => IotHubDescriptionIotHubResourceRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new IotHubDescriptionResource(Client, IotHubDescriptionData.DeserializeIotHubDescriptionData(e)), IotHubDescriptionIotHubResourceClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetIotHubDescriptions", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -99,37 +70,9 @@ namespace Azure.ResourceManager.IotHub
         /// <returns> A collection of <see cref="IotHubDescriptionResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<IotHubDescriptionResource> GetIotHubDescriptions(CancellationToken cancellationToken = default)
         {
-            Page<IotHubDescriptionResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = IotHubDescriptionIotHubResourceClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetIotHubDescriptions");
-                scope.Start();
-                try
-                {
-                    var response = IotHubDescriptionIotHubResourceRestClient.ListBySubscription(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new IotHubDescriptionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<IotHubDescriptionResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = IotHubDescriptionIotHubResourceClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetIotHubDescriptions");
-                scope.Start();
-                try
-                {
-                    var response = IotHubDescriptionIotHubResourceRestClient.ListBySubscriptionNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new IotHubDescriptionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => IotHubDescriptionIotHubResourceRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => IotHubDescriptionIotHubResourceRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new IotHubDescriptionResource(Client, IotHubDescriptionData.DeserializeIotHubDescriptionData(e)), IotHubDescriptionIotHubResourceClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetIotHubDescriptions", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -187,22 +130,8 @@ namespace Azure.ResourceManager.IotHub
         /// <returns> An async collection of <see cref="IotHubUserSubscriptionQuota" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<IotHubUserSubscriptionQuota> GetIotHubUserSubscriptionQuotaAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<IotHubUserSubscriptionQuota>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = ResourceProviderCommonClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetIotHubUserSubscriptionQuota");
-                scope.Start();
-                try
-                {
-                    var response = await ResourceProviderCommonRestClient.GetSubscriptionQuotaAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => ResourceProviderCommonRestClient.CreateGetSubscriptionQuotaRequest(Id.SubscriptionId);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, IotHubUserSubscriptionQuota.DeserializeIotHubUserSubscriptionQuota, ResourceProviderCommonClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetIotHubUserSubscriptionQuota", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -214,22 +143,8 @@ namespace Azure.ResourceManager.IotHub
         /// <returns> A collection of <see cref="IotHubUserSubscriptionQuota" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<IotHubUserSubscriptionQuota> GetIotHubUserSubscriptionQuota(CancellationToken cancellationToken = default)
         {
-            Page<IotHubUserSubscriptionQuota> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = ResourceProviderCommonClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetIotHubUserSubscriptionQuota");
-                scope.Start();
-                try
-                {
-                    var response = ResourceProviderCommonRestClient.GetSubscriptionQuota(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => ResourceProviderCommonRestClient.CreateGetSubscriptionQuotaRequest(Id.SubscriptionId);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, IotHubUserSubscriptionQuota.DeserializeIotHubUserSubscriptionQuota, ResourceProviderCommonClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetIotHubUserSubscriptionQuota", "value", null, cancellationToken);
         }
     }
 }

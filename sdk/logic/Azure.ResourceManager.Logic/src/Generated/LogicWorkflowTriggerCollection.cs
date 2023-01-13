@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -122,37 +121,9 @@ namespace Azure.ResourceManager.Logic
         /// <returns> An async collection of <see cref="LogicWorkflowTriggerResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<LogicWorkflowTriggerResource> GetAllAsync(int? top = null, string filter = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<LogicWorkflowTriggerResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _logicWorkflowTriggerWorkflowTriggersClientDiagnostics.CreateScope("LogicWorkflowTriggerCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _logicWorkflowTriggerWorkflowTriggersRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new LogicWorkflowTriggerResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<LogicWorkflowTriggerResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _logicWorkflowTriggerWorkflowTriggersClientDiagnostics.CreateScope("LogicWorkflowTriggerCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _logicWorkflowTriggerWorkflowTriggersRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new LogicWorkflowTriggerResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _logicWorkflowTriggerWorkflowTriggersRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top, filter);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _logicWorkflowTriggerWorkflowTriggersRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top, filter);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new LogicWorkflowTriggerResource(Client, LogicWorkflowTriggerData.DeserializeLogicWorkflowTriggerData(e)), _logicWorkflowTriggerWorkflowTriggersClientDiagnostics, Pipeline, "LogicWorkflowTriggerCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -166,37 +137,9 @@ namespace Azure.ResourceManager.Logic
         /// <returns> A collection of <see cref="LogicWorkflowTriggerResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<LogicWorkflowTriggerResource> GetAll(int? top = null, string filter = null, CancellationToken cancellationToken = default)
         {
-            Page<LogicWorkflowTriggerResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _logicWorkflowTriggerWorkflowTriggersClientDiagnostics.CreateScope("LogicWorkflowTriggerCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _logicWorkflowTriggerWorkflowTriggersRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top, filter, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new LogicWorkflowTriggerResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<LogicWorkflowTriggerResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _logicWorkflowTriggerWorkflowTriggersClientDiagnostics.CreateScope("LogicWorkflowTriggerCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _logicWorkflowTriggerWorkflowTriggersRestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top, filter, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new LogicWorkflowTriggerResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _logicWorkflowTriggerWorkflowTriggersRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top, filter);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _logicWorkflowTriggerWorkflowTriggersRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top, filter);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new LogicWorkflowTriggerResource(Client, LogicWorkflowTriggerData.DeserializeLogicWorkflowTriggerData(e)), _logicWorkflowTriggerWorkflowTriggersClientDiagnostics, Pipeline, "LogicWorkflowTriggerCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

@@ -81,14 +81,10 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WritePropertyName("suppressFailures");
                 writer.WriteBooleanValue(SuppressFailures.Value);
             }
-            if (Optional.IsDefined(ProtectedSettingsFromKeyVault))
+            if (Optional.IsDefined(KeyVaultProtectedSettings))
             {
                 writer.WritePropertyName("protectedSettingsFromKeyVault");
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(ProtectedSettingsFromKeyVault);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(ProtectedSettingsFromKeyVault.ToString()).RootElement);
-#endif
+                writer.WriteObjectValue(KeyVaultProtectedSettings);
             }
             writer.WriteEndObject();
             writer.WriteEndObject();

@@ -6,9 +6,7 @@
 #nullable disable
 
 using System;
-using System.Linq;
 using System.Threading;
-using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -61,37 +59,9 @@ namespace Azure.ResourceManager.StoragePool
         /// <returns> An async collection of <see cref="DiskPoolResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DiskPoolResource> GetDiskPoolsAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<DiskPoolResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = DiskPoolClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetDiskPools");
-                scope.Start();
-                try
-                {
-                    var response = await DiskPoolRestClient.ListBySubscriptionAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new DiskPoolResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<DiskPoolResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = DiskPoolClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetDiskPools");
-                scope.Start();
-                try
-                {
-                    var response = await DiskPoolRestClient.ListBySubscriptionNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new DiskPoolResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => DiskPoolRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DiskPoolRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DiskPoolResource(Client, DiskPoolData.DeserializeDiskPoolData(e)), DiskPoolClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetDiskPools", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -103,37 +73,9 @@ namespace Azure.ResourceManager.StoragePool
         /// <returns> A collection of <see cref="DiskPoolResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DiskPoolResource> GetDiskPools(CancellationToken cancellationToken = default)
         {
-            Page<DiskPoolResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = DiskPoolClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetDiskPools");
-                scope.Start();
-                try
-                {
-                    var response = DiskPoolRestClient.ListBySubscription(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new DiskPoolResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<DiskPoolResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = DiskPoolClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetDiskPools");
-                scope.Start();
-                try
-                {
-                    var response = DiskPoolRestClient.ListBySubscriptionNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new DiskPoolResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => DiskPoolRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DiskPoolRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DiskPoolResource(Client, DiskPoolData.DeserializeDiskPoolData(e)), DiskPoolClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetDiskPools", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -146,37 +88,9 @@ namespace Azure.ResourceManager.StoragePool
         /// <returns> An async collection of <see cref="DiskPoolZoneInfo" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DiskPoolZoneInfo> GetDiskPoolZonesAsync(AzureLocation location, CancellationToken cancellationToken = default)
         {
-            async Task<Page<DiskPoolZoneInfo>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = DiskPoolZonesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetDiskPoolZones");
-                scope.Start();
-                try
-                {
-                    var response = await DiskPoolZonesRestClient.ListAsync(Id.SubscriptionId, location, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<DiskPoolZoneInfo>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = DiskPoolZonesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetDiskPoolZones");
-                scope.Start();
-                try
-                {
-                    var response = await DiskPoolZonesRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, location, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => DiskPoolZonesRestClient.CreateListRequest(Id.SubscriptionId, location);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DiskPoolZonesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, location);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, DiskPoolZoneInfo.DeserializeDiskPoolZoneInfo, DiskPoolZonesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetDiskPoolZones", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -189,37 +103,9 @@ namespace Azure.ResourceManager.StoragePool
         /// <returns> A collection of <see cref="DiskPoolZoneInfo" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DiskPoolZoneInfo> GetDiskPoolZones(AzureLocation location, CancellationToken cancellationToken = default)
         {
-            Page<DiskPoolZoneInfo> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = DiskPoolZonesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetDiskPoolZones");
-                scope.Start();
-                try
-                {
-                    var response = DiskPoolZonesRestClient.List(Id.SubscriptionId, location, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<DiskPoolZoneInfo> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = DiskPoolZonesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetDiskPoolZones");
-                scope.Start();
-                try
-                {
-                    var response = DiskPoolZonesRestClient.ListNextPage(nextLink, Id.SubscriptionId, location, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => DiskPoolZonesRestClient.CreateListRequest(Id.SubscriptionId, location);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DiskPoolZonesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, location);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, DiskPoolZoneInfo.DeserializeDiskPoolZoneInfo, DiskPoolZonesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetDiskPoolZones", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -232,37 +118,9 @@ namespace Azure.ResourceManager.StoragePool
         /// <returns> An async collection of <see cref="StoragePoolSkuInfo" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<StoragePoolSkuInfo> GetResourceSkusAsync(AzureLocation location, CancellationToken cancellationToken = default)
         {
-            async Task<Page<StoragePoolSkuInfo>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = ResourceSkusClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetResourceSkus");
-                scope.Start();
-                try
-                {
-                    var response = await ResourceSkusRestClient.ListAsync(Id.SubscriptionId, location, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<StoragePoolSkuInfo>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = ResourceSkusClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetResourceSkus");
-                scope.Start();
-                try
-                {
-                    var response = await ResourceSkusRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, location, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => ResourceSkusRestClient.CreateListRequest(Id.SubscriptionId, location);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ResourceSkusRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, location);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, StoragePoolSkuInfo.DeserializeStoragePoolSkuInfo, ResourceSkusClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetResourceSkus", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -275,37 +133,9 @@ namespace Azure.ResourceManager.StoragePool
         /// <returns> A collection of <see cref="StoragePoolSkuInfo" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<StoragePoolSkuInfo> GetResourceSkus(AzureLocation location, CancellationToken cancellationToken = default)
         {
-            Page<StoragePoolSkuInfo> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = ResourceSkusClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetResourceSkus");
-                scope.Start();
-                try
-                {
-                    var response = ResourceSkusRestClient.List(Id.SubscriptionId, location, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<StoragePoolSkuInfo> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = ResourceSkusClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetResourceSkus");
-                scope.Start();
-                try
-                {
-                    var response = ResourceSkusRestClient.ListNextPage(nextLink, Id.SubscriptionId, location, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => ResourceSkusRestClient.CreateListRequest(Id.SubscriptionId, location);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ResourceSkusRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, location);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, StoragePoolSkuInfo.DeserializeStoragePoolSkuInfo, ResourceSkusClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetResourceSkus", "value", "nextLink", cancellationToken);
         }
     }
 }

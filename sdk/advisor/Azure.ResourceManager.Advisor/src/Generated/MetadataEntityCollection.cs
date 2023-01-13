@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -121,37 +120,9 @@ namespace Azure.ResourceManager.Advisor
         /// <returns> An async collection of <see cref="MetadataEntityResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<MetadataEntityResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<MetadataEntityResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _metadataEntityRecommendationMetadataClientDiagnostics.CreateScope("MetadataEntityCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _metadataEntityRecommendationMetadataRestClient.ListAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new MetadataEntityResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<MetadataEntityResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _metadataEntityRecommendationMetadataClientDiagnostics.CreateScope("MetadataEntityCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _metadataEntityRecommendationMetadataRestClient.ListNextPageAsync(nextLink, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new MetadataEntityResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _metadataEntityRecommendationMetadataRestClient.CreateListRequest();
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _metadataEntityRecommendationMetadataRestClient.CreateListNextPageRequest(nextLink);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new MetadataEntityResource(Client, MetadataEntityData.DeserializeMetadataEntityData(e)), _metadataEntityRecommendationMetadataClientDiagnostics, Pipeline, "MetadataEntityCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -163,37 +134,9 @@ namespace Azure.ResourceManager.Advisor
         /// <returns> A collection of <see cref="MetadataEntityResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<MetadataEntityResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<MetadataEntityResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _metadataEntityRecommendationMetadataClientDiagnostics.CreateScope("MetadataEntityCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _metadataEntityRecommendationMetadataRestClient.List(cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new MetadataEntityResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<MetadataEntityResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _metadataEntityRecommendationMetadataClientDiagnostics.CreateScope("MetadataEntityCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _metadataEntityRecommendationMetadataRestClient.ListNextPage(nextLink, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new MetadataEntityResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _metadataEntityRecommendationMetadataRestClient.CreateListRequest();
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _metadataEntityRecommendationMetadataRestClient.CreateListNextPageRequest(nextLink);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new MetadataEntityResource(Client, MetadataEntityData.DeserializeMetadataEntityData(e)), _metadataEntityRecommendationMetadataClientDiagnostics, Pipeline, "MetadataEntityCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

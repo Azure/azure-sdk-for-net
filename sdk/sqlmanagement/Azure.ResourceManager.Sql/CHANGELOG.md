@@ -1,14 +1,23 @@
 # Release History
 
-## 1.2.0-beta.1 (Unreleased)
+## 1.2.0 (2023-01-16)
 
 ### Features Added
 
-### Breaking Changes
-
-### Bugs Fixed
+- Supported Sql Database creation and update with `PreferredEnclaveType`.
+- Added methods `StartMove`, `CancelMove` and `CompleteMove` in ManagedDatabaseResource.
+- Added method `GetSynapseLinkWorkspaces` in SqlDatabaseResource. 
+- Added new resources for Database SqlVulnerability Assessment related APIs.
+- Added new resources for Server SqlVulnerability Assessment related APIs.
 
 ### Other Changes
+
+- Upgraded API version of Sql Database to 2022-05-01-preview.
+- Upgraded API version of Virtual Cluster to 2022-05-01-preview.
+- Upgraded API version of Managed Instance Dtc to 2022-05-01-preview
+- Upgraded API version of Managed Database to 2022-02-01-preview.
+- Upgraded API version of Managed Database Restore Detail to 2022-02-01-preview.
+- Upgraded API version of Sql Server DevOps Auditing Setting to 2022-02-01-preview.
 
 ## 1.1.0 (2022-11-11)
 

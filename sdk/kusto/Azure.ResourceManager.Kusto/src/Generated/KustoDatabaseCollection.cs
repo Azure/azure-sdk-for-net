@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -189,22 +188,8 @@ namespace Azure.ResourceManager.Kusto
         /// <returns> An async collection of <see cref="KustoDatabaseResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<KustoDatabaseResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<KustoDatabaseResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _kustoDatabaseDatabasesClientDiagnostics.CreateScope("KustoDatabaseCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _kustoDatabaseDatabasesRestClient.ListByClusterAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new KustoDatabaseResource(Client, value)), null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _kustoDatabaseDatabasesRestClient.CreateListByClusterRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new KustoDatabaseResource(Client, KustoDatabaseData.DeserializeKustoDatabaseData(e)), _kustoDatabaseDatabasesClientDiagnostics, Pipeline, "KustoDatabaseCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -216,22 +201,8 @@ namespace Azure.ResourceManager.Kusto
         /// <returns> A collection of <see cref="KustoDatabaseResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<KustoDatabaseResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<KustoDatabaseResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _kustoDatabaseDatabasesClientDiagnostics.CreateScope("KustoDatabaseCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _kustoDatabaseDatabasesRestClient.ListByCluster(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new KustoDatabaseResource(Client, value)), null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _kustoDatabaseDatabasesRestClient.CreateListByClusterRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new KustoDatabaseResource(Client, KustoDatabaseData.DeserializeKustoDatabaseData(e)), _kustoDatabaseDatabasesClientDiagnostics, Pipeline, "KustoDatabaseCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>

@@ -7,7 +7,6 @@
 
 using System;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -121,37 +120,9 @@ namespace Azure.ResourceManager.Orbital
         /// <returns> An async collection of <see cref="AvailableGroundStationResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<AvailableGroundStationResource> GetAllAsync(GroundStationCapability capability, CancellationToken cancellationToken = default)
         {
-            async Task<Page<AvailableGroundStationResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _availableGroundStationClientDiagnostics.CreateScope("AvailableGroundStationCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _availableGroundStationRestClient.ListByCapabilityAsync(Id.SubscriptionId, capability, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new AvailableGroundStationResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<AvailableGroundStationResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _availableGroundStationClientDiagnostics.CreateScope("AvailableGroundStationCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _availableGroundStationRestClient.ListByCapabilityNextPageAsync(nextLink, Id.SubscriptionId, capability, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new AvailableGroundStationResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _availableGroundStationRestClient.CreateListByCapabilityRequest(Id.SubscriptionId, capability);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _availableGroundStationRestClient.CreateListByCapabilityNextPageRequest(nextLink, Id.SubscriptionId, capability);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new AvailableGroundStationResource(Client, AvailableGroundStationData.DeserializeAvailableGroundStationData(e)), _availableGroundStationClientDiagnostics, Pipeline, "AvailableGroundStationCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -164,37 +135,9 @@ namespace Azure.ResourceManager.Orbital
         /// <returns> A collection of <see cref="AvailableGroundStationResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<AvailableGroundStationResource> GetAll(GroundStationCapability capability, CancellationToken cancellationToken = default)
         {
-            Page<AvailableGroundStationResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _availableGroundStationClientDiagnostics.CreateScope("AvailableGroundStationCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _availableGroundStationRestClient.ListByCapability(Id.SubscriptionId, capability, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new AvailableGroundStationResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<AvailableGroundStationResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _availableGroundStationClientDiagnostics.CreateScope("AvailableGroundStationCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _availableGroundStationRestClient.ListByCapabilityNextPage(nextLink, Id.SubscriptionId, capability, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new AvailableGroundStationResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _availableGroundStationRestClient.CreateListByCapabilityRequest(Id.SubscriptionId, capability);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _availableGroundStationRestClient.CreateListByCapabilityNextPageRequest(nextLink, Id.SubscriptionId, capability);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new AvailableGroundStationResource(Client, AvailableGroundStationData.DeserializeAvailableGroundStationData(e)), _availableGroundStationClientDiagnostics, Pipeline, "AvailableGroundStationCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

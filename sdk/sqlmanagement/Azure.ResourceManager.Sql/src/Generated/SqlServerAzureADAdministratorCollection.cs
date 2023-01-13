@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -175,37 +174,9 @@ namespace Azure.ResourceManager.Sql
         /// <returns> An async collection of <see cref="SqlServerAzureADAdministratorResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SqlServerAzureADAdministratorResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<SqlServerAzureADAdministratorResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _sqlServerAzureADAdministratorServerAzureADAdministratorsClientDiagnostics.CreateScope("SqlServerAzureADAdministratorCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _sqlServerAzureADAdministratorServerAzureADAdministratorsRestClient.ListByServerAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new SqlServerAzureADAdministratorResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<SqlServerAzureADAdministratorResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _sqlServerAzureADAdministratorServerAzureADAdministratorsClientDiagnostics.CreateScope("SqlServerAzureADAdministratorCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _sqlServerAzureADAdministratorServerAzureADAdministratorsRestClient.ListByServerNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new SqlServerAzureADAdministratorResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _sqlServerAzureADAdministratorServerAzureADAdministratorsRestClient.CreateListByServerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _sqlServerAzureADAdministratorServerAzureADAdministratorsRestClient.CreateListByServerNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SqlServerAzureADAdministratorResource(Client, SqlServerAzureADAdministratorData.DeserializeSqlServerAzureADAdministratorData(e)), _sqlServerAzureADAdministratorServerAzureADAdministratorsClientDiagnostics, Pipeline, "SqlServerAzureADAdministratorCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -217,37 +188,9 @@ namespace Azure.ResourceManager.Sql
         /// <returns> A collection of <see cref="SqlServerAzureADAdministratorResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SqlServerAzureADAdministratorResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<SqlServerAzureADAdministratorResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _sqlServerAzureADAdministratorServerAzureADAdministratorsClientDiagnostics.CreateScope("SqlServerAzureADAdministratorCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _sqlServerAzureADAdministratorServerAzureADAdministratorsRestClient.ListByServer(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new SqlServerAzureADAdministratorResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<SqlServerAzureADAdministratorResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _sqlServerAzureADAdministratorServerAzureADAdministratorsClientDiagnostics.CreateScope("SqlServerAzureADAdministratorCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _sqlServerAzureADAdministratorServerAzureADAdministratorsRestClient.ListByServerNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new SqlServerAzureADAdministratorResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _sqlServerAzureADAdministratorServerAzureADAdministratorsRestClient.CreateListByServerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _sqlServerAzureADAdministratorServerAzureADAdministratorsRestClient.CreateListByServerNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SqlServerAzureADAdministratorResource(Client, SqlServerAzureADAdministratorData.DeserializeSqlServerAzureADAdministratorData(e)), _sqlServerAzureADAdministratorServerAzureADAdministratorsClientDiagnostics, Pipeline, "SqlServerAzureADAdministratorCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

@@ -402,37 +402,9 @@ namespace Azure.ResourceManager.AppService
         {
             Argument.AssertNotNullOrEmpty(authprovider, nameof(authprovider));
 
-            async Task<Page<StaticSiteUser>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _staticSiteClientDiagnostics.CreateScope("StaticSiteResource.GetUsers");
-                scope.Start();
-                try
-                {
-                    var response = await _staticSiteRestClient.ListStaticSiteUsersAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, authprovider, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<StaticSiteUser>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _staticSiteClientDiagnostics.CreateScope("StaticSiteResource.GetUsers");
-                scope.Start();
-                try
-                {
-                    var response = await _staticSiteRestClient.ListStaticSiteUsersNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, authprovider, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _staticSiteRestClient.CreateListStaticSiteUsersRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, authprovider);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _staticSiteRestClient.CreateListStaticSiteUsersNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, authprovider);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, StaticSiteUser.DeserializeStaticSiteUser, _staticSiteClientDiagnostics, Pipeline, "StaticSiteResource.GetUsers", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -449,37 +421,9 @@ namespace Azure.ResourceManager.AppService
         {
             Argument.AssertNotNullOrEmpty(authprovider, nameof(authprovider));
 
-            Page<StaticSiteUser> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _staticSiteClientDiagnostics.CreateScope("StaticSiteResource.GetUsers");
-                scope.Start();
-                try
-                {
-                    var response = _staticSiteRestClient.ListStaticSiteUsers(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, authprovider, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<StaticSiteUser> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _staticSiteClientDiagnostics.CreateScope("StaticSiteResource.GetUsers");
-                scope.Start();
-                try
-                {
-                    var response = _staticSiteRestClient.ListStaticSiteUsersNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, authprovider, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _staticSiteRestClient.CreateListStaticSiteUsersRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, authprovider);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _staticSiteRestClient.CreateListStaticSiteUsersNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, authprovider);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, StaticSiteUser.DeserializeStaticSiteUser, _staticSiteClientDiagnostics, Pipeline, "StaticSiteResource.GetUsers", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -819,37 +763,9 @@ namespace Azure.ResourceManager.AppService
         /// <returns> An async collection of <see cref="StaticSiteFunctionOverview" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<StaticSiteFunctionOverview> GetStaticSiteFunctionsAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<StaticSiteFunctionOverview>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _staticSiteClientDiagnostics.CreateScope("StaticSiteResource.GetStaticSiteFunctions");
-                scope.Start();
-                try
-                {
-                    var response = await _staticSiteRestClient.ListStaticSiteFunctionsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<StaticSiteFunctionOverview>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _staticSiteClientDiagnostics.CreateScope("StaticSiteResource.GetStaticSiteFunctions");
-                scope.Start();
-                try
-                {
-                    var response = await _staticSiteRestClient.ListStaticSiteFunctionsNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _staticSiteRestClient.CreateListStaticSiteFunctionsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _staticSiteRestClient.CreateListStaticSiteFunctionsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, StaticSiteFunctionOverview.DeserializeStaticSiteFunctionOverview, _staticSiteClientDiagnostics, Pipeline, "StaticSiteResource.GetStaticSiteFunctions", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -861,37 +777,9 @@ namespace Azure.ResourceManager.AppService
         /// <returns> A collection of <see cref="StaticSiteFunctionOverview" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<StaticSiteFunctionOverview> GetStaticSiteFunctions(CancellationToken cancellationToken = default)
         {
-            Page<StaticSiteFunctionOverview> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _staticSiteClientDiagnostics.CreateScope("StaticSiteResource.GetStaticSiteFunctions");
-                scope.Start();
-                try
-                {
-                    var response = _staticSiteRestClient.ListStaticSiteFunctions(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<StaticSiteFunctionOverview> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _staticSiteClientDiagnostics.CreateScope("StaticSiteResource.GetStaticSiteFunctions");
-                scope.Start();
-                try
-                {
-                    var response = _staticSiteRestClient.ListStaticSiteFunctionsNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _staticSiteRestClient.CreateListStaticSiteFunctionsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _staticSiteRestClient.CreateListStaticSiteFunctionsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, StaticSiteFunctionOverview.DeserializeStaticSiteFunctionOverview, _staticSiteClientDiagnostics, Pipeline, "StaticSiteResource.GetStaticSiteFunctions", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -1079,22 +967,8 @@ namespace Azure.ResourceManager.AppService
         /// <returns> An async collection of <see cref="AppServicePrivateLinkResourceData" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<AppServicePrivateLinkResourceData> GetPrivateLinkResourcesAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<AppServicePrivateLinkResourceData>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _staticSiteClientDiagnostics.CreateScope("StaticSiteResource.GetPrivateLinkResources");
-                scope.Start();
-                try
-                {
-                    var response = await _staticSiteRestClient.GetPrivateLinkResourcesAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _staticSiteRestClient.CreateGetPrivateLinkResourcesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, AppServicePrivateLinkResourceData.DeserializeAppServicePrivateLinkResourceData, _staticSiteClientDiagnostics, Pipeline, "StaticSiteResource.GetPrivateLinkResources", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -1106,22 +980,8 @@ namespace Azure.ResourceManager.AppService
         /// <returns> A collection of <see cref="AppServicePrivateLinkResourceData" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<AppServicePrivateLinkResourceData> GetPrivateLinkResources(CancellationToken cancellationToken = default)
         {
-            Page<AppServicePrivateLinkResourceData> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _staticSiteClientDiagnostics.CreateScope("StaticSiteResource.GetPrivateLinkResources");
-                scope.Start();
-                try
-                {
-                    var response = _staticSiteRestClient.GetPrivateLinkResources(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _staticSiteRestClient.CreateGetPrivateLinkResourcesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, AppServicePrivateLinkResourceData.DeserializeAppServicePrivateLinkResourceData, _staticSiteClientDiagnostics, Pipeline, "StaticSiteResource.GetPrivateLinkResources", "value", null, cancellationToken);
         }
 
         /// <summary>

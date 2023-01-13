@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -186,22 +185,8 @@ namespace Azure.ResourceManager.HybridContainerService
         /// <returns> An async collection of <see cref="HybridContainerServiceAgentPoolResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<HybridContainerServiceAgentPoolResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<HybridContainerServiceAgentPoolResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _hybridContainerServiceAgentPoolagentPoolClientDiagnostics.CreateScope("HybridContainerServiceAgentPoolCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _hybridContainerServiceAgentPoolagentPoolRestClient.ListByProvisionedClusterAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new HybridContainerServiceAgentPoolResource(Client, value)), null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _hybridContainerServiceAgentPoolagentPoolRestClient.CreateListByProvisionedClusterRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new HybridContainerServiceAgentPoolResource(Client, HybridContainerServiceAgentPoolData.DeserializeHybridContainerServiceAgentPoolData(e)), _hybridContainerServiceAgentPoolagentPoolClientDiagnostics, Pipeline, "HybridContainerServiceAgentPoolCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -213,22 +198,8 @@ namespace Azure.ResourceManager.HybridContainerService
         /// <returns> A collection of <see cref="HybridContainerServiceAgentPoolResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<HybridContainerServiceAgentPoolResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<HybridContainerServiceAgentPoolResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _hybridContainerServiceAgentPoolagentPoolClientDiagnostics.CreateScope("HybridContainerServiceAgentPoolCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _hybridContainerServiceAgentPoolagentPoolRestClient.ListByProvisionedCluster(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new HybridContainerServiceAgentPoolResource(Client, value)), null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _hybridContainerServiceAgentPoolagentPoolRestClient.CreateListByProvisionedClusterRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new HybridContainerServiceAgentPoolResource(Client, HybridContainerServiceAgentPoolData.DeserializeHybridContainerServiceAgentPoolData(e)), _hybridContainerServiceAgentPoolagentPoolClientDiagnostics, Pipeline, "HybridContainerServiceAgentPoolCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>

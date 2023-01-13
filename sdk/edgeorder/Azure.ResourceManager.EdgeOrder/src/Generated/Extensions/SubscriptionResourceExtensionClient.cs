@@ -6,9 +6,7 @@
 #nullable disable
 
 using System;
-using System.Linq;
 using System.Threading;
-using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -63,37 +61,9 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <returns> An async collection of <see cref="EdgeOrderAddressResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<EdgeOrderAddressResource> GetEdgeOrderAddressesAsync(string filter = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<EdgeOrderAddressResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = EdgeOrderAddressClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetEdgeOrderAddresses");
-                scope.Start();
-                try
-                {
-                    var response = await EdgeOrderAddressRestClient.ListAddressesAtSubscriptionLevelAsync(Id.SubscriptionId, filter, skipToken, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new EdgeOrderAddressResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<EdgeOrderAddressResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = EdgeOrderAddressClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetEdgeOrderAddresses");
-                scope.Start();
-                try
-                {
-                    var response = await EdgeOrderAddressRestClient.ListAddressesAtSubscriptionLevelNextPageAsync(nextLink, Id.SubscriptionId, filter, skipToken, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new EdgeOrderAddressResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => EdgeOrderAddressRestClient.CreateListAddressesAtSubscriptionLevelRequest(Id.SubscriptionId, filter, skipToken);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => EdgeOrderAddressRestClient.CreateListAddressesAtSubscriptionLevelNextPageRequest(nextLink, Id.SubscriptionId, filter, skipToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new EdgeOrderAddressResource(Client, EdgeOrderAddressData.DeserializeEdgeOrderAddressData(e)), EdgeOrderAddressClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetEdgeOrderAddresses", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -107,37 +77,9 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <returns> A collection of <see cref="EdgeOrderAddressResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<EdgeOrderAddressResource> GetEdgeOrderAddresses(string filter = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            Page<EdgeOrderAddressResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = EdgeOrderAddressClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetEdgeOrderAddresses");
-                scope.Start();
-                try
-                {
-                    var response = EdgeOrderAddressRestClient.ListAddressesAtSubscriptionLevel(Id.SubscriptionId, filter, skipToken, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new EdgeOrderAddressResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<EdgeOrderAddressResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = EdgeOrderAddressClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetEdgeOrderAddresses");
-                scope.Start();
-                try
-                {
-                    var response = EdgeOrderAddressRestClient.ListAddressesAtSubscriptionLevelNextPage(nextLink, Id.SubscriptionId, filter, skipToken, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new EdgeOrderAddressResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => EdgeOrderAddressRestClient.CreateListAddressesAtSubscriptionLevelRequest(Id.SubscriptionId, filter, skipToken);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => EdgeOrderAddressRestClient.CreateListAddressesAtSubscriptionLevelNextPageRequest(nextLink, Id.SubscriptionId, filter, skipToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new EdgeOrderAddressResource(Client, EdgeOrderAddressData.DeserializeEdgeOrderAddressData(e)), EdgeOrderAddressClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetEdgeOrderAddresses", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -152,37 +94,9 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <returns> An async collection of <see cref="ProductFamily" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ProductFamily> GetProductFamiliesAsync(ProductFamiliesContent content, string expand = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<ProductFamily>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = DefaultClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetProductFamilies");
-                scope.Start();
-                try
-                {
-                    var response = await DefaultRestClient.ListProductFamiliesAsync(Id.SubscriptionId, content, expand, skipToken, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<ProductFamily>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = DefaultClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetProductFamilies");
-                scope.Start();
-                try
-                {
-                    var response = await DefaultRestClient.ListProductFamiliesNextPageAsync(nextLink, Id.SubscriptionId, content, expand, skipToken, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => DefaultRestClient.CreateListProductFamiliesRequest(Id.SubscriptionId, content, expand, skipToken);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DefaultRestClient.CreateListProductFamiliesNextPageRequest(nextLink, Id.SubscriptionId, content, expand, skipToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, ProductFamily.DeserializeProductFamily, DefaultClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetProductFamilies", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -197,37 +111,9 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <returns> A collection of <see cref="ProductFamily" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ProductFamily> GetProductFamilies(ProductFamiliesContent content, string expand = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            Page<ProductFamily> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = DefaultClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetProductFamilies");
-                scope.Start();
-                try
-                {
-                    var response = DefaultRestClient.ListProductFamilies(Id.SubscriptionId, content, expand, skipToken, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<ProductFamily> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = DefaultClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetProductFamilies");
-                scope.Start();
-                try
-                {
-                    var response = DefaultRestClient.ListProductFamiliesNextPage(nextLink, Id.SubscriptionId, content, expand, skipToken, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => DefaultRestClient.CreateListProductFamiliesRequest(Id.SubscriptionId, content, expand, skipToken);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DefaultRestClient.CreateListProductFamiliesNextPageRequest(nextLink, Id.SubscriptionId, content, expand, skipToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, ProductFamily.DeserializeProductFamily, DefaultClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetProductFamilies", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -241,37 +127,9 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <returns> An async collection of <see cref="ProductConfiguration" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ProductConfiguration> GetConfigurationsAsync(ConfigurationsContent content, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<ProductConfiguration>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = DefaultClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetConfigurations");
-                scope.Start();
-                try
-                {
-                    var response = await DefaultRestClient.ListConfigurationsAsync(Id.SubscriptionId, content, skipToken, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<ProductConfiguration>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = DefaultClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetConfigurations");
-                scope.Start();
-                try
-                {
-                    var response = await DefaultRestClient.ListConfigurationsNextPageAsync(nextLink, Id.SubscriptionId, content, skipToken, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => DefaultRestClient.CreateListConfigurationsRequest(Id.SubscriptionId, content, skipToken);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DefaultRestClient.CreateListConfigurationsNextPageRequest(nextLink, Id.SubscriptionId, content, skipToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, ProductConfiguration.DeserializeProductConfiguration, DefaultClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetConfigurations", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -285,37 +143,9 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <returns> A collection of <see cref="ProductConfiguration" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ProductConfiguration> GetConfigurations(ConfigurationsContent content, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            Page<ProductConfiguration> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = DefaultClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetConfigurations");
-                scope.Start();
-                try
-                {
-                    var response = DefaultRestClient.ListConfigurations(Id.SubscriptionId, content, skipToken, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<ProductConfiguration> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = DefaultClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetConfigurations");
-                scope.Start();
-                try
-                {
-                    var response = DefaultRestClient.ListConfigurationsNextPage(nextLink, Id.SubscriptionId, content, skipToken, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => DefaultRestClient.CreateListConfigurationsRequest(Id.SubscriptionId, content, skipToken);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DefaultRestClient.CreateListConfigurationsNextPageRequest(nextLink, Id.SubscriptionId, content, skipToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, ProductConfiguration.DeserializeProductConfiguration, DefaultClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetConfigurations", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -328,37 +158,9 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <returns> An async collection of <see cref="ProductFamiliesMetadata" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ProductFamiliesMetadata> GetProductFamiliesMetadataAsync(string skipToken = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<ProductFamiliesMetadata>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = DefaultClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetProductFamiliesMetadata");
-                scope.Start();
-                try
-                {
-                    var response = await DefaultRestClient.ListProductFamiliesMetadataAsync(Id.SubscriptionId, skipToken, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<ProductFamiliesMetadata>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = DefaultClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetProductFamiliesMetadata");
-                scope.Start();
-                try
-                {
-                    var response = await DefaultRestClient.ListProductFamiliesMetadataNextPageAsync(nextLink, Id.SubscriptionId, skipToken, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => DefaultRestClient.CreateListProductFamiliesMetadataRequest(Id.SubscriptionId, skipToken);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DefaultRestClient.CreateListProductFamiliesMetadataNextPageRequest(nextLink, Id.SubscriptionId, skipToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, ProductFamiliesMetadata.DeserializeProductFamiliesMetadata, DefaultClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetProductFamiliesMetadata", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -371,37 +173,9 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <returns> A collection of <see cref="ProductFamiliesMetadata" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ProductFamiliesMetadata> GetProductFamiliesMetadata(string skipToken = null, CancellationToken cancellationToken = default)
         {
-            Page<ProductFamiliesMetadata> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = DefaultClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetProductFamiliesMetadata");
-                scope.Start();
-                try
-                {
-                    var response = DefaultRestClient.ListProductFamiliesMetadata(Id.SubscriptionId, skipToken, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<ProductFamiliesMetadata> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = DefaultClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetProductFamiliesMetadata");
-                scope.Start();
-                try
-                {
-                    var response = DefaultRestClient.ListProductFamiliesMetadataNextPage(nextLink, Id.SubscriptionId, skipToken, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => DefaultRestClient.CreateListProductFamiliesMetadataRequest(Id.SubscriptionId, skipToken);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DefaultRestClient.CreateListProductFamiliesMetadataNextPageRequest(nextLink, Id.SubscriptionId, skipToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, ProductFamiliesMetadata.DeserializeProductFamiliesMetadata, DefaultClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetProductFamiliesMetadata", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -414,37 +188,9 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <returns> An async collection of <see cref="EdgeOrderResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<EdgeOrderResource> GetEdgeOrdersAsync(string skipToken = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<EdgeOrderResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = DefaultClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetEdgeOrders");
-                scope.Start();
-                try
-                {
-                    var response = await DefaultRestClient.ListOrderAtSubscriptionLevelAsync(Id.SubscriptionId, skipToken, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new EdgeOrderResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<EdgeOrderResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = DefaultClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetEdgeOrders");
-                scope.Start();
-                try
-                {
-                    var response = await DefaultRestClient.ListOrderAtSubscriptionLevelNextPageAsync(nextLink, Id.SubscriptionId, skipToken, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new EdgeOrderResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => DefaultRestClient.CreateListOrderAtSubscriptionLevelRequest(Id.SubscriptionId, skipToken);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DefaultRestClient.CreateListOrderAtSubscriptionLevelNextPageRequest(nextLink, Id.SubscriptionId, skipToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new EdgeOrderResource(Client, EdgeOrderData.DeserializeEdgeOrderData(e)), DefaultClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetEdgeOrders", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -457,37 +203,9 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <returns> A collection of <see cref="EdgeOrderResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<EdgeOrderResource> GetEdgeOrders(string skipToken = null, CancellationToken cancellationToken = default)
         {
-            Page<EdgeOrderResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = DefaultClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetEdgeOrders");
-                scope.Start();
-                try
-                {
-                    var response = DefaultRestClient.ListOrderAtSubscriptionLevel(Id.SubscriptionId, skipToken, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new EdgeOrderResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<EdgeOrderResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = DefaultClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetEdgeOrders");
-                scope.Start();
-                try
-                {
-                    var response = DefaultRestClient.ListOrderAtSubscriptionLevelNextPage(nextLink, Id.SubscriptionId, skipToken, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new EdgeOrderResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => DefaultRestClient.CreateListOrderAtSubscriptionLevelRequest(Id.SubscriptionId, skipToken);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DefaultRestClient.CreateListOrderAtSubscriptionLevelNextPageRequest(nextLink, Id.SubscriptionId, skipToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new EdgeOrderResource(Client, EdgeOrderData.DeserializeEdgeOrderData(e)), DefaultClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetEdgeOrders", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -502,37 +220,9 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <returns> An async collection of <see cref="EdgeOrderItemResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<EdgeOrderItemResource> GetEdgeOrderItemsAsync(string filter = null, string expand = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<EdgeOrderItemResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = EdgeOrderItemClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetEdgeOrderItems");
-                scope.Start();
-                try
-                {
-                    var response = await EdgeOrderItemRestClient.ListOrderItemsAtSubscriptionLevelAsync(Id.SubscriptionId, filter, expand, skipToken, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new EdgeOrderItemResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<EdgeOrderItemResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = EdgeOrderItemClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetEdgeOrderItems");
-                scope.Start();
-                try
-                {
-                    var response = await EdgeOrderItemRestClient.ListOrderItemsAtSubscriptionLevelNextPageAsync(nextLink, Id.SubscriptionId, filter, expand, skipToken, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new EdgeOrderItemResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => EdgeOrderItemRestClient.CreateListOrderItemsAtSubscriptionLevelRequest(Id.SubscriptionId, filter, expand, skipToken);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => EdgeOrderItemRestClient.CreateListOrderItemsAtSubscriptionLevelNextPageRequest(nextLink, Id.SubscriptionId, filter, expand, skipToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new EdgeOrderItemResource(Client, EdgeOrderItemData.DeserializeEdgeOrderItemData(e)), EdgeOrderItemClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetEdgeOrderItems", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -547,37 +237,9 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <returns> A collection of <see cref="EdgeOrderItemResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<EdgeOrderItemResource> GetEdgeOrderItems(string filter = null, string expand = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            Page<EdgeOrderItemResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = EdgeOrderItemClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetEdgeOrderItems");
-                scope.Start();
-                try
-                {
-                    var response = EdgeOrderItemRestClient.ListOrderItemsAtSubscriptionLevel(Id.SubscriptionId, filter, expand, skipToken, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new EdgeOrderItemResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<EdgeOrderItemResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = EdgeOrderItemClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetEdgeOrderItems");
-                scope.Start();
-                try
-                {
-                    var response = EdgeOrderItemRestClient.ListOrderItemsAtSubscriptionLevelNextPage(nextLink, Id.SubscriptionId, filter, expand, skipToken, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new EdgeOrderItemResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => EdgeOrderItemRestClient.CreateListOrderItemsAtSubscriptionLevelRequest(Id.SubscriptionId, filter, expand, skipToken);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => EdgeOrderItemRestClient.CreateListOrderItemsAtSubscriptionLevelNextPageRequest(nextLink, Id.SubscriptionId, filter, expand, skipToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new EdgeOrderItemResource(Client, EdgeOrderItemData.DeserializeEdgeOrderItemData(e)), EdgeOrderItemClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetEdgeOrderItems", "value", "nextLink", cancellationToken);
         }
     }
 }

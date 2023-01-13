@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -121,37 +120,9 @@ namespace Azure.ResourceManager.Logic
         /// <returns> An async collection of <see cref="LogicWorkflowVersionResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<LogicWorkflowVersionResource> GetAllAsync(int? top = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<LogicWorkflowVersionResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _logicWorkflowVersionWorkflowVersionsClientDiagnostics.CreateScope("LogicWorkflowVersionCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _logicWorkflowVersionWorkflowVersionsRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new LogicWorkflowVersionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<LogicWorkflowVersionResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _logicWorkflowVersionWorkflowVersionsClientDiagnostics.CreateScope("LogicWorkflowVersionCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _logicWorkflowVersionWorkflowVersionsRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new LogicWorkflowVersionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _logicWorkflowVersionWorkflowVersionsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _logicWorkflowVersionWorkflowVersionsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new LogicWorkflowVersionResource(Client, LogicWorkflowVersionData.DeserializeLogicWorkflowVersionData(e)), _logicWorkflowVersionWorkflowVersionsClientDiagnostics, Pipeline, "LogicWorkflowVersionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -164,37 +135,9 @@ namespace Azure.ResourceManager.Logic
         /// <returns> A collection of <see cref="LogicWorkflowVersionResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<LogicWorkflowVersionResource> GetAll(int? top = null, CancellationToken cancellationToken = default)
         {
-            Page<LogicWorkflowVersionResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _logicWorkflowVersionWorkflowVersionsClientDiagnostics.CreateScope("LogicWorkflowVersionCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _logicWorkflowVersionWorkflowVersionsRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new LogicWorkflowVersionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<LogicWorkflowVersionResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _logicWorkflowVersionWorkflowVersionsClientDiagnostics.CreateScope("LogicWorkflowVersionCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _logicWorkflowVersionWorkflowVersionsRestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new LogicWorkflowVersionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _logicWorkflowVersionWorkflowVersionsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _logicWorkflowVersionWorkflowVersionsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new LogicWorkflowVersionResource(Client, LogicWorkflowVersionData.DeserializeLogicWorkflowVersionData(e)), _logicWorkflowVersionWorkflowVersionsClientDiagnostics, Pipeline, "LogicWorkflowVersionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

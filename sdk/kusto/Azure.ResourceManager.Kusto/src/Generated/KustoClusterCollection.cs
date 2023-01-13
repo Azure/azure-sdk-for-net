@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -191,22 +190,8 @@ namespace Azure.ResourceManager.Kusto
         /// <returns> An async collection of <see cref="KustoClusterResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<KustoClusterResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<KustoClusterResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _kustoClusterClustersClientDiagnostics.CreateScope("KustoClusterCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _kustoClusterClustersRestClient.ListByResourceGroupAsync(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new KustoClusterResource(Client, value)), null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _kustoClusterClustersRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new KustoClusterResource(Client, KustoClusterData.DeserializeKustoClusterData(e)), _kustoClusterClustersClientDiagnostics, Pipeline, "KustoClusterCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -218,22 +203,8 @@ namespace Azure.ResourceManager.Kusto
         /// <returns> A collection of <see cref="KustoClusterResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<KustoClusterResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<KustoClusterResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _kustoClusterClustersClientDiagnostics.CreateScope("KustoClusterCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _kustoClusterClustersRestClient.ListByResourceGroup(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new KustoClusterResource(Client, value)), null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _kustoClusterClustersRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new KustoClusterResource(Client, KustoClusterData.DeserializeKustoClusterData(e)), _kustoClusterClustersClientDiagnostics, Pipeline, "KustoClusterCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>

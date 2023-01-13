@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -192,22 +191,8 @@ namespace Azure.ResourceManager.PostgreSql
         /// <returns> An async collection of <see cref="PostgreSqlServerResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<PostgreSqlServerResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<PostgreSqlServerResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _postgreSqlServerServersClientDiagnostics.CreateScope("PostgreSqlServerCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _postgreSqlServerServersRestClient.ListByResourceGroupAsync(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new PostgreSqlServerResource(Client, value)), null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _postgreSqlServerServersRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new PostgreSqlServerResource(Client, PostgreSqlServerData.DeserializePostgreSqlServerData(e)), _postgreSqlServerServersClientDiagnostics, Pipeline, "PostgreSqlServerCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -219,22 +204,8 @@ namespace Azure.ResourceManager.PostgreSql
         /// <returns> A collection of <see cref="PostgreSqlServerResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<PostgreSqlServerResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<PostgreSqlServerResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _postgreSqlServerServersClientDiagnostics.CreateScope("PostgreSqlServerCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _postgreSqlServerServersRestClient.ListByResourceGroup(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new PostgreSqlServerResource(Client, value)), null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _postgreSqlServerServersRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new PostgreSqlServerResource(Client, PostgreSqlServerData.DeserializePostgreSqlServerData(e)), _postgreSqlServerServersClientDiagnostics, Pipeline, "PostgreSqlServerCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -251,22 +222,8 @@ namespace Azure.ResourceManager.PostgreSql
         {
             Argument.AssertNotNullOrEmpty(serverName, nameof(serverName));
 
-            async Task<Page<PostgreSqlServerResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _replicasClientDiagnostics.CreateScope("PostgreSqlServerCollection.GetReplicas");
-                scope.Start();
-                try
-                {
-                    var response = await _replicasRestClient.ListByServerAsync(Id.SubscriptionId, Id.ResourceGroupName, serverName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new PostgreSqlServerResource(Client, value)), null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _replicasRestClient.CreateListByServerRequest(Id.SubscriptionId, Id.ResourceGroupName, serverName);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new PostgreSqlServerResource(Client, PostgreSqlServerData.DeserializePostgreSqlServerData(e)), _replicasClientDiagnostics, Pipeline, "PostgreSqlServerCollection.GetReplicas", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -283,22 +240,8 @@ namespace Azure.ResourceManager.PostgreSql
         {
             Argument.AssertNotNullOrEmpty(serverName, nameof(serverName));
 
-            Page<PostgreSqlServerResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _replicasClientDiagnostics.CreateScope("PostgreSqlServerCollection.GetReplicas");
-                scope.Start();
-                try
-                {
-                    var response = _replicasRestClient.ListByServer(Id.SubscriptionId, Id.ResourceGroupName, serverName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new PostgreSqlServerResource(Client, value)), null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _replicasRestClient.CreateListByServerRequest(Id.SubscriptionId, Id.ResourceGroupName, serverName);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new PostgreSqlServerResource(Client, PostgreSqlServerData.DeserializePostgreSqlServerData(e)), _replicasClientDiagnostics, Pipeline, "PostgreSqlServerCollection.GetReplicas", "value", null, cancellationToken);
         }
 
         /// <summary>
