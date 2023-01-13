@@ -50,6 +50,7 @@ steps:
         Repositories:
           - Name: ${{ parameters.TargetDocRepoOwner }}/${{ parameters.TargetDocRepoName }}
             WorkingDirectory: $(DocRepoLocation)
+            Commitish: test_metadta
         Paths: ${{ parameters.SparseCheckoutPaths }}
 
     # If performing a daily docs build set the $(TargetBranchName) to a daily branch
