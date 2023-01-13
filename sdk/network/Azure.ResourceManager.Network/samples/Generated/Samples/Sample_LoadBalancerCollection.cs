@@ -11,11 +11,12 @@ using Azure;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager;
+using Azure.ResourceManager.Network;
 using Azure.ResourceManager.Network.Models;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Resources.Models;
 
-namespace Azure.ResourceManager.Network
+namespace Azure.ResourceManager.Network.Samples
 {
     public partial class Sample_LoadBalancerCollection
     {
@@ -27,8 +28,10 @@ namespace Azure.ResourceManager.Network
             // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2021-02-01/examples/LoadBalancerGet.json
             // this example is just showing the usage of "LoadBalancers_Get" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this ResourceGroupResource created on azure
             // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
@@ -59,8 +62,10 @@ namespace Azure.ResourceManager.Network
             // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2021-02-01/examples/LoadBalancerGet.json
             // this example is just showing the usage of "LoadBalancers_Get" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this ResourceGroupResource created on azure
             // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
@@ -87,8 +92,10 @@ namespace Azure.ResourceManager.Network
             // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2021-02-01/examples/LoadBalancerCreate.json
             // this example is just showing the usage of "LoadBalancers_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this ResourceGroupResource created on azure
             // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
@@ -188,8 +195,10 @@ Name = "in-nat-rule",
             // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2021-02-01/examples/LoadBalancerCreateWithZones.json
             // this example is just showing the usage of "LoadBalancers_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this ResourceGroupResource created on azure
             // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
@@ -298,8 +307,10 @@ Name = "in-nat-rule",
             // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2021-02-01/examples/LoadBalancerCreateGatewayLoadBalancerConsumer.json
             // this example is just showing the usage of "LoadBalancers_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this ResourceGroupResource created on azure
             // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
@@ -405,8 +416,10 @@ Name = "in-nat-rule",
             // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2021-02-01/examples/LoadBalancerCreateGatewayLoadBalancerProviderWithOneBackendPool.json
             // this example is just showing the usage of "LoadBalancers_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this ResourceGroupResource created on azure
             // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
@@ -520,8 +533,10 @@ Name = "probe-lb",
             // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2021-02-01/examples/LoadBalancerCreateGatewayLoadBalancerProviderWithTwoBackendPool.json
             // this example is just showing the usage of "LoadBalancers_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this ResourceGroupResource created on azure
             // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
@@ -625,8 +640,10 @@ Name = "probe-lb",
             // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2021-02-01/examples/LoadBalancerCreateGlobalTier.json
             // this example is just showing the usage of "LoadBalancers_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this ResourceGroupResource created on azure
             // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
@@ -721,8 +738,10 @@ Name = "probe-lb",
             // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2021-02-01/examples/LoadBalancerCreateStandardSku.json
             // this example is just showing the usage of "LoadBalancers_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this ResourceGroupResource created on azure
             // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
@@ -827,8 +846,10 @@ Name = "in-nat-rule",
             // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2021-02-01/examples/LoadBalancerCreateWithInboundNatPool.json
             // this example is just showing the usage of "LoadBalancers_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this ResourceGroupResource created on azure
             // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
@@ -915,8 +936,10 @@ Name = "test",
             // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2021-02-01/examples/LoadBalancerCreateWithOutboundRules.json
             // this example is just showing the usage of "LoadBalancers_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this ResourceGroupResource created on azure
             // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
@@ -1035,8 +1058,10 @@ Name = "rule1",
             // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2021-02-01/examples/LoadBalancerList.json
             // this example is just showing the usage of "LoadBalancers_List" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this ResourceGroupResource created on azure
             // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource

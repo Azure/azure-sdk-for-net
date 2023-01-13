@@ -12,10 +12,11 @@ using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Network;
 using Azure.ResourceManager.Network.Models;
 using Azure.ResourceManager.Resources;
 
-namespace Azure.ResourceManager.Network
+namespace Azure.ResourceManager.Network.Samples
 {
     public partial class Sample_NetworkVirtualApplianceCollection
     {
@@ -27,8 +28,10 @@ namespace Azure.ResourceManager.Network
             // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2021-02-01/examples/NetworkVirtualApplianceGet.json
             // this example is just showing the usage of "NetworkVirtualAppliances_Get" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this ResourceGroupResource created on azure
             // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
@@ -59,8 +62,10 @@ namespace Azure.ResourceManager.Network
             // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2021-02-01/examples/NetworkVirtualApplianceGet.json
             // this example is just showing the usage of "NetworkVirtualAppliances_Get" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this ResourceGroupResource created on azure
             // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
@@ -87,8 +92,10 @@ namespace Azure.ResourceManager.Network
             // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2021-02-01/examples/NetworkVirtualAppliancePut.json
             // this example is just showing the usage of "NetworkVirtualAppliances_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this ResourceGroupResource created on azure
             // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
@@ -151,8 +158,10 @@ namespace Azure.ResourceManager.Network
             // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2021-02-01/examples/NetworkVirtualApplianceListByResourceGroup.json
             // this example is just showing the usage of "NetworkVirtualAppliances_ListByResourceGroup" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this ResourceGroupResource created on azure
             // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource

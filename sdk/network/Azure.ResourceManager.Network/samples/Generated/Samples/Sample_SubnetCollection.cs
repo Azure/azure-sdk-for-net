@@ -11,9 +11,10 @@ using Azure;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager;
+using Azure.ResourceManager.Network;
 using Azure.ResourceManager.Network.Models;
 
-namespace Azure.ResourceManager.Network
+namespace Azure.ResourceManager.Network.Samples
 {
     public partial class Sample_SubnetCollection
     {
@@ -25,8 +26,10 @@ namespace Azure.ResourceManager.Network
             // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2021-02-01/examples/SubnetGet.json
             // this example is just showing the usage of "Subnets_Get" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this VirtualNetworkResource created on azure
             // for more information of creating VirtualNetworkResource, please refer to the document of VirtualNetworkResource
@@ -58,8 +61,10 @@ namespace Azure.ResourceManager.Network
             // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2021-02-01/examples/SubnetGet.json
             // this example is just showing the usage of "Subnets_Get" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this VirtualNetworkResource created on azure
             // for more information of creating VirtualNetworkResource, please refer to the document of VirtualNetworkResource
@@ -87,8 +92,10 @@ namespace Azure.ResourceManager.Network
             // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2021-02-01/examples/SubnetGetWithDelegation.json
             // this example is just showing the usage of "Subnets_Get" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this VirtualNetworkResource created on azure
             // for more information of creating VirtualNetworkResource, please refer to the document of VirtualNetworkResource
@@ -120,8 +127,10 @@ namespace Azure.ResourceManager.Network
             // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2021-02-01/examples/SubnetGetWithDelegation.json
             // this example is just showing the usage of "Subnets_Get" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this VirtualNetworkResource created on azure
             // for more information of creating VirtualNetworkResource, please refer to the document of VirtualNetworkResource
@@ -149,8 +158,10 @@ namespace Azure.ResourceManager.Network
             // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2021-02-01/examples/SubnetCreate.json
             // this example is just showing the usage of "Subnets_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this VirtualNetworkResource created on azure
             // for more information of creating VirtualNetworkResource, please refer to the document of VirtualNetworkResource
@@ -187,8 +198,10 @@ namespace Azure.ResourceManager.Network
             // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2021-02-01/examples/SubnetCreateWithDelegation.json
             // this example is just showing the usage of "Subnets_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this VirtualNetworkResource created on azure
             // for more information of creating VirtualNetworkResource, please refer to the document of VirtualNetworkResource
@@ -225,8 +238,10 @@ namespace Azure.ResourceManager.Network
             // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2021-02-01/examples/SubnetCreateServiceEndpoint.json
             // this example is just showing the usage of "Subnets_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this VirtualNetworkResource created on azure
             // for more information of creating VirtualNetworkResource, please refer to the document of VirtualNetworkResource
@@ -270,8 +285,10 @@ Service = "Microsoft.Storage",
             // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2021-02-01/examples/SubnetList.json
             // this example is just showing the usage of "Subnets_List" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this VirtualNetworkResource created on azure
             // for more information of creating VirtualNetworkResource, please refer to the document of VirtualNetworkResource

@@ -11,9 +11,10 @@ using Azure;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager;
+using Azure.ResourceManager.Network;
 using Azure.ResourceManager.Network.Models;
 
-namespace Azure.ResourceManager.Network
+namespace Azure.ResourceManager.Network.Samples
 {
     public partial class Sample_VpnConnectionCollection
     {
@@ -25,8 +26,10 @@ namespace Azure.ResourceManager.Network
             // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2021-02-01/examples/VpnConnectionGet.json
             // this example is just showing the usage of "VpnConnections_Get" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this VpnGatewayResource created on azure
             // for more information of creating VpnGatewayResource, please refer to the document of VpnGatewayResource
@@ -58,8 +61,10 @@ namespace Azure.ResourceManager.Network
             // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2021-02-01/examples/VpnConnectionGet.json
             // this example is just showing the usage of "VpnConnections_Get" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this VpnGatewayResource created on azure
             // for more information of creating VpnGatewayResource, please refer to the document of VpnGatewayResource
@@ -87,8 +92,10 @@ namespace Azure.ResourceManager.Network
             // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2021-02-01/examples/VpnConnectionPut.json
             // this example is just showing the usage of "VpnConnections_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this VpnGatewayResource created on azure
             // for more information of creating VpnGatewayResource, please refer to the document of VpnGatewayResource
@@ -141,8 +148,10 @@ Name = "Connection-Link1",
             // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2021-02-01/examples/VpnConnectionList.json
             // this example is just showing the usage of "VpnConnections_ListByVpnGateway" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this VpnGatewayResource created on azure
             // for more information of creating VpnGatewayResource, please refer to the document of VpnGatewayResource

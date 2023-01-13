@@ -11,10 +11,11 @@ using Azure;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager;
+using Azure.ResourceManager.Network;
 using Azure.ResourceManager.Network.Models;
 using Azure.ResourceManager.Resources;
 
-namespace Azure.ResourceManager.Network
+namespace Azure.ResourceManager.Network.Samples
 {
     public partial class Sample_NetworkWatcherResource
     {
@@ -26,8 +27,10 @@ namespace Azure.ResourceManager.Network
             // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2021-02-01/examples/NetworkWatcherGet.json
             // this example is just showing the usage of "NetworkWatchers_Get" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this NetworkWatcherResource created on azure
             // for more information of creating NetworkWatcherResource, please refer to the document of NetworkWatcherResource
@@ -55,8 +58,10 @@ namespace Azure.ResourceManager.Network
             // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2021-02-01/examples/NetworkWatcherDelete.json
             // this example is just showing the usage of "NetworkWatchers_Delete" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this NetworkWatcherResource created on azure
             // for more information of creating NetworkWatcherResource, please refer to the document of NetworkWatcherResource
@@ -80,8 +85,10 @@ namespace Azure.ResourceManager.Network
             // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2021-02-01/examples/NetworkWatcherUpdateTags.json
             // this example is just showing the usage of "NetworkWatchers_UpdateTags" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this NetworkWatcherResource created on azure
             // for more information of creating NetworkWatcherResource, please refer to the document of NetworkWatcherResource
@@ -117,8 +124,10 @@ namespace Azure.ResourceManager.Network
             // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2021-02-01/examples/NetworkWatcherListAll.json
             // this example is just showing the usage of "NetworkWatchers_ListAll" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this SubscriptionResource created on azure
             // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
@@ -147,8 +156,10 @@ namespace Azure.ResourceManager.Network
             // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2021-02-01/examples/NetworkWatcherTopologyGet.json
             // this example is just showing the usage of "NetworkWatchers_GetTopology" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this NetworkWatcherResource created on azure
             // for more information of creating NetworkWatcherResource, please refer to the document of NetworkWatcherResource
@@ -176,8 +187,10 @@ namespace Azure.ResourceManager.Network
             // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2021-02-01/examples/NetworkWatcherIpFlowVerify.json
             // this example is just showing the usage of "NetworkWatchers_VerifyIPFlow" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this NetworkWatcherResource created on azure
             // for more information of creating NetworkWatcherResource, please refer to the document of NetworkWatcherResource
@@ -203,8 +216,10 @@ namespace Azure.ResourceManager.Network
             // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2021-02-01/examples/NetworkWatcherNextHopGet.json
             // this example is just showing the usage of "NetworkWatchers_GetNextHop" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this NetworkWatcherResource created on azure
             // for more information of creating NetworkWatcherResource, please refer to the document of NetworkWatcherResource
@@ -233,8 +248,10 @@ namespace Azure.ResourceManager.Network
             // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2021-02-01/examples/NetworkWatcherSecurityGroupViewGet.json
             // this example is just showing the usage of "NetworkWatchers_GetVMSecurityRules" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this NetworkWatcherResource created on azure
             // for more information of creating NetworkWatcherResource, please refer to the document of NetworkWatcherResource
@@ -260,8 +277,10 @@ namespace Azure.ResourceManager.Network
             // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2021-02-01/examples/NetworkWatcherTroubleshootGet.json
             // this example is just showing the usage of "NetworkWatchers_GetTroubleshooting" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this NetworkWatcherResource created on azure
             // for more information of creating NetworkWatcherResource, please refer to the document of NetworkWatcherResource
@@ -287,8 +306,10 @@ namespace Azure.ResourceManager.Network
             // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2021-02-01/examples/NetworkWatcherTroubleshootResultQuery.json
             // this example is just showing the usage of "NetworkWatchers_GetTroubleshootingResult" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this NetworkWatcherResource created on azure
             // for more information of creating NetworkWatcherResource, please refer to the document of NetworkWatcherResource
@@ -314,8 +335,10 @@ namespace Azure.ResourceManager.Network
             // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2021-02-01/examples/NetworkWatcherFlowLogConfigure.json
             // this example is just showing the usage of "NetworkWatchers_SetFlowLogConfiguration" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this NetworkWatcherResource created on azure
             // for more information of creating NetworkWatcherResource, please refer to the document of NetworkWatcherResource
@@ -341,8 +364,10 @@ namespace Azure.ResourceManager.Network
             // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2021-02-01/examples/NetworkWatcherFlowLogStatusQuery.json
             // this example is just showing the usage of "NetworkWatchers_GetFlowLogStatus" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this NetworkWatcherResource created on azure
             // for more information of creating NetworkWatcherResource, please refer to the document of NetworkWatcherResource
@@ -368,8 +393,10 @@ namespace Azure.ResourceManager.Network
             // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2021-02-01/examples/NetworkWatcherConnectivityCheck.json
             // this example is just showing the usage of "NetworkWatchers_CheckConnectivity" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this NetworkWatcherResource created on azure
             // for more information of creating NetworkWatcherResource, please refer to the document of NetworkWatcherResource
@@ -402,8 +429,10 @@ namespace Azure.ResourceManager.Network
             // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2021-02-01/examples/NetworkWatcherAzureReachabilityReportGet.json
             // this example is just showing the usage of "NetworkWatchers_GetAzureReachabilityReport" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this NetworkWatcherResource created on azure
             // for more information of creating NetworkWatcherResource, please refer to the document of NetworkWatcherResource
@@ -442,8 +471,10 @@ new AzureLocation("West US")
             // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2021-02-01/examples/NetworkWatcherAvailableProvidersListGet.json
             // this example is just showing the usage of "NetworkWatchers_ListAvailableProviders" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this NetworkWatcherResource created on azure
             // for more information of creating NetworkWatcherResource, please refer to the document of NetworkWatcherResource
@@ -478,8 +509,10 @@ new AzureLocation("West US")
             // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2021-02-01/examples/NetworkWatcherNetworkConfigurationDiagnostic.json
             // this example is just showing the usage of "NetworkWatchers_GetNetworkConfigurationDiagnostic" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this NetworkWatcherResource created on azure
             // for more information of creating NetworkWatcherResource, please refer to the document of NetworkWatcherResource

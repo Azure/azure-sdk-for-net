@@ -11,9 +11,10 @@ using Azure;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager;
+using Azure.ResourceManager.Network;
 using Azure.ResourceManager.Network.Models;
 
-namespace Azure.ResourceManager.Network
+namespace Azure.ResourceManager.Network.Samples
 {
     public partial class Sample_VirtualNetworkGatewayResource
     {
@@ -25,8 +26,10 @@ namespace Azure.ResourceManager.Network
             // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2021-02-01/examples/VirtualNetworkGatewayGet.json
             // this example is just showing the usage of "VirtualNetworkGateways_Get" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this VirtualNetworkGatewayResource created on azure
             // for more information of creating VirtualNetworkGatewayResource, please refer to the document of VirtualNetworkGatewayResource
@@ -54,8 +57,10 @@ namespace Azure.ResourceManager.Network
             // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2021-02-01/examples/VirtualNetworkGatewayDelete.json
             // this example is just showing the usage of "VirtualNetworkGateways_Delete" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this VirtualNetworkGatewayResource created on azure
             // for more information of creating VirtualNetworkGatewayResource, please refer to the document of VirtualNetworkGatewayResource
@@ -79,8 +84,10 @@ namespace Azure.ResourceManager.Network
             // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2021-02-01/examples/VirtualNetworkGatewayUpdateTags.json
             // this example is just showing the usage of "VirtualNetworkGateways_UpdateTags" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this VirtualNetworkGatewayResource created on azure
             // for more information of creating VirtualNetworkGatewayResource, please refer to the document of VirtualNetworkGatewayResource
@@ -117,8 +124,10 @@ namespace Azure.ResourceManager.Network
             // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2021-02-01/examples/VirtualNetworkGatewaysListConnections.json
             // this example is just showing the usage of "VirtualNetworkGateways_ListConnections" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this VirtualNetworkGatewayResource created on azure
             // for more information of creating VirtualNetworkGatewayResource, please refer to the document of VirtualNetworkGatewayResource
@@ -145,8 +154,10 @@ namespace Azure.ResourceManager.Network
             // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2021-02-01/examples/VirtualNetworkGatewayReset.json
             // this example is just showing the usage of "VirtualNetworkGateways_Reset" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this VirtualNetworkGatewayResource created on azure
             // for more information of creating VirtualNetworkGatewayResource, please refer to the document of VirtualNetworkGatewayResource
@@ -175,8 +186,10 @@ namespace Azure.ResourceManager.Network
             // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2021-02-01/examples/VirtualNetworkGatewayResetVpnClientSharedKey.json
             // this example is just showing the usage of "VirtualNetworkGateways_ResetVpnClientSharedKey" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this VirtualNetworkGatewayResource created on azure
             // for more information of creating VirtualNetworkGatewayResource, please refer to the document of VirtualNetworkGatewayResource
@@ -200,8 +213,10 @@ namespace Azure.ResourceManager.Network
             // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2021-02-01/examples/VirtualNetworkGatewayGenerateVpnClientPackage.json
             // this example is just showing the usage of "VirtualNetworkGateways_Generatevpnclientpackage" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this VirtualNetworkGatewayResource created on azure
             // for more information of creating VirtualNetworkGatewayResource, please refer to the document of VirtualNetworkGatewayResource
@@ -227,8 +242,10 @@ namespace Azure.ResourceManager.Network
             // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2021-02-01/examples/VirtualNetworkGatewayGenerateVpnProfile.json
             // this example is just showing the usage of "VirtualNetworkGateways_GenerateVpnProfile" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this VirtualNetworkGatewayResource created on azure
             // for more information of creating VirtualNetworkGatewayResource, please refer to the document of VirtualNetworkGatewayResource
@@ -254,8 +271,10 @@ namespace Azure.ResourceManager.Network
             // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2021-02-01/examples/VirtualNetworkGatewayGetVpnProfilePackageUrl.json
             // this example is just showing the usage of "VirtualNetworkGateways_GetVpnProfilePackageUrl" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this VirtualNetworkGatewayResource created on azure
             // for more information of creating VirtualNetworkGatewayResource, please refer to the document of VirtualNetworkGatewayResource
@@ -280,8 +299,10 @@ namespace Azure.ResourceManager.Network
             // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2021-02-01/examples/VirtualNetworkGatewayGetBGPPeerStatus.json
             // this example is just showing the usage of "VirtualNetworkGateways_GetBgpPeerStatus" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this VirtualNetworkGatewayResource created on azure
             // for more information of creating VirtualNetworkGatewayResource, please refer to the document of VirtualNetworkGatewayResource
@@ -306,8 +327,10 @@ namespace Azure.ResourceManager.Network
             // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2021-02-01/examples/VirtualNetworkGatewaySupportedVpnDevice.json
             // this example is just showing the usage of "VirtualNetworkGateways_SupportedVpnDevices" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this VirtualNetworkGatewayResource created on azure
             // for more information of creating VirtualNetworkGatewayResource, please refer to the document of VirtualNetworkGatewayResource
@@ -331,8 +354,10 @@ namespace Azure.ResourceManager.Network
             // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2021-02-01/examples/VirtualNetworkGatewayLearnedRoutes.json
             // this example is just showing the usage of "VirtualNetworkGateways_GetLearnedRoutes" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this VirtualNetworkGatewayResource created on azure
             // for more information of creating VirtualNetworkGatewayResource, please refer to the document of VirtualNetworkGatewayResource
@@ -357,8 +382,10 @@ namespace Azure.ResourceManager.Network
             // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2021-02-01/examples/VirtualNetworkGatewayGetAdvertisedRoutes.json
             // this example is just showing the usage of "VirtualNetworkGateways_GetAdvertisedRoutes" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this VirtualNetworkGatewayResource created on azure
             // for more information of creating VirtualNetworkGatewayResource, please refer to the document of VirtualNetworkGatewayResource
@@ -384,8 +411,10 @@ namespace Azure.ResourceManager.Network
             // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2021-02-01/examples/VirtualNetworkGatewaySetVpnClientIpsecParameters.json
             // this example is just showing the usage of "VirtualNetworkGateways_SetVpnclientIpsecParameters" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this VirtualNetworkGatewayResource created on azure
             // for more information of creating VirtualNetworkGatewayResource, please refer to the document of VirtualNetworkGatewayResource
@@ -411,8 +440,10 @@ namespace Azure.ResourceManager.Network
             // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2021-02-01/examples/VirtualNetworkGatewayGetVpnClientIpsecParameters.json
             // this example is just showing the usage of "VirtualNetworkGateways_GetVpnclientIpsecParameters" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this VirtualNetworkGatewayResource created on azure
             // for more information of creating VirtualNetworkGatewayResource, please refer to the document of VirtualNetworkGatewayResource
@@ -437,8 +468,10 @@ namespace Azure.ResourceManager.Network
             // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2021-02-01/examples/VirtualNetworkGatewayStartPacketCaptureFilterData.json
             // this example is just showing the usage of "VirtualNetworkGateways_StartPacketCapture" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this VirtualNetworkGatewayResource created on azure
             // for more information of creating VirtualNetworkGatewayResource, please refer to the document of VirtualNetworkGatewayResource
@@ -467,8 +500,10 @@ namespace Azure.ResourceManager.Network
             // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2021-02-01/examples/VirtualNetworkGatewayStartPacketCapture.json
             // this example is just showing the usage of "VirtualNetworkGateways_StartPacketCapture" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this VirtualNetworkGatewayResource created on azure
             // for more information of creating VirtualNetworkGatewayResource, please refer to the document of VirtualNetworkGatewayResource
@@ -493,8 +528,10 @@ namespace Azure.ResourceManager.Network
             // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2021-02-01/examples/VirtualNetworkGatewayStopPacketCapture.json
             // this example is just showing the usage of "VirtualNetworkGateways_StopPacketCapture" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this VirtualNetworkGatewayResource created on azure
             // for more information of creating VirtualNetworkGatewayResource, please refer to the document of VirtualNetworkGatewayResource
@@ -523,8 +560,10 @@ namespace Azure.ResourceManager.Network
             // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2021-02-01/examples/VirtualNetworkGatewayGetVpnclientConnectionHealth.json
             // this example is just showing the usage of "VirtualNetworkGateways_GetVpnclientConnectionHealth" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this VirtualNetworkGatewayResource created on azure
             // for more information of creating VirtualNetworkGatewayResource, please refer to the document of VirtualNetworkGatewayResource
@@ -549,8 +588,10 @@ namespace Azure.ResourceManager.Network
             // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2021-02-01/examples/VirtualNetworkGatewaysDisconnectP2sVpnConnections.json
             // this example is just showing the usage of "VirtualNetworkGateways_DisconnectVirtualNetworkGatewayVpnConnections" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this VirtualNetworkGatewayResource created on azure
             // for more information of creating VirtualNetworkGatewayResource, please refer to the document of VirtualNetworkGatewayResource
