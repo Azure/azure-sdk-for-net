@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -187,37 +186,9 @@ namespace Azure.ResourceManager.Automation
         /// <returns> An async collection of <see cref="AutomationConnectionResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<AutomationConnectionResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<AutomationConnectionResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _automationConnectionConnectionClientDiagnostics.CreateScope("AutomationConnectionCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _automationConnectionConnectionRestClient.ListByAutomationAccountAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new AutomationConnectionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<AutomationConnectionResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _automationConnectionConnectionClientDiagnostics.CreateScope("AutomationConnectionCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _automationConnectionConnectionRestClient.ListByAutomationAccountNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new AutomationConnectionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _automationConnectionConnectionRestClient.CreateListByAutomationAccountRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _automationConnectionConnectionRestClient.CreateListByAutomationAccountNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new AutomationConnectionResource(Client, AutomationConnectionData.DeserializeAutomationConnectionData(e)), _automationConnectionConnectionClientDiagnostics, Pipeline, "AutomationConnectionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -229,37 +200,9 @@ namespace Azure.ResourceManager.Automation
         /// <returns> A collection of <see cref="AutomationConnectionResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<AutomationConnectionResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<AutomationConnectionResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _automationConnectionConnectionClientDiagnostics.CreateScope("AutomationConnectionCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _automationConnectionConnectionRestClient.ListByAutomationAccount(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new AutomationConnectionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<AutomationConnectionResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _automationConnectionConnectionClientDiagnostics.CreateScope("AutomationConnectionCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _automationConnectionConnectionRestClient.ListByAutomationAccountNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new AutomationConnectionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _automationConnectionConnectionRestClient.CreateListByAutomationAccountRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _automationConnectionConnectionRestClient.CreateListByAutomationAccountNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new AutomationConnectionResource(Client, AutomationConnectionData.DeserializeAutomationConnectionData(e)), _automationConnectionConnectionClientDiagnostics, Pipeline, "AutomationConnectionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

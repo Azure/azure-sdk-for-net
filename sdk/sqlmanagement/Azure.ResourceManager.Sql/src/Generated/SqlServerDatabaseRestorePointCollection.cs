@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -120,37 +119,9 @@ namespace Azure.ResourceManager.Sql
         /// <returns> An async collection of <see cref="SqlServerDatabaseRestorePointResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SqlServerDatabaseRestorePointResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<SqlServerDatabaseRestorePointResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _sqlServerDatabaseRestorePointRestorePointsClientDiagnostics.CreateScope("SqlServerDatabaseRestorePointCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _sqlServerDatabaseRestorePointRestorePointsRestClient.ListByDatabaseAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new SqlServerDatabaseRestorePointResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<SqlServerDatabaseRestorePointResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _sqlServerDatabaseRestorePointRestorePointsClientDiagnostics.CreateScope("SqlServerDatabaseRestorePointCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _sqlServerDatabaseRestorePointRestorePointsRestClient.ListByDatabaseNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new SqlServerDatabaseRestorePointResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _sqlServerDatabaseRestorePointRestorePointsRestClient.CreateListByDatabaseRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _sqlServerDatabaseRestorePointRestorePointsRestClient.CreateListByDatabaseNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SqlServerDatabaseRestorePointResource(Client, SqlServerDatabaseRestorePointData.DeserializeSqlServerDatabaseRestorePointData(e)), _sqlServerDatabaseRestorePointRestorePointsClientDiagnostics, Pipeline, "SqlServerDatabaseRestorePointCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -162,37 +133,9 @@ namespace Azure.ResourceManager.Sql
         /// <returns> A collection of <see cref="SqlServerDatabaseRestorePointResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SqlServerDatabaseRestorePointResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<SqlServerDatabaseRestorePointResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _sqlServerDatabaseRestorePointRestorePointsClientDiagnostics.CreateScope("SqlServerDatabaseRestorePointCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _sqlServerDatabaseRestorePointRestorePointsRestClient.ListByDatabase(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new SqlServerDatabaseRestorePointResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<SqlServerDatabaseRestorePointResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _sqlServerDatabaseRestorePointRestorePointsClientDiagnostics.CreateScope("SqlServerDatabaseRestorePointCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _sqlServerDatabaseRestorePointRestorePointsRestClient.ListByDatabaseNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new SqlServerDatabaseRestorePointResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _sqlServerDatabaseRestorePointRestorePointsRestClient.CreateListByDatabaseRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _sqlServerDatabaseRestorePointRestorePointsRestClient.CreateListByDatabaseNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SqlServerDatabaseRestorePointResource(Client, SqlServerDatabaseRestorePointData.DeserializeSqlServerDatabaseRestorePointData(e)), _sqlServerDatabaseRestorePointRestorePointsClientDiagnostics, Pipeline, "SqlServerDatabaseRestorePointCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

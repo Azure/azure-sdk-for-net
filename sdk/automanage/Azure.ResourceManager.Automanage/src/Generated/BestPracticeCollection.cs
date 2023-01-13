@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -121,22 +120,8 @@ namespace Azure.ResourceManager.Automanage
         /// <returns> An async collection of <see cref="BestPracticeResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<BestPracticeResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<BestPracticeResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _bestPracticeClientDiagnostics.CreateScope("BestPracticeCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _bestPracticeRestClient.ListByTenantAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new BestPracticeResource(Client, value)), null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _bestPracticeRestClient.CreateListByTenantRequest();
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new BestPracticeResource(Client, BestPracticeData.DeserializeBestPracticeData(e)), _bestPracticeClientDiagnostics, Pipeline, "BestPracticeCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -148,22 +133,8 @@ namespace Azure.ResourceManager.Automanage
         /// <returns> A collection of <see cref="BestPracticeResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<BestPracticeResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<BestPracticeResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _bestPracticeClientDiagnostics.CreateScope("BestPracticeCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _bestPracticeRestClient.ListByTenant(cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new BestPracticeResource(Client, value)), null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _bestPracticeRestClient.CreateListByTenantRequest();
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new BestPracticeResource(Client, BestPracticeData.DeserializeBestPracticeData(e)), _bestPracticeClientDiagnostics, Pipeline, "BestPracticeCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>

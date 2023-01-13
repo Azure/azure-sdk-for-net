@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -192,37 +191,9 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <returns> An async collection of <see cref="DevTestLabNotificationChannelResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DevTestLabNotificationChannelResource> GetAllAsync(string expand = null, string filter = null, int? top = null, string orderby = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<DevTestLabNotificationChannelResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _devTestLabNotificationChannelNotificationChannelsClientDiagnostics.CreateScope("DevTestLabNotificationChannelCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _devTestLabNotificationChannelNotificationChannelsRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expand, filter, top, orderby, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new DevTestLabNotificationChannelResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<DevTestLabNotificationChannelResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _devTestLabNotificationChannelNotificationChannelsClientDiagnostics.CreateScope("DevTestLabNotificationChannelCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _devTestLabNotificationChannelNotificationChannelsRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expand, filter, top, orderby, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new DevTestLabNotificationChannelResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _devTestLabNotificationChannelNotificationChannelsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expand, filter, top, orderby);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _devTestLabNotificationChannelNotificationChannelsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expand, filter, top, orderby);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DevTestLabNotificationChannelResource(Client, DevTestLabNotificationChannelData.DeserializeDevTestLabNotificationChannelData(e)), _devTestLabNotificationChannelNotificationChannelsClientDiagnostics, Pipeline, "DevTestLabNotificationChannelCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -238,37 +209,9 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <returns> A collection of <see cref="DevTestLabNotificationChannelResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DevTestLabNotificationChannelResource> GetAll(string expand = null, string filter = null, int? top = null, string orderby = null, CancellationToken cancellationToken = default)
         {
-            Page<DevTestLabNotificationChannelResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _devTestLabNotificationChannelNotificationChannelsClientDiagnostics.CreateScope("DevTestLabNotificationChannelCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _devTestLabNotificationChannelNotificationChannelsRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expand, filter, top, orderby, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new DevTestLabNotificationChannelResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<DevTestLabNotificationChannelResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _devTestLabNotificationChannelNotificationChannelsClientDiagnostics.CreateScope("DevTestLabNotificationChannelCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _devTestLabNotificationChannelNotificationChannelsRestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expand, filter, top, orderby, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new DevTestLabNotificationChannelResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _devTestLabNotificationChannelNotificationChannelsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expand, filter, top, orderby);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _devTestLabNotificationChannelNotificationChannelsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expand, filter, top, orderby);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DevTestLabNotificationChannelResource(Client, DevTestLabNotificationChannelData.DeserializeDevTestLabNotificationChannelData(e)), _devTestLabNotificationChannelNotificationChannelsClientDiagnostics, Pipeline, "DevTestLabNotificationChannelCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

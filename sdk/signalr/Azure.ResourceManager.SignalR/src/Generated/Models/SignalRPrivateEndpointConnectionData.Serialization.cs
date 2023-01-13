@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.SignalR
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            Optional<ProvisioningState> provisioningState = default;
+            Optional<SignalRProvisioningState> provisioningState = default;
             Optional<WritableSubResource> privateEndpoint = default;
             Optional<IReadOnlyList<string>> groupIds = default;
             Optional<SignalRPrivateLinkServiceConnectionState> privateLinkServiceConnectionState = default;
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.SignalR
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            provisioningState = new ProvisioningState(property0.Value.GetString());
+                            provisioningState = new SignalRProvisioningState(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("privateEndpoint"))

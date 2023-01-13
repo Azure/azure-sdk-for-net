@@ -7,7 +7,6 @@
 
 using System;
 using System.Threading;
-using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -55,37 +54,9 @@ namespace Azure.ResourceManager.ChangeAnalysis
         /// <returns> An async collection of <see cref="DetectedChangeData" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DetectedChangeData> GetChangesByResourceGroupAsync(DateTimeOffset startTime, DateTimeOffset endTime, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<DetectedChangeData>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = ChangesClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetChangesByResourceGroup");
-                scope.Start();
-                try
-                {
-                    var response = await ChangesRestClient.ListChangesByResourceGroupAsync(Id.SubscriptionId, Id.ResourceGroupName, startTime, endTime, skipToken, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<DetectedChangeData>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = ChangesClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetChangesByResourceGroup");
-                scope.Start();
-                try
-                {
-                    var response = await ChangesRestClient.ListChangesByResourceGroupNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, startTime, endTime, skipToken, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => ChangesRestClient.CreateListChangesByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, startTime, endTime, skipToken);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ChangesRestClient.CreateListChangesByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, startTime, endTime, skipToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, DetectedChangeData.DeserializeDetectedChangeData, ChangesClientDiagnostics, Pipeline, "ResourceGroupResourceExtensionClient.GetChangesByResourceGroup", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -100,37 +71,9 @@ namespace Azure.ResourceManager.ChangeAnalysis
         /// <returns> A collection of <see cref="DetectedChangeData" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DetectedChangeData> GetChangesByResourceGroup(DateTimeOffset startTime, DateTimeOffset endTime, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            Page<DetectedChangeData> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = ChangesClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetChangesByResourceGroup");
-                scope.Start();
-                try
-                {
-                    var response = ChangesRestClient.ListChangesByResourceGroup(Id.SubscriptionId, Id.ResourceGroupName, startTime, endTime, skipToken, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<DetectedChangeData> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = ChangesClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetChangesByResourceGroup");
-                scope.Start();
-                try
-                {
-                    var response = ChangesRestClient.ListChangesByResourceGroupNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, startTime, endTime, skipToken, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => ChangesRestClient.CreateListChangesByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, startTime, endTime, skipToken);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ChangesRestClient.CreateListChangesByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, startTime, endTime, skipToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, DetectedChangeData.DeserializeDetectedChangeData, ChangesClientDiagnostics, Pipeline, "ResourceGroupResourceExtensionClient.GetChangesByResourceGroup", "value", "nextLink", cancellationToken);
         }
     }
 }
