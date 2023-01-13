@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -132,37 +131,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <returns> An async collection of <see cref="BackupEngineBaseResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<BackupEngineBaseResource> GetAllAsync(string filter = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<BackupEngineBaseResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _backupEngineBaseResourceBackupEnginesClientDiagnostics.CreateScope("BackupEngineBaseResourceCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _backupEngineBaseResourceBackupEnginesRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, _vaultName, filter, skipToken, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new BackupEngineBaseResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<BackupEngineBaseResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _backupEngineBaseResourceBackupEnginesClientDiagnostics.CreateScope("BackupEngineBaseResourceCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _backupEngineBaseResourceBackupEnginesRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, _vaultName, filter, skipToken, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new BackupEngineBaseResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _backupEngineBaseResourceBackupEnginesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, _vaultName, filter, skipToken);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _backupEngineBaseResourceBackupEnginesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, _vaultName, filter, skipToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new BackupEngineBaseResource(Client, BackupEngineBaseResourceData.DeserializeBackupEngineBaseResourceData(e)), _backupEngineBaseResourceBackupEnginesClientDiagnostics, Pipeline, "BackupEngineBaseResourceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -176,37 +147,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <returns> A collection of <see cref="BackupEngineBaseResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<BackupEngineBaseResource> GetAll(string filter = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            Page<BackupEngineBaseResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _backupEngineBaseResourceBackupEnginesClientDiagnostics.CreateScope("BackupEngineBaseResourceCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _backupEngineBaseResourceBackupEnginesRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, _vaultName, filter, skipToken, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new BackupEngineBaseResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<BackupEngineBaseResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _backupEngineBaseResourceBackupEnginesClientDiagnostics.CreateScope("BackupEngineBaseResourceCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _backupEngineBaseResourceBackupEnginesRestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, _vaultName, filter, skipToken, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new BackupEngineBaseResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _backupEngineBaseResourceBackupEnginesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, _vaultName, filter, skipToken);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _backupEngineBaseResourceBackupEnginesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, _vaultName, filter, skipToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new BackupEngineBaseResource(Client, BackupEngineBaseResourceData.DeserializeBackupEngineBaseResourceData(e)), _backupEngineBaseResourceBackupEnginesClientDiagnostics, Pipeline, "BackupEngineBaseResourceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -187,37 +186,9 @@ namespace Azure.ResourceManager.AppService
         /// <returns> An async collection of <see cref="AppServiceSourceControlResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<AppServiceSourceControlResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<AppServiceSourceControlResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _appServiceSourceControlClientDiagnostics.CreateScope("AppServiceSourceControlCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _appServiceSourceControlRestClient.ListSourceControlsAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new AppServiceSourceControlResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<AppServiceSourceControlResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _appServiceSourceControlClientDiagnostics.CreateScope("AppServiceSourceControlCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _appServiceSourceControlRestClient.ListSourceControlsNextPageAsync(nextLink, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new AppServiceSourceControlResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _appServiceSourceControlRestClient.CreateListSourceControlsRequest();
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _appServiceSourceControlRestClient.CreateListSourceControlsNextPageRequest(nextLink);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new AppServiceSourceControlResource(Client, AppServiceSourceControlData.DeserializeAppServiceSourceControlData(e)), _appServiceSourceControlClientDiagnostics, Pipeline, "AppServiceSourceControlCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -229,37 +200,9 @@ namespace Azure.ResourceManager.AppService
         /// <returns> A collection of <see cref="AppServiceSourceControlResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<AppServiceSourceControlResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<AppServiceSourceControlResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _appServiceSourceControlClientDiagnostics.CreateScope("AppServiceSourceControlCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _appServiceSourceControlRestClient.ListSourceControls(cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new AppServiceSourceControlResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<AppServiceSourceControlResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _appServiceSourceControlClientDiagnostics.CreateScope("AppServiceSourceControlCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _appServiceSourceControlRestClient.ListSourceControlsNextPage(nextLink, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new AppServiceSourceControlResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _appServiceSourceControlRestClient.CreateListSourceControlsRequest();
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _appServiceSourceControlRestClient.CreateListSourceControlsNextPageRequest(nextLink);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new AppServiceSourceControlResource(Client, AppServiceSourceControlData.DeserializeAppServiceSourceControlData(e)), _appServiceSourceControlClientDiagnostics, Pipeline, "AppServiceSourceControlCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

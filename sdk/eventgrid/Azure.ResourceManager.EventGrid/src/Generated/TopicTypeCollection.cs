@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -121,22 +120,8 @@ namespace Azure.ResourceManager.EventGrid
         /// <returns> An async collection of <see cref="TopicTypeResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<TopicTypeResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<TopicTypeResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _topicTypeClientDiagnostics.CreateScope("TopicTypeCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _topicTypeRestClient.ListAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new TopicTypeResource(Client, value)), null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _topicTypeRestClient.CreateListRequest();
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new TopicTypeResource(Client, TopicTypeData.DeserializeTopicTypeData(e)), _topicTypeClientDiagnostics, Pipeline, "TopicTypeCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -148,22 +133,8 @@ namespace Azure.ResourceManager.EventGrid
         /// <returns> A collection of <see cref="TopicTypeResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<TopicTypeResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<TopicTypeResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _topicTypeClientDiagnostics.CreateScope("TopicTypeCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _topicTypeRestClient.List(cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new TopicTypeResource(Client, value)), null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _topicTypeRestClient.CreateListRequest();
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new TopicTypeResource(Client, TopicTypeData.DeserializeTopicTypeData(e)), _topicTypeClientDiagnostics, Pipeline, "TopicTypeCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>

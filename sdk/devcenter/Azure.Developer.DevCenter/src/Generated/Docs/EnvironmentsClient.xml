@@ -1400,9 +1400,9 @@ var data = new {
     environmentType = "<environmentType>",
 };
 
-var operation = await client.CreateOrUpdateEnvironmentAsync(WaitUntil.Started, "<environmentName>", RequestContent.Create(data));
+var operation = await client.CreateOrUpdateEnvironmentAsync(WaitUntil.Completed, "<environmentName>", RequestContent.Create(data));
 
-BinaryData data = await operation.WaitForCompletionAsync();
+BinaryData data = operation.Value;
 JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
 Console.WriteLine(result.GetProperty("environmentType").ToString());
 Console.WriteLine(result.ToString());
@@ -1431,9 +1431,9 @@ var data = new {
     },
 };
 
-var operation = await client.CreateOrUpdateEnvironmentAsync(WaitUntil.Started, "<environmentName>", RequestContent.Create(data), <me>);
+var operation = await client.CreateOrUpdateEnvironmentAsync(WaitUntil.Completed, "<environmentName>", RequestContent.Create(data), <me>);
 
-BinaryData data = await operation.WaitForCompletionAsync();
+BinaryData data = operation.Value;
 JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
 Console.WriteLine(result.GetProperty("name").ToString());
 Console.WriteLine(result.GetProperty("environmentType").ToString());
@@ -1502,9 +1502,9 @@ var data = new {
     environmentType = "<environmentType>",
 };
 
-var operation = client.CreateOrUpdateEnvironment(WaitUntil.Started, "<environmentName>", RequestContent.Create(data));
+var operation = client.CreateOrUpdateEnvironment(WaitUntil.Completed, "<environmentName>", RequestContent.Create(data));
 
-BinaryData data = operation.WaitForCompletion();
+BinaryData data = operation.Value;
 JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
 Console.WriteLine(result.GetProperty("environmentType").ToString());
 Console.WriteLine(result.ToString());
@@ -1533,9 +1533,9 @@ var data = new {
     },
 };
 
-var operation = client.CreateOrUpdateEnvironment(WaitUntil.Started, "<environmentName>", RequestContent.Create(data), <me>);
+var operation = client.CreateOrUpdateEnvironment(WaitUntil.Completed, "<environmentName>", RequestContent.Create(data), <me>);
 
-BinaryData data = operation.WaitForCompletion();
+BinaryData data = operation.Value;
 JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
 Console.WriteLine(result.GetProperty("name").ToString());
 Console.WriteLine(result.GetProperty("environmentType").ToString());
@@ -1600,20 +1600,18 @@ This sample shows how to call DeleteEnvironmentAsync with required parameters.
 var credential = new DefaultAzureCredential();
 var client = new EnvironmentsClient("<tenantId>", "<devCenter>", "<projectName>", credential);
 
-var operation = await client.DeleteEnvironmentAsync(WaitUntil.Started, "<environmentName>");
+var operation = await client.DeleteEnvironmentAsync(WaitUntil.Completed, "<environmentName>");
 
-var response = await operation.WaitForCompletionResponseAsync();
-Console.WriteLine(response.Status)
+Console.WriteLine(operation.GetRawResponse().Status)
 ]]></code>
 This sample shows how to call DeleteEnvironmentAsync with all parameters.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
 var client = new EnvironmentsClient("<tenantId>", "<devCenter>", "<projectName>", credential);
 
-var operation = await client.DeleteEnvironmentAsync(WaitUntil.Started, "<environmentName>", <me>);
+var operation = await client.DeleteEnvironmentAsync(WaitUntil.Completed, "<environmentName>", <me>);
 
-var response = await operation.WaitForCompletionResponseAsync();
-Console.WriteLine(response.Status)
+Console.WriteLine(operation.GetRawResponse().Status)
 ]]></code>
 </example>
     </member>
@@ -1624,20 +1622,18 @@ This sample shows how to call DeleteEnvironment with required parameters.
 var credential = new DefaultAzureCredential();
 var client = new EnvironmentsClient("<tenantId>", "<devCenter>", "<projectName>", credential);
 
-var operation = client.DeleteEnvironment(WaitUntil.Started, "<environmentName>");
+var operation = client.DeleteEnvironment(WaitUntil.Completed, "<environmentName>");
 
-var response = operation.WaitForCompletionResponse();
-Console.WriteLine(response.Status)
+Console.WriteLine(operation.GetRawResponse().Status)
 ]]></code>
 This sample shows how to call DeleteEnvironment with all parameters.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
 var client = new EnvironmentsClient("<tenantId>", "<devCenter>", "<projectName>", credential);
 
-var operation = client.DeleteEnvironment(WaitUntil.Started, "<environmentName>", <me>);
+var operation = client.DeleteEnvironment(WaitUntil.Completed, "<environmentName>", <me>);
 
-var response = operation.WaitForCompletionResponse();
-Console.WriteLine(response.Status)
+Console.WriteLine(operation.GetRawResponse().Status)
 ]]></code>
 </example>
     </member>
@@ -1652,10 +1648,9 @@ var data = new {
     actionId = "<actionId>",
 };
 
-var operation = await client.DeployEnvironmentActionAsync(WaitUntil.Started, "<environmentName>", RequestContent.Create(data));
+var operation = await client.DeployEnvironmentActionAsync(WaitUntil.Completed, "<environmentName>", RequestContent.Create(data));
 
-var response = await operation.WaitForCompletionResponseAsync();
-Console.WriteLine(response.Status)
+Console.WriteLine(operation.GetRawResponse().Status)
 ]]></code>
 This sample shows how to call DeployEnvironmentActionAsync with all parameters and request content.
 <code><![CDATA[
@@ -1667,10 +1662,9 @@ var data = new {
     parameters = new {},
 };
 
-var operation = await client.DeployEnvironmentActionAsync(WaitUntil.Started, "<environmentName>", RequestContent.Create(data), <me>);
+var operation = await client.DeployEnvironmentActionAsync(WaitUntil.Completed, "<environmentName>", RequestContent.Create(data), <me>);
 
-var response = await operation.WaitForCompletionResponseAsync();
-Console.WriteLine(response.Status)
+Console.WriteLine(operation.GetRawResponse().Status)
 ]]></code>
 </example>
 <remarks>
@@ -1698,10 +1692,9 @@ var data = new {
     actionId = "<actionId>",
 };
 
-var operation = client.DeployEnvironmentAction(WaitUntil.Started, "<environmentName>", RequestContent.Create(data));
+var operation = client.DeployEnvironmentAction(WaitUntil.Completed, "<environmentName>", RequestContent.Create(data));
 
-var response = operation.WaitForCompletionResponse();
-Console.WriteLine(response.Status)
+Console.WriteLine(operation.GetRawResponse().Status)
 ]]></code>
 This sample shows how to call DeployEnvironmentAction with all parameters and request content.
 <code><![CDATA[
@@ -1713,10 +1706,9 @@ var data = new {
     parameters = new {},
 };
 
-var operation = client.DeployEnvironmentAction(WaitUntil.Started, "<environmentName>", RequestContent.Create(data), <me>);
+var operation = client.DeployEnvironmentAction(WaitUntil.Completed, "<environmentName>", RequestContent.Create(data), <me>);
 
-var response = operation.WaitForCompletionResponse();
-Console.WriteLine(response.Status)
+Console.WriteLine(operation.GetRawResponse().Status)
 ]]></code>
 </example>
 <remarks>
@@ -1744,10 +1736,9 @@ var data = new {
     actionId = "<actionId>",
 };
 
-var operation = await client.DeleteEnvironmentActionAsync(WaitUntil.Started, "<environmentName>", RequestContent.Create(data));
+var operation = await client.DeleteEnvironmentActionAsync(WaitUntil.Completed, "<environmentName>", RequestContent.Create(data));
 
-var response = await operation.WaitForCompletionResponseAsync();
-Console.WriteLine(response.Status)
+Console.WriteLine(operation.GetRawResponse().Status)
 ]]></code>
 This sample shows how to call DeleteEnvironmentActionAsync with all parameters and request content.
 <code><![CDATA[
@@ -1759,10 +1750,9 @@ var data = new {
     parameters = new {},
 };
 
-var operation = await client.DeleteEnvironmentActionAsync(WaitUntil.Started, "<environmentName>", RequestContent.Create(data), <me>);
+var operation = await client.DeleteEnvironmentActionAsync(WaitUntil.Completed, "<environmentName>", RequestContent.Create(data), <me>);
 
-var response = await operation.WaitForCompletionResponseAsync();
-Console.WriteLine(response.Status)
+Console.WriteLine(operation.GetRawResponse().Status)
 ]]></code>
 </example>
 <remarks>
@@ -1790,10 +1780,9 @@ var data = new {
     actionId = "<actionId>",
 };
 
-var operation = client.DeleteEnvironmentAction(WaitUntil.Started, "<environmentName>", RequestContent.Create(data));
+var operation = client.DeleteEnvironmentAction(WaitUntil.Completed, "<environmentName>", RequestContent.Create(data));
 
-var response = operation.WaitForCompletionResponse();
-Console.WriteLine(response.Status)
+Console.WriteLine(operation.GetRawResponse().Status)
 ]]></code>
 This sample shows how to call DeleteEnvironmentAction with all parameters and request content.
 <code><![CDATA[
@@ -1805,10 +1794,9 @@ var data = new {
     parameters = new {},
 };
 
-var operation = client.DeleteEnvironmentAction(WaitUntil.Started, "<environmentName>", RequestContent.Create(data), <me>);
+var operation = client.DeleteEnvironmentAction(WaitUntil.Completed, "<environmentName>", RequestContent.Create(data), <me>);
 
-var response = operation.WaitForCompletionResponse();
-Console.WriteLine(response.Status)
+Console.WriteLine(operation.GetRawResponse().Status)
 ]]></code>
 </example>
 <remarks>
@@ -1836,10 +1824,9 @@ var data = new {
     actionId = "<actionId>",
 };
 
-var operation = await client.CustomEnvironmentActionAsync(WaitUntil.Started, "<environmentName>", RequestContent.Create(data));
+var operation = await client.CustomEnvironmentActionAsync(WaitUntil.Completed, "<environmentName>", RequestContent.Create(data));
 
-var response = await operation.WaitForCompletionResponseAsync();
-Console.WriteLine(response.Status)
+Console.WriteLine(operation.GetRawResponse().Status)
 ]]></code>
 This sample shows how to call CustomEnvironmentActionAsync with all parameters and request content.
 <code><![CDATA[
@@ -1851,10 +1838,9 @@ var data = new {
     parameters = new {},
 };
 
-var operation = await client.CustomEnvironmentActionAsync(WaitUntil.Started, "<environmentName>", RequestContent.Create(data), <me>);
+var operation = await client.CustomEnvironmentActionAsync(WaitUntil.Completed, "<environmentName>", RequestContent.Create(data), <me>);
 
-var response = await operation.WaitForCompletionResponseAsync();
-Console.WriteLine(response.Status)
+Console.WriteLine(operation.GetRawResponse().Status)
 ]]></code>
 </example>
 <remarks>
@@ -1882,10 +1868,9 @@ var data = new {
     actionId = "<actionId>",
 };
 
-var operation = client.CustomEnvironmentAction(WaitUntil.Started, "<environmentName>", RequestContent.Create(data));
+var operation = client.CustomEnvironmentAction(WaitUntil.Completed, "<environmentName>", RequestContent.Create(data));
 
-var response = operation.WaitForCompletionResponse();
-Console.WriteLine(response.Status)
+Console.WriteLine(operation.GetRawResponse().Status)
 ]]></code>
 This sample shows how to call CustomEnvironmentAction with all parameters and request content.
 <code><![CDATA[
@@ -1897,10 +1882,9 @@ var data = new {
     parameters = new {},
 };
 
-var operation = client.CustomEnvironmentAction(WaitUntil.Started, "<environmentName>", RequestContent.Create(data), <me>);
+var operation = client.CustomEnvironmentAction(WaitUntil.Completed, "<environmentName>", RequestContent.Create(data), <me>);
 
-var response = operation.WaitForCompletionResponse();
-Console.WriteLine(response.Status)
+Console.WriteLine(operation.GetRawResponse().Status)
 ]]></code>
 </example>
 <remarks>

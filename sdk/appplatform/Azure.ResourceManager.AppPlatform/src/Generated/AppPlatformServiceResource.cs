@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -930,37 +929,9 @@ namespace Azure.ResourceManager.AppPlatform
         /// <returns> An async collection of <see cref="AppPlatformDeploymentResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<AppPlatformDeploymentResource> GetDeploymentsAsync(IEnumerable<string> version = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<AppPlatformDeploymentResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _appPlatformDeploymentDeploymentsClientDiagnostics.CreateScope("AppPlatformServiceResource.GetDeployments");
-                scope.Start();
-                try
-                {
-                    var response = await _appPlatformDeploymentDeploymentsRestClient.ListForClusterAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, version, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new AppPlatformDeploymentResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<AppPlatformDeploymentResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _appPlatformDeploymentDeploymentsClientDiagnostics.CreateScope("AppPlatformServiceResource.GetDeployments");
-                scope.Start();
-                try
-                {
-                    var response = await _appPlatformDeploymentDeploymentsRestClient.ListForClusterNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, version, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new AppPlatformDeploymentResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _appPlatformDeploymentDeploymentsRestClient.CreateListForClusterRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, version);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _appPlatformDeploymentDeploymentsRestClient.CreateListForClusterNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, version);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new AppPlatformDeploymentResource(Client, AppPlatformDeploymentData.DeserializeAppPlatformDeploymentData(e)), _appPlatformDeploymentDeploymentsClientDiagnostics, Pipeline, "AppPlatformServiceResource.GetDeployments", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -973,37 +944,9 @@ namespace Azure.ResourceManager.AppPlatform
         /// <returns> A collection of <see cref="AppPlatformDeploymentResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<AppPlatformDeploymentResource> GetDeployments(IEnumerable<string> version = null, CancellationToken cancellationToken = default)
         {
-            Page<AppPlatformDeploymentResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _appPlatformDeploymentDeploymentsClientDiagnostics.CreateScope("AppPlatformServiceResource.GetDeployments");
-                scope.Start();
-                try
-                {
-                    var response = _appPlatformDeploymentDeploymentsRestClient.ListForCluster(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, version, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new AppPlatformDeploymentResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<AppPlatformDeploymentResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _appPlatformDeploymentDeploymentsClientDiagnostics.CreateScope("AppPlatformServiceResource.GetDeployments");
-                scope.Start();
-                try
-                {
-                    var response = _appPlatformDeploymentDeploymentsRestClient.ListForClusterNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, version, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new AppPlatformDeploymentResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _appPlatformDeploymentDeploymentsRestClient.CreateListForClusterRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, version);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _appPlatformDeploymentDeploymentsRestClient.CreateListForClusterNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, version);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new AppPlatformDeploymentResource(Client, AppPlatformDeploymentData.DeserializeAppPlatformDeploymentData(e)), _appPlatformDeploymentDeploymentsClientDiagnostics, Pipeline, "AppPlatformServiceResource.GetDeployments", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

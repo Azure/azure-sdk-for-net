@@ -8,7 +8,6 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -110,37 +109,9 @@ namespace Azure.ResourceManager.Authorization
         /// <returns> An async collection of <see cref="RoleManagementPolicyResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<RoleManagementPolicyResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<RoleManagementPolicyResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _roleManagementPolicyClientDiagnostics.CreateScope("RoleManagementPolicyCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _roleManagementPolicyRestClient.ListForScopeAsync(Id, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new RoleManagementPolicyResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<RoleManagementPolicyResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _roleManagementPolicyClientDiagnostics.CreateScope("RoleManagementPolicyCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _roleManagementPolicyRestClient.ListForScopeNextPageAsync(nextLink, Id, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new RoleManagementPolicyResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _roleManagementPolicyRestClient.CreateListForScopeRequest(Id);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _roleManagementPolicyRestClient.CreateListForScopeNextPageRequest(nextLink, Id);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new RoleManagementPolicyResource(Client, RoleManagementPolicyData.DeserializeRoleManagementPolicyData(e)), _roleManagementPolicyClientDiagnostics, Pipeline, "RoleManagementPolicyCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -152,37 +123,9 @@ namespace Azure.ResourceManager.Authorization
         /// <returns> A collection of <see cref="RoleManagementPolicyResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<RoleManagementPolicyResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<RoleManagementPolicyResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _roleManagementPolicyClientDiagnostics.CreateScope("RoleManagementPolicyCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _roleManagementPolicyRestClient.ListForScope(Id, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new RoleManagementPolicyResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<RoleManagementPolicyResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _roleManagementPolicyClientDiagnostics.CreateScope("RoleManagementPolicyCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _roleManagementPolicyRestClient.ListForScopeNextPage(nextLink, Id, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new RoleManagementPolicyResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _roleManagementPolicyRestClient.CreateListForScopeRequest(Id);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _roleManagementPolicyRestClient.CreateListForScopeNextPageRequest(nextLink, Id);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new RoleManagementPolicyResource(Client, RoleManagementPolicyData.DeserializeRoleManagementPolicyData(e)), _roleManagementPolicyClientDiagnostics, Pipeline, "RoleManagementPolicyCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

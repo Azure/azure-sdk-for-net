@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -57,22 +56,8 @@ namespace Azure.ResourceManager.PowerBIDedicated
         /// <returns> An async collection of <see cref="DedicatedCapacityResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DedicatedCapacityResource> GetDedicatedCapacitiesAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<DedicatedCapacityResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = DedicatedCapacityCapacitiesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetDedicatedCapacities");
-                scope.Start();
-                try
-                {
-                    var response = await DedicatedCapacityCapacitiesRestClient.ListAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new DedicatedCapacityResource(Client, value)), null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => DedicatedCapacityCapacitiesRestClient.CreateListRequest(Id.SubscriptionId);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new DedicatedCapacityResource(Client, DedicatedCapacityData.DeserializeDedicatedCapacityData(e)), DedicatedCapacityCapacitiesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetDedicatedCapacities", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -84,22 +69,8 @@ namespace Azure.ResourceManager.PowerBIDedicated
         /// <returns> A collection of <see cref="DedicatedCapacityResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DedicatedCapacityResource> GetDedicatedCapacities(CancellationToken cancellationToken = default)
         {
-            Page<DedicatedCapacityResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = DedicatedCapacityCapacitiesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetDedicatedCapacities");
-                scope.Start();
-                try
-                {
-                    var response = DedicatedCapacityCapacitiesRestClient.List(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new DedicatedCapacityResource(Client, value)), null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => DedicatedCapacityCapacitiesRestClient.CreateListRequest(Id.SubscriptionId);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new DedicatedCapacityResource(Client, DedicatedCapacityData.DeserializeDedicatedCapacityData(e)), DedicatedCapacityCapacitiesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetDedicatedCapacities", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -111,22 +82,8 @@ namespace Azure.ResourceManager.PowerBIDedicated
         /// <returns> An async collection of <see cref="CapacitySku" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<CapacitySku> GetSkusCapacitiesAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<CapacitySku>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = DedicatedCapacityCapacitiesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetSkusCapacities");
-                scope.Start();
-                try
-                {
-                    var response = await DedicatedCapacityCapacitiesRestClient.ListSkusAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => DedicatedCapacityCapacitiesRestClient.CreateListSkusRequest(Id.SubscriptionId);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, CapacitySku.DeserializeCapacitySku, DedicatedCapacityCapacitiesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetSkusCapacities", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -138,22 +95,8 @@ namespace Azure.ResourceManager.PowerBIDedicated
         /// <returns> A collection of <see cref="CapacitySku" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<CapacitySku> GetSkusCapacities(CancellationToken cancellationToken = default)
         {
-            Page<CapacitySku> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = DedicatedCapacityCapacitiesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetSkusCapacities");
-                scope.Start();
-                try
-                {
-                    var response = DedicatedCapacityCapacitiesRestClient.ListSkus(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => DedicatedCapacityCapacitiesRestClient.CreateListSkusRequest(Id.SubscriptionId);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, CapacitySku.DeserializeCapacitySku, DedicatedCapacityCapacitiesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetSkusCapacities", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -213,22 +156,8 @@ namespace Azure.ResourceManager.PowerBIDedicated
         /// <returns> An async collection of <see cref="AutoScaleVCoreResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<AutoScaleVCoreResource> GetAutoScaleVCoresAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<AutoScaleVCoreResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = AutoScaleVCoreClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetAutoScaleVCores");
-                scope.Start();
-                try
-                {
-                    var response = await AutoScaleVCoreRestClient.ListBySubscriptionAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new AutoScaleVCoreResource(Client, value)), null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => AutoScaleVCoreRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new AutoScaleVCoreResource(Client, AutoScaleVCoreData.DeserializeAutoScaleVCoreData(e)), AutoScaleVCoreClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetAutoScaleVCores", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -240,22 +169,8 @@ namespace Azure.ResourceManager.PowerBIDedicated
         /// <returns> A collection of <see cref="AutoScaleVCoreResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<AutoScaleVCoreResource> GetAutoScaleVCores(CancellationToken cancellationToken = default)
         {
-            Page<AutoScaleVCoreResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = AutoScaleVCoreClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetAutoScaleVCores");
-                scope.Start();
-                try
-                {
-                    var response = AutoScaleVCoreRestClient.ListBySubscription(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new AutoScaleVCoreResource(Client, value)), null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => AutoScaleVCoreRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new AutoScaleVCoreResource(Client, AutoScaleVCoreData.DeserializeAutoScaleVCoreData(e)), AutoScaleVCoreClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetAutoScaleVCores", "value", null, cancellationToken);
         }
     }
 }

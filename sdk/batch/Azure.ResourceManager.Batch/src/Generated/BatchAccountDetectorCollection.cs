@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -120,37 +119,9 @@ namespace Azure.ResourceManager.Batch
         /// <returns> An async collection of <see cref="BatchAccountDetectorResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<BatchAccountDetectorResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<BatchAccountDetectorResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _batchAccountDetectorBatchAccountClientDiagnostics.CreateScope("BatchAccountDetectorCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _batchAccountDetectorBatchAccountRestClient.ListDetectorsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new BatchAccountDetectorResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<BatchAccountDetectorResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _batchAccountDetectorBatchAccountClientDiagnostics.CreateScope("BatchAccountDetectorCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _batchAccountDetectorBatchAccountRestClient.ListDetectorsNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new BatchAccountDetectorResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _batchAccountDetectorBatchAccountRestClient.CreateListDetectorsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _batchAccountDetectorBatchAccountRestClient.CreateListDetectorsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new BatchAccountDetectorResource(Client, BatchAccountDetectorData.DeserializeBatchAccountDetectorData(e)), _batchAccountDetectorBatchAccountClientDiagnostics, Pipeline, "BatchAccountDetectorCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -162,37 +133,9 @@ namespace Azure.ResourceManager.Batch
         /// <returns> A collection of <see cref="BatchAccountDetectorResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<BatchAccountDetectorResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<BatchAccountDetectorResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _batchAccountDetectorBatchAccountClientDiagnostics.CreateScope("BatchAccountDetectorCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _batchAccountDetectorBatchAccountRestClient.ListDetectors(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new BatchAccountDetectorResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<BatchAccountDetectorResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _batchAccountDetectorBatchAccountClientDiagnostics.CreateScope("BatchAccountDetectorCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _batchAccountDetectorBatchAccountRestClient.ListDetectorsNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new BatchAccountDetectorResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _batchAccountDetectorBatchAccountRestClient.CreateListDetectorsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _batchAccountDetectorBatchAccountRestClient.CreateListDetectorsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new BatchAccountDetectorResource(Client, BatchAccountDetectorData.DeserializeBatchAccountDetectorData(e)), _batchAccountDetectorBatchAccountClientDiagnostics, Pipeline, "BatchAccountDetectorCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

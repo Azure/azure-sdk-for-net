@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -189,37 +188,9 @@ namespace Azure.ResourceManager.CustomerInsights
         /// <returns> An async collection of <see cref="InteractionResourceFormatResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<InteractionResourceFormatResource> GetAllAsync(string localeCode = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<InteractionResourceFormatResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _interactionResourceFormatInteractionsClientDiagnostics.CreateScope("InteractionResourceFormatCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _interactionResourceFormatInteractionsRestClient.ListByHubAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, localeCode, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new InteractionResourceFormatResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<InteractionResourceFormatResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _interactionResourceFormatInteractionsClientDiagnostics.CreateScope("InteractionResourceFormatCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _interactionResourceFormatInteractionsRestClient.ListByHubNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, localeCode, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new InteractionResourceFormatResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _interactionResourceFormatInteractionsRestClient.CreateListByHubRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, localeCode);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _interactionResourceFormatInteractionsRestClient.CreateListByHubNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, localeCode);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new InteractionResourceFormatResource(Client, InteractionResourceFormatData.DeserializeInteractionResourceFormatData(e)), _interactionResourceFormatInteractionsClientDiagnostics, Pipeline, "InteractionResourceFormatCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -232,37 +203,9 @@ namespace Azure.ResourceManager.CustomerInsights
         /// <returns> A collection of <see cref="InteractionResourceFormatResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<InteractionResourceFormatResource> GetAll(string localeCode = null, CancellationToken cancellationToken = default)
         {
-            Page<InteractionResourceFormatResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _interactionResourceFormatInteractionsClientDiagnostics.CreateScope("InteractionResourceFormatCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _interactionResourceFormatInteractionsRestClient.ListByHub(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, localeCode, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new InteractionResourceFormatResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<InteractionResourceFormatResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _interactionResourceFormatInteractionsClientDiagnostics.CreateScope("InteractionResourceFormatCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _interactionResourceFormatInteractionsRestClient.ListByHubNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, localeCode, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new InteractionResourceFormatResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _interactionResourceFormatInteractionsRestClient.CreateListByHubRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, localeCode);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _interactionResourceFormatInteractionsRestClient.CreateListByHubNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, localeCode);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new InteractionResourceFormatResource(Client, InteractionResourceFormatData.DeserializeInteractionResourceFormatData(e)), _interactionResourceFormatInteractionsClientDiagnostics, Pipeline, "InteractionResourceFormatCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

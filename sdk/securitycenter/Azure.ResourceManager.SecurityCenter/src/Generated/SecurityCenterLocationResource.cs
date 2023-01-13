@@ -7,7 +7,6 @@
 
 using System;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -282,37 +281,9 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <returns> An async collection of <see cref="SecurityCenterAllowedConnection" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SecurityCenterAllowedConnection> GetAllowedConnectionsByHomeRegionAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<SecurityCenterAllowedConnection>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _allowedConnectionsClientDiagnostics.CreateScope("SecurityCenterLocationResource.GetAllowedConnectionsByHomeRegion");
-                scope.Start();
-                try
-                {
-                    var response = await _allowedConnectionsRestClient.ListByHomeRegionAsync(Id.SubscriptionId, new AzureLocation(Id.Name), cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<SecurityCenterAllowedConnection>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _allowedConnectionsClientDiagnostics.CreateScope("SecurityCenterLocationResource.GetAllowedConnectionsByHomeRegion");
-                scope.Start();
-                try
-                {
-                    var response = await _allowedConnectionsRestClient.ListByHomeRegionNextPageAsync(nextLink, Id.SubscriptionId, new AzureLocation(Id.Name), cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _allowedConnectionsRestClient.CreateListByHomeRegionRequest(Id.SubscriptionId, new AzureLocation(Id.Name));
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _allowedConnectionsRestClient.CreateListByHomeRegionNextPageRequest(nextLink, Id.SubscriptionId, new AzureLocation(Id.Name));
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, SecurityCenterAllowedConnection.DeserializeSecurityCenterAllowedConnection, _allowedConnectionsClientDiagnostics, Pipeline, "SecurityCenterLocationResource.GetAllowedConnectionsByHomeRegion", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -324,37 +295,9 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <returns> A collection of <see cref="SecurityCenterAllowedConnection" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SecurityCenterAllowedConnection> GetAllowedConnectionsByHomeRegion(CancellationToken cancellationToken = default)
         {
-            Page<SecurityCenterAllowedConnection> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _allowedConnectionsClientDiagnostics.CreateScope("SecurityCenterLocationResource.GetAllowedConnectionsByHomeRegion");
-                scope.Start();
-                try
-                {
-                    var response = _allowedConnectionsRestClient.ListByHomeRegion(Id.SubscriptionId, new AzureLocation(Id.Name), cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<SecurityCenterAllowedConnection> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _allowedConnectionsClientDiagnostics.CreateScope("SecurityCenterLocationResource.GetAllowedConnectionsByHomeRegion");
-                scope.Start();
-                try
-                {
-                    var response = _allowedConnectionsRestClient.ListByHomeRegionNextPage(nextLink, Id.SubscriptionId, new AzureLocation(Id.Name), cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _allowedConnectionsRestClient.CreateListByHomeRegionRequest(Id.SubscriptionId, new AzureLocation(Id.Name));
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _allowedConnectionsRestClient.CreateListByHomeRegionNextPageRequest(nextLink, Id.SubscriptionId, new AzureLocation(Id.Name));
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, SecurityCenterAllowedConnection.DeserializeSecurityCenterAllowedConnection, _allowedConnectionsClientDiagnostics, Pipeline, "SecurityCenterLocationResource.GetAllowedConnectionsByHomeRegion", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -366,37 +309,9 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <returns> An async collection of <see cref="SecurityTopologyResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SecurityTopologyResource> GetTopologiesByHomeRegionAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<SecurityTopologyResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _topologyClientDiagnostics.CreateScope("SecurityCenterLocationResource.GetTopologiesByHomeRegion");
-                scope.Start();
-                try
-                {
-                    var response = await _topologyRestClient.ListByHomeRegionAsync(Id.SubscriptionId, new AzureLocation(Id.Name), cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<SecurityTopologyResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _topologyClientDiagnostics.CreateScope("SecurityCenterLocationResource.GetTopologiesByHomeRegion");
-                scope.Start();
-                try
-                {
-                    var response = await _topologyRestClient.ListByHomeRegionNextPageAsync(nextLink, Id.SubscriptionId, new AzureLocation(Id.Name), cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _topologyRestClient.CreateListByHomeRegionRequest(Id.SubscriptionId, new AzureLocation(Id.Name));
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _topologyRestClient.CreateListByHomeRegionNextPageRequest(nextLink, Id.SubscriptionId, new AzureLocation(Id.Name));
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, SecurityTopologyResource.DeserializeSecurityTopologyResource, _topologyClientDiagnostics, Pipeline, "SecurityCenterLocationResource.GetTopologiesByHomeRegion", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -408,37 +323,9 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <returns> A collection of <see cref="SecurityTopologyResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SecurityTopologyResource> GetTopologiesByHomeRegion(CancellationToken cancellationToken = default)
         {
-            Page<SecurityTopologyResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _topologyClientDiagnostics.CreateScope("SecurityCenterLocationResource.GetTopologiesByHomeRegion");
-                scope.Start();
-                try
-                {
-                    var response = _topologyRestClient.ListByHomeRegion(Id.SubscriptionId, new AzureLocation(Id.Name), cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<SecurityTopologyResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _topologyClientDiagnostics.CreateScope("SecurityCenterLocationResource.GetTopologiesByHomeRegion");
-                scope.Start();
-                try
-                {
-                    var response = _topologyRestClient.ListByHomeRegionNextPage(nextLink, Id.SubscriptionId, new AzureLocation(Id.Name), cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _topologyRestClient.CreateListByHomeRegionRequest(Id.SubscriptionId, new AzureLocation(Id.Name));
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _topologyRestClient.CreateListByHomeRegionNextPageRequest(nextLink, Id.SubscriptionId, new AzureLocation(Id.Name));
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, SecurityTopologyResource.DeserializeSecurityTopologyResource, _topologyClientDiagnostics, Pipeline, "SecurityCenterLocationResource.GetTopologiesByHomeRegion", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -450,37 +337,9 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <returns> An async collection of <see cref="JitNetworkAccessPolicyResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<JitNetworkAccessPolicyResource> GetJitNetworkAccessPoliciesByRegionAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<JitNetworkAccessPolicyResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _jitNetworkAccessPolicyClientDiagnostics.CreateScope("SecurityCenterLocationResource.GetJitNetworkAccessPoliciesByRegion");
-                scope.Start();
-                try
-                {
-                    var response = await _jitNetworkAccessPolicyRestClient.ListByRegionAsync(Id.SubscriptionId, new AzureLocation(Id.Name), cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new JitNetworkAccessPolicyResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<JitNetworkAccessPolicyResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _jitNetworkAccessPolicyClientDiagnostics.CreateScope("SecurityCenterLocationResource.GetJitNetworkAccessPoliciesByRegion");
-                scope.Start();
-                try
-                {
-                    var response = await _jitNetworkAccessPolicyRestClient.ListByRegionNextPageAsync(nextLink, Id.SubscriptionId, new AzureLocation(Id.Name), cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new JitNetworkAccessPolicyResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _jitNetworkAccessPolicyRestClient.CreateListByRegionRequest(Id.SubscriptionId, new AzureLocation(Id.Name));
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _jitNetworkAccessPolicyRestClient.CreateListByRegionNextPageRequest(nextLink, Id.SubscriptionId, new AzureLocation(Id.Name));
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new JitNetworkAccessPolicyResource(Client, JitNetworkAccessPolicyData.DeserializeJitNetworkAccessPolicyData(e)), _jitNetworkAccessPolicyClientDiagnostics, Pipeline, "SecurityCenterLocationResource.GetJitNetworkAccessPoliciesByRegion", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -492,37 +351,9 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <returns> A collection of <see cref="JitNetworkAccessPolicyResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<JitNetworkAccessPolicyResource> GetJitNetworkAccessPoliciesByRegion(CancellationToken cancellationToken = default)
         {
-            Page<JitNetworkAccessPolicyResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _jitNetworkAccessPolicyClientDiagnostics.CreateScope("SecurityCenterLocationResource.GetJitNetworkAccessPoliciesByRegion");
-                scope.Start();
-                try
-                {
-                    var response = _jitNetworkAccessPolicyRestClient.ListByRegion(Id.SubscriptionId, new AzureLocation(Id.Name), cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new JitNetworkAccessPolicyResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<JitNetworkAccessPolicyResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _jitNetworkAccessPolicyClientDiagnostics.CreateScope("SecurityCenterLocationResource.GetJitNetworkAccessPoliciesByRegion");
-                scope.Start();
-                try
-                {
-                    var response = _jitNetworkAccessPolicyRestClient.ListByRegionNextPage(nextLink, Id.SubscriptionId, new AzureLocation(Id.Name), cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new JitNetworkAccessPolicyResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _jitNetworkAccessPolicyRestClient.CreateListByRegionRequest(Id.SubscriptionId, new AzureLocation(Id.Name));
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _jitNetworkAccessPolicyRestClient.CreateListByRegionNextPageRequest(nextLink, Id.SubscriptionId, new AzureLocation(Id.Name));
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new JitNetworkAccessPolicyResource(Client, JitNetworkAccessPolicyData.DeserializeJitNetworkAccessPolicyData(e)), _jitNetworkAccessPolicyClientDiagnostics, Pipeline, "SecurityCenterLocationResource.GetJitNetworkAccessPoliciesByRegion", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -534,37 +365,9 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <returns> An async collection of <see cref="DiscoveredSecuritySolution" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DiscoveredSecuritySolution> GetDiscoveredSecuritySolutionsByHomeRegionAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<DiscoveredSecuritySolution>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _discoveredSecuritySolutionsClientDiagnostics.CreateScope("SecurityCenterLocationResource.GetDiscoveredSecuritySolutionsByHomeRegion");
-                scope.Start();
-                try
-                {
-                    var response = await _discoveredSecuritySolutionsRestClient.ListByHomeRegionAsync(Id.SubscriptionId, new AzureLocation(Id.Name), cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<DiscoveredSecuritySolution>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _discoveredSecuritySolutionsClientDiagnostics.CreateScope("SecurityCenterLocationResource.GetDiscoveredSecuritySolutionsByHomeRegion");
-                scope.Start();
-                try
-                {
-                    var response = await _discoveredSecuritySolutionsRestClient.ListByHomeRegionNextPageAsync(nextLink, Id.SubscriptionId, new AzureLocation(Id.Name), cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _discoveredSecuritySolutionsRestClient.CreateListByHomeRegionRequest(Id.SubscriptionId, new AzureLocation(Id.Name));
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _discoveredSecuritySolutionsRestClient.CreateListByHomeRegionNextPageRequest(nextLink, Id.SubscriptionId, new AzureLocation(Id.Name));
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, DiscoveredSecuritySolution.DeserializeDiscoveredSecuritySolution, _discoveredSecuritySolutionsClientDiagnostics, Pipeline, "SecurityCenterLocationResource.GetDiscoveredSecuritySolutionsByHomeRegion", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -576,37 +379,9 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <returns> A collection of <see cref="DiscoveredSecuritySolution" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DiscoveredSecuritySolution> GetDiscoveredSecuritySolutionsByHomeRegion(CancellationToken cancellationToken = default)
         {
-            Page<DiscoveredSecuritySolution> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _discoveredSecuritySolutionsClientDiagnostics.CreateScope("SecurityCenterLocationResource.GetDiscoveredSecuritySolutionsByHomeRegion");
-                scope.Start();
-                try
-                {
-                    var response = _discoveredSecuritySolutionsRestClient.ListByHomeRegion(Id.SubscriptionId, new AzureLocation(Id.Name), cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<DiscoveredSecuritySolution> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _discoveredSecuritySolutionsClientDiagnostics.CreateScope("SecurityCenterLocationResource.GetDiscoveredSecuritySolutionsByHomeRegion");
-                scope.Start();
-                try
-                {
-                    var response = _discoveredSecuritySolutionsRestClient.ListByHomeRegionNextPage(nextLink, Id.SubscriptionId, new AzureLocation(Id.Name), cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _discoveredSecuritySolutionsRestClient.CreateListByHomeRegionRequest(Id.SubscriptionId, new AzureLocation(Id.Name));
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _discoveredSecuritySolutionsRestClient.CreateListByHomeRegionNextPageRequest(nextLink, Id.SubscriptionId, new AzureLocation(Id.Name));
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, DiscoveredSecuritySolution.DeserializeDiscoveredSecuritySolution, _discoveredSecuritySolutionsClientDiagnostics, Pipeline, "SecurityCenterLocationResource.GetDiscoveredSecuritySolutionsByHomeRegion", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -618,22 +393,8 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <returns> An async collection of <see cref="SecuritySolutionsReferenceData" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SecuritySolutionsReferenceData> GetAllSecuritySolutionsReferenceDataByHomeRegionAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<SecuritySolutionsReferenceData>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _securitySolutionsReferenceDataClientDiagnostics.CreateScope("SecurityCenterLocationResource.GetAllSecuritySolutionsReferenceDataByHomeRegion");
-                scope.Start();
-                try
-                {
-                    var response = await _securitySolutionsReferenceDataRestClient.ListByHomeRegionAsync(Id.SubscriptionId, new AzureLocation(Id.Name), cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _securitySolutionsReferenceDataRestClient.CreateListByHomeRegionRequest(Id.SubscriptionId, new AzureLocation(Id.Name));
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, SecuritySolutionsReferenceData.DeserializeSecuritySolutionsReferenceData, _securitySolutionsReferenceDataClientDiagnostics, Pipeline, "SecurityCenterLocationResource.GetAllSecuritySolutionsReferenceDataByHomeRegion", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -645,22 +406,8 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <returns> A collection of <see cref="SecuritySolutionsReferenceData" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SecuritySolutionsReferenceData> GetAllSecuritySolutionsReferenceDataByHomeRegion(CancellationToken cancellationToken = default)
         {
-            Page<SecuritySolutionsReferenceData> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _securitySolutionsReferenceDataClientDiagnostics.CreateScope("SecurityCenterLocationResource.GetAllSecuritySolutionsReferenceDataByHomeRegion");
-                scope.Start();
-                try
-                {
-                    var response = _securitySolutionsReferenceDataRestClient.ListByHomeRegion(Id.SubscriptionId, new AzureLocation(Id.Name), cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _securitySolutionsReferenceDataRestClient.CreateListByHomeRegionRequest(Id.SubscriptionId, new AzureLocation(Id.Name));
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, SecuritySolutionsReferenceData.DeserializeSecuritySolutionsReferenceData, _securitySolutionsReferenceDataClientDiagnostics, Pipeline, "SecurityCenterLocationResource.GetAllSecuritySolutionsReferenceDataByHomeRegion", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -672,37 +419,9 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <returns> An async collection of <see cref="ExternalSecuritySolution" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ExternalSecuritySolution> GetExternalSecuritySolutionsByHomeRegionAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<ExternalSecuritySolution>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _externalSecuritySolutionsClientDiagnostics.CreateScope("SecurityCenterLocationResource.GetExternalSecuritySolutionsByHomeRegion");
-                scope.Start();
-                try
-                {
-                    var response = await _externalSecuritySolutionsRestClient.ListByHomeRegionAsync(Id.SubscriptionId, new AzureLocation(Id.Name), cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<ExternalSecuritySolution>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _externalSecuritySolutionsClientDiagnostics.CreateScope("SecurityCenterLocationResource.GetExternalSecuritySolutionsByHomeRegion");
-                scope.Start();
-                try
-                {
-                    var response = await _externalSecuritySolutionsRestClient.ListByHomeRegionNextPageAsync(nextLink, Id.SubscriptionId, new AzureLocation(Id.Name), cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _externalSecuritySolutionsRestClient.CreateListByHomeRegionRequest(Id.SubscriptionId, new AzureLocation(Id.Name));
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _externalSecuritySolutionsRestClient.CreateListByHomeRegionNextPageRequest(nextLink, Id.SubscriptionId, new AzureLocation(Id.Name));
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, ExternalSecuritySolution.DeserializeExternalSecuritySolution, _externalSecuritySolutionsClientDiagnostics, Pipeline, "SecurityCenterLocationResource.GetExternalSecuritySolutionsByHomeRegion", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -714,37 +433,9 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <returns> A collection of <see cref="ExternalSecuritySolution" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ExternalSecuritySolution> GetExternalSecuritySolutionsByHomeRegion(CancellationToken cancellationToken = default)
         {
-            Page<ExternalSecuritySolution> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _externalSecuritySolutionsClientDiagnostics.CreateScope("SecurityCenterLocationResource.GetExternalSecuritySolutionsByHomeRegion");
-                scope.Start();
-                try
-                {
-                    var response = _externalSecuritySolutionsRestClient.ListByHomeRegion(Id.SubscriptionId, new AzureLocation(Id.Name), cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<ExternalSecuritySolution> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _externalSecuritySolutionsClientDiagnostics.CreateScope("SecurityCenterLocationResource.GetExternalSecuritySolutionsByHomeRegion");
-                scope.Start();
-                try
-                {
-                    var response = _externalSecuritySolutionsRestClient.ListByHomeRegionNextPage(nextLink, Id.SubscriptionId, new AzureLocation(Id.Name), cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _externalSecuritySolutionsRestClient.CreateListByHomeRegionRequest(Id.SubscriptionId, new AzureLocation(Id.Name));
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _externalSecuritySolutionsRestClient.CreateListByHomeRegionNextPageRequest(nextLink, Id.SubscriptionId, new AzureLocation(Id.Name));
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, ExternalSecuritySolution.DeserializeExternalSecuritySolution, _externalSecuritySolutionsClientDiagnostics, Pipeline, "SecurityCenterLocationResource.GetExternalSecuritySolutionsByHomeRegion", "value", "nextLink", cancellationToken);
         }
     }
 }

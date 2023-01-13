@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -187,37 +186,9 @@ namespace Azure.ResourceManager.Automation
         /// <returns> An async collection of <see cref="AutomationVariableResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<AutomationVariableResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<AutomationVariableResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _automationVariableVariableClientDiagnostics.CreateScope("AutomationVariableCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _automationVariableVariableRestClient.ListByAutomationAccountAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new AutomationVariableResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<AutomationVariableResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _automationVariableVariableClientDiagnostics.CreateScope("AutomationVariableCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _automationVariableVariableRestClient.ListByAutomationAccountNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new AutomationVariableResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _automationVariableVariableRestClient.CreateListByAutomationAccountRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _automationVariableVariableRestClient.CreateListByAutomationAccountNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new AutomationVariableResource(Client, AutomationVariableData.DeserializeAutomationVariableData(e)), _automationVariableVariableClientDiagnostics, Pipeline, "AutomationVariableCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -229,37 +200,9 @@ namespace Azure.ResourceManager.Automation
         /// <returns> A collection of <see cref="AutomationVariableResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<AutomationVariableResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<AutomationVariableResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _automationVariableVariableClientDiagnostics.CreateScope("AutomationVariableCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _automationVariableVariableRestClient.ListByAutomationAccount(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new AutomationVariableResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<AutomationVariableResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _automationVariableVariableClientDiagnostics.CreateScope("AutomationVariableCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _automationVariableVariableRestClient.ListByAutomationAccountNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new AutomationVariableResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _automationVariableVariableRestClient.CreateListByAutomationAccountRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _automationVariableVariableRestClient.CreateListByAutomationAccountNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new AutomationVariableResource(Client, AutomationVariableData.DeserializeAutomationVariableData(e)), _automationVariableVariableClientDiagnostics, Pipeline, "AutomationVariableCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

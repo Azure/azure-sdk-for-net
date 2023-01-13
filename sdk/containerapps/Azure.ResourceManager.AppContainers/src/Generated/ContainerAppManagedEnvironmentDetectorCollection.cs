@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -120,22 +119,8 @@ namespace Azure.ResourceManager.AppContainers
         /// <returns> An async collection of <see cref="ContainerAppManagedEnvironmentDetectorResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ContainerAppManagedEnvironmentDetectorResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<ContainerAppManagedEnvironmentDetectorResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _containerAppManagedEnvironmentDetectorManagedEnvironmentDiagnosticsClientDiagnostics.CreateScope("ContainerAppManagedEnvironmentDetectorCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _containerAppManagedEnvironmentDetectorManagedEnvironmentDiagnosticsRestClient.ListDetectorsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ContainerAppManagedEnvironmentDetectorResource(Client, value)), null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _containerAppManagedEnvironmentDetectorManagedEnvironmentDiagnosticsRestClient.CreateListDetectorsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new ContainerAppManagedEnvironmentDetectorResource(Client, ContainerAppDiagnosticData.DeserializeContainerAppDiagnosticData(e)), _containerAppManagedEnvironmentDetectorManagedEnvironmentDiagnosticsClientDiagnostics, Pipeline, "ContainerAppManagedEnvironmentDetectorCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -147,22 +132,8 @@ namespace Azure.ResourceManager.AppContainers
         /// <returns> A collection of <see cref="ContainerAppManagedEnvironmentDetectorResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ContainerAppManagedEnvironmentDetectorResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<ContainerAppManagedEnvironmentDetectorResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _containerAppManagedEnvironmentDetectorManagedEnvironmentDiagnosticsClientDiagnostics.CreateScope("ContainerAppManagedEnvironmentDetectorCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _containerAppManagedEnvironmentDetectorManagedEnvironmentDiagnosticsRestClient.ListDetectors(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ContainerAppManagedEnvironmentDetectorResource(Client, value)), null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _containerAppManagedEnvironmentDetectorManagedEnvironmentDiagnosticsRestClient.CreateListDetectorsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new ContainerAppManagedEnvironmentDetectorResource(Client, ContainerAppDiagnosticData.DeserializeContainerAppDiagnosticData(e)), _containerAppManagedEnvironmentDetectorManagedEnvironmentDiagnosticsClientDiagnostics, Pipeline, "ContainerAppManagedEnvironmentDetectorCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>

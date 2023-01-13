@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -186,37 +185,9 @@ namespace Azure.ResourceManager.Avs
         /// <returns> An async collection of <see cref="WorkloadNetworkPublicIPResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<WorkloadNetworkPublicIPResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<WorkloadNetworkPublicIPResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _workloadNetworkPublicIPWorkloadNetworksClientDiagnostics.CreateScope("WorkloadNetworkPublicIPCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _workloadNetworkPublicIPWorkloadNetworksRestClient.ListPublicIPsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new WorkloadNetworkPublicIPResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<WorkloadNetworkPublicIPResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _workloadNetworkPublicIPWorkloadNetworksClientDiagnostics.CreateScope("WorkloadNetworkPublicIPCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _workloadNetworkPublicIPWorkloadNetworksRestClient.ListPublicIPsNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new WorkloadNetworkPublicIPResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _workloadNetworkPublicIPWorkloadNetworksRestClient.CreateListPublicIPsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _workloadNetworkPublicIPWorkloadNetworksRestClient.CreateListPublicIPsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new WorkloadNetworkPublicIPResource(Client, WorkloadNetworkPublicIPData.DeserializeWorkloadNetworkPublicIPData(e)), _workloadNetworkPublicIPWorkloadNetworksClientDiagnostics, Pipeline, "WorkloadNetworkPublicIPCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -228,37 +199,9 @@ namespace Azure.ResourceManager.Avs
         /// <returns> A collection of <see cref="WorkloadNetworkPublicIPResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<WorkloadNetworkPublicIPResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<WorkloadNetworkPublicIPResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _workloadNetworkPublicIPWorkloadNetworksClientDiagnostics.CreateScope("WorkloadNetworkPublicIPCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _workloadNetworkPublicIPWorkloadNetworksRestClient.ListPublicIPs(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new WorkloadNetworkPublicIPResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<WorkloadNetworkPublicIPResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _workloadNetworkPublicIPWorkloadNetworksClientDiagnostics.CreateScope("WorkloadNetworkPublicIPCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _workloadNetworkPublicIPWorkloadNetworksRestClient.ListPublicIPsNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new WorkloadNetworkPublicIPResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _workloadNetworkPublicIPWorkloadNetworksRestClient.CreateListPublicIPsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _workloadNetworkPublicIPWorkloadNetworksRestClient.CreateListPublicIPsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new WorkloadNetworkPublicIPResource(Client, WorkloadNetworkPublicIPData.DeserializeWorkloadNetworkPublicIPData(e)), _workloadNetworkPublicIPWorkloadNetworksClientDiagnostics, Pipeline, "WorkloadNetworkPublicIPCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

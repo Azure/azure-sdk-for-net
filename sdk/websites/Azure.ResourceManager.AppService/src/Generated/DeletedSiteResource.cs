@@ -145,22 +145,8 @@ namespace Azure.ResourceManager.AppService
         /// <returns> An async collection of <see cref="AppSnapshot" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<AppSnapshot> GetDeletedWebAppSnapshotsAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<AppSnapshot>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _deletedSiteGlobalClientDiagnostics.CreateScope("DeletedSiteResource.GetDeletedWebAppSnapshots");
-                scope.Start();
-                try
-                {
-                    var response = await _deletedSiteGlobalRestClient.GetDeletedWebAppSnapshotsAsync(Id.SubscriptionId, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value, null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _deletedSiteGlobalRestClient.CreateGetDeletedWebAppSnapshotsRequest(Id.SubscriptionId, Id.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, AppSnapshot.DeserializeAppSnapshot, _deletedSiteGlobalClientDiagnostics, Pipeline, "DeletedSiteResource.GetDeletedWebAppSnapshots", "", null, cancellationToken);
         }
 
         /// <summary>
@@ -172,22 +158,8 @@ namespace Azure.ResourceManager.AppService
         /// <returns> A collection of <see cref="AppSnapshot" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<AppSnapshot> GetDeletedWebAppSnapshots(CancellationToken cancellationToken = default)
         {
-            Page<AppSnapshot> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _deletedSiteGlobalClientDiagnostics.CreateScope("DeletedSiteResource.GetDeletedWebAppSnapshots");
-                scope.Start();
-                try
-                {
-                    var response = _deletedSiteGlobalRestClient.GetDeletedWebAppSnapshots(Id.SubscriptionId, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value, null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _deletedSiteGlobalRestClient.CreateGetDeletedWebAppSnapshotsRequest(Id.SubscriptionId, Id.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, AppSnapshot.DeserializeAppSnapshot, _deletedSiteGlobalClientDiagnostics, Pipeline, "DeletedSiteResource.GetDeletedWebAppSnapshots", "", null, cancellationToken);
         }
     }
 }
