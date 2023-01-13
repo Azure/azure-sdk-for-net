@@ -145,22 +145,8 @@ namespace Azure.ResourceManager.EventGrid
         /// <returns> An async collection of <see cref="EventTypeUnderTopic" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<EventTypeUnderTopic> GetEventTypesAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<EventTypeUnderTopic>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _topicTypeClientDiagnostics.CreateScope("TopicTypeResource.GetEventTypes");
-                scope.Start();
-                try
-                {
-                    var response = await _topicTypeRestClient.ListEventTypesAsync(Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _topicTypeRestClient.CreateListEventTypesRequest(Id.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, EventTypeUnderTopic.DeserializeEventTypeUnderTopic, _topicTypeClientDiagnostics, Pipeline, "TopicTypeResource.GetEventTypes", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -172,22 +158,8 @@ namespace Azure.ResourceManager.EventGrid
         /// <returns> A collection of <see cref="EventTypeUnderTopic" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<EventTypeUnderTopic> GetEventTypes(CancellationToken cancellationToken = default)
         {
-            Page<EventTypeUnderTopic> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _topicTypeClientDiagnostics.CreateScope("TopicTypeResource.GetEventTypes");
-                scope.Start();
-                try
-                {
-                    var response = _topicTypeRestClient.ListEventTypes(Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _topicTypeRestClient.CreateListEventTypesRequest(Id.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, EventTypeUnderTopic.DeserializeEventTypeUnderTopic, _topicTypeClientDiagnostics, Pipeline, "TopicTypeResource.GetEventTypes", "value", null, cancellationToken);
         }
     }
 }

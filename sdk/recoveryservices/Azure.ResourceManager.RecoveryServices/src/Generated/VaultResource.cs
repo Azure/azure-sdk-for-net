@@ -430,22 +430,8 @@ namespace Azure.ResourceManager.RecoveryServices
         /// <returns> An async collection of <see cref="ReplicationUsage" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ReplicationUsage> GetReplicationUsagesAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<ReplicationUsage>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _replicationUsagesClientDiagnostics.CreateScope("VaultResource.GetReplicationUsages");
-                scope.Start();
-                try
-                {
-                    var response = await _replicationUsagesRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _replicationUsagesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, ReplicationUsage.DeserializeReplicationUsage, _replicationUsagesClientDiagnostics, Pipeline, "VaultResource.GetReplicationUsages", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -457,22 +443,8 @@ namespace Azure.ResourceManager.RecoveryServices
         /// <returns> A collection of <see cref="ReplicationUsage" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ReplicationUsage> GetReplicationUsages(CancellationToken cancellationToken = default)
         {
-            Page<ReplicationUsage> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _replicationUsagesClientDiagnostics.CreateScope("VaultResource.GetReplicationUsages");
-                scope.Start();
-                try
-                {
-                    var response = _replicationUsagesRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _replicationUsagesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, ReplicationUsage.DeserializeReplicationUsage, _replicationUsagesClientDiagnostics, Pipeline, "VaultResource.GetReplicationUsages", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -484,22 +456,8 @@ namespace Azure.ResourceManager.RecoveryServices
         /// <returns> An async collection of <see cref="VaultUsage" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<VaultUsage> GetUsagesByVaultsAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<VaultUsage>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _usagesClientDiagnostics.CreateScope("VaultResource.GetUsagesByVaults");
-                scope.Start();
-                try
-                {
-                    var response = await _usagesRestClient.ListByVaultsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _usagesRestClient.CreateListByVaultsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, VaultUsage.DeserializeVaultUsage, _usagesClientDiagnostics, Pipeline, "VaultResource.GetUsagesByVaults", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -511,22 +469,8 @@ namespace Azure.ResourceManager.RecoveryServices
         /// <returns> A collection of <see cref="VaultUsage" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<VaultUsage> GetUsagesByVaults(CancellationToken cancellationToken = default)
         {
-            Page<VaultUsage> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _usagesClientDiagnostics.CreateScope("VaultResource.GetUsagesByVaults");
-                scope.Start();
-                try
-                {
-                    var response = _usagesRestClient.ListByVaults(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _usagesRestClient.CreateListByVaultsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, VaultUsage.DeserializeVaultUsage, _usagesClientDiagnostics, Pipeline, "VaultResource.GetUsagesByVaults", "value", null, cancellationToken);
         }
 
         /// <summary>

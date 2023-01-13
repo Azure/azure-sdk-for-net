@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -186,37 +185,9 @@ namespace Azure.ResourceManager.DataMigration
         /// <returns> An async collection of <see cref="ProjectFileResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ProjectFileResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<ProjectFileResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _projectFileFilesClientDiagnostics.CreateScope("ProjectFileCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _projectFileFilesRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ProjectFileResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<ProjectFileResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _projectFileFilesClientDiagnostics.CreateScope("ProjectFileCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _projectFileFilesRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ProjectFileResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _projectFileFilesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _projectFileFilesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ProjectFileResource(Client, ProjectFileData.DeserializeProjectFileData(e)), _projectFileFilesClientDiagnostics, Pipeline, "ProjectFileCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -228,37 +199,9 @@ namespace Azure.ResourceManager.DataMigration
         /// <returns> A collection of <see cref="ProjectFileResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ProjectFileResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<ProjectFileResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _projectFileFilesClientDiagnostics.CreateScope("ProjectFileCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _projectFileFilesRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ProjectFileResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<ProjectFileResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _projectFileFilesClientDiagnostics.CreateScope("ProjectFileCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _projectFileFilesRestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ProjectFileResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _projectFileFilesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _projectFileFilesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ProjectFileResource(Client, ProjectFileData.DeserializeProjectFileData(e)), _projectFileFilesClientDiagnostics, Pipeline, "ProjectFileCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

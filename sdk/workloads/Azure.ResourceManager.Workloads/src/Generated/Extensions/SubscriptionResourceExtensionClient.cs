@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -69,37 +68,9 @@ namespace Azure.ResourceManager.Workloads
         /// <returns> An async collection of <see cref="PhpWorkloadResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<PhpWorkloadResource> GetPhpWorkloadResourcesAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<PhpWorkloadResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = PhpWorkloadResourcePhpWorkloadsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetPhpWorkloadResources");
-                scope.Start();
-                try
-                {
-                    var response = await PhpWorkloadResourcePhpWorkloadsRestClient.ListBySubscriptionAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new PhpWorkloadResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<PhpWorkloadResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = PhpWorkloadResourcePhpWorkloadsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetPhpWorkloadResources");
-                scope.Start();
-                try
-                {
-                    var response = await PhpWorkloadResourcePhpWorkloadsRestClient.ListBySubscriptionNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new PhpWorkloadResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => PhpWorkloadResourcePhpWorkloadsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => PhpWorkloadResourcePhpWorkloadsRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new PhpWorkloadResource(Client, PhpWorkloadResourceData.DeserializePhpWorkloadResourceData(e)), PhpWorkloadResourcePhpWorkloadsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetPhpWorkloadResources", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -111,37 +82,9 @@ namespace Azure.ResourceManager.Workloads
         /// <returns> A collection of <see cref="PhpWorkloadResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<PhpWorkloadResource> GetPhpWorkloadResources(CancellationToken cancellationToken = default)
         {
-            Page<PhpWorkloadResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = PhpWorkloadResourcePhpWorkloadsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetPhpWorkloadResources");
-                scope.Start();
-                try
-                {
-                    var response = PhpWorkloadResourcePhpWorkloadsRestClient.ListBySubscription(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new PhpWorkloadResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<PhpWorkloadResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = PhpWorkloadResourcePhpWorkloadsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetPhpWorkloadResources");
-                scope.Start();
-                try
-                {
-                    var response = PhpWorkloadResourcePhpWorkloadsRestClient.ListBySubscriptionNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new PhpWorkloadResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => PhpWorkloadResourcePhpWorkloadsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => PhpWorkloadResourcePhpWorkloadsRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new PhpWorkloadResource(Client, PhpWorkloadResourceData.DeserializePhpWorkloadResourceData(e)), PhpWorkloadResourcePhpWorkloadsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetPhpWorkloadResources", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -345,37 +288,9 @@ namespace Azure.ResourceManager.Workloads
         /// <returns> An async collection of <see cref="SapVirtualInstanceResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SapVirtualInstanceResource> GetSapVirtualInstancesAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<SapVirtualInstanceResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = SapVirtualInstanceSAPVirtualInstancesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetSapVirtualInstances");
-                scope.Start();
-                try
-                {
-                    var response = await SapVirtualInstanceSAPVirtualInstancesRestClient.ListBySubscriptionAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new SapVirtualInstanceResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<SapVirtualInstanceResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = SapVirtualInstanceSAPVirtualInstancesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetSapVirtualInstances");
-                scope.Start();
-                try
-                {
-                    var response = await SapVirtualInstanceSAPVirtualInstancesRestClient.ListBySubscriptionNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new SapVirtualInstanceResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => SapVirtualInstanceSAPVirtualInstancesRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => SapVirtualInstanceSAPVirtualInstancesRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SapVirtualInstanceResource(Client, SapVirtualInstanceData.DeserializeSapVirtualInstanceData(e)), SapVirtualInstanceSAPVirtualInstancesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetSapVirtualInstances", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -387,37 +302,9 @@ namespace Azure.ResourceManager.Workloads
         /// <returns> A collection of <see cref="SapVirtualInstanceResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SapVirtualInstanceResource> GetSapVirtualInstances(CancellationToken cancellationToken = default)
         {
-            Page<SapVirtualInstanceResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = SapVirtualInstanceSAPVirtualInstancesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetSapVirtualInstances");
-                scope.Start();
-                try
-                {
-                    var response = SapVirtualInstanceSAPVirtualInstancesRestClient.ListBySubscription(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new SapVirtualInstanceResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<SapVirtualInstanceResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = SapVirtualInstanceSAPVirtualInstancesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetSapVirtualInstances");
-                scope.Start();
-                try
-                {
-                    var response = SapVirtualInstanceSAPVirtualInstancesRestClient.ListBySubscriptionNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new SapVirtualInstanceResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => SapVirtualInstanceSAPVirtualInstancesRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => SapVirtualInstanceSAPVirtualInstancesRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SapVirtualInstanceResource(Client, SapVirtualInstanceData.DeserializeSapVirtualInstanceData(e)), SapVirtualInstanceSAPVirtualInstancesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetSapVirtualInstances", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -429,37 +316,9 @@ namespace Azure.ResourceManager.Workloads
         /// <returns> An async collection of <see cref="SapMonitorResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SapMonitorResource> GetSapMonitorsAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<SapMonitorResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = SapMonitormonitorsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetSapMonitors");
-                scope.Start();
-                try
-                {
-                    var response = await SapMonitormonitorsRestClient.ListAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new SapMonitorResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<SapMonitorResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = SapMonitormonitorsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetSapMonitors");
-                scope.Start();
-                try
-                {
-                    var response = await SapMonitormonitorsRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new SapMonitorResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => SapMonitormonitorsRestClient.CreateListRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => SapMonitormonitorsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SapMonitorResource(Client, SapMonitorData.DeserializeSapMonitorData(e)), SapMonitormonitorsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetSapMonitors", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -471,37 +330,9 @@ namespace Azure.ResourceManager.Workloads
         /// <returns> A collection of <see cref="SapMonitorResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SapMonitorResource> GetSapMonitors(CancellationToken cancellationToken = default)
         {
-            Page<SapMonitorResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = SapMonitormonitorsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetSapMonitors");
-                scope.Start();
-                try
-                {
-                    var response = SapMonitormonitorsRestClient.List(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new SapMonitorResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<SapMonitorResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = SapMonitormonitorsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetSapMonitors");
-                scope.Start();
-                try
-                {
-                    var response = SapMonitormonitorsRestClient.ListNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new SapMonitorResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => SapMonitormonitorsRestClient.CreateListRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => SapMonitormonitorsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SapMonitorResource(Client, SapMonitorData.DeserializeSapMonitorData(e)), SapMonitormonitorsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetSapMonitors", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -513,37 +344,9 @@ namespace Azure.ResourceManager.Workloads
         /// <returns> An async collection of <see cref="SkuDefinition" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SkuDefinition> GetSkusAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<SkuDefinition>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = SkusClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetSkus");
-                scope.Start();
-                try
-                {
-                    var response = await SkusRestClient.ListAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<SkuDefinition>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = SkusClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetSkus");
-                scope.Start();
-                try
-                {
-                    var response = await SkusRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => SkusRestClient.CreateListRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => SkusRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, SkuDefinition.DeserializeSkuDefinition, SkusClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetSkus", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -555,37 +358,9 @@ namespace Azure.ResourceManager.Workloads
         /// <returns> A collection of <see cref="SkuDefinition" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SkuDefinition> GetSkus(CancellationToken cancellationToken = default)
         {
-            Page<SkuDefinition> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = SkusClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetSkus");
-                scope.Start();
-                try
-                {
-                    var response = SkusRestClient.List(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<SkuDefinition> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = SkusClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetSkus");
-                scope.Start();
-                try
-                {
-                    var response = SkusRestClient.ListNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => SkusRestClient.CreateListRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => SkusRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, SkuDefinition.DeserializeSkuDefinition, SkusClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetSkus", "value", "nextLink", cancellationToken);
         }
     }
 }

@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -191,37 +190,9 @@ namespace Azure.ResourceManager.ProviderHub
         /// <returns> An async collection of <see cref="NestedResourceTypeFirstSkuResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<NestedResourceTypeFirstSkuResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<NestedResourceTypeFirstSkuResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _nestedResourceTypeFirstSkuSkusClientDiagnostics.CreateScope("NestedResourceTypeFirstSkuCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _nestedResourceTypeFirstSkuSkusRestClient.ListByResourceTypeRegistrationsNestedResourceTypeFirstAsync(Id.SubscriptionId, Id.Parent.Name, Id.Name, _nestedResourceTypeFirst, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new NestedResourceTypeFirstSkuResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<NestedResourceTypeFirstSkuResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _nestedResourceTypeFirstSkuSkusClientDiagnostics.CreateScope("NestedResourceTypeFirstSkuCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _nestedResourceTypeFirstSkuSkusRestClient.ListByResourceTypeRegistrationsNestedResourceTypeFirstNextPageAsync(nextLink, Id.SubscriptionId, Id.Parent.Name, Id.Name, _nestedResourceTypeFirst, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new NestedResourceTypeFirstSkuResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _nestedResourceTypeFirstSkuSkusRestClient.CreateListByResourceTypeRegistrationsNestedResourceTypeFirstRequest(Id.SubscriptionId, Id.Parent.Name, Id.Name, _nestedResourceTypeFirst);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _nestedResourceTypeFirstSkuSkusRestClient.CreateListByResourceTypeRegistrationsNestedResourceTypeFirstNextPageRequest(nextLink, Id.SubscriptionId, Id.Parent.Name, Id.Name, _nestedResourceTypeFirst);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new NestedResourceTypeFirstSkuResource(Client, SkuResourceData.DeserializeSkuResourceData(e)), _nestedResourceTypeFirstSkuSkusClientDiagnostics, Pipeline, "NestedResourceTypeFirstSkuCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -233,37 +204,9 @@ namespace Azure.ResourceManager.ProviderHub
         /// <returns> A collection of <see cref="NestedResourceTypeFirstSkuResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<NestedResourceTypeFirstSkuResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<NestedResourceTypeFirstSkuResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _nestedResourceTypeFirstSkuSkusClientDiagnostics.CreateScope("NestedResourceTypeFirstSkuCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _nestedResourceTypeFirstSkuSkusRestClient.ListByResourceTypeRegistrationsNestedResourceTypeFirst(Id.SubscriptionId, Id.Parent.Name, Id.Name, _nestedResourceTypeFirst, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new NestedResourceTypeFirstSkuResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<NestedResourceTypeFirstSkuResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _nestedResourceTypeFirstSkuSkusClientDiagnostics.CreateScope("NestedResourceTypeFirstSkuCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _nestedResourceTypeFirstSkuSkusRestClient.ListByResourceTypeRegistrationsNestedResourceTypeFirstNextPage(nextLink, Id.SubscriptionId, Id.Parent.Name, Id.Name, _nestedResourceTypeFirst, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new NestedResourceTypeFirstSkuResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _nestedResourceTypeFirstSkuSkusRestClient.CreateListByResourceTypeRegistrationsNestedResourceTypeFirstRequest(Id.SubscriptionId, Id.Parent.Name, Id.Name, _nestedResourceTypeFirst);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _nestedResourceTypeFirstSkuSkusRestClient.CreateListByResourceTypeRegistrationsNestedResourceTypeFirstNextPageRequest(nextLink, Id.SubscriptionId, Id.Parent.Name, Id.Name, _nestedResourceTypeFirst);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new NestedResourceTypeFirstSkuResource(Client, SkuResourceData.DeserializeSkuResourceData(e)), _nestedResourceTypeFirstSkuSkusClientDiagnostics, Pipeline, "NestedResourceTypeFirstSkuCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -186,22 +185,8 @@ namespace Azure.ResourceManager.Kusto
         /// <returns> An async collection of <see cref="KustoManagedPrivateEndpointResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<KustoManagedPrivateEndpointResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<KustoManagedPrivateEndpointResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _kustoManagedPrivateEndpointManagedPrivateEndpointsClientDiagnostics.CreateScope("KustoManagedPrivateEndpointCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _kustoManagedPrivateEndpointManagedPrivateEndpointsRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new KustoManagedPrivateEndpointResource(Client, value)), null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _kustoManagedPrivateEndpointManagedPrivateEndpointsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new KustoManagedPrivateEndpointResource(Client, KustoManagedPrivateEndpointData.DeserializeKustoManagedPrivateEndpointData(e)), _kustoManagedPrivateEndpointManagedPrivateEndpointsClientDiagnostics, Pipeline, "KustoManagedPrivateEndpointCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -213,22 +198,8 @@ namespace Azure.ResourceManager.Kusto
         /// <returns> A collection of <see cref="KustoManagedPrivateEndpointResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<KustoManagedPrivateEndpointResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<KustoManagedPrivateEndpointResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _kustoManagedPrivateEndpointManagedPrivateEndpointsClientDiagnostics.CreateScope("KustoManagedPrivateEndpointCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _kustoManagedPrivateEndpointManagedPrivateEndpointsRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new KustoManagedPrivateEndpointResource(Client, value)), null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _kustoManagedPrivateEndpointManagedPrivateEndpointsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new KustoManagedPrivateEndpointResource(Client, KustoManagedPrivateEndpointData.DeserializeKustoManagedPrivateEndpointData(e)), _kustoManagedPrivateEndpointManagedPrivateEndpointsClientDiagnostics, Pipeline, "KustoManagedPrivateEndpointCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>

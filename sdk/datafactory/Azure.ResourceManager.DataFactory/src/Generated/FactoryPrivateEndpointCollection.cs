@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -190,37 +189,9 @@ namespace Azure.ResourceManager.DataFactory
         /// <returns> An async collection of <see cref="FactoryPrivateEndpointResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<FactoryPrivateEndpointResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<FactoryPrivateEndpointResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _factoryPrivateEndpointManagedPrivateEndpointsClientDiagnostics.CreateScope("FactoryPrivateEndpointCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _factoryPrivateEndpointManagedPrivateEndpointsRestClient.ListByFactoryAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new FactoryPrivateEndpointResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<FactoryPrivateEndpointResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _factoryPrivateEndpointManagedPrivateEndpointsClientDiagnostics.CreateScope("FactoryPrivateEndpointCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _factoryPrivateEndpointManagedPrivateEndpointsRestClient.ListByFactoryNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new FactoryPrivateEndpointResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _factoryPrivateEndpointManagedPrivateEndpointsRestClient.CreateListByFactoryRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _factoryPrivateEndpointManagedPrivateEndpointsRestClient.CreateListByFactoryNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new FactoryPrivateEndpointResource(Client, FactoryPrivateEndpointData.DeserializeFactoryPrivateEndpointData(e)), _factoryPrivateEndpointManagedPrivateEndpointsClientDiagnostics, Pipeline, "FactoryPrivateEndpointCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -232,37 +203,9 @@ namespace Azure.ResourceManager.DataFactory
         /// <returns> A collection of <see cref="FactoryPrivateEndpointResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<FactoryPrivateEndpointResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<FactoryPrivateEndpointResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _factoryPrivateEndpointManagedPrivateEndpointsClientDiagnostics.CreateScope("FactoryPrivateEndpointCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _factoryPrivateEndpointManagedPrivateEndpointsRestClient.ListByFactory(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new FactoryPrivateEndpointResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<FactoryPrivateEndpointResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _factoryPrivateEndpointManagedPrivateEndpointsClientDiagnostics.CreateScope("FactoryPrivateEndpointCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _factoryPrivateEndpointManagedPrivateEndpointsRestClient.ListByFactoryNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new FactoryPrivateEndpointResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _factoryPrivateEndpointManagedPrivateEndpointsRestClient.CreateListByFactoryRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _factoryPrivateEndpointManagedPrivateEndpointsRestClient.CreateListByFactoryNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new FactoryPrivateEndpointResource(Client, FactoryPrivateEndpointData.DeserializeFactoryPrivateEndpointData(e)), _factoryPrivateEndpointManagedPrivateEndpointsClientDiagnostics, Pipeline, "FactoryPrivateEndpointCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
