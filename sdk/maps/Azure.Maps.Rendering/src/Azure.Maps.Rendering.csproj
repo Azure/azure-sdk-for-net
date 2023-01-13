@@ -36,6 +36,8 @@
     <Compile Include="$(AzureCoreSharedSources)OperationPoller.cs" LinkBase="Shared/Core" />
     <Compile Include="$(AzureCoreSharedSources)RetryAfterDelayStrategy.cs" LinkBase="Shared/Core" />
     <Compile Include="$(AzureCoreSharedSources)VoidValue.cs" LinkBase="Shared/Core" />
+    <Compile Include="$(AzureCoreSharedSources)DecodedResponse.cs" LinkBase="Shared/Core" />
+    <Compile Include="$(AzureCoreSharedSources)StreamConverter.cs" LinkBase="Shared/Core" />
   </ItemGroup>
 
   <!-- Shared source from Azure.Maps -->

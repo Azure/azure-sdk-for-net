@@ -56,6 +56,8 @@
     <Compile Include="..\..\..\core\Azure.Core\src\Shared\RetryAfterDelayStrategy.cs" LinkBase="Shared\Core" />
     <Compile Include="..\..\..\core\Azure.Core\src\Shared\TaskExtensions.cs" LinkBase="Shared\Core" />
     <Compile Include="..\..\..\core\Azure.Core\src\Shared\VoidValue.cs" LinkBase="Shared\Core" />
+    <Compile Include="..\..\..\core\Azure.Core\src\Shared\DecodedResponse.cs" LinkBase="Shared\Core" />
+    <Compile Include="..\..\..\core\Azure.Core\src\Shared\StreamConverter.cs" LinkBase="Shared\Core" />
   </ItemGroup>
 
   <ItemGroup Condition="'$(IsSample)' == 'true'">

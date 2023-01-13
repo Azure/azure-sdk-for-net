@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Tests
     public class LroRehydrationTests : ResourceManagerTestBase
     {
         public LroRehydrationTests(bool isAsync)
-            : base(isAsync, RecordedTestMode.Record)
+            : base(isAsync)
         {
         }
 

@@ -38,6 +38,8 @@
     <Compile Include="$(AzureCoreSharedSources)RetryAfterDelayStrategy.cs" LinkBase="Shared" />
     <Compile Include="$(AzureCoreSharedSources)ConstantDelayStrategy.cs" LinkBase="Shared" />
     <Compile Include="$(AzureCoreSharedSources)ExponentialDelayStrategy.cs" LinkBase="Shared" />
+    <Compile Include="$(AzureCoreSharedSources)DecodedResponse.cs" LinkBase="Shared" />
+    <Compile Include="$(AzureCoreSharedSources)StreamConverter.cs" LinkBase="Shared" />
   </ItemGroup>
 
   <!-- Shared source from Azure.Maps -->
