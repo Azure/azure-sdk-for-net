@@ -4,6 +4,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.NetworkInformation;
+using System.Runtime.InteropServices;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
@@ -33,7 +35,7 @@ namespace Azure.Monitor.Ingestion
         // If no concurrency count is provided for a parallel upload, default to 5 workers.
         private const int DefaultParallelWorkerCount = 5;
 
-        internal readonly struct BatchedLogs <T>
+        internal readonly struct BatchedLogs
         {
             public BatchedLogs(int logsCount, BinaryData logsData)
             {
@@ -83,7 +85,7 @@ namespace Azure.Monitor.Ingestion
         /// <param name="logEntries"></param>
         /// <param name="options"></param>
         /// <returns></returns>
-        internal static IEnumerable<BatchedLogs<T>> Batch<T>(IEnumerable<T> logEntries, UploadLogsOptions options = null)
+        internal static IEnumerable<BatchedLogs> Batch<T>(IEnumerable<T> logEntries, UploadLogsOptions options = null)
         {
             // Create an ArrayBufferWriter as backing store for Utf8JsonWriter
             ArrayBufferWriter<byte> arrayBuffer = new ArrayBufferWriter<byte>(SingleUploadThreshold);
@@ -118,7 +120,7 @@ namespace Azure.Monitor.Ingestion
                     WriteMemory(tempWriter, memory);
                     tempWriter.WriteEndArray();
                     tempWriter.Flush();
-                    yield return new BatchedLogs<T>(1, BinaryData.FromBytes(tempArrayBuffer.WrittenMemory));
+                    yield return new BatchedLogs(1, BinaryData.FromBytes(tempArrayBuffer.WrittenMemory));
                 }
                 // if adding this entry makes stream > 1 Mb send current stream now
                 else if ((writer.BytesPending + memory.Length + 1) >= SingleUploadThreshold)
@@ -126,7 +128,7 @@ namespace Azure.Monitor.Ingestion
                     writer.WriteEndArray();
                     writer.Flush();
                     // This batch is full so send it now
-                    yield return new BatchedLogs<T>(currentLogList.Count, BinaryData.FromBytes(arrayBuffer.WrittenMemory));
+                    yield return new BatchedLogs(currentLogList.Count, BinaryData.FromBytes(arrayBuffer.WrittenMemory));
 
                     // Reset arrayBuffer and writer for next batch
                     arrayBuffer = new ArrayBufferWriter<byte>(SingleUploadThreshold);
@@ -143,7 +145,7 @@ namespace Azure.Monitor.Ingestion
                     {
                         writer.WriteEndArray();
                         writer.Flush();
-                        yield return new BatchedLogs<T>(currentLogList.Count, BinaryData.FromBytes(arrayBuffer.WrittenMemory));
+                        yield return new BatchedLogs(currentLogList.Count, BinaryData.FromBytes(arrayBuffer.WrittenMemory));
                     }
                 }
                 else
@@ -157,7 +159,7 @@ namespace Azure.Monitor.Ingestion
                     {
                         writer.WriteEndArray();
                         writer.Flush();
-                        yield return new BatchedLogs<T>(currentLogList.Count, BinaryData.FromBytes(arrayBuffer.WrittenMemory));
+                        yield return new BatchedLogs(currentLogList.Count, BinaryData.FromBytes(arrayBuffer.WrittenMemory));
                     }
                 }
                 entryCount++;
@@ -199,14 +201,15 @@ namespace Azure.Monitor.Ingestion
         /// ]]></code>
         /// </example>
         /// <remarks> See error response code and error response message for more detail. </remarks>
-        public virtual Response Upload<T>(string ruleId, string streamName, IEnumerable<T> logs, UploadLogsOptions options = null, CancellationToken cancellationToken = default)
+        public virtual Response Upload(string ruleId, string streamName, IEnumerable<object> logs, UploadLogsOptions options = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(ruleId, nameof(ruleId));
             Argument.AssertNotNullOrEmpty(streamName, nameof(streamName));
             Argument.AssertNotNullOrEmpty(logs, nameof(logs));
 
             using var scope = ClientDiagnostics.CreateScope("LogsIngestionClient.Upload");
-
+            //event SyncAsyncEventHandler<UploadFailedArgs> handler += options.UploadFailed;
+            options = options?.Clone();
             Response response = null;
             List<Exception> exceptions = null;
 
@@ -215,7 +218,7 @@ namespace Azure.Monitor.Ingestion
             int logsFailed = 0;
 
             // Partition the stream into individual blocks
-            foreach (BatchedLogs<T> batch in Batch(logs, options))
+            foreach (BatchedLogs batch in Batch(logs, options))
             {
                 try
                 {
@@ -229,7 +232,7 @@ namespace Azure.Monitor.Ingestion
 
                     if (response.Status != 204)
                     {
-                        throw new RequestFailedException(response);
+                        OnExceptionAsync(false, batch.LogsCount, options, response, cancellationToken).EnsureCompleted();
                     }
                 }
                 catch (Exception ex)
@@ -252,6 +255,42 @@ namespace Azure.Monitor.Ingestion
             return response; //204 - response of last batch with header
         }
 
+        /// <summary>
+        /// test
+        /// </summary>
+        /// <param name="isAsync"></param>
+        /// <param name="logsCount"></param>
+        /// <param name="options"></param>
+        /// <param name="response"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        /// <exception cref="RequestFailedException"></exception>
+        protected internal virtual async Task OnExceptionAsync(bool isAsync, int logsCount, UploadLogsOptions options, Response response, CancellationToken cancellationToken = default)
+        {
+            //await ActionAdded.RaiseAsync(
+            //        new IndexActionEventArgs<T>(
+            //            this,
+            //            action,
+            //            isRunningSynchronously: false,
+            //            cancellationToken),
+            //        nameof(SearchIndexingBufferedSender<T>),
+            //        nameof(ActionAdded),
+            //        SearchClient.ClientDiagnostics)
+            //        .ConfigureAwait(false);
+            try
+            {
+                UploadFailedArgs uploadFailedArgs = new UploadFailedArgs(logsCount, new RequestFailedException(response), true, cancellationToken);
+                await options.UploadFailed.RaiseAsync(uploadFailedArgs, nameof(LogsIngestionClient), "Upload", ClientDiagnostics).ConfigureAwait(false);
+
+                if (options == null)
+                {
+                    throw new RequestFailedException(response);
+                }
+            }
+            catch (Exception)
+            {
+            }
+        }
         /// <summary> Ingestion API used to directly ingest data using Data Collection Rules. </summary>
         /// <param name="ruleId"> The immutable Id of the Data Collection Rule resource. </param>
         /// <param name="streamName"> The streamDeclaration name as defined in the Data Collection Rule. </param>
@@ -278,7 +317,7 @@ namespace Azure.Monitor.Ingestion
         /// ]]></code>
         /// </example>
         /// <remarks> See error response code and error response message for more detail. </remarks>
-        public virtual async Task<Response> UploadAsync<T>(string ruleId, string streamName, IEnumerable<T> logs, UploadLogsOptions options = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> UploadAsync(string ruleId, string streamName, IEnumerable<object> logs, UploadLogsOptions options = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(ruleId, nameof(ruleId));
             Argument.AssertNotNullOrEmpty(streamName, nameof(streamName));
@@ -299,7 +338,7 @@ namespace Azure.Monitor.Ingestion
             int logsFailed = 0;
 
             // Partition the stream into individual blocks
-            foreach (BatchedLogs<T> batch in Batch(logs, options))
+            foreach (BatchedLogs batch in Batch(logs, options))
             {
                 try
                 {
@@ -380,7 +419,7 @@ namespace Azure.Monitor.Ingestion
             }
         }
 
-        private async Task<Response> UploadBatchListSyncOrAsync<T>(BatchedLogs<T> batch, string ruleId, string streamName, bool async, CancellationToken cancellationToken)
+        private async Task<Response> UploadBatchListSyncOrAsync(BatchedLogs batch, string ruleId, string streamName, bool async, CancellationToken cancellationToken)
         {
             using HttpMessage message = CreateUploadRequest(ruleId, streamName, batch.LogsData, Compression, null);
 
