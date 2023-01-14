@@ -7,6 +7,8 @@ Project("{BA64559C-F3FC-407C-AB62-0BA086DE3778}") = "Azure.ResourceManager.Purvi
 EndProject
 Project("{BA64559C-F3FC-407C-AB62-0BA086DE3778}") = "Azure.ResourceManager.Purview.Tests", "tests\Azure.ResourceManager.Purview.Tests.csproj", "{5AE4E305-258B-44A2-8428-762ABCB0E4BE}"
 EndProject
+Project("{BA64559C-F3FC-407C-AB62-0BA086DE3778}") = "Azure.ResourceManager.Purview.Samples", "samples\Azure.ResourceManager.Purview.Samples.csproj", "{2A76BAA9-621F-4F84-B242-141346130E38}"
+EndProject
 Global
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
