@@ -51,8 +51,16 @@ namespace Azure.ResourceManager.Logic
 
         /// <summary>
         /// Gets a list of workflows by subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Logic/workflows
-        /// Operation Id: Workflows_ListBySubscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Logic/workflows</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Workflows_ListBySubscription</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="top"> The number of items to be included in the result. </param>
         /// <param name="filter"> The filter to apply on the operation. Options for filters include: State, Trigger, and ReferencedResourceId. </param>
@@ -67,8 +75,16 @@ namespace Azure.ResourceManager.Logic
 
         /// <summary>
         /// Gets a list of workflows by subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Logic/workflows
-        /// Operation Id: Workflows_ListBySubscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Logic/workflows</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Workflows_ListBySubscription</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="top"> The number of items to be included in the result. </param>
         /// <param name="filter"> The filter to apply on the operation. Options for filters include: State, Trigger, and ReferencedResourceId. </param>
@@ -83,8 +99,16 @@ namespace Azure.ResourceManager.Logic
 
         /// <summary>
         /// Gets a list of integration accounts by subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Logic/integrationAccounts
-        /// Operation Id: IntegrationAccounts_ListBySubscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Logic/integrationAccounts</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>IntegrationAccounts_ListBySubscription</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="top"> The number of items to be included in the result. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -98,8 +122,16 @@ namespace Azure.ResourceManager.Logic
 
         /// <summary>
         /// Gets a list of integration accounts by subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Logic/integrationAccounts
-        /// Operation Id: IntegrationAccounts_ListBySubscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Logic/integrationAccounts</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>IntegrationAccounts_ListBySubscription</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="top"> The number of items to be included in the result. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -113,8 +145,16 @@ namespace Azure.ResourceManager.Logic
 
         /// <summary>
         /// Gets a list of integration service environments by subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Logic/integrationServiceEnvironments
-        /// Operation Id: IntegrationServiceEnvironments_ListBySubscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Logic/integrationServiceEnvironments</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>IntegrationServiceEnvironments_ListBySubscription</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="top"> The number of items to be included in the result. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -128,8 +168,16 @@ namespace Azure.ResourceManager.Logic
 
         /// <summary>
         /// Gets a list of integration service environments by subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Logic/integrationServiceEnvironments
-        /// Operation Id: IntegrationServiceEnvironments_ListBySubscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Logic/integrationServiceEnvironments</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>IntegrationServiceEnvironments_ListBySubscription</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="top"> The number of items to be included in the result. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

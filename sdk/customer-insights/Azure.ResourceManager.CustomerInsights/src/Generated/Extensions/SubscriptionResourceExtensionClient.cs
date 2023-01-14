@@ -43,8 +43,16 @@ namespace Azure.ResourceManager.CustomerInsights
 
         /// <summary>
         /// Gets all hubs in the specified subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.CustomerInsights/hubs
-        /// Operation Id: Hubs_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.CustomerInsights/hubs</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Hubs_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="HubResource" /> that may take multiple service requests to iterate over. </returns>
@@ -57,8 +65,16 @@ namespace Azure.ResourceManager.CustomerInsights
 
         /// <summary>
         /// Gets all hubs in the specified subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.CustomerInsights/hubs
-        /// Operation Id: Hubs_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.CustomerInsights/hubs</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Hubs_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="HubResource" /> that may take multiple service requests to iterate over. </returns>

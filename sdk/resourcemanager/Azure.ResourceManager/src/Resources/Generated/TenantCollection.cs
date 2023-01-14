@@ -50,8 +50,16 @@ namespace Azure.ResourceManager.Resources
 
         /// <summary>
         /// Gets the tenants for your account.
-        /// Request Path: /tenants
-        /// Operation Id: Tenants_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/tenants</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Tenants_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="TenantResource" /> that may take multiple service requests to iterate over. </returns>
@@ -64,8 +72,16 @@ namespace Azure.ResourceManager.Resources
 
         /// <summary>
         /// Gets the tenants for your account.
-        /// Request Path: /tenants
-        /// Operation Id: Tenants_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/tenants</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Tenants_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="TenantResource" /> that may take multiple service requests to iterate over. </returns>
