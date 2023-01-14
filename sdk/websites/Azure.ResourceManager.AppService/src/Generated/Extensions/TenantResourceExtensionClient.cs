@@ -66,8 +66,16 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary>
         /// Description for Implements Csm operations Api to exposes the list of available Csm Apis under the resource provider
-        /// Request Path: /providers/Microsoft.CertificateRegistration/operations
-        /// Operation Id: CertificateRegistrationProvider_ListOperations
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.CertificateRegistration/operations</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>CertificateRegistrationProvider_ListOperations</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="CsmOperationDescription" /> that may take multiple service requests to iterate over. </returns>
@@ -80,8 +88,16 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary>
         /// Description for Implements Csm operations Api to exposes the list of available Csm Apis under the resource provider
-        /// Request Path: /providers/Microsoft.CertificateRegistration/operations
-        /// Operation Id: CertificateRegistrationProvider_ListOperations
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.CertificateRegistration/operations</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>CertificateRegistrationProvider_ListOperations</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="CsmOperationDescription" /> that may take multiple service requests to iterate over. </returns>
@@ -94,8 +110,16 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary>
         /// Description for Implements Csm operations Api to exposes the list of available Csm Apis under the resource provider
-        /// Request Path: /providers/Microsoft.DomainRegistration/operations
-        /// Operation Id: DomainRegistrationProvider_ListOperations
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.DomainRegistration/operations</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DomainRegistrationProvider_ListOperations</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="CsmOperationDescription" /> that may take multiple service requests to iterate over. </returns>
@@ -108,8 +132,16 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary>
         /// Description for Implements Csm operations Api to exposes the list of available Csm Apis under the resource provider
-        /// Request Path: /providers/Microsoft.DomainRegistration/operations
-        /// Operation Id: DomainRegistrationProvider_ListOperations
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.DomainRegistration/operations</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DomainRegistrationProvider_ListOperations</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="CsmOperationDescription" /> that may take multiple service requests to iterate over. </returns>
@@ -122,8 +154,16 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary>
         /// Description for Get available application frameworks and their versions
-        /// Request Path: /providers/Microsoft.Web/availableStacks
-        /// Operation Id: Provider_GetAvailableStacks
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Web/availableStacks</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Provider_GetAvailableStacks</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="osTypeSelected"> The ProviderOSTypeSelected to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -137,8 +177,16 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary>
         /// Description for Get available application frameworks and their versions
-        /// Request Path: /providers/Microsoft.Web/availableStacks
-        /// Operation Id: Provider_GetAvailableStacks
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Web/availableStacks</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Provider_GetAvailableStacks</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="osTypeSelected"> The ProviderOSTypeSelected to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -152,8 +200,16 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary>
         /// Description for Get available Function app frameworks and their versions
-        /// Request Path: /providers/Microsoft.Web/functionAppStacks
-        /// Operation Id: Provider_GetFunctionAppStacks
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Web/functionAppStacks</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Provider_GetFunctionAppStacks</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="stackOSType"> Stack OS Type. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -167,8 +223,16 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary>
         /// Description for Get available Function app frameworks and their versions
-        /// Request Path: /providers/Microsoft.Web/functionAppStacks
-        /// Operation Id: Provider_GetFunctionAppStacks
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Web/functionAppStacks</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Provider_GetFunctionAppStacks</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="stackOSType"> Stack OS Type. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -182,8 +246,16 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary>
         /// Description for Get available Function app frameworks and their versions for location
-        /// Request Path: /providers/Microsoft.Web/locations/{location}/functionAppStacks
-        /// Operation Id: Provider_GetFunctionAppStacksForLocation
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Web/locations/{location}/functionAppStacks</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Provider_GetFunctionAppStacksForLocation</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="location"> Function App stack location. </param>
         /// <param name="stackOSType"> Stack OS Type. </param>
@@ -198,8 +270,16 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary>
         /// Description for Get available Function app frameworks and their versions for location
-        /// Request Path: /providers/Microsoft.Web/locations/{location}/functionAppStacks
-        /// Operation Id: Provider_GetFunctionAppStacksForLocation
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Web/locations/{location}/functionAppStacks</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Provider_GetFunctionAppStacksForLocation</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="location"> Function App stack location. </param>
         /// <param name="stackOSType"> Stack OS Type. </param>
@@ -214,8 +294,16 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary>
         /// Description for Get available Web app frameworks and their versions for location
-        /// Request Path: /providers/Microsoft.Web/locations/{location}/webAppStacks
-        /// Operation Id: Provider_GetWebAppStacksForLocation
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Web/locations/{location}/webAppStacks</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Provider_GetWebAppStacksForLocation</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="location"> Web App stack location. </param>
         /// <param name="stackOSType"> Stack OS Type. </param>
@@ -230,8 +318,16 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary>
         /// Description for Get available Web app frameworks and their versions for location
-        /// Request Path: /providers/Microsoft.Web/locations/{location}/webAppStacks
-        /// Operation Id: Provider_GetWebAppStacksForLocation
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Web/locations/{location}/webAppStacks</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Provider_GetWebAppStacksForLocation</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="location"> Web App stack location. </param>
         /// <param name="stackOSType"> Stack OS Type. </param>
@@ -246,8 +342,16 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary>
         /// Description for Gets all available operations for the Microsoft.Web resource provider. Also exposes resource metric definitions
-        /// Request Path: /providers/Microsoft.Web/operations
-        /// Operation Id: Provider_ListOperations
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Web/operations</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Provider_ListOperations</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="CsmOperationDescription" /> that may take multiple service requests to iterate over. </returns>
@@ -260,8 +364,16 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary>
         /// Description for Gets all available operations for the Microsoft.Web resource provider. Also exposes resource metric definitions
-        /// Request Path: /providers/Microsoft.Web/operations
-        /// Operation Id: Provider_ListOperations
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Web/operations</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Provider_ListOperations</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="CsmOperationDescription" /> that may take multiple service requests to iterate over. </returns>
@@ -274,8 +386,16 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary>
         /// Description for Get available Web app frameworks and their versions
-        /// Request Path: /providers/Microsoft.Web/webAppStacks
-        /// Operation Id: Provider_GetWebAppStacks
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Web/webAppStacks</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Provider_GetWebAppStacks</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="stackOSType"> Stack OS Type. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -289,8 +409,16 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary>
         /// Description for Get available Web app frameworks and their versions
-        /// Request Path: /providers/Microsoft.Web/webAppStacks
-        /// Operation Id: Provider_GetWebAppStacks
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Web/webAppStacks</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Provider_GetWebAppStacks</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="stackOSType"> Stack OS Type. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

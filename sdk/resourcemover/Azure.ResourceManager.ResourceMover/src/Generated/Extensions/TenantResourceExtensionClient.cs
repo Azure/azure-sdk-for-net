@@ -43,8 +43,16 @@ namespace Azure.ResourceManager.ResourceMover
         }
 
         /// <summary>
-        /// Request Path: /providers/Microsoft.Migrate/operations
-        /// Operation Id: OperationsDiscovery_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Migrate/operations</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>OperationsDiscovery_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="MoverOperationsDiscovery" /> that may take multiple service requests to iterate over. </returns>
@@ -55,8 +63,16 @@ namespace Azure.ResourceManager.ResourceMover
         }
 
         /// <summary>
-        /// Request Path: /providers/Microsoft.Migrate/operations
-        /// Operation Id: OperationsDiscovery_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Migrate/operations</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>OperationsDiscovery_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="MoverOperationsDiscovery" /> that may take multiple service requests to iterate over. </returns>

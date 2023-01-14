@@ -44,8 +44,16 @@ namespace Azure.ResourceManager.AppPlatform
 
         /// <summary>
         /// Lists all of the available runtime versions supported by Microsoft.AppPlatform provider.
-        /// Request Path: /providers/Microsoft.AppPlatform/runtimeVersions
-        /// Operation Id: RuntimeVersions_ListRuntimeVersions
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.AppPlatform/runtimeVersions</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>RuntimeVersions_ListRuntimeVersions</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="AppPlatformSupportedRuntimeVersion" /> that may take multiple service requests to iterate over. </returns>
@@ -57,8 +65,16 @@ namespace Azure.ResourceManager.AppPlatform
 
         /// <summary>
         /// Lists all of the available runtime versions supported by Microsoft.AppPlatform provider.
-        /// Request Path: /providers/Microsoft.AppPlatform/runtimeVersions
-        /// Operation Id: RuntimeVersions_ListRuntimeVersions
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.AppPlatform/runtimeVersions</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>RuntimeVersions_ListRuntimeVersions</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="AppPlatformSupportedRuntimeVersion" /> that may take multiple service requests to iterate over. </returns>

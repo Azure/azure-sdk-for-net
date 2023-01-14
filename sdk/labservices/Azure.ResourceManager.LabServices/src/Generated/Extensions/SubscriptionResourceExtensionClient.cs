@@ -56,8 +56,16 @@ namespace Azure.ResourceManager.LabServices
 
         /// <summary>
         /// Returns a list of all lab plans within a subscription
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.LabServices/labPlans
-        /// Operation Id: LabPlans_ListBySubscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.LabServices/labPlans</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>LabPlans_ListBySubscription</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="filter"> The filter to apply to the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -71,8 +79,16 @@ namespace Azure.ResourceManager.LabServices
 
         /// <summary>
         /// Returns a list of all lab plans within a subscription
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.LabServices/labPlans
-        /// Operation Id: LabPlans_ListBySubscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.LabServices/labPlans</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>LabPlans_ListBySubscription</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="filter"> The filter to apply to the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -86,8 +102,16 @@ namespace Azure.ResourceManager.LabServices
 
         /// <summary>
         /// Returns a list of all labs for a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.LabServices/labs
-        /// Operation Id: Labs_ListBySubscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.LabServices/labs</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Labs_ListBySubscription</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="filter"> The filter to apply to the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -101,8 +125,16 @@ namespace Azure.ResourceManager.LabServices
 
         /// <summary>
         /// Returns a list of all labs for a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.LabServices/labs
-        /// Operation Id: Labs_ListBySubscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.LabServices/labs</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Labs_ListBySubscription</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="filter"> The filter to apply to the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -116,8 +148,16 @@ namespace Azure.ResourceManager.LabServices
 
         /// <summary>
         /// Returns a list of Azure Lab Services resource SKUs.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.LabServices/skus
-        /// Operation Id: Skus_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.LabServices/skus</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Skus_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="filter"> The filter to apply to the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -131,8 +171,16 @@ namespace Azure.ResourceManager.LabServices
 
         /// <summary>
         /// Returns a list of Azure Lab Services resource SKUs.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.LabServices/skus
-        /// Operation Id: Skus_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.LabServices/skus</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Skus_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="filter"> The filter to apply to the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -146,8 +194,16 @@ namespace Azure.ResourceManager.LabServices
 
         /// <summary>
         /// Returns list of usage per SKU family for the specified subscription in the specified region.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.LabServices/locations/{location}/usages
-        /// Operation Id: Usages_ListByLocation
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.LabServices/locations/{location}/usages</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Usages_ListByLocation</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="location"> The location name. </param>
         /// <param name="filter"> The filter to apply to the operation. </param>
@@ -162,8 +218,16 @@ namespace Azure.ResourceManager.LabServices
 
         /// <summary>
         /// Returns list of usage per SKU family for the specified subscription in the specified region.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.LabServices/locations/{location}/usages
-        /// Operation Id: Usages_ListByLocation
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.LabServices/locations/{location}/usages</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Usages_ListByLocation</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="location"> The location name. </param>
         /// <param name="filter"> The filter to apply to the operation. </param>

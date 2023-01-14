@@ -43,8 +43,16 @@ namespace Azure.ResourceManager.Grafana
 
         /// <summary>
         /// List all resources of workspaces for Grafana under the specified subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Dashboard/grafana
-        /// Operation Id: Grafana_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Dashboard/grafana</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Grafana_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ManagedGrafanaResource" /> that may take multiple service requests to iterate over. </returns>
@@ -57,8 +65,16 @@ namespace Azure.ResourceManager.Grafana
 
         /// <summary>
         /// List all resources of workspaces for Grafana under the specified subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Dashboard/grafana
-        /// Operation Id: Grafana_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Dashboard/grafana</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Grafana_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ManagedGrafanaResource" /> that may take multiple service requests to iterate over. </returns>

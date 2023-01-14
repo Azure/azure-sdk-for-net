@@ -44,8 +44,16 @@ namespace Azure.ResourceManager.ManagedServices
 
         /// <summary>
         /// Creates or updates a registration definition.
-        /// Request Path: /{scope}/providers/Microsoft.ManagedServices/registrationDefinitions/{registrationDefinitionId}
-        /// Operation Id: RegistrationDefinitions_CreateOrUpdate
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{scope}/providers/Microsoft.ManagedServices/registrationDefinitions/{registrationDefinitionId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>RegistrationDefinitions_CreateOrUpdate</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="registrationId"> The GUID of the registration definition. </param>
@@ -77,8 +85,16 @@ namespace Azure.ResourceManager.ManagedServices
 
         /// <summary>
         /// Creates or updates a registration definition.
-        /// Request Path: /{scope}/providers/Microsoft.ManagedServices/registrationDefinitions/{registrationDefinitionId}
-        /// Operation Id: RegistrationDefinitions_CreateOrUpdate
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{scope}/providers/Microsoft.ManagedServices/registrationDefinitions/{registrationDefinitionId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>RegistrationDefinitions_CreateOrUpdate</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="registrationId"> The GUID of the registration definition. </param>
@@ -110,8 +126,16 @@ namespace Azure.ResourceManager.ManagedServices
 
         /// <summary>
         /// Gets the registration definition details.
-        /// Request Path: /{scope}/providers/Microsoft.ManagedServices/registrationDefinitions/{registrationDefinitionId}
-        /// Operation Id: RegistrationDefinitions_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{scope}/providers/Microsoft.ManagedServices/registrationDefinitions/{registrationDefinitionId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>RegistrationDefinitions_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="registrationId"> The GUID of the registration definition. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -139,8 +163,16 @@ namespace Azure.ResourceManager.ManagedServices
 
         /// <summary>
         /// Gets the registration definition details.
-        /// Request Path: /{scope}/providers/Microsoft.ManagedServices/registrationDefinitions/{registrationDefinitionId}
-        /// Operation Id: RegistrationDefinitions_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{scope}/providers/Microsoft.ManagedServices/registrationDefinitions/{registrationDefinitionId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>RegistrationDefinitions_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="registrationId"> The GUID of the registration definition. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -168,8 +200,16 @@ namespace Azure.ResourceManager.ManagedServices
 
         /// <summary>
         /// Gets a list of the registration definitions.
-        /// Request Path: /{scope}/providers/Microsoft.ManagedServices/registrationDefinitions
-        /// Operation Id: RegistrationDefinitions_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{scope}/providers/Microsoft.ManagedServices/registrationDefinitions</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>RegistrationDefinitions_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="filter"> The filter query parameter to filter managed services resources by. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -183,8 +223,16 @@ namespace Azure.ResourceManager.ManagedServices
 
         /// <summary>
         /// Gets a list of the registration definitions.
-        /// Request Path: /{scope}/providers/Microsoft.ManagedServices/registrationDefinitions
-        /// Operation Id: RegistrationDefinitions_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{scope}/providers/Microsoft.ManagedServices/registrationDefinitions</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>RegistrationDefinitions_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="filter"> The filter query parameter to filter managed services resources by. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -198,8 +246,16 @@ namespace Azure.ResourceManager.ManagedServices
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /{scope}/providers/Microsoft.ManagedServices/registrationDefinitions/{registrationDefinitionId}
-        /// Operation Id: RegistrationDefinitions_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{scope}/providers/Microsoft.ManagedServices/registrationDefinitions/{registrationDefinitionId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>RegistrationDefinitions_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="registrationId"> The GUID of the registration definition. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -225,8 +281,16 @@ namespace Azure.ResourceManager.ManagedServices
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /{scope}/providers/Microsoft.ManagedServices/registrationDefinitions/{registrationDefinitionId}
-        /// Operation Id: RegistrationDefinitions_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{scope}/providers/Microsoft.ManagedServices/registrationDefinitions/{registrationDefinitionId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>RegistrationDefinitions_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="registrationId"> The GUID of the registration definition. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

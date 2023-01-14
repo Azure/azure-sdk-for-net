@@ -55,8 +55,16 @@ namespace Azure.ResourceManager.AgFoodPlatform
 
         /// <summary>
         /// Get farmBeats extension.
-        /// Request Path: /providers/Microsoft.AgFoodPlatform/farmBeatsExtensionDefinitions/{farmBeatsExtensionId}
-        /// Operation Id: FarmBeatsExtensions_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.AgFoodPlatform/farmBeatsExtensionDefinitions/{farmBeatsExtensionId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>FarmBeatsExtensions_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="farmBeatsExtensionId"> farmBeatsExtensionId to be queried. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -84,8 +92,16 @@ namespace Azure.ResourceManager.AgFoodPlatform
 
         /// <summary>
         /// Get farmBeats extension.
-        /// Request Path: /providers/Microsoft.AgFoodPlatform/farmBeatsExtensionDefinitions/{farmBeatsExtensionId}
-        /// Operation Id: FarmBeatsExtensions_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.AgFoodPlatform/farmBeatsExtensionDefinitions/{farmBeatsExtensionId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>FarmBeatsExtensions_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="farmBeatsExtensionId"> farmBeatsExtensionId to be queried. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -113,8 +129,16 @@ namespace Azure.ResourceManager.AgFoodPlatform
 
         /// <summary>
         /// Get list of farmBeats extension.
-        /// Request Path: /providers/Microsoft.AgFoodPlatform/farmBeatsExtensionDefinitions
-        /// Operation Id: FarmBeatsExtensions_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.AgFoodPlatform/farmBeatsExtensionDefinitions</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>FarmBeatsExtensions_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="farmBeatsExtensionIds"> FarmBeatsExtension ids. </param>
         /// <param name="farmBeatsExtensionNames"> FarmBeats extension names. </param>
@@ -135,8 +159,16 @@ namespace Azure.ResourceManager.AgFoodPlatform
 
         /// <summary>
         /// Get list of farmBeats extension.
-        /// Request Path: /providers/Microsoft.AgFoodPlatform/farmBeatsExtensionDefinitions
-        /// Operation Id: FarmBeatsExtensions_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.AgFoodPlatform/farmBeatsExtensionDefinitions</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>FarmBeatsExtensions_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="farmBeatsExtensionIds"> FarmBeatsExtension ids. </param>
         /// <param name="farmBeatsExtensionNames"> FarmBeats extension names. </param>
@@ -157,8 +189,16 @@ namespace Azure.ResourceManager.AgFoodPlatform
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /providers/Microsoft.AgFoodPlatform/farmBeatsExtensionDefinitions/{farmBeatsExtensionId}
-        /// Operation Id: FarmBeatsExtensions_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.AgFoodPlatform/farmBeatsExtensionDefinitions/{farmBeatsExtensionId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>FarmBeatsExtensions_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="farmBeatsExtensionId"> farmBeatsExtensionId to be queried. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -184,8 +224,16 @@ namespace Azure.ResourceManager.AgFoodPlatform
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /providers/Microsoft.AgFoodPlatform/farmBeatsExtensionDefinitions/{farmBeatsExtensionId}
-        /// Operation Id: FarmBeatsExtensions_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.AgFoodPlatform/farmBeatsExtensionDefinitions/{farmBeatsExtensionId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>FarmBeatsExtensions_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="farmBeatsExtensionId"> farmBeatsExtensionId to be queried. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

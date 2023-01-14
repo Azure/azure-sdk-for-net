@@ -55,8 +55,16 @@ namespace Azure.ResourceManager.Marketplace
 
         /// <summary>
         /// Changes private store properties
-        /// Request Path: /providers/Microsoft.Marketplace/privateStores/{privateStoreId}
-        /// Operation Id: PrivateStore_CreateOrUpdate
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Marketplace/privateStores/{privateStoreId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PrivateStore_CreateOrUpdate</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="privateStoreId"> The store ID - must use the tenant ID. </param>
@@ -86,8 +94,16 @@ namespace Azure.ResourceManager.Marketplace
 
         /// <summary>
         /// Changes private store properties
-        /// Request Path: /providers/Microsoft.Marketplace/privateStores/{privateStoreId}
-        /// Operation Id: PrivateStore_CreateOrUpdate
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Marketplace/privateStores/{privateStoreId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PrivateStore_CreateOrUpdate</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="privateStoreId"> The store ID - must use the tenant ID. </param>
@@ -117,8 +133,16 @@ namespace Azure.ResourceManager.Marketplace
 
         /// <summary>
         /// Get information about the private store
-        /// Request Path: /providers/Microsoft.Marketplace/privateStores/{privateStoreId}
-        /// Operation Id: PrivateStore_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Marketplace/privateStores/{privateStoreId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PrivateStore_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="privateStoreId"> The store ID - must use the tenant ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -142,8 +166,16 @@ namespace Azure.ResourceManager.Marketplace
 
         /// <summary>
         /// Get information about the private store
-        /// Request Path: /providers/Microsoft.Marketplace/privateStores/{privateStoreId}
-        /// Operation Id: PrivateStore_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Marketplace/privateStores/{privateStoreId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PrivateStore_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="privateStoreId"> The store ID - must use the tenant ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -167,8 +199,16 @@ namespace Azure.ResourceManager.Marketplace
 
         /// <summary>
         /// Gets the list of available private stores.
-        /// Request Path: /providers/Microsoft.Marketplace/privateStores
-        /// Operation Id: PrivateStore_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Marketplace/privateStores</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PrivateStore_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="useCache"> Determines if to use cache or DB for serving this request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -182,8 +222,16 @@ namespace Azure.ResourceManager.Marketplace
 
         /// <summary>
         /// Gets the list of available private stores.
-        /// Request Path: /providers/Microsoft.Marketplace/privateStores
-        /// Operation Id: PrivateStore_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Marketplace/privateStores</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PrivateStore_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="useCache"> Determines if to use cache or DB for serving this request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -197,8 +245,16 @@ namespace Azure.ResourceManager.Marketplace
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /providers/Microsoft.Marketplace/privateStores/{privateStoreId}
-        /// Operation Id: PrivateStore_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Marketplace/privateStores/{privateStoreId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PrivateStore_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="privateStoreId"> The store ID - must use the tenant ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -220,8 +276,16 @@ namespace Azure.ResourceManager.Marketplace
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /providers/Microsoft.Marketplace/privateStores/{privateStoreId}
-        /// Operation Id: PrivateStore_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Marketplace/privateStores/{privateStoreId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PrivateStore_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="privateStoreId"> The store ID - must use the tenant ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

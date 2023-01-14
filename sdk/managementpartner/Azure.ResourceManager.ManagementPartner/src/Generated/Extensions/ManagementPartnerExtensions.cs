@@ -38,8 +38,16 @@ namespace Azure.ResourceManager.ManagementPartner
 
         /// <summary>
         /// Get the management partner using the partnerId, objectId and tenantId.
-        /// Request Path: /providers/Microsoft.ManagementPartner/partners/{partnerId}
-        /// Operation Id: Partner_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.ManagementPartner/partners/{partnerId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Partner_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="partnerId"> Id of the Partner. </param>
@@ -54,8 +62,16 @@ namespace Azure.ResourceManager.ManagementPartner
 
         /// <summary>
         /// Get the management partner using the partnerId, objectId and tenantId.
-        /// Request Path: /providers/Microsoft.ManagementPartner/partners/{partnerId}
-        /// Operation Id: Partner_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.ManagementPartner/partners/{partnerId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Partner_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="partnerId"> Id of the Partner. </param>
@@ -70,8 +86,16 @@ namespace Azure.ResourceManager.ManagementPartner
 
         /// <summary>
         /// List all the operations.
-        /// Request Path: /providers/Microsoft.ManagementPartner/operations
-        /// Operation Id: Operation_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.ManagementPartner/operations</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Operation_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -83,8 +107,16 @@ namespace Azure.ResourceManager.ManagementPartner
 
         /// <summary>
         /// List all the operations.
-        /// Request Path: /providers/Microsoft.ManagementPartner/operations
-        /// Operation Id: Operation_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.ManagementPartner/operations</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Operation_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
