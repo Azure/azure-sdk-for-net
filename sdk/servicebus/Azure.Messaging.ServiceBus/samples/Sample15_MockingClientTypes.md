@@ -15,9 +15,14 @@ TODO
 Mock<ServiceBusClient> mockClient = new();
 Mock<ServiceBusSender> mockSender = new();
 
+// This sets up the mock ServiceBusClient to return the mock of the ServiceBusSender.
+
 mockClient
     .Setup(client =>client.CreateSender(It.IsAny<string>()))
     .Returns(mockSender.Object);
+
+// This sets up the mock sender to successfully return a completed task when any message is passed to
+// SendMessageAsync.
 
 mockSender
     .Setup(sender => sender.SendMessageAsync(
@@ -31,11 +36,19 @@ ServiceBusClient client = mockClient.Object;
 // service bus client above, this would be where application methods sending a message would be
 // called.
 
-var mockQueueName = "MockQueueName";
+string mockQueueName = "MockQueueName";
 ServiceBusSender sender = client.CreateSender(mockQueueName);
-ServiceBusMessage message = new ServiceBusMessage("Hello world!");
+ServiceBusMessage message = new("Hello World!");
 
 await sender.SendMessageAsync(message);
+
+// This illustrates how to verify that SendMessageAsync was called the correct number of times
+// with the expected message.
+
+mockSender
+    .Verify(sender => sender.SendMessageAsync(
+        It.Is<ServiceBusMessage>(m => (m.MessageId == message.MessageId)),
+        It.IsAny<CancellationToken>()));
 ```
 ## Receiving messages from a queue
 
@@ -43,43 +56,57 @@ await sender.SendMessageAsync(message);
 Mock<ServiceBusClient> mockClient = new();
 Mock<ServiceBusReceiver> mockReceiver = new();
 
+// This sets up the mock ServiceBusClient to return the mock of the ServiceBusReceiver.
+
 mockClient
     .Setup(client => client.CreateReceiver(
         It.IsAny<string>()))
     .Returns(mockReceiver.Object);
 
+List<ServiceBusReceivedMessage> messagesToReturn = new();
+int numMessagesToReturn = 10;
+
+// This creates a list of messages to return from the ServiceBusReceiver mock. See the ServiceBusModelFactory
+// for a complete set of properties that can be populated using the ServiceBusModelFactory.ServiceBusReceivedMessage
+// method.
+
+for (int i=0; i<numMessagesToReturn; i++)
+{
+    // This mocks a ServiceBusReceivedMessage instance using the model factory. Different arguments can mock different
+    // potential outputs from the broker.
+
+    ServiceBusReceivedMessage message = ServiceBusModelFactory.ServiceBusReceivedMessage(
+        body: new BinaryData($"message-{i}"),
+        messageId: $"id-{i}",
+        partitionKey: "illustrative-partitionKey",
+        correlationId: "illustrative-correlationId",
+        contentType: "illustrative-contentType",
+        replyTo: "illustrative-replyTo"
+        // ...
+        );
+    messagesToReturn.Add(message);
+}
+
+// This is a simple local method that returns an IAsyncEnumerable to use as the return for ReceiveMessagesAsync
+// below, since IAsyncEnumerables cannot be created directly.
+
 async IAsyncEnumerable<ServiceBusReceivedMessage> mockReturn()
 {
-    ServiceBusReceivedMessage message1 = ServiceBusModelFactory.ServiceBusReceivedMessage(
-        body: new BinaryData("message1"),
-        messageId: "messageId1",
-        partitionKey: "hellokey",
-        correlationId: "correlationId",
-        contentType: "contentType",
-        replyTo: "replyTo"
-        //...
-        );
-
-    ServiceBusReceivedMessage message2 = ServiceBusModelFactory.ServiceBusReceivedMessage(
-        body: new BinaryData("message2"),
-        messageId: "messageId2",
-        partitionKey: "hellokey",
-        correlationId: "correlationId",
-        contentType: "contentType",
-        replyTo: "replyTo"
-        //...
-        );
-
     // IAsyncEnumerable types can only be returned by async functions, use this no-op await statement to
     // force the method to be async.
 
     await Task.Yield();
 
-    // Yield statements allow methods to emit multiple outputs. In async methods this can be over time.
+    foreach (ServiceBusReceivedMessage message in messagesToReturn)
+    {
+        // Yield statements allow methods to emit multiple outputs. In async methods this can be over time.
 
-    yield return message1;
-    yield return message2;
+        yield return message;
+    }
 }
+
+// Use the method to mock a return from the ServiceBusReceiver. We are setting up the method to method to return
+// the list of messages defined above.
 
 mockReceiver
     .Setup(receiver => receiver.ReceiveMessagesAsync(
@@ -88,19 +115,22 @@ mockReceiver
 
 ServiceBusClient client = mockClient.Object;
 
-// The rest of this snippet illustrates how to receie messages using the mocked service bus client above,
+// The rest of this snippet illustrates how to receive messages using the mocked ServiceBusClient above,
 // this would be where application methods receiving messages would be called.
 
 var mockQueueName = "MockQueueName";
 ServiceBusReceiver receiver = client.CreateReceiver(mockQueueName);
 
 var cancellationTokenSource = new CancellationTokenSource();
-cancellationTokenSource.CancelAfter(TimeSpan.FromSeconds(1));
+cancellationTokenSource.CancelAfter(TimeSpan.FromSeconds(2));
 
 await foreach (ServiceBusReceivedMessage message in receiver.ReceiveMessagesAsync(cancellationTokenSource.Token))
 {
     // application control
 }
+
+// This is where applications can verify that the ServiceBusReceivedMessages output by the ServiceBusReceiver were
+// handled as expected.
 ```
 
 
@@ -110,12 +140,20 @@ await foreach (ServiceBusReceivedMessage message in receiver.ReceiveMessagesAsyn
 Mock<ServiceBusClient> mockClient = new();
 Mock<ServiceBusSender> mockSender = new();
 
+// This sets up the mock ServiceBusClient to return the mock of the ServiceBusSender.
+
 mockClient
     .Setup(client => client.CreateSender(It.IsAny<string>()))
     .Returns(mockSender.Object);
 
-// This list is modified by the batch and will contain all messages added to the batch.
+// As messages are added to the batch they will be added to this list as well. Altering the
+// messages in this list will not change the messages in the batch, since they are stored inside
+// the batch.
+
 List<ServiceBusMessage> backingList = new();
+
+// For illustrative purposes, this is the number of messages that the batch will contain, return
+// false from TryAddMessage for any additional calls.
 
 int batchCountThreshold = 5;
 
@@ -123,12 +161,20 @@ ServiceBusMessageBatch mockBatch = ServiceBusModelFactory.ServiceBusMessageBatch
     batchSizeBytes: 500,
     batchMessageStore: backingList,
     batchOptions: new CreateMessageBatchOptions(),
+    // The model factory allows a custom TryAddMessage callback, allowing control of
+    // what messages the batch accepts.
     tryAddCallback: _=> backingList.Count < batchCountThreshold);
+
+// This sets up a mock of the CreateMessageBatchAsync method, returning the batch that was previously
+// mocked.
 
 mockSender
     .Setup(sender => sender.CreateMessageBatchAsync(
         It.IsAny<CancellationToken>()))
     .ReturnsAsync(mockBatch);
+
+// Here we are mocking the SendMessagesAsync method so it will throw an exception if the batch passed
+// into it is not the one we are expecting to send.
 
 mockSender
     .Setup(sender => sender.SendMessagesAsync(
@@ -146,6 +192,8 @@ ServiceBusSender sender = client.CreateSender("mockQueueName");
 
 ServiceBusMessageBatch batch = await sender.CreateMessageBatchAsync(CancellationToken.None);
 
+// This is creating a list of messages to use in our test.
+
 List<ServiceBusMessage> sourceMessages = new();
 
 for (int index = 0; index < batchCountThreshold; index++)
@@ -154,10 +202,20 @@ for (int index = 0; index < batchCountThreshold; index++)
     sourceMessages.Add(message);
 }
 
+// Here we are adding messages to the batch. They should all be accepted.
+
 foreach (var message in sourceMessages)
 {
     Assert.True(batch.TryAddMessage(message));
 }
+
+// Since there are already batchCountThreshold number of messages in the batch,
+// this message will be rejected from the batch.
+
+Assert.IsFalse(batch.TryAddMessage(new ServiceBusMessage("Too Many Events.")));
+
+// For illustrative purposes we are calling SendMessagesAsync. Application-defined methods
+// would be called here instead.
 
 await sender.SendMessagesAsync(batch);
 
@@ -166,6 +224,9 @@ mockSender
         It.IsAny<ServiceBusMessageBatch>(),
         It.IsAny<CancellationToken>()),
     Times.Once);
+
+// For illustrative purposes, check that the messages in the batch match what the application expects to have
+// added.
 
 foreach (ServiceBusMessage message in backingList)
 {
@@ -271,6 +332,132 @@ BinaryData state = await sessionReceiver.GetSessionStateAsync(CancellationToken.
 Assert.AreEqual(setState, state);
 ```
 
+## Message Settlement
+
+```C# Snippet:ServiceBus_MockingComplete
+// The first section sets up a mock ServiceBusSender. See the Mocking send to queue TODO sample above
+// for a more detailed explanation.
+
+Mock<ServiceBusClient> mockClient = new();
+Mock<ServiceBusSender> mockSender = new();
+
+mockClient
+    .Setup(client => client.CreateSender(It.IsAny<string>()))
+    .Returns(mockSender.Object);
+
+mockSender
+    .Setup(sender => sender.SendMessageAsync(
+        It.IsAny<ServiceBusMessage>(),
+        It.IsAny<CancellationToken>()))
+    .Returns(Task.CompletedTask);
+
+ServiceBusClient client = mockClient.Object;
+
+Mock<ServiceBusReceiver> mockReceiver = new();
+
+mockClient
+    .Setup(client => client.CreateReceiver(It.IsAny<string>()))
+    .Returns(mockReceiver.Object);
+
+// This creates two lists, a list of messages to send and a list of messages to return from the ServiceBusReceiver mock.
+// See the ServiceBusModelFactory for a complete set of properties that can be populated using the
+// ServiceBusModelFactory.ServiceBusReceivedMessage method.
+
+List<ServiceBusMessage> messagesToSend = new();
+List<ServiceBusReceivedMessage> messagesToReturn = new();
+int numMessagesToSend = 3;
+
+for (int i = 0; i < numMessagesToSend; i++)
+{
+    string body = $"message-{i}";
+
+    ServiceBusMessage messageToSend = new(body);
+    messagesToSend.Add(messageToSend);
+
+    // This mocks a ServiceBusReceivedMessage instance using the model factory. Different arguments can mock different
+    // potential outputs from the broker.
+
+    ServiceBusReceivedMessage messageToReturn = ServiceBusModelFactory.ServiceBusReceivedMessage(
+        body: new BinaryData(body),
+        messageId: $"id-{i}",
+        partitionKey: "illustrative-partitionKey",
+        correlationId: "illustrative-correlationId",
+        contentType: "illustrative-contentType",
+        replyTo: "illustrative-replyTo"
+        // ...
+        );
+    messagesToReturn.Add(messageToReturn);
+}
+
+// This sets up the mock ServiceBusReceiver to return a different message from the messagesToReturn
+// list each time the method is called until there are no more messages.
+
+int numCallsReceiveMessage = 0;
+mockReceiver
+    .Setup(receiver => receiver.ReceiveMessageAsync(
+        It.IsAny<TimeSpan>(),
+        It.IsAny<CancellationToken>()))
+    .ReturnsAsync(messagesToReturn.ElementAtOrDefault(numCallsReceiveMessage));
+
+// This sets up the mock ServiceBusReceiver to keep track of how many times CompleteMessageAsync
+// has been called in the numCallsCompleteMessage counter.
+
+int numCallsCompleteMessage = 0;
+mockReceiver
+    .Setup(receiver => receiver.CompleteMessageAsync(
+        It.IsAny<ServiceBusReceivedMessage>(),
+        It.IsAny<CancellationToken>())).Callback(() => numCallsCompleteMessage++)
+    .Returns(Task.CompletedTask);
+
+// The rest of this snippet illustrates how to send a service bus message using the mocked
+// service bus client above, this would be where application methods sending a message would be
+// called.
+
+string mockQueueName = "MockQueueName";
+ServiceBusSender sender = client.CreateSender(mockQueueName);
+ServiceBusReceiver receiver = client.CreateReceiver(mockQueueName);
+
+foreach (ServiceBusMessage message in messagesToSend)
+{
+    await sender.SendMessageAsync(message);
+}
+
+// ReceiveMessageAsync can be called multiple times.
+
+ServiceBusReceivedMessage receivedMessage1 = await receiver.ReceiveMessageAsync(TimeSpan.FromSeconds(1), CancellationToken.None);
+await receiver.CompleteMessageAsync(receivedMessage1);
+
+ServiceBusReceivedMessage receivedMessage2 = await receiver.ReceiveMessageAsync(TimeSpan.FromSeconds(1), CancellationToken.None);
+await receiver.CompleteMessageAsync(receivedMessage2);
+
+// For illustrative purposes, verify that the number of times a message was received is the same number of times
+// a message was completed.
+
+mockReceiver
+    .Verify(receiver => receiver.CompleteMessageAsync(
+        It.IsAny<ServiceBusReceivedMessage>(),
+        It.IsAny<CancellationToken>()),
+        Times.Exactly(numCallsReceiveMessage));
+```
+
+```C# Snippet:ServiceBus_MockDefer
+// TODO
+await Task.Delay(1);
+```
+
+```C# Snippet:ServiceBus_MockPeek
+// TODO
+await Task.Delay(1);
+```
+
+```C# Snippet:ServiceBus_MockingAbandon
+// TODO
+Mock<ServiceBusClient> mockClient = new();
+Mock<ServiceBusSender> mockSender = new();
+Mock<ServiceBusReceiver> mockReceiver = new();
+await Task.Delay(1);
+```
+
 ## Testing message handlers
 
 For the `ServiceBusProcessor`:
@@ -322,7 +509,7 @@ ProcessErrorEventArgs errorArgs = new(
     errorSource: errorSource,
     fullyQualifiedNamespace: fullyQualifiedNamespace,
     entityPath: entityPath,
-    cancellationToken: source.Token);
+    cancellationToken: CancellationToken.None);
 
 Assert.DoesNotThrowAsync(async () => await ErrorHandler(errorArgs));
 ```
@@ -393,6 +580,19 @@ ProcessErrorEventArgs errorArgs = new(
 Assert.DoesNotThrowAsync(async () => await ErrorHandler(errorArgs));
 ```
 
+## Simulating the processor running
+
+```C# Snippet:ServiceBus_SimulateRunningTheProcessor
+// TODO
+await Task.Delay(1);
+```
+
+```C# Snippet:ServiceBus_SimulateRunningTheSessionProcessor
+// TODO
+await Task.Delay(1);
+```
+
+
 ## Sending and Receiving messages using topics and subscriptions
 
 ```C# Snippet:ServiceBus_MockingTopicSubscriptionSend
@@ -406,7 +606,17 @@ mockAdministrationClient
         It.IsAny<CancellationToken>()))
     .Callback<CreateTopicOptions, CancellationToken>((opts, ct) =>
     {
-        TopicProperties mockTopicProperties = ServiceBusModelFactory.TopicProperties(opts);
+        TopicProperties mockTopicProperties = ServiceBusModelFactory.TopicProperties(
+            name: opts.Name,
+            maxSizeInMegabytes: opts.MaxSizeInMegabytes,
+            requiresDuplicateDetection: opts.RequiresDuplicateDetection,
+            defaultMessageTimeToLive: opts.DefaultMessageTimeToLive,
+            autoDeleteOnIdle: opts.AutoDeleteOnIdle,
+            duplicateDetectionHistoryTimeWindow: opts.DuplicateDetectionHistoryTimeWindow,
+            enableBatchedOperations: opts.EnableBatchedOperations,
+            status: opts.Status,
+            enablePartitioning: opts.EnablePartitioning,
+            maxMessageSizeInKilobytes: opts.MaxMessageSizeInKilobytes.GetValueOrDefault());
 
         mockTopicResponse.Setup(r => r.Value).Returns(mockTopicProperties);
     })
@@ -418,7 +628,19 @@ mockAdministrationClient
         It.IsAny<CancellationToken>()))
     .Callback<CreateSubscriptionOptions, CancellationToken>((opts, ct) =>
     {
-        SubscriptionProperties mockSubscriptionProperties = ServiceBusModelFactory.SubscriptionProperties(opts);
+        SubscriptionProperties mockSubscriptionProperties = ServiceBusModelFactory.SubscriptionProperties(
+            topicName: opts.TopicName,
+            subscriptionName: opts.SubscriptionName,
+            lockDuration: opts.LockDuration,
+            requiresSession: opts.RequiresSession,
+            defaultMessageTimeToLive: opts.DefaultMessageTimeToLive,
+            autoDeleteOnIdle: opts.AutoDeleteOnIdle,
+            deadLetteringOnMessageExpiration: opts.DeadLetteringOnMessageExpiration,
+            maxDeliveryCount: opts.MaxDeliveryCount,
+            enableBatchedOperations: opts.EnableBatchedOperations,
+            status: opts.Status, forwardTo: opts.ForwardTo,
+            forwardDeadLetteredMessagesTo: opts.ForwardDeadLetteredMessagesTo,
+            userMetadata: opts.UserMetadata);
 
         mockSuscriptionResponse.Setup(r => r.Value).Returns(mockSubscriptionProperties);
     })
@@ -514,7 +736,22 @@ mockAdministrationClient
         It.IsAny<CancellationToken>()))
     .Callback<CreateQueueOptions, CancellationToken>((opts, ct) =>
     {
-        QueueProperties mockQueueProperties = ServiceBusModelFactory.QueueProperties(opts);
+        QueueProperties mockQueueProperties = ServiceBusModelFactory.QueueProperties(
+            name: opts.Name,
+            lockDuration: opts.LockDuration,
+            maxSizeInMegabytes: opts.MaxSizeInMegabytes,
+            requiresDuplicateDetection: opts.RequiresDuplicateDetection,
+            requiresSession: opts.RequiresSession,
+            defaultMessageTimeToLive: opts.DefaultMessageTimeToLive,
+            autoDeleteOnIdle: opts.AutoDeleteOnIdle,
+            deadLetteringOnMessageExpiration: opts.DeadLetteringOnMessageExpiration,
+            duplicateDetectionHistoryTimeWindow: opts.DuplicateDetectionHistoryTimeWindow,
+            maxDeliveryCount: opts.MaxDeliveryCount,
+            enableBatchedOperations: opts.EnableBatchedOperations,
+            status: opts.Status, forwardTo: opts.ForwardTo,
+            forwardDeadLetteredMessagesTo: opts.ForwardDeadLetteredMessagesTo,
+            userMetadata: opts.UserMetadata,
+            enablePartitioning: opts.EnablePartitioning);
 
         mockQueueResponse.Setup(r => r.Value).Returns(mockQueueProperties);
     })
@@ -553,7 +790,10 @@ mockAdministrationClient
         It.IsAny<CancellationToken>()))
     .Callback<string, string, CreateRuleOptions, CancellationToken>((topic, sub, opts, ct) =>
     {
-        RuleProperties mockRuleProperties = ServiceBusModelFactory.RuleProperties(opts);
+        RuleProperties mockRuleProperties = ServiceBusModelFactory.RuleProperties(
+            name: opts.Name,
+            filter: opts.Filter,
+            action: opts.Action);
 
         mockRuleResponse.Setup(r => r.Value).Returns(mockRuleProperties);
     })
