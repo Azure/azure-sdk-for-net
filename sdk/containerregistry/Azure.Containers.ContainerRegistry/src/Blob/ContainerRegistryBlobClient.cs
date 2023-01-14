@@ -692,10 +692,12 @@ namespace Azure.Containers.ContainerRegistry.Specialized
                 if (async)
                 {
                     await downloadResult.Value.Content.ToStream().CopyToAsync(destination).ConfigureAwait(false);
+                    await destination.FlushAsync(cancellationToken).ConfigureAwait(false);
                 }
                 else
                 {
                     downloadResult.Value.Content.ToStream().CopyTo(destination);
+                    destination.Flush();
                 }
 
                 return downloadResult.GetRawResponse();
@@ -744,6 +746,15 @@ namespace Azure.Containers.ContainerRegistry.Specialized
                 var computedDigest = BlobHelper.FormatDigest(sha256.Hash);
 
                 ValidateDigest(computedDigest, digest);
+
+                if (async)
+                {
+                    await destination.FlushAsync(cancellationToken).ConfigureAwait(false);
+                }
+                else
+                {
+                    destination.Flush();
+                }
 
                 // Return the last response received.
                 return result;

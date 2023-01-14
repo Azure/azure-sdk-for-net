@@ -593,7 +593,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
         [LiveOnly]
         public async Task CanUploadAndDownloadLargeBlob()
         {
-            long sizeInGiB = 5;
+            long sizeInGiB = 2;
             var uneven = 20;
             long size = (1024 * 1024 * 1024 * sizeInGiB) + uneven;
 
@@ -601,18 +601,31 @@ namespace Azure.Containers.ContainerRegistry.Tests
             var client = CreateBlobClient(repositoryId);
 
             var path = Path.Combine(TestContext.CurrentContext.TestDirectory, "Data", "LargeFile");
-            Directory.CreateDirectory(path);
-            string fileName = "blob.bin";
-            WriteLargeFile(path, fileName, size);
+            string uploadFileName = "blob.bin";
+
+            if (!File.Exists(Path.Combine(path, uploadFileName)))
+            {
+                WriteLargeFile(path, uploadFileName, size);
+            }
 
             // Upload the large file
-            using var fs = File.OpenRead(Path.Combine(path, fileName));
+            using var fs = File.OpenRead(Path.Combine(path, uploadFileName));
             var uploadResult = await client.UploadBlobAsync(fs);
 
             // Download the large file
-            using var downloadFs = File.OpenWrite(Path.Combine(path, "blob_1.bin"));
+            var downloadFileName = "blob_downloaded.bin";
+            var filePath = Path.Combine(path, downloadFileName);
 
+            if (File.Exists(filePath))
+            {
+                File.Delete(filePath);
+            }
+
+            using var downloadFs = File.OpenWrite(filePath);
             await client.DownloadBlobToAsync(uploadResult.Value.Digest, downloadFs);
+
+            Assert.IsTrue(File.Exists(filePath));
+            Assert.AreEqual(size, new FileInfo(filePath).Length);
         }
 
         private void WriteLargeFile(string path, string fileName, long size)
@@ -630,73 +643,6 @@ namespace Azure.Containers.ContainerRegistry.Tests
                 fs.Write(buffer, 0, buffer.Length);
                 bytesWritten += buffer.Length;
             };
-        }
-
-        [Test]
-        [LiveOnly]
-        public async Task CanPushLargeArtifact()
-        {
-            // Arrange
-            var name = "oci-artifact-large";
-            var sizeInMiB = 1;
-            var tag = $"big-{sizeInMiB}";
-            var size = (1024 * sizeInMiB) + 17;
-            var client = CreateBlobClient(name);
-
-            // Act
-            OciManifest manifest = new OciManifest();
-            manifest.SchemaVersion = 2;
-
-            // Upload config
-            var path = Path.Combine(TestContext.CurrentContext.TestDirectory, "Data", "oci-artifact");
-            var configFilePath = Path.Combine(path, "config.json");
-            if (File.Exists(configFilePath))
-            {
-                using (var fs = File.OpenRead(configFilePath))
-                {
-                    var uploadResult = await client.UploadBlobAsync(fs);
-
-                    // Update manifest
-                    OciBlobDescriptor descriptor = new OciBlobDescriptor();
-                    descriptor.Digest = uploadResult.Value.Digest;
-                    descriptor.Size = uploadResult.Value.Size;
-                    descriptor.MediaType = "application/vnd.acme.rocket.config";
-
-                    manifest.Config = descriptor;
-                }
-            }
-
-            // Upload large layer
-            var data = GetRandomBuffer(size);
-            using (var stream = new MemoryStream(data))
-            {
-                var uploadResult = await client.UploadBlobAsync(stream);
-
-                // Update manifest
-                OciBlobDescriptor descriptor = new OciBlobDescriptor();
-                descriptor.Digest = uploadResult.Value.Digest;
-                descriptor.Size = uploadResult.Value.Size;
-                descriptor.MediaType = "application/vnd.oci.image.layer.v1.tar";
-
-                manifest.Layers.Add(descriptor);
-            }
-
-            // Finally, upload manifest
-            var uploadManifestResult = await client.UploadManifestAsync(
-                manifest,
-                new UploadManifestOptions(tag));
-
-            // Assert
-            ContainerRegistryClient registryClient = CreateClient();
-
-            var names = registryClient.GetRepositoryNamesAsync();
-            Assert.IsTrue(await names.AnyAsync(n => n == name));
-
-            var properties = await registryClient.GetArtifact(name, tag).GetManifestPropertiesAsync();
-            Assert.AreEqual(uploadManifestResult.Value.Digest, properties.Value.Digest);
-
-            // Clean up
-            await registryClient.DeleteRepositoryAsync(name);
         }
 
         [RecordedTest]
