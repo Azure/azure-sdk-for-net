@@ -57,6 +57,7 @@ namespace Azure.ResourceManager.EventHubs
         public long? MessageRetentionInDays { get { throw null; } set { } }
         public long? PartitionCount { get { throw null; } set { } }
         public System.Collections.Generic.IReadOnlyList<string> PartitionIds { get { throw null; } }
+        public Azure.ResourceManager.EventHubs.Models.RetentionDescription RetentionDescription { get { throw null; } set { } }
         public Azure.ResourceManager.EventHubs.Models.EventHubEntityStatus? Status { get { throw null; } set { } }
         public System.DateTimeOffset? UpdatedOn { get { throw null; } }
     }
@@ -546,6 +547,24 @@ namespace Azure.ResourceManager.EventHubs.Models
         public int? SizeLimitInBytes { get { throw null; } set { } }
         public bool? SkipEmptyArchives { get { throw null; } set { } }
     }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct CleanupPolicyRetentionDescription : System.IEquatable<Azure.ResourceManager.EventHubs.Models.CleanupPolicyRetentionDescription>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public CleanupPolicyRetentionDescription(string value) { throw null; }
+        public static Azure.ResourceManager.EventHubs.Models.CleanupPolicyRetentionDescription Compaction { get { throw null; } }
+        public static Azure.ResourceManager.EventHubs.Models.CleanupPolicyRetentionDescription Delete { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.EventHubs.Models.CleanupPolicyRetentionDescription other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.EventHubs.Models.CleanupPolicyRetentionDescription left, Azure.ResourceManager.EventHubs.Models.CleanupPolicyRetentionDescription right) { throw null; }
+        public static implicit operator Azure.ResourceManager.EventHubs.Models.CleanupPolicyRetentionDescription (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.EventHubs.Models.CleanupPolicyRetentionDescription left, Azure.ResourceManager.EventHubs.Models.CleanupPolicyRetentionDescription right) { throw null; }
+        public override string ToString() { throw null; }
+    }
     public partial class ClusterQuotaConfigurationProperties
     {
         public ClusterQuotaConfigurationProperties() { }
@@ -794,9 +813,9 @@ namespace Azure.ResourceManager.EventHubs.Models
         public Azure.Core.AzureLocation? Location { get { throw null; } }
         public string PerimeterGuid { get { throw null; } }
     }
-    public partial class EventHubsNetworkSecurityPerimeterConfiguration : Azure.ResourceManager.Models.TrackedResourceData
+    public partial class EventHubsNetworkSecurityPerimeterConfiguration : Azure.ResourceManager.Models.ResourceData
     {
-        public EventHubsNetworkSecurityPerimeterConfiguration(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public EventHubsNetworkSecurityPerimeterConfiguration() { }
         public Azure.ResourceManager.EventHubs.Models.EventHubsNetworkSecurityPerimeter NetworkSecurityPerimeter { get { throw null; } }
         public Azure.ResourceManager.EventHubs.Models.EventHubsNetworkSecurityPerimeterConfigurationPropertiesProfile Profile { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.EventHubs.Models.EventHubsProvisioningIssue> ProvisioningIssues { get { throw null; } }
@@ -1113,5 +1132,12 @@ namespace Azure.ResourceManager.EventHubs.Models
         public static implicit operator Azure.ResourceManager.EventHubs.Models.EventHubsTlsVersion (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.EventHubs.Models.EventHubsTlsVersion left, Azure.ResourceManager.EventHubs.Models.EventHubsTlsVersion right) { throw null; }
         public override string ToString() { throw null; }
+    }
+    public partial class RetentionDescription
+    {
+        public RetentionDescription() { }
+        public Azure.ResourceManager.EventHubs.Models.CleanupPolicyRetentionDescription? CleanupPolicy { get { throw null; } set { } }
+        public long? RetentionTimeInHours { get { throw null; } set { } }
+        public int? TombstoneRetentionTimeInHours { get { throw null; } set { } }
     }
 }
