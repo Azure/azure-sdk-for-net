@@ -31,8 +31,8 @@ function AddSparseCheckoutPath([string]$subDirectory) {
 
 function CopyToProjectIfNeeded([string]$cloneRoot, [string]$mainDir, [string]$dest, [string[]]$additionalSubDirectories) {
     $source = "$cloneRoot/$mainDir"
-    Write-Host "Copying spec from $source"
-    # $mainSpecDir is the PR folder, we just need to copy its subfolders which include the cadl project folder
+    Write-Host "Copying files from $source"
+    # $mainDir is the PR folder, we just need to copy its subfolders which include the cadl project folder
     Get-ChildItem –Path "$source" -Exclude @("data-plane", "resource-manager")|
         Foreach-Object {
             Copy-Item -Path $_.FullName -Destination $dest -Recurse -Force

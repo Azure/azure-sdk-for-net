@@ -174,5 +174,6 @@ BenchmarkDotNet.Artifacts
 artifacts
 .assets
 
-# Temporary cadl folders for cadl generation
+# Temporary folders for cadl version SDK generation
 TempCadlFiles/
+TempSDKFiles/

@@ -52,16 +52,18 @@ if (Test-Path "$npmWorkingDir/cadl-project.yaml") {
 }
 
 try {
+    $loadExisting = $configuration["load-existing"] ?? $true
+    $existingOption = If ($loadExisting) {" --option @azure-tools/cadl-csharp.existing-project-folder=$ProjectDirectory/TempSDKFiles/src/Generated"} Else {""}
     Push-Location $npmWorkingDir
     NpmInstallForProject $npmWorkingDir
     if ($HasEmitterOutputDir) {
         $csharpSdkFolder = (Join-Path $ProjectDirectory ".." ".." "..")
         $csharpSdkFolder = Resolve-Path $csharpSdkFolder
-        Write-Host("npx cadl compile $mainCadlFile --emit `"`@azure-tools/cadl-csharp`" --arg `"csharp-sdk-folder=$csharpSdkFolder`"")
-        npx cadl compile $mainCadlFile --emit "@azure-tools/cadl-csharp" --arg "csharp-sdk-folder=$csharpSdkFolder"
+        $command = "npx cadl compile $mainCadlFile --emit @azure-tools/cadl-csharp --arg csharp-sdk-folder=$csharpSdkFolder$existingOption"
+        Invoke $command
     } else {
-        Write-Host("npx cadl compile $mainCadlFile --emit `"`@azure-tools/cadl-csharp`" --option `"@azure-tools/cadl-csharp.emitter-output-dir=$resolvedProjectDirectory`"")
-        npx cadl compile $mainCadlFile --emit "@azure-tools/cadl-csharp" --option @azure-tools/cadl-csharp.emitter-output-dir=$resolvedProjectDirectory
+        $command = "npx cadl compile $mainCadlFile --emit @azure-tools/cadl-csharp --option @azure-tools/cadl-csharp.emitter-output-dir=$resolvedProjectDirectory$existingOption"
+        Invoke $command
     }
     if ($LASTEXITCODE) { exit $LASTEXITCODE }
 }
