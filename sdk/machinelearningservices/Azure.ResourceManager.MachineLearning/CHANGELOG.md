@@ -4,7 +4,7 @@
 
 ### Breaking Changes
 
-- Various of renaming of resources and models to polish the API.
+- Various renaming of resources and models to polish the API.
 
 ## 1.0.0-beta.2 (2022-07-12)
 
