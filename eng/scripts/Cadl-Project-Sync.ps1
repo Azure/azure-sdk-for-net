@@ -29,13 +29,13 @@ function AddSparseCheckoutPath([string]$subDirectory) {
     }
 }
 
-function CopySpecToProjectIfNeeded([string]$specCloneRoot, [string]$mainSpecDir, [string]$dest, [string[]]$specAdditionalSubDirectories) {
-    $source = "$specCloneRoot/$mainSpecDir"
+function CopyToProjectIfNeeded([string]$cloneRoot, [string]$mainDir, [string]$dest, [string[]]$additionalSubDirectories) {
+    $source = "$cloneRoot/$mainDir"
     Write-Host "Copying spec from $source"
     Copy-Item -Path $source -Destination $dest -Recurse -Force
-    foreach($additionalDir in $specAdditionalSubDirectories)
+    foreach($additionalDir in $additionalSubDirectories)
     {
-        $source = "$specCloneRoot/$additionalDir"
+        $source = "$cloneRoot/$additionalDir"
         Write-Host "Copying spec from $source"
         Copy-Item -Path $source -Destination $dest -Recurse -Force
     }
@@ -128,33 +128,42 @@ if ( $configuration["repo"] -and $configuration["commit"]) {
     $specCloneDir = $configuration["spec-root-dir"]
 }
 
-
 $tempCadlDir = "$ProjectDirectory/TempCadlFiles"
 New-Item $tempCadlDir -Type Directory -Force | Out-Null
-CopySpecToProjectIfNeeded `
-    -specCloneRoot $specCloneDir `
-    -mainSpecDir $specSubDirectory `
+CopyToProjectIfNeeded `
+    -cloneRoot $specCloneDir `
+    -mainDir $specSubDirectory `
     -dest $tempCadlDir `
-    -specAdditionalSubDirectories $configuration["additionalDirectories"]
+    -additionalSubDirectories $configuration["additionalDirectories"]
 
 
 # Download the existing SDK
-$latestCommit = GetLatestCommit
-if ($latestCommit) {
-    $sdkCloneDir = GetSparseCloneDir $projectName "sdk"
+$loadExisting = $configuration["load-existing"] ?? $true
+if ($loadExisting)
+{    
+    $latestCommit = GetLatestCommit
+    if ($latestCommit) {
+        $sdkCloneDir = GetSparseCloneDir $projectName "sdk"
 
-    Write-Host "Setting up sparse clone for $projectName at $sdkCloneDir"
+        Write-Host "Setting up sparse clone for $projectName at $sdkCloneDir"
 
-    Push-Location $sdkCloneDir.Path
-    try {
-        if (!(Test-Path ".git")) {
-            InitializeSparseGitClone $sdkGitRemote
-            AddSparseCheckoutPath (GetProjectRelativePath)
+        Push-Location $sdkCloneDir.Path
+        try {
+            if (!(Test-Path ".git")) {
+                InitializeSparseGitClone $sdkGitRemote
+                AddSparseCheckoutPath (GetProjectRelativePath)
+            }
+            git checkout $latestCommit
         }
-        git checkout $latestCommit
+        finally {
+            Pop-Location
+        }
     }
-    finally {
-        Pop-Location
-    }
-}
 
+    $tempSDKDir = "$ProjectDirectory/TempSDKFiles"
+    New-Item $tempSDKDir -Type Directory -Force | Out-Null
+    CopyToProjectIfNeeded `
+        -cloneRoot $sdkCloneDir `
+        -mainDir (GetProjectRelativePath) `
+        -dest $tempSDKDir
+}
