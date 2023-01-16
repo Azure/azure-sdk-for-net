@@ -1098,56 +1098,44 @@ namespace Azure.ResourceManager.Synapse
 
         /// <summary>
         /// Lists all Kusto pool PrivateLinkResources.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/kustoPools/{kustoPoolName}/privateLinkResources
-        /// Operation Id: KustoPoolPrivateLinkResources_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/kustoPools/{kustoPoolName}/privateLinkResources</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>KustoPoolPrivateLinkResources_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="KustoPoolPrivateLinkResources" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<KustoPoolPrivateLinkResources> GetKustoPoolPrivateLinkResourcesAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<KustoPoolPrivateLinkResources>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _kustoPoolPrivateLinkResourcesClientDiagnostics.CreateScope("SynapseKustoPoolResource.GetKustoPoolPrivateLinkResources");
-                scope.Start();
-                try
-                {
-                    var response = await _kustoPoolPrivateLinkResourcesRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _kustoPoolPrivateLinkResourcesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, KustoPoolPrivateLinkResources.DeserializeKustoPoolPrivateLinkResources, _kustoPoolPrivateLinkResourcesClientDiagnostics, Pipeline, "SynapseKustoPoolResource.GetKustoPoolPrivateLinkResources", "value", null, cancellationToken);
         }
 
         /// <summary>
         /// Lists all Kusto pool PrivateLinkResources.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/kustoPools/{kustoPoolName}/privateLinkResources
-        /// Operation Id: KustoPoolPrivateLinkResources_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/kustoPools/{kustoPoolName}/privateLinkResources</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>KustoPoolPrivateLinkResources_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="KustoPoolPrivateLinkResources" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<KustoPoolPrivateLinkResources> GetKustoPoolPrivateLinkResources(CancellationToken cancellationToken = default)
         {
-            Page<KustoPoolPrivateLinkResources> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _kustoPoolPrivateLinkResourcesClientDiagnostics.CreateScope("SynapseKustoPoolResource.GetKustoPoolPrivateLinkResources");
-                scope.Start();
-                try
-                {
-                    var response = _kustoPoolPrivateLinkResourcesRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _kustoPoolPrivateLinkResourcesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, KustoPoolPrivateLinkResources.DeserializeKustoPoolPrivateLinkResources, _kustoPoolPrivateLinkResourcesClientDiagnostics, Pipeline, "SynapseKustoPoolResource.GetKustoPoolPrivateLinkResources", "value", null, cancellationToken);
         }
 
         /// <summary>
