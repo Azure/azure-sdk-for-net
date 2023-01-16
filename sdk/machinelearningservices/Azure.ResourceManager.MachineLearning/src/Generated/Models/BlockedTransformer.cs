@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary>
-    /// Enum for all classification models supported by AutoML.
-    /// Serialized Name: BlockedTransformers
-    /// </summary>
+    /// <summary> Enum for all classification models supported by AutoML. </summary>
     public readonly partial struct BlockedTransformer : IEquatable<BlockedTransformer>
     {
         private readonly string _value;
@@ -36,55 +33,25 @@ namespace Azure.ResourceManager.MachineLearning.Models
         private const string CountVectorizerValue = "CountVectorizer";
         private const string HashOneHotEncoderValue = "HashOneHotEncoder";
 
-        /// <summary>
-        /// Target encoding for text data.
-        /// Serialized Name: BlockedTransformers.TextTargetEncoder
-        /// </summary>
+        /// <summary> Target encoding for text data. </summary>
         public static BlockedTransformer TextTargetEncoder { get; } = new BlockedTransformer(TextTargetEncoderValue);
-        /// <summary>
-        /// Ohe hot encoding creates a binary feature transformation.
-        /// Serialized Name: BlockedTransformers.OneHotEncoder
-        /// </summary>
+        /// <summary> Ohe hot encoding creates a binary feature transformation. </summary>
         public static BlockedTransformer OneHotEncoder { get; } = new BlockedTransformer(OneHotEncoderValue);
-        /// <summary>
-        /// Target encoding for categorical data.
-        /// Serialized Name: BlockedTransformers.CatTargetEncoder
-        /// </summary>
+        /// <summary> Target encoding for categorical data. </summary>
         public static BlockedTransformer CatTargetEncoder { get; } = new BlockedTransformer(CatTargetEncoderValue);
-        /// <summary>
-        /// Tf-Idf stands for, term-frequency times inverse document-frequency. This is a common term weighting scheme for identifying information from documents.
-        /// Serialized Name: BlockedTransformers.TfIdf
-        /// </summary>
+        /// <summary> Tf-Idf stands for, term-frequency times inverse document-frequency. This is a common term weighting scheme for identifying information from documents. </summary>
         public static BlockedTransformer TfIdf { get; } = new BlockedTransformer(TfIdfValue);
-        /// <summary>
-        /// Weight of Evidence encoding is a technique used to encode categorical variables. It uses the natural log of the P(1)/P(0) to create weights.
-        /// Serialized Name: BlockedTransformers.WoETargetEncoder
-        /// </summary>
+        /// <summary> Weight of Evidence encoding is a technique used to encode categorical variables. It uses the natural log of the P(1)/P(0) to create weights. </summary>
         public static BlockedTransformer WoETargetEncoder { get; } = new BlockedTransformer(WoETargetEncoderValue);
-        /// <summary>
-        /// Label encoder converts labels/categorical variables in a numerical form.
-        /// Serialized Name: BlockedTransformers.LabelEncoder
-        /// </summary>
+        /// <summary> Label encoder converts labels/categorical variables in a numerical form. </summary>
         public static BlockedTransformer LabelEncoder { get; } = new BlockedTransformer(LabelEncoderValue);
-        /// <summary>
-        /// Word embedding helps represents words or phrases as a vector, or a series of numbers.
-        /// Serialized Name: BlockedTransformers.WordEmbedding
-        /// </summary>
+        /// <summary> Word embedding helps represents words or phrases as a vector, or a series of numbers. </summary>
         public static BlockedTransformer WordEmbedding { get; } = new BlockedTransformer(WordEmbeddingValue);
-        /// <summary>
-        /// Naive Bayes is a classified that is used for classification of discrete features that are categorically distributed.
-        /// Serialized Name: BlockedTransformers.NaiveBayes
-        /// </summary>
+        /// <summary> Naive Bayes is a classified that is used for classification of discrete features that are categorically distributed. </summary>
         public static BlockedTransformer NaiveBayes { get; } = new BlockedTransformer(NaiveBayesValue);
-        /// <summary>
-        /// Count Vectorizer converts a collection of text documents to a matrix of token counts.
-        /// Serialized Name: BlockedTransformers.CountVectorizer
-        /// </summary>
+        /// <summary> Count Vectorizer converts a collection of text documents to a matrix of token counts. </summary>
         public static BlockedTransformer CountVectorizer { get; } = new BlockedTransformer(CountVectorizerValue);
-        /// <summary>
-        /// Hashing One Hot Encoder can turn categorical variables into a limited number of new features. This is often used for high-cardinality categorical features.
-        /// Serialized Name: BlockedTransformers.HashOneHotEncoder
-        /// </summary>
+        /// <summary> Hashing One Hot Encoder can turn categorical variables into a limited number of new features. This is often used for high-cardinality categorical features. </summary>
         public static BlockedTransformer HashOneHotEncoder { get; } = new BlockedTransformer(HashOneHotEncoderValue);
         /// <summary> Determines if two <see cref="BlockedTransformer"/> values are the same. </summary>
         public static bool operator ==(BlockedTransformer left, BlockedTransformer right) => left.Equals(right);

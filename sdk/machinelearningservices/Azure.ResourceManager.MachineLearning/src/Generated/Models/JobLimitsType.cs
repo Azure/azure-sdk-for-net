@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary>
-    /// The JobLimitsType.
-    /// Serialized Name: JobLimitsType
-    /// </summary>
+    /// <summary> The JobLimitsType. </summary>
     internal readonly partial struct JobLimitsType : IEquatable<JobLimitsType>
     {
         private readonly string _value;
@@ -28,15 +25,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
         private const string CommandValue = "Command";
         private const string SweepValue = "Sweep";
 
-        /// <summary>
-        /// Command
-        /// Serialized Name: JobLimitsType.Command
-        /// </summary>
+        /// <summary> Command. </summary>
         public static JobLimitsType Command { get; } = new JobLimitsType(CommandValue);
-        /// <summary>
-        /// Sweep
-        /// Serialized Name: JobLimitsType.Sweep
-        /// </summary>
+        /// <summary> Sweep. </summary>
         public static JobLimitsType Sweep { get; } = new JobLimitsType(SweepValue);
         /// <summary> Determines if two <see cref="JobLimitsType"/> values are the same. </summary>
         public static bool operator ==(JobLimitsType left, JobLimitsType right) => left.Equals(right);

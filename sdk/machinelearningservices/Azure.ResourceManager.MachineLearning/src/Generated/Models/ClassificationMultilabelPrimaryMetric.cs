@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary>
-    /// Primary metrics for classification multilabel tasks.
-    /// Serialized Name: ClassificationMultilabelPrimaryMetrics
-    /// </summary>
+    /// <summary> Primary metrics for classification multilabel tasks. </summary>
     public readonly partial struct ClassificationMultilabelPrimaryMetric : IEquatable<ClassificationMultilabelPrimaryMetric>
     {
         private readonly string _value;
@@ -36,35 +33,23 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// AUC is the Area under the curve.
         /// This metric represents arithmetic mean of the score for each class,
         /// weighted by the number of true instances in each class.
-        /// Serialized Name: ClassificationMultilabelPrimaryMetrics.AUCWeighted
         /// </summary>
         public static ClassificationMultilabelPrimaryMetric AUCWeighted { get; } = new ClassificationMultilabelPrimaryMetric(AUCWeightedValue);
-        /// <summary>
-        /// Accuracy is the ratio of predictions that exactly match the true class labels.
-        /// Serialized Name: ClassificationMultilabelPrimaryMetrics.Accuracy
-        /// </summary>
+        /// <summary> Accuracy is the ratio of predictions that exactly match the true class labels. </summary>
         public static ClassificationMultilabelPrimaryMetric Accuracy { get; } = new ClassificationMultilabelPrimaryMetric(AccuracyValue);
         /// <summary>
         /// Normalized macro recall is recall macro-averaged and normalized, so that random
         /// performance has a score of 0, and perfect performance has a score of 1.
-        /// Serialized Name: ClassificationMultilabelPrimaryMetrics.NormMacroRecall
         /// </summary>
         public static ClassificationMultilabelPrimaryMetric NormMacroRecall { get; } = new ClassificationMultilabelPrimaryMetric(NormMacroRecallValue);
         /// <summary>
         /// The arithmetic mean of the average precision score for each class, weighted by
         /// the number of true instances in each class.
-        /// Serialized Name: ClassificationMultilabelPrimaryMetrics.AveragePrecisionScoreWeighted
         /// </summary>
         public static ClassificationMultilabelPrimaryMetric AveragePrecisionScoreWeighted { get; } = new ClassificationMultilabelPrimaryMetric(AveragePrecisionScoreWeightedValue);
-        /// <summary>
-        /// The arithmetic mean of precision for each class, weighted by number of true instances in each class.
-        /// Serialized Name: ClassificationMultilabelPrimaryMetrics.PrecisionScoreWeighted
-        /// </summary>
+        /// <summary> The arithmetic mean of precision for each class, weighted by number of true instances in each class. </summary>
         public static ClassificationMultilabelPrimaryMetric PrecisionScoreWeighted { get; } = new ClassificationMultilabelPrimaryMetric(PrecisionScoreWeightedValue);
-        /// <summary>
-        /// Intersection Over Union. Intersection of predictions divided by union of predictions.
-        /// Serialized Name: ClassificationMultilabelPrimaryMetrics.IOU
-        /// </summary>
+        /// <summary> Intersection Over Union. Intersection of predictions divided by union of predictions. </summary>
         public static ClassificationMultilabelPrimaryMetric IOU { get; } = new ClassificationMultilabelPrimaryMetric(IOUValue);
         /// <summary> Determines if two <see cref="ClassificationMultilabelPrimaryMetric"/> values are the same. </summary>
         public static bool operator ==(ClassificationMultilabelPrimaryMetric left, ClassificationMultilabelPrimaryMetric right) => left.Equals(right);
