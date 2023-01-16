@@ -17,20 +17,20 @@ namespace Azure.ResourceManager.ManagedServices.Models
         /// <summary> Initializes a new instance of MarketplaceRegistrationDefinitionList. </summary>
         internal MarketplaceRegistrationDefinitionList()
         {
-            Value = new ChangeTrackingList<MarketplaceRegistrationDefinitionData>();
+            Value = new ChangeTrackingList<ManagedServicesMarketplaceRegistrationData>();
         }
 
         /// <summary> Initializes a new instance of MarketplaceRegistrationDefinitionList. </summary>
         /// <param name="value"> The list of marketplace registration definitions. </param>
         /// <param name="nextLink"> The link to the next page of marketplace registration definitions. </param>
-        internal MarketplaceRegistrationDefinitionList(IReadOnlyList<MarketplaceRegistrationDefinitionData> value, string nextLink)
+        internal MarketplaceRegistrationDefinitionList(IReadOnlyList<ManagedServicesMarketplaceRegistrationData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> The list of marketplace registration definitions. </summary>
-        public IReadOnlyList<MarketplaceRegistrationDefinitionData> Value { get; }
+        public IReadOnlyList<ManagedServicesMarketplaceRegistrationData> Value { get; }
         /// <summary> The link to the next page of marketplace registration definitions. </summary>
         public string NextLink { get; }
     }

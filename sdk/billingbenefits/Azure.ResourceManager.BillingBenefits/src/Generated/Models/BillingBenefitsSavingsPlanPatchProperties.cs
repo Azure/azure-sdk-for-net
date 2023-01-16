@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
         public bool? IsRenewed { get; set; }
         /// <summary> Gets or sets the renew properties. </summary>
         internal RenewProperties RenewProperties { get; set; }
-        /// <summary> Gets or sets the purchase properties. </summary>
+        /// <summary> Gets or sets the renew purchase properties. </summary>
         public BillingBenefitsPurchaseContent RenewPurchaseProperties
         {
             get => RenewProperties is null ? default : RenewProperties.PurchaseProperties;

@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         public AnomalySecurityMLAnalyticsSettings()
         {
             RequiredDataConnectors = new ChangeTrackingList<SecurityMLAnalyticsSettingsDataSource>();
-            Tactics = new ChangeTrackingList<AttackTactic>();
+            Tactics = new ChangeTrackingList<SecurityInsightsAttackTactic>();
             Techniques = new ChangeTrackingList<string>();
             Kind = SecurityMLAnalyticsSettingsKind.Anomaly;
         }
@@ -35,8 +35,8 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="etag"> Etag of the azure resource. </param>
         /// <param name="description"> The description of the SecurityMLAnalyticsSettings. </param>
         /// <param name="displayName"> The display name for settings created by this SecurityMLAnalyticsSettings. </param>
-        /// <param name="enabled"> Determines whether this settings is enabled or disabled. </param>
-        /// <param name="lastModifiedUtc"> The last time that this SecurityMLAnalyticsSettings has been modified. </param>
+        /// <param name="isEnabled"> Determines whether this settings is enabled or disabled. </param>
+        /// <param name="lastModifiedOn"> The last time that this SecurityMLAnalyticsSettings has been modified. </param>
         /// <param name="requiredDataConnectors"> The required data sources for this SecurityMLAnalyticsSettings. </param>
         /// <param name="tactics"> The tactics of the SecurityMLAnalyticsSettings. </param>
         /// <param name="techniques"> The techniques of the SecurityMLAnalyticsSettings. </param>
@@ -47,12 +47,12 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="isDefaultSettings"> Determines whether this anomaly security ml analytics settings is a default settings. </param>
         /// <param name="anomalySettingsVersion"> The anomaly settings version of the Anomaly security ml analytics settings that dictates whether job version gets updated or not. </param>
         /// <param name="settingsDefinitionId"> The anomaly settings definition Id. </param>
-        internal AnomalySecurityMLAnalyticsSettings(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SecurityMLAnalyticsSettingsKind kind, ETag? etag, string description, string displayName, bool? enabled, DateTimeOffset? lastModifiedUtc, IList<SecurityMLAnalyticsSettingsDataSource> requiredDataConnectors, IList<AttackTactic> tactics, IList<string> techniques, string anomalyVersion, BinaryData customizableObservations, TimeSpan? frequency, SettingsStatus? settingsStatus, bool? isDefaultSettings, int? anomalySettingsVersion, Guid? settingsDefinitionId) : base(id, name, resourceType, systemData, kind, etag)
+        internal AnomalySecurityMLAnalyticsSettings(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SecurityMLAnalyticsSettingsKind kind, ETag? etag, string description, string displayName, bool? isEnabled, DateTimeOffset? lastModifiedOn, IList<SecurityMLAnalyticsSettingsDataSource> requiredDataConnectors, IList<SecurityInsightsAttackTactic> tactics, IList<string> techniques, string anomalyVersion, BinaryData customizableObservations, TimeSpan? frequency, AnomalySecurityMLAnalyticsSettingsStatus? settingsStatus, bool? isDefaultSettings, int? anomalySettingsVersion, Guid? settingsDefinitionId) : base(id, name, resourceType, systemData, kind, etag)
         {
             Description = description;
             DisplayName = displayName;
-            Enabled = enabled;
-            LastModifiedUtc = lastModifiedUtc;
+            IsEnabled = isEnabled;
+            LastModifiedOn = lastModifiedOn;
             RequiredDataConnectors = requiredDataConnectors;
             Tactics = tactics;
             Techniques = techniques;
@@ -71,13 +71,13 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <summary> The display name for settings created by this SecurityMLAnalyticsSettings. </summary>
         public string DisplayName { get; set; }
         /// <summary> Determines whether this settings is enabled or disabled. </summary>
-        public bool? Enabled { get; set; }
+        public bool? IsEnabled { get; set; }
         /// <summary> The last time that this SecurityMLAnalyticsSettings has been modified. </summary>
-        public DateTimeOffset? LastModifiedUtc { get; }
+        public DateTimeOffset? LastModifiedOn { get; }
         /// <summary> The required data sources for this SecurityMLAnalyticsSettings. </summary>
         public IList<SecurityMLAnalyticsSettingsDataSource> RequiredDataConnectors { get; }
         /// <summary> The tactics of the SecurityMLAnalyticsSettings. </summary>
-        public IList<AttackTactic> Tactics { get; }
+        public IList<SecurityInsightsAttackTactic> Tactics { get; }
         /// <summary> The techniques of the SecurityMLAnalyticsSettings. </summary>
         public IList<string> Techniques { get; }
         /// <summary> The anomaly version of the AnomalySecurityMLAnalyticsSettings. </summary>
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <summary> The frequency that this SecurityMLAnalyticsSettings will be run. </summary>
         public TimeSpan? Frequency { get; set; }
         /// <summary> The anomaly SecurityMLAnalyticsSettings status. </summary>
-        public SettingsStatus? SettingsStatus { get; set; }
+        public AnomalySecurityMLAnalyticsSettingsStatus? SettingsStatus { get; set; }
         /// <summary> Determines whether this anomaly security ml analytics settings is a default settings. </summary>
         public bool? IsDefaultSettings { get; set; }
         /// <summary> The anomaly settings version of the Anomaly security ml analytics settings that dictates whether job version gets updated or not. </summary>

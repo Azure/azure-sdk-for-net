@@ -7,6 +7,8 @@ Project("{75849958-749C-4A56-BD5A-40980096CB79}") = "Azure.ResourceManager.Searc
 EndProject
 Project("{75849958-749C-4A56-BD5A-40980096CB79}") = "Azure.ResourceManager.Search.Tests", "tests\Azure.ResourceManager.Search.Tests.csproj", "{83B1A520-E562-4E66-B799-1F335B0144EC}"
 EndProject
+Project("{75849958-749C-4A56-BD5A-40980096CB79}") = "Azure.ResourceManager.Search.Samples", "samples\Azure.ResourceManager.Search.Samples.csproj", "{73A62388-4227-4DFF-82D5-3C2808A88555}"
+EndProject
 Global
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

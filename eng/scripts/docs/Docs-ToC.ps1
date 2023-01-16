@@ -149,10 +149,8 @@ function GetPackageReadmeName($packageMetadata) {
   
 function Get-dotnet-DocsMsTocData($packageMetadata, $docRepoLocation, $PackageSourceOverride) {
     $packageLevelReadmeName = GetPackageReadmeName -packageMetadata $packageMetadata
-    $packageTocHeader = $packageMetadata.Package
-    if ($packageMetadata.DisplayName) {
-      $packageTocHeader = $packageMetadata.DisplayName
-    }
+    $packageTocHeader = GetDocsTocDisplayName $packageMetadata
+
     $children = @()
     # Children here combine namespaces in both preview and GA.
     if($packageMetadata.VersionPreview) {

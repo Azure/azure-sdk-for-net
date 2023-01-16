@@ -32,7 +32,11 @@ function AddSparseCheckoutPath([string]$subDirectory) {
 function CopyToProjectIfNeeded([string]$cloneRoot, [string]$mainDir, [string]$dest, [string[]]$additionalSubDirectories) {
     $source = "$cloneRoot/$mainDir"
     Write-Host "Copying spec from $source"
-    Copy-Item -Path $source -Destination $dest -Recurse -Force
+    # $mainSpecDir is the PR folder, we just need to copy its subfolders which include the cadl project folder
+    Get-ChildItem –Path "$source" -Exclude @("data-plane", "resource-manager")|
+        Foreach-Object {
+            Copy-Item -Path $_.FullName -Destination $dest -Recurse -Force
+        }
     foreach($additionalDir in $additionalSubDirectories)
     {
         $source = "$cloneRoot/$additionalDir"
@@ -106,13 +110,21 @@ $configuration = Get-Content -Path $cadlConfigurationFile -Raw | ConvertFrom-Yam
 $pieces = $cadlConfigurationFile.Path.Replace("\","/").Split("/")
 $projectName = $pieces[$pieces.Count - 3]
 
-$specSubDirectory = $configuration["directory"]
+# clone the whole RP directory which is the parent of $configuration["directory"]
+if ($configuration["directory"] -match "^[^/\\]+[\\/]+[^/\\]+")
+{
+    $specSubDirectory = $Matches[0]
+}
+else
+{
+    throw "The directory in $cadlConfigurationFile is not expected"
+}
 if ( $configuration["repo"] -and $configuration["commit"]) {
     $specCloneDir = GetSparseCloneDir $projectName "spec"
     $gitRemoteValue = GetGitRemoteValue $configuration["repo"]
 
     Write-Host "Setting up sparse clone for $projectName at $specCloneDir"
-    
+
     Push-Location $specCloneDir.Path
     try {
         if (!(Test-Path ".git")) {
@@ -120,6 +132,7 @@ if ( $configuration["repo"] -and $configuration["commit"]) {
             UpdateSparseCheckoutFile $specSubDirectory $configuration["additionalDirectories"]
         }
         git checkout $configuration["commit"]
+        if ($LASTEXITCODE) { exit $LASTEXITCODE }
     }
     finally {
         Pop-Location

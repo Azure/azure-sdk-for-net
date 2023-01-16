@@ -435,7 +435,10 @@ namespace Azure.Storage.DataMovement.Tests
                 newSourceFile,
                 GetNewBlobName(),
                 size);
+
+            // Create destination of a blob type that's not the same as the source
             PageBlobClient pageBlobClient = testContainer.Container.GetPageBlobClient(GetNewBlobName());
+            await pageBlobClient.CreateAsync(size);
             StorageResource sourceResource = new BlockBlobStorageResource(blockBlobClient);
             StorageResource destinationResource = new PageBlobStorageResource(
                 pageBlobClient,
@@ -503,10 +506,14 @@ namespace Azure.Storage.DataMovement.Tests
                 newSourceFile,
                 GetNewBlobName(),
                 size);
-            AppendBlobClient pageBlobClient = testContainer.Container.GetAppendBlobClient(GetNewBlobName());
+
+            // Create destination of a blob type that's not the same as the source
+            AppendBlobClient appendBlobClient = testContainer.Container.GetAppendBlobClient(GetNewBlobName());
+            await appendBlobClient.CreateAsync();
+
             StorageResource sourceResource = new BlockBlobStorageResource(blockBlobClient);
             StorageResource destinationResource = new AppendBlobStorageResource(
-                pageBlobClient,
+                appendBlobClient,
                 new AppendBlobStorageResourceOptions()
                 {
                     CopyMethod = TransferCopyMethod.AsyncCopy,

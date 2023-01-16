@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Reservations
         public int? Version { get; }
         /// <summary> The sku information associated to this reservation. </summary>
         internal ReservationsSkuName Sku { get; }
-        /// <summary> Gets or sets the name. </summary>
+        /// <summary> Gets the sku name. </summary>
         public string SkuName
         {
             get => Sku?.Name;
