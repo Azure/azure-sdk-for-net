@@ -20,7 +20,7 @@ namespace Compute.Tests
             string originalTestLocation = Environment.GetEnvironmentVariable("AZURE_VM_TEST_LOCATION");
             using (MockContext context = MockContext.Start(this.GetType()))
             {
-                Environment.SetEnvironmentVariable("AZURE_VM_TEST_LOCATION", "eastus2euap");
+                Environment.SetEnvironmentVariable("AZURE_VM_TEST_LOCATION", "eastus");
                 EnsureClientsInitialized(context);
 
                 string baseRGName = ComputeManagementTestUtilities.GenerateName(TestPrefix);
@@ -78,7 +78,7 @@ namespace Compute.Tests
             string originalTestLocation = Environment.GetEnvironmentVariable("AZURE_VM_TEST_LOCATION");
             using (MockContext context = MockContext.Start(this.GetType()))
             {
-                Environment.SetEnvironmentVariable("AZURE_VM_TEST_LOCATION", "eastus2euap");
+                Environment.SetEnvironmentVariable("AZURE_VM_TEST_LOCATION", "eastus");
                 EnsureClientsInitialized(context);
 
                 string baseRGName = ComputeManagementTestUtilities.GenerateName(TestPrefix);

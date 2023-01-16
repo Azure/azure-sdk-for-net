@@ -6,9 +6,7 @@
 #nullable disable
 
 using System;
-using System.Linq;
 using System.Threading;
-using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -45,86 +43,46 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
 
         /// <summary>
         /// Lists all the userAssignedIdentities available under the specified subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.ManagedIdentity/userAssignedIdentities
-        /// Operation Id: UserAssignedIdentities_ListBySubscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ManagedIdentity/userAssignedIdentities</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>UserAssignedIdentities_ListBySubscription</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="UserAssignedIdentityResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<UserAssignedIdentityResource> GetUserAssignedIdentitiesAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<UserAssignedIdentityResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = UserAssignedIdentityClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetUserAssignedIdentities");
-                scope.Start();
-                try
-                {
-                    var response = await UserAssignedIdentityRestClient.ListBySubscriptionAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new UserAssignedIdentityResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<UserAssignedIdentityResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = UserAssignedIdentityClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetUserAssignedIdentities");
-                scope.Start();
-                try
-                {
-                    var response = await UserAssignedIdentityRestClient.ListBySubscriptionNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new UserAssignedIdentityResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => UserAssignedIdentityRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => UserAssignedIdentityRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new UserAssignedIdentityResource(Client, UserAssignedIdentityData.DeserializeUserAssignedIdentityData(e)), UserAssignedIdentityClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetUserAssignedIdentities", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Lists all the userAssignedIdentities available under the specified subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.ManagedIdentity/userAssignedIdentities
-        /// Operation Id: UserAssignedIdentities_ListBySubscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ManagedIdentity/userAssignedIdentities</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>UserAssignedIdentities_ListBySubscription</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="UserAssignedIdentityResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<UserAssignedIdentityResource> GetUserAssignedIdentities(CancellationToken cancellationToken = default)
         {
-            Page<UserAssignedIdentityResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = UserAssignedIdentityClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetUserAssignedIdentities");
-                scope.Start();
-                try
-                {
-                    var response = UserAssignedIdentityRestClient.ListBySubscription(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new UserAssignedIdentityResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<UserAssignedIdentityResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = UserAssignedIdentityClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetUserAssignedIdentities");
-                scope.Start();
-                try
-                {
-                    var response = UserAssignedIdentityRestClient.ListBySubscriptionNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new UserAssignedIdentityResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => UserAssignedIdentityRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => UserAssignedIdentityRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new UserAssignedIdentityResource(Client, UserAssignedIdentityData.DeserializeUserAssignedIdentityData(e)), UserAssignedIdentityClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetUserAssignedIdentities", "value", "nextLink", cancellationToken);
         }
     }
 }

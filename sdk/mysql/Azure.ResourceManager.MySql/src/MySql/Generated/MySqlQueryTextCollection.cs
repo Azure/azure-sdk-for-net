@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -54,8 +53,16 @@ namespace Azure.ResourceManager.MySql
 
         /// <summary>
         /// Retrieve the Query-Store query texts for the queryId.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforMySQL/servers/{serverName}/queryTexts/{queryId}
-        /// Operation Id: QueryTexts_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforMySQL/servers/{serverName}/queryTexts/{queryId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>QueryTexts_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="queryId"> The Query-Store query identifier. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -83,8 +90,16 @@ namespace Azure.ResourceManager.MySql
 
         /// <summary>
         /// Retrieve the Query-Store query texts for the queryId.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforMySQL/servers/{serverName}/queryTexts/{queryId}
-        /// Operation Id: QueryTexts_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforMySQL/servers/{serverName}/queryTexts/{queryId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>QueryTexts_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="queryId"> The Query-Store query identifier. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -112,8 +127,16 @@ namespace Azure.ResourceManager.MySql
 
         /// <summary>
         /// Retrieve the Query-Store query texts for specified queryIds.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforMySQL/servers/{serverName}/queryTexts
-        /// Operation Id: QueryTexts_ListByServer
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforMySQL/servers/{serverName}/queryTexts</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>QueryTexts_ListByServer</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="queryIds"> The query identifiers. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -123,43 +146,23 @@ namespace Azure.ResourceManager.MySql
         {
             Argument.AssertNotNull(queryIds, nameof(queryIds));
 
-            async Task<Page<MySqlQueryTextResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _mySqlQueryTextQueryTextsClientDiagnostics.CreateScope("MySqlQueryTextCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _mySqlQueryTextQueryTextsRestClient.ListByServerAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, queryIds, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new MySqlQueryTextResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<MySqlQueryTextResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _mySqlQueryTextQueryTextsClientDiagnostics.CreateScope("MySqlQueryTextCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _mySqlQueryTextQueryTextsRestClient.ListByServerNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, queryIds, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new MySqlQueryTextResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _mySqlQueryTextQueryTextsRestClient.CreateListByServerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, queryIds);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _mySqlQueryTextQueryTextsRestClient.CreateListByServerNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, queryIds);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new MySqlQueryTextResource(Client, MySqlQueryTextData.DeserializeMySqlQueryTextData(e)), _mySqlQueryTextQueryTextsClientDiagnostics, Pipeline, "MySqlQueryTextCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Retrieve the Query-Store query texts for specified queryIds.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforMySQL/servers/{serverName}/queryTexts
-        /// Operation Id: QueryTexts_ListByServer
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforMySQL/servers/{serverName}/queryTexts</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>QueryTexts_ListByServer</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="queryIds"> The query identifiers. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -169,43 +172,23 @@ namespace Azure.ResourceManager.MySql
         {
             Argument.AssertNotNull(queryIds, nameof(queryIds));
 
-            Page<MySqlQueryTextResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _mySqlQueryTextQueryTextsClientDiagnostics.CreateScope("MySqlQueryTextCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _mySqlQueryTextQueryTextsRestClient.ListByServer(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, queryIds, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new MySqlQueryTextResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<MySqlQueryTextResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _mySqlQueryTextQueryTextsClientDiagnostics.CreateScope("MySqlQueryTextCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _mySqlQueryTextQueryTextsRestClient.ListByServerNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, queryIds, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new MySqlQueryTextResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _mySqlQueryTextQueryTextsRestClient.CreateListByServerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, queryIds);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _mySqlQueryTextQueryTextsRestClient.CreateListByServerNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, queryIds);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new MySqlQueryTextResource(Client, MySqlQueryTextData.DeserializeMySqlQueryTextData(e)), _mySqlQueryTextQueryTextsClientDiagnostics, Pipeline, "MySqlQueryTextCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforMySQL/servers/{serverName}/queryTexts/{queryId}
-        /// Operation Id: QueryTexts_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforMySQL/servers/{serverName}/queryTexts/{queryId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>QueryTexts_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="queryId"> The Query-Store query identifier. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -231,8 +214,16 @@ namespace Azure.ResourceManager.MySql
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforMySQL/servers/{serverName}/queryTexts/{queryId}
-        /// Operation Id: QueryTexts_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforMySQL/servers/{serverName}/queryTexts/{queryId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>QueryTexts_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="queryId"> The Query-Store query identifier. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

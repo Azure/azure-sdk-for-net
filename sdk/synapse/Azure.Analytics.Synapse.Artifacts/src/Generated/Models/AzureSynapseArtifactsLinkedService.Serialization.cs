@@ -61,6 +61,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 writer.WritePropertyName("authentication");
                 writer.WriteObjectValue(Authentication);
             }
+            if (Optional.IsDefined(WorkspaceResourceId))
+            {
+                writer.WritePropertyName("workspaceResourceId");
+                writer.WriteObjectValue(WorkspaceResourceId);
+            }
             writer.WriteEndObject();
             foreach (var item in AdditionalProperties)
             {
@@ -79,6 +84,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Optional<IList<object>> annotations = default;
             object endpoint = default;
             Optional<object> authentication = default;
+            Optional<object> workspaceResourceId = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
@@ -157,13 +163,23 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                             authentication = property0.Value.GetObject();
                             continue;
                         }
+                        if (property0.NameEquals("workspaceResourceId"))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            workspaceResourceId = property0.Value.GetObject();
+                            continue;
+                        }
                     }
                     continue;
                 }
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new AzureSynapseArtifactsLinkedService(type, connectVia.Value, description.Value, Optional.ToDictionary(parameters), Optional.ToList(annotations), additionalProperties, endpoint, authentication.Value);
+            return new AzureSynapseArtifactsLinkedService(type, connectVia.Value, description.Value, Optional.ToDictionary(parameters), Optional.ToList(annotations), additionalProperties, endpoint, authentication.Value, workspaceResourceId.Value);
         }
 
         internal partial class AzureSynapseArtifactsLinkedServiceConverter : JsonConverter<AzureSynapseArtifactsLinkedService>
