@@ -12,16 +12,16 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.Synapse.Models
 {
     /// <summary> Class representing a Private Link Resources. </summary>
-    public partial class KustoPoolPrivateLinkResources : ResourceData
+    public partial class SynapseKustoPoolPrivateLinkData : ResourceData
     {
-        /// <summary> Initializes a new instance of KustoPoolPrivateLinkResources. </summary>
-        public KustoPoolPrivateLinkResources()
+        /// <summary> Initializes a new instance of SynapseKustoPoolPrivateLinkData. </summary>
+        public SynapseKustoPoolPrivateLinkData()
         {
             RequiredMembers = new ChangeTrackingList<string>();
             RequiredZoneNames = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of KustoPoolPrivateLinkResources. </summary>
+        /// <summary> Initializes a new instance of SynapseKustoPoolPrivateLinkData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Synapse.Models
         /// <param name="requiredMembers"> The private link resource required member names. </param>
         /// <param name="requiredZoneNames"> The private link resource required zone names. </param>
         /// <param name="provisioningState"> The provisioned state of the resource. </param>
-        internal KustoPoolPrivateLinkResources(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string groupId, IReadOnlyList<string> requiredMembers, IReadOnlyList<string> requiredZoneNames, ResourceProvisioningState? provisioningState) : base(id, name, resourceType, systemData)
+        internal SynapseKustoPoolPrivateLinkData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string groupId, IReadOnlyList<string> requiredMembers, IReadOnlyList<string> requiredZoneNames, ResourceProvisioningState? provisioningState) : base(id, name, resourceType, systemData)
         {
             GroupId = groupId;
             RequiredMembers = requiredMembers;

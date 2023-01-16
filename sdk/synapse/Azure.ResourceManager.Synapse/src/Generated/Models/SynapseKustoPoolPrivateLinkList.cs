@@ -11,22 +11,22 @@ using Azure.Core;
 namespace Azure.ResourceManager.Synapse.Models
 {
     /// <summary> The list Kusto Private Link Resources operation response. </summary>
-    internal partial class PrivateLinkResources
+    internal partial class SynapseKustoPoolPrivateLinkList
     {
-        /// <summary> Initializes a new instance of PrivateLinkResources. </summary>
-        internal PrivateLinkResources()
+        /// <summary> Initializes a new instance of SynapseKustoPoolPrivateLinkList. </summary>
+        internal SynapseKustoPoolPrivateLinkList()
         {
-            Value = new ChangeTrackingList<KustoPoolPrivateLinkResources>();
+            Value = new ChangeTrackingList<SynapseKustoPoolPrivateLinkData>();
         }
 
-        /// <summary> Initializes a new instance of PrivateLinkResources. </summary>
+        /// <summary> Initializes a new instance of SynapseKustoPoolPrivateLinkList. </summary>
         /// <param name="value"> The list of Kusto Private Link Resources. </param>
-        internal PrivateLinkResources(IReadOnlyList<KustoPoolPrivateLinkResources> value)
+        internal SynapseKustoPoolPrivateLinkList(IReadOnlyList<SynapseKustoPoolPrivateLinkData> value)
         {
             Value = value;
         }
 
         /// <summary> The list of Kusto Private Link Resources. </summary>
-        public IReadOnlyList<KustoPoolPrivateLinkResources> Value { get; }
+        public IReadOnlyList<SynapseKustoPoolPrivateLinkData> Value { get; }
     }
 }

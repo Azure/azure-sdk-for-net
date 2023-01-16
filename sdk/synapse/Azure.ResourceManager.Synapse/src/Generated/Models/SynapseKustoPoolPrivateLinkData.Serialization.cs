@@ -12,7 +12,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
-    public partial class KustoPoolPrivateLinkResources : IUtf8JsonSerializable
+    public partial class SynapseKustoPoolPrivateLinkData : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Synapse.Models
             writer.WriteEndObject();
         }
 
-        internal static KustoPoolPrivateLinkResources DeserializeKustoPoolPrivateLinkResources(JsonElement element)
+        internal static SynapseKustoPoolPrivateLinkData DeserializeSynapseKustoPoolPrivateLinkData(JsonElement element)
         {
             ResourceIdentifier id = default;
             string name = default;
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.Synapse.Models
                     continue;
                 }
             }
-            return new KustoPoolPrivateLinkResources(id, name, type, systemData.Value, groupId.Value, Optional.ToList(requiredMembers), Optional.ToList(requiredZoneNames), Optional.ToNullable(provisioningState));
+            return new SynapseKustoPoolPrivateLinkData(id, name, type, systemData.Value, groupId.Value, Optional.ToList(requiredMembers), Optional.ToList(requiredZoneNames), Optional.ToNullable(provisioningState));
         }
     }
 }

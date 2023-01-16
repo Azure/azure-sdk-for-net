@@ -169,6 +169,8 @@ rename-mapping:
   Workspace.properties.workspaceUID: WorkspaceUid|uuid
   Workspace.properties.adlaResourceId: -|arm-id
   KustoPoolUpdate.properties.workspaceUID: WorkspaceUid|uuid
+  PrivateLinkResources: SynapseKustoPoolPrivateLinkList
+  KustoPoolPrivateLinkResources: SynapseKustoPoolPrivateLinkData
 
 prepend-rp-prefix:
   - AttachedDatabaseConfiguration
@@ -365,6 +367,7 @@ override-operation-name:
   KustoPools_CheckNameAvailability: CheckKustoPoolNameAvailability
   KustoPoolDataConnections_dataConnectionValidation: ValidateDataConnection
   IntegrationRuntimeNodeIpAddress_Get: GetIntegrationRuntimeNodeIPAddress
+  KustoPoolPrivateLinkResources_List: GetAllKustoPoolPrivateLinkData
 
 request-path-to-resource-name:
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/privateLinkHubs/{privateLinkHubName}/privateLinkResources/{privateLinkResourceName}: SynapsePrivateLinkResource

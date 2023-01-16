@@ -11,11 +11,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
-    internal partial class PrivateLinkResources
+    internal partial class SynapseKustoPoolPrivateLinkList
     {
-        internal static PrivateLinkResources DeserializePrivateLinkResources(JsonElement element)
+        internal static SynapseKustoPoolPrivateLinkList DeserializeSynapseKustoPoolPrivateLinkList(JsonElement element)
         {
-            Optional<IReadOnlyList<KustoPoolPrivateLinkResources>> value = default;
+            Optional<IReadOnlyList<SynapseKustoPoolPrivateLinkData>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
@@ -25,16 +25,16 @@ namespace Azure.ResourceManager.Synapse.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<KustoPoolPrivateLinkResources> array = new List<KustoPoolPrivateLinkResources>();
+                    List<SynapseKustoPoolPrivateLinkData> array = new List<SynapseKustoPoolPrivateLinkData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(KustoPoolPrivateLinkResources.DeserializeKustoPoolPrivateLinkResources(item));
+                        array.Add(SynapseKustoPoolPrivateLinkData.DeserializeSynapseKustoPoolPrivateLinkData(item));
                     }
                     value = array;
                     continue;
                 }
             }
-            return new PrivateLinkResources(Optional.ToList(value));
+            return new SynapseKustoPoolPrivateLinkList(Optional.ToList(value));
         }
     }
 }
