@@ -556,7 +556,7 @@ namespace Azure.Communication.CallAutomation
             scope.Start();
             try
             {
-                return new CallConnection(callConnectionId, CallConnectionRestClient, CallMediaRestClient,_clientDiagnostics);
+                return new CallConnection(callConnectionId, CallConnectionRestClient, CallMediaRestClient, _clientDiagnostics);
             }
             catch (Exception ex)
             {
@@ -572,7 +572,7 @@ namespace Azure.Communication.CallAutomation
             scope.Start();
             try
             {
-                return new CallRecording(_resourceEndpoint, CallRecordingRestClient, CallMediaRestClient, _clientDiagnostics, _pipeline);
+                return new CallRecording(_resourceEndpoint, CallRecordingRestClient, _clientDiagnostics, _pipeline);
             }
             catch (Exception ex)
             {
