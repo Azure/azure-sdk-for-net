@@ -544,7 +544,7 @@ namespace Azure.ResourceManager.Synapse
         }
 
         /// <summary>
-        /// Delete a SQL pool. You can call ToObjectFromJson&lt;SynapseSqlPoolResource&gt;() against the Value property of the result to get specified type.
+        /// Delete a SQL pool. You can call ToObjectFromJson&lt;SynapseSqlPoolData&gt;() against the Value property of the result to get specified type.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/sqlPools/{sqlPoolName}
         /// Operation Id: SqlPools_Delete
         /// </summary>
@@ -570,7 +570,7 @@ namespace Azure.ResourceManager.Synapse
         }
 
         /// <summary>
-        /// Delete a SQL pool. You can call ToObjectFromJson&lt;SynapseSqlPoolResource&gt;() against the Value property of the result to get specified type.
+        /// Delete a SQL pool. You can call ToObjectFromJson&lt;SynapseSqlPoolData&gt;() against the Value property of the result to get specified type.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/sqlPools/{sqlPoolName}
         /// Operation Id: SqlPools_Delete
         /// </summary>
@@ -656,7 +656,7 @@ namespace Azure.ResourceManager.Synapse
         }
 
         /// <summary>
-        /// Pause a SQL pool. You can call ToObjectFromJson&lt;SynapseSqlPoolResource&gt;() against the Value property of the result to get specified type.
+        /// Pause a SQL pool. You can call ToObjectFromJson&lt;SynapseSqlPoolData&gt;() against the Value property of the result to get specified type.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/sqlPools/{sqlPoolName}/pause
         /// Operation Id: SqlPools_Pause
         /// </summary>
@@ -682,7 +682,7 @@ namespace Azure.ResourceManager.Synapse
         }
 
         /// <summary>
-        /// Pause a SQL pool. You can call ToObjectFromJson&lt;SynapseSqlPoolResource&gt;() against the Value property of the result to get specified type.
+        /// Pause a SQL pool. You can call ToObjectFromJson&lt;SynapseSqlPoolData&gt;() against the Value property of the result to get specified type.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/sqlPools/{sqlPoolName}/pause
         /// Operation Id: SqlPools_Pause
         /// </summary>
@@ -708,7 +708,7 @@ namespace Azure.ResourceManager.Synapse
         }
 
         /// <summary>
-        /// Resume a SQL pool. You can call ToObjectFromJson&lt;SynapseSqlPoolResource&gt;() against the Value property of the result to get specified type.
+        /// Resume a SQL pool. You can call ToObjectFromJson&lt;SynapseSqlPoolData&gt;() against the Value property of the result to get specified type.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/sqlPools/{sqlPoolName}/resume
         /// Operation Id: SqlPools_Resume
         /// </summary>
@@ -734,7 +734,7 @@ namespace Azure.ResourceManager.Synapse
         }
 
         /// <summary>
-        /// Resume a SQL pool. You can call ToObjectFromJson&lt;SynapseSqlPoolResource&gt;() against the Value property of the result to get specified type.
+        /// Resume a SQL pool. You can call ToObjectFromJson&lt;SynapseSqlPoolData&gt;() against the Value property of the result to get specified type.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/sqlPools/{sqlPoolName}/resume
         /// Operation Id: SqlPools_Resume
         /// </summary>

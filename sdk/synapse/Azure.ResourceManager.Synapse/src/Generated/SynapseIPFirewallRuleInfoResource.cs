@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.Synapse
         }
 
         /// <summary>
-        /// Deletes a firewall rule. You can call ToObjectFromJson&lt;SynapseIPFirewallRuleInfoResource&gt;() against the Value property of the result to get specified type.
+        /// Deletes a firewall rule. You can call ToObjectFromJson&lt;SynapseIPFirewallRuleInfoData&gt;() against the Value property of the result to get specified type.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/firewallRules/{ruleName}
         /// Operation Id: IpFirewallRules_Delete
         /// </summary>
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.Synapse
         }
 
         /// <summary>
-        /// Deletes a firewall rule. You can call ToObjectFromJson&lt;SynapseIPFirewallRuleInfoResource&gt;() against the Value property of the result to get specified type.
+        /// Deletes a firewall rule. You can call ToObjectFromJson&lt;SynapseIPFirewallRuleInfoData&gt;() against the Value property of the result to get specified type.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/firewallRules/{ruleName}
         /// Operation Id: IpFirewallRules_Delete
         /// </summary>

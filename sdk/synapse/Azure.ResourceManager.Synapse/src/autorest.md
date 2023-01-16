@@ -465,7 +465,7 @@ directive:
   - from: bigDataPool.json
     where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/bigDataPools/{bigDataPoolName}'].delete
     transform: >
-      $.description += ' You can call ToObjectFromJson<SynapseBigDataPoolInfoResource>() against the Value property of the result to get specified type.';
+      $.description += ' You can call ToObjectFromJson<SynapseBigDataPoolInfoData>() against the Value property of the result to get specified type.';
       $.responses['200'].schema = {
           "type": "object"
       };
@@ -475,14 +475,14 @@ directive:
   - from: firewallRule.json
     where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/firewallRules/{ruleName}'].delete
     transform: >
-      $.description += '. You can call ToObjectFromJson<SynapseIPFirewallRuleInfoResource>() against the Value property of the result to get specified type.';
+      $.description += '. You can call ToObjectFromJson<SynapseIPFirewallRuleInfoData>() against the Value property of the result to get specified type.';
       $.responses['200'].schema = {
           "type": "object"
       };
   - from: sqlPool.json
     where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/sqlPools/{sqlPoolName}'].delete
     transform: >
-      $.description += '. You can call ToObjectFromJson<SynapseSqlPoolResource>() against the Value property of the result to get specified type.';
+      $.description += '. You can call ToObjectFromJson<SynapseSqlPoolData>() against the Value property of the result to get specified type.';
       $.responses['200'].schema = {
           "type": "object"
       };
@@ -492,7 +492,7 @@ directive:
   - from: sqlPool.json
     where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/sqlPools/{sqlPoolName}/pause'].post
     transform: >
-      $.description += '. You can call ToObjectFromJson<SynapseSqlPoolResource>() against the Value property of the result to get specified type.';
+      $.description += '. You can call ToObjectFromJson<SynapseSqlPoolData>() against the Value property of the result to get specified type.';
       $.responses['200'].schema = {
           "type": "object"
       };
@@ -502,7 +502,7 @@ directive:
   - from: sqlPool.json
     where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/sqlPools/{sqlPoolName}/resume'].post
     transform: >
-      $.description += '. You can call ToObjectFromJson<SynapseSqlPoolResource>() against the Value property of the result to get specified type.';
+      $.description += '. You can call ToObjectFromJson<SynapseSqlPoolData>() against the Value property of the result to get specified type.';
       $.responses['200'].schema = {
           "type": "object"
       };

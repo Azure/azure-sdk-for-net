@@ -315,7 +315,7 @@ namespace Azure.ResourceManager.Synapse
             return message;
         }
 
-        /// <summary> Delete a SQL pool. You can call ToObjectFromJson&lt;SynapseSqlPoolResource&gt;() against the Value property of the result to get specified type. </summary>
+        /// <summary> Delete a SQL pool. You can call ToObjectFromJson&lt;SynapseSqlPoolData&gt;() against the Value property of the result to get specified type. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="workspaceName"> The name of the workspace. </param>
@@ -343,7 +343,7 @@ namespace Azure.ResourceManager.Synapse
             }
         }
 
-        /// <summary> Delete a SQL pool. You can call ToObjectFromJson&lt;SynapseSqlPoolResource&gt;() against the Value property of the result to get specified type. </summary>
+        /// <summary> Delete a SQL pool. You can call ToObjectFromJson&lt;SynapseSqlPoolData&gt;() against the Value property of the result to get specified type. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="workspaceName"> The name of the workspace. </param>
@@ -473,7 +473,7 @@ namespace Azure.ResourceManager.Synapse
             return message;
         }
 
-        /// <summary> Pause a SQL pool. You can call ToObjectFromJson&lt;SynapseSqlPoolResource&gt;() against the Value property of the result to get specified type. </summary>
+        /// <summary> Pause a SQL pool. You can call ToObjectFromJson&lt;SynapseSqlPoolData&gt;() against the Value property of the result to get specified type. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="workspaceName"> The name of the workspace. </param>
@@ -500,7 +500,7 @@ namespace Azure.ResourceManager.Synapse
             }
         }
 
-        /// <summary> Pause a SQL pool. You can call ToObjectFromJson&lt;SynapseSqlPoolResource&gt;() against the Value property of the result to get specified type. </summary>
+        /// <summary> Pause a SQL pool. You can call ToObjectFromJson&lt;SynapseSqlPoolData&gt;() against the Value property of the result to get specified type. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="workspaceName"> The name of the workspace. </param>
@@ -550,7 +550,7 @@ namespace Azure.ResourceManager.Synapse
             return message;
         }
 
-        /// <summary> Resume a SQL pool. You can call ToObjectFromJson&lt;SynapseSqlPoolResource&gt;() against the Value property of the result to get specified type. </summary>
+        /// <summary> Resume a SQL pool. You can call ToObjectFromJson&lt;SynapseSqlPoolData&gt;() against the Value property of the result to get specified type. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="workspaceName"> The name of the workspace. </param>
@@ -577,7 +577,7 @@ namespace Azure.ResourceManager.Synapse
             }
         }
 
-        /// <summary> Resume a SQL pool. You can call ToObjectFromJson&lt;SynapseSqlPoolResource&gt;() against the Value property of the result to get specified type. </summary>
+        /// <summary> Resume a SQL pool. You can call ToObjectFromJson&lt;SynapseSqlPoolData&gt;() against the Value property of the result to get specified type. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="workspaceName"> The name of the workspace. </param>
