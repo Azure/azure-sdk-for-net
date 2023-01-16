@@ -6329,9 +6329,12 @@ namespace Azure.ResourceManager.Sql.Models
     public partial class ManagedInstanceDtcSecuritySettings
     {
         public ManagedInstanceDtcSecuritySettings() { }
+        public bool? IsXATransactionsEnabled { get { throw null; } set { } }
         public bool? SnaLu6Point2TransactionsEnabled { get { throw null; } set { } }
         public Azure.ResourceManager.Sql.Models.ManagedInstanceDtcTransactionManagerCommunicationSettings TransactionManagerCommunicationSettings { get { throw null; } set { } }
         public int? XATransactionsDefaultTimeoutInSeconds { get { throw null; } set { } }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        [System.ObsoleteAttribute("This property is obsolete and will be removed in a future release, please use IsXATransactionsEnabled instead.", false)]
         public bool? XaTransactionsEnabled { get { throw null; } set { } }
         public int? XATransactionsMaximumTimeoutInSeconds { get { throw null; } set { } }
     }
