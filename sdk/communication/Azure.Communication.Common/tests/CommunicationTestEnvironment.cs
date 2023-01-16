@@ -18,7 +18,7 @@ namespace Azure.Communication.Tests
 
         public string LiveTestDynamicConnectionString => GetRecordedVariable(
             LiveTestDynamicConnectionStringEnvironmentVariableName,
-            options => options.HasSecretConnectionStringParameter("accessKey", SanitizedValue.Base64));
+            options => options.IsSecret("endpoint=https://sanitized.communication.azure.com/;accesskey=Kg=="));
 
         public Uri LiveTestDynamicEndpoint => new(Core.ConnectionString.Parse(LiveTestDynamicConnectionString).GetRequired("endpoint"));
 
