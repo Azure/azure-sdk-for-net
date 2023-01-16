@@ -53,8 +53,16 @@ namespace Azure.ResourceManager.DataMigration
 
         /// <summary>
         /// Create or Update Database Migration resource.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{sqlDbInstanceName}/providers/Microsoft.DataMigration/databaseMigrations/{targetDbName}
-        /// Operation Id: DatabaseMigrationsSqlDb_CreateOrUpdate
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{sqlDbInstanceName}/providers/Microsoft.DataMigration/databaseMigrations/{targetDbName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DatabaseMigrationsSqlDb_CreateOrUpdate</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="sqlDBInstanceName"> The String to use. </param>
@@ -88,8 +96,16 @@ namespace Azure.ResourceManager.DataMigration
 
         /// <summary>
         /// Create or Update Database Migration resource.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{sqlDbInstanceName}/providers/Microsoft.DataMigration/databaseMigrations/{targetDbName}
-        /// Operation Id: DatabaseMigrationsSqlDb_CreateOrUpdate
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{sqlDbInstanceName}/providers/Microsoft.DataMigration/databaseMigrations/{targetDbName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DatabaseMigrationsSqlDb_CreateOrUpdate</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="sqlDBInstanceName"> The String to use. </param>
@@ -123,8 +139,16 @@ namespace Azure.ResourceManager.DataMigration
 
         /// <summary>
         /// Retrieve the Database Migration resource.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{sqlDbInstanceName}/providers/Microsoft.DataMigration/databaseMigrations/{targetDbName}
-        /// Operation Id: DatabaseMigrationsSqlDb_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{sqlDbInstanceName}/providers/Microsoft.DataMigration/databaseMigrations/{targetDbName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DatabaseMigrationsSqlDb_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="sqlDBInstanceName"> The String to use. </param>
         /// <param name="targetDBName"> The name of the target database. </param>
@@ -156,8 +180,16 @@ namespace Azure.ResourceManager.DataMigration
 
         /// <summary>
         /// Retrieve the Database Migration resource.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{sqlDbInstanceName}/providers/Microsoft.DataMigration/databaseMigrations/{targetDbName}
-        /// Operation Id: DatabaseMigrationsSqlDb_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{sqlDbInstanceName}/providers/Microsoft.DataMigration/databaseMigrations/{targetDbName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DatabaseMigrationsSqlDb_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="sqlDBInstanceName"> The String to use. </param>
         /// <param name="targetDBName"> The name of the target database. </param>
@@ -189,8 +221,16 @@ namespace Azure.ResourceManager.DataMigration
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{sqlDbInstanceName}/providers/Microsoft.DataMigration/databaseMigrations/{targetDbName}
-        /// Operation Id: DatabaseMigrationsSqlDb_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{sqlDbInstanceName}/providers/Microsoft.DataMigration/databaseMigrations/{targetDbName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DatabaseMigrationsSqlDb_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="sqlDBInstanceName"> The String to use. </param>
         /// <param name="targetDBName"> The name of the target database. </param>
@@ -220,8 +260,16 @@ namespace Azure.ResourceManager.DataMigration
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{sqlDbInstanceName}/providers/Microsoft.DataMigration/databaseMigrations/{targetDbName}
-        /// Operation Id: DatabaseMigrationsSqlDb_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{sqlDbInstanceName}/providers/Microsoft.DataMigration/databaseMigrations/{targetDbName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DatabaseMigrationsSqlDb_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="sqlDBInstanceName"> The String to use. </param>
         /// <param name="targetDBName"> The name of the target database. </param>

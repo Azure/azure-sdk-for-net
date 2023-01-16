@@ -58,8 +58,16 @@ namespace Azure.ResourceManager.SecurityCenter
 
         /// <summary>
         /// Get an alert that is associated a resource group or a resource in a resource group
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/locations/{ascLocation}/alerts/{alertName}
-        /// Operation Id: Alerts_GetResourceGroupLevel
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/locations/{ascLocation}/alerts/{alertName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Alerts_GetResourceGroupLevel</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="alertName"> Name of the alert object. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -87,8 +95,16 @@ namespace Azure.ResourceManager.SecurityCenter
 
         /// <summary>
         /// Get an alert that is associated a resource group or a resource in a resource group
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/locations/{ascLocation}/alerts/{alertName}
-        /// Operation Id: Alerts_GetResourceGroupLevel
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/locations/{ascLocation}/alerts/{alertName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Alerts_GetResourceGroupLevel</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="alertName"> Name of the alert object. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -116,8 +132,16 @@ namespace Azure.ResourceManager.SecurityCenter
 
         /// <summary>
         /// List all the alerts that are associated with the resource group that are stored in a specific location
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/locations/{ascLocation}/alerts
-        /// Operation Id: Alerts_ListResourceGroupLevelByRegion
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/locations/{ascLocation}/alerts</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Alerts_ListResourceGroupLevelByRegion</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ResourceGroupSecurityAlertResource" /> that may take multiple service requests to iterate over. </returns>
@@ -130,8 +154,16 @@ namespace Azure.ResourceManager.SecurityCenter
 
         /// <summary>
         /// List all the alerts that are associated with the resource group that are stored in a specific location
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/locations/{ascLocation}/alerts
-        /// Operation Id: Alerts_ListResourceGroupLevelByRegion
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/locations/{ascLocation}/alerts</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Alerts_ListResourceGroupLevelByRegion</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ResourceGroupSecurityAlertResource" /> that may take multiple service requests to iterate over. </returns>
@@ -144,8 +176,16 @@ namespace Azure.ResourceManager.SecurityCenter
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/locations/{ascLocation}/alerts/{alertName}
-        /// Operation Id: Alerts_GetResourceGroupLevel
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/locations/{ascLocation}/alerts/{alertName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Alerts_GetResourceGroupLevel</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="alertName"> Name of the alert object. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -171,8 +211,16 @@ namespace Azure.ResourceManager.SecurityCenter
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/locations/{ascLocation}/alerts/{alertName}
-        /// Operation Id: Alerts_GetResourceGroupLevel
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/locations/{ascLocation}/alerts/{alertName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Alerts_GetResourceGroupLevel</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="alertName"> Name of the alert object. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

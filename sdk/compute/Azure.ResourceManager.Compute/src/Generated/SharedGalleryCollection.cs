@@ -59,8 +59,16 @@ namespace Azure.ResourceManager.Compute
 
         /// <summary>
         /// Get a shared gallery by subscription id or tenant id.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/sharedGalleries/{galleryUniqueName}
-        /// Operation Id: SharedGalleries_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/sharedGalleries/{galleryUniqueName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SharedGalleries_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="galleryUniqueName"> The unique name of the Shared Gallery. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -89,8 +97,16 @@ namespace Azure.ResourceManager.Compute
 
         /// <summary>
         /// Get a shared gallery by subscription id or tenant id.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/sharedGalleries/{galleryUniqueName}
-        /// Operation Id: SharedGalleries_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/sharedGalleries/{galleryUniqueName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SharedGalleries_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="galleryUniqueName"> The unique name of the Shared Gallery. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -119,8 +135,16 @@ namespace Azure.ResourceManager.Compute
 
         /// <summary>
         /// List shared galleries by subscription id or tenant id.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/sharedGalleries
-        /// Operation Id: SharedGalleries_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/sharedGalleries</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SharedGalleries_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="sharedTo"> The query parameter to decide what shared galleries to fetch when doing listing operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -134,8 +158,16 @@ namespace Azure.ResourceManager.Compute
 
         /// <summary>
         /// List shared galleries by subscription id or tenant id.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/sharedGalleries
-        /// Operation Id: SharedGalleries_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/sharedGalleries</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SharedGalleries_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="sharedTo"> The query parameter to decide what shared galleries to fetch when doing listing operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -149,8 +181,16 @@ namespace Azure.ResourceManager.Compute
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/sharedGalleries/{galleryUniqueName}
-        /// Operation Id: SharedGalleries_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/sharedGalleries/{galleryUniqueName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SharedGalleries_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="galleryUniqueName"> The unique name of the Shared Gallery. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -176,8 +216,16 @@ namespace Azure.ResourceManager.Compute
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/sharedGalleries/{galleryUniqueName}
-        /// Operation Id: SharedGalleries_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/sharedGalleries/{galleryUniqueName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SharedGalleries_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="galleryUniqueName"> The unique name of the Shared Gallery. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

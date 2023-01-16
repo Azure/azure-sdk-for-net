@@ -51,8 +51,16 @@ namespace Azure.ResourceManager.SecurityCenter
 
         /// <summary>
         /// List the available security controls, their assessments, and the max score
-        /// Request Path: /providers/Microsoft.Security/secureScoreControlDefinitions
-        /// Operation Id: SecureScoreControlDefinitions_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Security/secureScoreControlDefinitions</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SecureScoreControlDefinitions_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="SecureScoreControlDefinitionItem" /> that may take multiple service requests to iterate over. </returns>
@@ -65,8 +73,16 @@ namespace Azure.ResourceManager.SecurityCenter
 
         /// <summary>
         /// List the available security controls, their assessments, and the max score
-        /// Request Path: /providers/Microsoft.Security/secureScoreControlDefinitions
-        /// Operation Id: SecureScoreControlDefinitions_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Security/secureScoreControlDefinitions</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SecureScoreControlDefinitions_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="SecureScoreControlDefinitionItem" /> that may take multiple service requests to iterate over. </returns>

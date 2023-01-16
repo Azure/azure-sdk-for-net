@@ -55,8 +55,16 @@ namespace Azure.ResourceManager.DataMigration
 
         /// <summary>
         /// The services resource is the top-level resource that represents the Database Migration Service. The PUT method creates a new service or updates an existing one. When a service is updated, existing child resources (i.e. tasks) are unaffected. Services currently support a single kind, &quot;vm&quot;, which refers to a VM-based service, although other kinds may be added in the future. This method can change the kind, SKU, and network of the service, but if tasks are currently running (i.e. the service is busy), this will fail with 400 Bad Request (&quot;ServiceIsBusy&quot;). The provider will reply when successful with 200 OK or 201 Created. Long-running operations use the provisioningState property.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{groupName}/providers/Microsoft.DataMigration/services/{serviceName}
-        /// Operation Id: Services_CreateOrUpdate
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{groupName}/providers/Microsoft.DataMigration/services/{serviceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Services_CreateOrUpdate</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="serviceName"> Name of the service. </param>
@@ -88,8 +96,16 @@ namespace Azure.ResourceManager.DataMigration
 
         /// <summary>
         /// The services resource is the top-level resource that represents the Database Migration Service. The PUT method creates a new service or updates an existing one. When a service is updated, existing child resources (i.e. tasks) are unaffected. Services currently support a single kind, &quot;vm&quot;, which refers to a VM-based service, although other kinds may be added in the future. This method can change the kind, SKU, and network of the service, but if tasks are currently running (i.e. the service is busy), this will fail with 400 Bad Request (&quot;ServiceIsBusy&quot;). The provider will reply when successful with 200 OK or 201 Created. Long-running operations use the provisioningState property.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{groupName}/providers/Microsoft.DataMigration/services/{serviceName}
-        /// Operation Id: Services_CreateOrUpdate
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{groupName}/providers/Microsoft.DataMigration/services/{serviceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Services_CreateOrUpdate</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="serviceName"> Name of the service. </param>
@@ -121,8 +137,16 @@ namespace Azure.ResourceManager.DataMigration
 
         /// <summary>
         /// The services resource is the top-level resource that represents the Database Migration Service. The GET method retrieves information about a service instance.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{groupName}/providers/Microsoft.DataMigration/services/{serviceName}
-        /// Operation Id: Services_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{groupName}/providers/Microsoft.DataMigration/services/{serviceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Services_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="serviceName"> Name of the service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -150,8 +174,16 @@ namespace Azure.ResourceManager.DataMigration
 
         /// <summary>
         /// The services resource is the top-level resource that represents the Database Migration Service. The GET method retrieves information about a service instance.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{groupName}/providers/Microsoft.DataMigration/services/{serviceName}
-        /// Operation Id: Services_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{groupName}/providers/Microsoft.DataMigration/services/{serviceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Services_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="serviceName"> Name of the service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -179,8 +211,16 @@ namespace Azure.ResourceManager.DataMigration
 
         /// <summary>
         /// The Services resource is the top-level resource that represents the Database Migration Service. This method returns a list of service resources in a resource group.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{groupName}/providers/Microsoft.DataMigration/services
-        /// Operation Id: Services_ListByResourceGroup
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{groupName}/providers/Microsoft.DataMigration/services</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Services_ListByResourceGroup</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="DataMigrationServiceResource" /> that may take multiple service requests to iterate over. </returns>
@@ -193,8 +233,16 @@ namespace Azure.ResourceManager.DataMigration
 
         /// <summary>
         /// The Services resource is the top-level resource that represents the Database Migration Service. This method returns a list of service resources in a resource group.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{groupName}/providers/Microsoft.DataMigration/services
-        /// Operation Id: Services_ListByResourceGroup
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{groupName}/providers/Microsoft.DataMigration/services</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Services_ListByResourceGroup</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="DataMigrationServiceResource" /> that may take multiple service requests to iterate over. </returns>
@@ -207,8 +255,16 @@ namespace Azure.ResourceManager.DataMigration
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{groupName}/providers/Microsoft.DataMigration/services/{serviceName}
-        /// Operation Id: Services_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{groupName}/providers/Microsoft.DataMigration/services/{serviceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Services_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="serviceName"> Name of the service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -234,8 +290,16 @@ namespace Azure.ResourceManager.DataMigration
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{groupName}/providers/Microsoft.DataMigration/services/{serviceName}
-        /// Operation Id: Services_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{groupName}/providers/Microsoft.DataMigration/services/{serviceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Services_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="serviceName"> Name of the service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

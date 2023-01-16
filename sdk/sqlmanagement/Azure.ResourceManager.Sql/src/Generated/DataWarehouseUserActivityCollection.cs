@@ -55,8 +55,16 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary>
         /// Gets the user activities of a data warehouse which includes running and suspended queries
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/dataWarehouseUserActivities/{dataWarehouseUserActivityName}
-        /// Operation Id: DataWarehouseUserActivities_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/dataWarehouseUserActivities/{dataWarehouseUserActivityName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DataWarehouseUserActivities_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="dataWarehouseUserActivityName"> The activity name of the data warehouse. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -80,8 +88,16 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary>
         /// Gets the user activities of a data warehouse which includes running and suspended queries
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/dataWarehouseUserActivities/{dataWarehouseUserActivityName}
-        /// Operation Id: DataWarehouseUserActivities_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/dataWarehouseUserActivities/{dataWarehouseUserActivityName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DataWarehouseUserActivities_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="dataWarehouseUserActivityName"> The activity name of the data warehouse. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -105,8 +121,16 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary>
         /// List the user activities of a data warehouse which includes running and suspended queries
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/dataWarehouseUserActivities
-        /// Operation Id: DataWarehouseUserActivities_ListByDatabase
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/dataWarehouseUserActivities</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DataWarehouseUserActivities_ListByDatabase</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="DataWarehouseUserActivityResource" /> that may take multiple service requests to iterate over. </returns>
@@ -119,8 +143,16 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary>
         /// List the user activities of a data warehouse which includes running and suspended queries
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/dataWarehouseUserActivities
-        /// Operation Id: DataWarehouseUserActivities_ListByDatabase
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/dataWarehouseUserActivities</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DataWarehouseUserActivities_ListByDatabase</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="DataWarehouseUserActivityResource" /> that may take multiple service requests to iterate over. </returns>
@@ -133,8 +165,16 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/dataWarehouseUserActivities/{dataWarehouseUserActivityName}
-        /// Operation Id: DataWarehouseUserActivities_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/dataWarehouseUserActivities/{dataWarehouseUserActivityName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DataWarehouseUserActivities_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="dataWarehouseUserActivityName"> The activity name of the data warehouse. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -156,8 +196,16 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/dataWarehouseUserActivities/{dataWarehouseUserActivityName}
-        /// Operation Id: DataWarehouseUserActivities_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/dataWarehouseUserActivities/{dataWarehouseUserActivityName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DataWarehouseUserActivities_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="dataWarehouseUserActivityName"> The activity name of the data warehouse. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

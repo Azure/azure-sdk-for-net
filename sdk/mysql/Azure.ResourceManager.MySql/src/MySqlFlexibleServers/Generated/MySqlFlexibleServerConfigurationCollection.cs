@@ -54,8 +54,16 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
 
         /// <summary>
         /// Gets information about a configuration of server.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforMySQL/flexibleServers/{serverName}/configurations/{configurationName}
-        /// Operation Id: Configurations_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforMySQL/flexibleServers/{serverName}/configurations/{configurationName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Configurations_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="configurationName"> The name of the server configuration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -83,8 +91,16 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
 
         /// <summary>
         /// Gets information about a configuration of server.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforMySQL/flexibleServers/{serverName}/configurations/{configurationName}
-        /// Operation Id: Configurations_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforMySQL/flexibleServers/{serverName}/configurations/{configurationName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Configurations_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="configurationName"> The name of the server configuration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -112,8 +128,16 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
 
         /// <summary>
         /// List all the configurations in a given server.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforMySQL/flexibleServers/{serverName}/configurations
-        /// Operation Id: Configurations_ListByServer
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforMySQL/flexibleServers/{serverName}/configurations</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Configurations_ListByServer</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="MySqlFlexibleServerConfigurationResource" /> that may take multiple service requests to iterate over. </returns>
@@ -126,8 +150,16 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
 
         /// <summary>
         /// List all the configurations in a given server.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforMySQL/flexibleServers/{serverName}/configurations
-        /// Operation Id: Configurations_ListByServer
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforMySQL/flexibleServers/{serverName}/configurations</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Configurations_ListByServer</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="MySqlFlexibleServerConfigurationResource" /> that may take multiple service requests to iterate over. </returns>
@@ -140,8 +172,16 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforMySQL/flexibleServers/{serverName}/configurations/{configurationName}
-        /// Operation Id: Configurations_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforMySQL/flexibleServers/{serverName}/configurations/{configurationName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Configurations_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="configurationName"> The name of the server configuration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -167,8 +207,16 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforMySQL/flexibleServers/{serverName}/configurations/{configurationName}
-        /// Operation Id: Configurations_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforMySQL/flexibleServers/{serverName}/configurations/{configurationName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Configurations_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="configurationName"> The name of the server configuration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

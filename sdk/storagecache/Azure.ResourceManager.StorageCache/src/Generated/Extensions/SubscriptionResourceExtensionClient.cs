@@ -56,8 +56,16 @@ namespace Azure.ResourceManager.StorageCache
 
         /// <summary>
         /// Get the list of StorageCache.Cache SKUs available to this subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.StorageCache/skus
-        /// Operation Id: Skus_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.StorageCache/skus</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Skus_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="StorageCacheSku" /> that may take multiple service requests to iterate over. </returns>
@@ -70,8 +78,16 @@ namespace Azure.ResourceManager.StorageCache
 
         /// <summary>
         /// Get the list of StorageCache.Cache SKUs available to this subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.StorageCache/skus
-        /// Operation Id: Skus_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.StorageCache/skus</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Skus_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="StorageCacheSku" /> that may take multiple service requests to iterate over. </returns>
@@ -84,8 +100,16 @@ namespace Azure.ResourceManager.StorageCache
 
         /// <summary>
         /// Get the list of Cache Usage Models available to this subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.StorageCache/usageModels
-        /// Operation Id: UsageModels_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.StorageCache/usageModels</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>UsageModels_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="StorageCacheUsageModel" /> that may take multiple service requests to iterate over. </returns>
@@ -98,8 +122,16 @@ namespace Azure.ResourceManager.StorageCache
 
         /// <summary>
         /// Get the list of Cache Usage Models available to this subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.StorageCache/usageModels
-        /// Operation Id: UsageModels_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.StorageCache/usageModels</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>UsageModels_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="StorageCacheUsageModel" /> that may take multiple service requests to iterate over. </returns>
@@ -112,8 +144,16 @@ namespace Azure.ResourceManager.StorageCache
 
         /// <summary>
         /// Gets the quantity used and quota limit for resources
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.StorageCache/locations/{location}/usages
-        /// Operation Id: AscUsages_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.StorageCache/locations/{location}/usages</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AscUsages_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="location"> The name of the region to query for usage information. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -127,8 +167,16 @@ namespace Azure.ResourceManager.StorageCache
 
         /// <summary>
         /// Gets the quantity used and quota limit for resources
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.StorageCache/locations/{location}/usages
-        /// Operation Id: AscUsages_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.StorageCache/locations/{location}/usages</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AscUsages_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="location"> The name of the region to query for usage information. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -142,8 +190,16 @@ namespace Azure.ResourceManager.StorageCache
 
         /// <summary>
         /// Returns all Caches the user has access to under a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.StorageCache/caches
-        /// Operation Id: Caches_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.StorageCache/caches</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Caches_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="StorageCacheResource" /> that may take multiple service requests to iterate over. </returns>
@@ -156,8 +212,16 @@ namespace Azure.ResourceManager.StorageCache
 
         /// <summary>
         /// Returns all Caches the user has access to under a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.StorageCache/caches
-        /// Operation Id: Caches_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.StorageCache/caches</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Caches_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="StorageCacheResource" /> that may take multiple service requests to iterate over. </returns>

@@ -48,8 +48,16 @@ namespace Azure.ResourceManager.Automation
 
         /// <summary>
         /// Retrieve a list of accounts within a given subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Automation/automationAccounts
-        /// Operation Id: AutomationAccount_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Automation/automationAccounts</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AutomationAccount_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="AutomationAccountResource" /> that may take multiple service requests to iterate over. </returns>
@@ -62,8 +70,16 @@ namespace Azure.ResourceManager.Automation
 
         /// <summary>
         /// Retrieve a list of accounts within a given subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Automation/automationAccounts
-        /// Operation Id: AutomationAccount_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Automation/automationAccounts</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AutomationAccount_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="AutomationAccountResource" /> that may take multiple service requests to iterate over. </returns>
@@ -76,8 +92,16 @@ namespace Azure.ResourceManager.Automation
 
         /// <summary>
         /// Retrieve deleted automation account.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Automation/deletedAutomationAccounts
-        /// Operation Id: deletedAutomationAccounts_ListBySubscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Automation/deletedAutomationAccounts</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>deletedAutomationAccounts_ListBySubscription</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="DeletedAutomationAccount" /> that may take multiple service requests to iterate over. </returns>
@@ -89,8 +113,16 @@ namespace Azure.ResourceManager.Automation
 
         /// <summary>
         /// Retrieve deleted automation account.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Automation/deletedAutomationAccounts
-        /// Operation Id: deletedAutomationAccounts_ListBySubscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Automation/deletedAutomationAccounts</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>deletedAutomationAccounts_ListBySubscription</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="DeletedAutomationAccount" /> that may take multiple service requests to iterate over. </returns>

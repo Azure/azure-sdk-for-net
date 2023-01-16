@@ -54,8 +54,16 @@ namespace Azure.ResourceManager.DataBoxEdge
 
         /// <summary>
         /// Gets an alert by name.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}/alerts/{name}
-        /// Operation Id: Alerts_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}/alerts/{name}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Alerts_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="name"> The alert name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -83,8 +91,16 @@ namespace Azure.ResourceManager.DataBoxEdge
 
         /// <summary>
         /// Gets an alert by name.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}/alerts/{name}
-        /// Operation Id: Alerts_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}/alerts/{name}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Alerts_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="name"> The alert name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -112,8 +128,16 @@ namespace Azure.ResourceManager.DataBoxEdge
 
         /// <summary>
         /// Gets all the alerts for a Data Box Edge/Data Box Gateway device.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}/alerts
-        /// Operation Id: Alerts_ListByDataBoxEdgeDevice
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}/alerts</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Alerts_ListByDataBoxEdgeDevice</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="DataBoxEdgeAlertResource" /> that may take multiple service requests to iterate over. </returns>
@@ -126,8 +150,16 @@ namespace Azure.ResourceManager.DataBoxEdge
 
         /// <summary>
         /// Gets all the alerts for a Data Box Edge/Data Box Gateway device.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}/alerts
-        /// Operation Id: Alerts_ListByDataBoxEdgeDevice
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}/alerts</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Alerts_ListByDataBoxEdgeDevice</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="DataBoxEdgeAlertResource" /> that may take multiple service requests to iterate over. </returns>
@@ -140,8 +172,16 @@ namespace Azure.ResourceManager.DataBoxEdge
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}/alerts/{name}
-        /// Operation Id: Alerts_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}/alerts/{name}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Alerts_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="name"> The alert name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -167,8 +207,16 @@ namespace Azure.ResourceManager.DataBoxEdge
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}/alerts/{name}
-        /// Operation Id: Alerts_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}/alerts/{name}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Alerts_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="name"> The alert name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

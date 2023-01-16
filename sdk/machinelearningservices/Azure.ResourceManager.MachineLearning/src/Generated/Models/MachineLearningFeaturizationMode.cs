@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary>
-    /// Featurization mode - determines data featurization mode.
-    /// Serialized Name: FeaturizationMode
-    /// </summary>
+    /// <summary> Featurization mode - determines data featurization mode. </summary>
     public readonly partial struct MachineLearningFeaturizationMode : IEquatable<MachineLearningFeaturizationMode>
     {
         private readonly string _value;
@@ -29,20 +26,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
         private const string CustomValue = "Custom";
         private const string OffValue = "Off";
 
-        /// <summary>
-        /// Auto mode, system performs featurization without any custom featurization inputs.
-        /// Serialized Name: FeaturizationMode.Auto
-        /// </summary>
+        /// <summary> Auto mode, system performs featurization without any custom featurization inputs. </summary>
         public static MachineLearningFeaturizationMode Auto { get; } = new MachineLearningFeaturizationMode(AutoValue);
-        /// <summary>
-        /// Custom featurization.
-        /// Serialized Name: FeaturizationMode.Custom
-        /// </summary>
+        /// <summary> Custom featurization. </summary>
         public static MachineLearningFeaturizationMode Custom { get; } = new MachineLearningFeaturizationMode(CustomValue);
-        /// <summary>
-        /// Featurization off. &apos;Forecasting&apos; task cannot use this value.
-        /// Serialized Name: FeaturizationMode.Off
-        /// </summary>
+        /// <summary> Featurization off. &apos;Forecasting&apos; task cannot use this value. </summary>
         public static MachineLearningFeaturizationMode Off { get; } = new MachineLearningFeaturizationMode(OffValue);
         /// <summary> Determines if two <see cref="MachineLearningFeaturizationMode"/> values are the same. </summary>
         public static bool operator ==(MachineLearningFeaturizationMode left, MachineLearningFeaturizationMode right) => left.Equals(right);

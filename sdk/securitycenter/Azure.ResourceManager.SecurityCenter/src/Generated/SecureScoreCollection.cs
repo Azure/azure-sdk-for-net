@@ -55,8 +55,16 @@ namespace Azure.ResourceManager.SecurityCenter
 
         /// <summary>
         /// Get secure score for a specific Microsoft Defender for Cloud initiative within your current scope. For the ASC Default initiative, use &apos;ascScore&apos;.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Security/secureScores/{secureScoreName}
-        /// Operation Id: SecureScores_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/secureScores/{secureScoreName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SecureScores_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="secureScoreName"> The initiative name. For the ASC Default initiative, use &apos;ascScore&apos; as in the sample request below. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -84,8 +92,16 @@ namespace Azure.ResourceManager.SecurityCenter
 
         /// <summary>
         /// Get secure score for a specific Microsoft Defender for Cloud initiative within your current scope. For the ASC Default initiative, use &apos;ascScore&apos;.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Security/secureScores/{secureScoreName}
-        /// Operation Id: SecureScores_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/secureScores/{secureScoreName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SecureScores_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="secureScoreName"> The initiative name. For the ASC Default initiative, use &apos;ascScore&apos; as in the sample request below. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -113,8 +129,16 @@ namespace Azure.ResourceManager.SecurityCenter
 
         /// <summary>
         /// List secure scores for all your Microsoft Defender for Cloud initiatives within your current scope.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Security/secureScores
-        /// Operation Id: SecureScores_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/secureScores</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SecureScores_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="SecureScoreResource" /> that may take multiple service requests to iterate over. </returns>
@@ -127,8 +151,16 @@ namespace Azure.ResourceManager.SecurityCenter
 
         /// <summary>
         /// List secure scores for all your Microsoft Defender for Cloud initiatives within your current scope.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Security/secureScores
-        /// Operation Id: SecureScores_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/secureScores</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SecureScores_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="SecureScoreResource" /> that may take multiple service requests to iterate over. </returns>
@@ -141,8 +173,16 @@ namespace Azure.ResourceManager.SecurityCenter
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Security/secureScores/{secureScoreName}
-        /// Operation Id: SecureScores_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/secureScores/{secureScoreName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SecureScores_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="secureScoreName"> The initiative name. For the ASC Default initiative, use &apos;ascScore&apos; as in the sample request below. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -168,8 +208,16 @@ namespace Azure.ResourceManager.SecurityCenter
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Security/secureScores/{secureScoreName}
-        /// Operation Id: SecureScores_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/secureScores/{secureScoreName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SecureScores_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="secureScoreName"> The initiative name. For the ASC Default initiative, use &apos;ascScore&apos; as in the sample request below. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

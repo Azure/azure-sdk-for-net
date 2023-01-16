@@ -54,8 +54,16 @@ namespace Azure.ResourceManager.SecurityCenter
 
         /// <summary>
         /// Recommended tasks that will help improve the security of the subscription proactively
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Security/locations/{ascLocation}/tasks/{taskName}
-        /// Operation Id: Tasks_GetSubscriptionLevelTask
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/locations/{ascLocation}/tasks/{taskName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Tasks_GetSubscriptionLevelTask</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="taskName"> Name of the task object, will be a GUID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -83,8 +91,16 @@ namespace Azure.ResourceManager.SecurityCenter
 
         /// <summary>
         /// Recommended tasks that will help improve the security of the subscription proactively
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Security/locations/{ascLocation}/tasks/{taskName}
-        /// Operation Id: Tasks_GetSubscriptionLevelTask
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/locations/{ascLocation}/tasks/{taskName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Tasks_GetSubscriptionLevelTask</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="taskName"> Name of the task object, will be a GUID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -112,8 +128,16 @@ namespace Azure.ResourceManager.SecurityCenter
 
         /// <summary>
         /// Recommended tasks that will help improve the security of the subscription proactively
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Security/locations/{ascLocation}/tasks
-        /// Operation Id: Tasks_ListByHomeRegion
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/locations/{ascLocation}/tasks</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Tasks_ListByHomeRegion</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="filter"> OData filter. Optional. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -127,8 +151,16 @@ namespace Azure.ResourceManager.SecurityCenter
 
         /// <summary>
         /// Recommended tasks that will help improve the security of the subscription proactively
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Security/locations/{ascLocation}/tasks
-        /// Operation Id: Tasks_ListByHomeRegion
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/locations/{ascLocation}/tasks</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Tasks_ListByHomeRegion</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="filter"> OData filter. Optional. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -142,8 +174,16 @@ namespace Azure.ResourceManager.SecurityCenter
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Security/locations/{ascLocation}/tasks/{taskName}
-        /// Operation Id: Tasks_GetSubscriptionLevelTask
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/locations/{ascLocation}/tasks/{taskName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Tasks_GetSubscriptionLevelTask</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="taskName"> Name of the task object, will be a GUID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -169,8 +209,16 @@ namespace Azure.ResourceManager.SecurityCenter
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Security/locations/{ascLocation}/tasks/{taskName}
-        /// Operation Id: Tasks_GetSubscriptionLevelTask
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/locations/{ascLocation}/tasks/{taskName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Tasks_GetSubscriptionLevelTask</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="taskName"> Name of the task object, will be a GUID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

@@ -53,8 +53,16 @@ namespace Azure.ResourceManager.MySql
 
         /// <summary>
         /// Retrieve the query statistic for specified identifier.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforMySQL/servers/{serverName}/topQueryStatistics/{queryStatisticId}
-        /// Operation Id: TopQueryStatistics_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforMySQL/servers/{serverName}/topQueryStatistics/{queryStatisticId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>TopQueryStatistics_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="queryStatisticId"> The Query Statistic identifier. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -82,8 +90,16 @@ namespace Azure.ResourceManager.MySql
 
         /// <summary>
         /// Retrieve the query statistic for specified identifier.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforMySQL/servers/{serverName}/topQueryStatistics/{queryStatisticId}
-        /// Operation Id: TopQueryStatistics_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforMySQL/servers/{serverName}/topQueryStatistics/{queryStatisticId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>TopQueryStatistics_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="queryStatisticId"> The Query Statistic identifier. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -111,8 +127,16 @@ namespace Azure.ResourceManager.MySql
 
         /// <summary>
         /// Retrieve the Query-Store top queries for specified metric and aggregation.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforMySQL/servers/{serverName}/topQueryStatistics
-        /// Operation Id: TopQueryStatistics_ListByServer
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforMySQL/servers/{serverName}/topQueryStatistics</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>TopQueryStatistics_ListByServer</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="input"> The required parameters for retrieving top query statistics. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -129,8 +153,16 @@ namespace Azure.ResourceManager.MySql
 
         /// <summary>
         /// Retrieve the Query-Store top queries for specified metric and aggregation.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforMySQL/servers/{serverName}/topQueryStatistics
-        /// Operation Id: TopQueryStatistics_ListByServer
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforMySQL/servers/{serverName}/topQueryStatistics</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>TopQueryStatistics_ListByServer</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="input"> The required parameters for retrieving top query statistics. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -147,8 +179,16 @@ namespace Azure.ResourceManager.MySql
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforMySQL/servers/{serverName}/topQueryStatistics/{queryStatisticId}
-        /// Operation Id: TopQueryStatistics_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforMySQL/servers/{serverName}/topQueryStatistics/{queryStatisticId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>TopQueryStatistics_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="queryStatisticId"> The Query Statistic identifier. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -174,8 +214,16 @@ namespace Azure.ResourceManager.MySql
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforMySQL/servers/{serverName}/topQueryStatistics/{queryStatisticId}
-        /// Operation Id: TopQueryStatistics_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforMySQL/servers/{serverName}/topQueryStatistics/{queryStatisticId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>TopQueryStatistics_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="queryStatisticId"> The Query Statistic identifier. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

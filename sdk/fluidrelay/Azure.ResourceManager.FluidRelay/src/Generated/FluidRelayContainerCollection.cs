@@ -54,8 +54,16 @@ namespace Azure.ResourceManager.FluidRelay
 
         /// <summary>
         /// Get a Fluid Relay container.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.FluidRelay/fluidRelayServers/{fluidRelayServerName}/fluidRelayContainers/{fluidRelayContainerName}
-        /// Operation Id: FluidRelayContainers_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.FluidRelay/fluidRelayServers/{fluidRelayServerName}/fluidRelayContainers/{fluidRelayContainerName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>FluidRelayContainers_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="fluidRelayContainerName"> The Fluid Relay container resource name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -83,8 +91,16 @@ namespace Azure.ResourceManager.FluidRelay
 
         /// <summary>
         /// Get a Fluid Relay container.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.FluidRelay/fluidRelayServers/{fluidRelayServerName}/fluidRelayContainers/{fluidRelayContainerName}
-        /// Operation Id: FluidRelayContainers_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.FluidRelay/fluidRelayServers/{fluidRelayServerName}/fluidRelayContainers/{fluidRelayContainerName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>FluidRelayContainers_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="fluidRelayContainerName"> The Fluid Relay container resource name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -112,8 +128,16 @@ namespace Azure.ResourceManager.FluidRelay
 
         /// <summary>
         /// List all Fluid Relay containers which are children of a given Fluid Relay server.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.FluidRelay/fluidRelayServers/{fluidRelayServerName}/fluidRelayContainers
-        /// Operation Id: FluidRelayContainers_ListByFluidRelayServers
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.FluidRelay/fluidRelayServers/{fluidRelayServerName}/fluidRelayContainers</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>FluidRelayContainers_ListByFluidRelayServers</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="FluidRelayContainerResource" /> that may take multiple service requests to iterate over. </returns>
@@ -126,8 +150,16 @@ namespace Azure.ResourceManager.FluidRelay
 
         /// <summary>
         /// List all Fluid Relay containers which are children of a given Fluid Relay server.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.FluidRelay/fluidRelayServers/{fluidRelayServerName}/fluidRelayContainers
-        /// Operation Id: FluidRelayContainers_ListByFluidRelayServers
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.FluidRelay/fluidRelayServers/{fluidRelayServerName}/fluidRelayContainers</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>FluidRelayContainers_ListByFluidRelayServers</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="FluidRelayContainerResource" /> that may take multiple service requests to iterate over. </returns>
@@ -140,8 +172,16 @@ namespace Azure.ResourceManager.FluidRelay
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.FluidRelay/fluidRelayServers/{fluidRelayServerName}/fluidRelayContainers/{fluidRelayContainerName}
-        /// Operation Id: FluidRelayContainers_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.FluidRelay/fluidRelayServers/{fluidRelayServerName}/fluidRelayContainers/{fluidRelayContainerName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>FluidRelayContainers_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="fluidRelayContainerName"> The Fluid Relay container resource name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -167,8 +207,16 @@ namespace Azure.ResourceManager.FluidRelay
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.FluidRelay/fluidRelayServers/{fluidRelayServerName}/fluidRelayContainers/{fluidRelayContainerName}
-        /// Operation Id: FluidRelayContainers_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.FluidRelay/fluidRelayServers/{fluidRelayServerName}/fluidRelayContainers/{fluidRelayContainerName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>FluidRelayContainers_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="fluidRelayContainerName"> The Fluid Relay container resource name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

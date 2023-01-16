@@ -54,8 +54,16 @@ namespace Azure.ResourceManager.Network
 
         /// <summary>
         /// Creates a nat rule to a scalable vpn gateway if it doesn&apos;t exist else updates the existing nat rules.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/vpnGateways/{gatewayName}/natRules/{natRuleName}
-        /// Operation Id: NatRules_CreateOrUpdate
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/vpnGateways/{gatewayName}/natRules/{natRuleName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NatRules_CreateOrUpdate</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="natRuleName"> The name of the nat rule. </param>
@@ -87,8 +95,16 @@ namespace Azure.ResourceManager.Network
 
         /// <summary>
         /// Creates a nat rule to a scalable vpn gateway if it doesn&apos;t exist else updates the existing nat rules.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/vpnGateways/{gatewayName}/natRules/{natRuleName}
-        /// Operation Id: NatRules_CreateOrUpdate
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/vpnGateways/{gatewayName}/natRules/{natRuleName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NatRules_CreateOrUpdate</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="natRuleName"> The name of the nat rule. </param>
@@ -120,8 +136,16 @@ namespace Azure.ResourceManager.Network
 
         /// <summary>
         /// Retrieves the details of a nat ruleGet.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/vpnGateways/{gatewayName}/natRules/{natRuleName}
-        /// Operation Id: NatRules_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/vpnGateways/{gatewayName}/natRules/{natRuleName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NatRules_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="natRuleName"> The name of the nat rule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -149,8 +173,16 @@ namespace Azure.ResourceManager.Network
 
         /// <summary>
         /// Retrieves the details of a nat ruleGet.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/vpnGateways/{gatewayName}/natRules/{natRuleName}
-        /// Operation Id: NatRules_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/vpnGateways/{gatewayName}/natRules/{natRuleName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NatRules_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="natRuleName"> The name of the nat rule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -178,8 +210,16 @@ namespace Azure.ResourceManager.Network
 
         /// <summary>
         /// Retrieves all nat rules for a particular virtual wan vpn gateway.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/vpnGateways/{gatewayName}/natRules
-        /// Operation Id: NatRules_ListByVpnGateway
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/vpnGateways/{gatewayName}/natRules</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NatRules_ListByVpnGateway</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="VpnGatewayNatRuleResource" /> that may take multiple service requests to iterate over. </returns>
@@ -192,8 +232,16 @@ namespace Azure.ResourceManager.Network
 
         /// <summary>
         /// Retrieves all nat rules for a particular virtual wan vpn gateway.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/vpnGateways/{gatewayName}/natRules
-        /// Operation Id: NatRules_ListByVpnGateway
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/vpnGateways/{gatewayName}/natRules</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NatRules_ListByVpnGateway</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="VpnGatewayNatRuleResource" /> that may take multiple service requests to iterate over. </returns>
@@ -206,8 +254,16 @@ namespace Azure.ResourceManager.Network
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/vpnGateways/{gatewayName}/natRules/{natRuleName}
-        /// Operation Id: NatRules_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/vpnGateways/{gatewayName}/natRules/{natRuleName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NatRules_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="natRuleName"> The name of the nat rule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -233,8 +289,16 @@ namespace Azure.ResourceManager.Network
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/vpnGateways/{gatewayName}/natRules/{natRuleName}
-        /// Operation Id: NatRules_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/vpnGateways/{gatewayName}/natRules/{natRuleName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NatRules_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="natRuleName"> The name of the nat rule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

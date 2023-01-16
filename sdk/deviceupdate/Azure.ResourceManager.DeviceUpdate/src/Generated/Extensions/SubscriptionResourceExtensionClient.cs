@@ -49,8 +49,16 @@ namespace Azure.ResourceManager.DeviceUpdate
 
         /// <summary>
         /// Checks ADU resource name availability.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.DeviceUpdate/checknameavailability
-        /// Operation Id: CheckNameAvailability
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DeviceUpdate/checknameavailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>CheckNameAvailability</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="content"> Check Name Availability Request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -72,8 +80,16 @@ namespace Azure.ResourceManager.DeviceUpdate
 
         /// <summary>
         /// Checks ADU resource name availability.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.DeviceUpdate/checknameavailability
-        /// Operation Id: CheckNameAvailability
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DeviceUpdate/checknameavailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>CheckNameAvailability</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="content"> Check Name Availability Request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -95,8 +111,16 @@ namespace Azure.ResourceManager.DeviceUpdate
 
         /// <summary>
         /// Returns list of Accounts.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.DeviceUpdate/accounts
-        /// Operation Id: Accounts_ListBySubscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DeviceUpdate/accounts</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Accounts_ListBySubscription</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="DeviceUpdateAccountResource" /> that may take multiple service requests to iterate over. </returns>
@@ -109,8 +133,16 @@ namespace Azure.ResourceManager.DeviceUpdate
 
         /// <summary>
         /// Returns list of Accounts.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.DeviceUpdate/accounts
-        /// Operation Id: Accounts_ListBySubscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DeviceUpdate/accounts</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Accounts_ListBySubscription</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="DeviceUpdateAccountResource" /> that may take multiple service requests to iterate over. </returns>

@@ -63,8 +63,16 @@ namespace Azure.ResourceManager.AlertsManagement
 
         /// <summary>
         /// List all alert processing rules in a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.AlertsManagement/actionRules
-        /// Operation Id: AlertProcessingRules_ListBySubscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.AlertsManagement/actionRules</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AlertProcessingRules_ListBySubscription</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="AlertProcessingRuleResource" /> that may take multiple service requests to iterate over. </returns>
@@ -77,8 +85,16 @@ namespace Azure.ResourceManager.AlertsManagement
 
         /// <summary>
         /// List all alert processing rules in a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.AlertsManagement/actionRules
-        /// Operation Id: AlertProcessingRules_ListBySubscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.AlertsManagement/actionRules</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AlertProcessingRules_ListBySubscription</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="AlertProcessingRuleResource" /> that may take multiple service requests to iterate over. </returns>
@@ -91,8 +107,16 @@ namespace Azure.ResourceManager.AlertsManagement
 
         /// <summary>
         /// Get a summarized count of your alerts grouped by various parameters (e.g. grouping by &apos;Severity&apos; returns the count of alerts for each severity).
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.AlertsManagement/alertsSummary
-        /// Operation Id: Alerts_GetSummary
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.AlertsManagement/alertsSummary</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Alerts_GetSummary</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="groupby"> This parameter allows the result set to be grouped by input fields (Maximum 2 comma separated fields supported). For example, groupby=severity or groupby=severity,alertstate. </param>
         /// <param name="includeSmartGroupsCount"> Include count of the SmartGroups as part of the summary. Default value is &apos;false&apos;. </param>
@@ -125,8 +149,16 @@ namespace Azure.ResourceManager.AlertsManagement
 
         /// <summary>
         /// Get a summarized count of your alerts grouped by various parameters (e.g. grouping by &apos;Severity&apos; returns the count of alerts for each severity).
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.AlertsManagement/alertsSummary
-        /// Operation Id: Alerts_GetSummary
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.AlertsManagement/alertsSummary</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Alerts_GetSummary</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="groupby"> This parameter allows the result set to be grouped by input fields (Maximum 2 comma separated fields supported). For example, groupby=severity or groupby=severity,alertstate. </param>
         /// <param name="includeSmartGroupsCount"> Include count of the SmartGroups as part of the summary. Default value is &apos;false&apos;. </param>

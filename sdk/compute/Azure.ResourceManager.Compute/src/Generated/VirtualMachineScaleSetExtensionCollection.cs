@@ -54,8 +54,16 @@ namespace Azure.ResourceManager.Compute
 
         /// <summary>
         /// The operation to create or update an extension.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachineScaleSets/{vmScaleSetName}/extensions/{vmssExtensionName}
-        /// Operation Id: VirtualMachineScaleSetExtensions_CreateOrUpdate
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachineScaleSets/{vmScaleSetName}/extensions/{vmssExtensionName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>VirtualMachineScaleSetExtensions_CreateOrUpdate</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="vmssExtensionName"> The name of the VM scale set extension. </param>
@@ -87,8 +95,16 @@ namespace Azure.ResourceManager.Compute
 
         /// <summary>
         /// The operation to create or update an extension.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachineScaleSets/{vmScaleSetName}/extensions/{vmssExtensionName}
-        /// Operation Id: VirtualMachineScaleSetExtensions_CreateOrUpdate
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachineScaleSets/{vmScaleSetName}/extensions/{vmssExtensionName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>VirtualMachineScaleSetExtensions_CreateOrUpdate</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="vmssExtensionName"> The name of the VM scale set extension. </param>
@@ -120,8 +136,16 @@ namespace Azure.ResourceManager.Compute
 
         /// <summary>
         /// The operation to get the extension.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachineScaleSets/{vmScaleSetName}/extensions/{vmssExtensionName}
-        /// Operation Id: VirtualMachineScaleSetExtensions_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachineScaleSets/{vmScaleSetName}/extensions/{vmssExtensionName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>VirtualMachineScaleSetExtensions_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="vmssExtensionName"> The name of the VM scale set extension. </param>
         /// <param name="expand"> The expand expression to apply on the operation. </param>
@@ -150,8 +174,16 @@ namespace Azure.ResourceManager.Compute
 
         /// <summary>
         /// The operation to get the extension.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachineScaleSets/{vmScaleSetName}/extensions/{vmssExtensionName}
-        /// Operation Id: VirtualMachineScaleSetExtensions_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachineScaleSets/{vmScaleSetName}/extensions/{vmssExtensionName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>VirtualMachineScaleSetExtensions_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="vmssExtensionName"> The name of the VM scale set extension. </param>
         /// <param name="expand"> The expand expression to apply on the operation. </param>
@@ -180,8 +212,16 @@ namespace Azure.ResourceManager.Compute
 
         /// <summary>
         /// Gets a list of all extensions in a VM scale set.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachineScaleSets/{vmScaleSetName}/extensions
-        /// Operation Id: VirtualMachineScaleSetExtensions_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachineScaleSets/{vmScaleSetName}/extensions</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>VirtualMachineScaleSetExtensions_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="VirtualMachineScaleSetExtensionResource" /> that may take multiple service requests to iterate over. </returns>
@@ -194,8 +234,16 @@ namespace Azure.ResourceManager.Compute
 
         /// <summary>
         /// Gets a list of all extensions in a VM scale set.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachineScaleSets/{vmScaleSetName}/extensions
-        /// Operation Id: VirtualMachineScaleSetExtensions_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachineScaleSets/{vmScaleSetName}/extensions</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>VirtualMachineScaleSetExtensions_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="VirtualMachineScaleSetExtensionResource" /> that may take multiple service requests to iterate over. </returns>
@@ -208,8 +256,16 @@ namespace Azure.ResourceManager.Compute
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachineScaleSets/{vmScaleSetName}/extensions/{vmssExtensionName}
-        /// Operation Id: VirtualMachineScaleSetExtensions_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachineScaleSets/{vmScaleSetName}/extensions/{vmssExtensionName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>VirtualMachineScaleSetExtensions_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="vmssExtensionName"> The name of the VM scale set extension. </param>
         /// <param name="expand"> The expand expression to apply on the operation. </param>
@@ -236,8 +292,16 @@ namespace Azure.ResourceManager.Compute
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachineScaleSets/{vmScaleSetName}/extensions/{vmssExtensionName}
-        /// Operation Id: VirtualMachineScaleSetExtensions_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachineScaleSets/{vmScaleSetName}/extensions/{vmssExtensionName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>VirtualMachineScaleSetExtensions_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="vmssExtensionName"> The name of the VM scale set extension. </param>
         /// <param name="expand"> The expand expression to apply on the operation. </param>

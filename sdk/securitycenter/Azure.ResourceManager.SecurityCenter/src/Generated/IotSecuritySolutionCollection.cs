@@ -55,8 +55,16 @@ namespace Azure.ResourceManager.SecurityCenter
 
         /// <summary>
         /// Use this method to create or update yours IoT Security solution
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/iotSecuritySolutions/{solutionName}
-        /// Operation Id: IotSecuritySolution_CreateOrUpdate
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/iotSecuritySolutions/{solutionName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>IotSecuritySolution_CreateOrUpdate</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="solutionName"> The name of the IoT Security solution. </param>
@@ -88,8 +96,16 @@ namespace Azure.ResourceManager.SecurityCenter
 
         /// <summary>
         /// Use this method to create or update yours IoT Security solution
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/iotSecuritySolutions/{solutionName}
-        /// Operation Id: IotSecuritySolution_CreateOrUpdate
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/iotSecuritySolutions/{solutionName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>IotSecuritySolution_CreateOrUpdate</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="solutionName"> The name of the IoT Security solution. </param>
@@ -121,8 +137,16 @@ namespace Azure.ResourceManager.SecurityCenter
 
         /// <summary>
         /// User this method to get details of a specific IoT Security solution based on solution name
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/iotSecuritySolutions/{solutionName}
-        /// Operation Id: IotSecuritySolution_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/iotSecuritySolutions/{solutionName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>IotSecuritySolution_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="solutionName"> The name of the IoT Security solution. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -150,8 +174,16 @@ namespace Azure.ResourceManager.SecurityCenter
 
         /// <summary>
         /// User this method to get details of a specific IoT Security solution based on solution name
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/iotSecuritySolutions/{solutionName}
-        /// Operation Id: IotSecuritySolution_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/iotSecuritySolutions/{solutionName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>IotSecuritySolution_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="solutionName"> The name of the IoT Security solution. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -179,8 +211,16 @@ namespace Azure.ResourceManager.SecurityCenter
 
         /// <summary>
         /// Use this method to get the list IoT Security solutions organized by resource group.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/iotSecuritySolutions
-        /// Operation Id: IotSecuritySolution_ListByResourceGroup
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/iotSecuritySolutions</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>IotSecuritySolution_ListByResourceGroup</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="filter"> Filter the IoT Security solution with OData syntax. Supports filtering by iotHubs. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -194,8 +234,16 @@ namespace Azure.ResourceManager.SecurityCenter
 
         /// <summary>
         /// Use this method to get the list IoT Security solutions organized by resource group.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/iotSecuritySolutions
-        /// Operation Id: IotSecuritySolution_ListByResourceGroup
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/iotSecuritySolutions</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>IotSecuritySolution_ListByResourceGroup</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="filter"> Filter the IoT Security solution with OData syntax. Supports filtering by iotHubs. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -209,8 +257,16 @@ namespace Azure.ResourceManager.SecurityCenter
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/iotSecuritySolutions/{solutionName}
-        /// Operation Id: IotSecuritySolution_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/iotSecuritySolutions/{solutionName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>IotSecuritySolution_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="solutionName"> The name of the IoT Security solution. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -236,8 +292,16 @@ namespace Azure.ResourceManager.SecurityCenter
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/iotSecuritySolutions/{solutionName}
-        /// Operation Id: IotSecuritySolution_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/iotSecuritySolutions/{solutionName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>IotSecuritySolution_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="solutionName"> The name of the IoT Security solution. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

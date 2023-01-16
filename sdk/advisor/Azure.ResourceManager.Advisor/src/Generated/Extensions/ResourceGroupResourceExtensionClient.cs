@@ -45,8 +45,16 @@ namespace Azure.ResourceManager.Advisor
 
         /// <summary>
         /// Retrieve Azure Advisor configurations.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.Advisor/configurations
-        /// Operation Id: Configurations_ListByResourceGroup
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.Advisor/configurations</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Configurations_ListByResourceGroup</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ConfigData" /> that may take multiple service requests to iterate over. </returns>
@@ -58,8 +66,16 @@ namespace Azure.ResourceManager.Advisor
 
         /// <summary>
         /// Retrieve Azure Advisor configurations.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.Advisor/configurations
-        /// Operation Id: Configurations_ListByResourceGroup
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.Advisor/configurations</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Configurations_ListByResourceGroup</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ConfigData" /> that may take multiple service requests to iterate over. </returns>
@@ -71,8 +87,16 @@ namespace Azure.ResourceManager.Advisor
 
         /// <summary>
         /// Create/Overwrite Azure Advisor configuration.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.Advisor/configurations/{configurationName}
-        /// Operation Id: Configurations_CreateInResourceGroup
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.Advisor/configurations/{configurationName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Configurations_CreateInResourceGroup</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="configurationName"> Advisor configuration name. Value must be &apos;default&apos;. </param>
         /// <param name="data"> The Azure Advisor configuration data structure. </param>
@@ -95,8 +119,16 @@ namespace Azure.ResourceManager.Advisor
 
         /// <summary>
         /// Create/Overwrite Azure Advisor configuration.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.Advisor/configurations/{configurationName}
-        /// Operation Id: Configurations_CreateInResourceGroup
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.Advisor/configurations/{configurationName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Configurations_CreateInResourceGroup</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="configurationName"> Advisor configuration name. Value must be &apos;default&apos;. </param>
         /// <param name="data"> The Azure Advisor configuration data structure. </param>

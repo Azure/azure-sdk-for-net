@@ -47,8 +47,16 @@ namespace Azure.ResourceManager.ContainerService
 
         /// <summary>
         /// Gets a list of managed clusters in the specified subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.ContainerService/managedClusters
-        /// Operation Id: ManagedClusters_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ContainerService/managedClusters</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ManagedClusters_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ContainerServiceManagedClusterResource" /> that may take multiple service requests to iterate over. </returns>
@@ -61,8 +69,16 @@ namespace Azure.ResourceManager.ContainerService
 
         /// <summary>
         /// Gets a list of managed clusters in the specified subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.ContainerService/managedClusters
-        /// Operation Id: ManagedClusters_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ContainerService/managedClusters</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ManagedClusters_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ContainerServiceManagedClusterResource" /> that may take multiple service requests to iterate over. </returns>
@@ -75,8 +91,16 @@ namespace Azure.ResourceManager.ContainerService
 
         /// <summary>
         /// Gets a list of snapshots in the specified subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.ContainerService/snapshots
-        /// Operation Id: Snapshots_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ContainerService/snapshots</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Snapshots_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="AgentPoolSnapshotResource" /> that may take multiple service requests to iterate over. </returns>
@@ -89,8 +113,16 @@ namespace Azure.ResourceManager.ContainerService
 
         /// <summary>
         /// Gets a list of snapshots in the specified subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.ContainerService/snapshots
-        /// Operation Id: Snapshots_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ContainerService/snapshots</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Snapshots_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="AgentPoolSnapshotResource" /> that may take multiple service requests to iterate over. </returns>

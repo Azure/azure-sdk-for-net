@@ -59,8 +59,16 @@ namespace Azure.ResourceManager.AppComplianceAutomation
 
         /// <summary>
         /// Get the AppComplianceAutomation snapshot and its properties.
-        /// Request Path: /providers/Microsoft.AppComplianceAutomation/reports/{reportName}/snapshots/{snapshotName}
-        /// Operation Id: Snapshot_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.AppComplianceAutomation/reports/{reportName}/snapshots/{snapshotName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Snapshot_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="snapshotName"> Snapshot Name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -88,8 +96,16 @@ namespace Azure.ResourceManager.AppComplianceAutomation
 
         /// <summary>
         /// Get the AppComplianceAutomation snapshot and its properties.
-        /// Request Path: /providers/Microsoft.AppComplianceAutomation/reports/{reportName}/snapshots/{snapshotName}
-        /// Operation Id: Snapshot_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.AppComplianceAutomation/reports/{reportName}/snapshots/{snapshotName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Snapshot_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="snapshotName"> Snapshot Name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -117,8 +133,16 @@ namespace Azure.ResourceManager.AppComplianceAutomation
 
         /// <summary>
         /// Get the AppComplianceAutomation snapshot list.
-        /// Request Path: /providers/Microsoft.AppComplianceAutomation/reports/{reportName}/snapshots
-        /// Operation Id: Snapshots_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.AppComplianceAutomation/reports/{reportName}/snapshots</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Snapshots_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="skipToken"> Skip over when retrieving results. </param>
         /// <param name="top"> Number of elements to return when retrieving results. </param>
@@ -136,8 +160,16 @@ namespace Azure.ResourceManager.AppComplianceAutomation
 
         /// <summary>
         /// Get the AppComplianceAutomation snapshot list.
-        /// Request Path: /providers/Microsoft.AppComplianceAutomation/reports/{reportName}/snapshots
-        /// Operation Id: Snapshots_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.AppComplianceAutomation/reports/{reportName}/snapshots</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Snapshots_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="skipToken"> Skip over when retrieving results. </param>
         /// <param name="top"> Number of elements to return when retrieving results. </param>
@@ -155,8 +187,16 @@ namespace Azure.ResourceManager.AppComplianceAutomation
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /providers/Microsoft.AppComplianceAutomation/reports/{reportName}/snapshots/{snapshotName}
-        /// Operation Id: Snapshot_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.AppComplianceAutomation/reports/{reportName}/snapshots/{snapshotName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Snapshot_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="snapshotName"> Snapshot Name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -182,8 +222,16 @@ namespace Azure.ResourceManager.AppComplianceAutomation
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /providers/Microsoft.AppComplianceAutomation/reports/{reportName}/snapshots/{snapshotName}
-        /// Operation Id: Snapshot_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.AppComplianceAutomation/reports/{reportName}/snapshots/{snapshotName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Snapshot_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="snapshotName"> Snapshot Name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

@@ -49,8 +49,16 @@ namespace Azure.ResourceManager.AppPlatform
 
         /// <summary>
         /// Checks that the resource name is valid and is not already in use.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.AppPlatform/locations/{location}/checkNameAvailability
-        /// Operation Id: Services_CheckNameAvailability
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.AppPlatform/locations/{location}/checkNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Services_CheckNameAvailability</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="location"> the region. </param>
         /// <param name="content"> Parameters supplied to the operation. </param>
@@ -73,8 +81,16 @@ namespace Azure.ResourceManager.AppPlatform
 
         /// <summary>
         /// Checks that the resource name is valid and is not already in use.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.AppPlatform/locations/{location}/checkNameAvailability
-        /// Operation Id: Services_CheckNameAvailability
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.AppPlatform/locations/{location}/checkNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Services_CheckNameAvailability</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="location"> the region. </param>
         /// <param name="content"> Parameters supplied to the operation. </param>
@@ -97,8 +113,16 @@ namespace Azure.ResourceManager.AppPlatform
 
         /// <summary>
         /// Handles requests to list all resources in a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.AppPlatform/Spring
-        /// Operation Id: Services_ListBySubscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.AppPlatform/Spring</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Services_ListBySubscription</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="AppPlatformServiceResource" /> that may take multiple service requests to iterate over. </returns>
@@ -111,8 +135,16 @@ namespace Azure.ResourceManager.AppPlatform
 
         /// <summary>
         /// Handles requests to list all resources in a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.AppPlatform/Spring
-        /// Operation Id: Services_ListBySubscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.AppPlatform/Spring</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Services_ListBySubscription</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="AppPlatformServiceResource" /> that may take multiple service requests to iterate over. </returns>
@@ -125,8 +157,16 @@ namespace Azure.ResourceManager.AppPlatform
 
         /// <summary>
         /// Lists all of the available skus of the Microsoft.AppPlatform provider.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.AppPlatform/skus
-        /// Operation Id: Skus_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.AppPlatform/skus</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Skus_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="AvailableAppPlatformSku" /> that may take multiple service requests to iterate over. </returns>
@@ -139,8 +179,16 @@ namespace Azure.ResourceManager.AppPlatform
 
         /// <summary>
         /// Lists all of the available skus of the Microsoft.AppPlatform provider.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.AppPlatform/skus
-        /// Operation Id: Skus_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.AppPlatform/skus</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Skus_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="AvailableAppPlatformSku" /> that may take multiple service requests to iterate over. </returns>

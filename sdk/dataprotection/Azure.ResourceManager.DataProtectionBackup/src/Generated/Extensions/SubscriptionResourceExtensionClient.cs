@@ -53,8 +53,16 @@ namespace Azure.ResourceManager.DataProtectionBackup
 
         /// <summary>
         /// Returns resource collection belonging to a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.DataProtection/backupVaults
-        /// Operation Id: BackupVaults_GetInSubscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DataProtection/backupVaults</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>BackupVaults_GetInSubscription</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="DataProtectionBackupVaultResource" /> that may take multiple service requests to iterate over. </returns>
@@ -67,8 +75,16 @@ namespace Azure.ResourceManager.DataProtectionBackup
 
         /// <summary>
         /// Returns resource collection belonging to a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.DataProtection/backupVaults
-        /// Operation Id: BackupVaults_GetInSubscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DataProtection/backupVaults</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>BackupVaults_GetInSubscription</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="DataProtectionBackupVaultResource" /> that may take multiple service requests to iterate over. </returns>
@@ -81,8 +97,16 @@ namespace Azure.ResourceManager.DataProtectionBackup
 
         /// <summary>
         /// Validates if a feature is supported
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.DataProtection/locations/{location}/checkFeatureSupport
-        /// Operation Id: DataProtection_CheckFeatureSupport
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DataProtection/locations/{location}/checkFeatureSupport</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DataProtection_CheckFeatureSupport</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="location"> The String to use. </param>
         /// <param name="content"> Feature support request object. </param>
@@ -105,8 +129,16 @@ namespace Azure.ResourceManager.DataProtectionBackup
 
         /// <summary>
         /// Validates if a feature is supported
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.DataProtection/locations/{location}/checkFeatureSupport
-        /// Operation Id: DataProtection_CheckFeatureSupport
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DataProtection/locations/{location}/checkFeatureSupport</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DataProtection_CheckFeatureSupport</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="location"> The String to use. </param>
         /// <param name="content"> Feature support request object. </param>
@@ -129,8 +161,16 @@ namespace Azure.ResourceManager.DataProtectionBackup
 
         /// <summary>
         /// Returns ResourceGuards collection belonging to a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.DataProtection/resourceGuards
-        /// Operation Id: ResourceGuards_GetResourcesInSubscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DataProtection/resourceGuards</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ResourceGuards_GetResourcesInSubscription</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ResourceGuardResource" /> that may take multiple service requests to iterate over. </returns>
@@ -143,8 +183,16 @@ namespace Azure.ResourceManager.DataProtectionBackup
 
         /// <summary>
         /// Returns ResourceGuards collection belonging to a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.DataProtection/resourceGuards
-        /// Operation Id: ResourceGuards_GetResourcesInSubscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DataProtection/resourceGuards</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ResourceGuards_GetResourcesInSubscription</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ResourceGuardResource" /> that may take multiple service requests to iterate over. </returns>

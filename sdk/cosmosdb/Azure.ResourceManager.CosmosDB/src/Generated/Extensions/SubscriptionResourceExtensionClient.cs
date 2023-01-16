@@ -58,8 +58,16 @@ namespace Azure.ResourceManager.CosmosDB
 
         /// <summary>
         /// Lists all the Azure Cosmos DB database accounts available under the subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.DocumentDB/databaseAccounts
-        /// Operation Id: DatabaseAccounts_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DocumentDB/databaseAccounts</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DatabaseAccounts_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="CosmosDBAccountResource" /> that may take multiple service requests to iterate over. </returns>
@@ -71,8 +79,16 @@ namespace Azure.ResourceManager.CosmosDB
 
         /// <summary>
         /// Lists all the Azure Cosmos DB database accounts available under the subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.DocumentDB/databaseAccounts
-        /// Operation Id: DatabaseAccounts_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DocumentDB/databaseAccounts</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DatabaseAccounts_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="CosmosDBAccountResource" /> that may take multiple service requests to iterate over. </returns>
@@ -84,8 +100,16 @@ namespace Azure.ResourceManager.CosmosDB
 
         /// <summary>
         /// List all managed Cassandra clusters in this subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.DocumentDB/cassandraClusters
-        /// Operation Id: CassandraClusters_ListBySubscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DocumentDB/cassandraClusters</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>CassandraClusters_ListBySubscription</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="CassandraClusterResource" /> that may take multiple service requests to iterate over. </returns>
@@ -97,8 +121,16 @@ namespace Azure.ResourceManager.CosmosDB
 
         /// <summary>
         /// List all managed Cassandra clusters in this subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.DocumentDB/cassandraClusters
-        /// Operation Id: CassandraClusters_ListBySubscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DocumentDB/cassandraClusters</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>CassandraClusters_ListBySubscription</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="CassandraClusterResource" /> that may take multiple service requests to iterate over. </returns>
@@ -110,8 +142,16 @@ namespace Azure.ResourceManager.CosmosDB
 
         /// <summary>
         /// Lists all the restorable Azure Cosmos DB database accounts available under the subscription. This call requires &apos;Microsoft.DocumentDB/locations/restorableDatabaseAccounts/read&apos; permission.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.DocumentDB/restorableDatabaseAccounts
-        /// Operation Id: RestorableDatabaseAccounts_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DocumentDB/restorableDatabaseAccounts</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>RestorableDatabaseAccounts_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="RestorableCosmosDBAccountResource" /> that may take multiple service requests to iterate over. </returns>
@@ -123,8 +163,16 @@ namespace Azure.ResourceManager.CosmosDB
 
         /// <summary>
         /// Lists all the restorable Azure Cosmos DB database accounts available under the subscription. This call requires &apos;Microsoft.DocumentDB/locations/restorableDatabaseAccounts/read&apos; permission.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.DocumentDB/restorableDatabaseAccounts
-        /// Operation Id: RestorableDatabaseAccounts_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DocumentDB/restorableDatabaseAccounts</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>RestorableDatabaseAccounts_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="RestorableCosmosDBAccountResource" /> that may take multiple service requests to iterate over. </returns>

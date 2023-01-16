@@ -63,8 +63,16 @@ namespace Azure.ResourceManager.ArcScVmm
 
         /// <summary>
         /// List of VmmServers in a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.ScVmm/vmmServers
-        /// Operation Id: VmmServers_ListBySubscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ScVmm/vmmServers</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>VmmServers_ListBySubscription</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ScVmmServerResource" /> that may take multiple service requests to iterate over. </returns>
@@ -77,8 +85,16 @@ namespace Azure.ResourceManager.ArcScVmm
 
         /// <summary>
         /// List of VmmServers in a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.ScVmm/vmmServers
-        /// Operation Id: VmmServers_ListBySubscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ScVmm/vmmServers</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>VmmServers_ListBySubscription</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ScVmmServerResource" /> that may take multiple service requests to iterate over. </returns>
@@ -91,8 +107,16 @@ namespace Azure.ResourceManager.ArcScVmm
 
         /// <summary>
         /// List of Clouds in a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.ScVmm/clouds
-        /// Operation Id: Clouds_ListBySubscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ScVmm/clouds</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Clouds_ListBySubscription</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ScVmmCloudResource" /> that may take multiple service requests to iterate over. </returns>
@@ -105,8 +129,16 @@ namespace Azure.ResourceManager.ArcScVmm
 
         /// <summary>
         /// List of Clouds in a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.ScVmm/clouds
-        /// Operation Id: Clouds_ListBySubscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ScVmm/clouds</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Clouds_ListBySubscription</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ScVmmCloudResource" /> that may take multiple service requests to iterate over. </returns>
@@ -119,8 +151,16 @@ namespace Azure.ResourceManager.ArcScVmm
 
         /// <summary>
         /// List of VirtualNetworks in a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.ScVmm/virtualNetworks
-        /// Operation Id: VirtualNetworks_ListBySubscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ScVmm/virtualNetworks</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>VirtualNetworks_ListBySubscription</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ScVmmVirtualNetworkResource" /> that may take multiple service requests to iterate over. </returns>
@@ -133,8 +173,16 @@ namespace Azure.ResourceManager.ArcScVmm
 
         /// <summary>
         /// List of VirtualNetworks in a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.ScVmm/virtualNetworks
-        /// Operation Id: VirtualNetworks_ListBySubscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ScVmm/virtualNetworks</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>VirtualNetworks_ListBySubscription</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ScVmmVirtualNetworkResource" /> that may take multiple service requests to iterate over. </returns>
@@ -147,8 +195,16 @@ namespace Azure.ResourceManager.ArcScVmm
 
         /// <summary>
         /// List of VirtualMachines in a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.ScVmm/virtualMachines
-        /// Operation Id: VirtualMachines_ListBySubscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ScVmm/virtualMachines</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>VirtualMachines_ListBySubscription</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ScVmmVirtualMachineResource" /> that may take multiple service requests to iterate over. </returns>
@@ -161,8 +217,16 @@ namespace Azure.ResourceManager.ArcScVmm
 
         /// <summary>
         /// List of VirtualMachines in a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.ScVmm/virtualMachines
-        /// Operation Id: VirtualMachines_ListBySubscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ScVmm/virtualMachines</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>VirtualMachines_ListBySubscription</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ScVmmVirtualMachineResource" /> that may take multiple service requests to iterate over. </returns>
@@ -175,8 +239,16 @@ namespace Azure.ResourceManager.ArcScVmm
 
         /// <summary>
         /// List of VirtualMachineTemplates in a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.ScVmm/virtualMachineTemplates
-        /// Operation Id: VirtualMachineTemplates_ListBySubscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ScVmm/virtualMachineTemplates</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>VirtualMachineTemplates_ListBySubscription</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ScVmmVirtualMachineTemplateResource" /> that may take multiple service requests to iterate over. </returns>
@@ -189,8 +261,16 @@ namespace Azure.ResourceManager.ArcScVmm
 
         /// <summary>
         /// List of VirtualMachineTemplates in a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.ScVmm/virtualMachineTemplates
-        /// Operation Id: VirtualMachineTemplates_ListBySubscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ScVmm/virtualMachineTemplates</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>VirtualMachineTemplates_ListBySubscription</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ScVmmVirtualMachineTemplateResource" /> that may take multiple service requests to iterate over. </returns>
@@ -203,8 +283,16 @@ namespace Azure.ResourceManager.ArcScVmm
 
         /// <summary>
         /// List of AvailabilitySets in a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.ScVmm/availabilitySets
-        /// Operation Id: AvailabilitySets_ListBySubscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ScVmm/availabilitySets</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AvailabilitySets_ListBySubscription</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ScVmmAvailabilitySetResource" /> that may take multiple service requests to iterate over. </returns>
@@ -217,8 +305,16 @@ namespace Azure.ResourceManager.ArcScVmm
 
         /// <summary>
         /// List of AvailabilitySets in a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.ScVmm/availabilitySets
-        /// Operation Id: AvailabilitySets_ListBySubscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ScVmm/availabilitySets</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AvailabilitySets_ListBySubscription</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ScVmmAvailabilitySetResource" /> that may take multiple service requests to iterate over. </returns>

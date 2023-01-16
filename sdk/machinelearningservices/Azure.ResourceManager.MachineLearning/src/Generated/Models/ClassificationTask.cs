@@ -11,17 +11,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary>
-    /// Classification task in AutoML Table vertical.
-    /// Serialized Name: Classification
-    /// </summary>
+    /// <summary> Classification task in AutoML Table vertical. </summary>
     public partial class ClassificationTask : AutoMLVertical
     {
         /// <summary> Initializes a new instance of ClassificationTask. </summary>
-        /// <param name="trainingData">
-        /// [Required] Training data input.
-        /// Serialized Name: AutoMLVertical.trainingData
-        /// </param>
+        /// <param name="trainingData"> [Required] Training data input. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="trainingData"/> is null. </exception>
         public ClassificationTask(MachineLearningTableJobInput trainingData) : base(trainingData)
         {
@@ -32,78 +26,38 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Initializes a new instance of ClassificationTask. </summary>
-        /// <param name="logVerbosity">
-        /// Log verbosity for the job.
-        /// Serialized Name: AutoMLVertical.logVerbosity
-        /// </param>
+        /// <param name="logVerbosity"> Log verbosity for the job. </param>
         /// <param name="targetColumnName">
         /// Target column name: This is prediction values column.
         /// Also known as label column name in context of classification tasks.
-        /// Serialized Name: AutoMLVertical.targetColumnName
         /// </param>
-        /// <param name="taskType">
-        /// [Required] Task type for AutoMLJob.
-        /// Serialized Name: AutoMLVertical.taskType
-        /// </param>
-        /// <param name="trainingData">
-        /// [Required] Training data input.
-        /// Serialized Name: AutoMLVertical.trainingData
-        /// </param>
-        /// <param name="positiveLabel">
-        /// Positive label for binary metrics calculation.
-        /// Serialized Name: Classification.positiveLabel
-        /// </param>
-        /// <param name="primaryMetric">
-        /// Primary metric for the task.
-        /// Serialized Name: Classification.primaryMetric
-        /// </param>
-        /// <param name="trainingSettings">
-        /// Inputs for training phase for an AutoML Job.
-        /// Serialized Name: Classification.trainingSettings
-        /// </param>
-        /// <param name="cvSplitColumnNames">
-        /// Columns to use for CVSplit data.
-        /// Serialized Name: TableVertical.cvSplitColumnNames
-        /// </param>
-        /// <param name="featurizationSettings">
-        /// Featurization inputs needed for AutoML job.
-        /// Serialized Name: TableVertical.featurizationSettings
-        /// </param>
-        /// <param name="limitSettings">
-        /// Execution constraints for AutoMLJob.
-        /// Serialized Name: TableVertical.limitSettings
-        /// </param>
+        /// <param name="taskType"> [Required] Task type for AutoMLJob. </param>
+        /// <param name="trainingData"> [Required] Training data input. </param>
+        /// <param name="positiveLabel"> Positive label for binary metrics calculation. </param>
+        /// <param name="primaryMetric"> Primary metric for the task. </param>
+        /// <param name="trainingSettings"> Inputs for training phase for an AutoML Job. </param>
+        /// <param name="cvSplitColumnNames"> Columns to use for CVSplit data. </param>
+        /// <param name="featurizationSettings"> Featurization inputs needed for AutoML job. </param>
+        /// <param name="limitSettings"> Execution constraints for AutoMLJob. </param>
         /// <param name="nCrossValidations">
         /// Number of cross validation folds to be applied on training dataset
         /// when validation dataset is not provided.
-        /// Serialized Name: TableVertical.nCrossValidations
         /// Please note <see cref="NCrossValidations"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="AutoNCrossValidations"/> and <see cref="CustomNCrossValidations"/>.
         /// </param>
-        /// <param name="testData">
-        /// Test data input.
-        /// Serialized Name: TableVertical.testData
-        /// </param>
+        /// <param name="testData"> Test data input. </param>
         /// <param name="testDataSize">
         /// The fraction of test dataset that needs to be set aside for validation purpose.
         /// Values between (0.0 , 1.0)
         /// Applied when validation dataset is not provided.
-        /// Serialized Name: TableVertical.testDataSize
         /// </param>
-        /// <param name="validationData">
-        /// Validation data inputs.
-        /// Serialized Name: TableVertical.validationData
-        /// </param>
+        /// <param name="validationData"> Validation data inputs. </param>
         /// <param name="validationDataSize">
         /// The fraction of training dataset that needs to be set aside for validation purpose.
         /// Values between (0.0 , 1.0)
         /// Applied when validation dataset is not provided.
-        /// Serialized Name: TableVertical.validationDataSize
         /// </param>
-        /// <param name="weightColumnName">
-        /// The name of the sample weight column. Automated ML supports a weighted column as an input, causing rows in the data to be weighted up or down.
-        /// Serialized Name: TableVertical.weightColumnName
-        /// </param>
+        /// <param name="weightColumnName"> The name of the sample weight column. Automated ML supports a weighted column as an input, causing rows in the data to be weighted up or down. </param>
         internal ClassificationTask(MachineLearningLogVerbosity? logVerbosity, string targetColumnName, TaskType taskType, MachineLearningTableJobInput trainingData, string positiveLabel, ClassificationPrimaryMetric? primaryMetric, ClassificationTrainingSettings trainingSettings, IList<string> cvSplitColumnNames, TableVerticalFeaturizationSettings featurizationSettings, TableVerticalLimitSettings limitSettings, NCrossValidations nCrossValidations, MachineLearningTableJobInput testData, double? testDataSize, MachineLearningTableJobInput validationData, double? validationDataSize, string weightColumnName) : base(logVerbosity, targetColumnName, taskType, trainingData)
         {
             PositiveLabel = positiveLabel;
@@ -121,72 +75,42 @@ namespace Azure.ResourceManager.MachineLearning.Models
             TaskType = taskType;
         }
 
-        /// <summary>
-        /// Positive label for binary metrics calculation.
-        /// Serialized Name: Classification.positiveLabel
-        /// </summary>
+        /// <summary> Positive label for binary metrics calculation. </summary>
         public string PositiveLabel { get; set; }
-        /// <summary>
-        /// Primary metric for the task.
-        /// Serialized Name: Classification.primaryMetric
-        /// </summary>
+        /// <summary> Primary metric for the task. </summary>
         public ClassificationPrimaryMetric? PrimaryMetric { get; set; }
-        /// <summary>
-        /// Inputs for training phase for an AutoML Job.
-        /// Serialized Name: Classification.trainingSettings
-        /// </summary>
+        /// <summary> Inputs for training phase for an AutoML Job. </summary>
         public ClassificationTrainingSettings TrainingSettings { get; set; }
-        /// <summary>
-        /// Columns to use for CVSplit data.
-        /// Serialized Name: TableVertical.cvSplitColumnNames
-        /// </summary>
+        /// <summary> Columns to use for CVSplit data. </summary>
         public IList<string> CvSplitColumnNames { get; set; }
-        /// <summary>
-        /// Featurization inputs needed for AutoML job.
-        /// Serialized Name: TableVertical.featurizationSettings
-        /// </summary>
+        /// <summary> Featurization inputs needed for AutoML job. </summary>
         public TableVerticalFeaturizationSettings FeaturizationSettings { get; set; }
-        /// <summary>
-        /// Execution constraints for AutoMLJob.
-        /// Serialized Name: TableVertical.limitSettings
-        /// </summary>
+        /// <summary> Execution constraints for AutoMLJob. </summary>
         public TableVerticalLimitSettings LimitSettings { get; set; }
         /// <summary>
         /// Number of cross validation folds to be applied on training dataset
         /// when validation dataset is not provided.
-        /// Serialized Name: TableVertical.nCrossValidations
         /// Please note <see cref="NCrossValidations"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="AutoNCrossValidations"/> and <see cref="CustomNCrossValidations"/>.
         /// </summary>
         public NCrossValidations NCrossValidations { get; set; }
-        /// <summary>
-        /// Test data input.
-        /// Serialized Name: TableVertical.testData
-        /// </summary>
+        /// <summary> Test data input. </summary>
         public MachineLearningTableJobInput TestData { get; set; }
         /// <summary>
         /// The fraction of test dataset that needs to be set aside for validation purpose.
         /// Values between (0.0 , 1.0)
         /// Applied when validation dataset is not provided.
-        /// Serialized Name: TableVertical.testDataSize
         /// </summary>
         public double? TestDataSize { get; set; }
-        /// <summary>
-        /// Validation data inputs.
-        /// Serialized Name: TableVertical.validationData
-        /// </summary>
+        /// <summary> Validation data inputs. </summary>
         public MachineLearningTableJobInput ValidationData { get; set; }
         /// <summary>
         /// The fraction of training dataset that needs to be set aside for validation purpose.
         /// Values between (0.0 , 1.0)
         /// Applied when validation dataset is not provided.
-        /// Serialized Name: TableVertical.validationDataSize
         /// </summary>
         public double? ValidationDataSize { get; set; }
-        /// <summary>
-        /// The name of the sample weight column. Automated ML supports a weighted column as an input, causing rows in the data to be weighted up or down.
-        /// Serialized Name: TableVertical.weightColumnName
-        /// </summary>
+        /// <summary> The name of the sample weight column. Automated ML supports a weighted column as an input, causing rows in the data to be weighted up or down. </summary>
         public string WeightColumnName { get; set; }
     }
 }

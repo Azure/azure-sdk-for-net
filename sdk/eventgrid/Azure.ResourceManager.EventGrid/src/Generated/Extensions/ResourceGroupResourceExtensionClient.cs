@@ -97,8 +97,16 @@ namespace Azure.ResourceManager.EventGrid
 
         /// <summary>
         /// List event types for a topic.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{providerNamespace}/{resourceTypeName}/{resourceName}/providers/Microsoft.EventGrid/eventTypes
-        /// Operation Id: Topics_ListEventTypes
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{providerNamespace}/{resourceTypeName}/{resourceName}/providers/Microsoft.EventGrid/eventTypes</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Topics_ListEventTypes</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="providerNamespace"> Namespace of the provider of the topic. </param>
         /// <param name="resourceTypeName"> Name of the topic type. </param>
@@ -113,8 +121,16 @@ namespace Azure.ResourceManager.EventGrid
 
         /// <summary>
         /// List event types for a topic.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{providerNamespace}/{resourceTypeName}/{resourceName}/providers/Microsoft.EventGrid/eventTypes
-        /// Operation Id: Topics_ListEventTypes
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{providerNamespace}/{resourceTypeName}/{resourceName}/providers/Microsoft.EventGrid/eventTypes</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Topics_ListEventTypes</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="providerNamespace"> Namespace of the provider of the topic. </param>
         /// <param name="resourceTypeName"> Name of the topic type. </param>

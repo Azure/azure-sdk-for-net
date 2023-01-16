@@ -40,8 +40,16 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary>
         /// Gets a deleted server.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Sql/locations/{locationName}/deletedServers/{deletedServerName}
-        /// Operation Id: DeletedServers_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Sql/locations/{locationName}/deletedServers/{deletedServerName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DeletedServers_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="locationName"> The name of the region where the resource is located. </param>
@@ -57,8 +65,16 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary>
         /// Gets a deleted server.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Sql/locations/{locationName}/deletedServers/{deletedServerName}
-        /// Operation Id: DeletedServers_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Sql/locations/{locationName}/deletedServers/{deletedServerName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DeletedServers_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="locationName"> The name of the region where the resource is located. </param>
@@ -83,8 +99,16 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary>
         /// Gets a subscription usage metric.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Sql/locations/{locationName}/usages/{usageName}
-        /// Operation Id: SubscriptionUsages_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Sql/locations/{locationName}/usages/{usageName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SubscriptionUsages_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="locationName"> The name of the region where the resource is located. </param>
@@ -100,8 +124,16 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary>
         /// Gets a subscription usage metric.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Sql/locations/{locationName}/usages/{usageName}
-        /// Operation Id: SubscriptionUsages_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Sql/locations/{locationName}/usages/{usageName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SubscriptionUsages_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="locationName"> The name of the region where the resource is located. </param>
@@ -126,8 +158,16 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary>
         /// Gets a managed instance time zone.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Sql/locations/{locationName}/timeZones/{timeZoneId}
-        /// Operation Id: TimeZones_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Sql/locations/{locationName}/timeZones/{timeZoneId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>TimeZones_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="locationName"> The String to use. </param>
@@ -143,8 +183,16 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary>
         /// Gets a managed instance time zone.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Sql/locations/{locationName}/timeZones/{timeZoneId}
-        /// Operation Id: TimeZones_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Sql/locations/{locationName}/timeZones/{timeZoneId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>TimeZones_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="locationName"> The String to use. </param>
@@ -176,8 +224,16 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary>
         /// Gets a long term retention backup.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Sql/locations/{locationName}/longTermRetentionServers/{longTermRetentionServerName}/longTermRetentionDatabases/{longTermRetentionDatabaseName}/longTermRetentionBackups/{backupName}
-        /// Operation Id: LongTermRetentionBackups_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Sql/locations/{locationName}/longTermRetentionServers/{longTermRetentionServerName}/longTermRetentionDatabases/{longTermRetentionDatabaseName}/longTermRetentionBackups/{backupName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>LongTermRetentionBackups_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="locationName"> The location of the database. </param>
@@ -195,8 +251,16 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary>
         /// Gets a long term retention backup.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Sql/locations/{locationName}/longTermRetentionServers/{longTermRetentionServerName}/longTermRetentionDatabases/{longTermRetentionDatabaseName}/longTermRetentionBackups/{backupName}
-        /// Operation Id: LongTermRetentionBackups_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Sql/locations/{locationName}/longTermRetentionServers/{longTermRetentionServerName}/longTermRetentionDatabases/{longTermRetentionDatabaseName}/longTermRetentionBackups/{backupName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>LongTermRetentionBackups_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="locationName"> The location of the database. </param>
@@ -230,8 +294,16 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary>
         /// Gets a long term retention backup for a managed database.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Sql/locations/{locationName}/longTermRetentionManagedInstances/{managedInstanceName}/longTermRetentionDatabases/{databaseName}/longTermRetentionManagedInstanceBackups/{backupName}
-        /// Operation Id: LongTermRetentionManagedInstanceBackups_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Sql/locations/{locationName}/longTermRetentionManagedInstances/{managedInstanceName}/longTermRetentionDatabases/{databaseName}/longTermRetentionManagedInstanceBackups/{backupName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>LongTermRetentionManagedInstanceBackups_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="locationName"> The location of the database. </param>
@@ -249,8 +321,16 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary>
         /// Gets a long term retention backup for a managed database.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Sql/locations/{locationName}/longTermRetentionManagedInstances/{managedInstanceName}/longTermRetentionDatabases/{databaseName}/longTermRetentionManagedInstanceBackups/{backupName}
-        /// Operation Id: LongTermRetentionManagedInstanceBackups_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Sql/locations/{locationName}/longTermRetentionManagedInstances/{managedInstanceName}/longTermRetentionDatabases/{databaseName}/longTermRetentionManagedInstanceBackups/{backupName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>LongTermRetentionManagedInstanceBackups_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="locationName"> The location of the database. </param>
@@ -268,8 +348,16 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary>
         /// Gets a list of all deleted servers in a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Sql/deletedServers
-        /// Operation Id: DeletedServers_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Sql/deletedServers</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DeletedServers_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -281,8 +369,16 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary>
         /// Gets a list of all deleted servers in a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Sql/deletedServers
-        /// Operation Id: DeletedServers_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Sql/deletedServers</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DeletedServers_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -294,8 +390,16 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary>
         /// Gets a list of all instance pools in the subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Sql/instancePools
-        /// Operation Id: InstancePools_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Sql/instancePools</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>InstancePools_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -307,8 +411,16 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary>
         /// Gets a list of all instance pools in the subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Sql/instancePools
-        /// Operation Id: InstancePools_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Sql/instancePools</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>InstancePools_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -320,8 +432,16 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary>
         /// Gets the subscription capabilities available for the specified location.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Sql/locations/{locationName}/capabilities
-        /// Operation Id: Capabilities_ListByLocation
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Sql/locations/{locationName}/capabilities</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Capabilities_ListByLocation</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="locationName"> The location name whose capabilities are retrieved. </param>
@@ -334,8 +454,16 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary>
         /// Gets the subscription capabilities available for the specified location.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Sql/locations/{locationName}/capabilities
-        /// Operation Id: Capabilities_ListByLocation
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Sql/locations/{locationName}/capabilities</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Capabilities_ListByLocation</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="locationName"> The location name whose capabilities are retrieved. </param>
@@ -348,8 +476,16 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary>
         /// Gets a collection of sync database ids.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Sql/locations/{locationName}/syncDatabaseIds
-        /// Operation Id: SyncGroups_ListSyncDatabaseIds
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Sql/locations/{locationName}/syncDatabaseIds</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SyncGroups_ListSyncDatabaseIds</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="locationName"> The name of the region where the resource is located. </param>
@@ -362,8 +498,16 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary>
         /// Gets a collection of sync database ids.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Sql/locations/{locationName}/syncDatabaseIds
-        /// Operation Id: SyncGroups_ListSyncDatabaseIds
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Sql/locations/{locationName}/syncDatabaseIds</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SyncGroups_ListSyncDatabaseIds</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="locationName"> The name of the region where the resource is located. </param>
@@ -376,8 +520,16 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary>
         /// Gets a list of all servers in the subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Sql/servers
-        /// Operation Id: Servers_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Sql/servers</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Servers_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="expand"> The child resources to include in the response. </param>
@@ -390,8 +542,16 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary>
         /// Gets a list of all servers in the subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Sql/servers
-        /// Operation Id: Servers_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Sql/servers</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Servers_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="expand"> The child resources to include in the response. </param>
@@ -404,8 +564,16 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary>
         /// Determines whether a resource can be created with the specified name.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Sql/checkNameAvailability
-        /// Operation Id: Servers_CheckNameAvailability
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Sql/checkNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Servers_CheckNameAvailability</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="content"> The name availability request parameters. </param>
@@ -420,8 +588,16 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary>
         /// Determines whether a resource can be created with the specified name.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Sql/checkNameAvailability
-        /// Operation Id: Servers_CheckNameAvailability
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Sql/checkNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Servers_CheckNameAvailability</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="content"> The name availability request parameters. </param>
@@ -436,8 +612,16 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary>
         /// Lists the long term retention backups for a given location.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Sql/locations/{locationName}/longTermRetentionBackups
-        /// Operation Id: LongTermRetentionBackups_ListByLocation
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Sql/locations/{locationName}/longTermRetentionBackups</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>LongTermRetentionBackups_ListByLocation</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="locationName"> The location of the database. </param>
@@ -452,8 +636,16 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary>
         /// Lists the long term retention backups for a given location.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Sql/locations/{locationName}/longTermRetentionBackups
-        /// Operation Id: LongTermRetentionBackups_ListByLocation
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Sql/locations/{locationName}/longTermRetentionBackups</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>LongTermRetentionBackups_ListByLocation</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="locationName"> The location of the database. </param>
@@ -468,8 +660,16 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary>
         /// Lists the long term retention backups for a given server.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Sql/locations/{locationName}/longTermRetentionServers/{longTermRetentionServerName}/longTermRetentionBackups
-        /// Operation Id: LongTermRetentionBackups_ListByServer
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Sql/locations/{locationName}/longTermRetentionServers/{longTermRetentionServerName}/longTermRetentionBackups</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>LongTermRetentionBackups_ListByServer</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="locationName"> The location of the database. </param>
@@ -489,8 +689,16 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary>
         /// Lists the long term retention backups for a given server.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Sql/locations/{locationName}/longTermRetentionServers/{longTermRetentionServerName}/longTermRetentionBackups
-        /// Operation Id: LongTermRetentionBackups_ListByServer
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Sql/locations/{locationName}/longTermRetentionServers/{longTermRetentionServerName}/longTermRetentionBackups</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>LongTermRetentionBackups_ListByServer</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="locationName"> The location of the database. </param>
@@ -510,8 +718,16 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary>
         /// Lists the long term retention backups for a given managed instance.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Sql/locations/{locationName}/longTermRetentionManagedInstances/{managedInstanceName}/longTermRetentionManagedInstanceBackups
-        /// Operation Id: LongTermRetentionManagedInstanceBackups_ListByInstance
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Sql/locations/{locationName}/longTermRetentionManagedInstances/{managedInstanceName}/longTermRetentionManagedInstanceBackups</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>LongTermRetentionManagedInstanceBackups_ListByInstance</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="locationName"> The location of the database. </param>
@@ -531,8 +747,16 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary>
         /// Lists the long term retention backups for a given managed instance.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Sql/locations/{locationName}/longTermRetentionManagedInstances/{managedInstanceName}/longTermRetentionManagedInstanceBackups
-        /// Operation Id: LongTermRetentionManagedInstanceBackups_ListByInstance
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Sql/locations/{locationName}/longTermRetentionManagedInstances/{managedInstanceName}/longTermRetentionManagedInstanceBackups</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>LongTermRetentionManagedInstanceBackups_ListByInstance</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="locationName"> The location of the database. </param>
@@ -552,8 +776,16 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary>
         /// Lists the long term retention backups for managed databases in a given location.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Sql/locations/{locationName}/longTermRetentionManagedInstanceBackups
-        /// Operation Id: LongTermRetentionManagedInstanceBackups_ListByLocation
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Sql/locations/{locationName}/longTermRetentionManagedInstanceBackups</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>LongTermRetentionManagedInstanceBackups_ListByLocation</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="locationName"> The location of the database. </param>
@@ -568,8 +800,16 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary>
         /// Lists the long term retention backups for managed databases in a given location.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Sql/locations/{locationName}/longTermRetentionManagedInstanceBackups
-        /// Operation Id: LongTermRetentionManagedInstanceBackups_ListByLocation
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Sql/locations/{locationName}/longTermRetentionManagedInstanceBackups</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>LongTermRetentionManagedInstanceBackups_ListByLocation</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="locationName"> The location of the database. </param>
@@ -584,8 +824,16 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary>
         /// Gets a list of all managed instances in the subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Sql/managedInstances
-        /// Operation Id: ManagedInstances_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Sql/managedInstances</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ManagedInstances_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="expand"> The child resources to include in the response. </param>
@@ -598,8 +846,16 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary>
         /// Gets a list of all managed instances in the subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Sql/managedInstances
-        /// Operation Id: ManagedInstances_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Sql/managedInstances</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ManagedInstances_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="expand"> The child resources to include in the response. </param>
@@ -612,8 +868,16 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary>
         /// Gets a list of all virtualClusters in the subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Sql/virtualClusters
-        /// Operation Id: VirtualClusters_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Sql/virtualClusters</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>VirtualClusters_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -625,8 +889,16 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary>
         /// Gets a list of all virtualClusters in the subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Sql/virtualClusters
-        /// Operation Id: VirtualClusters_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Sql/virtualClusters</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>VirtualClusters_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -656,8 +928,16 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary>
         /// Gets a failover group.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/locations/{locationName}/instanceFailoverGroups/{failoverGroupName}
-        /// Operation Id: InstanceFailoverGroups_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/locations/{locationName}/instanceFailoverGroups/{failoverGroupName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>InstanceFailoverGroups_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="locationName"> The name of the region where the resource is located. </param>
@@ -673,8 +953,16 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary>
         /// Gets a failover group.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/locations/{locationName}/instanceFailoverGroups/{failoverGroupName}
-        /// Operation Id: InstanceFailoverGroups_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/locations/{locationName}/instanceFailoverGroups/{failoverGroupName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>InstanceFailoverGroups_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="locationName"> The name of the region where the resource is located. </param>
@@ -698,8 +986,16 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary>
         /// Gets an instance pool.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/instancePools/{instancePoolName}
-        /// Operation Id: InstancePools_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/instancePools/{instancePoolName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>InstancePools_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="instancePoolName"> The name of the instance pool to be retrieved. </param>
@@ -714,8 +1010,16 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary>
         /// Gets an instance pool.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/instancePools/{instancePoolName}
-        /// Operation Id: InstancePools_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/instancePools/{instancePoolName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>InstancePools_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="instancePoolName"> The name of the instance pool to be retrieved. </param>
@@ -739,8 +1043,16 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary>
         /// Gets a server trust group.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/locations/{locationName}/serverTrustGroups/{serverTrustGroupName}
-        /// Operation Id: ServerTrustGroups_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/locations/{locationName}/serverTrustGroups/{serverTrustGroupName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ServerTrustGroups_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="locationName"> The name of the region where the resource is located. </param>
@@ -756,8 +1068,16 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary>
         /// Gets a server trust group.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/locations/{locationName}/serverTrustGroups/{serverTrustGroupName}
-        /// Operation Id: ServerTrustGroups_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/locations/{locationName}/serverTrustGroups/{serverTrustGroupName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ServerTrustGroups_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="locationName"> The name of the region where the resource is located. </param>
@@ -781,8 +1101,16 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary>
         /// Gets a server.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}
-        /// Operation Id: Servers_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Servers_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="serverName"> The name of the server. </param>
@@ -798,8 +1126,16 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary>
         /// Gets a server.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}
-        /// Operation Id: Servers_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Servers_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="serverName"> The name of the server. </param>
@@ -831,8 +1167,16 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary>
         /// Gets a long term retention backup.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/locations/{locationName}/longTermRetentionServers/{longTermRetentionServerName}/longTermRetentionDatabases/{longTermRetentionDatabaseName}/longTermRetentionBackups/{backupName}
-        /// Operation Id: LongTermRetentionBackups_GetByResourceGroup
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/locations/{locationName}/longTermRetentionServers/{longTermRetentionServerName}/longTermRetentionDatabases/{longTermRetentionDatabaseName}/longTermRetentionBackups/{backupName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>LongTermRetentionBackups_GetByResourceGroup</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="locationName"> The location of the database. </param>
@@ -850,8 +1194,16 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary>
         /// Gets a long term retention backup.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/locations/{locationName}/longTermRetentionServers/{longTermRetentionServerName}/longTermRetentionDatabases/{longTermRetentionDatabaseName}/longTermRetentionBackups/{backupName}
-        /// Operation Id: LongTermRetentionBackups_GetByResourceGroup
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/locations/{locationName}/longTermRetentionServers/{longTermRetentionServerName}/longTermRetentionDatabases/{longTermRetentionDatabaseName}/longTermRetentionBackups/{backupName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>LongTermRetentionBackups_GetByResourceGroup</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="locationName"> The location of the database. </param>
@@ -885,8 +1237,16 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary>
         /// Gets a long term retention backup for a managed database.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/locations/{locationName}/longTermRetentionManagedInstances/{managedInstanceName}/longTermRetentionDatabases/{databaseName}/longTermRetentionManagedInstanceBackups/{backupName}
-        /// Operation Id: LongTermRetentionManagedInstanceBackups_GetByResourceGroup
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/locations/{locationName}/longTermRetentionManagedInstances/{managedInstanceName}/longTermRetentionDatabases/{databaseName}/longTermRetentionManagedInstanceBackups/{backupName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>LongTermRetentionManagedInstanceBackups_GetByResourceGroup</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="locationName"> The location of the database. </param>
@@ -904,8 +1264,16 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary>
         /// Gets a long term retention backup for a managed database.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/locations/{locationName}/longTermRetentionManagedInstances/{managedInstanceName}/longTermRetentionDatabases/{databaseName}/longTermRetentionManagedInstanceBackups/{backupName}
-        /// Operation Id: LongTermRetentionManagedInstanceBackups_GetByResourceGroup
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/locations/{locationName}/longTermRetentionManagedInstances/{managedInstanceName}/longTermRetentionDatabases/{databaseName}/longTermRetentionManagedInstanceBackups/{backupName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>LongTermRetentionManagedInstanceBackups_GetByResourceGroup</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="locationName"> The location of the database. </param>
@@ -931,8 +1299,16 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary>
         /// Gets a managed instance.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}
-        /// Operation Id: ManagedInstances_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ManagedInstances_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="managedInstanceName"> The name of the managed instance. </param>
@@ -948,8 +1324,16 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary>
         /// Gets a managed instance.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}
-        /// Operation Id: ManagedInstances_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ManagedInstances_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="managedInstanceName"> The name of the managed instance. </param>
@@ -973,8 +1357,16 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary>
         /// Gets a virtual cluster.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/virtualClusters/{virtualClusterName}
-        /// Operation Id: VirtualClusters_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/virtualClusters/{virtualClusterName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>VirtualClusters_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="virtualClusterName"> The name of the virtual cluster. </param>
@@ -989,8 +1381,16 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary>
         /// Gets a virtual cluster.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/virtualClusters/{virtualClusterName}
-        /// Operation Id: VirtualClusters_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/virtualClusters/{virtualClusterName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>VirtualClusters_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="virtualClusterName"> The name of the virtual cluster. </param>
@@ -1005,8 +1405,16 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary>
         /// Lists the long term retention backups for a given location.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/locations/{locationName}/longTermRetentionBackups
-        /// Operation Id: LongTermRetentionBackups_ListByResourceGroupLocation
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/locations/{locationName}/longTermRetentionBackups</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>LongTermRetentionBackups_ListByResourceGroupLocation</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="locationName"> The location of the database. </param>
@@ -1021,8 +1429,16 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary>
         /// Lists the long term retention backups for a given location.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/locations/{locationName}/longTermRetentionBackups
-        /// Operation Id: LongTermRetentionBackups_ListByResourceGroupLocation
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/locations/{locationName}/longTermRetentionBackups</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>LongTermRetentionBackups_ListByResourceGroupLocation</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="locationName"> The location of the database. </param>
@@ -1037,8 +1453,16 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary>
         /// Lists the long term retention backups for a given server.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/locations/{locationName}/longTermRetentionServers/{longTermRetentionServerName}/longTermRetentionBackups
-        /// Operation Id: LongTermRetentionBackups_ListByResourceGroupServer
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/locations/{locationName}/longTermRetentionServers/{longTermRetentionServerName}/longTermRetentionBackups</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>LongTermRetentionBackups_ListByResourceGroupServer</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="locationName"> The location of the database. </param>
@@ -1058,8 +1482,16 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary>
         /// Lists the long term retention backups for a given server.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/locations/{locationName}/longTermRetentionServers/{longTermRetentionServerName}/longTermRetentionBackups
-        /// Operation Id: LongTermRetentionBackups_ListByResourceGroupServer
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/locations/{locationName}/longTermRetentionServers/{longTermRetentionServerName}/longTermRetentionBackups</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>LongTermRetentionBackups_ListByResourceGroupServer</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="locationName"> The location of the database. </param>
@@ -1079,8 +1511,16 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary>
         /// Lists the long term retention backups for a given managed instance.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/locations/{locationName}/longTermRetentionManagedInstances/{managedInstanceName}/longTermRetentionManagedInstanceBackups
-        /// Operation Id: LongTermRetentionManagedInstanceBackups_ListByResourceGroupInstance
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/locations/{locationName}/longTermRetentionManagedInstances/{managedInstanceName}/longTermRetentionManagedInstanceBackups</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>LongTermRetentionManagedInstanceBackups_ListByResourceGroupInstance</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="locationName"> The location of the database. </param>
@@ -1100,8 +1540,16 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary>
         /// Lists the long term retention backups for a given managed instance.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/locations/{locationName}/longTermRetentionManagedInstances/{managedInstanceName}/longTermRetentionManagedInstanceBackups
-        /// Operation Id: LongTermRetentionManagedInstanceBackups_ListByResourceGroupInstance
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/locations/{locationName}/longTermRetentionManagedInstances/{managedInstanceName}/longTermRetentionManagedInstanceBackups</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>LongTermRetentionManagedInstanceBackups_ListByResourceGroupInstance</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="locationName"> The location of the database. </param>
@@ -1121,8 +1569,16 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary>
         /// Lists the long term retention backups for managed databases in a given location.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/locations/{locationName}/longTermRetentionManagedInstanceBackups
-        /// Operation Id: LongTermRetentionManagedInstanceBackups_ListByResourceGroupLocation
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/locations/{locationName}/longTermRetentionManagedInstanceBackups</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>LongTermRetentionManagedInstanceBackups_ListByResourceGroupLocation</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="locationName"> The location of the database. </param>
@@ -1137,8 +1593,16 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary>
         /// Lists the long term retention backups for managed databases in a given location.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/locations/{locationName}/longTermRetentionManagedInstanceBackups
-        /// Operation Id: LongTermRetentionManagedInstanceBackups_ListByResourceGroupLocation
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/locations/{locationName}/longTermRetentionManagedInstanceBackups</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>LongTermRetentionManagedInstanceBackups_ListByResourceGroupLocation</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="locationName"> The location of the database. </param>

@@ -54,8 +54,16 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary>
         /// Description for Creates an ownership identifier for a domain or updates identifier details for an existing identifier
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DomainRegistration/domains/{domainName}/domainOwnershipIdentifiers/{name}
-        /// Operation Id: Domains_CreateOrUpdateOwnershipIdentifier
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DomainRegistration/domains/{domainName}/domainOwnershipIdentifiers/{name}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Domains_CreateOrUpdateOwnershipIdentifier</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="name"> Name of identifier. </param>
@@ -87,8 +95,16 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary>
         /// Description for Creates an ownership identifier for a domain or updates identifier details for an existing identifier
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DomainRegistration/domains/{domainName}/domainOwnershipIdentifiers/{name}
-        /// Operation Id: Domains_CreateOrUpdateOwnershipIdentifier
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DomainRegistration/domains/{domainName}/domainOwnershipIdentifiers/{name}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Domains_CreateOrUpdateOwnershipIdentifier</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="name"> Name of identifier. </param>
@@ -120,8 +136,16 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary>
         /// Description for Get ownership identifier for domain
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DomainRegistration/domains/{domainName}/domainOwnershipIdentifiers/{name}
-        /// Operation Id: Domains_GetOwnershipIdentifier
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DomainRegistration/domains/{domainName}/domainOwnershipIdentifiers/{name}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Domains_GetOwnershipIdentifier</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="name"> Name of identifier. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -149,8 +173,16 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary>
         /// Description for Get ownership identifier for domain
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DomainRegistration/domains/{domainName}/domainOwnershipIdentifiers/{name}
-        /// Operation Id: Domains_GetOwnershipIdentifier
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DomainRegistration/domains/{domainName}/domainOwnershipIdentifiers/{name}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Domains_GetOwnershipIdentifier</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="name"> Name of identifier. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -178,8 +210,16 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary>
         /// Description for Lists domain ownership identifiers.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DomainRegistration/domains/{domainName}/domainOwnershipIdentifiers
-        /// Operation Id: Domains_ListOwnershipIdentifiers
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DomainRegistration/domains/{domainName}/domainOwnershipIdentifiers</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Domains_ListOwnershipIdentifiers</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="DomainOwnershipIdentifierResource" /> that may take multiple service requests to iterate over. </returns>
@@ -192,8 +232,16 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary>
         /// Description for Lists domain ownership identifiers.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DomainRegistration/domains/{domainName}/domainOwnershipIdentifiers
-        /// Operation Id: Domains_ListOwnershipIdentifiers
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DomainRegistration/domains/{domainName}/domainOwnershipIdentifiers</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Domains_ListOwnershipIdentifiers</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="DomainOwnershipIdentifierResource" /> that may take multiple service requests to iterate over. </returns>
@@ -206,8 +254,16 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DomainRegistration/domains/{domainName}/domainOwnershipIdentifiers/{name}
-        /// Operation Id: Domains_GetOwnershipIdentifier
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DomainRegistration/domains/{domainName}/domainOwnershipIdentifiers/{name}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Domains_GetOwnershipIdentifier</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="name"> Name of identifier. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -233,8 +289,16 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DomainRegistration/domains/{domainName}/domainOwnershipIdentifiers/{name}
-        /// Operation Id: Domains_GetOwnershipIdentifier
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DomainRegistration/domains/{domainName}/domainOwnershipIdentifiers/{name}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Domains_GetOwnershipIdentifier</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="name"> Name of identifier. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

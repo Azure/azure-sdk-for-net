@@ -54,8 +54,16 @@ namespace Azure.ResourceManager.Chaos
 
         /// <summary>
         /// Get an execution detail of a Experiment resource.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Chaos/experiments/{experimentName}/executionDetails/{executionDetailsId}
-        /// Operation Id: Experiments_GetExecutionDetails
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Chaos/experiments/{experimentName}/executionDetails/{executionDetailsId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Experiments_GetExecutionDetails</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="executionDetailsId"> GUID that represents a Experiment execution detail. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -83,8 +91,16 @@ namespace Azure.ResourceManager.Chaos
 
         /// <summary>
         /// Get an execution detail of a Experiment resource.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Chaos/experiments/{experimentName}/executionDetails/{executionDetailsId}
-        /// Operation Id: Experiments_GetExecutionDetails
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Chaos/experiments/{experimentName}/executionDetails/{executionDetailsId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Experiments_GetExecutionDetails</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="executionDetailsId"> GUID that represents a Experiment execution detail. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -112,8 +128,16 @@ namespace Azure.ResourceManager.Chaos
 
         /// <summary>
         /// Get a list of execution details of a Experiment resource.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Chaos/experiments/{experimentName}/executionDetails
-        /// Operation Id: Experiments_ListExecutionDetails
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Chaos/experiments/{experimentName}/executionDetails</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Experiments_ListExecutionDetails</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ExperimentExecutionDetailResource" /> that may take multiple service requests to iterate over. </returns>
@@ -126,8 +150,16 @@ namespace Azure.ResourceManager.Chaos
 
         /// <summary>
         /// Get a list of execution details of a Experiment resource.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Chaos/experiments/{experimentName}/executionDetails
-        /// Operation Id: Experiments_ListExecutionDetails
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Chaos/experiments/{experimentName}/executionDetails</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Experiments_ListExecutionDetails</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ExperimentExecutionDetailResource" /> that may take multiple service requests to iterate over. </returns>
@@ -140,8 +172,16 @@ namespace Azure.ResourceManager.Chaos
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Chaos/experiments/{experimentName}/executionDetails/{executionDetailsId}
-        /// Operation Id: Experiments_GetExecutionDetails
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Chaos/experiments/{experimentName}/executionDetails/{executionDetailsId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Experiments_GetExecutionDetails</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="executionDetailsId"> GUID that represents a Experiment execution detail. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -167,8 +207,16 @@ namespace Azure.ResourceManager.Chaos
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Chaos/experiments/{experimentName}/executionDetails/{executionDetailsId}
-        /// Operation Id: Experiments_GetExecutionDetails
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Chaos/experiments/{experimentName}/executionDetails/{executionDetailsId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Experiments_GetExecutionDetails</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="executionDetailsId"> GUID that represents a Experiment execution detail. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

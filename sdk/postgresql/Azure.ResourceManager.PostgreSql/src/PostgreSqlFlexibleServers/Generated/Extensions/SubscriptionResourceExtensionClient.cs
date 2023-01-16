@@ -57,8 +57,16 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
 
         /// <summary>
         /// List all the servers in a given subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.DBforPostgreSQL/flexibleServers
-        /// Operation Id: Servers_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DBforPostgreSQL/flexibleServers</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Servers_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="PostgreSqlFlexibleServerResource" /> that may take multiple service requests to iterate over. </returns>
@@ -71,8 +79,16 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
 
         /// <summary>
         /// List all the servers in a given subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.DBforPostgreSQL/flexibleServers
-        /// Operation Id: Servers_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DBforPostgreSQL/flexibleServers</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Servers_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="PostgreSqlFlexibleServerResource" /> that may take multiple service requests to iterate over. </returns>
@@ -85,8 +101,16 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
 
         /// <summary>
         /// Check the availability of name for resource
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.DBforPostgreSQL/checkNameAvailability
-        /// Operation Id: CheckNameAvailability_Execute
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DBforPostgreSQL/checkNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>CheckNameAvailability_Execute</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="content"> The required parameters for checking if resource name is available. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -108,8 +132,16 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
 
         /// <summary>
         /// Check the availability of name for resource
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.DBforPostgreSQL/checkNameAvailability
-        /// Operation Id: CheckNameAvailability_Execute
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DBforPostgreSQL/checkNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>CheckNameAvailability_Execute</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="content"> The required parameters for checking if resource name is available. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -131,8 +163,16 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
 
         /// <summary>
         /// Get capabilities at specified location in a given subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.DBforPostgreSQL/locations/{locationName}/capabilities
-        /// Operation Id: LocationBasedCapabilities_Execute
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DBforPostgreSQL/locations/{locationName}/capabilities</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>LocationBasedCapabilities_Execute</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="locationName"> The name of the location. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -146,8 +186,16 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
 
         /// <summary>
         /// Get capabilities at specified location in a given subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.DBforPostgreSQL/locations/{locationName}/capabilities
-        /// Operation Id: LocationBasedCapabilities_Execute
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DBforPostgreSQL/locations/{locationName}/capabilities</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>LocationBasedCapabilities_Execute</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="locationName"> The name of the location. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -161,8 +209,16 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
 
         /// <summary>
         /// Get virtual network subnet usage for a given vNet resource id.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.DBforPostgreSQL/locations/{locationName}/checkVirtualNetworkSubnetUsage
-        /// Operation Id: VirtualNetworkSubnetUsage_Execute
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DBforPostgreSQL/locations/{locationName}/checkVirtualNetworkSubnetUsage</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>VirtualNetworkSubnetUsage_Execute</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="locationName"> The name of the location. </param>
         /// <param name="postgreSqlFlexibleServerVirtualNetworkSubnetUsageParameter"> The required parameters for creating or updating a server. </param>
@@ -185,8 +241,16 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
 
         /// <summary>
         /// Get virtual network subnet usage for a given vNet resource id.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.DBforPostgreSQL/locations/{locationName}/checkVirtualNetworkSubnetUsage
-        /// Operation Id: VirtualNetworkSubnetUsage_Execute
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DBforPostgreSQL/locations/{locationName}/checkVirtualNetworkSubnetUsage</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>VirtualNetworkSubnetUsage_Execute</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="locationName"> The name of the location. </param>
         /// <param name="postgreSqlFlexibleServerVirtualNetworkSubnetUsageParameter"> The required parameters for creating or updating a server. </param>

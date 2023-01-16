@@ -49,8 +49,16 @@ namespace Azure.ResourceManager.HybridCompute
 
         /// <summary>
         /// Lists all the hybrid machines in the specified subscription. Use the nextLink property in the response to get the next page of hybrid machines.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.HybridCompute/machines
-        /// Operation Id: Machines_ListBySubscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.HybridCompute/machines</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Machines_ListBySubscription</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="HybridComputeMachineResource" /> that may take multiple service requests to iterate over. </returns>
@@ -63,8 +71,16 @@ namespace Azure.ResourceManager.HybridCompute
 
         /// <summary>
         /// Lists all the hybrid machines in the specified subscription. Use the nextLink property in the response to get the next page of hybrid machines.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.HybridCompute/machines
-        /// Operation Id: Machines_ListBySubscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.HybridCompute/machines</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Machines_ListBySubscription</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="HybridComputeMachineResource" /> that may take multiple service requests to iterate over. </returns>
@@ -77,8 +93,16 @@ namespace Azure.ResourceManager.HybridCompute
 
         /// <summary>
         /// Gets a list of all Azure Arc PrivateLinkScopes within a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.HybridCompute/privateLinkScopes
-        /// Operation Id: PrivateLinkScopes_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.HybridCompute/privateLinkScopes</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PrivateLinkScopes_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="HybridComputePrivateLinkScopeResource" /> that may take multiple service requests to iterate over. </returns>
@@ -91,8 +115,16 @@ namespace Azure.ResourceManager.HybridCompute
 
         /// <summary>
         /// Gets a list of all Azure Arc PrivateLinkScopes within a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.HybridCompute/privateLinkScopes
-        /// Operation Id: PrivateLinkScopes_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.HybridCompute/privateLinkScopes</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PrivateLinkScopes_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="HybridComputePrivateLinkScopeResource" /> that may take multiple service requests to iterate over. </returns>
@@ -105,8 +137,16 @@ namespace Azure.ResourceManager.HybridCompute
 
         /// <summary>
         /// Returns a Azure Arc PrivateLinkScope&apos;s validation details.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.HybridCompute/locations/{location}/privateLinkScopes/{privateLinkScopeId}
-        /// Operation Id: PrivateLinkScopes_GetValidationDetails
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.HybridCompute/locations/{location}/privateLinkScopes/{privateLinkScopeId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PrivateLinkScopes_GetValidationDetails</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="location"> The location of the target resource. </param>
         /// <param name="privateLinkScopeId"> The id (Guid) of the Azure Arc PrivateLinkScope resource. </param>
@@ -129,8 +169,16 @@ namespace Azure.ResourceManager.HybridCompute
 
         /// <summary>
         /// Returns a Azure Arc PrivateLinkScope&apos;s validation details.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.HybridCompute/locations/{location}/privateLinkScopes/{privateLinkScopeId}
-        /// Operation Id: PrivateLinkScopes_GetValidationDetails
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.HybridCompute/locations/{location}/privateLinkScopes/{privateLinkScopeId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PrivateLinkScopes_GetValidationDetails</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="location"> The location of the target resource. </param>
         /// <param name="privateLinkScopeId"> The id (Guid) of the Azure Arc PrivateLinkScope resource. </param>

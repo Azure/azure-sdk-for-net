@@ -93,8 +93,16 @@ namespace Azure.ResourceManager.Automation
 
         /// <summary>
         /// Retrieve the dsc node identified by node id.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/nodes/{nodeId}
-        /// Operation Id: DscNode_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/nodes/{nodeId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DscNode_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<DscNodeResource>> GetAsync(CancellationToken cancellationToken = default)
@@ -117,8 +125,16 @@ namespace Azure.ResourceManager.Automation
 
         /// <summary>
         /// Retrieve the dsc node identified by node id.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/nodes/{nodeId}
-        /// Operation Id: DscNode_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/nodes/{nodeId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DscNode_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<DscNodeResource> Get(CancellationToken cancellationToken = default)
@@ -141,8 +157,16 @@ namespace Azure.ResourceManager.Automation
 
         /// <summary>
         /// Delete the dsc node identified by node id.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/nodes/{nodeId}
-        /// Operation Id: DscNode_Delete
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/nodes/{nodeId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DscNode_Delete</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -167,8 +191,16 @@ namespace Azure.ResourceManager.Automation
 
         /// <summary>
         /// Delete the dsc node identified by node id.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/nodes/{nodeId}
-        /// Operation Id: DscNode_Delete
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/nodes/{nodeId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DscNode_Delete</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -193,8 +225,16 @@ namespace Azure.ResourceManager.Automation
 
         /// <summary>
         /// Update the dsc node.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/nodes/{nodeId}
-        /// Operation Id: DscNode_Update
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/nodes/{nodeId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DscNode_Update</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="patch"> Parameters supplied to the update dsc node. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -219,8 +259,16 @@ namespace Azure.ResourceManager.Automation
 
         /// <summary>
         /// Update the dsc node.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/nodes/{nodeId}
-        /// Operation Id: DscNode_Update
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/nodes/{nodeId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DscNode_Update</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="patch"> Parameters supplied to the update dsc node. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -245,8 +293,16 @@ namespace Azure.ResourceManager.Automation
 
         /// <summary>
         /// Retrieve the Dsc node report list by node id.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/nodes/{nodeId}/reports
-        /// Operation Id: NodeReports_ListByNode
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/nodes/{nodeId}/reports</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NodeReports_ListByNode</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="filter"> The filter to apply on the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -260,8 +316,16 @@ namespace Azure.ResourceManager.Automation
 
         /// <summary>
         /// Retrieve the Dsc node report list by node id.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/nodes/{nodeId}/reports
-        /// Operation Id: NodeReports_ListByNode
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/nodes/{nodeId}/reports</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NodeReports_ListByNode</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="filter"> The filter to apply on the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -275,8 +339,16 @@ namespace Azure.ResourceManager.Automation
 
         /// <summary>
         /// Retrieve the Dsc node report data by node id and report id.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/nodes/{nodeId}/reports/{reportId}
-        /// Operation Id: NodeReports_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/nodes/{nodeId}/reports/{reportId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NodeReports_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="reportId"> The report id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -302,8 +374,16 @@ namespace Azure.ResourceManager.Automation
 
         /// <summary>
         /// Retrieve the Dsc node report data by node id and report id.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/nodes/{nodeId}/reports/{reportId}
-        /// Operation Id: NodeReports_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/nodes/{nodeId}/reports/{reportId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NodeReports_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="reportId"> The report id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -329,8 +409,16 @@ namespace Azure.ResourceManager.Automation
 
         /// <summary>
         /// Retrieve the Dsc node reports by node id and report id.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/nodes/{nodeId}/reports/{reportId}/content
-        /// Operation Id: NodeReports_GetContent
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/nodes/{nodeId}/reports/{reportId}/content</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NodeReports_GetContent</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="reportId"> The report id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -356,8 +444,16 @@ namespace Azure.ResourceManager.Automation
 
         /// <summary>
         /// Retrieve the Dsc node reports by node id and report id.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/nodes/{nodeId}/reports/{reportId}/content
-        /// Operation Id: NodeReports_GetContent
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/nodes/{nodeId}/reports/{reportId}/content</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NodeReports_GetContent</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="reportId"> The report id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

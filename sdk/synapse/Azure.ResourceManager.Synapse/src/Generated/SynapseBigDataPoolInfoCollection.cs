@@ -54,8 +54,16 @@ namespace Azure.ResourceManager.Synapse
 
         /// <summary>
         /// Create a new Big Data pool.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/bigDataPools/{bigDataPoolName}
-        /// Operation Id: BigDataPools_CreateOrUpdate
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/bigDataPools/{bigDataPoolName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>BigDataPools_CreateOrUpdate</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="bigDataPoolName"> Big Data pool name. </param>
@@ -88,8 +96,16 @@ namespace Azure.ResourceManager.Synapse
 
         /// <summary>
         /// Create a new Big Data pool.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/bigDataPools/{bigDataPoolName}
-        /// Operation Id: BigDataPools_CreateOrUpdate
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/bigDataPools/{bigDataPoolName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>BigDataPools_CreateOrUpdate</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="bigDataPoolName"> Big Data pool name. </param>
@@ -122,8 +138,16 @@ namespace Azure.ResourceManager.Synapse
 
         /// <summary>
         /// Get a Big Data pool.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/bigDataPools/{bigDataPoolName}
-        /// Operation Id: BigDataPools_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/bigDataPools/{bigDataPoolName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>BigDataPools_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="bigDataPoolName"> Big Data pool name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -151,8 +175,16 @@ namespace Azure.ResourceManager.Synapse
 
         /// <summary>
         /// Get a Big Data pool.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/bigDataPools/{bigDataPoolName}
-        /// Operation Id: BigDataPools_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/bigDataPools/{bigDataPoolName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>BigDataPools_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="bigDataPoolName"> Big Data pool name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -180,8 +212,16 @@ namespace Azure.ResourceManager.Synapse
 
         /// <summary>
         /// List Big Data pools in a workspace.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/bigDataPools
-        /// Operation Id: BigDataPools_ListByWorkspace
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/bigDataPools</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>BigDataPools_ListByWorkspace</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="SynapseBigDataPoolInfoResource" /> that may take multiple service requests to iterate over. </returns>
@@ -194,8 +234,16 @@ namespace Azure.ResourceManager.Synapse
 
         /// <summary>
         /// List Big Data pools in a workspace.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/bigDataPools
-        /// Operation Id: BigDataPools_ListByWorkspace
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/bigDataPools</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>BigDataPools_ListByWorkspace</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="SynapseBigDataPoolInfoResource" /> that may take multiple service requests to iterate over. </returns>
@@ -208,8 +256,16 @@ namespace Azure.ResourceManager.Synapse
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/bigDataPools/{bigDataPoolName}
-        /// Operation Id: BigDataPools_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/bigDataPools/{bigDataPoolName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>BigDataPools_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="bigDataPoolName"> Big Data pool name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -235,8 +291,16 @@ namespace Azure.ResourceManager.Synapse
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/bigDataPools/{bigDataPoolName}
-        /// Operation Id: BigDataPools_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/bigDataPools/{bigDataPoolName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>BigDataPools_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="bigDataPoolName"> Big Data pool name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
