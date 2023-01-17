@@ -1,0 +1,28 @@
+# NOTE: Please refer to https://aka.ms/azsdk/engsys/ci-yaml before editing this file.
+trigger:
+  branches:
+    include:
+      - main
+      - feature/*
+      - release/*
+      - hotfix/*
+  paths:
+    include:
+      - eng/scripts/*
+
+pr:
+  branches:
+    include:
+      - main
+      - feature/*
+      - release/*
+      - hotfix/*
+  paths:
+    include:
+      - eng/scripts/*
+
+extends:
+  template: /eng/common/pipelines/templates/stages/archetype-sdk-tool-pwsh.yml
+  parameters:
+    TargetDirectory: eng/scripts/
+    TargetTags: 'UnitTest'

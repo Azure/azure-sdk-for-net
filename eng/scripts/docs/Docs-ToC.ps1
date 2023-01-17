@@ -116,7 +116,7 @@ function Get-dotnet-OnboardedDocsMsPackagesForMoniker ($DocRepoLocation, $monike
     foreach ($packageInfo in $packageInfos) {
         $packageName = $packageInfo.Name
         if (!$packageName) {
-            LogError "Package name not folder. Please check csv file for the packageId: $($packageInfo.Id)"
+            LogError "Package name not found. Please check csv file for the packageId: $($packageInfo.Id)"
         }
         $jsonFile = "$DocRepoLocation/metadata/$moniker/$packageName.json"
         if (Test-Path $jsonFile) {

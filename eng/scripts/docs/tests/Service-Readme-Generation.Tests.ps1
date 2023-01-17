@@ -1,6 +1,6 @@
 <#
 ```
-Invoke-Pester -Output Detailed $PSScriptRoot/Service-Readme-Generation-Tests.ps1
+Invoke-Pester -Output Detailed $PSScriptRoot/Service-Readme-Generation.Tests.ps1
 
 We are testing:
 1. Get-dotnet-OnboardedDocsMsPackagesForMoniker function in Docs-ToC.sp1
@@ -11,7 +11,8 @@ We are testing:
 Import-Module Pester
 
 BeforeAll {
-    . $PSScriptRoot/../../../common/scripts/common.ps1
+    . $PSScriptRoot/../../Language-Settings.ps1
+    . $PSScriptRoot/logging.ps1
 }
 
 # Test plan:
@@ -36,7 +37,7 @@ Describe "Get-OnboardedDocsMsPackagesForMoniker" -Tag "UnitTest" {
         @{ DocRepoLocation = "$PSScriptRoot/inputs/exceptions"; moniker="latest" }
         @{ DocRepoLocation = "$PSScriptRoot/inputs/exceptions"; moniker="preview" }
     ) {
-        $onboardingPackages = Get-dotnet-OnboardedDocsMsPackagesForMoniker -DocRepoLocation $DocRepoLocation -moniker $moniker 2> $null
+        ($onboardingPackages = Get-dotnet-OnboardedDocsMsPackagesForMoniker -DocRepoLocation $DocRepoLocation -moniker $moniker) 2>$null
         $onboardingPackages.Value | Should -BeNullOrEmpty
     }
 }

@@ -1,6 +1,6 @@
 <#
 ```
-Invoke-Pester -Output Detailed $PSScriptRoot\Toc-Generation-Tests.ps1
+Invoke-Pester -Output Detailed $PSScriptRoot\Toc-Generation.Tests.ps1
 ```
 #>
 
@@ -28,8 +28,8 @@ BeforeAll {
 
 AfterAll {
     $tempLocation = (Join-Path ([System.IO.Path]::GetTempPath()) "extractNupkg")
-    Remove-Item "$tempLocation/*" -Recurse
-    Remove-Item "$PSScriptRoot/outputs" -Recurse
+    Remove-Item "$tempLocation/*" -Recurse -Force
+    Remove-Item "$PSScriptRoot/outputs" -Recurse -Force
 }
 # Test plan:
 # 1. Tests on Fetch-NamespacesFromNupkg from nuget source. 
