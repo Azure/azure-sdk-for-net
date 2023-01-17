@@ -4,6 +4,7 @@
 using System;
 using System.Buffers;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Dynamic;
 using System.IO;
 using System.Linq;
@@ -99,18 +100,20 @@ namespace Azure.Core.Dynamic
                 {
                     case JsonTokenType.StartObject:
                         writer.WriteStartObject();
-                        //WriteComplexElement(index, writer);
-                        WriteComplexElement(reader, writer);
+                        WriteComplexElement(ref reader, writer);
                         return;
+                    //case JsonTokenType.EndObject:
+                    //    writer.WriteEndObject();
+                    //    return;
                     //case JsonTokenType.StartArray:
                     //    writer.WriteStartArray();
                     //    WriteComplexElement(index, writer);
                     //    return;
                     case JsonTokenType.String:
-                        WriteString(reader, writer);
+                        WriteString(ref reader, writer);
                         return;
                     case JsonTokenType.Number:
-                        //writer.WriteNumberValue(_utf8Json.Slice(row.Location, row.SizeOrLength).Span);
+                        WriteNumber(ref reader, writer);
                         return;
                     case JsonTokenType.True:
                         writer.WriteBooleanValue(value: true);
@@ -125,14 +128,28 @@ namespace Azure.Core.Dynamic
             }
         }
 
-        private static void WriteComplexElement(Utf8JsonReader reader, Utf8JsonWriter writer)
+        private static void WriteComplexElement(ref Utf8JsonReader reader, Utf8JsonWriter writer)
         {
             while (reader.Read())
             {
                 switch (reader.TokenType)
                 {
+                    case JsonTokenType.StartObject:
+                        writer.WriteStartObject();
+                        WriteComplexElement(ref reader, writer);
+                        continue;
+
                     case JsonTokenType.PropertyName:
-                        writer.WritePropertyName(reader.GetString());
+                        writer.WritePropertyName(reader.ValueSpan);
+                        //Debug.WriteLine($"PropertyName: {new BinaryData(reader.ValueSpan.ToArray())}, TokenStartIndex: {reader.TokenStartIndex}");
+                        continue;
+
+                    case JsonTokenType.String:
+                        WriteString(ref reader, writer);
+                        continue;
+
+                    case JsonTokenType.Number:
+                        WriteNumber(ref reader, writer);
                         continue;
 
                     case JsonTokenType.EndObject:
@@ -142,10 +159,25 @@ namespace Azure.Core.Dynamic
             }
         }
 
-        private static void WriteString(Utf8JsonReader reader, Utf8JsonWriter writer)
+        private static void WriteString(ref Utf8JsonReader reader, Utf8JsonWriter writer)
         {
             writer.WriteStringValue(reader.ValueSpan);
             return;
+        }
+
+        private static void WriteNumber(ref Utf8JsonReader reader, Utf8JsonWriter writer)
+        {
+            if (reader.TryGetInt64(out long longValue))
+            {
+                writer.WriteNumberValue(longValue);
+                return;
+            }
+
+            if (reader.TryGetDouble(out double doubleValue))
+            {
+                writer.WriteNumberValue(doubleValue);
+                return;
+            }
         }
 
         private void WriteTheHardWay(Utf8JsonWriter writer)
