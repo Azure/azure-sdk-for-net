@@ -1,14 +1,14 @@
 function LogWarning
 {
-    Write-Output "$args"
+    Write-Host "$args"
 }
 
 function LogError
 {
-    Write-Output "$args"
+    Write-Host "$args"
 }
 
 function LogDebug
 {
-    Write-Output "$args"
+    Write-Host "$args"
 }
