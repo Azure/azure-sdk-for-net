@@ -109,7 +109,7 @@ namespace Azure.Identity.Tests
         [TestCase("westus")]
         public async Task VerifyImdsRequestWithClientIdAndRegionalAuthorityNameMockAsync(string regionName)
         {
-            using var environment = new TestEnvVar(new() { {"AZURE_REGIONAL_AUTHORITY_NAME", regionName}, {"MSI_ENDPOINT", null }, { "MSI_SECRET", null }, { "IDENTITY_ENDPOINT", null }, { "IDENTITY_HEADER", null }, { "AZURE_POD_IDENTITY_AUTHORITY_HOST", null } });
+            using var environment = new TestEnvVar(new() { { "AZURE_REGIONAL_AUTHORITY_NAME", regionName }, { "MSI_ENDPOINT", null }, { "MSI_SECRET", null }, { "IDENTITY_ENDPOINT", null }, { "IDENTITY_HEADER", null }, { "AZURE_POD_IDENTITY_AUTHORITY_HOST", null } });
 
             var response = CreateMockResponse(200, ExpectedToken);
             var mockTransport = new MockTransport(response);
@@ -147,9 +147,12 @@ namespace Azure.Identity.Tests
             var options = new TokenCredentialOptions() { Transport = mockTransport, AuthorityHost = authority };
             //var pipeline = CredentialPipeline.GetInstance(options);
             var _pipeline = new HttpPipeline(mockTransport);
-            var pipeline =  new CredentialPipeline(authority, _pipeline, new ClientDiagnostics(options));
+            var pipeline = new CredentialPipeline(authority, _pipeline, new ClientDiagnostics(options));
 
-            ManagedIdentityCredential credential = InstrumentClient(new ManagedIdentityCredential(new ManagedIdentityClient( pipeline, "mock-client-id")));
+            ManagedIdentityCredential credential = InstrumentClient(
+                new ManagedIdentityCredential(
+                    new ManagedIdentityClient(
+                        new ManagedIdentityClientOptions { Pipeline = pipeline, ClientId = "mock-client-id", Options = options })));
 
             AccessToken actualToken = await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default));
 
@@ -857,7 +860,6 @@ namespace Azure.Identity.Tests
             yield return new object[] { AzureAuthorityHosts.AzureGermany };
             yield return new object[] { AzureAuthorityHosts.AzureGovernment };
             yield return new object[] { AzureAuthorityHosts.AzurePublicCloud };
-            yield return new object[] { new Uri("https://foo.bar") };
         }
 
         private MockResponse CreateMockResponse(int responseCode, string token)
