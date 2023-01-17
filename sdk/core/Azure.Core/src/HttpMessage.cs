@@ -14,7 +14,7 @@ namespace Azure.Core
     /// </summary>
     public sealed class HttpMessage : IDisposable
     {
-        private Dictionary<string, object>? _properties;
+        private ArrayBackedPropertyBag<string, object>? _properties;
         private readonly ArrayBackedPropertyBag<long, object> _propertyBag = new();
 
         private Response? _response;
@@ -138,8 +138,8 @@ namespace Azure.Core
         /// <param name="value">The property value.</param>
         public void SetProperty(string name, object value)
         {
-            _properties ??= new Dictionary<string, object>();
-            _properties[name] = value;
+            _properties ??= new();
+            _properties.Add(name, value);
         }
 
         /// <summary>
