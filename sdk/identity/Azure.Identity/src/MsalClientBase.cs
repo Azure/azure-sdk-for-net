@@ -5,6 +5,7 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
+using Azure.Core.Pipeline;
 using Microsoft.Identity.Client;
 
 namespace Azure.Identity
@@ -79,6 +80,22 @@ namespace Azure.Identity
 
             asyncLock.SetValue(client);
             return client;
+        }
+
+        protected async ValueTask RemoveUser(bool async, IAccount account, CancellationToken cancellationToken)
+        {
+            var client = await CreateClientAsync(async, cancellationToken).ConfigureAwait(false);
+            if (async)
+            {
+                await client.RemoveAsync(account).ConfigureAwait(false);
+            }
+            else
+            {
+                // Only an async version is available
+#pragma warning disable AZC0107 // Public asynchronous method shouldn't be called in synchronous scope. Use synchronous version of the method if it is available.
+                client.RemoveAsync(account).EnsureCompleted();
+#pragma warning restore AZC0107 // Public asynchronous method shouldn't be called in synchronous scope. Use synchronous version of the method if it is available.
+            }
         }
 
         protected void LogMsal(LogLevel level, string message, bool isPii)
