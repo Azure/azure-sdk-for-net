@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary>
-    /// The current provisioning state.
-    /// Serialized Name: PrivateEndpointConnectionProvisioningState
-    /// </summary>
+    /// <summary> The current provisioning state. </summary>
     public readonly partial struct MachineLearningPrivateEndpointConnectionProvisioningState : IEquatable<MachineLearningPrivateEndpointConnectionProvisioningState>
     {
         private readonly string _value;
@@ -30,25 +27,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
         private const string DeletingValue = "Deleting";
         private const string FailedValue = "Failed";
 
-        /// <summary>
-        /// Succeeded
-        /// Serialized Name: PrivateEndpointConnectionProvisioningState.Succeeded
-        /// </summary>
+        /// <summary> Succeeded. </summary>
         public static MachineLearningPrivateEndpointConnectionProvisioningState Succeeded { get; } = new MachineLearningPrivateEndpointConnectionProvisioningState(SucceededValue);
-        /// <summary>
-        /// Creating
-        /// Serialized Name: PrivateEndpointConnectionProvisioningState.Creating
-        /// </summary>
+        /// <summary> Creating. </summary>
         public static MachineLearningPrivateEndpointConnectionProvisioningState Creating { get; } = new MachineLearningPrivateEndpointConnectionProvisioningState(CreatingValue);
-        /// <summary>
-        /// Deleting
-        /// Serialized Name: PrivateEndpointConnectionProvisioningState.Deleting
-        /// </summary>
+        /// <summary> Deleting. </summary>
         public static MachineLearningPrivateEndpointConnectionProvisioningState Deleting { get; } = new MachineLearningPrivateEndpointConnectionProvisioningState(DeletingValue);
-        /// <summary>
-        /// Failed
-        /// Serialized Name: PrivateEndpointConnectionProvisioningState.Failed
-        /// </summary>
+        /// <summary> Failed. </summary>
         public static MachineLearningPrivateEndpointConnectionProvisioningState Failed { get; } = new MachineLearningPrivateEndpointConnectionProvisioningState(FailedValue);
         /// <summary> Determines if two <see cref="MachineLearningPrivateEndpointConnectionProvisioningState"/> values are the same. </summary>
         public static bool operator ==(MachineLearningPrivateEndpointConnectionProvisioningState left, MachineLearningPrivateEndpointConnectionProvisioningState right) => left.Equals(right);

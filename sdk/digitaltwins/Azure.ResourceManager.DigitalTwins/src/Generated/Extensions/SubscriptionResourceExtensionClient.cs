@@ -45,8 +45,16 @@ namespace Azure.ResourceManager.DigitalTwins
 
         /// <summary>
         /// Get all the DigitalTwinsInstances in a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.DigitalTwins/digitalTwinsInstances
-        /// Operation Id: DigitalTwins_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DigitalTwins/digitalTwinsInstances</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DigitalTwins_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="DigitalTwinsDescriptionResource" /> that may take multiple service requests to iterate over. </returns>
@@ -59,8 +67,16 @@ namespace Azure.ResourceManager.DigitalTwins
 
         /// <summary>
         /// Get all the DigitalTwinsInstances in a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.DigitalTwins/digitalTwinsInstances
-        /// Operation Id: DigitalTwins_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DigitalTwins/digitalTwinsInstances</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DigitalTwins_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="DigitalTwinsDescriptionResource" /> that may take multiple service requests to iterate over. </returns>
@@ -73,8 +89,16 @@ namespace Azure.ResourceManager.DigitalTwins
 
         /// <summary>
         /// Check if a DigitalTwinsInstance name is available.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.DigitalTwins/locations/{location}/checkNameAvailability
-        /// Operation Id: DigitalTwins_CheckNameAvailability
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DigitalTwins/locations/{location}/checkNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DigitalTwins_CheckNameAvailability</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="location"> Location of DigitalTwinsInstance. </param>
         /// <param name="content"> Set the name parameter in the DigitalTwinsInstanceCheckName structure to the name of the DigitalTwinsInstance to check. </param>
@@ -97,8 +121,16 @@ namespace Azure.ResourceManager.DigitalTwins
 
         /// <summary>
         /// Check if a DigitalTwinsInstance name is available.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.DigitalTwins/locations/{location}/checkNameAvailability
-        /// Operation Id: DigitalTwins_CheckNameAvailability
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DigitalTwins/locations/{location}/checkNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DigitalTwins_CheckNameAvailability</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="location"> Location of DigitalTwinsInstance. </param>
         /// <param name="content"> Set the name parameter in the DigitalTwinsInstanceCheckName structure to the name of the DigitalTwinsInstance to check. </param>

@@ -57,8 +57,16 @@ namespace Azure.ResourceManager.FrontDoor
 
         /// <summary>
         /// Lists all available managed rule sets.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/FrontDoorWebApplicationFirewallManagedRuleSets
-        /// Operation Id: ManagedRuleSets_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/FrontDoorWebApplicationFirewallManagedRuleSets</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ManagedRuleSets_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ManagedRuleSetDefinition" /> that may take multiple service requests to iterate over. </returns>
@@ -71,8 +79,16 @@ namespace Azure.ResourceManager.FrontDoor
 
         /// <summary>
         /// Lists all available managed rule sets.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/FrontDoorWebApplicationFirewallManagedRuleSets
-        /// Operation Id: ManagedRuleSets_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/FrontDoorWebApplicationFirewallManagedRuleSets</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ManagedRuleSets_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ManagedRuleSetDefinition" /> that may take multiple service requests to iterate over. </returns>
@@ -85,8 +101,16 @@ namespace Azure.ResourceManager.FrontDoor
 
         /// <summary>
         /// Check the availability of a Front Door subdomain.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/checkFrontDoorNameAvailability
-        /// Operation Id: FrontDoorNameAvailabilityWithSubscription_Check
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/checkFrontDoorNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>FrontDoorNameAvailabilityWithSubscription_Check</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="content"> Input to check. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -108,8 +132,16 @@ namespace Azure.ResourceManager.FrontDoor
 
         /// <summary>
         /// Check the availability of a Front Door subdomain.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/checkFrontDoorNameAvailability
-        /// Operation Id: FrontDoorNameAvailabilityWithSubscription_Check
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/checkFrontDoorNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>FrontDoorNameAvailabilityWithSubscription_Check</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="content"> Input to check. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -131,8 +163,16 @@ namespace Azure.ResourceManager.FrontDoor
 
         /// <summary>
         /// Lists all of the Front Doors within an Azure subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/frontDoors
-        /// Operation Id: FrontDoors_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/frontDoors</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>FrontDoors_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="FrontDoorResource" /> that may take multiple service requests to iterate over. </returns>
@@ -145,8 +185,16 @@ namespace Azure.ResourceManager.FrontDoor
 
         /// <summary>
         /// Lists all of the Front Doors within an Azure subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/frontDoors
-        /// Operation Id: FrontDoors_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/frontDoors</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>FrontDoors_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="FrontDoorResource" /> that may take multiple service requests to iterate over. </returns>
@@ -159,8 +207,16 @@ namespace Azure.ResourceManager.FrontDoor
 
         /// <summary>
         /// Gets a list of Network Experiment Profiles under a subscription
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/NetworkExperimentProfiles
-        /// Operation Id: NetworkExperimentProfiles_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/NetworkExperimentProfiles</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NetworkExperimentProfiles_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="FrontDoorNetworkExperimentProfileResource" /> that may take multiple service requests to iterate over. </returns>
@@ -173,8 +229,16 @@ namespace Azure.ResourceManager.FrontDoor
 
         /// <summary>
         /// Gets a list of Network Experiment Profiles under a subscription
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/NetworkExperimentProfiles
-        /// Operation Id: NetworkExperimentProfiles_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/NetworkExperimentProfiles</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NetworkExperimentProfiles_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="FrontDoorNetworkExperimentProfileResource" /> that may take multiple service requests to iterate over. </returns>

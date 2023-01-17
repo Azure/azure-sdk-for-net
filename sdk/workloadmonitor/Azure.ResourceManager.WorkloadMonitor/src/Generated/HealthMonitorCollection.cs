@@ -66,8 +66,16 @@ namespace Azure.ResourceManager.WorkloadMonitor
 
         /// <summary>
         /// Get the current health status of a monitor of a virtual machine. Optional parameter: $expand (retrieve the monitor&apos;s evidence and configuration).
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{providerName}/{resourceCollectionName}/{resourceName}/providers/Microsoft.WorkloadMonitor/monitors/{monitorId}
-        /// Operation Id: HealthMonitors_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{providerName}/{resourceCollectionName}/{resourceName}/providers/Microsoft.WorkloadMonitor/monitors/{monitorId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>HealthMonitors_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="monitorId"> The monitor Id of the virtual machine. </param>
         /// <param name="expand"> Optionally expand the monitor’s evidence and/or configuration. Example: $expand=evidence,configuration. </param>
@@ -96,8 +104,16 @@ namespace Azure.ResourceManager.WorkloadMonitor
 
         /// <summary>
         /// Get the current health status of a monitor of a virtual machine. Optional parameter: $expand (retrieve the monitor&apos;s evidence and configuration).
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{providerName}/{resourceCollectionName}/{resourceName}/providers/Microsoft.WorkloadMonitor/monitors/{monitorId}
-        /// Operation Id: HealthMonitors_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{providerName}/{resourceCollectionName}/{resourceName}/providers/Microsoft.WorkloadMonitor/monitors/{monitorId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>HealthMonitors_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="monitorId"> The monitor Id of the virtual machine. </param>
         /// <param name="expand"> Optionally expand the monitor’s evidence and/or configuration. Example: $expand=evidence,configuration. </param>
@@ -126,8 +142,16 @@ namespace Azure.ResourceManager.WorkloadMonitor
 
         /// <summary>
         /// Get the current health status of all monitors of a virtual machine. Optional parameters: $expand (retrieve the monitor&apos;s evidence and configuration) and $filter (filter by monitor name).
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{providerName}/{resourceCollectionName}/{resourceName}/providers/Microsoft.WorkloadMonitor/monitors
-        /// Operation Id: HealthMonitors_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{providerName}/{resourceCollectionName}/{resourceName}/providers/Microsoft.WorkloadMonitor/monitors</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>HealthMonitors_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="filter"> Optionally filter by monitor name. Example: $filter=monitorName eq &apos;logical-disks|C:|disk-free-space-mb.&apos;. </param>
         /// <param name="expand"> Optionally expand the monitor’s evidence and/or configuration. Example: $expand=evidence,configuration. </param>
@@ -142,8 +166,16 @@ namespace Azure.ResourceManager.WorkloadMonitor
 
         /// <summary>
         /// Get the current health status of all monitors of a virtual machine. Optional parameters: $expand (retrieve the monitor&apos;s evidence and configuration) and $filter (filter by monitor name).
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{providerName}/{resourceCollectionName}/{resourceName}/providers/Microsoft.WorkloadMonitor/monitors
-        /// Operation Id: HealthMonitors_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{providerName}/{resourceCollectionName}/{resourceName}/providers/Microsoft.WorkloadMonitor/monitors</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>HealthMonitors_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="filter"> Optionally filter by monitor name. Example: $filter=monitorName eq &apos;logical-disks|C:|disk-free-space-mb.&apos;. </param>
         /// <param name="expand"> Optionally expand the monitor’s evidence and/or configuration. Example: $expand=evidence,configuration. </param>
@@ -158,8 +190,16 @@ namespace Azure.ResourceManager.WorkloadMonitor
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{providerName}/{resourceCollectionName}/{resourceName}/providers/Microsoft.WorkloadMonitor/monitors/{monitorId}
-        /// Operation Id: HealthMonitors_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{providerName}/{resourceCollectionName}/{resourceName}/providers/Microsoft.WorkloadMonitor/monitors/{monitorId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>HealthMonitors_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="monitorId"> The monitor Id of the virtual machine. </param>
         /// <param name="expand"> Optionally expand the monitor’s evidence and/or configuration. Example: $expand=evidence,configuration. </param>
@@ -186,8 +226,16 @@ namespace Azure.ResourceManager.WorkloadMonitor
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{providerName}/{resourceCollectionName}/{resourceName}/providers/Microsoft.WorkloadMonitor/monitors/{monitorId}
-        /// Operation Id: HealthMonitors_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{providerName}/{resourceCollectionName}/{resourceName}/providers/Microsoft.WorkloadMonitor/monitors/{monitorId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>HealthMonitors_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="monitorId"> The monitor Id of the virtual machine. </param>
         /// <param name="expand"> Optionally expand the monitor’s evidence and/or configuration. Example: $expand=evidence,configuration. </param>

@@ -100,8 +100,16 @@ namespace Azure.ResourceManager.HybridData
 
         /// <summary>
         /// This method gets job definition object by name.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridData/dataManagers/{dataManagerName}/dataServices/{dataServiceName}/jobDefinitions/{jobDefinitionName}
-        /// Operation Id: JobDefinitions_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridData/dataManagers/{dataManagerName}/dataServices/{dataServiceName}/jobDefinitions/{jobDefinitionName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>JobDefinitions_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="jobDefinitionName"> The job definition name that is being queried. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -115,8 +123,16 @@ namespace Azure.ResourceManager.HybridData
 
         /// <summary>
         /// This method gets job definition object by name.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridData/dataManagers/{dataManagerName}/dataServices/{dataServiceName}/jobDefinitions/{jobDefinitionName}
-        /// Operation Id: JobDefinitions_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridData/dataManagers/{dataManagerName}/dataServices/{dataServiceName}/jobDefinitions/{jobDefinitionName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>JobDefinitions_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="jobDefinitionName"> The job definition name that is being queried. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -130,8 +146,16 @@ namespace Azure.ResourceManager.HybridData
 
         /// <summary>
         /// Gets the data service that matches the data service name given.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridData/dataManagers/{dataManagerName}/dataServices/{dataServiceName}
-        /// Operation Id: DataServices_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridData/dataManagers/{dataManagerName}/dataServices/{dataServiceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DataServices_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<HybridDataServiceResource>> GetAsync(CancellationToken cancellationToken = default)
@@ -154,8 +178,16 @@ namespace Azure.ResourceManager.HybridData
 
         /// <summary>
         /// Gets the data service that matches the data service name given.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridData/dataManagers/{dataManagerName}/dataServices/{dataServiceName}
-        /// Operation Id: DataServices_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridData/dataManagers/{dataManagerName}/dataServices/{dataServiceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DataServices_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<HybridDataServiceResource> Get(CancellationToken cancellationToken = default)
@@ -178,8 +210,16 @@ namespace Azure.ResourceManager.HybridData
 
         /// <summary>
         /// This method gets all the jobs of a data service type in a given resource.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridData/dataManagers/{dataManagerName}/dataServices/{dataServiceName}/jobs
-        /// Operation Id: Jobs_ListByDataService
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridData/dataManagers/{dataManagerName}/dataServices/{dataServiceName}/jobs</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Jobs_ListByDataService</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="filter"> OData Filter options. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -193,8 +233,16 @@ namespace Azure.ResourceManager.HybridData
 
         /// <summary>
         /// This method gets all the jobs of a data service type in a given resource.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridData/dataManagers/{dataManagerName}/dataServices/{dataServiceName}/jobs
-        /// Operation Id: Jobs_ListByDataService
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridData/dataManagers/{dataManagerName}/dataServices/{dataServiceName}/jobs</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Jobs_ListByDataService</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="filter"> OData Filter options. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

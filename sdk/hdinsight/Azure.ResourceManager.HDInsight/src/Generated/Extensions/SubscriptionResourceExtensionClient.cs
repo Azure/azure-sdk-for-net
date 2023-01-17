@@ -49,8 +49,16 @@ namespace Azure.ResourceManager.HDInsight
 
         /// <summary>
         /// Lists all the HDInsight clusters under the subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.HDInsight/clusters
-        /// Operation Id: Clusters_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.HDInsight/clusters</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Clusters_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="HDInsightClusterResource" /> that may take multiple service requests to iterate over. </returns>
@@ -63,8 +71,16 @@ namespace Azure.ResourceManager.HDInsight
 
         /// <summary>
         /// Lists all the HDInsight clusters under the subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.HDInsight/clusters
-        /// Operation Id: Clusters_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.HDInsight/clusters</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Clusters_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="HDInsightClusterResource" /> that may take multiple service requests to iterate over. </returns>
@@ -77,8 +93,16 @@ namespace Azure.ResourceManager.HDInsight
 
         /// <summary>
         /// Gets the capabilities for the specified location.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.HDInsight/locations/{location}/capabilities
-        /// Operation Id: Locations_GetCapabilities
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.HDInsight/locations/{location}/capabilities</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Locations_GetCapabilities</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="location"> The Azure location (region) for which to make the request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -100,8 +124,16 @@ namespace Azure.ResourceManager.HDInsight
 
         /// <summary>
         /// Gets the capabilities for the specified location.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.HDInsight/locations/{location}/capabilities
-        /// Operation Id: Locations_GetCapabilities
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.HDInsight/locations/{location}/capabilities</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Locations_GetCapabilities</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="location"> The Azure location (region) for which to make the request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -123,8 +155,16 @@ namespace Azure.ResourceManager.HDInsight
 
         /// <summary>
         /// Lists the usages for the specified location.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.HDInsight/locations/{location}/usages
-        /// Operation Id: Locations_ListUsages
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.HDInsight/locations/{location}/usages</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Locations_ListUsages</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="location"> The Azure location (region) for which to make the request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -137,8 +177,16 @@ namespace Azure.ResourceManager.HDInsight
 
         /// <summary>
         /// Lists the usages for the specified location.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.HDInsight/locations/{location}/usages
-        /// Operation Id: Locations_ListUsages
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.HDInsight/locations/{location}/usages</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Locations_ListUsages</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="location"> The Azure location (region) for which to make the request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -151,8 +199,16 @@ namespace Azure.ResourceManager.HDInsight
 
         /// <summary>
         /// Lists the billingSpecs for the specified subscription and location.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.HDInsight/locations/{location}/billingSpecs
-        /// Operation Id: Locations_ListBillingSpecs
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.HDInsight/locations/{location}/billingSpecs</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Locations_ListBillingSpecs</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="location"> The Azure location (region) for which to make the request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -174,8 +230,16 @@ namespace Azure.ResourceManager.HDInsight
 
         /// <summary>
         /// Lists the billingSpecs for the specified subscription and location.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.HDInsight/locations/{location}/billingSpecs
-        /// Operation Id: Locations_ListBillingSpecs
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.HDInsight/locations/{location}/billingSpecs</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Locations_ListBillingSpecs</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="location"> The Azure location (region) for which to make the request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -197,8 +261,16 @@ namespace Azure.ResourceManager.HDInsight
 
         /// <summary>
         /// Check the cluster name is available or not.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.HDInsight/locations/{location}/checkNameAvailability
-        /// Operation Id: Locations_CheckNameAvailability
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.HDInsight/locations/{location}/checkNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Locations_CheckNameAvailability</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="location"> The Azure location (region) for which to make the request. </param>
         /// <param name="content"> The HDInsightNameAvailabilityContent to use. </param>
@@ -221,8 +293,16 @@ namespace Azure.ResourceManager.HDInsight
 
         /// <summary>
         /// Check the cluster name is available or not.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.HDInsight/locations/{location}/checkNameAvailability
-        /// Operation Id: Locations_CheckNameAvailability
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.HDInsight/locations/{location}/checkNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Locations_CheckNameAvailability</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="location"> The Azure location (region) for which to make the request. </param>
         /// <param name="content"> The HDInsightNameAvailabilityContent to use. </param>
@@ -245,8 +325,16 @@ namespace Azure.ResourceManager.HDInsight
 
         /// <summary>
         /// Validate the cluster create request spec is valid or not.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.HDInsight/locations/{location}/validateCreateRequest
-        /// Operation Id: Locations_ValidateClusterCreateRequest
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.HDInsight/locations/{location}/validateCreateRequest</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Locations_ValidateClusterCreateRequest</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="location"> The Azure location (region) for which to make the request. </param>
         /// <param name="content"> The HDInsightClusterCreationValidateContent to use. </param>
@@ -269,8 +357,16 @@ namespace Azure.ResourceManager.HDInsight
 
         /// <summary>
         /// Validate the cluster create request spec is valid or not.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.HDInsight/locations/{location}/validateCreateRequest
-        /// Operation Id: Locations_ValidateClusterCreateRequest
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.HDInsight/locations/{location}/validateCreateRequest</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Locations_ValidateClusterCreateRequest</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="location"> The Azure location (region) for which to make the request. </param>
         /// <param name="content"> The HDInsightClusterCreationValidateContent to use. </param>

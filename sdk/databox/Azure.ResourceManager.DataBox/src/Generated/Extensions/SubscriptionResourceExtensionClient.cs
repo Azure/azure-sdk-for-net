@@ -49,8 +49,16 @@ namespace Azure.ResourceManager.DataBox
 
         /// <summary>
         /// Lists all the jobs available under the subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.DataBox/jobs
-        /// Operation Id: Jobs_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DataBox/jobs</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Jobs_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="skipToken"> $skipToken is supported on Get list of jobs, which provides the next page in the list of jobs. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -64,8 +72,16 @@ namespace Azure.ResourceManager.DataBox
 
         /// <summary>
         /// Lists all the jobs available under the subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.DataBox/jobs
-        /// Operation Id: Jobs_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DataBox/jobs</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Jobs_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="skipToken"> $skipToken is supported on Get list of jobs, which provides the next page in the list of jobs. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -79,8 +95,16 @@ namespace Azure.ResourceManager.DataBox
 
         /// <summary>
         /// [DEPRECATED NOTICE: This operation will soon be removed]. This method validates the customer shipping address and provide alternate addresses if any.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.DataBox/locations/{location}/validateAddress
-        /// Operation Id: Service_ValidateAddress
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DataBox/locations/{location}/validateAddress</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Service_ValidateAddress</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="location"> The location of the resource. </param>
         /// <param name="content"> Shipping address of the customer. </param>
@@ -103,8 +127,16 @@ namespace Azure.ResourceManager.DataBox
 
         /// <summary>
         /// [DEPRECATED NOTICE: This operation will soon be removed]. This method validates the customer shipping address and provide alternate addresses if any.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.DataBox/locations/{location}/validateAddress
-        /// Operation Id: Service_ValidateAddress
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DataBox/locations/{location}/validateAddress</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Service_ValidateAddress</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="location"> The location of the resource. </param>
         /// <param name="content"> Shipping address of the customer. </param>
@@ -127,8 +159,16 @@ namespace Azure.ResourceManager.DataBox
 
         /// <summary>
         /// This method does all necessary pre-job creation validation under subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.DataBox/locations/{location}/validateInputs
-        /// Operation Id: Service_ValidateInputs
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DataBox/locations/{location}/validateInputs</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Service_ValidateInputs</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="location"> The location of the resource. </param>
         /// <param name="content"> Inputs of the customer. </param>
@@ -151,8 +191,16 @@ namespace Azure.ResourceManager.DataBox
 
         /// <summary>
         /// This method does all necessary pre-job creation validation under subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.DataBox/locations/{location}/validateInputs
-        /// Operation Id: Service_ValidateInputs
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DataBox/locations/{location}/validateInputs</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Service_ValidateInputs</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="location"> The location of the resource. </param>
         /// <param name="content"> Inputs of the customer. </param>
@@ -175,8 +223,16 @@ namespace Azure.ResourceManager.DataBox
 
         /// <summary>
         /// This API provides configuration details specific to given region/location at Subscription level.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.DataBox/locations/{location}/regionConfiguration
-        /// Operation Id: Service_RegionConfiguration
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DataBox/locations/{location}/regionConfiguration</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Service_RegionConfiguration</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="location"> The location of the resource. </param>
         /// <param name="content"> Request body to get the configuration for the region. </param>
@@ -199,8 +255,16 @@ namespace Azure.ResourceManager.DataBox
 
         /// <summary>
         /// This API provides configuration details specific to given region/location at Subscription level.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.DataBox/locations/{location}/regionConfiguration
-        /// Operation Id: Service_RegionConfiguration
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DataBox/locations/{location}/regionConfiguration</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Service_RegionConfiguration</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="location"> The location of the resource. </param>
         /// <param name="content"> Request body to get the configuration for the region. </param>

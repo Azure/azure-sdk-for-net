@@ -7,10 +7,7 @@
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary>
-    /// SKU capacity information
-    /// Serialized Name: SkuCapacity
-    /// </summary>
+    /// <summary> SKU capacity information. </summary>
     public partial class MachineLearningSkuCapacity
     {
         /// <summary> Initializes a new instance of MachineLearningSkuCapacity. </summary>
@@ -19,22 +16,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Initializes a new instance of MachineLearningSkuCapacity. </summary>
-        /// <param name="default">
-        /// Gets or sets the default capacity.
-        /// Serialized Name: SkuCapacity.default
-        /// </param>
-        /// <param name="maximum">
-        /// Gets or sets the maximum.
-        /// Serialized Name: SkuCapacity.maximum
-        /// </param>
-        /// <param name="minimum">
-        /// Gets or sets the minimum.
-        /// Serialized Name: SkuCapacity.minimum
-        /// </param>
-        /// <param name="scaleType">
-        /// Gets or sets the type of the scale.
-        /// Serialized Name: SkuCapacity.scaleType
-        /// </param>
+        /// <param name="default"> Gets or sets the default capacity. </param>
+        /// <param name="maximum"> Gets or sets the maximum. </param>
+        /// <param name="minimum"> Gets or sets the minimum. </param>
+        /// <param name="scaleType"> Gets or sets the type of the scale. </param>
         internal MachineLearningSkuCapacity(int? @default, int? maximum, int? minimum, MachineLearningSkuScaleType? scaleType)
         {
             Default = @default;
@@ -43,25 +28,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
             ScaleType = scaleType;
         }
 
-        /// <summary>
-        /// Gets or sets the default capacity.
-        /// Serialized Name: SkuCapacity.default
-        /// </summary>
+        /// <summary> Gets or sets the default capacity. </summary>
         public int? Default { get; }
-        /// <summary>
-        /// Gets or sets the maximum.
-        /// Serialized Name: SkuCapacity.maximum
-        /// </summary>
+        /// <summary> Gets or sets the maximum. </summary>
         public int? Maximum { get; }
-        /// <summary>
-        /// Gets or sets the minimum.
-        /// Serialized Name: SkuCapacity.minimum
-        /// </summary>
+        /// <summary> Gets or sets the minimum. </summary>
         public int? Minimum { get; }
-        /// <summary>
-        /// Gets or sets the type of the scale.
-        /// Serialized Name: SkuCapacity.scaleType
-        /// </summary>
+        /// <summary> Gets or sets the type of the scale. </summary>
         public MachineLearningSkuScaleType? ScaleType { get; }
     }
 }

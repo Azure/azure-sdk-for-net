@@ -44,8 +44,16 @@ namespace Azure.ResourceManager.ManagedServices
 
         /// <summary>
         /// Get the marketplace registration definition for the marketplace identifier.
-        /// Request Path: /{scope}/providers/Microsoft.ManagedServices/marketplaceRegistrationDefinitions/{marketplaceIdentifier}
-        /// Operation Id: MarketplaceRegistrationDefinitions_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{scope}/providers/Microsoft.ManagedServices/marketplaceRegistrationDefinitions/{marketplaceIdentifier}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>MarketplaceRegistrationDefinitions_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="marketplaceIdentifier"> The Azure Marketplace identifier. Expected formats: {publisher}.{product[-preview]}.{planName}.{version} or {publisher}.{product[-preview]}.{planName} or {publisher}.{product[-preview]} or {publisher}). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -73,8 +81,16 @@ namespace Azure.ResourceManager.ManagedServices
 
         /// <summary>
         /// Get the marketplace registration definition for the marketplace identifier.
-        /// Request Path: /{scope}/providers/Microsoft.ManagedServices/marketplaceRegistrationDefinitions/{marketplaceIdentifier}
-        /// Operation Id: MarketplaceRegistrationDefinitions_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{scope}/providers/Microsoft.ManagedServices/marketplaceRegistrationDefinitions/{marketplaceIdentifier}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>MarketplaceRegistrationDefinitions_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="marketplaceIdentifier"> The Azure Marketplace identifier. Expected formats: {publisher}.{product[-preview]}.{planName}.{version} or {publisher}.{product[-preview]}.{planName} or {publisher}.{product[-preview]} or {publisher}). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -102,8 +118,16 @@ namespace Azure.ResourceManager.ManagedServices
 
         /// <summary>
         /// Gets a list of the marketplace registration definitions for the marketplace identifier.
-        /// Request Path: /{scope}/providers/Microsoft.ManagedServices/marketplaceRegistrationDefinitions
-        /// Operation Id: MarketplaceRegistrationDefinitions_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{scope}/providers/Microsoft.ManagedServices/marketplaceRegistrationDefinitions</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>MarketplaceRegistrationDefinitions_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="filter"> The filter query parameter to filter managed services resources by. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -117,8 +141,16 @@ namespace Azure.ResourceManager.ManagedServices
 
         /// <summary>
         /// Gets a list of the marketplace registration definitions for the marketplace identifier.
-        /// Request Path: /{scope}/providers/Microsoft.ManagedServices/marketplaceRegistrationDefinitions
-        /// Operation Id: MarketplaceRegistrationDefinitions_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{scope}/providers/Microsoft.ManagedServices/marketplaceRegistrationDefinitions</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>MarketplaceRegistrationDefinitions_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="filter"> The filter query parameter to filter managed services resources by. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -132,8 +164,16 @@ namespace Azure.ResourceManager.ManagedServices
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /{scope}/providers/Microsoft.ManagedServices/marketplaceRegistrationDefinitions/{marketplaceIdentifier}
-        /// Operation Id: MarketplaceRegistrationDefinitions_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{scope}/providers/Microsoft.ManagedServices/marketplaceRegistrationDefinitions/{marketplaceIdentifier}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>MarketplaceRegistrationDefinitions_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="marketplaceIdentifier"> The Azure Marketplace identifier. Expected formats: {publisher}.{product[-preview]}.{planName}.{version} or {publisher}.{product[-preview]}.{planName} or {publisher}.{product[-preview]} or {publisher}). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -159,8 +199,16 @@ namespace Azure.ResourceManager.ManagedServices
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /{scope}/providers/Microsoft.ManagedServices/marketplaceRegistrationDefinitions/{marketplaceIdentifier}
-        /// Operation Id: MarketplaceRegistrationDefinitions_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{scope}/providers/Microsoft.ManagedServices/marketplaceRegistrationDefinitions/{marketplaceIdentifier}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>MarketplaceRegistrationDefinitions_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="marketplaceIdentifier"> The Azure Marketplace identifier. Expected formats: {publisher}.{product[-preview]}.{planName}.{version} or {publisher}.{product[-preview]}.{planName} or {publisher}.{product[-preview]} or {publisher}). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

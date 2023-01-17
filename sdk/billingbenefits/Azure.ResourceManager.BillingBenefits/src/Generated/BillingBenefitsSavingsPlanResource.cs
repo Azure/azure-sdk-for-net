@@ -89,8 +89,16 @@ namespace Azure.ResourceManager.BillingBenefits
 
         /// <summary>
         /// Get savings plan.
-        /// Request Path: /providers/Microsoft.BillingBenefits/savingsPlanOrders/{savingsPlanOrderId}/savingsPlans/{savingsPlanId}
-        /// Operation Id: SavingsPlan_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.BillingBenefits/savingsPlanOrders/{savingsPlanOrderId}/savingsPlans/{savingsPlanId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SavingsPlan_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="expand"> May be used to expand the detail information of some properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -114,8 +122,16 @@ namespace Azure.ResourceManager.BillingBenefits
 
         /// <summary>
         /// Get savings plan.
-        /// Request Path: /providers/Microsoft.BillingBenefits/savingsPlanOrders/{savingsPlanOrderId}/savingsPlans/{savingsPlanId}
-        /// Operation Id: SavingsPlan_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.BillingBenefits/savingsPlanOrders/{savingsPlanOrderId}/savingsPlans/{savingsPlanId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SavingsPlan_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="expand"> May be used to expand the detail information of some properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -139,8 +155,16 @@ namespace Azure.ResourceManager.BillingBenefits
 
         /// <summary>
         /// Update savings plan.
-        /// Request Path: /providers/Microsoft.BillingBenefits/savingsPlanOrders/{savingsPlanOrderId}/savingsPlans/{savingsPlanId}
-        /// Operation Id: SavingsPlan_Update
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.BillingBenefits/savingsPlanOrders/{savingsPlanOrderId}/savingsPlans/{savingsPlanId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SavingsPlan_Update</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="patch"> Request body for patching a savings plan order alias. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -165,8 +189,16 @@ namespace Azure.ResourceManager.BillingBenefits
 
         /// <summary>
         /// Update savings plan.
-        /// Request Path: /providers/Microsoft.BillingBenefits/savingsPlanOrders/{savingsPlanOrderId}/savingsPlans/{savingsPlanId}
-        /// Operation Id: SavingsPlan_Update
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.BillingBenefits/savingsPlanOrders/{savingsPlanOrderId}/savingsPlans/{savingsPlanId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SavingsPlan_Update</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="patch"> Request body for patching a savings plan order alias. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -191,8 +223,16 @@ namespace Azure.ResourceManager.BillingBenefits
 
         /// <summary>
         /// Validate savings plan patch.
-        /// Request Path: /providers/Microsoft.BillingBenefits/savingsPlanOrders/{savingsPlanOrderId}/savingsPlans/{savingsPlanId}/validate
-        /// Operation Id: SavingsPlan_ValidateUpdate
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.BillingBenefits/savingsPlanOrders/{savingsPlanOrderId}/savingsPlans/{savingsPlanId}/validate</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SavingsPlan_ValidateUpdate</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="content"> Request body for validating a savings plan patch request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -209,8 +249,16 @@ namespace Azure.ResourceManager.BillingBenefits
 
         /// <summary>
         /// Validate savings plan patch.
-        /// Request Path: /providers/Microsoft.BillingBenefits/savingsPlanOrders/{savingsPlanOrderId}/savingsPlans/{savingsPlanId}/validate
-        /// Operation Id: SavingsPlan_ValidateUpdate
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.BillingBenefits/savingsPlanOrders/{savingsPlanOrderId}/savingsPlans/{savingsPlanId}/validate</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SavingsPlan_ValidateUpdate</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="content"> Request body for validating a savings plan patch request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

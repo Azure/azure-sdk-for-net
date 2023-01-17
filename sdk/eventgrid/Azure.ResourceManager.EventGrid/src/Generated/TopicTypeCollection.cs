@@ -55,8 +55,16 @@ namespace Azure.ResourceManager.EventGrid
 
         /// <summary>
         /// Get information about a topic type.
-        /// Request Path: /providers/Microsoft.EventGrid/topicTypes/{topicTypeName}
-        /// Operation Id: TopicTypes_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.EventGrid/topicTypes/{topicTypeName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>TopicTypes_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="topicTypeName"> Name of the topic type. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -84,8 +92,16 @@ namespace Azure.ResourceManager.EventGrid
 
         /// <summary>
         /// Get information about a topic type.
-        /// Request Path: /providers/Microsoft.EventGrid/topicTypes/{topicTypeName}
-        /// Operation Id: TopicTypes_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.EventGrid/topicTypes/{topicTypeName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>TopicTypes_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="topicTypeName"> Name of the topic type. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -113,8 +129,16 @@ namespace Azure.ResourceManager.EventGrid
 
         /// <summary>
         /// List all registered topic types.
-        /// Request Path: /providers/Microsoft.EventGrid/topicTypes
-        /// Operation Id: TopicTypes_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.EventGrid/topicTypes</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>TopicTypes_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="TopicTypeResource" /> that may take multiple service requests to iterate over. </returns>
@@ -126,8 +150,16 @@ namespace Azure.ResourceManager.EventGrid
 
         /// <summary>
         /// List all registered topic types.
-        /// Request Path: /providers/Microsoft.EventGrid/topicTypes
-        /// Operation Id: TopicTypes_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.EventGrid/topicTypes</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>TopicTypes_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="TopicTypeResource" /> that may take multiple service requests to iterate over. </returns>
@@ -139,8 +171,16 @@ namespace Azure.ResourceManager.EventGrid
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /providers/Microsoft.EventGrid/topicTypes/{topicTypeName}
-        /// Operation Id: TopicTypes_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.EventGrid/topicTypes/{topicTypeName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>TopicTypes_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="topicTypeName"> Name of the topic type. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -166,8 +206,16 @@ namespace Azure.ResourceManager.EventGrid
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /providers/Microsoft.EventGrid/topicTypes/{topicTypeName}
-        /// Operation Id: TopicTypes_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.EventGrid/topicTypes/{topicTypeName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>TopicTypes_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="topicTypeName"> Name of the topic type. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

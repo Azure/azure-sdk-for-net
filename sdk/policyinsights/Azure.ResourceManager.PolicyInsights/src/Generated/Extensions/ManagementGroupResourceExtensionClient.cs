@@ -57,8 +57,16 @@ namespace Azure.ResourceManager.PolicyInsights
 
         /// <summary>
         /// Queries policy tracked resources under the management group.
-        /// Request Path: /providers/{managementGroupsNamespace}/managementGroups/{managementGroupName}/providers/Microsoft.PolicyInsights/policyTrackedResources/{policyTrackedResourcesResource}/queryResults
-        /// Operation Id: PolicyTrackedResources_ListQueryResultsForManagementGroup
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/{managementGroupsNamespace}/managementGroups/{managementGroupName}/providers/Microsoft.PolicyInsights/policyTrackedResources/{policyTrackedResourcesResource}/queryResults</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PolicyTrackedResources_ListQueryResultsForManagementGroup</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="policyTrackedResourceType"> The name of the virtual resource under PolicyTrackedResources resource type; only &quot;default&quot; is allowed. </param>
         /// <param name="policyQuerySettings"> Parameter group. </param>
@@ -73,8 +81,16 @@ namespace Azure.ResourceManager.PolicyInsights
 
         /// <summary>
         /// Queries policy tracked resources under the management group.
-        /// Request Path: /providers/{managementGroupsNamespace}/managementGroups/{managementGroupName}/providers/Microsoft.PolicyInsights/policyTrackedResources/{policyTrackedResourcesResource}/queryResults
-        /// Operation Id: PolicyTrackedResources_ListQueryResultsForManagementGroup
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/{managementGroupsNamespace}/managementGroups/{managementGroupName}/providers/Microsoft.PolicyInsights/policyTrackedResources/{policyTrackedResourcesResource}/queryResults</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PolicyTrackedResources_ListQueryResultsForManagementGroup</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="policyTrackedResourceType"> The name of the virtual resource under PolicyTrackedResources resource type; only &quot;default&quot; is allowed. </param>
         /// <param name="policyQuerySettings"> Parameter group. </param>
@@ -89,8 +105,16 @@ namespace Azure.ResourceManager.PolicyInsights
 
         /// <summary>
         /// Queries policy events for the resources under the management group.
-        /// Request Path: /providers/{managementGroupsNamespace}/managementGroups/{managementGroupName}/providers/Microsoft.PolicyInsights/policyEvents/{policyEventsResource}/queryResults
-        /// Operation Id: PolicyEvents_ListQueryResultsForManagementGroup
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/{managementGroupsNamespace}/managementGroups/{managementGroupName}/providers/Microsoft.PolicyInsights/policyEvents/{policyEventsResource}/queryResults</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PolicyEvents_ListQueryResultsForManagementGroup</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="policyEventType"> The name of the virtual resource under PolicyEvents resource type; only &quot;default&quot; is allowed. </param>
         /// <param name="policyQuerySettings"> Parameter group. </param>
@@ -105,8 +129,16 @@ namespace Azure.ResourceManager.PolicyInsights
 
         /// <summary>
         /// Queries policy events for the resources under the management group.
-        /// Request Path: /providers/{managementGroupsNamespace}/managementGroups/{managementGroupName}/providers/Microsoft.PolicyInsights/policyEvents/{policyEventsResource}/queryResults
-        /// Operation Id: PolicyEvents_ListQueryResultsForManagementGroup
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/{managementGroupsNamespace}/managementGroups/{managementGroupName}/providers/Microsoft.PolicyInsights/policyEvents/{policyEventsResource}/queryResults</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PolicyEvents_ListQueryResultsForManagementGroup</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="policyEventType"> The name of the virtual resource under PolicyEvents resource type; only &quot;default&quot; is allowed. </param>
         /// <param name="policyQuerySettings"> Parameter group. </param>
@@ -121,8 +153,16 @@ namespace Azure.ResourceManager.PolicyInsights
 
         /// <summary>
         /// Queries policy states for the resources under the management group.
-        /// Request Path: /providers/{managementGroupsNamespace}/managementGroups/{managementGroupName}/providers/Microsoft.PolicyInsights/policyStates/{policyStatesResource}/queryResults
-        /// Operation Id: PolicyStates_ListQueryResultsForManagementGroup
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/{managementGroupsNamespace}/managementGroups/{managementGroupName}/providers/Microsoft.PolicyInsights/policyStates/{policyStatesResource}/queryResults</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PolicyStates_ListQueryResultsForManagementGroup</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="policyStateType"> The virtual resource under PolicyStates resource type. In a given time range, &apos;latest&apos; represents the latest policy state(s), whereas &apos;default&apos; represents all policy state(s). </param>
         /// <param name="policyQuerySettings"> Parameter group. </param>
@@ -137,8 +177,16 @@ namespace Azure.ResourceManager.PolicyInsights
 
         /// <summary>
         /// Queries policy states for the resources under the management group.
-        /// Request Path: /providers/{managementGroupsNamespace}/managementGroups/{managementGroupName}/providers/Microsoft.PolicyInsights/policyStates/{policyStatesResource}/queryResults
-        /// Operation Id: PolicyStates_ListQueryResultsForManagementGroup
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/{managementGroupsNamespace}/managementGroups/{managementGroupName}/providers/Microsoft.PolicyInsights/policyStates/{policyStatesResource}/queryResults</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PolicyStates_ListQueryResultsForManagementGroup</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="policyStateType"> The virtual resource under PolicyStates resource type. In a given time range, &apos;latest&apos; represents the latest policy state(s), whereas &apos;default&apos; represents all policy state(s). </param>
         /// <param name="policyQuerySettings"> Parameter group. </param>
@@ -153,8 +201,16 @@ namespace Azure.ResourceManager.PolicyInsights
 
         /// <summary>
         /// Summarizes policy states for the resources under the management group.
-        /// Request Path: /providers/{managementGroupsNamespace}/managementGroups/{managementGroupName}/providers/Microsoft.PolicyInsights/policyStates/{policyStatesSummaryResource}/summarize
-        /// Operation Id: PolicyStates_SummarizeForManagementGroup
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/{managementGroupsNamespace}/managementGroups/{managementGroupName}/providers/Microsoft.PolicyInsights/policyStates/{policyStatesSummaryResource}/summarize</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PolicyStates_SummarizeForManagementGroup</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="policyStateSummaryType"> The virtual resource under PolicyStates resource type for summarize action. In a given time range, &apos;latest&apos; represents the latest policy state(s) and is the only allowed value. </param>
         /// <param name="policyQuerySettings"> Parameter group. </param>
@@ -168,8 +224,16 @@ namespace Azure.ResourceManager.PolicyInsights
 
         /// <summary>
         /// Summarizes policy states for the resources under the management group.
-        /// Request Path: /providers/{managementGroupsNamespace}/managementGroups/{managementGroupName}/providers/Microsoft.PolicyInsights/policyStates/{policyStatesSummaryResource}/summarize
-        /// Operation Id: PolicyStates_SummarizeForManagementGroup
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/{managementGroupsNamespace}/managementGroups/{managementGroupName}/providers/Microsoft.PolicyInsights/policyStates/{policyStatesSummaryResource}/summarize</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PolicyStates_SummarizeForManagementGroup</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="policyStateSummaryType"> The virtual resource under PolicyStates resource type for summarize action. In a given time range, &apos;latest&apos; represents the latest policy state(s) and is the only allowed value. </param>
         /// <param name="policyQuerySettings"> Parameter group. </param>
@@ -183,8 +247,16 @@ namespace Azure.ResourceManager.PolicyInsights
 
         /// <summary>
         /// Checks what restrictions Azure Policy will place on resources within a management group.
-        /// Request Path: /providers/{managementGroupsNamespace}/managementGroups/{managementGroupId}/providers/Microsoft.PolicyInsights/checkPolicyRestrictions
-        /// Operation Id: PolicyRestrictions_CheckAtManagementGroupScope
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/{managementGroupsNamespace}/managementGroups/{managementGroupId}/providers/Microsoft.PolicyInsights/checkPolicyRestrictions</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PolicyRestrictions_CheckAtManagementGroupScope</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="content"> The check policy restrictions parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -206,8 +278,16 @@ namespace Azure.ResourceManager.PolicyInsights
 
         /// <summary>
         /// Checks what restrictions Azure Policy will place on resources within a management group.
-        /// Request Path: /providers/{managementGroupsNamespace}/managementGroups/{managementGroupId}/providers/Microsoft.PolicyInsights/checkPolicyRestrictions
-        /// Operation Id: PolicyRestrictions_CheckAtManagementGroupScope
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/{managementGroupsNamespace}/managementGroups/{managementGroupId}/providers/Microsoft.PolicyInsights/checkPolicyRestrictions</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PolicyRestrictions_CheckAtManagementGroupScope</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="content"> The check policy restrictions parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

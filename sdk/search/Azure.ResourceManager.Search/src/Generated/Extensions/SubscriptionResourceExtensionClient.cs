@@ -45,8 +45,16 @@ namespace Azure.ResourceManager.Search
 
         /// <summary>
         /// Gets a list of all search services in the given subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Search/searchServices
-        /// Operation Id: Services_ListBySubscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Search/searchServices</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Services_ListBySubscription</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="searchManagementRequestOptions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -60,8 +68,16 @@ namespace Azure.ResourceManager.Search
 
         /// <summary>
         /// Gets a list of all search services in the given subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Search/searchServices
-        /// Operation Id: Services_ListBySubscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Search/searchServices</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Services_ListBySubscription</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="searchManagementRequestOptions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -75,8 +91,16 @@ namespace Azure.ResourceManager.Search
 
         /// <summary>
         /// Checks whether or not the given search service name is available for use. Search service names must be globally unique since they are part of the service URI (https://&lt;name&gt;.search.windows.net).
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Search/checkNameAvailability
-        /// Operation Id: Services_CheckNameAvailability
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Search/checkNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Services_CheckNameAvailability</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="content"> The resource name and type to check. </param>
         /// <param name="searchManagementRequestOptions"> Parameter group. </param>
@@ -99,8 +123,16 @@ namespace Azure.ResourceManager.Search
 
         /// <summary>
         /// Checks whether or not the given search service name is available for use. Search service names must be globally unique since they are part of the service URI (https://&lt;name&gt;.search.windows.net).
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Search/checkNameAvailability
-        /// Operation Id: Services_CheckNameAvailability
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Search/checkNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Services_CheckNameAvailability</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="content"> The resource name and type to check. </param>
         /// <param name="searchManagementRequestOptions"> Parameter group. </param>

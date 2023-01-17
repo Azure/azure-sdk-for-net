@@ -7,10 +7,7 @@
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary>
-    /// Result of Diagnose
-    /// Serialized Name: DiagnoseResult
-    /// </summary>
+    /// <summary> Result of Diagnose. </summary>
     public partial class MachineLearningDiagnoseResult
     {
         /// <summary> Initializes a new instance of MachineLearningDiagnoseResult. </summary>
@@ -19,18 +16,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Initializes a new instance of MachineLearningDiagnoseResult. </summary>
-        /// <param name="code">
-        /// Code for workspace setup error
-        /// Serialized Name: DiagnoseResult.code
-        /// </param>
-        /// <param name="level">
-        /// Level of workspace setup error
-        /// Serialized Name: DiagnoseResult.level
-        /// </param>
-        /// <param name="message">
-        /// Message of workspace setup error
-        /// Serialized Name: DiagnoseResult.message
-        /// </param>
+        /// <param name="code"> Code for workspace setup error. </param>
+        /// <param name="level"> Level of workspace setup error. </param>
+        /// <param name="message"> Message of workspace setup error. </param>
         internal MachineLearningDiagnoseResult(string code, MachineLearningDiagnoseResultLevel? level, string message)
         {
             Code = code;
@@ -38,20 +26,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
             Message = message;
         }
 
-        /// <summary>
-        /// Code for workspace setup error
-        /// Serialized Name: DiagnoseResult.code
-        /// </summary>
+        /// <summary> Code for workspace setup error. </summary>
         public string Code { get; }
-        /// <summary>
-        /// Level of workspace setup error
-        /// Serialized Name: DiagnoseResult.level
-        /// </summary>
+        /// <summary> Level of workspace setup error. </summary>
         public MachineLearningDiagnoseResultLevel? Level { get; }
-        /// <summary>
-        /// Message of workspace setup error
-        /// Serialized Name: DiagnoseResult.message
-        /// </summary>
+        /// <summary> Message of workspace setup error. </summary>
         public string Message { get; }
     }
 }
