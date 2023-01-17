@@ -49,10 +49,10 @@ namespace Azure.ResourceManager.Sql
             Optional<int> numberOfFilesRestoring = default;
             Optional<int> numberOfFilesRestored = default;
             Optional<int> numberOfFilesUnrestorable = default;
-            Optional<IReadOnlyList<ManagedDatabaseRestoreDetailsBackupSetProperties>> fullBackupSets = default;
-            Optional<IReadOnlyList<ManagedDatabaseRestoreDetailsBackupSetProperties>> diffBackupSets = default;
-            Optional<IReadOnlyList<ManagedDatabaseRestoreDetailsBackupSetProperties>> logBackupSets = default;
-            Optional<IReadOnlyList<ManagedDatabaseRestoreDetailsUnrestorableFileProperties>> unrestorableFiles = default;
+            Optional<IReadOnlyList<ManagedDatabaseRestoreDetailBackupSetProperties>> fullBackupSets = default;
+            Optional<IReadOnlyList<ManagedDatabaseRestoreDetailBackupSetProperties>> diffBackupSets = default;
+            Optional<IReadOnlyList<ManagedDatabaseRestoreDetailBackupSetProperties>> logBackupSets = default;
+            Optional<IReadOnlyList<ManagedDatabaseRestoreDetailUnrestorableFileProperties>> unrestorableFiles = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"))
@@ -241,10 +241,10 @@ namespace Azure.ResourceManager.Sql
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<ManagedDatabaseRestoreDetailsBackupSetProperties> array = new List<ManagedDatabaseRestoreDetailsBackupSetProperties>();
+                            List<ManagedDatabaseRestoreDetailBackupSetProperties> array = new List<ManagedDatabaseRestoreDetailBackupSetProperties>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ManagedDatabaseRestoreDetailsBackupSetProperties.DeserializeManagedDatabaseRestoreDetailsBackupSetProperties(item));
+                                array.Add(ManagedDatabaseRestoreDetailBackupSetProperties.DeserializeManagedDatabaseRestoreDetailBackupSetProperties(item));
                             }
                             fullBackupSets = array;
                             continue;
@@ -256,10 +256,10 @@ namespace Azure.ResourceManager.Sql
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<ManagedDatabaseRestoreDetailsBackupSetProperties> array = new List<ManagedDatabaseRestoreDetailsBackupSetProperties>();
+                            List<ManagedDatabaseRestoreDetailBackupSetProperties> array = new List<ManagedDatabaseRestoreDetailBackupSetProperties>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ManagedDatabaseRestoreDetailsBackupSetProperties.DeserializeManagedDatabaseRestoreDetailsBackupSetProperties(item));
+                                array.Add(ManagedDatabaseRestoreDetailBackupSetProperties.DeserializeManagedDatabaseRestoreDetailBackupSetProperties(item));
                             }
                             diffBackupSets = array;
                             continue;
@@ -271,10 +271,10 @@ namespace Azure.ResourceManager.Sql
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<ManagedDatabaseRestoreDetailsBackupSetProperties> array = new List<ManagedDatabaseRestoreDetailsBackupSetProperties>();
+                            List<ManagedDatabaseRestoreDetailBackupSetProperties> array = new List<ManagedDatabaseRestoreDetailBackupSetProperties>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ManagedDatabaseRestoreDetailsBackupSetProperties.DeserializeManagedDatabaseRestoreDetailsBackupSetProperties(item));
+                                array.Add(ManagedDatabaseRestoreDetailBackupSetProperties.DeserializeManagedDatabaseRestoreDetailBackupSetProperties(item));
                             }
                             logBackupSets = array;
                             continue;
@@ -286,10 +286,10 @@ namespace Azure.ResourceManager.Sql
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<ManagedDatabaseRestoreDetailsUnrestorableFileProperties> array = new List<ManagedDatabaseRestoreDetailsUnrestorableFileProperties>();
+                            List<ManagedDatabaseRestoreDetailUnrestorableFileProperties> array = new List<ManagedDatabaseRestoreDetailUnrestorableFileProperties>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ManagedDatabaseRestoreDetailsUnrestorableFileProperties.DeserializeManagedDatabaseRestoreDetailsUnrestorableFileProperties(item));
+                                array.Add(ManagedDatabaseRestoreDetailUnrestorableFileProperties.DeserializeManagedDatabaseRestoreDetailUnrestorableFileProperties(item));
                             }
                             unrestorableFiles = array;
                             continue;

@@ -7,6 +7,8 @@ Project("{AF237844-264B-4650-941B-7745D6DEAC52}") = "Azure.ResourceManager.AppCo
 EndProject
 Project("{AF237844-264B-4650-941B-7745D6DEAC52}") = "Azure.ResourceManager.AppComplianceAutomation.Tests", "tests\Azure.ResourceManager.AppComplianceAutomation.Tests.csproj", "{2F79F425-2B2A-4727-9785-23810B6913D0}"
 EndProject
+Project("{AF237844-264B-4650-941B-7745D6DEAC52}") = "Azure.ResourceManager.AppComplianceAutomation.Samples", "samples\Azure.ResourceManager.AppComplianceAutomation.Samples.csproj", "{B5195FB6-D96A-49D9-87CC-D35BF1AB31D6}"
+EndProject
 Global
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

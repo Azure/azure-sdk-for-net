@@ -7,17 +7,11 @@
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary>
-    /// The UnknownOnlineScaleSettings.
-    /// Serialized Name: UnknownOnlineScaleSettings
-    /// </summary>
+    /// <summary> The UnknownOnlineScaleSettings. </summary>
     internal partial class UnknownOnlineScaleSettings : MachineLearningOnlineScaleSettings
     {
         /// <summary> Initializes a new instance of UnknownOnlineScaleSettings. </summary>
-        /// <param name="scaleType">
-        /// [Required] Type of deployment scaling algorithm
-        /// Serialized Name: OnlineScaleSettings.scaleType
-        /// </param>
+        /// <param name="scaleType"> [Required] Type of deployment scaling algorithm. </param>
         internal UnknownOnlineScaleSettings(ScaleType scaleType) : base(scaleType)
         {
             ScaleType = scaleType;

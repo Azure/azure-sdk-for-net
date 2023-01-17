@@ -7,6 +7,8 @@ Project("{63CC540D-ED93-4EB3-ACD4-DA8005EB217B}") = "Azure.ResourceManager.Devic
 EndProject
 Project("{63CC540D-ED93-4EB3-ACD4-DA8005EB217B}") = "Azure.ResourceManager.DeviceProvisioningServices.Tests", "tests\Azure.ResourceManager.DeviceProvisioningServices.Tests.csproj", "{222E5D18-0F8C-42A6-87DD-AD1B6706F3F7}"
 EndProject
+Project("{63CC540D-ED93-4EB3-ACD4-DA8005EB217B}") = "Azure.ResourceManager.DeviceProvisioningServices.Samples", "samples\Azure.ResourceManager.DeviceProvisioningServices.Samples.csproj", "{796D38DB-5A2F-43C3-919E-22EA33F77D6D}"
+EndProject
 Global
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

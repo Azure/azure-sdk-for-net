@@ -1,45 +1,45 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://mohitc-acs.search.windows.net/indexes(\u0027doesnotexist\u0027)/docs/$count?api-version=2020-06-30",
+      "RequestUri": "https://azs-net-shrejaazsearch.search.windows.net/indexes(\u0027doesnotexist\u0027)/docs/$count?api-version=2020-06-30",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json; odata.metadata=none",
         "api-key": "Sanitized",
-        "User-Agent": [
-          "azsdk-net-Search.Documents/11.3.0-alpha.20210326.1",
-          "(.NET Core 4.6.29719.03; Microsoft Windows 10.0.19043 )"
-        ],
-        "x-ms-client-request-id": "74da84cc969d91270b8cb602179371eb",
+        "User-Agent": "azsdk-net-Search.Documents/11.5.0-alpha.20230107.1 (.NET Framework 4.8.9105.0; Microsoft Windows 10.0.22621 )",
+        "x-ms-client-request-id": "d6d788ed2373085a1e5dfc7ea42b40a0",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 404,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "client-request-id": "74da84cc-969d-9127-0b8c-b602179371eb",
+        "client-request-id": "d6d788ed-2373-085a-1e5d-fc7ea42b40a0",
         "Content-Language": "en",
-        "Content-Length": "78",
+        "Content-Length": "110",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Sat, 27 Mar 2021 18:39:51 GMT",
+        "Date": "Mon, 09 Jan 2023 18:03:25 GMT",
         "elapsed-time": "8",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Preference-Applied": "odata.include-annotations=\u0022*\u0022",
-        "request-id": "74da84cc-969d-9127-0b8c-b602179371eb",
+        "request-id": "d6d788ed-2373-085a-1e5d-fc7ea42b40a0",
         "Strict-Transport-Security": "max-age=15724800; includeSubDomains",
-        "x-ms-client-request-id": "74da84cc-969d-9127-0b8c-b602179371eb"
+        "x-ms-client-request-id": "d6d788ed-2373-085a-1e5d-fc7ea42b40a0"
       },
       "ResponseBody": {
-        "Message": "The index \u0027doesnotexist\u0027 for service \u0027mohitc-acs\u0027 was not found."
+        "error": {
+          "code": "",
+          "message": "The index \u0027doesnotexist\u0027 for service \u0027azs-net-shrejaazsearch\u0027 was not found."
+        }
       }
     }
   ],
   "Variables": {
-    "RandomSeed": "266578448",
-    "SearchIndexName": "mbqvlxmt",
+    "RandomSeed": "293472250",
+    "SearchIndexName": "dlnpqugf",
     "SEARCH_ADMIN_API_KEY": "Sanitized",
-    "SEARCH_ENDPOINT_SUFFIX": null,
-    "SEARCH_SERVICE_NAME": "mohitc-acs"
+    "SEARCH_ENDPOINT_SUFFIX": "search.windows.net",
+    "SEARCH_SERVICE_NAME": "azs-net-shrejaazsearch"
   }
 }

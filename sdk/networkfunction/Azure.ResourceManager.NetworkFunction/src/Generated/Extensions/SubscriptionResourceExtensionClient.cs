@@ -6,9 +6,7 @@
 #nullable disable
 
 using System;
-using System.Linq;
 using System.Threading;
-using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -45,86 +43,46 @@ namespace Azure.ResourceManager.NetworkFunction
 
         /// <summary>
         /// Return list of Azure Traffic Collectors in a subscription
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.NetworkFunction/azureTrafficCollectors
-        /// Operation Id: AzureTrafficCollectorsBySubscription_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.NetworkFunction/azureTrafficCollectors</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AzureTrafficCollectorsBySubscription_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="AzureTrafficCollectorResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<AzureTrafficCollectorResource> GetAzureTrafficCollectorsAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<AzureTrafficCollectorResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = AzureTrafficCollectorsBySubscriptionClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetAzureTrafficCollectors");
-                scope.Start();
-                try
-                {
-                    var response = await AzureTrafficCollectorsBySubscriptionRestClient.ListAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new AzureTrafficCollectorResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<AzureTrafficCollectorResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = AzureTrafficCollectorsBySubscriptionClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetAzureTrafficCollectors");
-                scope.Start();
-                try
-                {
-                    var response = await AzureTrafficCollectorsBySubscriptionRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new AzureTrafficCollectorResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => AzureTrafficCollectorsBySubscriptionRestClient.CreateListRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => AzureTrafficCollectorsBySubscriptionRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new AzureTrafficCollectorResource(Client, AzureTrafficCollectorData.DeserializeAzureTrafficCollectorData(e)), AzureTrafficCollectorsBySubscriptionClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetAzureTrafficCollectors", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Return list of Azure Traffic Collectors in a subscription
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.NetworkFunction/azureTrafficCollectors
-        /// Operation Id: AzureTrafficCollectorsBySubscription_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.NetworkFunction/azureTrafficCollectors</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AzureTrafficCollectorsBySubscription_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="AzureTrafficCollectorResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<AzureTrafficCollectorResource> GetAzureTrafficCollectors(CancellationToken cancellationToken = default)
         {
-            Page<AzureTrafficCollectorResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = AzureTrafficCollectorsBySubscriptionClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetAzureTrafficCollectors");
-                scope.Start();
-                try
-                {
-                    var response = AzureTrafficCollectorsBySubscriptionRestClient.List(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new AzureTrafficCollectorResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<AzureTrafficCollectorResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = AzureTrafficCollectorsBySubscriptionClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetAzureTrafficCollectors");
-                scope.Start();
-                try
-                {
-                    var response = AzureTrafficCollectorsBySubscriptionRestClient.ListNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new AzureTrafficCollectorResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => AzureTrafficCollectorsBySubscriptionRestClient.CreateListRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => AzureTrafficCollectorsBySubscriptionRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new AzureTrafficCollectorResource(Client, AzureTrafficCollectorData.DeserializeAzureTrafficCollectorData(e)), AzureTrafficCollectorsBySubscriptionClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetAzureTrafficCollectors", "value", "nextLink", cancellationToken);
         }
     }
 }

@@ -96,8 +96,16 @@ namespace Azure.ResourceManager.Support
 
         /// <summary>
         /// Get problem classification details for a specific Azure service.
-        /// Request Path: /providers/Microsoft.Support/services/{serviceName}/problemClassifications/{problemClassificationName}
-        /// Operation Id: ProblemClassifications_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Support/services/{serviceName}/problemClassifications/{problemClassificationName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ProblemClassifications_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="problemClassificationName"> Name of problem classification. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -111,8 +119,16 @@ namespace Azure.ResourceManager.Support
 
         /// <summary>
         /// Get problem classification details for a specific Azure service.
-        /// Request Path: /providers/Microsoft.Support/services/{serviceName}/problemClassifications/{problemClassificationName}
-        /// Operation Id: ProblemClassifications_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Support/services/{serviceName}/problemClassifications/{problemClassificationName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ProblemClassifications_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="problemClassificationName"> Name of problem classification. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -126,8 +142,16 @@ namespace Azure.ResourceManager.Support
 
         /// <summary>
         /// Gets a specific Azure service for support ticket creation.
-        /// Request Path: /providers/Microsoft.Support/services/{serviceName}
-        /// Operation Id: Services_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Support/services/{serviceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Services_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<SupportAzureServiceResource>> GetAsync(CancellationToken cancellationToken = default)
@@ -150,8 +174,16 @@ namespace Azure.ResourceManager.Support
 
         /// <summary>
         /// Gets a specific Azure service for support ticket creation.
-        /// Request Path: /providers/Microsoft.Support/services/{serviceName}
-        /// Operation Id: Services_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Support/services/{serviceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Services_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<SupportAzureServiceResource> Get(CancellationToken cancellationToken = default)
