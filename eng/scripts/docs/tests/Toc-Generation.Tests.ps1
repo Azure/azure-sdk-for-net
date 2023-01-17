@@ -8,7 +8,7 @@ Import-Module Pester
 
 BeforeAll {
     . $PSScriptRoot/../Docs-ToC.ps1
-    . $PSScriptRoot/../../../common/scripts/logging.ps1
+    . $PSScriptRoot/logging.ps1
     function Backup-File($targetPath, $backupFolder) {
         if (!(Test-Path $targetPath)) {
             return $null

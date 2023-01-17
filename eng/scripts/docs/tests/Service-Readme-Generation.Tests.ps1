@@ -37,7 +37,7 @@ Describe "Get-OnboardedDocsMsPackagesForMoniker" -Tag "UnitTest" {
         @{ DocRepoLocation = "$PSScriptRoot/inputs/exceptions"; moniker="latest" }
         @{ DocRepoLocation = "$PSScriptRoot/inputs/exceptions"; moniker="preview" }
     ) {
-        ($onboardingPackages = Get-dotnet-OnboardedDocsMsPackagesForMoniker -DocRepoLocation $DocRepoLocation -moniker $moniker) 2>$null
+        $onboardingPackages = Get-dotnet-OnboardedDocsMsPackagesForMoniker -DocRepoLocation $DocRepoLocation -moniker $moniker
         $onboardingPackages.Value | Should -BeNullOrEmpty
     }
 }
