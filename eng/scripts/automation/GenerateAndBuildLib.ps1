@@ -428,6 +428,11 @@ function New-CADLPackageFolder() {
     $ciymlFilePath =(Join-Path $sdkPath "sdk" $service $CI_YAML_FILE)
     $apifolder = (Join-Path $projectFolder "api")
     Write-Host "projectFolder:$projectFolder, apifolder:$apifolder"
+    if ((-Not $relatedCadlProjectFolder.Contains("specification")) -And $specRoot.Contains("specification"))
+    {
+        $relatedCadlProjectFolder = "specification/$relatedCadlProjectFolder"
+        $specRoot = Split-Path $specRoot
+    }
     if ((Test-Path -Path $projectFolder) -And (Test-Path -Path $apifolder)) {
         Write-Host "Path exists!"
         if (Test-Path -Path $projectFolder/src/autorest.md) {
