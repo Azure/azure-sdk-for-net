@@ -24,7 +24,7 @@ namespace Azure.Communication.CallAutomation
         internal ServerCallingRestClient ServerCallingRestClient { get; }
         internal ContentRestClient ContentRestClient { get; }
         internal ServerCallsRestClient ServerCallsRestClient { get; }
-        internal CallAutomationEventHandler CallAutomationEventHandler { get; }
+        internal EventProcessor EventProcessor { get; }
 
         #region public constructors
         /// <summary> Initializes a new instance of <see cref="CallAutomationClient"/>.</summary>
@@ -85,7 +85,7 @@ namespace Azure.Communication.CallAutomation
             CallConnectionsRestClient = new CallConnectionsRestClient(_clientDiagnostics, httpPipeline, endpoint, options.ApiVersion);
             ContentRestClient = new ContentRestClient(_clientDiagnostics, httpPipeline, endpoint, options.ApiVersion);
             ServerCallsRestClient = new ServerCallsRestClient(_clientDiagnostics, httpPipeline, endpoint, options.ApiVersion);
-            CallAutomationEventHandler = new CallAutomationEventHandler(options.EventHandlerOptions);
+            EventProcessor = new EventProcessor(options.EventProcessorOptions);
         }
 
         private CallAutomationClient(Uri endpoint, CallAutomationClientOptions options, ConnectionString connectionString)
@@ -148,7 +148,10 @@ namespace Azure.Communication.CallAutomation
                         cancellationToken)
                     .ConfigureAwait(false);
 
-                return Response.FromValue(new AnswerCallResult(GetCallConnection(answerResponse.Value.CallConnectionId), new CallConnectionProperties(answerResponse.Value)),
+                var result = new AnswerCallResult(GetCallConnection(answerResponse.Value.CallConnectionId), new CallConnectionProperties(answerResponse.Value));
+                result.SetEventProcessor(EventProcessor, answerResponse.Value.CallConnectionId, null);
+
+                return Response.FromValue(result,
                     answerResponse.GetRawResponse());
             }
             catch (Exception ex)
@@ -198,7 +201,10 @@ namespace Azure.Communication.CallAutomation
                     options.RepeatabilityHeaders?.GetRepeatabilityFirstSentString(),
                     cancellationToken);
 
-                return Response.FromValue(new AnswerCallResult(GetCallConnection(answerResponse.Value.CallConnectionId), new CallConnectionProperties(answerResponse.Value)),
+                var result = new AnswerCallResult(GetCallConnection(answerResponse.Value.CallConnectionId), new CallConnectionProperties(answerResponse.Value));
+                result.SetEventProcessor(EventProcessor, answerResponse.Value.CallConnectionId, null);
+
+                return Response.FromValue(result,
                     answerResponse.GetRawResponse());
             }
             catch (Exception ex)
@@ -432,7 +438,12 @@ namespace Azure.Communication.CallAutomation
                     cancellationToken
                     ).ConfigureAwait(false);
 
-                return Response.FromValue(new CreateCallResult(GetCallConnection(createCallResponse.Value.CallConnectionId), new CallConnectionProperties(createCallResponse.Value)),
+                var result = new CreateCallResult(
+                    GetCallConnection(createCallResponse.Value.CallConnectionId),
+                    new CallConnectionProperties(createCallResponse.Value));
+                result.SetEventProcessor(EventProcessor, createCallResponse.Value.CallConnectionId, request.OperationContext);
+
+                return Response.FromValue(result,
                     createCallResponse.GetRawResponse());
             }
             catch (Exception ex)
@@ -471,7 +482,12 @@ namespace Azure.Communication.CallAutomation
                     cancellationToken
                     );
 
-                return Response.FromValue(new CreateCallResult(GetCallConnection(createCallResponse.Value.CallConnectionId), new CallConnectionProperties(createCallResponse.Value)),
+                var result = new CreateCallResult(
+                    GetCallConnection(createCallResponse.Value.CallConnectionId),
+                    new CallConnectionProperties(createCallResponse.Value));
+                result.SetEventProcessor(EventProcessor, createCallResponse.Value.CallConnectionId, request.OperationContext);
+
+                return Response.FromValue(result,
                     createCallResponse.GetRawResponse());
             }
             catch (Exception ex)
@@ -540,7 +556,7 @@ namespace Azure.Communication.CallAutomation
             scope.Start();
             try
             {
-                return new CallConnection(callConnectionId, CallConnectionsRestClient, ContentRestClient,_clientDiagnostics);
+                return new CallConnection(callConnectionId, CallConnectionsRestClient, ContentRestClient,_clientDiagnostics, EventProcessor);
             }
             catch (Exception ex)
             {
@@ -565,14 +581,14 @@ namespace Azure.Communication.CallAutomation
             }
         }
 
-        /// <summary> Get CallAtumation's EventHandler for handling Call Automation's event more easily. </summary>
-        public virtual CallAutomationEventHandler GetCallAutomationEventHandler()
+        /// <summary> Get CallAtumation's EventProcessor for handling Call Automation's event more easily. </summary>
+        public virtual EventProcessor GetEventProcessor()
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallAutomationClient)}.{nameof(GetCallAutomationEventHandler)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallAutomationClient)}.{nameof(GetEventProcessor)}");
             scope.Start();
             try
             {
-                return CallAutomationEventHandler;
+                return EventProcessor;
             }
             catch (Exception ex)
             {

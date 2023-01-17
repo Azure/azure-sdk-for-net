@@ -3,18 +3,21 @@
 
 using System.Threading.Tasks;
 using System;
-using Azure.Core;
 
 namespace Azure.Communication.CallAutomation
 {
-    [CodeGenModel("TransferCallResponse")]
-    public partial class TransferCallToParticipantResult : ResultWithWaitForEventBase
+    /// <summary> The result from playing audio. </summary>
+    public class PlayResult : ResultWithWaitForEventBase
     {
+        internal PlayResult()
+        {
+        }
+
         /// <summary>
-        /// Wait for TransferCallToParticipantEventResult using EventProcessor.
+        /// Wait for PlayEventResult using EventProcessor.
         /// </summary>
         /// <returns></returns>
-        public async Task<TransferCallToParticipantEventResult> WaitForEvent()
+        public async Task<PlayEventResult> WaitForEvent()
         {
             if (_evHandler is null)
             {
@@ -24,17 +27,17 @@ namespace Azure.Communication.CallAutomation
             var returnedEvent = await _evHandler.WaitForEvent(filter
                 => filter.CallConnectionId == _callConnectionId
                 && filter.OperationContext == _operationContext
-                && (filter.GetType() == typeof(CallTransferAccepted)
-                || filter.GetType() == typeof(CallTransferFailed))).ConfigureAwait(false);
+                && (filter.GetType() == typeof(PlayCompleted)
+                || filter.GetType() == typeof(PlayFailed))).ConfigureAwait(false);
 
-            TransferCallToParticipantEventResult result = default;
+            PlayEventResult result = default;
             switch (returnedEvent)
             {
-                case CallTransferAccepted:
-                    result = new TransferCallToParticipantEventResult(true, (CallTransferAccepted)returnedEvent, null);
+                case PlayCompleted:
+                    result = new PlayEventResult(true, (PlayCompleted)returnedEvent, null);
                     break;
-                case CallTransferFailed:
-                    result = new TransferCallToParticipantEventResult(false, null, (CallTransferFailed)returnedEvent);
+                case PlayFailed:
+                    result = new PlayEventResult(false, null, (PlayFailed)returnedEvent);
                     break;
                 default:
                     throw new NotSupportedException(returnedEvent.GetType().Name);

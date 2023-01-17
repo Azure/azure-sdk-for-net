@@ -3,18 +3,21 @@
 
 using System.Threading.Tasks;
 using System;
-using Azure.Core;
 
 namespace Azure.Communication.CallAutomation
 {
-    [CodeGenModel("TransferCallResponse")]
-    public partial class TransferCallToParticipantResult : ResultWithWaitForEventBase
+    /// <summary> The result from start recognizing result. </summary>
+    public class StartRecognizingResult : ResultWithWaitForEventBase
     {
+        internal StartRecognizingResult()
+        {
+        }
+
         /// <summary>
-        /// Wait for TransferCallToParticipantEventResult using EventProcessor.
+        /// Wait for StartRecognizingEventResult using EventProcessor.
         /// </summary>
         /// <returns></returns>
-        public async Task<TransferCallToParticipantEventResult> WaitForEvent()
+        public async Task<StartRecognizingEventResult> WaitForEvent()
         {
             if (_evHandler is null)
             {
@@ -24,17 +27,17 @@ namespace Azure.Communication.CallAutomation
             var returnedEvent = await _evHandler.WaitForEvent(filter
                 => filter.CallConnectionId == _callConnectionId
                 && filter.OperationContext == _operationContext
-                && (filter.GetType() == typeof(CallTransferAccepted)
-                || filter.GetType() == typeof(CallTransferFailed))).ConfigureAwait(false);
+                && (filter.GetType() == typeof(RecognizeCompleted)
+                || filter.GetType() == typeof(RecognizeFailed))).ConfigureAwait(false);
 
-            TransferCallToParticipantEventResult result = default;
+            StartRecognizingEventResult result = default;
             switch (returnedEvent)
             {
-                case CallTransferAccepted:
-                    result = new TransferCallToParticipantEventResult(true, (CallTransferAccepted)returnedEvent, null);
+                case RecognizeCompleted:
+                    result = new StartRecognizingEventResult(true, (RecognizeCompleted)returnedEvent, null);
                     break;
-                case CallTransferFailed:
-                    result = new TransferCallToParticipantEventResult(false, null, (CallTransferFailed)returnedEvent);
+                case RecognizeFailed:
+                    result = new StartRecognizingEventResult(false, null, (RecognizeFailed)returnedEvent);
                     break;
                 default:
                     throw new NotSupportedException(returnedEvent.GetType().Name);

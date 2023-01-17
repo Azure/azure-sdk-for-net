@@ -46,8 +46,8 @@ namespace Azure.Communication.CallAutomation
         }
 
         /// <summary>
-        /// Configure options for Call Automation's <see cref="CallAutomationEventHandler"/>.
+        /// Configure options for Call Automation's <see cref="EventProcessor"/>.
         /// </summary>
-        public EventHandlerOptions EventHandlerOptions { get; } = new();
+        public EventProcessorOptions EventProcessorOptions { get; } = new();
     }
 }

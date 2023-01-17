@@ -33,7 +33,7 @@ namespace Azure.Communication.CallAutomation
         /// <param name="backlogEventId">Internally used id for tracking the saved event.</param>
         /// <param name="eventsToBeSaved">Incoming Event to be saved.</param>
         /// <returns></returns>
-        internal bool AddEvent(string backlogEventId, CallAutomationEventBase eventsToBeSaved)
+        internal bool TryAddEvent(string backlogEventId, CallAutomationEventBase eventsToBeSaved)
         {
             if (_eventBacklog.Count < MAXIMUM_EVENTBACKLOGS_AT_ONCE)
             {
@@ -48,14 +48,10 @@ namespace Azure.Communication.CallAutomation
             }
         }
 
-        internal bool GetAndRemoveEvent(IEnumerable<Type> eventTypes, string callConnectionId, string operationContext, out KeyValuePair<string, CallAutomationEventBase> matchingEvent)
+        internal bool TryGetAndRemoveEvent(Func<CallAutomationEventBase, bool> predicate, out KeyValuePair<string, CallAutomationEventBase> matchingEvent)
         {
             // Match any event that matches in the events backlog
-            var matchingKvp = _eventBacklog.Where(kvp
-                => callConnectionId == kvp.Value.Item1.CallConnectionId
-                && operationContext == kvp.Value.Item1.OperationContext
-                && (!(eventTypes?.Any() ?? false) || eventTypes.Contains(kvp.Value.Item1.GetType())))
-                .FirstOrDefault();
+            var matchingKvp = _eventBacklog.FirstOrDefault(kvp => predicate(kvp.Value.Item1));
 
             // try remove the item - if successful, return it as keyValuePair
             if (matchingKvp.Key != default && _eventBacklog.TryRemove(matchingKvp.Key, out var returnedValue))
@@ -74,7 +70,7 @@ namespace Azure.Communication.CallAutomation
         /// </summary>
         /// <param name="internalEventId">Key of the event in events backlog.</param>
         /// <returns></returns>
-        internal bool RemoveEvent(string internalEventId) => _eventBacklog.TryRemove(internalEventId, out _);
+        internal bool TryRemoveEvent(string internalEventId) => _eventBacklog.TryRemove(internalEventId, out _);
 
         /// <summary>
         /// When timer procs, it will remove itself from the dictionary.
