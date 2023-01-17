@@ -7,7 +7,6 @@
 
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -19,32 +18,14 @@ namespace Azure.ResourceManager.Compute.Models
             writer.WritePropertyName("name");
             writer.WriteStringValue(Name);
             writer.WritePropertyName("properties");
-            writer.WriteStartObject();
-            if (Optional.IsDefined(PublicIPAddress))
-            {
-                writer.WritePropertyName("publicIPAddress");
-                JsonSerializer.Serialize(writer, PublicIPAddress);
-            }
-            if (Optional.IsDefined(Subnet))
-            {
-                writer.WritePropertyName("subnet");
-                JsonSerializer.Serialize(writer, Subnet);
-            }
-            if (Optional.IsDefined(PrivateIPAddress))
-            {
-                writer.WritePropertyName("privateIPAddress");
-                writer.WriteStringValue(PrivateIPAddress);
-            }
-            writer.WriteEndObject();
+            writer.WriteObjectValue(Properties);
             writer.WriteEndObject();
         }
 
         internal static LoadBalancerFrontendIPConfiguration DeserializeLoadBalancerFrontendIPConfiguration(JsonElement element)
         {
             string name = default;
-            Optional<WritableSubResource> publicIPAddress = default;
-            Optional<WritableSubResource> subnet = default;
-            Optional<string> privateIPAddress = default;
+            LoadBalancerFrontendIPConfigurationProperties properties = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"))
@@ -54,43 +35,11 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 if (property.NameEquals("properties"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    foreach (var property0 in property.Value.EnumerateObject())
-                    {
-                        if (property0.NameEquals("publicIPAddress"))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                property0.ThrowNonNullablePropertyIsNull();
-                                continue;
-                            }
-                            publicIPAddress = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText());
-                            continue;
-                        }
-                        if (property0.NameEquals("subnet"))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                property0.ThrowNonNullablePropertyIsNull();
-                                continue;
-                            }
-                            subnet = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText());
-                            continue;
-                        }
-                        if (property0.NameEquals("privateIPAddress"))
-                        {
-                            privateIPAddress = property0.Value.GetString();
-                            continue;
-                        }
-                    }
+                    properties = LoadBalancerFrontendIPConfigurationProperties.DeserializeLoadBalancerFrontendIPConfigurationProperties(property.Value);
                     continue;
                 }
             }
-            return new LoadBalancerFrontendIPConfiguration(name, publicIPAddress, subnet, privateIPAddress.Value);
+            return new LoadBalancerFrontendIPConfiguration(name, properties);
         }
     }
 }

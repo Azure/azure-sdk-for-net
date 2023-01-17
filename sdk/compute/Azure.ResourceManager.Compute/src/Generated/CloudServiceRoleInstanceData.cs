@@ -9,7 +9,6 @@ using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Compute.Models;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Compute
 {
@@ -30,15 +29,13 @@ namespace Azure.ResourceManager.Compute
         /// <param name="location"> Resource Location. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="sku"> The role instance SKU. </param>
-        /// <param name="networkProfile"> Describes the network profile for the role instance. </param>
-        /// <param name="instanceView"> The instance view of the role instance. </param>
-        internal CloudServiceRoleInstanceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, IReadOnlyDictionary<string, string> tags, InstanceSku sku, RoleInstanceNetworkProfile networkProfile, RoleInstanceView instanceView) : base(id, name, resourceType, systemData)
+        /// <param name="properties"> Role instance properties. </param>
+        internal CloudServiceRoleInstanceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, IReadOnlyDictionary<string, string> tags, InstanceSku sku, RoleInstanceProperties properties) : base(id, name, resourceType, systemData)
         {
             Location = location;
             Tags = tags;
             Sku = sku;
-            NetworkProfile = networkProfile;
-            InstanceView = instanceView;
+            Properties = properties;
         }
 
         /// <summary> Resource Location. </summary>
@@ -47,15 +44,7 @@ namespace Azure.ResourceManager.Compute
         public IReadOnlyDictionary<string, string> Tags { get; }
         /// <summary> The role instance SKU. </summary>
         public InstanceSku Sku { get; }
-        /// <summary> Describes the network profile for the role instance. </summary>
-        internal RoleInstanceNetworkProfile NetworkProfile { get; }
-        /// <summary> Specifies the list of resource Ids for the network interfaces associated with the role instance. </summary>
-        public IReadOnlyList<WritableSubResource> NetworkInterfaces
-        {
-            get => NetworkProfile?.NetworkInterfaces;
-        }
-
-        /// <summary> The instance view of the role instance. </summary>
-        public RoleInstanceView InstanceView { get; }
+        /// <summary> Role instance properties. </summary>
+        public RoleInstanceProperties Properties { get; }
     }
 }

@@ -26,19 +26,24 @@ namespace Azure.ResourceManager.Compute
         /// <param name="systemData"> The systemData. </param>
         /// <param name="location"> Resource location. </param>
         /// <param name="sku"> Describes the cloud service role sku. </param>
-        /// <param name="uniqueId"> Specifies the ID which uniquely identifies a cloud service role. </param>
-        internal CloudServiceRoleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, CloudServiceRoleSku sku, string uniqueId) : base(id, name, resourceType, systemData)
+        /// <param name="properties"> The cloud service role properties. </param>
+        internal CloudServiceRoleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, CloudServiceRoleSku sku, CloudServiceRoleProperties properties) : base(id, name, resourceType, systemData)
         {
             Location = location;
             Sku = sku;
-            UniqueId = uniqueId;
+            Properties = properties;
         }
 
         /// <summary> Resource location. </summary>
         public AzureLocation? Location { get; }
         /// <summary> Describes the cloud service role sku. </summary>
         public CloudServiceRoleSku Sku { get; }
+        /// <summary> The cloud service role properties. </summary>
+        internal CloudServiceRoleProperties Properties { get; }
         /// <summary> Specifies the ID which uniquely identifies a cloud service role. </summary>
-        public string UniqueId { get; }
+        public string CloudServiceRoleUniqueId
+        {
+            get => Properties?.UniqueId;
+        }
     }
 }
