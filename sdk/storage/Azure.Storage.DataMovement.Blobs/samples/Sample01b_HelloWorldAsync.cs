@@ -44,7 +44,7 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
             // using an environment variable.
 
             string connectionString = ConnectionString;
-            string containerName = ("sample-container");
+            string containerName = Randomize("sample-container");
 
             // Create a client that can authenticate with a connection string
             BlobContainerClient container = new BlobContainerClient(connectionString, containerName);
@@ -103,13 +103,14 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
             string accountName = StorageAccountName;
             string accountKey = StorageAccountKey;
             Uri serviceUri = StorageAccountBlobUri;
+            string containerName = Randomize("sample-container");
 
             // Create a SharedKeyCredential that we can use to authenticate
             StorageSharedKeyCredential credential = new StorageSharedKeyCredential(accountName, accountKey);
 
             // Create a client that can authenticate with a SharedKeyCredential
             BlobServiceClient service = new BlobServiceClient(serviceUri, credential);
-            BlobContainerClient container = service.GetBlobContainerClient("sample-container");
+            BlobContainerClient container = service.GetBlobContainerClient(containerName);
             await container.CreateIfNotExistsAsync();
 
             try
@@ -146,7 +147,7 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
                 await transferManager.StartTransferAsync(
                     sourceResource: new BlockBlobStorageResource(sourceBlob, new BlockBlobStorageResourceOptions()
                     {
-                        DestinationConditions = new BlobRequestConditions(){ LeaseId = "xyz" }
+                        DestinationConditions = new BlobRequestConditions() { LeaseId = "xyz" }
                     }),
                     destinationResource: new LocalFileStorageResource(downloadPath2));
                 #endregion
@@ -205,7 +206,7 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
             BlobServiceClient service = new BlobServiceClient(sasUri.Uri);
 
             string connectionString = ConnectionString;
-            string containerName = "sample-container";
+            string containerName = Randomize("sample-container");
 
             // Create a client that can authenticate with a connection string
             BlobContainerClient container = service.GetBlobContainerClient(containerName);
@@ -296,7 +297,7 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
             BlobServiceClient service = new BlobServiceClient(sasUri.Uri);
 
             string connectionString = ConnectionString;
-            string containerName = ("sample-container");
+            string containerName = Randomize("sample-container");
 
             // Create a client that can authenticate with a connection string
             BlobContainerClient container = service.GetBlobContainerClient(containerName);
@@ -383,7 +384,7 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
             BlobServiceClient service = new BlobServiceClient(sasUri.Uri);
 
             string connectionString = ConnectionString;
-            string containerName = ("sample-container");
+            string containerName = Randomize("sample-container");
 
             // Create a client that can authenticate with a connection string
             BlobContainerClient container = service.GetBlobContainerClient(containerName);
@@ -468,7 +469,7 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
 
             // Create a client that can authenticate using our token credential
             BlobServiceClient service = new BlobServiceClient(ActiveDirectoryBlobUri, credential);
-            string containerName = "sample-container";
+            string containerName = Randomize("sample-container");
 
             // Create a client that can authenticate with a connection string
             BlobContainerClient container = service.GetBlobContainerClient(containerName);
@@ -548,7 +549,7 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
             // using an environment variable.
 
             string connectionString = ConnectionString;
-            string containerName = "sample-container";
+            string containerName = Randomize("sample-container");
 
             // Create a client that can authenticate with a connection string
             BlobContainerClient container = new BlobContainerClient(connectionString, containerName);
@@ -609,13 +610,14 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
             string accountName = StorageAccountName;
             string accountKey = StorageAccountKey;
             Uri serviceUri = StorageAccountBlobUri;
+            string containerName = Randomize("sample-container");
 
             // Create a SharedKeyCredential that we can use to authenticate
             StorageSharedKeyCredential credential = new StorageSharedKeyCredential(accountName, accountKey);
 
             // Create a client that can authenticate with a connection string
             BlobServiceClient service = new BlobServiceClient(serviceUri, credential);
-            BlobContainerClient container = service.GetBlobContainerClient("sample-container");
+            BlobContainerClient container = service.GetBlobContainerClient(containerName);
 
             // Make a service request to verify we've successfully authenticated
             await container.CreateIfNotExistsAsync();
