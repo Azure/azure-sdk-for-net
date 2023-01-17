@@ -699,10 +699,11 @@ namespace Azure.Identity.Tests
             var startTime = DateTimeOffset.UtcNow;
 
             var ex = Assert.ThrowsAsync<CredentialUnavailableException>(async () => await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default)));
+            var endTime = DateTimeOffset.UtcNow;
 
             Assert.That(ex.Message, Does.Contain(ImdsManagedIdentitySource.AggregateError));
 
-            Assert.Less(DateTimeOffset.UtcNow - startTime, TimeSpan.FromSeconds(2));
+            Assert.Less(endTime - startTime, TimeSpan.FromSeconds(2));
 
             await Task.CompletedTask;
         }
