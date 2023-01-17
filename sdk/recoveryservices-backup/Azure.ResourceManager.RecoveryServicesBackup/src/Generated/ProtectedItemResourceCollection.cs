@@ -53,8 +53,16 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <summary>
         /// Enables backup of an item or to modifies the backup policy information of an already backed up item. This is an
         /// asynchronous operation. To know the status of the operation, call the GetItemOperationResult API.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupFabrics/{fabricName}/protectionContainers/{containerName}/protectedItems/{protectedItemName}
-        /// Operation Id: ProtectedItems_CreateOrUpdate
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupFabrics/{fabricName}/protectionContainers/{containerName}/protectedItems/{protectedItemName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ProtectedItems_CreateOrUpdate</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="protectedItemName"> Item name to be backed up. </param>
@@ -87,8 +95,16 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <summary>
         /// Enables backup of an item or to modifies the backup policy information of an already backed up item. This is an
         /// asynchronous operation. To know the status of the operation, call the GetItemOperationResult API.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupFabrics/{fabricName}/protectionContainers/{containerName}/protectedItems/{protectedItemName}
-        /// Operation Id: ProtectedItems_CreateOrUpdate
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupFabrics/{fabricName}/protectionContainers/{containerName}/protectedItems/{protectedItemName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ProtectedItems_CreateOrUpdate</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="protectedItemName"> Item name to be backed up. </param>
@@ -121,8 +137,16 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <summary>
         /// Provides the details of the backed up item. This is an asynchronous operation. To know the status of the operation,
         /// call the GetItemOperationResult API.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupFabrics/{fabricName}/protectionContainers/{containerName}/protectedItems/{protectedItemName}
-        /// Operation Id: ProtectedItems_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupFabrics/{fabricName}/protectionContainers/{containerName}/protectedItems/{protectedItemName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ProtectedItems_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="protectedItemName"> Backed up item name whose details are to be fetched. </param>
         /// <param name="filter"> OData filter options. </param>
@@ -152,8 +176,16 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <summary>
         /// Provides the details of the backed up item. This is an asynchronous operation. To know the status of the operation,
         /// call the GetItemOperationResult API.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupFabrics/{fabricName}/protectionContainers/{containerName}/protectedItems/{protectedItemName}
-        /// Operation Id: ProtectedItems_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupFabrics/{fabricName}/protectionContainers/{containerName}/protectedItems/{protectedItemName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ProtectedItems_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="protectedItemName"> Backed up item name whose details are to be fetched. </param>
         /// <param name="filter"> OData filter options. </param>
@@ -182,8 +214,16 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupFabrics/{fabricName}/protectionContainers/{containerName}/protectedItems/{protectedItemName}
-        /// Operation Id: ProtectedItems_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupFabrics/{fabricName}/protectionContainers/{containerName}/protectedItems/{protectedItemName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ProtectedItems_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="protectedItemName"> Backed up item name whose details are to be fetched. </param>
         /// <param name="filter"> OData filter options. </param>
@@ -210,8 +250,16 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupFabrics/{fabricName}/protectionContainers/{containerName}/protectedItems/{protectedItemName}
-        /// Operation Id: ProtectedItems_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupFabrics/{fabricName}/protectionContainers/{containerName}/protectedItems/{protectedItemName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ProtectedItems_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="protectedItemName"> Backed up item name whose details are to be fetched. </param>
         /// <param name="filter"> OData filter options. </param>

@@ -461,9 +461,9 @@ var data = new {
     },
 };
 
-var operation = await client.StartAnalyzeConversationAsync(WaitUntil.Started, RequestContent.Create(data));
+var operation = await client.StartAnalyzeConversationAsync(WaitUntil.Completed, RequestContent.Create(data));
 
-BinaryData data = await operation.WaitForCompletionAsync();
+BinaryData data = operation.Value;
 JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
 Console.WriteLine(result.GetProperty("createdDateTime").ToString());
 Console.WriteLine(result.GetProperty("jobId").ToString());
@@ -515,9 +515,9 @@ var data = new {
     },
 };
 
-var operation = await client.StartAnalyzeConversationAsync(WaitUntil.Started, RequestContent.Create(data));
+var operation = await client.StartAnalyzeConversationAsync(WaitUntil.Completed, RequestContent.Create(data));
 
-BinaryData data = await operation.WaitForCompletionAsync();
+BinaryData data = operation.Value;
 JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
 Console.WriteLine(result.GetProperty("displayName").ToString());
 Console.WriteLine(result.GetProperty("createdDateTime").ToString());
@@ -636,9 +636,9 @@ var data = new {
     },
 };
 
-var operation = client.StartAnalyzeConversation(WaitUntil.Started, RequestContent.Create(data));
+var operation = client.StartAnalyzeConversation(WaitUntil.Completed, RequestContent.Create(data));
 
-BinaryData data = operation.WaitForCompletion();
+BinaryData data = operation.Value;
 JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
 Console.WriteLine(result.GetProperty("createdDateTime").ToString());
 Console.WriteLine(result.GetProperty("jobId").ToString());
@@ -690,9 +690,9 @@ var data = new {
     },
 };
 
-var operation = client.StartAnalyzeConversation(WaitUntil.Started, RequestContent.Create(data));
+var operation = client.StartAnalyzeConversation(WaitUntil.Completed, RequestContent.Create(data));
 
-BinaryData data = operation.WaitForCompletion();
+BinaryData data = operation.Value;
 JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
 Console.WriteLine(result.GetProperty("displayName").ToString());
 Console.WriteLine(result.GetProperty("createdDateTime").ToString());
@@ -787,10 +787,9 @@ var credential = new AzureKeyCredential("<key>");
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new ConversationAnalysisClient(endpoint, credential);
 
-var operation = await client.CancelAnalyzeConversationJobAsync(WaitUntil.Started, Guid.NewGuid());
+var operation = await client.CancelAnalyzeConversationJobAsync(WaitUntil.Completed, Guid.NewGuid());
 
-var response = await operation.WaitForCompletionResponseAsync();
-Console.WriteLine(response.Status)
+Console.WriteLine(operation.GetRawResponse().Status)
 ]]></code>
 </example>
 <remarks>
@@ -805,10 +804,9 @@ var credential = new AzureKeyCredential("<key>");
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new ConversationAnalysisClient(endpoint, credential);
 
-var operation = client.CancelAnalyzeConversationJob(WaitUntil.Started, Guid.NewGuid());
+var operation = client.CancelAnalyzeConversationJob(WaitUntil.Completed, Guid.NewGuid());
 
-var response = operation.WaitForCompletionResponse();
-Console.WriteLine(response.Status)
+Console.WriteLine(operation.GetRawResponse().Status)
 ]]></code>
 </example>
 <remarks>

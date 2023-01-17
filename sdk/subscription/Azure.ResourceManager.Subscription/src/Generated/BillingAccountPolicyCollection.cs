@@ -53,8 +53,16 @@ namespace Azure.ResourceManager.Subscription
 
         /// <summary>
         /// Get Billing Account Policy.
-        /// Request Path: /providers/Microsoft.Billing/billingAccounts/{billingAccountId}/providers/Microsoft.Subscription/policies/default
-        /// Operation Id: BillingAccount_GetPolicy
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountId}/providers/Microsoft.Subscription/policies/default</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>BillingAccount_GetPolicy</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="billingAccountId"> Billing Account Id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -82,8 +90,16 @@ namespace Azure.ResourceManager.Subscription
 
         /// <summary>
         /// Get Billing Account Policy.
-        /// Request Path: /providers/Microsoft.Billing/billingAccounts/{billingAccountId}/providers/Microsoft.Subscription/policies/default
-        /// Operation Id: BillingAccount_GetPolicy
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountId}/providers/Microsoft.Subscription/policies/default</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>BillingAccount_GetPolicy</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="billingAccountId"> Billing Account Id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -111,8 +127,16 @@ namespace Azure.ResourceManager.Subscription
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /providers/Microsoft.Billing/billingAccounts/{billingAccountId}/providers/Microsoft.Subscription/policies/default
-        /// Operation Id: BillingAccount_GetPolicy
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountId}/providers/Microsoft.Subscription/policies/default</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>BillingAccount_GetPolicy</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="billingAccountId"> Billing Account Id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -138,8 +162,16 @@ namespace Azure.ResourceManager.Subscription
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /providers/Microsoft.Billing/billingAccounts/{billingAccountId}/providers/Microsoft.Subscription/policies/default
-        /// Operation Id: BillingAccount_GetPolicy
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountId}/providers/Microsoft.Subscription/policies/default</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>BillingAccount_GetPolicy</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="billingAccountId"> Billing Account Id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

@@ -1059,10 +1059,9 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new DeviceUpdateClient(endpoint, "<instanceId>", credential);
 
-var operation = await client.DeleteUpdateAsync(WaitUntil.Started, "<provider>", "<name>", "<version>");
+var operation = await client.DeleteUpdateAsync(WaitUntil.Completed, "<provider>", "<name>", "<version>");
 
-var response = await operation.WaitForCompletionResponseAsync();
-Console.WriteLine(response.Status)
+Console.WriteLine(operation.GetRawResponse().Status)
 ]]></code>
 </example>
     </member>
@@ -1074,10 +1073,9 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new DeviceUpdateClient(endpoint, "<instanceId>", credential);
 
-var operation = client.DeleteUpdate(WaitUntil.Started, "<provider>", "<name>", "<version>");
+var operation = client.DeleteUpdate(WaitUntil.Completed, "<provider>", "<name>", "<version>");
 
-var response = operation.WaitForCompletionResponse();
-Console.WriteLine(response.Status)
+Console.WriteLine(operation.GetRawResponse().Status)
 ]]></code>
 </example>
     </member>
@@ -1108,10 +1106,9 @@ var data = new[] {
     }
 };
 
-var operation = await client.StartImportUpdateAsync(WaitUntil.Started, RequestContent.Create(data));
+var operation = await client.StartImportUpdateAsync(WaitUntil.Completed, RequestContent.Create(data));
 
-var response = await operation.WaitForCompletionResponseAsync();
-Console.WriteLine(response.Status)
+Console.WriteLine(operation.GetRawResponse().Status)
 ]]></code>
 </example>
 <remarks>
@@ -1165,10 +1162,9 @@ var data = new[] {
     }
 };
 
-var operation = client.StartImportUpdate(WaitUntil.Started, RequestContent.Create(data));
+var operation = client.StartImportUpdate(WaitUntil.Completed, RequestContent.Create(data));
 
-var response = operation.WaitForCompletionResponse();
-Console.WriteLine(response.Status)
+Console.WriteLine(operation.GetRawResponse().Status)
 ]]></code>
 </example>
 <remarks>

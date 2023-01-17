@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -55,8 +54,16 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary>
         /// Description for Gets the config reference and status of an app
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/config/configreferences/appsettings/{appSettingKey}
-        /// Operation Id: WebApps_GetAppSettingKeyVaultReferenceSlot
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/config/configreferences/appsettings/{appSettingKey}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>WebApps_GetAppSettingKeyVaultReferenceSlot</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="appSettingKey"> App Setting key name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -84,8 +91,16 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary>
         /// Description for Gets the config reference and status of an app
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/config/configreferences/appsettings/{appSettingKey}
-        /// Operation Id: WebApps_GetAppSettingKeyVaultReferenceSlot
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/config/configreferences/appsettings/{appSettingKey}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>WebApps_GetAppSettingKeyVaultReferenceSlot</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="appSettingKey"> App Setting key name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -113,92 +128,60 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary>
         /// Description for Gets the config reference app settings and status of an app
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/config/configreferences/appsettings
-        /// Operation Id: WebApps_GetAppSettingsKeyVaultReferencesSlot
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/config/configreferences/appsettings</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>WebApps_GetAppSettingsKeyVaultReferencesSlot</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="WebSiteSlotConfigAppSettingResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<WebSiteSlotConfigAppSettingResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<WebSiteSlotConfigAppSettingResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _webSiteSlotConfigAppSettingWebAppsClientDiagnostics.CreateScope("WebSiteSlotConfigAppSettingCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _webSiteSlotConfigAppSettingWebAppsRestClient.GetAppSettingsKeyVaultReferencesSlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new WebSiteSlotConfigAppSettingResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<WebSiteSlotConfigAppSettingResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _webSiteSlotConfigAppSettingWebAppsClientDiagnostics.CreateScope("WebSiteSlotConfigAppSettingCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _webSiteSlotConfigAppSettingWebAppsRestClient.GetAppSettingsKeyVaultReferencesSlotNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new WebSiteSlotConfigAppSettingResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _webSiteSlotConfigAppSettingWebAppsRestClient.CreateGetAppSettingsKeyVaultReferencesSlotRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _webSiteSlotConfigAppSettingWebAppsRestClient.CreateGetAppSettingsKeyVaultReferencesSlotNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new WebSiteSlotConfigAppSettingResource(Client, ApiKeyVaultReferenceData.DeserializeApiKeyVaultReferenceData(e)), _webSiteSlotConfigAppSettingWebAppsClientDiagnostics, Pipeline, "WebSiteSlotConfigAppSettingCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Description for Gets the config reference app settings and status of an app
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/config/configreferences/appsettings
-        /// Operation Id: WebApps_GetAppSettingsKeyVaultReferencesSlot
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/config/configreferences/appsettings</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>WebApps_GetAppSettingsKeyVaultReferencesSlot</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="WebSiteSlotConfigAppSettingResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<WebSiteSlotConfigAppSettingResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<WebSiteSlotConfigAppSettingResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _webSiteSlotConfigAppSettingWebAppsClientDiagnostics.CreateScope("WebSiteSlotConfigAppSettingCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _webSiteSlotConfigAppSettingWebAppsRestClient.GetAppSettingsKeyVaultReferencesSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new WebSiteSlotConfigAppSettingResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<WebSiteSlotConfigAppSettingResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _webSiteSlotConfigAppSettingWebAppsClientDiagnostics.CreateScope("WebSiteSlotConfigAppSettingCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _webSiteSlotConfigAppSettingWebAppsRestClient.GetAppSettingsKeyVaultReferencesSlotNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new WebSiteSlotConfigAppSettingResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _webSiteSlotConfigAppSettingWebAppsRestClient.CreateGetAppSettingsKeyVaultReferencesSlotRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _webSiteSlotConfigAppSettingWebAppsRestClient.CreateGetAppSettingsKeyVaultReferencesSlotNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new WebSiteSlotConfigAppSettingResource(Client, ApiKeyVaultReferenceData.DeserializeApiKeyVaultReferenceData(e)), _webSiteSlotConfigAppSettingWebAppsClientDiagnostics, Pipeline, "WebSiteSlotConfigAppSettingCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/config/configreferences/appsettings/{appSettingKey}
-        /// Operation Id: WebApps_GetAppSettingKeyVaultReferenceSlot
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/config/configreferences/appsettings/{appSettingKey}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>WebApps_GetAppSettingKeyVaultReferenceSlot</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="appSettingKey"> App Setting key name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -224,8 +207,16 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/config/configreferences/appsettings/{appSettingKey}
-        /// Operation Id: WebApps_GetAppSettingKeyVaultReferenceSlot
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/config/configreferences/appsettings/{appSettingKey}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>WebApps_GetAppSettingKeyVaultReferenceSlot</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="appSettingKey"> App Setting key name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

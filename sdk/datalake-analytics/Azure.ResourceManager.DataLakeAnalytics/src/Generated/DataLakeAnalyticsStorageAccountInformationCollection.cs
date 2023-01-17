@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -56,8 +55,16 @@ namespace Azure.ResourceManager.DataLakeAnalytics
 
         /// <summary>
         /// Updates the specified Data Lake Analytics account to add an Azure Storage account.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataLakeAnalytics/accounts/{accountName}/storageAccounts/{storageAccountName}
-        /// Operation Id: StorageAccounts_Add
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataLakeAnalytics/accounts/{accountName}/storageAccounts/{storageAccountName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>StorageAccounts_Add</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="storageAccountName"> The name of the Azure Storage account to add. </param>
@@ -89,8 +96,16 @@ namespace Azure.ResourceManager.DataLakeAnalytics
 
         /// <summary>
         /// Updates the specified Data Lake Analytics account to add an Azure Storage account.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataLakeAnalytics/accounts/{accountName}/storageAccounts/{storageAccountName}
-        /// Operation Id: StorageAccounts_Add
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataLakeAnalytics/accounts/{accountName}/storageAccounts/{storageAccountName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>StorageAccounts_Add</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="storageAccountName"> The name of the Azure Storage account to add. </param>
@@ -122,8 +137,16 @@ namespace Azure.ResourceManager.DataLakeAnalytics
 
         /// <summary>
         /// Gets the specified Azure Storage account linked to the given Data Lake Analytics account.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataLakeAnalytics/accounts/{accountName}/storageAccounts/{storageAccountName}
-        /// Operation Id: StorageAccounts_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataLakeAnalytics/accounts/{accountName}/storageAccounts/{storageAccountName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>StorageAccounts_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="storageAccountName"> The name of the Azure Storage account for which to retrieve the details. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -151,8 +174,16 @@ namespace Azure.ResourceManager.DataLakeAnalytics
 
         /// <summary>
         /// Gets the specified Azure Storage account linked to the given Data Lake Analytics account.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataLakeAnalytics/accounts/{accountName}/storageAccounts/{storageAccountName}
-        /// Operation Id: StorageAccounts_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataLakeAnalytics/accounts/{accountName}/storageAccounts/{storageAccountName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>StorageAccounts_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="storageAccountName"> The name of the Azure Storage account for which to retrieve the details. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -180,8 +211,16 @@ namespace Azure.ResourceManager.DataLakeAnalytics
 
         /// <summary>
         /// Gets the first page of Azure Storage accounts, if any, linked to the specified Data Lake Analytics account. The response includes a link to the next page, if any.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataLakeAnalytics/accounts/{accountName}/storageAccounts
-        /// Operation Id: StorageAccounts_ListByAccount
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataLakeAnalytics/accounts/{accountName}/storageAccounts</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>StorageAccounts_ListByAccount</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="filter"> The OData filter. Optional. </param>
         /// <param name="top"> The number of items to return. Optional. </param>
@@ -193,43 +232,23 @@ namespace Azure.ResourceManager.DataLakeAnalytics
         /// <returns> An async collection of <see cref="DataLakeAnalyticsStorageAccountInformationResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DataLakeAnalyticsStorageAccountInformationResource> GetAllAsync(string filter = null, int? top = null, int? skip = null, string select = null, string orderby = null, bool? count = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<DataLakeAnalyticsStorageAccountInformationResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _dataLakeAnalyticsStorageAccountInformationStorageAccountsClientDiagnostics.CreateScope("DataLakeAnalyticsStorageAccountInformationCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _dataLakeAnalyticsStorageAccountInformationStorageAccountsRestClient.ListByAccountAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, select, orderby, count, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new DataLakeAnalyticsStorageAccountInformationResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<DataLakeAnalyticsStorageAccountInformationResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _dataLakeAnalyticsStorageAccountInformationStorageAccountsClientDiagnostics.CreateScope("DataLakeAnalyticsStorageAccountInformationCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _dataLakeAnalyticsStorageAccountInformationStorageAccountsRestClient.ListByAccountNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, select, orderby, count, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new DataLakeAnalyticsStorageAccountInformationResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _dataLakeAnalyticsStorageAccountInformationStorageAccountsRestClient.CreateListByAccountRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, select, orderby, count);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _dataLakeAnalyticsStorageAccountInformationStorageAccountsRestClient.CreateListByAccountNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, select, orderby, count);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DataLakeAnalyticsStorageAccountInformationResource(Client, DataLakeAnalyticsStorageAccountInformationData.DeserializeDataLakeAnalyticsStorageAccountInformationData(e)), _dataLakeAnalyticsStorageAccountInformationStorageAccountsClientDiagnostics, Pipeline, "DataLakeAnalyticsStorageAccountInformationCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Gets the first page of Azure Storage accounts, if any, linked to the specified Data Lake Analytics account. The response includes a link to the next page, if any.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataLakeAnalytics/accounts/{accountName}/storageAccounts
-        /// Operation Id: StorageAccounts_ListByAccount
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataLakeAnalytics/accounts/{accountName}/storageAccounts</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>StorageAccounts_ListByAccount</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="filter"> The OData filter. Optional. </param>
         /// <param name="top"> The number of items to return. Optional. </param>
@@ -241,43 +260,23 @@ namespace Azure.ResourceManager.DataLakeAnalytics
         /// <returns> A collection of <see cref="DataLakeAnalyticsStorageAccountInformationResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DataLakeAnalyticsStorageAccountInformationResource> GetAll(string filter = null, int? top = null, int? skip = null, string select = null, string orderby = null, bool? count = null, CancellationToken cancellationToken = default)
         {
-            Page<DataLakeAnalyticsStorageAccountInformationResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _dataLakeAnalyticsStorageAccountInformationStorageAccountsClientDiagnostics.CreateScope("DataLakeAnalyticsStorageAccountInformationCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _dataLakeAnalyticsStorageAccountInformationStorageAccountsRestClient.ListByAccount(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, select, orderby, count, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new DataLakeAnalyticsStorageAccountInformationResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<DataLakeAnalyticsStorageAccountInformationResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _dataLakeAnalyticsStorageAccountInformationStorageAccountsClientDiagnostics.CreateScope("DataLakeAnalyticsStorageAccountInformationCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _dataLakeAnalyticsStorageAccountInformationStorageAccountsRestClient.ListByAccountNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, select, orderby, count, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new DataLakeAnalyticsStorageAccountInformationResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _dataLakeAnalyticsStorageAccountInformationStorageAccountsRestClient.CreateListByAccountRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, select, orderby, count);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _dataLakeAnalyticsStorageAccountInformationStorageAccountsRestClient.CreateListByAccountNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, select, orderby, count);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DataLakeAnalyticsStorageAccountInformationResource(Client, DataLakeAnalyticsStorageAccountInformationData.DeserializeDataLakeAnalyticsStorageAccountInformationData(e)), _dataLakeAnalyticsStorageAccountInformationStorageAccountsClientDiagnostics, Pipeline, "DataLakeAnalyticsStorageAccountInformationCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataLakeAnalytics/accounts/{accountName}/storageAccounts/{storageAccountName}
-        /// Operation Id: StorageAccounts_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataLakeAnalytics/accounts/{accountName}/storageAccounts/{storageAccountName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>StorageAccounts_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="storageAccountName"> The name of the Azure Storage account for which to retrieve the details. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -303,8 +302,16 @@ namespace Azure.ResourceManager.DataLakeAnalytics
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataLakeAnalytics/accounts/{accountName}/storageAccounts/{storageAccountName}
-        /// Operation Id: StorageAccounts_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataLakeAnalytics/accounts/{accountName}/storageAccounts/{storageAccountName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>StorageAccounts_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="storageAccountName"> The name of the Azure Storage account for which to retrieve the details. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

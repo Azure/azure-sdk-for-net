@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -56,8 +55,16 @@ namespace Azure.ResourceManager.Avs
 
         /// <summary>
         /// Get a private cloud workload network.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AVS/privateClouds/{privateCloudName}/workloadNetworks/{workloadNetworkName}
-        /// Operation Id: WorkloadNetworks_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AVS/privateClouds/{privateCloudName}/workloadNetworks/{workloadNetworkName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>WorkloadNetworks_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="workloadNetworkName"> Name for the workload network in the private cloud. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -81,8 +88,16 @@ namespace Azure.ResourceManager.Avs
 
         /// <summary>
         /// Get a private cloud workload network.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AVS/privateClouds/{privateCloudName}/workloadNetworks/{workloadNetworkName}
-        /// Operation Id: WorkloadNetworks_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AVS/privateClouds/{privateCloudName}/workloadNetworks/{workloadNetworkName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>WorkloadNetworks_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="workloadNetworkName"> Name for the workload network in the private cloud. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -106,92 +121,60 @@ namespace Azure.ResourceManager.Avs
 
         /// <summary>
         /// List of workload networks in a private cloud.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AVS/privateClouds/{privateCloudName}/workloadNetworks
-        /// Operation Id: WorkloadNetworks_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AVS/privateClouds/{privateCloudName}/workloadNetworks</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>WorkloadNetworks_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="WorkloadNetworkResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<WorkloadNetworkResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<WorkloadNetworkResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _workloadNetworkClientDiagnostics.CreateScope("WorkloadNetworkCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _workloadNetworkRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new WorkloadNetworkResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<WorkloadNetworkResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _workloadNetworkClientDiagnostics.CreateScope("WorkloadNetworkCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _workloadNetworkRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new WorkloadNetworkResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _workloadNetworkRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _workloadNetworkRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new WorkloadNetworkResource(Client, WorkloadNetworkData.DeserializeWorkloadNetworkData(e)), _workloadNetworkClientDiagnostics, Pipeline, "WorkloadNetworkCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// List of workload networks in a private cloud.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AVS/privateClouds/{privateCloudName}/workloadNetworks
-        /// Operation Id: WorkloadNetworks_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AVS/privateClouds/{privateCloudName}/workloadNetworks</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>WorkloadNetworks_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="WorkloadNetworkResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<WorkloadNetworkResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<WorkloadNetworkResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _workloadNetworkClientDiagnostics.CreateScope("WorkloadNetworkCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _workloadNetworkRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new WorkloadNetworkResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<WorkloadNetworkResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _workloadNetworkClientDiagnostics.CreateScope("WorkloadNetworkCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _workloadNetworkRestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new WorkloadNetworkResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _workloadNetworkRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _workloadNetworkRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new WorkloadNetworkResource(Client, WorkloadNetworkData.DeserializeWorkloadNetworkData(e)), _workloadNetworkClientDiagnostics, Pipeline, "WorkloadNetworkCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AVS/privateClouds/{privateCloudName}/workloadNetworks/{workloadNetworkName}
-        /// Operation Id: WorkloadNetworks_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AVS/privateClouds/{privateCloudName}/workloadNetworks/{workloadNetworkName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>WorkloadNetworks_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="workloadNetworkName"> Name for the workload network in the private cloud. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -213,8 +196,16 @@ namespace Azure.ResourceManager.Avs
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AVS/privateClouds/{privateCloudName}/workloadNetworks/{workloadNetworkName}
-        /// Operation Id: WorkloadNetworks_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AVS/privateClouds/{privateCloudName}/workloadNetworks/{workloadNetworkName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>WorkloadNetworks_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="workloadNetworkName"> Name for the workload network in the private cloud. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

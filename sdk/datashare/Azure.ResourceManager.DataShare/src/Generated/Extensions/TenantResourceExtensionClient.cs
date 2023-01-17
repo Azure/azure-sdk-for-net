@@ -56,8 +56,16 @@ namespace Azure.ResourceManager.DataShare
 
         /// <summary>
         /// Reject an invitation
-        /// Request Path: /providers/Microsoft.DataShare/locations/{location}/rejectInvitation
-        /// Operation Id: ConsumerInvitations_RejectInvitation
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.DataShare/locations/{location}/rejectInvitation</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ConsumerInvitations_RejectInvitation</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="location"> Location of the invitation. </param>
         /// <param name="data"> An invitation payload. </param>
@@ -80,8 +88,16 @@ namespace Azure.ResourceManager.DataShare
 
         /// <summary>
         /// Reject an invitation
-        /// Request Path: /providers/Microsoft.DataShare/locations/{location}/rejectInvitation
-        /// Operation Id: ConsumerInvitations_RejectInvitation
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.DataShare/locations/{location}/rejectInvitation</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ConsumerInvitations_RejectInvitation</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="location"> Location of the invitation. </param>
         /// <param name="data"> An invitation payload. </param>
@@ -104,8 +120,16 @@ namespace Azure.ResourceManager.DataShare
 
         /// <summary>
         /// Activate the email registration for the current tenant
-        /// Request Path: /providers/Microsoft.DataShare/locations/{location}/activateEmail
-        /// Operation Id: EmailRegistrations_ActivateEmail
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.DataShare/locations/{location}/activateEmail</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>EmailRegistrations_ActivateEmail</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="location"> Location of the activation. </param>
         /// <param name="emailRegistration"> The payload for tenant domain activation. </param>
@@ -128,8 +152,16 @@ namespace Azure.ResourceManager.DataShare
 
         /// <summary>
         /// Activate the email registration for the current tenant
-        /// Request Path: /providers/Microsoft.DataShare/locations/{location}/activateEmail
-        /// Operation Id: EmailRegistrations_ActivateEmail
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.DataShare/locations/{location}/activateEmail</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>EmailRegistrations_ActivateEmail</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="location"> Location of the activation. </param>
         /// <param name="emailRegistration"> The payload for tenant domain activation. </param>
@@ -152,8 +184,16 @@ namespace Azure.ResourceManager.DataShare
 
         /// <summary>
         /// Register an email for the current tenant
-        /// Request Path: /providers/Microsoft.DataShare/locations/{location}/registerEmail
-        /// Operation Id: EmailRegistrations_RegisterEmail
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.DataShare/locations/{location}/registerEmail</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>EmailRegistrations_RegisterEmail</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="location"> Location of the registration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -175,8 +215,16 @@ namespace Azure.ResourceManager.DataShare
 
         /// <summary>
         /// Register an email for the current tenant
-        /// Request Path: /providers/Microsoft.DataShare/locations/{location}/registerEmail
-        /// Operation Id: EmailRegistrations_RegisterEmail
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.DataShare/locations/{location}/registerEmail</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>EmailRegistrations_RegisterEmail</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="location"> Location of the registration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -54,230 +53,146 @@ namespace Azure.ResourceManager.Synapse
 
         /// <summary>
         /// Returns a list of privateLinkHubs in a subscription
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Synapse/privateLinkHubs
-        /// Operation Id: PrivateLinkHubs_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Synapse/privateLinkHubs</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PrivateLinkHubs_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="SynapsePrivateLinkHubResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SynapsePrivateLinkHubResource> GetSynapsePrivateLinkHubsAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<SynapsePrivateLinkHubResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = SynapsePrivateLinkHubPrivateLinkHubsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetSynapsePrivateLinkHubs");
-                scope.Start();
-                try
-                {
-                    var response = await SynapsePrivateLinkHubPrivateLinkHubsRestClient.ListAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new SynapsePrivateLinkHubResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<SynapsePrivateLinkHubResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = SynapsePrivateLinkHubPrivateLinkHubsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetSynapsePrivateLinkHubs");
-                scope.Start();
-                try
-                {
-                    var response = await SynapsePrivateLinkHubPrivateLinkHubsRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new SynapsePrivateLinkHubResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => SynapsePrivateLinkHubPrivateLinkHubsRestClient.CreateListRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => SynapsePrivateLinkHubPrivateLinkHubsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SynapsePrivateLinkHubResource(Client, SynapsePrivateLinkHubData.DeserializeSynapsePrivateLinkHubData(e)), SynapsePrivateLinkHubPrivateLinkHubsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetSynapsePrivateLinkHubs", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Returns a list of privateLinkHubs in a subscription
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Synapse/privateLinkHubs
-        /// Operation Id: PrivateLinkHubs_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Synapse/privateLinkHubs</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PrivateLinkHubs_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="SynapsePrivateLinkHubResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SynapsePrivateLinkHubResource> GetSynapsePrivateLinkHubs(CancellationToken cancellationToken = default)
         {
-            Page<SynapsePrivateLinkHubResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = SynapsePrivateLinkHubPrivateLinkHubsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetSynapsePrivateLinkHubs");
-                scope.Start();
-                try
-                {
-                    var response = SynapsePrivateLinkHubPrivateLinkHubsRestClient.List(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new SynapsePrivateLinkHubResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<SynapsePrivateLinkHubResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = SynapsePrivateLinkHubPrivateLinkHubsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetSynapsePrivateLinkHubs");
-                scope.Start();
-                try
-                {
-                    var response = SynapsePrivateLinkHubPrivateLinkHubsRestClient.ListNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new SynapsePrivateLinkHubResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => SynapsePrivateLinkHubPrivateLinkHubsRestClient.CreateListRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => SynapsePrivateLinkHubPrivateLinkHubsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SynapsePrivateLinkHubResource(Client, SynapsePrivateLinkHubData.DeserializeSynapsePrivateLinkHubData(e)), SynapsePrivateLinkHubPrivateLinkHubsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetSynapsePrivateLinkHubs", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Returns a list of workspaces in a subscription
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Synapse/workspaces
-        /// Operation Id: Workspaces_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Synapse/workspaces</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Workspaces_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="SynapseWorkspaceResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SynapseWorkspaceResource> GetSynapseWorkspacesAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<SynapseWorkspaceResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = SynapseWorkspaceWorkspacesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetSynapseWorkspaces");
-                scope.Start();
-                try
-                {
-                    var response = await SynapseWorkspaceWorkspacesRestClient.ListAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new SynapseWorkspaceResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<SynapseWorkspaceResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = SynapseWorkspaceWorkspacesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetSynapseWorkspaces");
-                scope.Start();
-                try
-                {
-                    var response = await SynapseWorkspaceWorkspacesRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new SynapseWorkspaceResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => SynapseWorkspaceWorkspacesRestClient.CreateListRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => SynapseWorkspaceWorkspacesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SynapseWorkspaceResource(Client, SynapseWorkspaceData.DeserializeSynapseWorkspaceData(e)), SynapseWorkspaceWorkspacesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetSynapseWorkspaces", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Returns a list of workspaces in a subscription
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Synapse/workspaces
-        /// Operation Id: Workspaces_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Synapse/workspaces</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Workspaces_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="SynapseWorkspaceResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SynapseWorkspaceResource> GetSynapseWorkspaces(CancellationToken cancellationToken = default)
         {
-            Page<SynapseWorkspaceResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = SynapseWorkspaceWorkspacesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetSynapseWorkspaces");
-                scope.Start();
-                try
-                {
-                    var response = SynapseWorkspaceWorkspacesRestClient.List(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new SynapseWorkspaceResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<SynapseWorkspaceResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = SynapseWorkspaceWorkspacesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetSynapseWorkspaces");
-                scope.Start();
-                try
-                {
-                    var response = SynapseWorkspaceWorkspacesRestClient.ListNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new SynapseWorkspaceResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => SynapseWorkspaceWorkspacesRestClient.CreateListRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => SynapseWorkspaceWorkspacesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SynapseWorkspaceResource(Client, SynapseWorkspaceData.DeserializeSynapseWorkspaceData(e)), SynapseWorkspaceWorkspacesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetSynapseWorkspaces", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Lists eligible SKUs for Kusto Pool resource.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Synapse/skus
-        /// Operation Id: KustoPools_ListSkus
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Synapse/skus</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>KustoPools_ListSkus</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="KustoPoolSkuDescription" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<KustoPoolSkuDescription> GetSkusKustoPoolsAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<KustoPoolSkuDescription>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = SynapseKustoPoolKustoPoolsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetSkusKustoPools");
-                scope.Start();
-                try
-                {
-                    var response = await SynapseKustoPoolKustoPoolsRestClient.ListSkusAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => SynapseKustoPoolKustoPoolsRestClient.CreateListSkusRequest(Id.SubscriptionId);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, KustoPoolSkuDescription.DeserializeKustoPoolSkuDescription, SynapseKustoPoolKustoPoolsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetSkusKustoPools", "value", null, cancellationToken);
         }
 
         /// <summary>
         /// Lists eligible SKUs for Kusto Pool resource.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Synapse/skus
-        /// Operation Id: KustoPools_ListSkus
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Synapse/skus</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>KustoPools_ListSkus</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="KustoPoolSkuDescription" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<KustoPoolSkuDescription> GetSkusKustoPools(CancellationToken cancellationToken = default)
         {
-            Page<KustoPoolSkuDescription> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = SynapseKustoPoolKustoPoolsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetSkusKustoPools");
-                scope.Start();
-                try
-                {
-                    var response = SynapseKustoPoolKustoPoolsRestClient.ListSkus(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => SynapseKustoPoolKustoPoolsRestClient.CreateListSkusRequest(Id.SubscriptionId);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, KustoPoolSkuDescription.DeserializeKustoPoolSkuDescription, SynapseKustoPoolKustoPoolsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetSkusKustoPools", "value", null, cancellationToken);
         }
 
         /// <summary>
         /// Checks that the kusto pool name is valid and is not already in use.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Synapse/locations/{location}/kustoPoolCheckNameAvailability
-        /// Operation Id: KustoPools_CheckNameAvailability
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Synapse/locations/{location}/kustoPoolCheckNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>KustoPools_CheckNameAvailability</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="location"> The name of Azure region. </param>
         /// <param name="content"> The name of the cluster. </param>
@@ -300,8 +215,16 @@ namespace Azure.ResourceManager.Synapse
 
         /// <summary>
         /// Checks that the kusto pool name is valid and is not already in use.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Synapse/locations/{location}/kustoPoolCheckNameAvailability
-        /// Operation Id: KustoPools_CheckNameAvailability
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Synapse/locations/{location}/kustoPoolCheckNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>KustoPools_CheckNameAvailability</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="location"> The name of Azure region. </param>
         /// <param name="content"> The name of the cluster. </param>

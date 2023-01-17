@@ -30,8 +30,16 @@ namespace Azure.ResourceManager.DataLakeStore
 
         /// <summary>
         /// Lists the Data Lake Store accounts within the subscription. The response includes a link to the next page of results, if any.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.DataLakeStore/accounts
-        /// Operation Id: Accounts_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DataLakeStore/accounts</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Accounts_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="filter"> OData filter. Optional. </param>
@@ -49,8 +57,16 @@ namespace Azure.ResourceManager.DataLakeStore
 
         /// <summary>
         /// Lists the Data Lake Store accounts within the subscription. The response includes a link to the next page of results, if any.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.DataLakeStore/accounts
-        /// Operation Id: Accounts_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DataLakeStore/accounts</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Accounts_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="filter"> OData filter. Optional. </param>
@@ -68,8 +84,16 @@ namespace Azure.ResourceManager.DataLakeStore
 
         /// <summary>
         /// Checks whether the specified account name is available or taken.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.DataLakeStore/locations/{location}/checkNameAvailability
-        /// Operation Id: Accounts_CheckNameAvailability
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DataLakeStore/locations/{location}/checkNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Accounts_CheckNameAvailability</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="location"> The resource location without whitespace. </param>
@@ -85,8 +109,16 @@ namespace Azure.ResourceManager.DataLakeStore
 
         /// <summary>
         /// Checks whether the specified account name is available or taken.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.DataLakeStore/locations/{location}/checkNameAvailability
-        /// Operation Id: Accounts_CheckNameAvailability
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DataLakeStore/locations/{location}/checkNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Accounts_CheckNameAvailability</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="location"> The resource location without whitespace. </param>
@@ -102,8 +134,16 @@ namespace Azure.ResourceManager.DataLakeStore
 
         /// <summary>
         /// Gets subscription-level properties and limits for Data Lake Store specified by resource location.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.DataLakeStore/locations/{location}/capability
-        /// Operation Id: Locations_GetCapability
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DataLakeStore/locations/{location}/capability</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Locations_GetCapability</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="location"> The resource location without whitespace. </param>
@@ -115,8 +155,16 @@ namespace Azure.ResourceManager.DataLakeStore
 
         /// <summary>
         /// Gets subscription-level properties and limits for Data Lake Store specified by resource location.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.DataLakeStore/locations/{location}/capability
-        /// Operation Id: Locations_GetCapability
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DataLakeStore/locations/{location}/capability</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Locations_GetCapability</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="location"> The resource location without whitespace. </param>
@@ -128,8 +176,16 @@ namespace Azure.ResourceManager.DataLakeStore
 
         /// <summary>
         /// Gets the current usage count and the limit for the resources of the location under the subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.DataLakeStore/locations/{location}/usages
-        /// Operation Id: Locations_GetUsage
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DataLakeStore/locations/{location}/usages</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Locations_GetUsage</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="location"> The resource location without whitespace. </param>
@@ -142,8 +198,16 @@ namespace Azure.ResourceManager.DataLakeStore
 
         /// <summary>
         /// Gets the current usage count and the limit for the resources of the location under the subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.DataLakeStore/locations/{location}/usages
-        /// Operation Id: Locations_GetUsage
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DataLakeStore/locations/{location}/usages</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Locations_GetUsage</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="location"> The resource location without whitespace. </param>
@@ -173,8 +237,16 @@ namespace Azure.ResourceManager.DataLakeStore
 
         /// <summary>
         /// Gets the specified Data Lake Store account.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataLakeStore/accounts/{accountName}
-        /// Operation Id: Accounts_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataLakeStore/accounts/{accountName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Accounts_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="accountName"> The name of the Data Lake Store account. </param>
@@ -189,8 +261,16 @@ namespace Azure.ResourceManager.DataLakeStore
 
         /// <summary>
         /// Gets the specified Data Lake Store account.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataLakeStore/accounts/{accountName}
-        /// Operation Id: Accounts_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataLakeStore/accounts/{accountName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Accounts_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="accountName"> The name of the Data Lake Store account. </param>
