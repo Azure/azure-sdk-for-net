@@ -6,9 +6,6 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
-using System.Runtime.CompilerServices;
-using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
@@ -625,24 +622,9 @@ namespace Azure.Developer.LoadTesting
         /// <include file="Docs/LoadTestAdministrationClient.xml" path="doc/members/member[@name='GetTestsAsync(String,String,DateTimeOffset,DateTimeOffset,Int32,RequestContext)']/*" />
         public virtual AsyncPageable<BinaryData> GetTestsAsync(string orderby = null, string search = null, DateTimeOffset? lastModifiedStartTime = null, DateTimeOffset? lastModifiedEndTime = null, int? maxpagesize = null, RequestContext context = null)
         {
-            return GetTestsImplementationAsync("LoadTestAdministrationClient.GetTests", orderby, search, lastModifiedStartTime, lastModifiedEndTime, maxpagesize, context);
-        }
-
-        private AsyncPageable<BinaryData> GetTestsImplementationAsync(string diagnosticsScopeName, string orderby, string search, DateTimeOffset? lastModifiedStartTime, DateTimeOffset? lastModifiedEndTime, int? maxpagesize, RequestContext context)
-        {
-            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, ClientDiagnostics, diagnosticsScopeName);
-            async IAsyncEnumerable<Page<BinaryData>> CreateEnumerableAsync(string nextLink, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken = default)
-            {
-                do
-                {
-                    var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetTestsRequest(orderby, search, lastModifiedStartTime, lastModifiedEndTime, maxpagesize, context)
-                        : CreateGetTestsNextPageRequest(nextLink, orderby, search, lastModifiedStartTime, lastModifiedEndTime, maxpagesize, context);
-                    var page = await LowLevelPageableHelpers.ProcessMessageAsync(_pipeline, message, context, "value", "nextLink", cancellationToken).ConfigureAwait(false);
-                    nextLink = page.ContinuationToken;
-                    yield return page;
-                } while (!string.IsNullOrEmpty(nextLink));
-            }
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetTestsRequest(orderby, search, lastModifiedStartTime, lastModifiedEndTime, maxpagesize, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetTestsNextPageRequest(nextLink, orderby, search, lastModifiedStartTime, lastModifiedEndTime, maxpagesize, context);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "LoadTestAdministrationClient.GetTests", "value", "nextLink", context);
         }
 
         /// <summary> Get all load tests by the fully qualified resource Id e.g subscriptions/{subId}/resourceGroups/{rg}/providers/Microsoft.LoadTestService/loadtests/{resName}. </summary>
@@ -657,24 +639,9 @@ namespace Azure.Developer.LoadTesting
         /// <include file="Docs/LoadTestAdministrationClient.xml" path="doc/members/member[@name='GetTests(String,String,DateTimeOffset,DateTimeOffset,Int32,RequestContext)']/*" />
         public virtual Pageable<BinaryData> GetTests(string orderby = null, string search = null, DateTimeOffset? lastModifiedStartTime = null, DateTimeOffset? lastModifiedEndTime = null, int? maxpagesize = null, RequestContext context = null)
         {
-            return GetTestsImplementation("LoadTestAdministrationClient.GetTests", orderby, search, lastModifiedStartTime, lastModifiedEndTime, maxpagesize, context);
-        }
-
-        private Pageable<BinaryData> GetTestsImplementation(string diagnosticsScopeName, string orderby, string search, DateTimeOffset? lastModifiedStartTime, DateTimeOffset? lastModifiedEndTime, int? maxpagesize, RequestContext context)
-        {
-            return PageableHelpers.CreatePageable(CreateEnumerable, ClientDiagnostics, diagnosticsScopeName);
-            IEnumerable<Page<BinaryData>> CreateEnumerable(string nextLink, int? pageSizeHint)
-            {
-                do
-                {
-                    var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetTestsRequest(orderby, search, lastModifiedStartTime, lastModifiedEndTime, maxpagesize, context)
-                        : CreateGetTestsNextPageRequest(nextLink, orderby, search, lastModifiedStartTime, lastModifiedEndTime, maxpagesize, context);
-                    var page = LowLevelPageableHelpers.ProcessMessage(_pipeline, message, context, "value", "nextLink");
-                    nextLink = page.ContinuationToken;
-                    yield return page;
-                } while (!string.IsNullOrEmpty(nextLink));
-            }
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetTestsRequest(orderby, search, lastModifiedStartTime, lastModifiedEndTime, maxpagesize, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetTestsNextPageRequest(nextLink, orderby, search, lastModifiedStartTime, lastModifiedEndTime, maxpagesize, context);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "LoadTestAdministrationClient.GetTests", "value", "nextLink", context);
         }
 
         /// <summary> Get all test files. </summary>
@@ -689,24 +656,9 @@ namespace Azure.Developer.LoadTesting
         {
             Argument.AssertNotNullOrEmpty(testId, nameof(testId));
 
-            return GetTestFilesImplementationAsync("LoadTestAdministrationClient.GetTestFiles", testId, context);
-        }
-
-        private AsyncPageable<BinaryData> GetTestFilesImplementationAsync(string diagnosticsScopeName, string testId, RequestContext context)
-        {
-            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, ClientDiagnostics, diagnosticsScopeName);
-            async IAsyncEnumerable<Page<BinaryData>> CreateEnumerableAsync(string nextLink, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken = default)
-            {
-                do
-                {
-                    var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetTestFilesRequest(testId, context)
-                        : CreateGetTestFilesNextPageRequest(nextLink, testId, context);
-                    var page = await LowLevelPageableHelpers.ProcessMessageAsync(_pipeline, message, context, "value", "nextLink", cancellationToken).ConfigureAwait(false);
-                    nextLink = page.ContinuationToken;
-                    yield return page;
-                } while (!string.IsNullOrEmpty(nextLink));
-            }
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetTestFilesRequest(testId, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetTestFilesNextPageRequest(nextLink, testId, context);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "LoadTestAdministrationClient.GetTestFiles", "value", "nextLink", context);
         }
 
         /// <summary> Get all test files. </summary>
@@ -721,24 +673,9 @@ namespace Azure.Developer.LoadTesting
         {
             Argument.AssertNotNullOrEmpty(testId, nameof(testId));
 
-            return GetTestFilesImplementation("LoadTestAdministrationClient.GetTestFiles", testId, context);
-        }
-
-        private Pageable<BinaryData> GetTestFilesImplementation(string diagnosticsScopeName, string testId, RequestContext context)
-        {
-            return PageableHelpers.CreatePageable(CreateEnumerable, ClientDiagnostics, diagnosticsScopeName);
-            IEnumerable<Page<BinaryData>> CreateEnumerable(string nextLink, int? pageSizeHint)
-            {
-                do
-                {
-                    var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetTestFilesRequest(testId, context)
-                        : CreateGetTestFilesNextPageRequest(nextLink, testId, context);
-                    var page = LowLevelPageableHelpers.ProcessMessage(_pipeline, message, context, "value", "nextLink");
-                    nextLink = page.ContinuationToken;
-                    yield return page;
-                } while (!string.IsNullOrEmpty(nextLink));
-            }
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetTestFilesRequest(testId, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetTestFilesNextPageRequest(nextLink, testId, context);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "LoadTestAdministrationClient.GetTestFiles", "value", "nextLink", context);
         }
 
         internal HttpMessage CreateCreateOrUpdateTestRequest(string testId, RequestContent content, RequestContext context)
