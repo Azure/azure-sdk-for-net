@@ -31,21 +31,20 @@ namespace Azure.Containers.ContainerRegistry.Specialized
 
         internal static string FormatDigest(byte[] hash)
         {
-            return $"sha256:{BytesToString(hash)}";
+            return BytesToString(hash);
         }
 
         private static string BytesToString(byte[] bytes)
         {
-            var builder = new StringBuilder();
+            var builder = new StringBuilder(72);
+            builder.Append("sha256:");
             for (int i = 0; i < bytes.Length; i++)
             {
 #pragma warning disable CA1305 // Specify IFormatProvider
-                builder.AppendFormat("{0:X2}", bytes[i]);
+                builder.AppendFormat("{0:x2}", bytes[i]);
 #pragma warning restore CA1305 // Specify IFormatProvider
             }
-#pragma warning disable CA1304 // Specify CultureInfo
-            return builder.ToString().ToLower();
-#pragma warning restore CA1304 // Specify CultureInfo
+            return builder.ToString();
         }
     }
 }
