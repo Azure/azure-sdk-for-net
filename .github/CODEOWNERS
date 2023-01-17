@@ -223,6 +223,8 @@
 /sdk/communication/Azure.ResourceManager.Communication/
 
 # ServiceLabel: %Compute %Service Attention
+#/<NotInRepo>/           @Drewm3 @TravisCragg-MSFT @nikhilpatel909 @jaylabell @sandeepraichura @hilaryw29 @MsGabsta
+
 # PRLabel: %Compute
 /sdk/compute/                                   @bilaakpan-ms @sandido @dkulkarni-ms @haagha @madewithsmiles @MS-syh2qs @grizzlytheodore @amjads1 @avirishuv @vaibhav-agar @Drewm3
 
