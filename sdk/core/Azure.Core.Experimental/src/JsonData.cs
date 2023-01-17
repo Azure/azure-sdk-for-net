@@ -86,6 +86,68 @@ namespace Azure.Core.Dynamic
             }
         }
 
+        // Note: internal implementation reading original data and writing to a buffer while
+        // iterating over tokens.  Currently implemented without change-tracking in order to
+        // prove correctness.
+        internal void WriteElementTo(Utf8JsonWriter writer)
+        {
+            Span<byte> original = _original.Span;
+            Utf8JsonReader reader = new Utf8JsonReader(original);
+            while (reader.Read())
+            {
+                switch (reader.TokenType)
+                {
+                    case JsonTokenType.StartObject:
+                        writer.WriteStartObject();
+                        //WriteComplexElement(index, writer);
+                        WriteComplexElement(reader, writer);
+                        return;
+                    //case JsonTokenType.StartArray:
+                    //    writer.WriteStartArray();
+                    //    WriteComplexElement(index, writer);
+                    //    return;
+                    case JsonTokenType.String:
+                        WriteString(reader, writer);
+                        return;
+                    case JsonTokenType.Number:
+                        //writer.WriteNumberValue(_utf8Json.Slice(row.Location, row.SizeOrLength).Span);
+                        return;
+                    case JsonTokenType.True:
+                        writer.WriteBooleanValue(value: true);
+                        return;
+                    case JsonTokenType.False:
+                        writer.WriteBooleanValue(value: false);
+                        return;
+                    case JsonTokenType.Null:
+                        writer.WriteNullValue();
+                        return;
+                }
+            }
+        }
+
+        private static void WriteComplexElement(Utf8JsonReader reader, Utf8JsonWriter writer)
+        {
+            while (reader.Read())
+            {
+                switch (reader.TokenType)
+                {
+                    case JsonTokenType.PropertyName:
+                        writer.WritePropertyName(reader.GetString());
+                        continue;
+
+                    case JsonTokenType.EndObject:
+                        writer.WriteEndObject();
+                        return;
+                }
+            }
+        }
+
+        private static void WriteString(Utf8JsonReader reader, Utf8JsonWriter writer)
+        {
+            writer.WriteStringValue(reader.ValueSpan);
+            return;
+        }
+
         private void WriteTheHardWay(Utf8JsonWriter writer)
         {
             // TODO: Handle arrays
