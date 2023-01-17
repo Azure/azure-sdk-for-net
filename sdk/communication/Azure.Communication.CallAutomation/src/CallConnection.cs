@@ -523,10 +523,8 @@ namespace Azure.Communication.CallAutomation
         public virtual async Task<Response<RemoveParticipantsResult>> RemoveParticipantsAsync(IEnumerable<CommunicationIdentifier> participantsToRemove, string operationContext = default, CancellationToken cancellationToken = default)
         {
             RemoveParticipantsOptions options = new RemoveParticipantsOptions(participantsToRemove);
-            if (!String.IsNullOrEmpty(operationContext))
-            {
-                options.OperationContext = options.OperationContext == default ? Guid.NewGuid().ToString() : options.OperationContext;
-            }
+
+            options.OperationContext = operationContext == default ? Guid.NewGuid().ToString() : operationContext;
 
             return await RemoveParticipantsAsync(options, cancellationToken).ConfigureAwait(false);
         }
@@ -585,10 +583,8 @@ namespace Azure.Communication.CallAutomation
         public virtual Response<RemoveParticipantsResult> RemoveParticipants(IEnumerable<CommunicationIdentifier> participantsToRemove, string operationContext = default, CancellationToken cancellationToken = default)
         {
             RemoveParticipantsOptions options = new RemoveParticipantsOptions(participantsToRemove);
-            if (!String.IsNullOrEmpty(operationContext))
-            {
-                options.OperationContext = options.OperationContext == default ? Guid.NewGuid().ToString() : options.OperationContext;
-            }
+
+            options.OperationContext = operationContext == default ? Guid.NewGuid().ToString() : operationContext;
 
             return RemoveParticipants(options, cancellationToken);
         }
