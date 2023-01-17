@@ -2,12 +2,6 @@
 
 ## 1.1.0-beta.1 (2023-01-17)
 
-### Features Added
-
-### Breaking Changes
-
-### Bugs Fixed
-
 ### Other Changes
 - Support kusto pool private link data
 
