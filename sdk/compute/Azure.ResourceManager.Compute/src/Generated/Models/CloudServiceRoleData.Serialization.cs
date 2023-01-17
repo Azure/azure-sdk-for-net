@@ -18,11 +18,11 @@ namespace Azure.ResourceManager.Compute
         {
             Optional<AzureLocation> location = default;
             Optional<CloudServiceRoleSku> sku = default;
+            Optional<CloudServiceRoleProperties> properties = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            Optional<string> uniqueId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("location"))
@@ -43,6 +43,16 @@ namespace Azure.ResourceManager.Compute
                         continue;
                     }
                     sku = CloudServiceRoleSku.DeserializeCloudServiceRoleSku(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("properties"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    properties = CloudServiceRoleProperties.DeserializeCloudServiceRoleProperties(property.Value);
                     continue;
                 }
                 if (property.NameEquals("id"))
@@ -70,25 +80,8 @@ namespace Azure.ResourceManager.Compute
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    foreach (var property0 in property.Value.EnumerateObject())
-                    {
-                        if (property0.NameEquals("uniqueId"))
-                        {
-                            uniqueId = property0.Value.GetString();
-                            continue;
-                        }
-                    }
-                    continue;
-                }
             }
-            return new CloudServiceRoleData(id, name, type, systemData.Value, Optional.ToNullable(location), sku.Value, uniqueId.Value);
+            return new CloudServiceRoleData(id, name, type, systemData.Value, Optional.ToNullable(location), sku.Value, properties.Value);
         }
     }
 }

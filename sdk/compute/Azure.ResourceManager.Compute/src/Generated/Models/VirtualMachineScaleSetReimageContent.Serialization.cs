@@ -30,6 +30,16 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WritePropertyName("tempDisk");
                 writer.WriteBooleanValue(TempDisk.Value);
             }
+            if (Optional.IsDefined(ExactVersion))
+            {
+                writer.WritePropertyName("exactVersion");
+                writer.WriteStringValue(ExactVersion);
+            }
+            if (Optional.IsDefined(OSProfile))
+            {
+                writer.WritePropertyName("osProfile");
+                writer.WriteObjectValue(OSProfile);
+            }
             writer.WriteEndObject();
         }
     }

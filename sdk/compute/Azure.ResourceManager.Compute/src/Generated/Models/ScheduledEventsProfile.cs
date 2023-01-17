@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> The ScheduledEventsProfile. </summary>
-    internal partial class ScheduledEventsProfile
+    public partial class ScheduledEventsProfile
     {
         /// <summary> Initializes a new instance of ScheduledEventsProfile. </summary>
         public ScheduledEventsProfile()
@@ -17,12 +17,16 @@ namespace Azure.ResourceManager.Compute.Models
 
         /// <summary> Initializes a new instance of ScheduledEventsProfile. </summary>
         /// <param name="terminateNotificationProfile"> Specifies Terminate Scheduled Event related configurations. </param>
-        internal ScheduledEventsProfile(TerminateNotificationProfile terminateNotificationProfile)
+        /// <param name="osImageNotificationProfile"> Specifies OS Image Scheduled Event related configurations. </param>
+        internal ScheduledEventsProfile(TerminateNotificationProfile terminateNotificationProfile, OSImageNotificationProfile osImageNotificationProfile)
         {
             TerminateNotificationProfile = terminateNotificationProfile;
+            OSImageNotificationProfile = osImageNotificationProfile;
         }
 
         /// <summary> Specifies Terminate Scheduled Event related configurations. </summary>
         public TerminateNotificationProfile TerminateNotificationProfile { get; set; }
+        /// <summary> Specifies OS Image Scheduled Event related configurations. </summary>
+        public OSImageNotificationProfile OSImageNotificationProfile { get; set; }
     }
 }

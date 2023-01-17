@@ -7,7 +7,6 @@
 
 using System;
 using Azure.Core;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -16,58 +15,20 @@ namespace Azure.ResourceManager.Compute.Models
     {
         /// <summary> Initializes a new instance of LoadBalancerFrontendIPConfiguration. </summary>
         /// <param name="name"> The name of the resource that is unique within the set of frontend IP configurations used by the load balancer. This name can be used to access the resource. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public LoadBalancerFrontendIPConfiguration(string name)
+        /// <param name="properties"> Properties of load balancer frontend ip configuration. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="properties"/> is null. </exception>
+        public LoadBalancerFrontendIPConfiguration(string name, LoadBalancerFrontendIPConfigurationProperties properties)
         {
             Argument.AssertNotNull(name, nameof(name));
+            Argument.AssertNotNull(properties, nameof(properties));
 
             Name = name;
-        }
-
-        /// <summary> Initializes a new instance of LoadBalancerFrontendIPConfiguration. </summary>
-        /// <param name="name"> The name of the resource that is unique within the set of frontend IP configurations used by the load balancer. This name can be used to access the resource. </param>
-        /// <param name="publicIPAddress"> The reference to the public ip address resource. </param>
-        /// <param name="subnet"> The reference to the virtual network subnet resource. </param>
-        /// <param name="privateIPAddress"> The virtual network private IP address of the IP configuration. </param>
-        internal LoadBalancerFrontendIPConfiguration(string name, WritableSubResource publicIPAddress, WritableSubResource subnet, string privateIPAddress)
-        {
-            Name = name;
-            PublicIPAddress = publicIPAddress;
-            Subnet = subnet;
-            PrivateIPAddress = privateIPAddress;
+            Properties = properties;
         }
 
         /// <summary> The name of the resource that is unique within the set of frontend IP configurations used by the load balancer. This name can be used to access the resource. </summary>
         public string Name { get; set; }
-        /// <summary> The reference to the public ip address resource. </summary>
-        internal WritableSubResource PublicIPAddress { get; set; }
-        /// <summary> Gets or sets Id. </summary>
-        public ResourceIdentifier PublicIPAddressId
-        {
-            get => PublicIPAddress is null ? default : PublicIPAddress.Id;
-            set
-            {
-                if (PublicIPAddress is null)
-                    PublicIPAddress = new WritableSubResource();
-                PublicIPAddress.Id = value;
-            }
-        }
-
-        /// <summary> The reference to the virtual network subnet resource. </summary>
-        internal WritableSubResource Subnet { get; set; }
-        /// <summary> Gets or sets Id. </summary>
-        public ResourceIdentifier SubnetId
-        {
-            get => Subnet is null ? default : Subnet.Id;
-            set
-            {
-                if (Subnet is null)
-                    Subnet = new WritableSubResource();
-                Subnet.Id = value;
-            }
-        }
-
-        /// <summary> The virtual network private IP address of the IP configuration. </summary>
-        public string PrivateIPAddress { get; set; }
+        /// <summary> Properties of load balancer frontend ip configuration. </summary>
+        public LoadBalancerFrontendIPConfigurationProperties Properties { get; set; }
     }
 }
