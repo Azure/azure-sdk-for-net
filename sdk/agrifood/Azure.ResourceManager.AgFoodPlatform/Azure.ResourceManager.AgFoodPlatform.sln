@@ -7,6 +7,7 @@ Project("{0DD48B31-CFBE-46EF-9E83-76C0ACFBAFA6}") = "Azure.ResourceManager.AgFoo
 EndProject
 Project("{0DD48B31-CFBE-46EF-9E83-76C0ACFBAFA6}") = "Azure.ResourceManager.AgFoodPlatform.Tests", "tests\Azure.ResourceManager.AgFoodPlatform.Tests.csproj", "{660D73A2-AD9B-4FED-A5F1-B927BF2022B2}"
 EndProject
+Project("{0DD48B31-CFBE-46EF-9E83-76C0ACFBAFA6}") = "Azure.ResourceManager.AgFoodPlatform.Samples", "samples\Azure.ResourceManager.AgFoodPlatform.Samples.csproj", "{E8528A62-C1D5-4248-ADEF-3E51E9A17B11}"
 Global
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

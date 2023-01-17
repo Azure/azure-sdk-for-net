@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -57,8 +56,16 @@ namespace Azure.ResourceManager.DeploymentManager
 
         /// <summary>
         /// This is an asynchronous operation and can be polled to completion using the location header returned by this operation.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DeploymentManager/rollouts/{rolloutName}
-        /// Operation Id: Rollouts_CreateOrUpdate
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DeploymentManager/rollouts/{rolloutName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Rollouts_CreateOrUpdate</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="rolloutName"> The rollout name. </param>
@@ -90,8 +97,16 @@ namespace Azure.ResourceManager.DeploymentManager
 
         /// <summary>
         /// This is an asynchronous operation and can be polled to completion using the location header returned by this operation.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DeploymentManager/rollouts/{rolloutName}
-        /// Operation Id: Rollouts_CreateOrUpdate
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DeploymentManager/rollouts/{rolloutName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Rollouts_CreateOrUpdate</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="rolloutName"> The rollout name. </param>
@@ -123,8 +138,16 @@ namespace Azure.ResourceManager.DeploymentManager
 
         /// <summary>
         /// Gets detailed information of a rollout.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DeploymentManager/rollouts/{rolloutName}
-        /// Operation Id: Rollouts_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DeploymentManager/rollouts/{rolloutName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Rollouts_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="rolloutName"> The rollout name. </param>
         /// <param name="retryAttempt"> Rollout retry attempt ordinal to get the result of. If not specified, result of the latest attempt will be returned. </param>
@@ -153,8 +176,16 @@ namespace Azure.ResourceManager.DeploymentManager
 
         /// <summary>
         /// Gets detailed information of a rollout.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DeploymentManager/rollouts/{rolloutName}
-        /// Operation Id: Rollouts_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DeploymentManager/rollouts/{rolloutName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Rollouts_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="rolloutName"> The rollout name. </param>
         /// <param name="retryAttempt"> Rollout retry attempt ordinal to get the result of. If not specified, result of the latest attempt will be returned. </param>
@@ -183,62 +214,58 @@ namespace Azure.ResourceManager.DeploymentManager
 
         /// <summary>
         /// Lists the rollouts in a resource group.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DeploymentManager/rollouts
-        /// Operation Id: Rollouts_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DeploymentManager/rollouts</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Rollouts_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="RolloutResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<RolloutResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<RolloutResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _rolloutClientDiagnostics.CreateScope("RolloutCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _rolloutRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Select(value => new RolloutResource(Client, value)), null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _rolloutRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new RolloutResource(Client, RolloutData.DeserializeRolloutData(e)), _rolloutClientDiagnostics, Pipeline, "RolloutCollection.GetAll", "", null, cancellationToken);
         }
 
         /// <summary>
         /// Lists the rollouts in a resource group.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DeploymentManager/rollouts
-        /// Operation Id: Rollouts_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DeploymentManager/rollouts</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Rollouts_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="RolloutResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<RolloutResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<RolloutResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _rolloutClientDiagnostics.CreateScope("RolloutCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _rolloutRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Select(value => new RolloutResource(Client, value)), null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _rolloutRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new RolloutResource(Client, RolloutData.DeserializeRolloutData(e)), _rolloutClientDiagnostics, Pipeline, "RolloutCollection.GetAll", "", null, cancellationToken);
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DeploymentManager/rollouts/{rolloutName}
-        /// Operation Id: Rollouts_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DeploymentManager/rollouts/{rolloutName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Rollouts_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="rolloutName"> The rollout name. </param>
         /// <param name="retryAttempt"> Rollout retry attempt ordinal to get the result of. If not specified, result of the latest attempt will be returned. </param>
@@ -265,8 +292,16 @@ namespace Azure.ResourceManager.DeploymentManager
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DeploymentManager/rollouts/{rolloutName}
-        /// Operation Id: Rollouts_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DeploymentManager/rollouts/{rolloutName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Rollouts_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="rolloutName"> The rollout name. </param>
         /// <param name="retryAttempt"> Rollout retry attempt ordinal to get the result of. If not specified, result of the latest attempt will be returned. </param>

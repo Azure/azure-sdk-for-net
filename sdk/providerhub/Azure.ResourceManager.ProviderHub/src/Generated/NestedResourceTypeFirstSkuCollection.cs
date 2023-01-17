@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -60,8 +59,16 @@ namespace Azure.ResourceManager.ProviderHub
 
         /// <summary>
         /// Creates or updates the resource type skus in the given resource type.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.ProviderHub/providerRegistrations/{providerNamespace}/resourcetypeRegistrations/{resourceType}/resourcetypeRegistrations/{nestedResourceTypeFirst}/skus/{sku}
-        /// Operation Id: Skus_CreateOrUpdateNestedResourceTypeFirst
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ProviderHub/providerRegistrations/{providerNamespace}/resourcetypeRegistrations/{resourceType}/resourcetypeRegistrations/{nestedResourceTypeFirst}/skus/{sku}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Skus_CreateOrUpdateNestedResourceTypeFirst</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="sku"> The SKU. </param>
@@ -93,8 +100,16 @@ namespace Azure.ResourceManager.ProviderHub
 
         /// <summary>
         /// Creates or updates the resource type skus in the given resource type.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.ProviderHub/providerRegistrations/{providerNamespace}/resourcetypeRegistrations/{resourceType}/resourcetypeRegistrations/{nestedResourceTypeFirst}/skus/{sku}
-        /// Operation Id: Skus_CreateOrUpdateNestedResourceTypeFirst
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ProviderHub/providerRegistrations/{providerNamespace}/resourcetypeRegistrations/{resourceType}/resourcetypeRegistrations/{nestedResourceTypeFirst}/skus/{sku}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Skus_CreateOrUpdateNestedResourceTypeFirst</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="sku"> The SKU. </param>
@@ -126,8 +141,16 @@ namespace Azure.ResourceManager.ProviderHub
 
         /// <summary>
         /// Gets the sku details for the given resource type and sku name.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.ProviderHub/providerRegistrations/{providerNamespace}/resourcetypeRegistrations/{resourceType}/resourcetypeRegistrations/{nestedResourceTypeFirst}/skus/{sku}
-        /// Operation Id: Skus_GetNestedResourceTypeFirst
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ProviderHub/providerRegistrations/{providerNamespace}/resourcetypeRegistrations/{resourceType}/resourcetypeRegistrations/{nestedResourceTypeFirst}/skus/{sku}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Skus_GetNestedResourceTypeFirst</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="sku"> The SKU. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -155,8 +178,16 @@ namespace Azure.ResourceManager.ProviderHub
 
         /// <summary>
         /// Gets the sku details for the given resource type and sku name.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.ProviderHub/providerRegistrations/{providerNamespace}/resourcetypeRegistrations/{resourceType}/resourcetypeRegistrations/{nestedResourceTypeFirst}/skus/{sku}
-        /// Operation Id: Skus_GetNestedResourceTypeFirst
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ProviderHub/providerRegistrations/{providerNamespace}/resourcetypeRegistrations/{resourceType}/resourcetypeRegistrations/{nestedResourceTypeFirst}/skus/{sku}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Skus_GetNestedResourceTypeFirst</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="sku"> The SKU. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -184,92 +215,60 @@ namespace Azure.ResourceManager.ProviderHub
 
         /// <summary>
         /// Gets the list of skus for the given resource type.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.ProviderHub/providerRegistrations/{providerNamespace}/resourcetypeRegistrations/{resourceType}/resourcetypeRegistrations/{nestedResourceTypeFirst}/skus
-        /// Operation Id: Skus_ListByResourceTypeRegistrationsNestedResourceTypeFirst
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ProviderHub/providerRegistrations/{providerNamespace}/resourcetypeRegistrations/{resourceType}/resourcetypeRegistrations/{nestedResourceTypeFirst}/skus</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Skus_ListByResourceTypeRegistrationsNestedResourceTypeFirst</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="NestedResourceTypeFirstSkuResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<NestedResourceTypeFirstSkuResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<NestedResourceTypeFirstSkuResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _nestedResourceTypeFirstSkuSkusClientDiagnostics.CreateScope("NestedResourceTypeFirstSkuCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _nestedResourceTypeFirstSkuSkusRestClient.ListByResourceTypeRegistrationsNestedResourceTypeFirstAsync(Id.SubscriptionId, Id.Parent.Name, Id.Name, _nestedResourceTypeFirst, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new NestedResourceTypeFirstSkuResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<NestedResourceTypeFirstSkuResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _nestedResourceTypeFirstSkuSkusClientDiagnostics.CreateScope("NestedResourceTypeFirstSkuCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _nestedResourceTypeFirstSkuSkusRestClient.ListByResourceTypeRegistrationsNestedResourceTypeFirstNextPageAsync(nextLink, Id.SubscriptionId, Id.Parent.Name, Id.Name, _nestedResourceTypeFirst, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new NestedResourceTypeFirstSkuResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _nestedResourceTypeFirstSkuSkusRestClient.CreateListByResourceTypeRegistrationsNestedResourceTypeFirstRequest(Id.SubscriptionId, Id.Parent.Name, Id.Name, _nestedResourceTypeFirst);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _nestedResourceTypeFirstSkuSkusRestClient.CreateListByResourceTypeRegistrationsNestedResourceTypeFirstNextPageRequest(nextLink, Id.SubscriptionId, Id.Parent.Name, Id.Name, _nestedResourceTypeFirst);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new NestedResourceTypeFirstSkuResource(Client, SkuResourceData.DeserializeSkuResourceData(e)), _nestedResourceTypeFirstSkuSkusClientDiagnostics, Pipeline, "NestedResourceTypeFirstSkuCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Gets the list of skus for the given resource type.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.ProviderHub/providerRegistrations/{providerNamespace}/resourcetypeRegistrations/{resourceType}/resourcetypeRegistrations/{nestedResourceTypeFirst}/skus
-        /// Operation Id: Skus_ListByResourceTypeRegistrationsNestedResourceTypeFirst
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ProviderHub/providerRegistrations/{providerNamespace}/resourcetypeRegistrations/{resourceType}/resourcetypeRegistrations/{nestedResourceTypeFirst}/skus</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Skus_ListByResourceTypeRegistrationsNestedResourceTypeFirst</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="NestedResourceTypeFirstSkuResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<NestedResourceTypeFirstSkuResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<NestedResourceTypeFirstSkuResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _nestedResourceTypeFirstSkuSkusClientDiagnostics.CreateScope("NestedResourceTypeFirstSkuCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _nestedResourceTypeFirstSkuSkusRestClient.ListByResourceTypeRegistrationsNestedResourceTypeFirst(Id.SubscriptionId, Id.Parent.Name, Id.Name, _nestedResourceTypeFirst, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new NestedResourceTypeFirstSkuResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<NestedResourceTypeFirstSkuResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _nestedResourceTypeFirstSkuSkusClientDiagnostics.CreateScope("NestedResourceTypeFirstSkuCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _nestedResourceTypeFirstSkuSkusRestClient.ListByResourceTypeRegistrationsNestedResourceTypeFirstNextPage(nextLink, Id.SubscriptionId, Id.Parent.Name, Id.Name, _nestedResourceTypeFirst, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new NestedResourceTypeFirstSkuResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _nestedResourceTypeFirstSkuSkusRestClient.CreateListByResourceTypeRegistrationsNestedResourceTypeFirstRequest(Id.SubscriptionId, Id.Parent.Name, Id.Name, _nestedResourceTypeFirst);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _nestedResourceTypeFirstSkuSkusRestClient.CreateListByResourceTypeRegistrationsNestedResourceTypeFirstNextPageRequest(nextLink, Id.SubscriptionId, Id.Parent.Name, Id.Name, _nestedResourceTypeFirst);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new NestedResourceTypeFirstSkuResource(Client, SkuResourceData.DeserializeSkuResourceData(e)), _nestedResourceTypeFirstSkuSkusClientDiagnostics, Pipeline, "NestedResourceTypeFirstSkuCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.ProviderHub/providerRegistrations/{providerNamespace}/resourcetypeRegistrations/{resourceType}/resourcetypeRegistrations/{nestedResourceTypeFirst}/skus/{sku}
-        /// Operation Id: Skus_GetNestedResourceTypeFirst
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ProviderHub/providerRegistrations/{providerNamespace}/resourcetypeRegistrations/{resourceType}/resourcetypeRegistrations/{nestedResourceTypeFirst}/skus/{sku}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Skus_GetNestedResourceTypeFirst</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="sku"> The SKU. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -295,8 +294,16 @@ namespace Azure.ResourceManager.ProviderHub
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.ProviderHub/providerRegistrations/{providerNamespace}/resourcetypeRegistrations/{resourceType}/resourcetypeRegistrations/{nestedResourceTypeFirst}/skus/{sku}
-        /// Operation Id: Skus_GetNestedResourceTypeFirst
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ProviderHub/providerRegistrations/{providerNamespace}/resourcetypeRegistrations/{resourceType}/resourcetypeRegistrations/{nestedResourceTypeFirst}/skus/{sku}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Skus_GetNestedResourceTypeFirst</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="sku"> The SKU. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

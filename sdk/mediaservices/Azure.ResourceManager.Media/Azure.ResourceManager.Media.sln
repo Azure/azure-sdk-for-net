@@ -7,6 +7,8 @@ Project("{8D956EB5-B733-4192-B096-6B0AEF2E65F9}") = "Azure.ResourceManager.Media
 EndProject
 Project("{8D956EB5-B733-4192-B096-6B0AEF2E65F9}") = "Azure.ResourceManager.Media.Tests", "tests\Azure.ResourceManager.Media.Tests.csproj", "{8C0A52A9-BDF3-4224-AA6A-182BDFB095D4}"
 EndProject
+Project("{8D956EB5-B733-4192-B096-6B0AEF2E65F9}") = "Azure.ResourceManager.Media.Samples", "samples\Azure.ResourceManager.Media.Samples.csproj", "{4A3B206A-3A55-421B-B2FC-EC85EE16C9E6}"
+EndProject
 Global
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

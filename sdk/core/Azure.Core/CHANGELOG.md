@@ -1,6 +1,16 @@
 # Release History
 
-## 1.27.0-beta.1 (Unreleased)
+## 1.28.0-beta.1 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
+## 1.27.0 (2023-01-10)
 
 ### Features Added
 
@@ -8,12 +18,6 @@
 - Added `RetryPolicy` property to `ClientOptions` to allow library authors to set a custom retry policy.
 - Added `MessageProcessingContext` type and `ProcessingContext` property to `HttpMessage` which contains information about the message as it traverses through the pipeline.
 - Added `SetProperty` and `TryGetProperty` overloads to `HttpMessage` to allow setting property values using a `Type` as the key.
-
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
 
 ## 1.26.0 (2022-11-08)
 

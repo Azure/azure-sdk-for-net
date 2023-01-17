@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
     /// <summary> Properties of Cognitive Services account commitment plan. </summary>
@@ -16,14 +18,18 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         }
 
         /// <summary> Initializes a new instance of CommitmentPlanProperties. </summary>
+        /// <param name="provisioningState"> Gets the status of the resource at the time the operation was called. </param>
+        /// <param name="commitmentPlanGuid"> Commitment plan guid. </param>
         /// <param name="hostingModel"> Account hosting model. </param>
         /// <param name="planType"> Commitment plan type. </param>
         /// <param name="current"> Cognitive Services account commitment period. </param>
         /// <param name="autoRenew"> AutoRenew commitment plan. </param>
         /// <param name="next"> Cognitive Services account commitment period. </param>
         /// <param name="last"> Cognitive Services account commitment period. </param>
-        internal CommitmentPlanProperties(ServiceAccountHostingModel? hostingModel, string planType, CommitmentPeriod current, bool? autoRenew, CommitmentPeriod next, CommitmentPeriod last)
+        internal CommitmentPlanProperties(CommitmentPlanProvisioningState? provisioningState, Guid? commitmentPlanGuid, ServiceAccountHostingModel? hostingModel, string planType, CommitmentPeriod current, bool? autoRenew, CommitmentPeriod next, CommitmentPeriod last)
         {
+            ProvisioningState = provisioningState;
+            CommitmentPlanGuid = commitmentPlanGuid;
             HostingModel = hostingModel;
             PlanType = planType;
             Current = current;
@@ -32,6 +38,10 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             Last = last;
         }
 
+        /// <summary> Gets the status of the resource at the time the operation was called. </summary>
+        public CommitmentPlanProvisioningState? ProvisioningState { get; }
+        /// <summary> Commitment plan guid. </summary>
+        public Guid? CommitmentPlanGuid { get; set; }
         /// <summary> Account hosting model. </summary>
         public ServiceAccountHostingModel? HostingModel { get; set; }
         /// <summary> Commitment plan type. </summary>

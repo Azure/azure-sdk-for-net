@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary>
-    /// An enum describing the unit of quota measurement.
-    /// Serialized Name: QuotaUnit
-    /// </summary>
+    /// <summary> An enum describing the unit of quota measurement. </summary>
     public readonly partial struct MachineLearningQuotaUnit : IEquatable<MachineLearningQuotaUnit>
     {
         private readonly string _value;
@@ -27,10 +24,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         private const string CountValue = "Count";
 
-        /// <summary>
-        /// Count
-        /// Serialized Name: QuotaUnit.Count
-        /// </summary>
+        /// <summary> Count. </summary>
         public static MachineLearningQuotaUnit Count { get; } = new MachineLearningQuotaUnit(CountValue);
         /// <summary> Determines if two <see cref="MachineLearningQuotaUnit"/> values are the same. </summary>
         public static bool operator ==(MachineLearningQuotaUnit left, MachineLearningQuotaUnit right) => left.Equals(right);

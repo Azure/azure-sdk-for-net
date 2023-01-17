@@ -7,17 +7,11 @@
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary>
-    /// The UnknownDatastoreCredentials.
-    /// Serialized Name: UnknownDatastoreCredentials
-    /// </summary>
+    /// <summary> The UnknownDatastoreCredentials. </summary>
     internal partial class UnknownDatastoreCredentials : MachineLearningDatastoreCredentials
     {
         /// <summary> Initializes a new instance of UnknownDatastoreCredentials. </summary>
-        /// <param name="credentialsType">
-        /// [Required] Credential type used to authentication with storage.
-        /// Serialized Name: DatastoreCredentials.credentialsType
-        /// </param>
+        /// <param name="credentialsType"> [Required] Credential type used to authentication with storage. </param>
         internal UnknownDatastoreCredentials(CredentialsType credentialsType) : base(credentialsType)
         {
             CredentialsType = credentialsType;
