@@ -39,6 +39,11 @@ namespace Azure.ResourceManager.EventHubs
             writer.WriteStringValue(Location);
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
+            if (Optional.IsDefined(SupportsScaling))
+            {
+                writer.WritePropertyName("supportsScaling");
+                writer.WriteBooleanValue(SupportsScaling.Value);
+            }
             writer.WriteEndObject();
             writer.WriteEndObject();
         }
@@ -56,6 +61,7 @@ namespace Azure.ResourceManager.EventHubs
             Optional<DateTimeOffset> updatedAt = default;
             Optional<string> metricId = default;
             Optional<string> status = default;
+            Optional<bool> supportsScaling = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sku"))
@@ -110,7 +116,7 @@ namespace Azure.ResourceManager.EventHubs
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("properties"))
@@ -152,11 +158,21 @@ namespace Azure.ResourceManager.EventHubs
                             status = property0.Value.GetString();
                             continue;
                         }
+                        if (property0.NameEquals("supportsScaling"))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            supportsScaling = property0.Value.GetBoolean();
+                            continue;
+                        }
                     }
                     continue;
                 }
             }
-            return new EventHubsClusterData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, sku.Value, Optional.ToNullable(createdAt), Optional.ToNullable(updatedAt), metricId.Value, status.Value);
+            return new EventHubsClusterData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, sku.Value, Optional.ToNullable(createdAt), Optional.ToNullable(updatedAt), metricId.Value, status.Value, Optional.ToNullable(supportsScaling));
         }
     }
 }

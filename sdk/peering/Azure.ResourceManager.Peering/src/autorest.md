@@ -8,7 +8,7 @@ azure-arm: true
 csharp: true
 library-name: Peering
 namespace: Azure.ResourceManager.Peering
-require: https://github.com/Azure/azure-rest-api-specs/blob/aa8a23b8f92477d0fdce7af6ccffee1c604b3c56/specification/peering/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/5fc05d0f0b15cbf16de942cadce464b495c66a58/specification/peering/resource-manager/readme.md
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 skip-csproj: true
@@ -76,6 +76,7 @@ rename-mapping:
   SessionStateV4: PeeringSessionStateV4
   SessionStateV6: PeeringSessionStateV6
   LogAnalyticsWorkspaceProperties: PeeringLogAnalyticsWorkspaceProperties
+  RpUnbilledPrefix: RoutingPreferenceUnbilledPrefix
   PeeringLocation.properties.azureRegion: -|azure-location
   ExchangeConnection.connectionIdentifier: -|uuid
   ExchangePeeringFacility.microsoftIPv4Address: -|ip-address
@@ -86,6 +87,7 @@ rename-mapping:
   BgpSession.peerSessionIPv6Address: -|ip-address
   CdnPeeringPrefix.properties.azureRegion: -|azure-location
   PeeringServiceLocation.properties.azureRegion: -|azure-location
+  RpUnbilledPrefix.azureRegion: -|azure-location
 
 directive:
   - from: swagger-document

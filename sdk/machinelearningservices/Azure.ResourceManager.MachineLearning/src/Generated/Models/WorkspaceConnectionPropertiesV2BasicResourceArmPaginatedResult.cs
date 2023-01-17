@@ -17,20 +17,20 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary> Initializes a new instance of WorkspaceConnectionPropertiesV2BasicResourceArmPaginatedResult. </summary>
         internal WorkspaceConnectionPropertiesV2BasicResourceArmPaginatedResult()
         {
-            Value = new ChangeTrackingList<WorkspaceConnectionPropertiesV2BasicResourceData>();
+            Value = new ChangeTrackingList<MachineLearningWorkspaceConnectionData>();
         }
 
         /// <summary> Initializes a new instance of WorkspaceConnectionPropertiesV2BasicResourceArmPaginatedResult. </summary>
         /// <param name="value"></param>
         /// <param name="nextLink"></param>
-        internal WorkspaceConnectionPropertiesV2BasicResourceArmPaginatedResult(IReadOnlyList<WorkspaceConnectionPropertiesV2BasicResourceData> value, string nextLink)
+        internal WorkspaceConnectionPropertiesV2BasicResourceArmPaginatedResult(IReadOnlyList<MachineLearningWorkspaceConnectionData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> Gets the value. </summary>
-        public IReadOnlyList<WorkspaceConnectionPropertiesV2BasicResourceData> Value { get; }
+        public IReadOnlyList<MachineLearningWorkspaceConnectionData> Value { get; }
         /// <summary> Gets the next link. </summary>
         public string NextLink { get; }
     }

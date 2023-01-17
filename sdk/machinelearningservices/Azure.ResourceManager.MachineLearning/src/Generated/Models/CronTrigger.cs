@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> The CronTrigger. </summary>
-    public partial class CronTrigger : TriggerBase
+    public partial class CronTrigger : MachineLearningTriggerBase
     {
         /// <summary> Initializes a new instance of CronTrigger. </summary>
         /// <param name="expression">
@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             Argument.AssertNotNull(expression, nameof(expression));
 
             Expression = expression;
-            TriggerType = TriggerType.Cron;
+            TriggerType = MachineLearningTriggerType.Cron;
         }
 
         /// <summary> Initializes a new instance of CronTrigger. </summary>
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// [Required] Specifies cron expression of schedule.
         /// The expression should follow NCronTab format.
         /// </param>
-        internal CronTrigger(string endTime, string startTime, string timeZone, TriggerType triggerType, string expression) : base(endTime, startTime, timeZone, triggerType)
+        internal CronTrigger(string endTime, string startTime, string timeZone, MachineLearningTriggerType triggerType, string expression) : base(endTime, startTime, timeZone, triggerType)
         {
             Expression = expression;
             TriggerType = triggerType;

@@ -6,8 +6,6 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
-using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -16,7 +14,7 @@ using Azure.Core.Pipeline;
 
 namespace Azure.AI.AnomalyDetector
 {
-    // Data plane generated client. The AnomalyDetector service client.
+    // Data plane generated client.
     /// <summary> The AnomalyDetector service client. </summary>
     public partial class AnomalyDetectorClient
     {
@@ -69,154 +67,8 @@ namespace Azure.AI.AnomalyDetector
             _apiVersion = options.Version;
         }
 
-        /// <summary> List Multivariate Models. </summary>
-        /// <param name="skip"> Skip indicates how many models will be skipped. </param>
-        /// <param name="maxCount"> Top indicates how many models will be fetched. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <remarks> List models of a resource. </remarks>
-        public virtual AsyncPageable<AnomalyDetectionModel> GetMultivariateModelValuesAsync(int? skip = null, int? maxCount = null, CancellationToken cancellationToken = default)
-        {
-            async Task<Page<AnomalyDetectionModel>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = ClientDiagnostics.CreateScope("AnomalyDetectorClient.GetMultivariateModelValues");
-                scope.Start();
-                try
-                {
-                    var response = await GetMultivariateModelsFirstPageAsync(skip, maxCount, cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Models, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<AnomalyDetectionModel>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = ClientDiagnostics.CreateScope("AnomalyDetectorClient.GetMultivariateModelValues");
-                scope.Start();
-                try
-                {
-                    var response = await GetMultivariateModelsNextPageAsync(nextLink, skip, maxCount, cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Models, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
-        }
-
-        /// <summary> List Multivariate Models. </summary>
-        /// <param name="skip"> Skip indicates how many models will be skipped. </param>
-        /// <param name="maxCount"> Top indicates how many models will be fetched. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <remarks> List models of a resource. </remarks>
-        public virtual Pageable<AnomalyDetectionModel> GetMultivariateModelValues(int? skip = null, int? maxCount = null, CancellationToken cancellationToken = default)
-        {
-            Page<AnomalyDetectionModel> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = ClientDiagnostics.CreateScope("AnomalyDetectorClient.GetMultivariateModelValues");
-                scope.Start();
-                try
-                {
-                    var response = GetMultivariateModelsFirstPage(skip, maxCount, cancellationToken);
-                    return Page.FromValues(response.Value.Models, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<AnomalyDetectionModel> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = ClientDiagnostics.CreateScope("AnomalyDetectorClient.GetMultivariateModelValues");
-                scope.Start();
-                try
-                {
-                    var response = GetMultivariateModelsNextPage(nextLink, skip, maxCount, cancellationToken);
-                    return Page.FromValues(response.Value.Models, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
-        }
-
-        /// <summary> List Multivariate Models. </summary>
-        /// <param name="skip"> Skip indicates how many models will be skipped. </param>
-        /// <param name="maxCount"> Top indicates how many models will be fetched. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <remarks> List models of a resource. </remarks>
-        private async Task<Response<ModelList>> GetMultivariateModelsFirstPageAsync(int? skip = null, int? maxCount = null, CancellationToken cancellationToken = default)
-        {
-            RequestContext context = FromCancellationToken(cancellationToken);
-            using var message = CreateGetMultivariateModelsRequest(skip, maxCount, context);
-            Response response = await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-            return Response.FromValue(ModelList.FromResponse(response), response);
-        }
-
-        /// <summary> List Multivariate Models. </summary>
-        /// <param name="skip"> Skip indicates how many models will be skipped. </param>
-        /// <param name="maxCount"> Top indicates how many models will be fetched. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <remarks> List models of a resource. </remarks>
-        private Response<ModelList> GetMultivariateModelsFirstPage(int? skip = null, int? maxCount = null, CancellationToken cancellationToken = default)
-        {
-            RequestContext context = FromCancellationToken(cancellationToken);
-            using var message = CreateGetMultivariateModelsRequest(skip, maxCount, context);
-            Response response = _pipeline.ProcessMessage(message, context);
-            return Response.FromValue(ModelList.FromResponse(response), response);
-        }
-
-        /// <summary> List Multivariate Models. </summary>
-        /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="skip"> Skip indicates how many models will be skipped. </param>
-        /// <param name="maxCount"> Top indicates how many models will be fetched. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
-        /// <remarks> List models of a resource. </remarks>
-        private async Task<Response<ModelList>> GetMultivariateModelsNextPageAsync(string nextLink, int? skip = null, int? maxCount = null, CancellationToken cancellationToken = default)
-        {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-
-            RequestContext context = FromCancellationToken(cancellationToken);
-            using var message = CreateGetMultivariateModelsNextPageRequest(nextLink, skip, maxCount, context);
-            Response response = await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-            return Response.FromValue(ModelList.FromResponse(response), response);
-        }
-
-        /// <summary> List Multivariate Models. </summary>
-        /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="skip"> Skip indicates how many models will be skipped. </param>
-        /// <param name="maxCount"> Top indicates how many models will be fetched. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
-        /// <remarks> List models of a resource. </remarks>
-        private Response<ModelList> GetMultivariateModelsNextPage(string nextLink, int? skip = null, int? maxCount = null, CancellationToken cancellationToken = default)
-        {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-
-            RequestContext context = FromCancellationToken(cancellationToken);
-            using var message = CreateGetMultivariateModelsNextPageRequest(nextLink, skip, maxCount, context);
-            Response response = _pipeline.ProcessMessage(message, context);
-            return Response.FromValue(ModelList.FromResponse(response), response);
-        }
-
         /// <summary> Detect anomalies for the entire series in batch. </summary>
-        /// <param name="options"> The UnivariateDetectionOptions to use. </param>
+        /// <param name="options"> Method of univariate anomaly detection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
         /// <remarks>
@@ -225,17 +77,17 @@ namespace Azure.AI.AnomalyDetector
         /// are used to determine whether it is an anomaly. The entire detection can give
         /// user an overall status of the time series.
         /// </remarks>
-        public virtual async Task<Response<UnivariateDetectionResult>> DetectUnivariateEntireSeriesAsync(UnivariateDetectionOptions options, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<UnivariateEntireDetectionResult>> DetectUnivariateEntireSeriesAsync(UnivariateDetectionOptions options, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(options, nameof(options));
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await DetectUnivariateEntireSeriesAsync(options.ToRequestContent(), context).ConfigureAwait(false);
-            return Response.FromValue(UnivariateDetectionResult.FromResponse(response), response);
+            return Response.FromValue(UnivariateEntireDetectionResult.FromResponse(response), response);
         }
 
         /// <summary> Detect anomalies for the entire series in batch. </summary>
-        /// <param name="options"> The UnivariateDetectionOptions to use. </param>
+        /// <param name="options"> Method of univariate anomaly detection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
         /// <remarks>
@@ -244,13 +96,13 @@ namespace Azure.AI.AnomalyDetector
         /// are used to determine whether it is an anomaly. The entire detection can give
         /// user an overall status of the time series.
         /// </remarks>
-        public virtual Response<UnivariateDetectionResult> DetectUnivariateEntireSeries(UnivariateDetectionOptions options, CancellationToken cancellationToken = default)
+        public virtual Response<UnivariateEntireDetectionResult> DetectUnivariateEntireSeries(UnivariateDetectionOptions options, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(options, nameof(options));
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = DetectUnivariateEntireSeries(options.ToRequestContent(), context);
-            return Response.FromValue(UnivariateDetectionResult.FromResponse(response), response);
+            return Response.FromValue(UnivariateEntireDetectionResult.FromResponse(response), response);
         }
 
         /// <summary> Detect anomalies for the entire series in batch. </summary>
@@ -304,7 +156,7 @@ namespace Azure.AI.AnomalyDetector
         }
 
         /// <summary> Detect anomaly status of the latest point in time series. </summary>
-        /// <param name="options"> The UnivariateDetectionOptions to use. </param>
+        /// <param name="options"> Method of univariate anomaly detection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
         /// <remarks>
@@ -321,7 +173,7 @@ namespace Azure.AI.AnomalyDetector
         }
 
         /// <summary> Detect anomaly status of the latest point in time series. </summary>
-        /// <param name="options"> The UnivariateDetectionOptions to use. </param>
+        /// <param name="options"> Method of univariate anomaly detection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
         /// <remarks>
@@ -388,7 +240,7 @@ namespace Azure.AI.AnomalyDetector
         }
 
         /// <summary> Detect change point for the entire series. </summary>
-        /// <param name="options"> The UnivariateChangePointDetectionOptions to use. </param>
+        /// <param name="options"> Method of univariate anomaly detection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
         /// <remarks> Evaluate change point score of every series point. </remarks>
@@ -402,7 +254,7 @@ namespace Azure.AI.AnomalyDetector
         }
 
         /// <summary> Detect change point for the entire series. </summary>
-        /// <param name="options"> The UnivariateChangePointDetectionOptions to use. </param>
+        /// <param name="options"> Method of univariate anomaly detection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
         /// <remarks> Evaluate change point score of every series point. </remarks>
@@ -466,7 +318,7 @@ namespace Azure.AI.AnomalyDetector
         }
 
         /// <summary> Get Multivariate Anomaly Detection Result. </summary>
-        /// <param name="resultId"> The String to use. </param>
+        /// <param name="resultId"> ID of a batch detection result. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resultId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="resultId"/> is an empty string, and was expected to be non-empty. </exception>
@@ -494,7 +346,7 @@ namespace Azure.AI.AnomalyDetector
         }
 
         /// <summary> Get Multivariate Anomaly Detection Result. </summary>
-        /// <param name="resultId"> The String to use. </param>
+        /// <param name="resultId"> ID of a batch detection result. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resultId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="resultId"/> is an empty string, and was expected to be non-empty. </exception>
@@ -522,7 +374,7 @@ namespace Azure.AI.AnomalyDetector
         }
 
         /// <summary> Get Multivariate Anomaly Detection Result. </summary>
-        /// <param name="resultId"> The String to use. </param>
+        /// <param name="resultId"> ID of a batch detection result. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resultId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="resultId"/> is an empty string, and was expected to be non-empty. </exception>
@@ -548,7 +400,7 @@ namespace Azure.AI.AnomalyDetector
         }
 
         /// <summary> Get Multivariate Anomaly Detection Result. </summary>
-        /// <param name="resultId"> The String to use. </param>
+        /// <param name="resultId"> ID of a batch detection result. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resultId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="resultId"/> is an empty string, and was expected to be non-empty. </exception>
@@ -574,7 +426,7 @@ namespace Azure.AI.AnomalyDetector
         }
 
         /// <summary> Train a Multivariate Anomaly Detection Model. </summary>
-        /// <param name="modelInfo"> The ModelInfo to use. </param>
+        /// <param name="modelInfo"> Model information. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="modelInfo"/> is null. </exception>
         /// <remarks>
@@ -596,7 +448,7 @@ namespace Azure.AI.AnomalyDetector
         }
 
         /// <summary> Train a Multivariate Anomaly Detection Model. </summary>
-        /// <param name="modelInfo"> The ModelInfo to use. </param>
+        /// <param name="modelInfo"> Model information. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="modelInfo"/> is null. </exception>
         /// <remarks>
@@ -829,7 +681,7 @@ namespace Azure.AI.AnomalyDetector
 
         /// <summary> Detect Multivariate Anomaly. </summary>
         /// <param name="modelId"> Model identifier. </param>
-        /// <param name="options"> The MultivariateDetectionOptions to use. </param>
+        /// <param name="options"> Request of multivariate anomaly detection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="modelId"/> or <paramref name="options"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="modelId"/> is an empty string, and was expected to be non-empty. </exception>
@@ -841,7 +693,7 @@ namespace Azure.AI.AnomalyDetector
         /// externally accessible Azure storage Uri, either pointed to an Azure blob
         /// storage folder, or pointed to a CSV file in Azure blob storage.
         /// </remarks>
-        public virtual async Task<Response<MultivariateDetectionResult>> DetectMultivariateBatchAnomalyAsync(string modelId, MultivariateDetectionOptions options, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<MultivariateDetectionResult>> DetectMultivariateBatchAnomalyAsync(string modelId, MultivariateBatchDetectionOptions options, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(modelId, nameof(modelId));
             Argument.AssertNotNull(options, nameof(options));
@@ -853,7 +705,7 @@ namespace Azure.AI.AnomalyDetector
 
         /// <summary> Detect Multivariate Anomaly. </summary>
         /// <param name="modelId"> Model identifier. </param>
-        /// <param name="options"> The MultivariateDetectionOptions to use. </param>
+        /// <param name="options"> Request of multivariate anomaly detection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="modelId"/> or <paramref name="options"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="modelId"/> is an empty string, and was expected to be non-empty. </exception>
@@ -865,7 +717,7 @@ namespace Azure.AI.AnomalyDetector
         /// externally accessible Azure storage Uri, either pointed to an Azure blob
         /// storage folder, or pointed to a CSV file in Azure blob storage.
         /// </remarks>
-        public virtual Response<MultivariateDetectionResult> DetectMultivariateBatchAnomaly(string modelId, MultivariateDetectionOptions options, CancellationToken cancellationToken = default)
+        public virtual Response<MultivariateDetectionResult> DetectMultivariateBatchAnomaly(string modelId, MultivariateBatchDetectionOptions options, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(modelId, nameof(modelId));
             Argument.AssertNotNull(options, nameof(options));
@@ -933,7 +785,7 @@ namespace Azure.AI.AnomalyDetector
 
         /// <summary> Detect anomalies in the last point of the request body. </summary>
         /// <param name="modelId"> Model identifier. </param>
-        /// <param name="options"> The MultivariateLastDetectionOptions to use. </param>
+        /// <param name="options"> Request of last detection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="modelId"/> or <paramref name="options"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="modelId"/> is an empty string, and was expected to be non-empty. </exception>
@@ -955,7 +807,7 @@ namespace Azure.AI.AnomalyDetector
 
         /// <summary> Detect anomalies in the last point of the request body. </summary>
         /// <param name="modelId"> Model identifier. </param>
-        /// <param name="options"> The MultivariateLastDetectionOptions to use. </param>
+        /// <param name="options"> Request of last detection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="modelId"/> or <paramref name="options"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="modelId"/> is an empty string, and was expected to be non-empty. </exception>
@@ -1034,30 +886,41 @@ namespace Azure.AI.AnomalyDetector
         /// <summary> List Multivariate Models. </summary>
         /// <param name="skip"> Skip indicates how many models will be skipped. </param>
         /// <param name="maxCount"> Top indicates how many models will be fetched. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> List models of a resource. </remarks>
+        public virtual AsyncPageable<AnomalyDetectionModel> GetMultivariateModelValuesAsync(int? skip = null, int? maxCount = null, CancellationToken cancellationToken = default)
+        {
+            RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetMultivariateModelsRequest(skip, maxCount, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetMultivariateModelsNextPageRequest(nextLink, skip, maxCount, context);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, AnomalyDetectionModel.DeserializeAnomalyDetectionModel, ClientDiagnostics, _pipeline, "AnomalyDetectorClient.GetMultivariateModels", "models", "nextLink", context);
+        }
+
+        /// <summary> List Multivariate Models. </summary>
+        /// <param name="skip"> Skip indicates how many models will be skipped. </param>
+        /// <param name="maxCount"> Top indicates how many models will be fetched. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> List models of a resource. </remarks>
+        public virtual Pageable<AnomalyDetectionModel> GetMultivariateModelValues(int? skip = null, int? maxCount = null, CancellationToken cancellationToken = default)
+        {
+            RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetMultivariateModelsRequest(skip, maxCount, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetMultivariateModelsNextPageRequest(nextLink, skip, maxCount, context);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, AnomalyDetectionModel.DeserializeAnomalyDetectionModel, ClientDiagnostics, _pipeline, "AnomalyDetectorClient.GetMultivariateModels", "models", "nextLink", context);
+        }
+
+        /// <summary> List Multivariate Models. </summary>
+        /// <param name="skip"> Skip indicates how many models will be skipped. </param>
+        /// <param name="maxCount"> Top indicates how many models will be fetched. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
         /// <include file="Docs/AnomalyDetectorClient.xml" path="doc/members/member[@name='GetMultivariateModelsAsync(Int32,Int32,RequestContext)']/*" />
         public virtual AsyncPageable<BinaryData> GetMultivariateModelsAsync(int? skip = null, int? maxCount = null, RequestContext context = null)
         {
-            return GetMultivariateModelsImplementationAsync("AnomalyDetectorClient.GetMultivariateModels", skip, maxCount, context);
-        }
-
-        private AsyncPageable<BinaryData> GetMultivariateModelsImplementationAsync(string diagnosticsScopeName, int? skip, int? maxCount, RequestContext context)
-        {
-            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, ClientDiagnostics, diagnosticsScopeName);
-            async IAsyncEnumerable<Page<BinaryData>> CreateEnumerableAsync(string nextLink, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken = default)
-            {
-                do
-                {
-                    var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetMultivariateModelsRequest(skip, maxCount, context)
-                        : CreateGetMultivariateModelsNextPageRequest(nextLink, skip, maxCount, context);
-                    var page = await LowLevelPageableHelpers.ProcessMessageAsync(_pipeline, message, context, "models", "nextLink", cancellationToken).ConfigureAwait(false);
-                    nextLink = page.ContinuationToken;
-                    yield return page;
-                } while (!string.IsNullOrEmpty(nextLink));
-            }
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetMultivariateModelsRequest(skip, maxCount, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetMultivariateModelsNextPageRequest(nextLink, skip, maxCount, context);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "AnomalyDetectorClient.GetMultivariateModels", "models", "nextLink", context);
         }
 
         /// <summary> List Multivariate Models. </summary>
@@ -1069,24 +932,9 @@ namespace Azure.AI.AnomalyDetector
         /// <include file="Docs/AnomalyDetectorClient.xml" path="doc/members/member[@name='GetMultivariateModels(Int32,Int32,RequestContext)']/*" />
         public virtual Pageable<BinaryData> GetMultivariateModels(int? skip = null, int? maxCount = null, RequestContext context = null)
         {
-            return GetMultivariateModelsImplementation("AnomalyDetectorClient.GetMultivariateModels", skip, maxCount, context);
-        }
-
-        private Pageable<BinaryData> GetMultivariateModelsImplementation(string diagnosticsScopeName, int? skip, int? maxCount, RequestContext context)
-        {
-            return PageableHelpers.CreatePageable(CreateEnumerable, ClientDiagnostics, diagnosticsScopeName);
-            IEnumerable<Page<BinaryData>> CreateEnumerable(string nextLink, int? pageSizeHint)
-            {
-                do
-                {
-                    var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetMultivariateModelsRequest(skip, maxCount, context)
-                        : CreateGetMultivariateModelsNextPageRequest(nextLink, skip, maxCount, context);
-                    var page = LowLevelPageableHelpers.ProcessMessage(_pipeline, message, context, "models", "nextLink");
-                    nextLink = page.ContinuationToken;
-                    yield return page;
-                } while (!string.IsNullOrEmpty(nextLink));
-            }
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetMultivariateModelsRequest(skip, maxCount, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetMultivariateModelsNextPageRequest(nextLink, skip, maxCount, context);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "AnomalyDetectorClient.GetMultivariateModels", "models", "nextLink", context);
         }
 
         internal HttpMessage CreateDetectUnivariateEntireSeriesRequest(RequestContent content, RequestContext context)

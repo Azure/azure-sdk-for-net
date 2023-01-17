@@ -7,6 +7,8 @@ Project("{9BC5726F-3AA4-4090-A346-782803460FE7}") = "Azure.ResourceManager.Front
 EndProject
 Project("{9BC5726F-3AA4-4090-A346-782803460FE7}") = "Azure.ResourceManager.FrontDoor.Tests", "tests\Azure.ResourceManager.FrontDoor.Tests.csproj", "{4363C7E2-821F-4E6D-8BB3-D687AE03BD4D}"
 EndProject
+Project("{9BC5726F-3AA4-4090-A346-782803460FE7}") = "Azure.ResourceManager.FrontDoor.Samples", "samples\Azure.ResourceManager.FrontDoor.Samples.csproj", "{AD1F0EA9-0BAD-4F46-BE32-D09B7A73B4A0}"
+EndProject
 Global
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

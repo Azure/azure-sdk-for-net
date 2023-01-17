@@ -23,7 +23,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
             writer.WritePropertyName("name");
             writer.WriteStringValue(Name);
             writer.WritePropertyName("time");
-            writer.WriteStringValue(Time);
+            writer.WriteStringValue(Time, "O");
             if (Optional.IsDefined(SampleRate))
             {
                 writer.WritePropertyName("sampleRate");

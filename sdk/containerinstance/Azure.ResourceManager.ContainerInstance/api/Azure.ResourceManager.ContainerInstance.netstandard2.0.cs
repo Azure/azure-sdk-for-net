@@ -206,6 +206,9 @@ namespace Azure.ResourceManager.ContainerInstance.Models
     }
     public partial class ContainerGroupImageRegistryCredential
     {
+        public ContainerGroupImageRegistryCredential(string server) { }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        [System.ObsoleteAttribute("This method is obsolete and will be removed in a future release.", false)]
         public ContainerGroupImageRegistryCredential(string server, string username) { }
         public string Identity { get { throw null; } set { } }
         public System.Uri IdentityUri { get { throw null; } set { } }

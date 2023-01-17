@@ -16,6 +16,7 @@ namespace Azure.Data.SchemaRegistry.Models
         internal static SchemaVersions DeserializeSchemaVersions(JsonElement element)
         {
             Optional<IReadOnlyList<int>> schemaVersions = default;
+            Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("schemaVersions"))
@@ -33,8 +34,13 @@ namespace Azure.Data.SchemaRegistry.Models
                     schemaVersions = array;
                     continue;
                 }
+                if (property.NameEquals("nextLink"))
+                {
+                    nextLink = property.Value.GetString();
+                    continue;
+                }
             }
-            return new SchemaVersions(Optional.ToList(schemaVersions));
+            return new SchemaVersions(Optional.ToList(schemaVersions), nextLink.Value);
         }
     }
 }

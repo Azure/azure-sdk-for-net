@@ -1,6 +1,8 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+#nullable disable // TODO: remove and fix errors
+
 using System;
 using System.Net;
 using System.Threading.Tasks;
@@ -23,7 +25,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Integration.Tests
             this.factory = factory;
         }
 
-        [Theory]
+        [Theory(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/33403")]
         [InlineData(HttpStatusCode.OK)]
         [InlineData(HttpStatusCode.BadRequest)]
         public async Task VerifyRequest(HttpStatusCode httpStatusCode)

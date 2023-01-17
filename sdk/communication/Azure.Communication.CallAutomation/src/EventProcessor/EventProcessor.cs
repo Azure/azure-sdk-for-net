@@ -44,6 +44,7 @@ namespace Azure.Communication.CallAutomation
         /// <param name="events">Incoming CallAutomationEventBase object.</param>
         public void ProcessEvents(IEnumerable<CallAutomationEventBase> events)
         {
+            // Note: There will always be only 1 event coming from the service
             CallAutomationEventBase receivedEvent = events.FirstOrDefault();
 
             if (receivedEvent != null)

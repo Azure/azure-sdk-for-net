@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> The UnknownScheduleActionBase. </summary>
-    internal partial class UnknownScheduleActionBase : ScheduleActionBase
+    internal partial class UnknownScheduleActionBase : MachineLearningScheduleAction
     {
         /// <summary> Initializes a new instance of UnknownScheduleActionBase. </summary>
         /// <param name="actionType"> [Required] Specifies the action type of the schedule. </param>

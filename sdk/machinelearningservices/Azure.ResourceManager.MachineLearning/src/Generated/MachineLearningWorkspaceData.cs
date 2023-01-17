@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.MachineLearning
         public MachineLearningWorkspaceData(AzureLocation location) : base(location)
         {
             PrivateEndpointConnections = new ChangeTrackingList<MachineLearningPrivateEndpointConnectionData>();
-            SharedPrivateLinkResources = new ChangeTrackingList<SharedPrivateLinkResource>();
+            SharedPrivateLinkResources = new ChangeTrackingList<MachineLearningSharedPrivateLinkResource>();
         }
 
         /// <summary> Initializes a new instance of MachineLearningWorkspaceData. </summary>
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="discoveryUri"> Url for the discovery service to identify regional endpoints for machine learning experimentation services. </param>
         /// <param name="provisioningState"> The current deployment state of workspace resource. The provisioningState is to indicate states for resource provisioning. </param>
         /// <param name="encryption"> The encryption settings of Azure ML workspace. </param>
-        /// <param name="hbiWorkspace"> The flag to signal HBI data in the workspace and reduce diagnostic data collected by the service. </param>
+        /// <param name="isHbiWorkspace"> The flag to signal HBI data in the workspace and reduce diagnostic data collected by the service. </param>
         /// <param name="serviceProvisionedResourceGroup"> The name of the managed resource group created by workspace RP in customer subscription if the workspace is CMK workspace. </param>
         /// <param name="privateLinkCount"> Count of private connections in the workspace. </param>
         /// <param name="imageBuildCompute"> The compute name for image build. </param>
@@ -55,10 +55,10 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="serviceManagedResourcesSettings"> The service managed resource settings. </param>
         /// <param name="primaryUserAssignedIdentity"> The user assigned identity resource id that represents the workspace identity. </param>
         /// <param name="tenantId"> The tenant id associated with this workspace. </param>
-        /// <param name="storageHnsEnabled"> If the storage associated with the workspace has hierarchical namespace(HNS) enabled. </param>
+        /// <param name="isStorageHnsEnabled"> If the storage associated with the workspace has hierarchical namespace(HNS) enabled. </param>
         /// <param name="mlFlowTrackingUri"> The URI associated with this workspace that machine learning flow must point at to set up tracking. </param>
-        /// <param name="v1LegacyMode"> Enabling v1_legacy_mode may prevent you from using features provided by the v2 API. </param>
-        internal MachineLearningWorkspaceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, MachineLearningSku sku, string workspaceId, string description, string friendlyName, string keyVault, string applicationInsights, string containerRegistry, string storageAccount, Uri discoveryUri, ProvisioningState? provisioningState, EncryptionProperty encryption, bool? hbiWorkspace, string serviceProvisionedResourceGroup, int? privateLinkCount, string imageBuildCompute, bool? allowPublicAccessWhenBehindVnet, PublicNetworkAccess? publicNetworkAccess, IReadOnlyList<MachineLearningPrivateEndpointConnectionData> privateEndpointConnections, IList<SharedPrivateLinkResource> sharedPrivateLinkResources, NotebookResourceInfo notebookInfo, ServiceManagedResourcesSettings serviceManagedResourcesSettings, string primaryUserAssignedIdentity, Guid? tenantId, bool? storageHnsEnabled, Uri mlFlowTrackingUri, bool? v1LegacyMode) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="isV1LegacyMode"> Enabling v1_legacy_mode may prevent you from using features provided by the v2 API. </param>
+        internal MachineLearningWorkspaceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, MachineLearningSku sku, string workspaceId, string description, string friendlyName, string keyVault, string applicationInsights, string containerRegistry, string storageAccount, Uri discoveryUri, MachineLearningProvisioningState? provisioningState, MachineLearningEncryptionSetting encryption, bool? isHbiWorkspace, string serviceProvisionedResourceGroup, int? privateLinkCount, string imageBuildCompute, bool? allowPublicAccessWhenBehindVnet, MachineLearningPublicNetworkAccess? publicNetworkAccess, IReadOnlyList<MachineLearningPrivateEndpointConnectionData> privateEndpointConnections, IList<MachineLearningSharedPrivateLinkResource> sharedPrivateLinkResources, MachineLearningNotebookResourceInfo notebookInfo, ServiceManagedResourcesSettings serviceManagedResourcesSettings, string primaryUserAssignedIdentity, Guid? tenantId, bool? isStorageHnsEnabled, Uri mlFlowTrackingUri, bool? isV1LegacyMode) : base(id, name, resourceType, systemData, tags, location)
         {
             Identity = identity;
             Sku = sku;
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.MachineLearning
             DiscoveryUri = discoveryUri;
             ProvisioningState = provisioningState;
             Encryption = encryption;
-            HbiWorkspace = hbiWorkspace;
+            IsHbiWorkspace = isHbiWorkspace;
             ServiceProvisionedResourceGroup = serviceProvisionedResourceGroup;
             PrivateLinkCount = privateLinkCount;
             ImageBuildCompute = imageBuildCompute;
@@ -84,9 +84,9 @@ namespace Azure.ResourceManager.MachineLearning
             ServiceManagedResourcesSettings = serviceManagedResourcesSettings;
             PrimaryUserAssignedIdentity = primaryUserAssignedIdentity;
             TenantId = tenantId;
-            StorageHnsEnabled = storageHnsEnabled;
+            IsStorageHnsEnabled = isStorageHnsEnabled;
             MlFlowTrackingUri = mlFlowTrackingUri;
-            V1LegacyMode = v1LegacyMode;
+            IsV1LegacyMode = isV1LegacyMode;
         }
 
         /// <summary> The identity of the resource. </summary>
@@ -110,11 +110,11 @@ namespace Azure.ResourceManager.MachineLearning
         /// <summary> Url for the discovery service to identify regional endpoints for machine learning experimentation services. </summary>
         public Uri DiscoveryUri { get; set; }
         /// <summary> The current deployment state of workspace resource. The provisioningState is to indicate states for resource provisioning. </summary>
-        public ProvisioningState? ProvisioningState { get; }
+        public MachineLearningProvisioningState? ProvisioningState { get; }
         /// <summary> The encryption settings of Azure ML workspace. </summary>
-        public EncryptionProperty Encryption { get; set; }
+        public MachineLearningEncryptionSetting Encryption { get; set; }
         /// <summary> The flag to signal HBI data in the workspace and reduce diagnostic data collected by the service. </summary>
-        public bool? HbiWorkspace { get; set; }
+        public bool? IsHbiWorkspace { get; set; }
         /// <summary> The name of the managed resource group created by workspace RP in customer subscription if the workspace is CMK workspace. </summary>
         public string ServiceProvisionedResourceGroup { get; }
         /// <summary> Count of private connections in the workspace. </summary>
@@ -124,13 +124,13 @@ namespace Azure.ResourceManager.MachineLearning
         /// <summary> The flag to indicate whether to allow public access when behind VNet. </summary>
         public bool? AllowPublicAccessWhenBehindVnet { get; set; }
         /// <summary> Whether requests from Public Network are allowed. </summary>
-        public PublicNetworkAccess? PublicNetworkAccess { get; set; }
+        public MachineLearningPublicNetworkAccess? PublicNetworkAccess { get; set; }
         /// <summary> The list of private endpoint connections in the workspace. </summary>
         public IReadOnlyList<MachineLearningPrivateEndpointConnectionData> PrivateEndpointConnections { get; }
         /// <summary> The list of shared private link resources in this workspace. </summary>
-        public IList<SharedPrivateLinkResource> SharedPrivateLinkResources { get; }
+        public IList<MachineLearningSharedPrivateLinkResource> SharedPrivateLinkResources { get; }
         /// <summary> The notebook info of Azure ML workspace. </summary>
-        public NotebookResourceInfo NotebookInfo { get; }
+        public MachineLearningNotebookResourceInfo NotebookInfo { get; }
         /// <summary> The service managed resource settings. </summary>
         internal ServiceManagedResourcesSettings ServiceManagedResourcesSettings { get; set; }
         /// <summary> The throughput of the collections in cosmosdb database. </summary>
@@ -150,10 +150,10 @@ namespace Azure.ResourceManager.MachineLearning
         /// <summary> The tenant id associated with this workspace. </summary>
         public Guid? TenantId { get; }
         /// <summary> If the storage associated with the workspace has hierarchical namespace(HNS) enabled. </summary>
-        public bool? StorageHnsEnabled { get; }
+        public bool? IsStorageHnsEnabled { get; }
         /// <summary> The URI associated with this workspace that machine learning flow must point at to set up tracking. </summary>
         public Uri MlFlowTrackingUri { get; }
         /// <summary> Enabling v1_legacy_mode may prevent you from using features provided by the v2 API. </summary>
-        public bool? V1LegacyMode { get; set; }
+        public bool? IsV1LegacyMode { get; set; }
     }
 }

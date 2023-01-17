@@ -25,7 +25,7 @@ namespace Azure.AI.AnomalyDetector
                 if (DataSchema != null)
                 {
                     writer.WritePropertyName("dataSchema");
-                    writer.WriteStringValue(DataSchema.Value.ToSerialString());
+                    writer.WriteStringValue(DataSchema.Value.ToString());
                 }
                 else
                 {
@@ -70,16 +70,6 @@ namespace Azure.AI.AnomalyDetector
                     writer.WriteNull("status");
                 }
             }
-            if (Optional.IsCollectionDefined(Errors))
-            {
-                writer.WritePropertyName("errors");
-                writer.WriteStartArray();
-                foreach (var item in Errors)
-                {
-                    writer.WriteObjectValue(item);
-                }
-                writer.WriteEndArray();
-            }
             if (Optional.IsDefined(DiagnosticsInfo))
             {
                 writer.WritePropertyName("diagnosticsInfo");
@@ -98,7 +88,7 @@ namespace Azure.AI.AnomalyDetector
             Optional<int?> slidingWindow = default;
             Optional<AlignPolicy> alignPolicy = default;
             Optional<ModelStatus?> status = default;
-            Optional<IList<ErrorResponse>> errors = default;
+            Optional<IReadOnlyList<ErrorResponse>> errors = default;
             Optional<DiagnosticsInfo> diagnosticsInfo = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -114,7 +104,7 @@ namespace Azure.AI.AnomalyDetector
                         dataSchema = null;
                         continue;
                     }
-                    dataSchema = property.Value.GetString().ToDataSchema();
+                    dataSchema = new DataSchema(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("startTime"))

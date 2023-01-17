@@ -64,6 +64,8 @@ namespace Azure.Core
         /// </summary>
         public bool HasResponse => _response != null;
 
+        internal void ClearResponse() => _response = null;
+
         /// <summary>
         /// The <see cref="System.Threading.CancellationToken"/> to be used during the <see cref="HttpMessage"/> processing.
         /// </summary>
@@ -92,7 +94,7 @@ namespace Azure.Core
         /// <summary>
         /// The processing context for the message.
         /// </summary>
-        public ProcessingContext ProcessingContext => new(this);
+        public MessageProcessingContext ProcessingContext => new(this);
 
         internal void ApplyRequestContext(RequestContext? context, ResponseClassifier? classifier)
         {

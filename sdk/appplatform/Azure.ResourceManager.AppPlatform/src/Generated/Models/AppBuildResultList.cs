@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
         /// <summary> Initializes a new instance of AppBuildResultList. </summary>
         internal AppBuildResultList()
         {
-            Value = new ChangeTrackingList<AppBuildResultData>();
+            Value = new ChangeTrackingList<AppPlatformBuildResultData>();
         }
 
         /// <summary> Initializes a new instance of AppBuildResultList. </summary>
@@ -26,14 +26,14 @@ namespace Azure.ResourceManager.AppPlatform.Models
         /// URL client should use to fetch the next page (per server side paging).
         /// It&apos;s null for now, added for future use.
         /// </param>
-        internal AppBuildResultList(IReadOnlyList<AppBuildResultData> value, string nextLink)
+        internal AppBuildResultList(IReadOnlyList<AppPlatformBuildResultData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> Collection of Build result resources. </summary>
-        public IReadOnlyList<AppBuildResultData> Value { get; }
+        public IReadOnlyList<AppPlatformBuildResultData> Value { get; }
         /// <summary>
         /// URL client should use to fetch the next page (per server side paging).
         /// It&apos;s null for now, added for future use.

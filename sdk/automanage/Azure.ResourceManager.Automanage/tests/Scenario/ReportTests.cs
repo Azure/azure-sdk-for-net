@@ -26,10 +26,10 @@ namespace Azure.ResourceManager.Automanage.Tests.Scenario
             var profile = await CreateConfigurationProfile(profileCollection, profileName);
 
             // create VM from existing ARM template
-            var vm = await CreateVirtualMachineFromTemplate(vmName, rg);
+            var vmId = await CreateVirtualMachineFromTemplate(vmName, rg);
 
             // create assignment between custom profile and VM
-            await CreateAssignment(vm, profile.Id);
+            await CreateAssignment(vmId, profile.Id);
 
             // get reports
             var reports = rg.GetReportsByConfigurationProfileAssignmentsAsync(vmName, "default");

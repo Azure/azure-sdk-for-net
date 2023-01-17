@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -56,8 +55,16 @@ namespace Azure.ResourceManager.Authorization
 
         /// <summary>
         /// Gets provider operations metadata for the specified resource provider.
-        /// Request Path: /providers/Microsoft.Authorization/providerOperations/{resourceProviderNamespace}
-        /// Operation Id: ProviderOperationsMetadata_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Authorization/providerOperations/{resourceProviderNamespace}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ProviderOperationsMetadata_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="resourceProviderNamespace"> The namespace of the resource provider. </param>
         /// <param name="expand"> Specifies whether to expand the values. </param>
@@ -85,8 +92,16 @@ namespace Azure.ResourceManager.Authorization
 
         /// <summary>
         /// Gets provider operations metadata for the specified resource provider.
-        /// Request Path: /providers/Microsoft.Authorization/providerOperations/{resourceProviderNamespace}
-        /// Operation Id: ProviderOperationsMetadata_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Authorization/providerOperations/{resourceProviderNamespace}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ProviderOperationsMetadata_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="resourceProviderNamespace"> The namespace of the resource provider. </param>
         /// <param name="expand"> Specifies whether to expand the values. </param>
@@ -114,94 +129,62 @@ namespace Azure.ResourceManager.Authorization
 
         /// <summary>
         /// Gets provider operations metadata for all resource providers.
-        /// Request Path: /providers/Microsoft.Authorization/providerOperations
-        /// Operation Id: ProviderOperationsMetadata_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Authorization/providerOperations</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ProviderOperationsMetadata_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="expand"> Specifies whether to expand the values. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="AuthorizationProviderOperationsMetadataResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<AuthorizationProviderOperationsMetadataResource> GetAllAsync(string expand = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<AuthorizationProviderOperationsMetadataResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _authorizationProviderOperationsMetadataProviderOperationsMetadataClientDiagnostics.CreateScope("AuthorizationProviderOperationsMetadataCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _authorizationProviderOperationsMetadataProviderOperationsMetadataRestClient.ListAsync(expand, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new AuthorizationProviderOperationsMetadataResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<AuthorizationProviderOperationsMetadataResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _authorizationProviderOperationsMetadataProviderOperationsMetadataClientDiagnostics.CreateScope("AuthorizationProviderOperationsMetadataCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _authorizationProviderOperationsMetadataProviderOperationsMetadataRestClient.ListNextPageAsync(nextLink, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new AuthorizationProviderOperationsMetadataResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _authorizationProviderOperationsMetadataProviderOperationsMetadataRestClient.CreateListRequest(expand);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _authorizationProviderOperationsMetadataProviderOperationsMetadataRestClient.CreateListNextPageRequest(nextLink, expand);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new AuthorizationProviderOperationsMetadataResource(Client, AuthorizationProviderOperationsMetadataData.DeserializeAuthorizationProviderOperationsMetadataData(e)), _authorizationProviderOperationsMetadataProviderOperationsMetadataClientDiagnostics, Pipeline, "AuthorizationProviderOperationsMetadataCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Gets provider operations metadata for all resource providers.
-        /// Request Path: /providers/Microsoft.Authorization/providerOperations
-        /// Operation Id: ProviderOperationsMetadata_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Authorization/providerOperations</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ProviderOperationsMetadata_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="expand"> Specifies whether to expand the values. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="AuthorizationProviderOperationsMetadataResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<AuthorizationProviderOperationsMetadataResource> GetAll(string expand = null, CancellationToken cancellationToken = default)
         {
-            Page<AuthorizationProviderOperationsMetadataResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _authorizationProviderOperationsMetadataProviderOperationsMetadataClientDiagnostics.CreateScope("AuthorizationProviderOperationsMetadataCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _authorizationProviderOperationsMetadataProviderOperationsMetadataRestClient.List(expand, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new AuthorizationProviderOperationsMetadataResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<AuthorizationProviderOperationsMetadataResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _authorizationProviderOperationsMetadataProviderOperationsMetadataClientDiagnostics.CreateScope("AuthorizationProviderOperationsMetadataCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _authorizationProviderOperationsMetadataProviderOperationsMetadataRestClient.ListNextPage(nextLink, expand, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new AuthorizationProviderOperationsMetadataResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _authorizationProviderOperationsMetadataProviderOperationsMetadataRestClient.CreateListRequest(expand);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _authorizationProviderOperationsMetadataProviderOperationsMetadataRestClient.CreateListNextPageRequest(nextLink, expand);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new AuthorizationProviderOperationsMetadataResource(Client, AuthorizationProviderOperationsMetadataData.DeserializeAuthorizationProviderOperationsMetadataData(e)), _authorizationProviderOperationsMetadataProviderOperationsMetadataClientDiagnostics, Pipeline, "AuthorizationProviderOperationsMetadataCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /providers/Microsoft.Authorization/providerOperations/{resourceProviderNamespace}
-        /// Operation Id: ProviderOperationsMetadata_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Authorization/providerOperations/{resourceProviderNamespace}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ProviderOperationsMetadata_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="resourceProviderNamespace"> The namespace of the resource provider. </param>
         /// <param name="expand"> Specifies whether to expand the values. </param>
@@ -227,8 +210,16 @@ namespace Azure.ResourceManager.Authorization
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /providers/Microsoft.Authorization/providerOperations/{resourceProviderNamespace}
-        /// Operation Id: ProviderOperationsMetadata_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Authorization/providerOperations/{resourceProviderNamespace}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ProviderOperationsMetadata_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="resourceProviderNamespace"> The namespace of the resource provider. </param>
         /// <param name="expand"> Specifies whether to expand the values. </param>

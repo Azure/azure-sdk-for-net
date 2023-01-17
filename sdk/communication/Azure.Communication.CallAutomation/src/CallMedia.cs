@@ -18,7 +18,7 @@ namespace Azure.Communication.CallAutomation
     public class CallMedia
     {
         private readonly ClientDiagnostics _clientDiagnostics;
-        internal ContentRestClient ContentRestClient { get; }
+        internal CallMediaRestClient CallMediaRestClient { get; }
         internal EventProcessor EventProcessor { get; }
 
         /// <summary>
@@ -26,10 +26,10 @@ namespace Azure.Communication.CallAutomation
         /// </summary>
         public virtual string CallConnectionId { get; internal set; }
 
-        internal CallMedia(string callConnectionId, ContentRestClient callContentRestClient, ClientDiagnostics clientDiagnostics, EventProcessor eventProcessor)
+        internal CallMedia(string callConnectionId, CallMediaRestClient callCallMediaRestClient, ClientDiagnostics clientDiagnostics, EventProcessor eventProcessor)
         {
             CallConnectionId = callConnectionId;
-            ContentRestClient = callContentRestClient;
+            CallMediaRestClient = callCallMediaRestClient;
             _clientDiagnostics = clientDiagnostics;
             EventProcessor = eventProcessor;
         }
@@ -38,7 +38,7 @@ namespace Azure.Communication.CallAutomation
         protected CallMedia()
         {
             _clientDiagnostics = null;
-            ContentRestClient = null;
+            CallMediaRestClient = null;
             CallConnectionId = null;
         }
 
@@ -58,7 +58,7 @@ namespace Azure.Communication.CallAutomation
             {
                 PlayRequestInternal request = CreatePlayRequest(playSource, playTo, playOptions);
 
-                var response = await ContentRestClient.PlayAsync(CallConnectionId, request, cancellationToken).ConfigureAwait(false);
+                var response = await CallMediaRestClient.PlayAsync(CallConnectionId, request, cancellationToken).ConfigureAwait(false);
 
                 var result = new PlayResult();
                 result.SetEventProcessor(EventProcessor, CallConnectionId, playOptions?.OperationContext);
@@ -88,7 +88,7 @@ namespace Azure.Communication.CallAutomation
             {
                 PlayRequestInternal request = CreatePlayRequest(playSource, playTo, playOptions);
 
-                var response = ContentRestClient.Play(CallConnectionId, request, cancellationToken);
+                var response = CallMediaRestClient.Play(CallConnectionId, request, cancellationToken);
 
                 var result = new PlayResult();
                 result.SetEventProcessor(EventProcessor, CallConnectionId, playOptions?.OperationContext);
@@ -183,7 +183,7 @@ namespace Azure.Communication.CallAutomation
             scope.Start();
             try
             {
-                var response = await ContentRestClient.CancelAllMediaOperationsAsync(CallConnectionId, cancellationToken).ConfigureAwait(false);
+                var response = await CallMediaRestClient.CancelAllMediaOperationsAsync(CallConnectionId, cancellationToken).ConfigureAwait(false);
 
                 var result = new CancelAllMediaOperationsResult();
                 result.SetEventProcessor(EventProcessor, CallConnectionId, null);
@@ -208,7 +208,7 @@ namespace Azure.Communication.CallAutomation
             scope.Start();
             try
             {
-                var response = ContentRestClient.CancelAllMediaOperations(CallConnectionId, cancellationToken);
+                var response = CallMediaRestClient.CancelAllMediaOperations(CallConnectionId, cancellationToken);
 
                 var result = new CancelAllMediaOperationsResult();
                 result.SetEventProcessor(EventProcessor, CallConnectionId, null);
@@ -236,7 +236,7 @@ namespace Azure.Communication.CallAutomation
             {
                 RecognizeRequestInternal request = CreateRecognizeRequest(recognizeOptions);
 
-                var response = await ContentRestClient.RecognizeAsync(CallConnectionId, request, cancellationToken).ConfigureAwait(false);
+                var response = await CallMediaRestClient.RecognizeAsync(CallConnectionId, request, cancellationToken).ConfigureAwait(false);
 
                 var result = new StartRecognizingResult();
                 result.SetEventProcessor(EventProcessor, CallConnectionId, recognizeOptions?.OperationContext);
@@ -264,7 +264,7 @@ namespace Azure.Communication.CallAutomation
             {
                 RecognizeRequestInternal request = CreateRecognizeRequest(recognizeOptions);
 
-                var response = ContentRestClient.Recognize(CallConnectionId, request, cancellationToken);
+                var response = CallMediaRestClient.Recognize(CallConnectionId, request, cancellationToken);
 
                 var result = new StartRecognizingResult();
                 result.SetEventProcessor(EventProcessor, CallConnectionId, recognizeOptions?.OperationContext);

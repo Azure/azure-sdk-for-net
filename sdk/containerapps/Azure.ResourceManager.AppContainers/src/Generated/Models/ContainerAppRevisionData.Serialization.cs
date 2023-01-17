@@ -38,8 +38,8 @@ namespace Azure.ResourceManager.AppContainers
             Optional<int> replicas = default;
             Optional<int> trafficWeight = default;
             Optional<string> provisioningError = default;
-            Optional<RevisionHealthState> healthState = default;
-            Optional<RevisionProvisioningState> provisioningState = default;
+            Optional<ContainerAppRevisionHealthState> healthState = default;
+            Optional<ContainerAppRevisionProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"))
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.AppContainers
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("properties"))
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.AppContainers
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            healthState = new RevisionHealthState(property0.Value.GetString());
+                            healthState = new ContainerAppRevisionHealthState(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"))
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.AppContainers
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            provisioningState = new RevisionProvisioningState(property0.Value.GetString());
+                            provisioningState = new ContainerAppRevisionProvisioningState(property0.Value.GetString());
                             continue;
                         }
                     }
