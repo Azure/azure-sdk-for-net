@@ -369,7 +369,8 @@
             "value": "ServiceNameCapitalCase"
           }
         ],
-        "separator": "."
+        "separator": ".",
+        "removeEmptyValues": true
       },
       "replaces": "Microsoft.Template"
     },
