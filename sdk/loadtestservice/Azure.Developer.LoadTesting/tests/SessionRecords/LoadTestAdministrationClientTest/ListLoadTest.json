@@ -8,9 +8,9 @@
         "Authorization": "Sanitized",
         "Content-Length": "256",
         "Content-Type": "application/merge-patch\u002Bjson",
-        "traceparent": "00-88bdaac663978e15c408571d52097023-39e48c70043f52a0-00",
-        "User-Agent": "azsdk-net-Developer.LoadTesting/1.0.0-alpha.20230114.1 (.NET 6.0.13; Microsoft Windows 10.0.22621)",
-        "x-ms-client-request-id": "5789415bdf66e5efbbd87d86e2c52f90",
+        "traceparent": "00-cceb16637270c9dbceee187f6066b2cf-5d55707396a58346-00",
+        "User-Agent": "azsdk-net-Developer.LoadTesting/1.0.0-alpha.20230118.1 (.NET 6.0.13; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "abb73f4196059432b00101df605afc74",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -30,20 +30,44 @@
       "ResponseHeaders": {
         "api-supported-versions": "2021-07-01-preview, 2022-06-01-preview, 2022-11-01",
         "Connection": "keep-alive",
-        "Content-Length": "730",
+        "Content-Length": "962",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Sat, 14 Jan 2023 06:08:42 GMT",
-        "mise-correlation-id": "fdc0b300-4f5b-4ac1-8a5d-0b8ac46fc4ff",
+        "Date": "Tue, 17 Jan 2023 19:24:15 GMT",
+        "mise-correlation-id": "32cb2596-87c1-41ea-8e55-7f43341b3ec9",
         "Strict-Transport-Security": "max-age=15724800; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "6f7df0b5-ab4f-4f8f-b4d9-ab824cc22322"
+        "x-ms-correlation-request-id": "c23d23b4-d538-4ae1-8f2b-b1f84fd4c0e9"
       },
-      "ResponseBody": "{\u0022passFailCriteria\u0022:{\u0022passFailMetrics\u0022:{}},\u0022loadTestConfiguration\u0022:{\u0022engineInstances\u0022:1,\u0022splitAllCSVs\u0022:false,\u0022quickStartTest\u0022:false},\u0022inputArtifacts\u0022:{\u0022testScriptFileInfo\u0022:{\u0022url\u0022:\u0022https://maltccstorageaccounteuap.blob.core.windows.net/42ad4cf6-5edb-4de7-b897-bac23bf060e1/31e85300-00d5-44eb-bf8d-ba0ce3307510?skoid=fe06edb5-033b-4f33-bef0-9489f8feffb8\u0026sktid=33e01921-4d64-4f8c-a055-5bdaffd5e33d\u0026skt=2023-01-14T06%3A08%3A24Z\u0026ske=2023-01-14T13%3A08%3A24Z\u0026sks=b\u0026skv=2021-08-06\u0026sv=2021-08-06\u0026se=2023-01-14T07%3A08%3A42Z\u0026sr=b\u0026sp=r\u0026sig=Sanitized test was created through loadtesting C# SDK\u0022,\u0022displayName\u0022:\u0022Dotnet Testing Framework Loadtest\u0022,\u0022createdDateTime\u0022:\u00222023-01-14T06:08:29.366Z\u0022,\u0022lastModifiedDateTime\u0022:\u00222023-01-14T06:08:42.325Z\u0022}"
+      "ResponseBody": {
+        "passFailCriteria": {
+          "passFailMetrics": {}
+        },
+        "loadTestConfiguration": {
+          "engineInstances": 1,
+          "splitAllCSVs": false,
+          "quickStartTest": false
+        },
+        "inputArtifacts": {
+          "testScriptFileInfo": {
+            "url": "https://maltccstorageaccounteuap.blob.core.windows.net/3cb6fef4-bb92-4896-b808-fa77501455d7/480a605a-ae38-4324-a40f-28c6023b6fbe?skoid=fe06edb5-033b-4f33-bef0-9489f8feffb8\u0026sktid=33e01921-4d64-4f8c-a055-5bdaffd5e33d\u0026skt=2023-01-17T18%3A45%3A10Z\u0026ske=2023-01-18T08%3A45%3A10Z\u0026sks=b\u0026skv=2021-08-06\u0026sv=2021-08-06\u0026se=2023-01-17T20%3A24%3A15Z\u0026sr=b\u0026sp=r\u0026sig=Sanitized",
+            "fileName": "sample.jmx",
+            "fileType": "JMX_FILE",
+            "expireDateTime": "2023-01-17T20:24:15.3710341",
+            "validationStatus": "VALIDATION_INITIATED"
+          },
+          "additionalFileInfo": []
+        },
+        "testId": "test-from-csharp-sdk-testing-framework",
+        "description": "This test was created through loadtesting C# SDK",
+        "displayName": "Dotnet Testing Framework Loadtest",
+        "createdDateTime": "2023-01-17T19:23:43.356Z",
+        "lastModifiedDateTime": "2023-01-17T19:24:15.365Z"
+      }
     }
   ],
   "Variables": {
     "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com/",
     "LOADTESTSERVICE_ENDPOINT": "f3395a15-535c-46ea-aaf4-db52915c248b.eastus2euap.cnt-canary.loadtesting.azure.com",
-    "RandomSeed": "1785038053"
+    "RandomSeed": "2009951930"
   }
 }
