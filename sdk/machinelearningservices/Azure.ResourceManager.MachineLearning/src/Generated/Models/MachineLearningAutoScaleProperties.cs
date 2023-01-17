@@ -7,10 +7,7 @@
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary>
-    /// Auto scale properties
-    /// Serialized Name: AutoScaleProperties
-    /// </summary>
+    /// <summary> Auto scale properties. </summary>
     public partial class MachineLearningAutoScaleProperties
     {
         /// <summary> Initializes a new instance of MachineLearningAutoScaleProperties. </summary>
@@ -19,9 +16,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Initializes a new instance of MachineLearningAutoScaleProperties. </summary>
-        /// <param name="minNodeCount"> Serialized Name: AutoScaleProperties.minNodeCount. </param>
-        /// <param name="isEnabled"> Serialized Name: AutoScaleProperties.enabled. </param>
-        /// <param name="maxNodeCount"> Serialized Name: AutoScaleProperties.maxNodeCount. </param>
+        /// <param name="minNodeCount"></param>
+        /// <param name="isEnabled"></param>
+        /// <param name="maxNodeCount"></param>
         internal MachineLearningAutoScaleProperties(int? minNodeCount, bool? isEnabled, int? maxNodeCount)
         {
             MinNodeCount = minNodeCount;
@@ -29,11 +26,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
             MaxNodeCount = maxNodeCount;
         }
 
-        /// <summary> Serialized Name: AutoScaleProperties.minNodeCount. </summary>
+        /// <summary> Gets or sets the min node count. </summary>
         public int? MinNodeCount { get; set; }
-        /// <summary> Serialized Name: AutoScaleProperties.enabled. </summary>
+        /// <summary> Gets or sets the is enabled. </summary>
         public bool? IsEnabled { get; set; }
-        /// <summary> Serialized Name: AutoScaleProperties.maxNodeCount. </summary>
+        /// <summary> Gets or sets the max node count. </summary>
         public int? MaxNodeCount { get; set; }
     }
 }

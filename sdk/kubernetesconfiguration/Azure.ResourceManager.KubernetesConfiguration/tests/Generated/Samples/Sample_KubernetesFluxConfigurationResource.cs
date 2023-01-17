@@ -11,9 +11,10 @@ using Azure;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager;
+using Azure.ResourceManager.KubernetesConfiguration;
 using Azure.ResourceManager.KubernetesConfiguration.Models;
 
-namespace Azure.ResourceManager.KubernetesConfiguration
+namespace Azure.ResourceManager.KubernetesConfiguration.Samples
 {
     public partial class Sample_KubernetesFluxConfigurationResource
     {
@@ -22,11 +23,13 @@ namespace Azure.ResourceManager.KubernetesConfiguration
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_GetFluxConfiguration()
         {
-            // Generated from example definition: specification/kubernetesconfiguration/resource-manager/Microsoft.KubernetesConfiguration/stable/2022-07-01/examples/GetFluxConfiguration.json
+            // Generated from example definition: specification/kubernetesconfiguration/resource-manager/Microsoft.KubernetesConfiguration/stable/2022-11-01/examples/GetFluxConfiguration.json
             // this example is just showing the usage of "FluxConfigurations_Get" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this KubernetesFluxConfigurationResource created on azure
             // for more information of creating KubernetesFluxConfigurationResource, please refer to the document of KubernetesFluxConfigurationResource
@@ -54,11 +57,13 @@ namespace Azure.ResourceManager.KubernetesConfiguration
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Update_PatchFluxConfiguration()
         {
-            // Generated from example definition: specification/kubernetesconfiguration/resource-manager/Microsoft.KubernetesConfiguration/stable/2022-07-01/examples/PatchFluxConfiguration.json
+            // Generated from example definition: specification/kubernetesconfiguration/resource-manager/Microsoft.KubernetesConfiguration/stable/2022-11-01/examples/PatchFluxConfiguration.json
             // this example is just showing the usage of "FluxConfigurations_Update" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this KubernetesFluxConfigurationResource created on azure
             // for more information of creating KubernetesFluxConfigurationResource, please refer to the document of KubernetesFluxConfigurationResource
@@ -81,7 +86,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration
                 },
                 Kustomizations =
 {
-["srs-kustomization1"] = new KustomizationUpdateContent(),
+["srs-kustomization1"] = null,
 ["srs-kustomization2"] = new KustomizationUpdateContent()
 {
 Path = "./test/alt-path",
@@ -112,11 +117,13 @@ SyncIntervalInSeconds = 300,
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Delete_DeleteFluxConfiguration()
         {
-            // Generated from example definition: specification/kubernetesconfiguration/resource-manager/Microsoft.KubernetesConfiguration/stable/2022-07-01/examples/DeleteFluxConfiguration.json
+            // Generated from example definition: specification/kubernetesconfiguration/resource-manager/Microsoft.KubernetesConfiguration/stable/2022-11-01/examples/DeleteFluxConfiguration.json
             // this example is just showing the usage of "FluxConfigurations_Delete" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this KubernetesFluxConfigurationResource created on azure
             // for more information of creating KubernetesFluxConfigurationResource, please refer to the document of KubernetesFluxConfigurationResource

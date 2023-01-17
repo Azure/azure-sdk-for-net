@@ -28,8 +28,8 @@ namespace Azure.ResourceManager.SecurityCenter.Tests
             var nsg = await CreateNetworkSecurityGroup(_resourceGroup, Recording.GenerateAssetName("nsg"));
             var network = await CreateNetwork(_resourceGroup, nsg, Recording.GenerateAssetName("vnet"));
             var networkInterface = await CreateNetworkInterface(_resourceGroup, network, Recording.GenerateAssetName("networkInterface"));
-            var vm = await CreateVirtualMachine(_resourceGroup, networkInterface.Data.Id, Recording.GenerateAssetName("vm"));
-            _softwareCollection = _resourceGroup.GetSoftwareInventories("Microsoft.Compute", "virtualMachines", vm.Data.Name);
+            var vm = await CreateVirtualMachine(_resourceGroup, networkInterface.Id, Recording.GenerateAssetName("vm"));
+            _softwareCollection = _resourceGroup.GetSoftwareInventories("Microsoft.Compute", "virtualMachines", vm.Id.Name);
         }
 
         [RecordedTest]

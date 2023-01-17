@@ -6,9 +6,7 @@
 #nullable disable
 
 using System;
-using System.Linq;
 using System.Threading;
-using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -45,86 +43,46 @@ namespace Azure.ResourceManager.Nginx
 
         /// <summary>
         /// List the Nginx deployments resources
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Nginx.NginxPlus/nginxDeployments
-        /// Operation Id: Deployments_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Nginx.NginxPlus/nginxDeployments</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Deployments_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="NginxDeploymentResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<NginxDeploymentResource> GetNginxDeploymentsAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<NginxDeploymentResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = NginxDeploymentDeploymentsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetNginxDeployments");
-                scope.Start();
-                try
-                {
-                    var response = await NginxDeploymentDeploymentsRestClient.ListAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new NginxDeploymentResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<NginxDeploymentResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = NginxDeploymentDeploymentsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetNginxDeployments");
-                scope.Start();
-                try
-                {
-                    var response = await NginxDeploymentDeploymentsRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new NginxDeploymentResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => NginxDeploymentDeploymentsRestClient.CreateListRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => NginxDeploymentDeploymentsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new NginxDeploymentResource(Client, NginxDeploymentData.DeserializeNginxDeploymentData(e)), NginxDeploymentDeploymentsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetNginxDeployments", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// List the Nginx deployments resources
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Nginx.NginxPlus/nginxDeployments
-        /// Operation Id: Deployments_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Nginx.NginxPlus/nginxDeployments</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Deployments_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="NginxDeploymentResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<NginxDeploymentResource> GetNginxDeployments(CancellationToken cancellationToken = default)
         {
-            Page<NginxDeploymentResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = NginxDeploymentDeploymentsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetNginxDeployments");
-                scope.Start();
-                try
-                {
-                    var response = NginxDeploymentDeploymentsRestClient.List(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new NginxDeploymentResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<NginxDeploymentResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = NginxDeploymentDeploymentsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetNginxDeployments");
-                scope.Start();
-                try
-                {
-                    var response = NginxDeploymentDeploymentsRestClient.ListNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new NginxDeploymentResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => NginxDeploymentDeploymentsRestClient.CreateListRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => NginxDeploymentDeploymentsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new NginxDeploymentResource(Client, NginxDeploymentData.DeserializeNginxDeploymentData(e)), NginxDeploymentDeploymentsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetNginxDeployments", "value", "nextLink", cancellationToken);
         }
     }
 }

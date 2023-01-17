@@ -282,19 +282,15 @@ rename-mapping:
   ResourceSku.locations: -|azure-location
   ResourceSkuRestrictionInfo.locations: -|azure-location
 
+parameter-rename-mapping:
+  ConfigServers_Validate:
+    configServerSettings: settings
+
 directive:
-  - from: swagger-document
-    where: $.definitions..location
-    transform: >
-      $['x-ms-format'] = 'azure-location';
   - from: swagger-document
     where: $.definitions..resourceType
     transform: >
       $['x-ms-format'] = 'resource-type';
-  - from: swagger-document
-    where: $.paths..parameters[?(@.name === 'location')]
-    transform: >
-      $['x-ms-format'] = 'azure-location';
   - from: swagger-document
     where: $.definitions
     transform: >
@@ -306,5 +302,4 @@ directive:
           'nextLinkName': null,
           'itemName': 'deployments'
       };
-      $['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}/configServers/validate'].post.parameters[4]['x-ms-client-name'] = 'settings';
 ```

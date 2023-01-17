@@ -29,16 +29,16 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
         /// <param name="token"> Auth token value. </param>
-        /// <param name="expires"> Token expiration date. </param>
-        internal ContainerAppAuthToken(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string token, DateTimeOffset? expires) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="expireOn"> Token expiration date. </param>
+        internal ContainerAppAuthToken(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string token, DateTimeOffset? expireOn) : base(id, name, resourceType, systemData, tags, location)
         {
             Token = token;
-            Expires = expires;
+            ExpireOn = expireOn;
         }
 
         /// <summary> Auth token value. </summary>
         public string Token { get; }
         /// <summary> Token expiration date. </summary>
-        public DateTimeOffset? Expires { get; }
+        public DateTimeOffset? ExpireOn { get; }
     }
 }

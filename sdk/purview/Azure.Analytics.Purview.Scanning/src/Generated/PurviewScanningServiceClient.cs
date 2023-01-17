@@ -6,9 +6,6 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
-using System.Runtime.CompilerServices;
-using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
@@ -530,24 +527,9 @@ namespace Azure.Analytics.Purview.Scanning
         /// <include file="Docs/PurviewScanningServiceClient.xml" path="doc/members/member[@name='GetKeyVaultReferencesAsync(RequestContext)']/*" />
         public virtual AsyncPageable<BinaryData> GetKeyVaultReferencesAsync(RequestContext context = null)
         {
-            return GetKeyVaultReferencesImplementationAsync("PurviewScanningServiceClient.GetKeyVaultReferences", context);
-        }
-
-        private AsyncPageable<BinaryData> GetKeyVaultReferencesImplementationAsync(string diagnosticsScopeName, RequestContext context)
-        {
-            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, ClientDiagnostics, diagnosticsScopeName);
-            async IAsyncEnumerable<Page<BinaryData>> CreateEnumerableAsync(string nextLink, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken = default)
-            {
-                do
-                {
-                    var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetKeyVaultReferencesRequest(context)
-                        : CreateGetKeyVaultReferencesNextPageRequest(nextLink, context);
-                    var page = await LowLevelPageableHelpers.ProcessMessageAsync(_pipeline, message, context, "value", "nextLink", cancellationToken).ConfigureAwait(false);
-                    nextLink = page.ContinuationToken;
-                    yield return page;
-                } while (!string.IsNullOrEmpty(nextLink));
-            }
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetKeyVaultReferencesRequest(context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetKeyVaultReferencesNextPageRequest(nextLink, context);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "PurviewScanningServiceClient.GetKeyVaultReferences", "value", "nextLink", context);
         }
 
         /// <summary> List key vault connections in account. </summary>
@@ -557,24 +539,9 @@ namespace Azure.Analytics.Purview.Scanning
         /// <include file="Docs/PurviewScanningServiceClient.xml" path="doc/members/member[@name='GetKeyVaultReferences(RequestContext)']/*" />
         public virtual Pageable<BinaryData> GetKeyVaultReferences(RequestContext context = null)
         {
-            return GetKeyVaultReferencesImplementation("PurviewScanningServiceClient.GetKeyVaultReferences", context);
-        }
-
-        private Pageable<BinaryData> GetKeyVaultReferencesImplementation(string diagnosticsScopeName, RequestContext context)
-        {
-            return PageableHelpers.CreatePageable(CreateEnumerable, ClientDiagnostics, diagnosticsScopeName);
-            IEnumerable<Page<BinaryData>> CreateEnumerable(string nextLink, int? pageSizeHint)
-            {
-                do
-                {
-                    var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetKeyVaultReferencesRequest(context)
-                        : CreateGetKeyVaultReferencesNextPageRequest(nextLink, context);
-                    var page = LowLevelPageableHelpers.ProcessMessage(_pipeline, message, context, "value", "nextLink");
-                    nextLink = page.ContinuationToken;
-                    yield return page;
-                } while (!string.IsNullOrEmpty(nextLink));
-            }
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetKeyVaultReferencesRequest(context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetKeyVaultReferencesNextPageRequest(nextLink, context);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "PurviewScanningServiceClient.GetKeyVaultReferences", "value", "nextLink", context);
         }
 
         /// <summary> List classification rules in Account. </summary>
@@ -584,24 +551,9 @@ namespace Azure.Analytics.Purview.Scanning
         /// <include file="Docs/PurviewScanningServiceClient.xml" path="doc/members/member[@name='GetClassificationRulesAsync(RequestContext)']/*" />
         public virtual AsyncPageable<BinaryData> GetClassificationRulesAsync(RequestContext context = null)
         {
-            return GetClassificationRulesImplementationAsync("PurviewScanningServiceClient.GetClassificationRules", context);
-        }
-
-        private AsyncPageable<BinaryData> GetClassificationRulesImplementationAsync(string diagnosticsScopeName, RequestContext context)
-        {
-            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, ClientDiagnostics, diagnosticsScopeName);
-            async IAsyncEnumerable<Page<BinaryData>> CreateEnumerableAsync(string nextLink, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken = default)
-            {
-                do
-                {
-                    var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetClassificationRulesRequest(context)
-                        : CreateGetClassificationRulesNextPageRequest(nextLink, context);
-                    var page = await LowLevelPageableHelpers.ProcessMessageAsync(_pipeline, message, context, "value", "nextLink", cancellationToken).ConfigureAwait(false);
-                    nextLink = page.ContinuationToken;
-                    yield return page;
-                } while (!string.IsNullOrEmpty(nextLink));
-            }
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetClassificationRulesRequest(context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetClassificationRulesNextPageRequest(nextLink, context);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "PurviewScanningServiceClient.GetClassificationRules", "value", "nextLink", context);
         }
 
         /// <summary> List classification rules in Account. </summary>
@@ -611,24 +563,9 @@ namespace Azure.Analytics.Purview.Scanning
         /// <include file="Docs/PurviewScanningServiceClient.xml" path="doc/members/member[@name='GetClassificationRules(RequestContext)']/*" />
         public virtual Pageable<BinaryData> GetClassificationRules(RequestContext context = null)
         {
-            return GetClassificationRulesImplementation("PurviewScanningServiceClient.GetClassificationRules", context);
-        }
-
-        private Pageable<BinaryData> GetClassificationRulesImplementation(string diagnosticsScopeName, RequestContext context)
-        {
-            return PageableHelpers.CreatePageable(CreateEnumerable, ClientDiagnostics, diagnosticsScopeName);
-            IEnumerable<Page<BinaryData>> CreateEnumerable(string nextLink, int? pageSizeHint)
-            {
-                do
-                {
-                    var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetClassificationRulesRequest(context)
-                        : CreateGetClassificationRulesNextPageRequest(nextLink, context);
-                    var page = LowLevelPageableHelpers.ProcessMessage(_pipeline, message, context, "value", "nextLink");
-                    nextLink = page.ContinuationToken;
-                    yield return page;
-                } while (!string.IsNullOrEmpty(nextLink));
-            }
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetClassificationRulesRequest(context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetClassificationRulesNextPageRequest(nextLink, context);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "PurviewScanningServiceClient.GetClassificationRules", "value", "nextLink", context);
         }
 
         /// <summary> List data sources in Data catalog. </summary>
@@ -638,24 +575,9 @@ namespace Azure.Analytics.Purview.Scanning
         /// <include file="Docs/PurviewScanningServiceClient.xml" path="doc/members/member[@name='GetDataSourcesAsync(RequestContext)']/*" />
         public virtual AsyncPageable<BinaryData> GetDataSourcesAsync(RequestContext context = null)
         {
-            return GetDataSourcesImplementationAsync("PurviewScanningServiceClient.GetDataSources", context);
-        }
-
-        private AsyncPageable<BinaryData> GetDataSourcesImplementationAsync(string diagnosticsScopeName, RequestContext context)
-        {
-            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, ClientDiagnostics, diagnosticsScopeName);
-            async IAsyncEnumerable<Page<BinaryData>> CreateEnumerableAsync(string nextLink, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken = default)
-            {
-                do
-                {
-                    var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetDataSourcesRequest(context)
-                        : CreateGetDataSourcesNextPageRequest(nextLink, context);
-                    var page = await LowLevelPageableHelpers.ProcessMessageAsync(_pipeline, message, context, "value", "nextLink", cancellationToken).ConfigureAwait(false);
-                    nextLink = page.ContinuationToken;
-                    yield return page;
-                } while (!string.IsNullOrEmpty(nextLink));
-            }
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetDataSourcesRequest(context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetDataSourcesNextPageRequest(nextLink, context);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "PurviewScanningServiceClient.GetDataSources", "value", "nextLink", context);
         }
 
         /// <summary> List data sources in Data catalog. </summary>
@@ -665,24 +587,9 @@ namespace Azure.Analytics.Purview.Scanning
         /// <include file="Docs/PurviewScanningServiceClient.xml" path="doc/members/member[@name='GetDataSources(RequestContext)']/*" />
         public virtual Pageable<BinaryData> GetDataSources(RequestContext context = null)
         {
-            return GetDataSourcesImplementation("PurviewScanningServiceClient.GetDataSources", context);
-        }
-
-        private Pageable<BinaryData> GetDataSourcesImplementation(string diagnosticsScopeName, RequestContext context)
-        {
-            return PageableHelpers.CreatePageable(CreateEnumerable, ClientDiagnostics, diagnosticsScopeName);
-            IEnumerable<Page<BinaryData>> CreateEnumerable(string nextLink, int? pageSizeHint)
-            {
-                do
-                {
-                    var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetDataSourcesRequest(context)
-                        : CreateGetDataSourcesNextPageRequest(nextLink, context);
-                    var page = LowLevelPageableHelpers.ProcessMessage(_pipeline, message, context, "value", "nextLink");
-                    nextLink = page.ContinuationToken;
-                    yield return page;
-                } while (!string.IsNullOrEmpty(nextLink));
-            }
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetDataSourcesRequest(context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetDataSourcesNextPageRequest(nextLink, context);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "PurviewScanningServiceClient.GetDataSources", "value", "nextLink", context);
         }
 
         /// <summary> List scan rulesets in Data catalog. </summary>
@@ -692,24 +599,9 @@ namespace Azure.Analytics.Purview.Scanning
         /// <include file="Docs/PurviewScanningServiceClient.xml" path="doc/members/member[@name='GetScanRulesetsAsync(RequestContext)']/*" />
         public virtual AsyncPageable<BinaryData> GetScanRulesetsAsync(RequestContext context = null)
         {
-            return GetScanRulesetsImplementationAsync("PurviewScanningServiceClient.GetScanRulesets", context);
-        }
-
-        private AsyncPageable<BinaryData> GetScanRulesetsImplementationAsync(string diagnosticsScopeName, RequestContext context)
-        {
-            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, ClientDiagnostics, diagnosticsScopeName);
-            async IAsyncEnumerable<Page<BinaryData>> CreateEnumerableAsync(string nextLink, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken = default)
-            {
-                do
-                {
-                    var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetScanRulesetsRequest(context)
-                        : CreateGetScanRulesetsNextPageRequest(nextLink, context);
-                    var page = await LowLevelPageableHelpers.ProcessMessageAsync(_pipeline, message, context, "value", "nextLink", cancellationToken).ConfigureAwait(false);
-                    nextLink = page.ContinuationToken;
-                    yield return page;
-                } while (!string.IsNullOrEmpty(nextLink));
-            }
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetScanRulesetsRequest(context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetScanRulesetsNextPageRequest(nextLink, context);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "PurviewScanningServiceClient.GetScanRulesets", "value", "nextLink", context);
         }
 
         /// <summary> List scan rulesets in Data catalog. </summary>
@@ -719,24 +611,9 @@ namespace Azure.Analytics.Purview.Scanning
         /// <include file="Docs/PurviewScanningServiceClient.xml" path="doc/members/member[@name='GetScanRulesets(RequestContext)']/*" />
         public virtual Pageable<BinaryData> GetScanRulesets(RequestContext context = null)
         {
-            return GetScanRulesetsImplementation("PurviewScanningServiceClient.GetScanRulesets", context);
-        }
-
-        private Pageable<BinaryData> GetScanRulesetsImplementation(string diagnosticsScopeName, RequestContext context)
-        {
-            return PageableHelpers.CreatePageable(CreateEnumerable, ClientDiagnostics, diagnosticsScopeName);
-            IEnumerable<Page<BinaryData>> CreateEnumerable(string nextLink, int? pageSizeHint)
-            {
-                do
-                {
-                    var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetScanRulesetsRequest(context)
-                        : CreateGetScanRulesetsNextPageRequest(nextLink, context);
-                    var page = LowLevelPageableHelpers.ProcessMessage(_pipeline, message, context, "value", "nextLink");
-                    nextLink = page.ContinuationToken;
-                    yield return page;
-                } while (!string.IsNullOrEmpty(nextLink));
-            }
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetScanRulesetsRequest(context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetScanRulesetsNextPageRequest(nextLink, context);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "PurviewScanningServiceClient.GetScanRulesets", "value", "nextLink", context);
         }
 
         /// <summary> List all system scan rulesets for an account. </summary>
@@ -746,24 +623,9 @@ namespace Azure.Analytics.Purview.Scanning
         /// <include file="Docs/PurviewScanningServiceClient.xml" path="doc/members/member[@name='GetSystemRulesetsAsync(RequestContext)']/*" />
         public virtual AsyncPageable<BinaryData> GetSystemRulesetsAsync(RequestContext context = null)
         {
-            return GetSystemRulesetsImplementationAsync("PurviewScanningServiceClient.GetSystemRulesets", context);
-        }
-
-        private AsyncPageable<BinaryData> GetSystemRulesetsImplementationAsync(string diagnosticsScopeName, RequestContext context)
-        {
-            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, ClientDiagnostics, diagnosticsScopeName);
-            async IAsyncEnumerable<Page<BinaryData>> CreateEnumerableAsync(string nextLink, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken = default)
-            {
-                do
-                {
-                    var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetSystemRulesetsRequest(context)
-                        : CreateGetSystemRulesetsNextPageRequest(nextLink, context);
-                    var page = await LowLevelPageableHelpers.ProcessMessageAsync(_pipeline, message, context, "value", "nextLink", cancellationToken).ConfigureAwait(false);
-                    nextLink = page.ContinuationToken;
-                    yield return page;
-                } while (!string.IsNullOrEmpty(nextLink));
-            }
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetSystemRulesetsRequest(context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetSystemRulesetsNextPageRequest(nextLink, context);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "PurviewScanningServiceClient.GetSystemRulesets", "value", "nextLink", context);
         }
 
         /// <summary> List all system scan rulesets for an account. </summary>
@@ -773,24 +635,9 @@ namespace Azure.Analytics.Purview.Scanning
         /// <include file="Docs/PurviewScanningServiceClient.xml" path="doc/members/member[@name='GetSystemRulesets(RequestContext)']/*" />
         public virtual Pageable<BinaryData> GetSystemRulesets(RequestContext context = null)
         {
-            return GetSystemRulesetsImplementation("PurviewScanningServiceClient.GetSystemRulesets", context);
-        }
-
-        private Pageable<BinaryData> GetSystemRulesetsImplementation(string diagnosticsScopeName, RequestContext context)
-        {
-            return PageableHelpers.CreatePageable(CreateEnumerable, ClientDiagnostics, diagnosticsScopeName);
-            IEnumerable<Page<BinaryData>> CreateEnumerable(string nextLink, int? pageSizeHint)
-            {
-                do
-                {
-                    var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetSystemRulesetsRequest(context)
-                        : CreateGetSystemRulesetsNextPageRequest(nextLink, context);
-                    var page = LowLevelPageableHelpers.ProcessMessage(_pipeline, message, context, "value", "nextLink");
-                    nextLink = page.ContinuationToken;
-                    yield return page;
-                } while (!string.IsNullOrEmpty(nextLink));
-            }
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetSystemRulesetsRequest(context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetSystemRulesetsNextPageRequest(nextLink, context);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "PurviewScanningServiceClient.GetSystemRulesets", "value", "nextLink", context);
         }
 
         /// <summary> List system scan ruleset versions in Data catalog. </summary>
@@ -801,24 +648,9 @@ namespace Azure.Analytics.Purview.Scanning
         /// <include file="Docs/PurviewScanningServiceClient.xml" path="doc/members/member[@name='GetSystemRulesetsVersionsAsync(String,RequestContext)']/*" />
         public virtual AsyncPageable<BinaryData> GetSystemRulesetsVersionsAsync(string dataSourceType = null, RequestContext context = null)
         {
-            return GetSystemRulesetsVersionsImplementationAsync("PurviewScanningServiceClient.GetSystemRulesetsVersions", dataSourceType, context);
-        }
-
-        private AsyncPageable<BinaryData> GetSystemRulesetsVersionsImplementationAsync(string diagnosticsScopeName, string dataSourceType, RequestContext context)
-        {
-            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, ClientDiagnostics, diagnosticsScopeName);
-            async IAsyncEnumerable<Page<BinaryData>> CreateEnumerableAsync(string nextLink, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken = default)
-            {
-                do
-                {
-                    var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetSystemRulesetsVersionsRequest(dataSourceType, context)
-                        : CreateGetSystemRulesetsVersionsNextPageRequest(nextLink, dataSourceType, context);
-                    var page = await LowLevelPageableHelpers.ProcessMessageAsync(_pipeline, message, context, "value", "nextLink", cancellationToken).ConfigureAwait(false);
-                    nextLink = page.ContinuationToken;
-                    yield return page;
-                } while (!string.IsNullOrEmpty(nextLink));
-            }
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetSystemRulesetsVersionsRequest(dataSourceType, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetSystemRulesetsVersionsNextPageRequest(nextLink, dataSourceType, context);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "PurviewScanningServiceClient.GetSystemRulesetsVersions", "value", "nextLink", context);
         }
 
         /// <summary> List system scan ruleset versions in Data catalog. </summary>
@@ -829,24 +661,9 @@ namespace Azure.Analytics.Purview.Scanning
         /// <include file="Docs/PurviewScanningServiceClient.xml" path="doc/members/member[@name='GetSystemRulesetsVersions(String,RequestContext)']/*" />
         public virtual Pageable<BinaryData> GetSystemRulesetsVersions(string dataSourceType = null, RequestContext context = null)
         {
-            return GetSystemRulesetsVersionsImplementation("PurviewScanningServiceClient.GetSystemRulesetsVersions", dataSourceType, context);
-        }
-
-        private Pageable<BinaryData> GetSystemRulesetsVersionsImplementation(string diagnosticsScopeName, string dataSourceType, RequestContext context)
-        {
-            return PageableHelpers.CreatePageable(CreateEnumerable, ClientDiagnostics, diagnosticsScopeName);
-            IEnumerable<Page<BinaryData>> CreateEnumerable(string nextLink, int? pageSizeHint)
-            {
-                do
-                {
-                    var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetSystemRulesetsVersionsRequest(dataSourceType, context)
-                        : CreateGetSystemRulesetsVersionsNextPageRequest(nextLink, dataSourceType, context);
-                    var page = LowLevelPageableHelpers.ProcessMessage(_pipeline, message, context, "value", "nextLink");
-                    nextLink = page.ContinuationToken;
-                    yield return page;
-                } while (!string.IsNullOrEmpty(nextLink));
-            }
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetSystemRulesetsVersionsRequest(dataSourceType, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetSystemRulesetsVersionsNextPageRequest(nextLink, dataSourceType, context);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "PurviewScanningServiceClient.GetSystemRulesetsVersions", "value", "nextLink", context);
         }
 
         internal HttpMessage CreateGetKeyVaultReferenceRequest(string keyVaultName, RequestContext context)
