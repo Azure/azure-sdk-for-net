@@ -87,7 +87,7 @@ namespace Azure.Identity
             Argument.AssertNotNull(clientId, nameof(clientId));
             Argument.AssertNotNull(authorizationCode, nameof(authorizationCode));
             _clientId = clientId;
-            _authCode = authorizationCode ;
+            _authCode = authorizationCode;
             _pipeline = pipeline ?? CredentialPipeline.GetInstance(options ?? new TokenCredentialOptions());
             _redirectUri = options switch
             {
@@ -164,6 +164,19 @@ namespace Azure.Identity
             catch (Exception e)
             {
                 throw scope.FailWrapAndThrow(e);
+            }
+        }
+
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        public async ValueTask Logout(CancellationToken cancellationToken = default)
+        {
+            if (_record is not null)
+            {
+                await _client.RemoveUser(true, new AuthenticationAccount(_record), cancellationToken).ConfigureAwait(false);
             }
         }
     }

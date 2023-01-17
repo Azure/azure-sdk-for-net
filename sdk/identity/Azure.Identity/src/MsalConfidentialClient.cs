@@ -5,6 +5,7 @@ using System;
 using System.Security.Cryptography.X509Certificates;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Core.Pipeline;
 using Microsoft.Identity.Client;
 using Microsoft.Identity.Client.Extensibility;
 
@@ -251,5 +252,14 @@ namespace Azure.Identity
                 .ExecuteAsync(async, cancellationToken)
                 .ConfigureAwait(false);
         }
+
+        public async ValueTask RemoveUserAsync(IAccount account, CancellationToken cancellationToken) =>
+            await RemoveUserInternal(true, account, cancellationToken).ConfigureAwait(false);
+
+        public void RemoveUser(IAccount account, CancellationToken cancellationToken) =>
+            RemoveUserInternal(false, account, cancellationToken).EnsureCompleted();
+
+        private ValueTask RemoveUserInternal(bool async, IAccount account, CancellationToken cancellationToken) =>
+            RemoveUser(async, account, cancellationToken);
     }
 }
