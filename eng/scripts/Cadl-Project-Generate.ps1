@@ -52,8 +52,8 @@ if (Test-Path "$npmWorkingDir/cadl-project.yaml") {
 }
 
 try {
-    $loadExisting = $configuration["load-existing"] ?? $true
-    $existingOption = If ($loadExisting) {" --option @azure-tools/cadl-csharp.existing-project-folder=$ProjectDirectory/TempSDKFiles/src/Generated"} Else {""}
+    $loadExisting = $configuration["load-existing"] ?? $false
+    $existingOption = If ($loadExisting) {" --option @azure-tools/cadl-csharp.existing-project-folder=$ProjectDirectory/TempSDKFiles/Generated"} Else {""}
     Push-Location $npmWorkingDir
     NpmInstallForProject $npmWorkingDir
     if ($HasEmitterOutputDir) {

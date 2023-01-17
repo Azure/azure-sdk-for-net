@@ -20,7 +20,7 @@ function GetLatestCommit() {
 
 function GetProjectRelativePath() {
     $rootPath = Resolve-Path "$PSScriptRoot/../.."
-    return [System.IO.Path]::GetRelativePath($rootPath, $ProjectDirectory).Replace("\","/")
+    return [System.IO.Path]::GetRelativePath($rootPath, (Join-Path $ProjectDirectory "src")).Replace("\","/")
 }
 
 function AddSparseCheckoutPath([string]$subDirectory) {
@@ -151,7 +151,7 @@ CopyToProjectIfNeeded `
 
 
 # Download the existing SDK
-$loadExisting = $configuration["load-existing"] ?? $true
+$loadExisting = $configuration["load-existing"] ?? $false
 if ($loadExisting)
 {    
     $latestCommit = GetLatestCommit
