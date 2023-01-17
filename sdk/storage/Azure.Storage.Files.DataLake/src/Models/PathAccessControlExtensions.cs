@@ -146,7 +146,7 @@ namespace Azure.Storage.Files.DataLake.Models
         /// Returns the octal string respentation of this RolePermissions.
         /// </summary>
         /// <returns>String.</returns>
-        public static string ToSymbolicRolePermissions(this RolePermissions rolePermissions, bool stickyBit = false)
+        public static string ToSymbolicRolePermissions(this RolePermissions rolePermissions, bool stickyBit)
         {
             StringBuilder stringBuilder = new StringBuilder();
 
