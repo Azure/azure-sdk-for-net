@@ -35,7 +35,9 @@ namespace Azure.OpenAI.Inference.Tests
         public void CompletionTest()
         {
             var client = GetClient();
-            CompletionsRequest completionsRequest = new CompletionsRequest(new List<string> { "Hello world", "running over the same old ground" });
+            CompletionsRequest completionsRequest = new();
+            completionsRequest.Prompt.Add("Hello world");
+            completionsRequest.Prompt.Add("running over the same old ground");
             Assert.That(completionsRequest, Is.InstanceOf<CompletionsRequest>());
             var response = client.Completions(DeploymentId, completionsRequest);
             Assert.That(response, Is.InstanceOf<Response<Completion>>());
