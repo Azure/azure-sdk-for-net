@@ -5,7 +5,9 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
+using System.Net;
 using Azure.Core;
 using Azure.ResourceManager.AppContainers.Models;
 using Azure.ResourceManager.Models;
@@ -19,7 +21,7 @@ namespace Azure.ResourceManager.AppContainers
         /// <param name="location"> The location. </param>
         public ContainerAppData(AzureLocation location) : base(location)
         {
-            OutboundIPAddresses = new ChangeTrackingList<string>();
+            OutboundIPAddressList = new ChangeTrackingList<IPAddress>();
         }
 
         /// <summary> Initializes a new instance of ContainerAppData. </summary>
@@ -36,13 +38,14 @@ namespace Azure.ResourceManager.AppContainers
         /// <param name="environmentId"> Resource ID of environment. </param>
         /// <param name="workloadProfileType"> Workload profile type to pin for container app execution. </param>
         /// <param name="latestRevisionName"> Name of the latest revision of the Container App. </param>
+        /// <param name="latestReadyRevisionName"> Name of the latest ready revision of the Container App. </param>
         /// <param name="latestRevisionFqdn"> Fully Qualified Domain Name of the latest revision of the Container App. </param>
         /// <param name="customDomainVerificationId"> Id used to verify domain name ownership. </param>
         /// <param name="configuration"> Non versioned Container App configuration properties. </param>
         /// <param name="template"> Container App versioned application definition. </param>
-        /// <param name="outboundIPAddresses"> Outbound IP Addresses for container app. </param>
+        /// <param name="outboundIPAddressList"> Outbound IP Addresses for container app. </param>
         /// <param name="eventStreamEndpoint"> The endpoint of the eventstream of the container app. </param>
-        internal ContainerAppData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ExtendedLocation extendedLocation, ManagedServiceIdentity identity, ContainerAppProvisioningState? provisioningState, string managedEnvironmentId, string environmentId, string workloadProfileType, string latestRevisionName, string latestRevisionFqdn, string customDomainVerificationId, ContainerAppConfiguration configuration, ContainerAppTemplate template, IReadOnlyList<string> outboundIPAddresses, string eventStreamEndpoint) : base(id, name, resourceType, systemData, tags, location)
+        internal ContainerAppData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ContainerAppExtendedLocation extendedLocation, ManagedServiceIdentity identity, ContainerAppProvisioningState? provisioningState, ResourceIdentifier managedEnvironmentId, ResourceIdentifier environmentId, string workloadProfileType, string latestRevisionName, string latestReadyRevisionName, string latestRevisionFqdn, string customDomainVerificationId, ContainerAppConfiguration configuration, ContainerAppTemplate template, IReadOnlyList<IPAddress> outboundIPAddressList, Uri eventStreamEndpoint) : base(id, name, resourceType, systemData, tags, location)
         {
             ExtendedLocation = extendedLocation;
             Identity = identity;
@@ -51,28 +54,31 @@ namespace Azure.ResourceManager.AppContainers
             EnvironmentId = environmentId;
             WorkloadProfileType = workloadProfileType;
             LatestRevisionName = latestRevisionName;
+            LatestReadyRevisionName = latestReadyRevisionName;
             LatestRevisionFqdn = latestRevisionFqdn;
             CustomDomainVerificationId = customDomainVerificationId;
             Configuration = configuration;
             Template = template;
-            OutboundIPAddresses = outboundIPAddresses;
+            OutboundIPAddressList = outboundIPAddressList;
             EventStreamEndpoint = eventStreamEndpoint;
         }
 
         /// <summary> The complex type of the extended location. </summary>
-        public ExtendedLocation ExtendedLocation { get; set; }
+        public ContainerAppExtendedLocation ExtendedLocation { get; set; }
         /// <summary> managed identities for the Container App to interact with other Azure services without maintaining any secrets or credentials in code. </summary>
         public ManagedServiceIdentity Identity { get; set; }
         /// <summary> Provisioning state of the Container App. </summary>
         public ContainerAppProvisioningState? ProvisioningState { get; }
         /// <summary> Deprecated. Resource ID of the Container App&apos;s environment. </summary>
-        public string ManagedEnvironmentId { get; set; }
+        public ResourceIdentifier ManagedEnvironmentId { get; set; }
         /// <summary> Resource ID of environment. </summary>
-        public string EnvironmentId { get; set; }
+        public ResourceIdentifier EnvironmentId { get; set; }
         /// <summary> Workload profile type to pin for container app execution. </summary>
         public string WorkloadProfileType { get; set; }
         /// <summary> Name of the latest revision of the Container App. </summary>
         public string LatestRevisionName { get; }
+        /// <summary> Name of the latest ready revision of the Container App. </summary>
+        public string LatestReadyRevisionName { get; }
         /// <summary> Fully Qualified Domain Name of the latest revision of the Container App. </summary>
         public string LatestRevisionFqdn { get; }
         /// <summary> Id used to verify domain name ownership. </summary>
@@ -82,8 +88,8 @@ namespace Azure.ResourceManager.AppContainers
         /// <summary> Container App versioned application definition. </summary>
         public ContainerAppTemplate Template { get; set; }
         /// <summary> Outbound IP Addresses for container app. </summary>
-        public IReadOnlyList<string> OutboundIPAddresses { get; }
+        public IReadOnlyList<IPAddress> OutboundIPAddressList { get; }
         /// <summary> The endpoint of the eventstream of the container app. </summary>
-        public string EventStreamEndpoint { get; }
+        public Uri EventStreamEndpoint { get; }
     }
 }

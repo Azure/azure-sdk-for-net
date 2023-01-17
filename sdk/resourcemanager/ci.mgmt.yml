@@ -29,6 +29,7 @@ trigger:
     - sdk/azurestackhci/Azure.ResourceManager.Hci
     - sdk/batch/Azure.ResourceManager.Batch
     - sdk/billing/Azure.ResourceManager.Billing
+    - sdk/billingbenefits/Azure.ResourceManager.BillingBenefits
     - sdk/blueprint/Azure.ResourceManager.Blueprint
     - sdk/botservice/Azure.ResourceManager.BotService
     - sdk/cdn/Azure.ResourceManager.Cdn
@@ -147,6 +148,7 @@ trigger:
     - sdk/sqlvirtualmachine/Azure.ResourceManager.SqlVirtualMachine
     - sdk/storage/Azure.ResourceManager.Storage
     - sdk/storagecache/Azure.ResourceManager.StorageCache
+    - sdk/storagemover/Azure.ResourceManager.StorageMover
     - sdk/storagepool/Azure.ResourceManager.StoragePool
     - sdk/storagesync/Azure.ResourceManager.StorageSync
     - sdk/streamanalytics/Azure.ResourceManager.StreamAnalytics
@@ -189,6 +191,7 @@ pr:
     - sdk/azurestackhci/Azure.ResourceManager.Hci
     - sdk/batch/Azure.ResourceManager.Batch
     - sdk/billing/Azure.ResourceManager.Billing
+    - sdk/billingbenefits/Azure.ResourceManager.BillingBenefits
     - sdk/blueprint/Azure.ResourceManager.Blueprint
     - sdk/botservice/Azure.ResourceManager.BotService
     - sdk/cdn/Azure.ResourceManager.Cdn
@@ -307,6 +310,7 @@ pr:
     - sdk/sqlvirtualmachine/Azure.ResourceManager.SqlVirtualMachine
     - sdk/storage/Azure.ResourceManager.Storage
     - sdk/storagecache/Azure.ResourceManager.StorageCache
+    - sdk/storagemover/Azure.ResourceManager.StorageMover
     - sdk/storagepool/Azure.ResourceManager.StoragePool
     - sdk/storagesync/Azure.ResourceManager.StorageSync
     - sdk/streamanalytics/Azure.ResourceManager.StreamAnalytics

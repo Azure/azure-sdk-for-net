@@ -17,20 +17,20 @@ namespace Azure.ResourceManager.LoadTesting.Models
         /// <summary> Initializes a new instance of LoadTestResourcePageList. </summary>
         internal LoadTestResourcePageList()
         {
-            Value = new ChangeTrackingList<LoadTestingData>();
+            Value = new ChangeTrackingList<LoadTestingResourceData>();
         }
 
         /// <summary> Initializes a new instance of LoadTestResourcePageList. </summary>
         /// <param name="value"> List of resources in current page. </param>
         /// <param name="nextLink"> Link to next page of resources. </param>
-        internal LoadTestResourcePageList(IReadOnlyList<LoadTestingData> value, string nextLink)
+        internal LoadTestResourcePageList(IReadOnlyList<LoadTestingResourceData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> List of resources in current page. </summary>
-        public IReadOnlyList<LoadTestingData> Value { get; }
+        public IReadOnlyList<LoadTestingResourceData> Value { get; }
         /// <summary> Link to next page of resources. </summary>
         public string NextLink { get; }
     }

@@ -1,19 +1,48 @@
 # Release History
 
-## 3.0.0-preview.6 (2022-12-06)
+## 3.0.0-preview.7 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
+## 3.0.0-preview.6 (2022-12-08)
 **Features**
-  - Added `OneTable` and `MultiTable` two data schemas.
-  - Added `topContributorCount` in `detect_multivariate_last_anomaly` and `detect_multivariate_batch_anomaly`.
+- Added `OneTable` and `MultiTable` two data schemas.
+- Added Azure Managed Identity data reader access for Azure Blob Storage.
+- Added `topContributorCount` in the request body for `DetectMultivariateBatchAnomaly` and `DetectMultivariateLastAnomaly`.
 
 **Breaking Changes**
-  - Renamed `detect_entire_series` to `detect_univariate_entire_series`.
-  - Renamed `detect_last_point` to `detect_univariate_last_point`.
-  - Renamed `detect_change_point` to `detect_univariate_change_point`.
-  - Renamed `train_multivariate_model` to `create_and_train_multivariate_model`.
-  - Renamed `list_multivariate_model` to `list_multivariate_models`.
-  - Renamed `detect_anomaly` to `detect_multivariate_batch_anomaly`.
-  - Renamed `get_detection_result` to `get_multivariate_batch_detection_result`.
-  - Renamed `last_detect_anomaly` to `detect_multivariate_last_anomaly`.
+- Renamed `Model` to `AnomalyDetectionModel`.
+- Renamed `DetectionRequest` to `MultivariateBatchDetectionOptions`.
+- Renamed `DetectionResult` to `MultivariateDetectionResult`.
+- Renamed `DetectionStatus` to `MultivariateBatchDetectionStatus`.
+- Renamed `DetectionResultSummary` to `MultivariateBatchDetectionResultSummary`.
+- Renamed `FillNaMethod` to `FillNAMethod`.
+- Renamed `LastDetectionRequest` to `MultivariateLastDetectionOptions`.
+- Renamed `LastDetectionResult` to `MultivariateLastDetectionResult`.
+- Replaced `ModelSnapshot` with `AnomalyDetectionModel` in `listMultivariateModel`.
+- Renamed `listMultivariateModel` to `GetMultivariateModelValues`.
+- Renamed `DetectAnomaly` to `DetectMultivariateBatchAnomaly`
+- Renamed `GetDetectionResult` to `GetMultivariateBatchDetectionResultValue`.
+- Renamed `GetMultivariateModel`to `GetMultivariateModelValue` 
+- Renamed `LastDetectAnomaly` to `DetectMultivariateLastAnomaly`.
+- Renamed `DetectRequest` to `UnivariateDetectionOptions`.
+- Renamed `EntireDetectResponse` to `UnivariateEntireDetectionResult`.
+- Renamed `LastDetectResponse` to `UnivariateLastDetectionResult`.
+- Renamed `ChangePointDetectRequest` to `UnivariateChangePointDetectionOptions`.
+- Renamed `ChangePointDetectResponse` to `UnivariateChangePointDetectionResult`.
+- Renamed `DetectEntireSeries` to `DetectUnivariateEntireSeries`.
+- Renamed `DetectLastPoint` to `DetectUnivariateLastPoint`.
+- Renamed `DetectChangePoint` to `DetectUnivariateChangePoint`.
+- Renamed `ApiVersion` to `ServiceVersion` in `AnomalyDetectorClientOptions`
+- Removed `ExportModel`.
+- Removed `AnomalyDetectorModelFactory`
+- Added `DataSchema` to `ModelInfo`
 
 ## 3.0.0-preview.5 (2022-01-23)
 

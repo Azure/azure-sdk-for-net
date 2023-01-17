@@ -93,23 +93,28 @@ $configuration = Get-Content -Path $cadlConfigurationFile -Raw | ConvertFrom-Yam
 $pieces = $cadlConfigurationFile.Path.Replace("\","/").Split("/")
 $projectName = $pieces[$pieces.Count - 3]
 
-$specCloneDir = GetSpecCloneDir $projectName
-
-$gitRemoteValue = GetGitRemoteValue $configuration["repo"]
-
-Write-Host "Setting up sparse clone for $projectName at $specCloneDir"
 $specSubDirectory = $configuration["directory"]
-Push-Location $specCloneDir.Path
-try {
-    if (!(Test-Path ".git")) {
-        InitializeSparseGitClone $gitRemoteValue
-        UpdateSparseCheckoutFile $specSubDirectory $configuration["additionalDirectories"]
+if ( $configuration["repo"] -and $configuration["commit"]) {
+    $specCloneDir = GetSpecCloneDir $projectName
+    $gitRemoteValue = GetGitRemoteValue $configuration["repo"]
+
+    Write-Host "Setting up sparse clone for $projectName at $specCloneDir"
+    
+    Push-Location $specCloneDir.Path
+    try {
+        if (!(Test-Path ".git")) {
+            InitializeSparseGitClone $gitRemoteValue
+            UpdateSparseCheckoutFile $specSubDirectory $configuration["additionalDirectories"]
+        }
+        git checkout $configuration["commit"]
     }
-    git checkout $configuration["commit"]
+    finally {
+        Pop-Location
+    }
+} elseif ( $configuration["spec-root-dir"] ) {
+    $specCloneDir = $configuration["spec-root-dir"]
 }
-finally {
-    Pop-Location
-}
+
 
 $tempCadlDir = "$ProjectDirectory/TempCadlFiles"
 New-Item $tempCadlDir -Type Directory -Force | Out-Null

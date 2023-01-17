@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.Synapse.Models
 {
     /// <summary> The UnknownLinkedIntegrationRuntimeType. </summary>
-    internal partial class UnknownLinkedIntegrationRuntimeType : LinkedIntegrationRuntimeType
+    internal partial class UnknownLinkedIntegrationRuntimeType : SynapseLinkedIntegrationRuntimeType
     {
         /// <summary> Initializes a new instance of UnknownLinkedIntegrationRuntimeType. </summary>
         /// <param name="authorizationType"> The authorization type for integration runtime sharing. </param>

@@ -4,7 +4,7 @@ Run `dotnet build /t:GenerateCode` to generate code.
 
 ``` yaml
 azure-arm: true
-require: https://github.com/Azure/azure-rest-api-specs/blob/7b68a8cd8cb3f2328d4830fbbac41d8ad5febb67/specification/sql/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/f3e7c1b20f032a637069d055524549b950830c22/specification/sql/resource-manager/readme.md
 namespace: Azure.ResourceManager.Sql
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
@@ -242,7 +242,7 @@ rename-mapping:
   DatabaseOperation: DatabaseOperationData
   ServerOperation: ServerOperationData
   ElasticPoolOperation: ElasticPoolOperationData
-  UpdateManagedInstanceDnsServersOperation: ManagedInstanceUpdateDnsServersOperationData
+  UpdateVirtualClusterDnsServersOperation: ManagedInstanceUpdateDnsServersOperationData
   VirtualNetworkRule: SqlServerVirtualNetworkRule
   VirtualNetworkRuleState: SqlServerVirtualNetworkRuleState
   MetricAvailability: SqlMetricAvailability
@@ -259,6 +259,7 @@ rename-mapping:
   RestorePoint: SqlServerDatabaseRestorePoint
   BackupStorageRedundancy: SqlBackupStorageRedundancy
   PrimaryAggregationType: SqlMetricPrimaryAggregationType
+  DNSRefreshOperationStatus: DnsRefreshConfigurationPropertiesStatus
 
 prompted-enum-values:
   - Default
@@ -429,3 +430,17 @@ directive:
       where: $.definitions
       transform: >
           $.JobSchedule.properties.interval['format'] = 'duration';
+    - from: ServerDevOpsAudit.json
+      where: $.paths..parameters[?(@.name === 'devOpsAuditingSettingsName')]
+      transform: >
+        delete $.enum;
+        delete $['x-ms-enum'];
+        $.description = 'The name of the devops audit settings. This should always be Default.';
+      reason: address breaking changes when upgrading ServerDevOpsAudit API version from 2020-11-01-preview to 2022-02-01-preview
+    - from: ManagedDatabaseRestoreDetails.json
+      where: $.definitions
+      transform: >
+        $.ManagedDatabaseRestoreDetailsProperties.properties.percentCompleted['x-ms-client-name'] = 'CompletedPercent';
+        $.ManagedDatabaseRestoreDetailsProperties.properties.numberOfFilesDetected['x-ms-client-name'] = 'NumberOfFilesFound';
+        $.ManagedDatabaseRestoreDetailsProperties.properties.unrestorableFiles['x-ms-client-name'] = 'UnrestorableFileList';
+      reason: address breaking changes when upgrading ManagedDatabaseRestoreDetail API version from 2020-11-01-preview to 2022-02-01-preview
