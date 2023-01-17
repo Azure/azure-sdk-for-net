@@ -60,7 +60,24 @@ namespace Azure.Core.Experimental.Tests
                       ""StringProperty"" :  ""Nested"",
                       ""IntProperty"" :  22,
                       ""DoubleProperty"" :  22.22
-                  }
+                  },
+                  ""ArrayProperty"" : [
+                      {
+                          ""StringProperty"" :  ""First"",
+                          ""IntProperty"" :  1,
+                          ""DoubleProperty"" :  1.1
+                      },
+                      {
+                          ""StringProperty"" :  ""Second"",
+                          ""IntProperty"" :  2,
+                          ""DoubleProperty"" :  2.2
+                      },
+                      {
+                          ""StringProperty"" :  ""Third"",
+                          ""IntProperty"" :  3,
+                          ""DoubleProperty"" :  3.3
+                      }
+                  ]
                 }";
 
             JsonData jd = JsonData.Parse(json);
@@ -83,8 +100,7 @@ namespace Azure.Core.Experimental.Tests
             Assert.AreEqual(jd.RootElement.GetProperty("ObjectProperty").GetProperty("IntProperty").GetInt32(), testClass.ObjectProperty.IntProperty);
             Assert.AreEqual(jd.RootElement.GetProperty("ObjectProperty").GetProperty("DoubleProperty").GetDouble(), testClass.ObjectProperty.DoubleProperty);
 
-            // Note: removing whitespace in json to match Utf8JsonWriter defaults.
-            Assert.AreEqual(json.Replace(" ", "").Replace("\r", "").Replace("\n", ""), jsonString);
+            Assert.AreEqual(RemoveWhiteSpace(json), jsonString);
         }
 
         [Test]
@@ -127,12 +143,60 @@ namespace Azure.Core.Experimental.Tests
             Assert.AreEqual(json, jsonString);
         }
 
+        [Test]
+        public void CanWriteNumberArray()
+        {
+            string json = @"[ 1, 2.2, 3, -4]";
+
+            JsonData jd = JsonData.Parse(json);
+
+            using MemoryStream stream = new MemoryStream();
+            Utf8JsonWriter writer = new Utf8JsonWriter(stream);
+
+            jd.WriteElementTo(writer);
+
+            writer.Flush();
+            stream.Position = 0;
+
+            string jsonString = BinaryData.FromStream(stream).ToString();
+
+            Assert.AreEqual(RemoveWhiteSpace(json), jsonString);
+        }
+
+        [Test]
+        public void CanWriteStringArray()
+        {
+            string json = @"[ ""one"", ""two"", ""three""]";
+
+            JsonData jd = JsonData.Parse(json);
+
+            using MemoryStream stream = new MemoryStream();
+            Utf8JsonWriter writer = new Utf8JsonWriter(stream);
+
+            jd.WriteElementTo(writer);
+
+            writer.Flush();
+            stream.Position = 0;
+
+            string jsonString = BinaryData.FromStream(stream).ToString();
+
+            Assert.AreEqual(RemoveWhiteSpace(json), jsonString);
+        }
+
+        #region Helpers
         private class TestClass
         {
             public string StringProperty { get; set; }
             public int IntProperty { get; set; }
             public double DoubleProperty { get; set; }
             public TestClass ObjectProperty { get; set; }
+            public TestClass[] ArrayProperty { get; set; }
         }
+
+        private static string RemoveWhiteSpace(string value)
+        {
+            return value.Replace(" ", "").Replace("\r", "").Replace("\n", "");
+        }
+        #endregion
     }
 }

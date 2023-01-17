@@ -100,15 +100,12 @@ namespace Azure.Core.Dynamic
                 {
                     case JsonTokenType.StartObject:
                         writer.WriteStartObject();
-                        WriteComplexElement(ref reader, writer);
+                        WriteObjectElement(ref reader, writer);
                         return;
-                    //case JsonTokenType.EndObject:
-                    //    writer.WriteEndObject();
-                    //    return;
-                    //case JsonTokenType.StartArray:
-                    //    writer.WriteStartArray();
-                    //    WriteComplexElement(index, writer);
-                    //    return;
+                    case JsonTokenType.StartArray:
+                        writer.WriteStartArray();
+                        WriteArrayValues(ref reader, writer);
+                        return;
                     case JsonTokenType.String:
                         WriteString(ref reader, writer);
                         return;
@@ -128,7 +125,7 @@ namespace Azure.Core.Dynamic
             }
         }
 
-        private static void WriteComplexElement(ref Utf8JsonReader reader, Utf8JsonWriter writer)
+        private static void WriteArrayValues(ref Utf8JsonReader reader, Utf8JsonWriter writer)
         {
             while (reader.Read())
             {
@@ -136,22 +133,66 @@ namespace Azure.Core.Dynamic
                 {
                     case JsonTokenType.StartObject:
                         writer.WriteStartObject();
-                        WriteComplexElement(ref reader, writer);
+                        WriteObjectElement(ref reader, writer);
                         continue;
-
-                    case JsonTokenType.PropertyName:
-                        writer.WritePropertyName(reader.ValueSpan);
-                        //Debug.WriteLine($"PropertyName: {new BinaryData(reader.ValueSpan.ToArray())}, TokenStartIndex: {reader.TokenStartIndex}");
+                    case JsonTokenType.StartArray:
+                        writer.WriteStartArray();
+                        WriteArrayValues(ref reader, writer);
                         continue;
-
                     case JsonTokenType.String:
                         WriteString(ref reader, writer);
                         continue;
-
                     case JsonTokenType.Number:
                         WriteNumber(ref reader, writer);
                         continue;
+                    case JsonTokenType.True:
+                        writer.WriteBooleanValue(value: true);
+                        return;
+                    case JsonTokenType.False:
+                        writer.WriteBooleanValue(value: false);
+                        return;
+                    case JsonTokenType.Null:
+                        writer.WriteNullValue();
+                        return;
+                    case JsonTokenType.EndArray:
+                        writer.WriteEndArray();
+                        return;
+                }
+            }
+        }
 
+        private static void WriteObjectElement(ref Utf8JsonReader reader, Utf8JsonWriter writer)
+        {
+            while (reader.Read())
+            {
+                switch (reader.TokenType)
+                {
+                    case JsonTokenType.StartObject:
+                        writer.WriteStartObject();
+                        WriteObjectElement(ref reader, writer);
+                        continue;
+                    case JsonTokenType.StartArray:
+                        writer.WriteStartArray();
+                        WriteArrayValues(ref reader, writer);
+                        continue;
+                    case JsonTokenType.PropertyName:
+                        writer.WritePropertyName(reader.ValueSpan);
+                        continue;
+                    case JsonTokenType.String:
+                        WriteString(ref reader, writer);
+                        continue;
+                    case JsonTokenType.Number:
+                        WriteNumber(ref reader, writer);
+                        continue;
+                    case JsonTokenType.True:
+                        writer.WriteBooleanValue(value: true);
+                        return;
+                    case JsonTokenType.False:
+                        writer.WriteBooleanValue(value: false);
+                        return;
+                    case JsonTokenType.Null:
+                        writer.WriteNullValue();
+                        return;
                     case JsonTokenType.EndObject:
                         writer.WriteEndObject();
                         return;
