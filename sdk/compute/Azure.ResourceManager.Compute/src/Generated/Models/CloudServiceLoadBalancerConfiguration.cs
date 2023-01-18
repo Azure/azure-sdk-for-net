@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
@@ -16,39 +17,33 @@ namespace Azure.ResourceManager.Compute.Models
     {
         /// <summary> Initializes a new instance of CloudServiceLoadBalancerConfiguration. </summary>
         /// <param name="name"> The name of the Load balancer. </param>
-        /// <param name="properties"> Properties of the load balancer configuration. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="properties"/> is null. </exception>
-        public CloudServiceLoadBalancerConfiguration(string name, LoadBalancerConfigurationProperties properties)
+        /// <param name="frontendIPConfigurations"> Specifies the frontend IP to be used for the load balancer. Only IPv4 frontend IP address is supported. Each load balancer configuration must have exactly one frontend IP configuration. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="frontendIPConfigurations"/> is null. </exception>
+        public CloudServiceLoadBalancerConfiguration(string name, IEnumerable<LoadBalancerFrontendIPConfiguration> frontendIPConfigurations)
         {
             Argument.AssertNotNull(name, nameof(name));
-            Argument.AssertNotNull(properties, nameof(properties));
+            Argument.AssertNotNull(frontendIPConfigurations, nameof(frontendIPConfigurations));
 
             Name = name;
-            Properties = properties;
+            FrontendIPConfigurations = frontendIPConfigurations.ToList();
         }
 
         /// <summary> Initializes a new instance of CloudServiceLoadBalancerConfiguration. </summary>
         /// <param name="id"> Resource Id. </param>
         /// <param name="name"> The name of the Load balancer. </param>
-        /// <param name="properties"> Properties of the load balancer configuration. </param>
-        internal CloudServiceLoadBalancerConfiguration(ResourceIdentifier id, string name, LoadBalancerConfigurationProperties properties)
+        /// <param name="frontendIPConfigurations"> Specifies the frontend IP to be used for the load balancer. Only IPv4 frontend IP address is supported. Each load balancer configuration must have exactly one frontend IP configuration. </param>
+        internal CloudServiceLoadBalancerConfiguration(ResourceIdentifier id, string name, IList<LoadBalancerFrontendIPConfiguration> frontendIPConfigurations)
         {
             Id = id;
             Name = name;
-            Properties = properties;
+            FrontendIPConfigurations = frontendIPConfigurations;
         }
 
         /// <summary> Resource Id. </summary>
         public ResourceIdentifier Id { get; set; }
         /// <summary> The name of the Load balancer. </summary>
         public string Name { get; set; }
-        /// <summary> Properties of the load balancer configuration. </summary>
-        internal LoadBalancerConfigurationProperties Properties { get; set; }
         /// <summary> Specifies the frontend IP to be used for the load balancer. Only IPv4 frontend IP address is supported. Each load balancer configuration must have exactly one frontend IP configuration. </summary>
-        public IList<LoadBalancerFrontendIPConfiguration> LoadBalancerFrontendIPConfigurations
-        {
-            get => Properties is null ? default : Properties.FrontendIPConfigurations;
-            set => Properties = new LoadBalancerConfigurationProperties(value);
-        }
+        public IList<LoadBalancerFrontendIPConfiguration> FrontendIPConfigurations { get; }
     }
 }

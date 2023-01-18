@@ -338,15 +338,7 @@ directive:
       $.CloudServiceRole.properties.properties["x-ms-client-flatten"] = true;
       $.RoleInstance.properties.properties["x-ms-client-flatten"] = true;
       $.LoadBalancerConfiguration.properties.properties["x-ms-client-flatten"] = true;
-      $.LoadBalancerFrontendIPConfiguration.properties.properties["x-ms-client-flatten"] = true;
-  - from: cloudService.json
-    where: $.definitions.LoadBalancerConfigurationProperties
-    transform: >
-      $.properties.frontendIpConfigurations = $.properties.frontendIPConfigurations;
-      $.properties.frontendIpConfigurations["x-ms-client-name"] = "frontendIPConfigurations";
-      $.required = ["frontendIpConfigurations"];
-      $.properties.frontendIPConfigurations = undefined;
-    reason: Service returns response with property name as frontendIpConfigurations.
+      $.LoadBalancerFrontendIpConfiguration.properties.properties["x-ms-client-flatten"] = true;
   # this makes the name in VirtualMachineScaleSetExtension to be readonly so that our inheritance chooser could properly make it inherit from Azure.ResourceManager.ResourceData. We have some customized code to add the setter for name back (as in constructor)
   - from: virtualMachineScaleSet.json
     where: $.definitions.VirtualMachineScaleSetExtension.properties.name
