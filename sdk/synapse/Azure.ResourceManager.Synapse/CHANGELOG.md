@@ -1,9 +1,10 @@
 # Release History
 
-## 1.1.0-beta.1 (2023-01-17)
+## 1.1.0 (2023-01-18)
 
-### Other Changes
-- Support kusto pool private link data
+### Features Added
+
+- Added method `GetAllKustoPoolPrivateLinkData` to list all kusto pool private link data.
 
 ## 1.0.0 (2022-12-26)
 
