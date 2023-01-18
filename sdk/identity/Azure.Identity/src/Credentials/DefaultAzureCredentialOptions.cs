@@ -230,7 +230,7 @@ namespace Azure.Identity
         /// Specifies whether the <see cref="AzureDeveloperCliCredential"/> will be excluded from the <see cref="DefaultAzureCredential"/> authentication flow.
         /// </summary>
         public bool ExcludeAzureDeveloperCliCredential { get; set; }
-        
+
         /// <summary>
         /// Specifies whether the <see cref="AzureCliCredential"/> will be excluded from the <see cref="DefaultAzureCredential"/> authentication flow.
         /// </summary>
