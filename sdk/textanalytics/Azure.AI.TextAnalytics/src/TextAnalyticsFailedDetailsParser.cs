@@ -22,30 +22,39 @@ namespace Azure.Core.Pipeline
 
             if (response.ContentStream is { CanSeek: true })
             {
-                var position = response.ContentStream.Position;
+                long position = response.ContentStream.Position;
+
                 try
                 {
-                    // Try to parse the failure content and use that as the
+                    // Try to extract the standard Azure Error object from the response so that we can use it as the
                     // default value for the message, error code, etc.
 
                     response.ContentStream.Position = 0;
                     using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
                     if (doc.RootElement.TryGetProperty("error", out JsonElement errorElement))
                     {
-                        var textAnalyticsError = Transforms.ConvertToError(Error.DeserializeError(errorElement));
+                        TextAnalyticsError textAnalyticsError = Transforms.ConvertToError(Error.DeserializeError(errorElement));
                         error = new ResponseError(textAnalyticsError.ErrorCode.ToString(), textAnalyticsError.Message);
                         return true;
                     }
 
+                    // If the response does not straight up correspond to the standard Azure Error object that we are
+                    // looking for, the Error object must actually be nested somewhere in there instead. For example,
+                    // this can happen in the case of the convenience methods that receive a single input document as a
+                    // parameter instead of a list of input documents. Here, rather than returning the typical
+                    // successful response that includes a list of errors that the user needs to look through, we
+                    // want to grab the first error in that list (which inevitably corresponds to a problem with the
+                    // single input document), and use that error to throw a useful RequestFailedException. Now,
+                    // depending on the circumstances, that standard Azure Error could be inside an InputError
+                    // object, a DocumentError object, etc., so we need to look for it among a handful of well-known
+                    // cases like those.
+
                     if (doc.RootElement.TryGetProperty("errors", out JsonElement errorsElement))
                     {
-                        var errors = new List<Error>();
+                        List<Error> errors = new();
+
                         foreach (JsonElement item in errorsElement.EnumerateArray())
                         {
-                            // This element could be the Error object that we are looking for, but it could also be an
-                            // InputError or a DocumentError object that is wrapping it instead. Therefore, we must
-                            // first check if the element has a property called "error". If it does, the value would
-                            // correspond to the actual Error object.
                             if (item.TryGetProperty("error", out errorElement))
                             {
                                 errors.Add(Error.DeserializeError(errorElement));
@@ -62,13 +71,10 @@ namespace Azure.Core.Pipeline
 
                     if (doc.RootElement.TryGetProperty("results", out JsonElement results) && results.TryGetProperty("errors", out errorsElement))
                     {
-                        var errors = new List<Error>();
+                        List<Error> errors = new();
+
                         foreach (JsonElement item in errorsElement.EnumerateArray())
                         {
-                            // This element could be the Error object that we are looking for, but it could also be an
-                            // InputError or a DocumentError object that is wrapping it instead. Therefore, we must
-                            // first check if the element has a property called "error". If it does, the value would
-                            // correspond to the actual Error object.
                             if (item.TryGetProperty("error", out errorElement))
                             {
                                 errors.Add(Error.DeserializeError(errorElement));
