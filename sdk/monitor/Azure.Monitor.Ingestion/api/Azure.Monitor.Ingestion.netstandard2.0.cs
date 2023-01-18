@@ -6,10 +6,12 @@ namespace Azure.Monitor.Ingestion
         public LogsIngestionClient(System.Uri endpoint, Azure.Core.TokenCredential credential) { }
         public LogsIngestionClient(System.Uri endpoint, Azure.Core.TokenCredential credential, Azure.Monitor.Ingestion.LogsIngestionClientOptions options) { }
         public virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
+        protected internal virtual void OnException(int logsCount, Azure.Monitor.Ingestion.UploadLogsOptions options, Azure.Response response, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { }
+        protected internal virtual System.Threading.Tasks.Task OnExceptionAsync(int logsCount, Azure.Monitor.Ingestion.UploadLogsOptions options, Azure.Response response, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response Upload(string ruleId, string streamName, Azure.Core.RequestContent content, string contentEncoding = null, Azure.RequestContext context = null) { throw null; }
+        public virtual Azure.Response Upload(string ruleId, string streamName, System.Collections.Generic.IEnumerable<object> logs, Azure.Monitor.Ingestion.UploadLogsOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> UploadAsync(string ruleId, string streamName, Azure.Core.RequestContent content, string contentEncoding = null, Azure.RequestContext context = null) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> UploadAsync<T>(string ruleId, string streamName, System.Collections.Generic.IEnumerable<T> logs, Azure.Monitor.Ingestion.UploadLogsOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response Upload<T>(string ruleId, string streamName, System.Collections.Generic.IEnumerable<T> logs, Azure.Monitor.Ingestion.UploadLogsOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> UploadAsync(string ruleId, string streamName, System.Collections.Generic.IEnumerable<object> logs, Azure.Monitor.Ingestion.UploadLogsOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class LogsIngestionClientOptions : Azure.Core.ClientOptions
     {
@@ -19,11 +21,18 @@ namespace Azure.Monitor.Ingestion
             V2021_11_01_Preview = 1,
         }
     }
+    public partial class UploadFailedArgs : Azure.SyncAsyncEventArgs
+    {
+        internal UploadFailedArgs() : base (default(bool), default(System.Threading.CancellationToken)) { }
+        public System.Exception Exception { get { throw null; } }
+        public int FailedLogs { get { throw null; } }
+    }
     public partial class UploadLogsOptions
     {
         public UploadLogsOptions() { }
         public int MaxConcurrency { get { throw null; } set { } }
         public Azure.Core.Serialization.ObjectSerializer Serializer { get { throw null; } set { } }
+        public event Azure.Core.SyncAsyncEventHandler<Azure.Monitor.Ingestion.UploadFailedArgs> UploadFailed { add { } remove { } }
     }
 }
 namespace Microsoft.Extensions.Azure
