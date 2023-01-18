@@ -81,18 +81,17 @@ namespace Azure.Monitor.Ingestion
         /// <summary>
         /// Hidden method for batching data - serializing into arrays of JSON no more than SingleUploadThreshold each
         /// </summary>
-        /// <typeparam name="T"></typeparam>
         /// <param name="logEntries"></param>
         /// <param name="options"></param>
         /// <returns></returns>
-        internal static IEnumerable<BatchedLogs> Batch<T>(IEnumerable<T> logEntries, UploadLogsOptions options = null)
+        internal static IEnumerable<BatchedLogs> Batch(IEnumerable<object> logEntries, UploadLogsOptions options = null)
         {
             // Create an ArrayBufferWriter as backing store for Utf8JsonWriter
             ArrayBufferWriter<byte> arrayBuffer = new ArrayBufferWriter<byte>(SingleUploadThreshold);
             Utf8JsonWriter writer = new Utf8JsonWriter(arrayBuffer);
             writer.WriteStartArray();
             int entryCount = 0;
-            List<T> currentLogList = new List<T>();
+            List<object> currentLogList = new List<object>();
             var logEntriesList = logEntries.ToList();
             int logEntriesCount = logEntriesList.Count;
             foreach (var log in logEntriesList)
@@ -135,7 +134,7 @@ namespace Azure.Monitor.Ingestion
                     writer.Reset(arrayBuffer);
                     writer.WriteStartArray();
                     // reset log list
-                    currentLogList = new List<T>();
+                    currentLogList = new List<object>();
                     // add current log to memory and currentLogList
                     WriteMemory(writer, memory);
                     currentLogList.Add(log);
@@ -208,8 +207,6 @@ namespace Azure.Monitor.Ingestion
             Argument.AssertNotNullOrEmpty(logs, nameof(logs));
 
             using var scope = ClientDiagnostics.CreateScope("LogsIngestionClient.Upload");
-            //event SyncAsyncEventHandler<UploadFailedArgs> handler += options.UploadFailed;
-            options = options?.Clone();
             Response response = null;
             List<Exception> exceptions = null;
 
@@ -232,7 +229,7 @@ namespace Azure.Monitor.Ingestion
 
                     if (response.Status != 204)
                     {
-                        OnExceptionAsync(false, batch.LogsCount, options, response, cancellationToken).EnsureCompleted();
+                        OnException(batch.LogsCount, options, response, cancellationToken);
                     }
                 }
                 catch (Exception ex)
@@ -255,42 +252,6 @@ namespace Azure.Monitor.Ingestion
             return response; //204 - response of last batch with header
         }
 
-        /// <summary>
-        /// test
-        /// </summary>
-        /// <param name="isAsync"></param>
-        /// <param name="logsCount"></param>
-        /// <param name="options"></param>
-        /// <param name="response"></param>
-        /// <param name="cancellationToken"></param>
-        /// <returns></returns>
-        /// <exception cref="RequestFailedException"></exception>
-        protected internal virtual async Task OnExceptionAsync(bool isAsync, int logsCount, UploadLogsOptions options, Response response, CancellationToken cancellationToken = default)
-        {
-            //await ActionAdded.RaiseAsync(
-            //        new IndexActionEventArgs<T>(
-            //            this,
-            //            action,
-            //            isRunningSynchronously: false,
-            //            cancellationToken),
-            //        nameof(SearchIndexingBufferedSender<T>),
-            //        nameof(ActionAdded),
-            //        SearchClient.ClientDiagnostics)
-            //        .ConfigureAwait(false);
-            try
-            {
-                UploadFailedArgs uploadFailedArgs = new UploadFailedArgs(logsCount, new RequestFailedException(response), true, cancellationToken);
-                await options.UploadFailed.RaiseAsync(uploadFailedArgs, nameof(LogsIngestionClient), "Upload", ClientDiagnostics).ConfigureAwait(false);
-
-                if (options == null)
-                {
-                    throw new RequestFailedException(response);
-                }
-            }
-            catch (Exception)
-            {
-            }
-        }
         /// <summary> Ingestion API used to directly ingest data using Data Collection Rules. </summary>
         /// <param name="ruleId"> The immutable Id of the Data Collection Rule resource. </param>
         /// <param name="streamName"> The streamDeclaration name as defined in the Data Collection Rule. </param>
@@ -367,7 +328,14 @@ namespace Azure.Monitor.Ingestion
                                 continue;
                             }
                             // Check completed task for Exception/RequestFailedException and increase logsFailed count
-                            ProcessCompletedTask(runningTasks[i], ref exceptions, ref logsFailed);
+                            if (options == null)
+                            {
+                                ProcessCompletedTask(runningTasks[i], ref exceptions, ref logsFailed);
+                            }
+                            else
+                            {
+                                await OnExceptionAsync(runningTasks[i].LogsCount, options, runningTasks[i].CurrentTask.Result, cancellationToken).ConfigureAwait(false);
+                            }
                             // Remove completed task from task list
                             runningTasks.RemoveAt(i);
                             i--;
@@ -386,7 +354,15 @@ namespace Azure.Monitor.Ingestion
             // At this point, all tasks have completed. Examine tasks to see if they have exceptions. If Status code != 204, add RequestFailedException to list of exceptions. Increment logsFailed accordingly
             foreach (var task in runningTasks)
             {
-                ProcessCompletedTask(task, ref exceptions, ref logsFailed);
+                // Check completed task for Exception/RequestFailedException and increase logsFailed count
+                if (options == null)
+                {
+                    ProcessCompletedTask(task, ref exceptions, ref logsFailed);
+                }
+                else
+                {
+                    await OnExceptionAsync(task.LogsCount, options, task.CurrentTask.Result, cancellationToken).ConfigureAwait(false);
+                }
             }
             if (exceptions?.Count > 0)
             {
@@ -397,6 +373,50 @@ namespace Azure.Monitor.Ingestion
 
             // If no exceptions return response
             return runningTasks.Select(_ => _.CurrentTask).Last().Result; //204 - response of last batch with header
+        }
+
+        /// <summary>
+        /// test
+        /// </summary>
+        /// <param name="logsCount"></param>
+        /// <param name="options"></param>
+        /// <param name="response"></param>
+        /// <param name="cancellationToken"></param>
+        protected internal virtual async void OnException(int logsCount, UploadLogsOptions options, Response response, CancellationToken cancellationToken = default)
+        {
+            try
+            {
+                if (options == null)
+                {
+                    throw new RequestFailedException(response);
+                }
+                await options.InvokeEvent(isRunningSynchronously: true, logsCount, response, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception)
+            {
+            }
+        }
+
+        /// <summary>
+        /// test
+        /// </summary>
+        /// <param name="logsCount"></param>
+        /// <param name="options"></param>
+        /// <param name="response"></param>
+        /// <param name="cancellationToken"></param>
+        protected internal virtual async Task OnExceptionAsync(int logsCount, UploadLogsOptions options, Response response, CancellationToken cancellationToken = default)
+        {
+            try
+            {
+                if (options == null)
+                {
+                    throw new RequestFailedException(response);
+                }
+                await options.InvokeEvent(isRunningSynchronously: false, logsCount, response, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception)
+            {
+            }
         }
 
         private static void ProcessCompletedTask((Task<Response> CurrentTask, int LogsCount) runningTask, ref List<Exception> exceptions, ref int logsFailed)

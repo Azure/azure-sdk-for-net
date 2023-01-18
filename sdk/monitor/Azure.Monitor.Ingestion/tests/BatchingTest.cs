@@ -26,7 +26,7 @@ namespace Azure.Monitor.Ingestion.Tests
                     }
                 });
             }
-            IEnumerable<LogsIngestionClient.BatchedLogs<IEnumerable>> x = LogsIngestionClient.Batch(entries);
+            IEnumerable<LogsIngestionClient.BatchedLogs> x = LogsIngestionClient.Batch(entries);
             Assert.AreEqual(1, x.Count());
             Assert.AreEqual(10, x.First().LogsCount);
         }
@@ -45,7 +45,7 @@ namespace Azure.Monitor.Ingestion.Tests
                     }
                 });
             }
-            IEnumerable<LogsIngestionClient.BatchedLogs<IEnumerable>> x = LogsIngestionClient.Batch(entries);
+            IEnumerable<LogsIngestionClient.BatchedLogs> x = LogsIngestionClient.Batch(entries);
             int count = x.Count();
             Assert.Greater(count, 1); //ideally should be 2 batches
             Assert.Less(count, 3);

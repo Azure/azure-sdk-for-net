@@ -4,7 +4,10 @@
 using System;
 using System.Collections.Generic;
 using System.Reflection;
+using System.Threading;
+using System.Threading.Tasks;
 using Azure.Core;
+using Azure.Core.Pipeline;
 using Azure.Core.Serialization;
 
 namespace Azure.Monitor.Ingestion
@@ -31,17 +34,12 @@ namespace Azure.Monitor.Ingestion
         /// </summary>
         public event SyncAsyncEventHandler<UploadFailedArgs> UploadFailed;
 
-        /// <summary>
-        /// test
-        /// </summary>
-        /// <returns></returns>
-        internal UploadLogsOptions Clone()
+        private ClientDiagnostics _clientDiagnostics = new ClientDiagnostics(new LogsIngestionClientOptions());
+
+        internal async Task InvokeEvent(bool isRunningSynchronously, int logsCount, Response response, CancellationToken cancellationToken = default)
         {
-            UploadLogsOptions copy = new UploadLogsOptions();
-            copy.Serializer = Serializer;
-            copy.MaxConcurrency = MaxConcurrency;
-            copy.UploadFailed = UploadFailed;
-            return copy;
+            UploadFailedArgs uploadFailedArgs = new UploadFailedArgs(logsCount, new RequestFailedException(response), isRunningSynchronously, cancellationToken);
+            await UploadFailed.RaiseAsync(uploadFailedArgs, nameof(LogsIngestionClient), "Upload", _clientDiagnostics).ConfigureAwait(false);
         }
     }
 }
