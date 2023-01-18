@@ -17,18 +17,19 @@ namespace Azure.Communication.CallAutomation
         /// Wait for CancelAllMediaOperationsEventResult using EventProcessor.
         /// </summary>
         /// <returns></returns>
-        public async Task<CancelAllMediaOperationsEventResult> WaitForEvent()
+        public async Task<CancelAllMediaOperationsEventResult> WaitForEvent(TimeSpan eventTimeout = default)
         {
             if (_evHandler is null)
             {
-                throw new ArgumentNullException(nameof(_evHandler));
+                throw new NullReferenceException(nameof(_evHandler));
             }
 
             var returnedEvent = await _evHandler.WaitForEvent(filter
                 => filter.CallConnectionId == _callConnectionId
                 && filter.OperationContext == _operationContext
                 && (filter.GetType() == typeof(PlayCanceled)
-                || filter.GetType() == typeof(RecognizeCanceled))).ConfigureAwait(false);
+                || filter.GetType() == typeof(RecognizeCanceled)),
+                eventTimeout).ConfigureAwait(false);
 
             CancelAllMediaOperationsEventResult result = default;
             switch (returnedEvent)

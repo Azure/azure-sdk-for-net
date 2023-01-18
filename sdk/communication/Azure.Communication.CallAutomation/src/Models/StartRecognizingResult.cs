@@ -17,18 +17,19 @@ namespace Azure.Communication.CallAutomation
         /// Wait for StartRecognizingEventResult using EventProcessor.
         /// </summary>
         /// <returns></returns>
-        public async Task<StartRecognizingEventResult> WaitForEvent()
+        public async Task<StartRecognizingEventResult> WaitForEvent(TimeSpan eventTimeout = default)
         {
             if (_evHandler is null)
             {
-                throw new ArgumentNullException(nameof(_evHandler));
+                throw new NullReferenceException(nameof(_evHandler));
             }
 
             var returnedEvent = await _evHandler.WaitForEvent(filter
                 => filter.CallConnectionId == _callConnectionId
                 && filter.OperationContext == _operationContext
                 && (filter.GetType() == typeof(RecognizeCompleted)
-                || filter.GetType() == typeof(RecognizeFailed))).ConfigureAwait(false);
+                || filter.GetType() == typeof(RecognizeFailed)),
+                eventTimeout).ConfigureAwait(false);
 
             StartRecognizingEventResult result = default;
             switch (returnedEvent)

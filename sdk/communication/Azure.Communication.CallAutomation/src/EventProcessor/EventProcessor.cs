@@ -16,6 +16,8 @@ namespace Azure.Communication.CallAutomation
     /// </summary>
     public class EventProcessor
     {
+        private const int DEFAULT_EVENT_EXPIRATION_SECONDS = 40;
+
         private TimeSpan _exceptionTimeout;
         private EventBacklog _eventBacklog;
         private ConcurrentDictionary<(string, Type), EventHandler<EventProcessorArgs>> _ongoingEvents;
@@ -23,7 +25,7 @@ namespace Azure.Communication.CallAutomation
 
         internal EventProcessor(EventProcessorOptions options)
         {
-            _exceptionTimeout = options.EventTimeout;
+            _exceptionTimeout = options.EventTimeout == default ? TimeSpan.FromSeconds(DEFAULT_EVENT_EXPIRATION_SECONDS) : options.EventTimeout;
             _eventBacklog = new EventBacklog();
             _ongoingEvents = new ConcurrentDictionary<(string, Type), EventHandler<EventProcessorArgs>>();
         }
@@ -107,11 +109,12 @@ namespace Azure.Communication.CallAutomation
         /// Wait for any matching incoming event for the call. Returns the event once it arrives in ProcessEvent method.
         /// </summary>
         /// <param name="predicate">Predicate for waiting on event</param>
+        /// <param name="eventTimeout">Timeout for this waiting on event</param>
         /// <returns>Returns CallAutomationEvent once matching event arrives.</returns>
-        public async Task<CallAutomationEventBase> WaitForEvent(Func<CallAutomationEventBase, bool> predicate)
+        public async Task<CallAutomationEventBase> WaitForEvent(Func<CallAutomationEventBase, bool> predicate, TimeSpan eventTimeout = default)
         {
             // initialize awaiter and get event handler of it
-            var awaiter = new EventAwaiter(predicate, _exceptionTimeout);
+            var awaiter = new EventAwaiter(predicate, eventTimeout == default ? _exceptionTimeout : eventTimeout);
             EventHandler<EventProcessorArgs> handler = (o, arg) => awaiter.OnEventReceived(o, arg);
 
             try

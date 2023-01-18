@@ -17,18 +17,19 @@ namespace Azure.Communication.CallAutomation
         /// Wait for PlayEventResult using EventProcessor.
         /// </summary>
         /// <returns></returns>
-        public async Task<PlayEventResult> WaitForEvent()
+        public async Task<PlayEventResult> WaitForEvent(TimeSpan eventTimeout = default)
         {
             if (_evHandler is null)
             {
-                throw new ArgumentNullException(nameof(_evHandler));
+                throw new NullReferenceException(nameof(_evHandler));
             }
 
             var returnedEvent = await _evHandler.WaitForEvent(filter
                 => filter.CallConnectionId == _callConnectionId
                 && filter.OperationContext == _operationContext
                 && (filter.GetType() == typeof(PlayCompleted)
-                || filter.GetType() == typeof(PlayFailed))).ConfigureAwait(false);
+                || filter.GetType() == typeof(PlayFailed)),
+                eventTimeout).ConfigureAwait(false);
 
             PlayEventResult result = default;
             switch (returnedEvent)

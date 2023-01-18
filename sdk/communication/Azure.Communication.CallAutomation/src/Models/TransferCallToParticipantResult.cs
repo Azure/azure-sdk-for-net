@@ -14,18 +14,19 @@ namespace Azure.Communication.CallAutomation
         /// Wait for TransferCallToParticipantEventResult using EventProcessor.
         /// </summary>
         /// <returns></returns>
-        public async Task<TransferCallToParticipantEventResult> WaitForEvent()
+        public async Task<TransferCallToParticipantEventResult> WaitForEvent(TimeSpan eventTimeout = default)
         {
             if (_evHandler is null)
             {
-                throw new ArgumentNullException(nameof(_evHandler));
+                throw new NullReferenceException(nameof(_evHandler));
             }
 
             var returnedEvent = await _evHandler.WaitForEvent(filter
                 => filter.CallConnectionId == _callConnectionId
                 && filter.OperationContext == _operationContext
                 && (filter.GetType() == typeof(CallTransferAccepted)
-                || filter.GetType() == typeof(CallTransferFailed))).ConfigureAwait(false);
+                || filter.GetType() == typeof(CallTransferFailed)),
+                eventTimeout).ConfigureAwait(false);
 
             TransferCallToParticipantEventResult result = default;
             switch (returnedEvent)

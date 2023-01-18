@@ -11,8 +11,6 @@ namespace Azure.Communication.CallAutomation
 {
     internal class EventAwaiter : IDisposable
     {
-        private const int DEFAULT_EVENT_EXPIRATION_SECONDS = 40;
-
         private TimeSpan _exceptionTimeout;
         private Timer _expiringTimer;
 
@@ -23,11 +21,11 @@ namespace Azure.Communication.CallAutomation
         internal TaskCompletionSource<EventProcessorArgs> taskSource { get; }
         internal Action<object, EventProcessorArgs> OnEventReceived => OnEventsReceived;
 
-        internal EventAwaiter(Func<CallAutomationEventBase, bool> predicate, TimeSpan defaultTimeout = default)
+        internal EventAwaiter(Func<CallAutomationEventBase, bool> predicate, TimeSpan defaultTimeout)
         {
             // With constructor, define predicate that matches the condition given.
             _predicate = predicate;
-            _exceptionTimeout = defaultTimeout == default ? TimeSpan.FromSeconds(DEFAULT_EVENT_EXPIRATION_SECONDS) : defaultTimeout;
+            _exceptionTimeout = defaultTimeout;
 
             // timer is required for this eventawaiter to throw timeout exception on no events received
             _expiringTimer = new Timer(new TimerCallback(TimerProc));
