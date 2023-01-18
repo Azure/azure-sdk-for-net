@@ -32,17 +32,11 @@ namespace Azure.Identity
         internal const string AzdCLIInternalError = "AzdCLIInternalError: The command failed with an unexpected error. Here is the traceback:";
         internal TimeSpan AzdCliProcessTimeout { get; private set; }
 
-        // The default install paths are used to find Azure Developer CLI if no path is specified. This is to prevent executing out of the current working directory.
-        private static readonly string DefaultPathWindows = $"{EnvironmentVariables.ProgramFilesX86}\\Microsoft SDKs\\Azure\\CLI2\\wbin;{EnvironmentVariables.ProgramFiles}\\Microsoft SDKs\\Azure\\CLI2\\wbin";
         private static readonly string DefaultWorkingDirWindows = Environment.GetFolderPath(Environment.SpecialFolder.System);
-        private const string DefaultPathNonWindows = "/usr/bin:/usr/local/bin";
         private const string DefaultWorkingDirNonWindows = "/bin/";
         private const string RefreshTokeExpired = "The provided authorization code or refresh token has expired due to inactivity. Send a new interactive authorization request for this user and resource.";
-        private static readonly string DefaultPath = RuntimeInformation.IsOSPlatform(OSPlatform.Windows) ? DefaultPathWindows : DefaultPathNonWindows;
         private static readonly string DefaultWorkingDir = RuntimeInformation.IsOSPlatform(OSPlatform.Windows) ? DefaultWorkingDirWindows : DefaultWorkingDirNonWindows;
         private static readonly Regex AzdNotFoundPattern = new Regex("azd:(.*)not found");
-
-        private readonly string _path;
 
         private readonly CredentialPipeline _pipeline;
         private readonly IProcessService _processService;
@@ -71,7 +65,6 @@ namespace Azure.Identity
             _logPII = options?.IsLoggingPIIEnabled ?? false;
             _logAccountDetails = options?.Diagnostics?.IsAccountIdentifierLoggingEnabled ?? false;
             _pipeline = pipeline;
-            _path = !string.IsNullOrEmpty(EnvironmentVariables.Path) ? EnvironmentVariables.Path : DefaultPath;
             _processService = processService ?? ProcessService.Default;
             TenantId = options?.TenantId;
             AdditionallyAllowedTenantIds = TenantIdResolver.ResolveAddionallyAllowedTenantIds(options?.AdditionallyAllowedTenantsCore);
@@ -183,8 +176,7 @@ namespace Azure.Identity
                 UseShellExecute = false,
                 ErrorDialog = false,
                 CreateNoWindow = true,
-                WorkingDirectory = DefaultWorkingDir,
-                Environment = { { "PATH", _path } }
+                WorkingDirectory = DefaultWorkingDir
             };
 
         private static void GetFileNameAndArguments(string[] scopes, string tenantId, out string fileName, out string argument)

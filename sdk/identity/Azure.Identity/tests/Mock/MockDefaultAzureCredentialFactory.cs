@@ -14,10 +14,10 @@ namespace Azure.Identity.Tests.Mock
 
         public Action<Mock<EnvironmentCredential>> OnCreateEnvironmentCredential { get; set; }
         private Mock<EnvironmentCredential> mockEnvironmentCredential = new();
-        public Action<Mock<AzureCliCredential>> OnCreateAzureCliCredential { get; set; }
-        private Mock<AzureCliCredential> mockAzureCliCredential = new();
         public Action<Mock<AzureDeveloperCliCredential>> OnCreateAzureDeveloperCliCredential { get; set; }
         private Mock<AzureDeveloperCliCredential> mockAzureDeveloperCliCredential = new();
+        public Action<Mock<AzureCliCredential>> OnCreateAzureCliCredential { get; set; }
+        private Mock<AzureCliCredential> mockAzureCliCredential = new();
         public Action<Mock<ManagedIdentityCredential>> OnCreateManagedIdentityCredential { get; set; }
         private Mock<ManagedIdentityCredential> mockManagedIdentityCredential = new();
         public Action<Mock<SharedTokenCacheCredential>> OnCreateSharedTokenCacheCredential { get; set; }
@@ -49,6 +49,12 @@ namespace Azure.Identity.Tests.Mock
             return mockSharedTokenCacheCredential.Object;
         }
 
+        public override TokenCredential CreateAzureDeveloperCliCredential()
+        {
+            OnCreateAzureDeveloperCliCredential?.Invoke(mockAzureDeveloperCliCredential);
+            return mockAzureDeveloperCliCredential.Object;
+        }
+        
         public override TokenCredential CreateAzureCliCredential()
         {
             OnCreateAzureCliCredential?.Invoke(mockAzureCliCredential);
@@ -59,12 +65,6 @@ namespace Azure.Identity.Tests.Mock
         {
             OnCreateAzurePowerShellCredential?.Invoke(mockAzurePowershellCredential);
             return mockAzurePowershellCredential.Object;
-        }
-
-        public override TokenCredential CreateAzureDeveloperCliCredential()
-        {
-            OnCreateAzureDeveloperCliCredential?.Invoke(mockAzureDeveloperCliCredential);
-            return mockAzureDeveloperCliCredential.Object;
         }
 
         public override TokenCredential CreateInteractiveBrowserCredential()

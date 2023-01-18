@@ -65,14 +65,14 @@ namespace Azure.Identity
                 chain[i++] = CreateVisualStudioCodeCredential();
             }
 
-            if (!Options.ExcludeAzureCliCredential)
-            {
-                chain[i++] = CreateAzureCliCredential();
-            }
-
             if (!Options.ExcludeAzureDeveloperCliCredential)
             {
                 chain[i++] = CreateAzureDeveloperCliCredential();
+            }
+
+            if (!Options.ExcludeAzureCliCredential)
+            {
+                chain[i++] = CreateAzureCliCredential();
             }
 
             if (!Options.ExcludeAzurePowerShellCredential)
@@ -138,22 +138,6 @@ namespace Azure.Identity
                 Pipeline);
         }
 
-        public virtual TokenCredential CreateAzureCliCredential()
-        {
-            var options = new AzureCliCredentialOptions
-            {
-                TenantId = Options.TenantId,
-                CliProcessTimeout = Options.DeveloperCredentialTimeout
-            };
-
-            foreach (var addlTenant in Options.AdditionallyAllowedTenants)
-            {
-                options.AdditionallyAllowedTenants.Add(addlTenant);
-            }
-
-            return new AzureCliCredential(Pipeline, default, options);
-        }
-
         public virtual TokenCredential CreateAzureDeveloperCliCredential()
         {
             var options = new AzureDeveloperCliCredentialOptions
@@ -168,6 +152,22 @@ namespace Azure.Identity
             }
 
             return new AzureDeveloperCliCredential(Pipeline, default, options);
+        }
+
+        public virtual TokenCredential CreateAzureCliCredential()
+        {
+            var options = new AzureCliCredentialOptions
+            {
+                TenantId = Options.TenantId,
+                CliProcessTimeout = Options.DeveloperCredentialTimeout
+            };
+
+            foreach (var addlTenant in Options.AdditionallyAllowedTenants)
+            {
+                options.AdditionallyAllowedTenants.Add(addlTenant);
+            }
+
+            return new AzureCliCredential(Pipeline, default, options);
         }
 
         public virtual TokenCredential CreateVisualStudioCredential()

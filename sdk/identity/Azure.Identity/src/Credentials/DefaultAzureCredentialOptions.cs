@@ -227,14 +227,14 @@ namespace Azure.Identity
         public bool ExcludeInteractiveBrowserCredential { get; set; } = true;
 
         /// <summary>
-        /// Specifies whether the <see cref="AzureCliCredential"/> will be excluded from the <see cref="DefaultAzureCredential"/> authentication flow.
-        /// </summary>
-        public bool ExcludeAzureCliCredential { get; set; }
-
-        /// <summary>
         /// Specifies whether the <see cref="AzureDeveloperCliCredential"/> will be excluded from the <see cref="DefaultAzureCredential"/> authentication flow.
         /// </summary>
         public bool ExcludeAzureDeveloperCliCredential { get; set; }
+        
+        /// <summary>
+        /// Specifies whether the <see cref="AzureCliCredential"/> will be excluded from the <see cref="DefaultAzureCredential"/> authentication flow.
+        /// </summary>
+        public bool ExcludeAzureCliCredential { get; set; }
 
         /// <summary>
         /// Specifies whether the <see cref="VisualStudioCredential"/> will be excluded from the <see cref="DefaultAzureCredential"/> authentication flow.
@@ -270,8 +270,8 @@ namespace Azure.Identity
                 ExcludeManagedIdentityCredential = ExcludeManagedIdentityCredential,
                 ExcludeSharedTokenCacheCredential = ExcludeSharedTokenCacheCredential,
                 ExcludeInteractiveBrowserCredential = ExcludeInteractiveBrowserCredential,
-                ExcludeAzureCliCredential = ExcludeAzureCliCredential,
                 ExcludeAzureDeveloperCliCredential = ExcludeAzureDeveloperCliCredential,
+                ExcludeAzureCliCredential = ExcludeAzureCliCredential,
                 ExcludeVisualStudioCredential = ExcludeVisualStudioCredential,
                 ExcludeVisualStudioCodeCredential = ExcludeVisualStudioCodeCredential,
                 ExcludeAzurePowerShellCredential = ExcludeAzurePowerShellCredential,

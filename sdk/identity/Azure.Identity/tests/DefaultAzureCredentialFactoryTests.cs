@@ -329,8 +329,8 @@ namespace Azure.Identity.Tests
                                                    [Values(true, false)] bool excludeSharedTokenCacheCredential,
                                                    [Values(true, false)] bool excludeVisualStudioCredential,
                                                    [Values(true, false)] bool excludeVisualStudioCodeCredential,
-                                                   [Values(true, false)] bool excludeCliCredential,
                                                    [Values(true, false)] bool excludeDeveloperCliCredential,
+                                                   [Values(true, false)] bool excludeCliCredential,
                                                    [Values(true, false)] bool excludeAzurePowerShellCredential,
                                                    [Values(true, false)] bool excludeInteractiveBrowserCredential)
         {
@@ -348,8 +348,8 @@ namespace Azure.Identity.Tests
                 expCredentialTypes.ConditionalAdd(!excludeSharedTokenCacheCredential, typeof(SharedTokenCacheCredential));
                 expCredentialTypes.ConditionalAdd(!excludeVisualStudioCredential, typeof(VisualStudioCredential));
                 expCredentialTypes.ConditionalAdd(!excludeVisualStudioCodeCredential, typeof(VisualStudioCodeCredential));
-                expCredentialTypes.ConditionalAdd(!excludeCliCredential, typeof(AzureCliCredential));
                 expCredentialTypes.ConditionalAdd(!excludeDeveloperCliCredential, typeof(AzureDeveloperCliCredential));
+                expCredentialTypes.ConditionalAdd(!excludeCliCredential, typeof(AzureCliCredential));
                 expCredentialTypes.ConditionalAdd(!excludeAzurePowerShellCredential, typeof(AzurePowerShellCredential));
                 expCredentialTypes.ConditionalAdd(!excludeInteractiveBrowserCredential, typeof(InteractiveBrowserCredential));
 
@@ -358,8 +358,8 @@ namespace Azure.Identity.Tests
                     ExcludeEnvironmentCredential = excludeEnvironmentCredential,
                     ExcludeManagedIdentityCredential = excludeManagedIdentityCredential,
                     ExcludeSharedTokenCacheCredential = excludeSharedTokenCacheCredential,
-                    ExcludeAzureCliCredential = excludeCliCredential,
                     ExcludeAzureDeveloperCliCredential = excludeDeveloperCliCredential,
+                    ExcludeAzureCliCredential = excludeCliCredential,
                     ExcludeInteractiveBrowserCredential = excludeInteractiveBrowserCredential,
                     ExcludeVisualStudioCredential = excludeVisualStudioCredential,
                     ExcludeVisualStudioCodeCredential = excludeVisualStudioCodeCredential,
