@@ -396,8 +396,8 @@ int numCallsReceiveMessage = 0;
 mockReceiver
     .Setup(receiver => receiver.ReceiveMessageAsync(
         It.IsAny<TimeSpan>(),
-        It.IsAny<CancellationToken>()))
-    .ReturnsAsync(messagesToReturn.ElementAtOrDefault(numCallsReceiveMessage));
+        It.IsAny<CancellationToken>())).Callback(() => numCallsReceiveMessage++)
+    .ReturnsAsync(() => messagesToReturn.ElementAtOrDefault(numCallsReceiveMessage));
 
 // This sets up the mock ServiceBusReceiver to keep track of how many times CompleteMessageAsync
 // has been called in the numCallsCompleteMessage counter.
@@ -441,21 +441,270 @@ mockReceiver
 ```
 
 ```C# Snippet:ServiceBus_MockDefer
-// TODO
-await Task.Delay(1);
+// The first section sets up a mock ServiceBusReceiver.
+
+Mock<ServiceBusClient> mockClient = new();
+Mock<ServiceBusReceiver> mockReceiver = new();
+
+mockClient
+    .Setup(client => client.CreateReceiver(It.IsAny<string>()))
+    .Returns(mockReceiver.Object);
+
+ServiceBusClient client = mockClient.Object;
+
+// This creates a list of messages to return from the ServiceBusReceiver mock. See the ServiceBusModelFactory
+// for a complete set of properties that can be populated using the ServiceBusModelFactory.ServiceBusReceivedMessage method.
+
+List<ServiceBusReceivedMessage> messagesToReturn = new();
+int numMessages = 3;
+
+for (int i = 0; i < numMessages; i++)
+{
+    string body = $"message-{i}";
+
+    // This mocks a ServiceBusReceivedMessage instance using the model factory. Different arguments can mock different
+    // potential outputs from the broker.
+
+    ServiceBusReceivedMessage messageToReturn = ServiceBusModelFactory.ServiceBusReceivedMessage(
+        body: new BinaryData(body),
+        messageId: $"id-{i}",
+        sequenceNumber: i, // this needs to be populated in order to defer each message
+        partitionKey: "illustrative-partitionKey",
+        correlationId: "illustrative-correlationId",
+        contentType: "illustrative-contentType",
+        replyTo: "illustrative-replyTo"
+        // ...
+        );
+    messagesToReturn.Add(messageToReturn);
+}
+
+// This sets up the mock ServiceBusReceiver to return a different message from the messagesToReturn
+// list each time the method is called until there are no more messages.
+
+int numCallsReceiveMessage = 0;
+mockReceiver
+    .Setup(receiver => receiver.ReceiveMessageAsync(
+        It.IsAny<TimeSpan>(),
+        It.IsAny<CancellationToken>()))
+    .ReturnsAsync(() =>
+    {
+        ServiceBusReceivedMessage m = messagesToReturn.ElementAtOrDefault(numCallsReceiveMessage);
+        numCallsReceiveMessage++;
+        return m;
+    });
+
+// This sets up the mock ServiceBusReceiver to keep track of the messages being deferred using each message's
+// sequence number. It creates a new ServiceBusReceivedMessage using the model factory in order to update
+// application properties.
+
+Dictionary<long, ServiceBusReceivedMessage> deferredMessages = new();
+
+mockReceiver
+    .Setup(receiver => receiver.DeferMessageAsync(
+        It.IsAny<ServiceBusReceivedMessage>(),
+        It.IsAny<Dictionary<string, object>>(),
+        It.IsAny<CancellationToken>()))
+    .Callback<ServiceBusReceivedMessage, IDictionary<string, object>, CancellationToken>((m, p, ct) =>
+    {
+        ServiceBusReceivedMessage updatedMessage = ServiceBusModelFactory.ServiceBusReceivedMessage(
+            body: m.Body,
+            messageId: m.MessageId,
+            properties: p,
+            sequenceNumber: m.SequenceNumber);
+        deferredMessages.Add(m.SequenceNumber, updatedMessage);
+    })
+    .Returns(Task.CompletedTask);
+
+// This sets up the ServiceBusReceiver mock to retrieve the ServiceBusReceivedMessage that has been deferred.
+// If a message has been deferred with the given sequence number, throw a ServiceBusException (as expected).
+
+mockReceiver
+    .Setup(receiver => receiver.ReceiveDeferredMessageAsync(
+        It.IsAny<long>(),
+        It.IsAny<CancellationToken>()))
+    .ReturnsAsync((long s, CancellationToken ct) =>
+    {
+        if (deferredMessages.ContainsKey(s))
+        {
+            ServiceBusReceivedMessage message = deferredMessages[s];
+            deferredMessages.Remove(s);
+            return message;
+        }
+        else
+        {
+            throw new ServiceBusException();
+        }
+    });
+
+// The rest of this snippet illustrates how to defer a service bus message using the mocked
+// service bus client above, this would be where application methods deferrring a message would be
+// called.
+
+string mockQueueName = "MockQueueName";
+ServiceBusReceiver receiver = client.CreateReceiver(mockQueueName);
+
+client.CreateReceiver(mockQueueName);
+
+List<long> deferredMessageSequenceNumbers = new();
+for (int i = 0; i < numMessages; i++)
+{
+    ServiceBusReceivedMessage message = await receiver.ReceiveMessageAsync(TimeSpan.FromSeconds(1), CancellationToken.None);
+    deferredMessageSequenceNumbers.Add(message.SequenceNumber);
+    await receiver.DeferMessageAsync(message);
+}
+
+for (int i = 0; i < numMessages; i++)
+{
+    ServiceBusReceivedMessage message = await receiver.ReceiveDeferredMessageAsync(i, CancellationToken.None);
+
+    // Application message processing...
+}
+
+// For illustrative purposes, make sure all deferred messages were received.
+
+Assert.IsEmpty(deferredMessages);
 ```
 
 ```C# Snippet:ServiceBus_MockPeek
-// TODO
-await Task.Delay(1);
+// This sets up the ServiceBusClient mock to return the ServiceBusReceiver mock.
+
+Mock<ServiceBusClient> mockClient = new();
+Mock<ServiceBusReceiver> mockReceiver = new();
+
+mockClient
+    .Setup(client => client.CreateReceiver(It.IsAny<string>()))
+    .Returns(mockReceiver.Object);
+
+ServiceBusClient client = mockClient.Object;
+
+// This creates a list of messages to return from the ServiceBusReceiver mock. See the ServiceBusModelFactory
+// for a complete set of properties that can be populated using the ServiceBusModelFactory.ServiceBusReceivedMessage method.
+
+List<ServiceBusReceivedMessage> messagesToReturn = new();
+int numMessages = 3;
+
+for (int i = 0; i < numMessages; i++)
+{
+    string body = $"message-{i}";
+
+    // This mocks a ServiceBusReceivedMessage instance using the model factory. Different arguments can mock different
+    // potential outputs from the broker.
+
+    ServiceBusReceivedMessage messageToReturn = ServiceBusModelFactory.ServiceBusReceivedMessage(
+        body: new BinaryData(body),
+        messageId: $"id-{i}",
+        sequenceNumber: i,
+        partitionKey: "illustrative-partitionKey",
+        correlationId: "illustrative-correlationId",
+        contentType: "illustrative-contentType",
+        replyTo: "illustrative-replyTo"
+        // ...
+        );
+    messagesToReturn.Add(messageToReturn);
+}
+
+// Set up peek to return the next message in the list of messages after each call.
+
+int numCallsPeek = 0;
+mockReceiver
+    .Setup(receiver => receiver.PeekMessageAsync(
+        It.IsAny<long>(),
+        It.IsAny<CancellationToken>()))
+    .ReturnsAsync(() =>
+    {
+        ServiceBusReceivedMessage m = messagesToReturn.ElementAtOrDefault(numCallsPeek);
+        numCallsPeek++;
+        return m;
+    });
+
+// The rest of this snippet illustrates how to peek a service bus message using the mocked
+// service bus receiver above, this would be where application methods peeking a message would be
+// called.
+
+string mockQueueName = "MockQueue";
+ServiceBusReceiver receiver = client.CreateReceiver(mockQueueName);
+
+ServiceBusReceivedMessage peekedMessage = await receiver.PeekMessageAsync(0, CancellationToken.None);
+
+mockReceiver
+    .Verify(receiver => receiver.PeekMessageAsync(
+        It.IsAny<long>(),
+        It.IsAny<CancellationToken>()), Times.Once());
 ```
 
 ```C# Snippet:ServiceBus_MockingAbandon
-// TODO
+// This sets up the ServiceBusClient mock to return the ServiceBusReceiver mock.
+
 Mock<ServiceBusClient> mockClient = new();
-Mock<ServiceBusSender> mockSender = new();
 Mock<ServiceBusReceiver> mockReceiver = new();
-await Task.Delay(1);
+
+mockClient
+    .Setup(client => client.CreateReceiver(It.IsAny<string>()))
+    .Returns(mockReceiver.Object);
+
+ServiceBusClient client = mockClient.Object;
+
+// This creates a list of messages to return from the ServiceBusReceiver mock. See the ServiceBusModelFactory
+// for a complete set of properties that can be populated using the ServiceBusModelFactory.ServiceBusReceivedMessage method.
+
+List<ServiceBusReceivedMessage> messagesToReturn = new();
+int numMessages = 3;
+
+for (int i = 0; i < numMessages; i++)
+{
+    string body = $"message-{i}";
+
+    // This mocks a ServiceBusReceivedMessage instance using the model factory. Different arguments can mock different
+    // potential outputs from the broker.
+
+    ServiceBusReceivedMessage messageToReturn = ServiceBusModelFactory.ServiceBusReceivedMessage(
+        body: new BinaryData(body),
+        messageId: $"id-{i}",
+        sequenceNumber: i,
+        partitionKey: "illustrative-partitionKey",
+        correlationId: "illustrative-correlationId",
+        contentType: "illustrative-contentType",
+        replyTo: "illustrative-replyTo"
+        // ...
+        );
+    messagesToReturn.Add(messageToReturn);
+}
+
+// Set up receive to return the next message in the list of messages after each call.
+
+mockReceiver
+    .Setup(receiver => receiver.ReceiveMessageAsync(
+        It.IsAny<TimeSpan>(),
+        It.IsAny<CancellationToken>()))
+    .ReturnsAsync(() =>
+    {
+        ServiceBusReceivedMessage m = messagesToReturn.FirstOrDefault();
+        if (m!= null)
+        {
+            messagesToReturn.RemoveAt(0);
+        }
+        return m;
+    });
+
+// Set up abandon to put the received message back at the front of the list to be returned again.
+
+mockReceiver
+    .Setup(receiver => receiver.AbandonMessageAsync(
+        It.IsAny<ServiceBusReceivedMessage>(),
+        It.IsAny<Dictionary<string, object>>(),
+        It.IsAny<CancellationToken>()))
+    .Callback<ServiceBusReceivedMessage, IDictionary<string, object>, CancellationToken>((m, p, ct) => messagesToReturn.Insert(0, m))
+    .Returns(Task.CompletedTask);
+
+// The rest of this snippet illustrates how to abandon a service bus message using the mocked
+// service bus receiver above, this would be where application methods peeking a message would be
+// called.
+
+string mockQueueName = "MockQueue";
+ServiceBusReceiver receiver = client.CreateReceiver(mockQueueName);
+
+ServiceBusReceivedMessage message = await receiver.ReceiveMessageAsync();
+await receiver.AbandonMessageAsync(message);
 ```
 
 ## Testing message handlers
@@ -583,13 +832,170 @@ Assert.DoesNotThrowAsync(async () => await ErrorHandler(errorArgs));
 ## Simulating the processor running
 
 ```C# Snippet:ServiceBus_SimulateRunningTheProcessor
-// TODO
-await Task.Delay(1);
+Mock<ServiceBusClient> mockClient = new();
+Mock<ServiceBusReceiver> mockReceiver = new();
+
+// This handler is for illustrative purposes only.
+
+async Task MessageHandler(ProcessMessageEventArgs args)
+{
+    string body = args.Message.Body.ToString();
+    Console.WriteLine(body);
+
+    // we can evaluate application logic and use that to determine how to settle the message.
+    await args.CompleteMessageAsync(args.Message);
+}
+
+// This function simulates a random message being emitted for processing.
+
+Random rng = new();
+
+TimerCallback dispatchMessage = async _ =>
+{
+    ServiceBusReceivedMessage message = ServiceBusModelFactory.ServiceBusReceivedMessage(
+        body: new BinaryData("message"),
+        messageId: "messageId",
+        partitionKey: "hellokey",
+        correlationId: "correlationId",
+        contentType: "contentType",
+        replyTo: "replyTo"
+        //...
+        );
+
+    ProcessMessageEventArgs processArgs = new(
+        message: message,
+        receiver: mockReceiver.Object,
+        cancellationToken: CancellationToken.None);
+
+    await MessageHandler(processArgs);
+};
+
+// Create a timer that runs once-a-second when started and, otherwise, sits idle.
+
+Timer eventDispatchTimer = new(
+    dispatchMessage,
+    null,
+    Timeout.Infinite,
+    Timeout.Infinite);
+
+void startTimer() =>
+    eventDispatchTimer.Change(0, (int)TimeSpan.FromSeconds(1).TotalMilliseconds);
+
+void stopTimer() =>
+    eventDispatchTimer.Change(Timeout.Infinite, Timeout.Infinite);
+
+// Create a mock of the processor that dispatches messages when StartProcessingAsync
+// is called and does so until StopProcessingAsync is called.
+
+Mock<ServiceBusProcessor> mockProcessor = new();
+
+mockProcessor
+    .Setup(processor => processor.StartProcessingAsync(It.IsAny<CancellationToken>()))
+    .Returns(Task.CompletedTask)
+    .Callback(startTimer);
+
+mockProcessor
+    .Setup(processor => processor.StopProcessingAsync(It.IsAny<CancellationToken>()))
+    .Returns(Task.CompletedTask)
+    .Callback(stopTimer);
+
+mockClient
+    .Setup(client => client.CreateProcessor(It.IsAny<string>()))
+    .Returns(mockProcessor.Object);
+
+// Start the processor.
+
+await mockProcessor.Object.StartProcessingAsync();
+
+// This is where application code would be called and tested.
+
+// Stop the processor.
+
+await mockProcessor.Object.StopProcessingAsync();
 ```
 
 ```C# Snippet:ServiceBus_SimulateRunningTheSessionProcessor
-// TODO
-await Task.Delay(1);
+Mock<ServiceBusClient> mockClient = new();
+Mock<ServiceBusSessionReceiver> mockSessionReceiver = new();
+
+// This handler is for illustrative purposes only.
+
+async Task MessageHandler(ProcessSessionMessageEventArgs args)
+{
+    string body = args.Message.Body.ToString();
+    Console.WriteLine(body);
+
+    // we can evaluate application logic and use that to determine how to settle the message.
+    await args.CompleteMessageAsync(args.Message);
+}
+
+// This function simulates a random message being emitted for processing.
+
+Random rng = new();
+
+TimerCallback dispatchMessage = async _ =>
+{
+    ServiceBusReceivedMessage message = ServiceBusModelFactory.ServiceBusReceivedMessage(
+        body: new BinaryData("message"),
+        messageId: "messageId",
+        sessionId: "session",
+        partitionKey: "hellokey",
+        correlationId: "correlationId",
+        contentType: "contentType",
+        replyTo: "replyTo"
+        //...
+        );
+
+    ProcessSessionMessageEventArgs processArgs = new(
+        message: message,
+        receiver: mockSessionReceiver.Object,
+        cancellationToken: CancellationToken.None);
+
+    await MessageHandler(processArgs);
+};
+
+// Create a timer that runs once-a-second when started and, otherwise, sits idle.
+
+Timer eventDispatchTimer = new(
+    dispatchMessage,
+    null,
+    Timeout.Infinite,
+    Timeout.Infinite);
+
+void startTimer() =>
+    eventDispatchTimer.Change(0, (int)TimeSpan.FromSeconds(1).TotalMilliseconds);
+
+void stopTimer() =>
+    eventDispatchTimer.Change(Timeout.Infinite, Timeout.Infinite);
+
+// Create a mock of the session processor that dispatches messages when StartProcessingAsync
+// is called and does so until StopProcessingAsync is called.
+
+Mock<ServiceBusSessionProcessor> mockProcessor = new();
+
+mockProcessor
+    .Setup(processor => processor.StartProcessingAsync(It.IsAny<CancellationToken>()))
+    .Returns(Task.CompletedTask)
+    .Callback(startTimer);
+
+mockProcessor
+    .Setup(processor => processor.StopProcessingAsync(It.IsAny<CancellationToken>()))
+    .Returns(Task.CompletedTask)
+    .Callback(stopTimer);
+
+mockClient
+    .Setup(client => client.CreateSessionProcessor(It.IsAny<string>(), It.IsAny<ServiceBusSessionProcessorOptions>()))
+    .Returns(mockProcessor.Object);
+
+// Start the processor.
+
+await mockProcessor.Object.StartProcessingAsync();
+
+// This is where application code would be called and tested.
+
+// Stop the processor.
+
+await mockProcessor.Object.StopProcessingAsync();
 ```
 
 
