@@ -35,10 +35,7 @@ namespace Azure.Developer.LoadTesting.Tests
                 Regex = @"sig=(?<group>.*?)(?=$|&)"
             });
 
-            BodyRegexSanitizers.Add(new BodyRegexSanitizer("[^\\r](?<break>\\n)", "\r")
-            {
-                    GroupForReplace = "break"
-            });
+            BodyRegexSanitizers.Add(new BodyRegexSanitizer("\r\n", "\n"));
         }
 
         internal LoadTestAdministrationClient CreateAdministrationClient()
