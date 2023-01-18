@@ -47,6 +47,34 @@ Documentation is available to help you learn how to use this package
 Code samples for using the management library for .NET can be found in the following locations
 - [.NET Management Library Code Samples](https://docs.microsoft.com/samples/browse/?branch=master&languages=csharp&term=managing%20using%20Azure%20.NET%20SDK)
 
+## In-depth Example
+Further AutoManage Specific Samples are available in the .\Samples folder within this folder. 
+
+The general flow is to build an Azure ArmClient, and then make use of the powerful extension methods defined within the `Azure.ResourceManager.Automanage` and `Azure.ResourceManager.Automanage.Models` Nuget package and namespace to retrieve a list of AutoManage Assignments for a given scope (either Subscription or ResourceGroup).  
+
+```csharp
+//build a Client (Using Azure.Core, Azure.Identity and Azure.ResourceManager)
+var armClient = new ArmClient(new DefaultAzureCredential());
+var subscription = armClient.GetDefaultSubscription();
+```
+
+Next, to add a new assignment, simply define an assignment object and add it to the collection.  It's that simple!
+
+```csharp
+string profileId = "/providers/Microsoft.Automanage/bestPractices/AzureBestPracticesProduction";
+
+Console.WriteLine($"[AutoManage-Onboarding]--Onboarding with profile, {profileId}");
+
+var collection = client.GetConfigurationProfileAssignments(vmId.Parent);
+
+var data = new ConfigurationProfileAssignmentData();
+data.Properties = new ConfigurationProfileAssignmentProperties() { ConfigurationProfile = profileId };
+
+var assignment = await collection.CreateOrUpdateAsync(WaitUntil.Completed, "default", data);
+
+return assignment.Value;
+```
+
 ## Troubleshooting
 
 -   File an issue via [Github
