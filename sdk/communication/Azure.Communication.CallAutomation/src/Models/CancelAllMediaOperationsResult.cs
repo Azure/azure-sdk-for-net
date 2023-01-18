@@ -26,7 +26,7 @@ namespace Azure.Communication.CallAutomation
 
             var returnedEvent = await _evHandler.WaitForEvent(filter
                 => filter.CallConnectionId == _callConnectionId
-                && filter.OperationContext == _operationContext
+                && (filter.OperationContext == _operationContext || _operationContext is null)
                 && (filter.GetType() == typeof(PlayCanceled)
                 || filter.GetType() == typeof(RecognizeCanceled)),
                 eventTimeout).ConfigureAwait(false);
