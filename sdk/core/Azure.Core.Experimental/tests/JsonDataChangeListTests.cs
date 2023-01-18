@@ -136,10 +136,11 @@ namespace Azure.Core.Experimental.Tests
             // 3. Type round-trips correctly.
             using MemoryStream stream = new();
             jd.WriteTo(stream);
-            var val = new BinaryData(stream.GetBuffer()).ToString();
-            var dict = JsonSerializer.Deserialize<Dictionary<string, object>>(val);
-            Assert.AreEqual(1.2, dict["Foo"]);
-            Assert.AreEqual("hi", dict["Bar"]);
+            stream.Position = 0;
+            string value = BinaryData.FromStream(stream).ToString();
+            JsonDocument doc = JsonDocument.Parse(value);
+            Assert.AreEqual(1.2, doc.RootElement.GetProperty("Foo").GetDouble());
+            Assert.AreEqual("hi", doc.RootElement.GetProperty("Bar").GetString());
         }
 
         [Test]
