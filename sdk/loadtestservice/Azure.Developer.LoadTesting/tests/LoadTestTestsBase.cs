@@ -16,7 +16,6 @@ namespace Azure.Developer.LoadTesting.Tests
     {
         internal string _testId;
         internal string _fileName;
-        internal string resourceId;
         internal TestHelper _testHelper;
         internal LoadTestAdministrationClient _loadTestAdministrationClient;
         internal string _testRunId;
