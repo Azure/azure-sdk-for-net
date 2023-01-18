@@ -424,8 +424,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
                 });
 
             // This sets up the mock ServiceBusReceiver to keep track of the messages being deferred using each message's
-            // sequence number. It creates a new ServiceBusReceivedMessage using the model factory in order to update
-            // application properties.
+            // sequence number.
 
             Dictionary<long, ServiceBusReceivedMessage> deferredMessages = new();
 
@@ -436,12 +435,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
                     It.IsAny<CancellationToken>()))
                 .Callback<ServiceBusReceivedMessage, IDictionary<string, object>, CancellationToken>((m, p, ct) =>
                 {
-                    ServiceBusReceivedMessage updatedMessage = ServiceBusModelFactory.ServiceBusReceivedMessage(
-                        body: m.Body,
-                        messageId: m.MessageId,
-                        properties: p,
-                        sequenceNumber: m.SequenceNumber);
-                    deferredMessages.Add(m.SequenceNumber, updatedMessage);
+                    deferredMessages.Add(m.SequenceNumber, m);
                 })
                 .Returns(Task.CompletedTask);
 
