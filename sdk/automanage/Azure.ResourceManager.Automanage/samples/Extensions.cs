@@ -23,7 +23,7 @@ namespace AutoManageTest
                 targetGroup = await rgCollection.GetAsync(resourceGroup);
                 Console.WriteLine($"[ResourceGroup-Creation]--Found previous RG, {resourceGroup}");
             }
-            catch (Exception ex)
+            catch
             {
                 AzureLocation location = AzureLocation.WestUS2;
                 var l = rgCollection.CreateOrUpdate(WaitUntil.Completed, resourceGroup, new ResourceGroupData(location));
@@ -43,7 +43,7 @@ namespace AutoManageTest
                 Console.WriteLine("[VirtualMachine-Creation]--VM Already existed, no need to create one for this run");
                 return vm2;
             }
-            catch (Exception ex)
+            catch
             {
                 Console.WriteLine("[VirtualMachine-Creation]--Need to create VM");
             }
@@ -113,7 +113,8 @@ namespace AutoManageTest
             {
                 var l = await networkInterfaces.GetAsync(networkInterfaceName);
                 Console.WriteLine("[VirtualMachine-NICCreation]--Found previous NIC, reusing");
-                return l.Value.ToVmNicReference(); ;
+                return l.Value.ToVmNicReference();
+                ;
             }
             catch
             {
@@ -121,7 +122,7 @@ namespace AutoManageTest
             }
 
             var networkGroup = await resourceGroup.CreateVirtualNetworksIfNotExistsAsync(virtualMachineName);
-            var subnet = networkGroup.GetSubnets().FirstOrDefault().Id;
+            var subnet = networkGroup?.GetSubnets().FirstOrDefault()?.Id;
 
             NetworkInterfaceIPConfigurationData networkInterfaceIPConfiguration = new NetworkInterfaceIPConfigurationData()
             {
@@ -139,7 +140,7 @@ namespace AutoManageTest
             return networkInterfaceOperation.Value.ToVmNicReference();
         }
 
-        public static async Task<VirtualNetworkResource> CreateVirtualNetworksIfNotExistsAsync(this ResourceGroupResource resourceGroup, string virtualMachineName)
+        public static async Task<VirtualNetworkResource?> CreateVirtualNetworksIfNotExistsAsync(this ResourceGroupResource resourceGroup, string virtualMachineName)
         {
             var networkGroups = resourceGroup.GetVirtualNetworks();
             var targetName = $"{virtualMachineName}_netwrk";
@@ -147,7 +148,7 @@ namespace AutoManageTest
             if (networkGroups.Count() != 0)
             {
                 Console.Write("[NetworkGroup--Creation]--Network groups exist, using the first one");
-                return networkGroups.FirstOrDefault();
+                return networkGroups?.FirstOrDefault();
             }
 
             Console.WriteLine("[NetworkGroup--Creation]--Need to create a virtual network");
@@ -195,7 +196,7 @@ namespace AutoManageTest
             return assignment.Value;
         }
 
-        public static async Task<ConfigurationProfileAssignmentResource> WaitAssignmentCompleted(this ArmClient client, ResourceIdentifier vmId)
+        public static async Task<ConfigurationProfileAssignmentResource?> WaitAssignmentCompleted(this ArmClient client, ResourceIdentifier vmId)
         {
             var assignmentName = string.Concat(vmId, "/providers/Microsoft.Automanage/configurationProfileAssignments/default");
             var shouldWaitStates = new[] { "InProgress", "New" };
@@ -205,16 +206,16 @@ namespace AutoManageTest
             var collection = client.GetConfigurationProfileAssignments(vmId.Parent);
             var thisAssignment = collection.FirstOrDefault(x => x.Data.Id.ToString() == assignmentName);
 
-            while (shouldWaitStates.Contains(thisAssignment.GetStatus()))
+            while (shouldWaitStates.Contains(thisAssignment?.GetStatus()))
             {
-                Console.WriteLine($"--Status was {thisAssignment.GetStatus()}, waiting for completed status");
+                Console.WriteLine($"--Status was {thisAssignment?.GetStatus()}, waiting for completed status");
                 await Task.Delay(TimeSpan.FromSeconds(25));
 
                 collection = client.GetConfigurationProfileAssignments(vmId.Parent);
                 thisAssignment = collection.FirstOrDefault(x => x.Data.Id.ToString() == assignmentName);
             }
 
-            Console.WriteLine($"[AutoManage-Onboarding]--Final assignment status for this VM was {thisAssignment.GetStatus()}");
+            Console.WriteLine($"[AutoManage-Onboarding]--Final assignment status for this VM was {thisAssignment?.GetStatus()}");
 
             return thisAssignment;
         }
