@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.DataBoxEdge
             return message;
         }
 
-        /// <summary> List all the available Skus and information related to them. </summary>
+        /// <summary> List all the available Skus and information related to the skus. </summary>
         /// <param name="subscriptionId"> The subscription ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.DataBoxEdge
             }
         }
 
-        /// <summary> List all the available Skus and information related to them. </summary>
+        /// <summary> List all the available Skus and information related to the skus. </summary>
         /// <param name="subscriptionId"> The subscription ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.DataBoxEdge
             return message;
         }
 
-        /// <summary> List all the available Skus and information related to them. </summary>
+        /// <summary> List all the available Skus and information related to the skus. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> The subscription ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.DataBoxEdge
             }
         }
 
-        /// <summary> List all the available Skus and information related to them. </summary>
+        /// <summary> List all the available Skus and information related to the skus. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> The subscription ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

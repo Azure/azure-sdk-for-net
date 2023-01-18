@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.DataBoxEdge
         }
 
         /// <summary>
-        /// List all the available Skus and information related to them.
+        /// List all the available Skus and information related to the skus.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.DataBoxEdge
         }
 
         /// <summary>
-        /// List all the available Skus and information related to them.
+        /// List all the available Skus and information related to the skus.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
