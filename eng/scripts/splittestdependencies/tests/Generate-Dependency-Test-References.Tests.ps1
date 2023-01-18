@@ -1,6 +1,6 @@
 <#
 ```
-Invoke-Pester -Output Detailed $PSScriptRoot\tests\Generate-Dependency-Test-References-Tests.ps1
+Invoke-Pester -Output Detailed $PSScriptRoot\tests\Generate-Dependency-Test-References.Tests.ps1
 ```
 #>
 

@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.Synapse
         }
 
         /// <summary>
-        /// Deletes a firewall rule
+        /// Deletes a firewall rule. You can call ToObjectFromJson&lt;SynapseIPFirewallRuleInfoData&gt;() against the Value property of the result to get specified type.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -185,7 +185,7 @@ namespace Azure.ResourceManager.Synapse
         }
 
         /// <summary>
-        /// Deletes a firewall rule
+        /// Deletes a firewall rule. You can call ToObjectFromJson&lt;SynapseIPFirewallRuleInfoData&gt;() against the Value property of the result to get specified type.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
