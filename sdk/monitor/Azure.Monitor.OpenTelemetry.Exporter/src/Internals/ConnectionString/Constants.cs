@@ -11,13 +11,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.ConnectionString
         internal const string DefaultIngestionEndpoint = "https://dc.services.visualstudio.com/";
 
         /// <summary>
-        /// Default AAD Audience for Ingestion (aka Breeze).
-        /// IMPORTANT: This value only works in the Public Azure Cloud.
-        /// For Sovereign Azure Clouds, this value MUST come from the Connection String.
-        /// </summary>
-        internal const string DefaultAADAudience = "https://monitor.azure.com//.default";
-
-        /// <summary>
         /// Sub-domain for Ingestion endpoint (aka Breeze). (https://dc.applicationinsights.azure.com/).
         /// </summary>
         internal const string IngestionPrefix = "dc";
