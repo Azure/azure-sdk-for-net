@@ -16,13 +16,12 @@ namespace Azure.Developer.LoadTesting.Tests
     {
         internal string _testId;
         internal string _fileName;
-        internal string resourceId;
         internal TestHelper _testHelper;
         internal LoadTestAdministrationClient _loadTestAdministrationClient;
         internal string _testRunId;
         internal string _resourceId;
 
-        public LoadTestTestsBase(bool isAsync) : base(isAsync)
+        public LoadTestTestsBase(bool isAsync) : base(isAsync, RecordedTestMode.Record)
         {
             _testId = "test-from-csharp-sdk-testing-framework";
             _fileName = "sample.jmx";
@@ -36,7 +35,7 @@ namespace Azure.Developer.LoadTesting.Tests
                 Regex = @"sig=(?<group>.*?)(?=$|&)"
             });
 
-            BodyRegexSanitizers.Add(new BodyRegexSanitizer("[^\\r](?<break>\\n)", "\r")
+            BodyRegexSanitizers.Add(new BodyRegexSanitizer("[^\\r](?<break>\\n)", "\r\n")
             {
                     GroupForReplace = "break"
             });

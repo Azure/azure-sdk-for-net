@@ -117,7 +117,7 @@ namespace Azure.Developer.LoadTesting.Tests
         {
             LoadTestAdministrationClient loadTestAdministrationClient = CreateAdministrationClient();
             await _testHelper.SetupTestingLoadTestResourceAsync(loadTestAdministrationClient, _testId);
-            resourceId = TestEnvironment.ResourceId;
+            _resourceId = TestEnvironment.ResourceId;
 
             Response response = await loadTestAdministrationClient.CreateOrUpdateAppComponentsAsync(
                     _testId,
@@ -126,9 +126,9 @@ namespace Azure.Developer.LoadTesting.Tests
                         {
                             { "components",  new Dictionary<string, Dictionary<string, string>>
                                 {
-                                    { resourceId, new Dictionary<string, string>
+                                    { _resourceId, new Dictionary<string, string>
                                         {
-                                            { "resourceId", resourceId },
+                                            { "resourceId", _resourceId },
                                             { "resourceName", "App-Service-Sample-Demo" },
                                             { "resourceType", "Microsoft.Web/sites" },
                                             { "kind", "web" }
@@ -147,7 +147,7 @@ namespace Azure.Developer.LoadTesting.Tests
             LoadTestAdministrationClient loadTestAdministrationClient = CreateAdministrationClient();
             await _testHelper.SetupTestingLoadTestResourceAsync(loadTestAdministrationClient, _testId);
 
-            resourceId = TestEnvironment.ResourceId;
+            _resourceId = TestEnvironment.ResourceId;
 
             await loadTestAdministrationClient.CreateOrUpdateAppComponentsAsync(
                     _testId,
@@ -156,9 +156,9 @@ namespace Azure.Developer.LoadTesting.Tests
                         {
                             { "components",  new Dictionary<string, Dictionary<string, string>>
                                 {
-                                    { resourceId, new Dictionary<string, string>
+                                    { _resourceId, new Dictionary<string, string>
                                         {
-                                            { "resourceId", resourceId },
+                                            { "resourceId", _resourceId },
                                             { "resourceName", "App-Service-Sample-Demo" },
                                             { "resourceType", "Microsoft.Web/sites" },
                                             { "kind", "web" }
@@ -179,7 +179,7 @@ namespace Azure.Developer.LoadTesting.Tests
         {
             LoadTestAdministrationClient loadTestAdministrationClient = CreateAdministrationClient();
             await _testHelper.SetupTestingLoadTestResourceAsync(loadTestAdministrationClient, _testId);
-            resourceId = TestEnvironment.ResourceId;
+            _resourceId = TestEnvironment.ResourceId;
 
             Response response = await loadTestAdministrationClient.CreateOrUpdateServerMetricsConfigAsync(
                     _testId,
@@ -190,9 +190,9 @@ namespace Azure.Developer.LoadTesting.Tests
                                 "metrics", new Dictionary<string, Dictionary<string, string>>
                                 {
                                     {
-                                        resourceId, new Dictionary<string, string>
+                                        _resourceId, new Dictionary<string, string>
                                         {
-                                            {"resourceId", resourceId },
+                                            {"resourceId", _resourceId },
                                             {"metricNamespace", "microsoft.insights/components"},
                                             {"displayDescription", "sample description"},
                                             {"name",  "requests/duration"},
@@ -213,7 +213,7 @@ namespace Azure.Developer.LoadTesting.Tests
         {
             LoadTestAdministrationClient loadTestAdministrationClient = CreateAdministrationClient();
             await _testHelper.SetupTestingLoadTestResourceAsync(loadTestAdministrationClient, _testId);
-            resourceId = TestEnvironment.ResourceId;
+            _resourceId = TestEnvironment.ResourceId;
 
             await loadTestAdministrationClient.CreateOrUpdateServerMetricsConfigAsync(
                     _testId,
@@ -224,9 +224,9 @@ namespace Azure.Developer.LoadTesting.Tests
                                 "metrics", new Dictionary<string, Dictionary<string, string>>
                                 {
                                     {
-                                        resourceId, new Dictionary<string, string>
+                                        _resourceId, new Dictionary<string, string>
                                         {
-                                            {"resourceId", resourceId },
+                                            {"resourceId", _resourceId },
                                             {"metricNamespace", "microsoft.insights/components"},
                                             {"displayDescription", "sample description"},
                                             {"name",  "requests/duration"},
