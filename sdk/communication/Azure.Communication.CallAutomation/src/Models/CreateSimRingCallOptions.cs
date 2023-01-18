@@ -10,14 +10,14 @@ namespace Azure.Communication.CallAutomation
     /// <summary>
     /// Options for the Create Call Request.
     /// </summary>
-    public class CreateCallOptions
+    public class CreateSimRingCallOptions
     {
         /// <summary>
         /// 
         /// </summary>
         /// <param name="callTarget"></param>
         /// <param name="callbackUri"></param>
-        public CreateCallOptions(CallTarget callTarget, Uri callbackUri)
+        public CreateSimRingCallOptions(CallTarget callTarget, Uri callbackUri)
         {
             CallTarget = callTarget;
             CallbackUri = callbackUri;
@@ -29,7 +29,7 @@ namespace Azure.Communication.CallAutomation
         /// <param name="targets"></param>
         /// <param name="callSource"></param>
         /// <param name="callbackUri"></param>
-        public CreateCallOptions(CallSource callSource, IEnumerable<CommunicationIdentifier> targets, Uri callbackUri)
+        public CreateSimRingCallOptions(CallSource callSource, IEnumerable<CommunicationIdentifier> targets, Uri callbackUri)
         {
             Targets = (IReadOnlyList<CommunicationIdentifier>)targets;
             CallSource = callSource;
