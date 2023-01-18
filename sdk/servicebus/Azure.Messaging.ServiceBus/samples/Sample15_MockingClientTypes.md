@@ -238,6 +238,8 @@ Assert.AreEqual(backingList.Count, sourceMessages.Count);
 ## Session sending and receiving
 
 ```C# Snippet:ServiceBus_MockingSessionReceiver
+// This sets up the mock ServiceBusSender.
+
 Mock<ServiceBusClient> mockClient = new();
 Mock<ServiceBusSender> mockSender = new();
 Mock<ServiceBusSessionReceiver> mockSessionReceiver = new();
@@ -246,6 +248,9 @@ mockClient
     .Setup(client => client.CreateSender(It.IsAny<string>()))
     .Returns(mockSender.Object);
 
+// This sets up the ServiceBusClient to return the mock ServiceBusSessionProcessor when
+// AcceptNextSession is called.
+
 mockClient
     .Setup(client => client.AcceptNextSessionAsync(
         It.IsAny<string>(),
@@ -253,13 +258,9 @@ mockClient
         It.IsAny<CancellationToken>()))
     .ReturnsAsync(mockSessionReceiver.Object);
 
-mockSender
-    .Setup(sender => sender.SendMessageAsync(
-        It.IsAny<ServiceBusMessage>(),
-        It.IsAny<CancellationToken>()))
-    .Returns(Task.CompletedTask);
-
 ServiceBusClient client = mockClient.Object;
+
+// This sets up a set of messages to send to the session.
 
 List<ServiceBusMessage> testSessionMessages = new();
 Queue<ServiceBusReceivedMessage> messagesToReturn = new();
@@ -269,29 +270,36 @@ var numMessagesInSession = 5;
 
 for (var i=0; i<numMessagesInSession; i++)
 {
-    var messageBody = $"message{i}";
-    var messageId = $"messageId{i}";
-    ServiceBusMessage sentMessage = new(messageBody)
+    ServiceBusMessage sentMessage = new($"message{i}")
     {
         SessionId = mockSessionId,
-        MessageId = messageId
+        MessageId = $"messageId{i}"
     };
     testSessionMessages.Add(sentMessage);
-
-    ServiceBusReceivedMessage messageToReceive = ServiceBusModelFactory.ServiceBusReceivedMessage(
-        body: new BinaryData(messageBody),
-        messageId: "messageId2",
-        sessionId: mockSessionId
-        //...
-        );
-    messagesToReturn.Enqueue(messageToReceive);
 }
+
+// This sets up the session sender to enqueue each message sent to the queue of messages to return.
+
+mockSender
+    .Setup(sender => sender.SendMessageAsync(
+        It.IsAny<ServiceBusMessage>(),
+        It.IsAny<CancellationToken>()))
+    .Callback<ServiceBusMessage, CancellationToken>(
+    (m,ct) => messagesToReturn.Enqueue(ServiceBusModelFactory.ServiceBusReceivedMessage(
+        body:m.Body,
+        messageId:m.MessageId,
+        sessionId:m.SessionId)))
+    .Returns(Task.CompletedTask);
+
+// This sets up the receiver to return a sent message off of the queue, or return null.
 
 mockSessionReceiver
     .Setup(receiver => receiver.ReceiveMessageAsync(
         It.IsAny<TimeSpan>(),
         It.IsAny<CancellationToken>()))
-    .ReturnsAsync(messagesToReturn.Dequeue());
+    .ReturnsAsync(() => { if (messagesToReturn.Count > 0) { return messagesToReturn.Dequeue(); } else { return null; } });
+
+// This sets up the mocked ServiceBusSessionReceiver to be able to set and get session state.
 
 BinaryData mockSessionState = new("notSet");
 
@@ -301,6 +309,8 @@ mockSessionReceiver
         It.IsAny<CancellationToken>()))
     .Callback<BinaryData, CancellationToken>((st, ct) => mockSessionState = st)
     .Returns(Task.CompletedTask);
+
+// ReturnsAsync needs to be called with a lambda to eagerly access the most up to date session state.
 
 mockSessionReceiver
     .Setup(receiver => receiver.GetSessionStateAsync(
@@ -328,6 +338,8 @@ ServiceBusReceivedMessage receivedMessage = await sessionReceiver.ReceiveMessage
 BinaryData setState = new("MockState");
 await sessionReceiver.SetSessionStateAsync(setState, CancellationToken.None);
 BinaryData state = await sessionReceiver.GetSessionStateAsync(CancellationToken.None);
+
+// For illustrative purposes, verify that the state of the session is what we expect.
 
 Assert.AreEqual(setState, state);
 ```
@@ -723,14 +735,22 @@ mockReceiver
 Task MessageHandler(ProcessMessageEventArgs args)
 {
     // Sample illustrative processor handler
+
+    // Application message processing code would be here...
+
     return Task.CompletedTask;
 }
 
 Task ErrorHandler(ProcessErrorEventArgs args)
 {
     // Sample illustrative processor error handler
+
+    // Application error processing code would be here...
+
     return Task.CompletedTask;
 }
+
+// Here we are mocking the ServiceBusReceivedMessage to process using the ServiceBusModelFactory.
 
 ServiceBusReceivedMessage message = ServiceBusModelFactory.ServiceBusReceivedMessage(
         body: new BinaryData("message"),
@@ -742,10 +762,14 @@ ServiceBusReceivedMessage message = ServiceBusModelFactory.ServiceBusReceivedMes
         //...
         );
 
+// Create a set of ProcessMessageEventArgs to use to test the handler.
+
 ProcessMessageEventArgs processArgs = new(
     message: message,
     receiver: mockReceiver.Object,
     cancellationToken: CancellationToken.None);
+
+// For illustrative purposes, simply test that the message handler does not throw any exceptions.
 
 Assert.DoesNotThrowAsync(async () => await MessageHandler(processArgs));
 
@@ -753,12 +777,16 @@ string fullyQualifiedNamespace = "full-qualified-namespace";
 string entityPath = "entity-path";
 ServiceBusErrorSource errorSource = new();
 
+// Create a set of ProcessErrorEventArgs to test the handler.
+
 ProcessErrorEventArgs errorArgs = new(
     exception: new Exception("sample exception"),
     errorSource: errorSource,
     fullyQualifiedNamespace: fullyQualifiedNamespace,
     entityPath: entityPath,
     cancellationToken: CancellationToken.None);
+
+// For illustrative purposes, simply test that the error handler does not throw any exceptions.
 
 Assert.DoesNotThrowAsync(async () => await ErrorHandler(errorArgs));
 ```
@@ -773,6 +801,9 @@ mockSessionReceiver
         It.IsAny<ServiceBusReceivedMessage>(),
         It.IsAny<CancellationToken>()))
     .Returns(Task.CompletedTask);
+
+// The following are sample illustrative message and error handlers. Additional application processing code
+// would be defined inside of each.
 
 async Task MessageHandler(ProcessSessionMessageEventArgs args)
 {
@@ -798,6 +829,8 @@ Task ErrorHandler(ProcessErrorEventArgs args)
     return Task.CompletedTask;
 }
 
+// Here we are mocking the ServiceBusReceivedMessage to process using the ServiceBusModelFactory.
+
 ServiceBusReceivedMessage message = ServiceBusModelFactory.ServiceBusReceivedMessage(
         body: new BinaryData("message"),
         messageId: "messageId",
@@ -808,10 +841,14 @@ ServiceBusReceivedMessage message = ServiceBusModelFactory.ServiceBusReceivedMes
         //...
         );
 
+// Create a set of ProcessMessageEventArgs to use to test the handler.
+
 ProcessSessionMessageEventArgs processArgs = new(
     message: message,
     receiver: mockSessionReceiver.Object,
     cancellationToken: CancellationToken.None);
+
+// For illustrative purposes, simply test that the message handler does not throw any exceptions.
 
 Assert.DoesNotThrowAsync(async () => await MessageHandler(processArgs));
 
@@ -819,12 +856,16 @@ string fullyQualifiedNamespace = "full-qualified-namespace";
 string entityPath = "entity-path";
 ServiceBusErrorSource errorSource = new();
 
+// Create a set of ProcessErrorEventArgs to test the handler.
+
 ProcessErrorEventArgs errorArgs = new(
     exception: new Exception("sample exception"),
     errorSource: errorSource,
     fullyQualifiedNamespace: fullyQualifiedNamespace,
     entityPath: entityPath,
     cancellationToken: CancellationToken.None);
+
+// For illustrative purposes, simply test that the error handler does not throw any exceptions.
 
 Assert.DoesNotThrowAsync(async () => await ErrorHandler(errorArgs));
 ```
@@ -872,17 +913,17 @@ TimerCallback dispatchMessage = async _ =>
 
 // Create a timer that runs once-a-second when started and, otherwise, sits idle.
 
-Timer eventDispatchTimer = new(
+Timer messageDispatchTimer = new(
     dispatchMessage,
     null,
     Timeout.Infinite,
     Timeout.Infinite);
 
 void startTimer() =>
-    eventDispatchTimer.Change(0, (int)TimeSpan.FromSeconds(1).TotalMilliseconds);
+    messageDispatchTimer.Change(0, (int)TimeSpan.FromSeconds(1).TotalMilliseconds);
 
 void stopTimer() =>
-    eventDispatchTimer.Change(Timeout.Infinite, Timeout.Infinite);
+    messageDispatchTimer.Change(Timeout.Infinite, Timeout.Infinite);
 
 // Create a mock of the processor that dispatches messages when StartProcessingAsync
 // is called and does so until StopProcessingAsync is called.
@@ -956,17 +997,17 @@ TimerCallback dispatchMessage = async _ =>
 
 // Create a timer that runs once-a-second when started and, otherwise, sits idle.
 
-Timer eventDispatchTimer = new(
+Timer messageDispatchTimer = new(
     dispatchMessage,
     null,
     Timeout.Infinite,
     Timeout.Infinite);
 
 void startTimer() =>
-    eventDispatchTimer.Change(0, (int)TimeSpan.FromSeconds(1).TotalMilliseconds);
+    messageDispatchTimer.Change(0, (int)TimeSpan.FromSeconds(1).TotalMilliseconds);
 
 void stopTimer() =>
-    eventDispatchTimer.Change(Timeout.Infinite, Timeout.Infinite);
+    messageDispatchTimer.Change(Timeout.Infinite, Timeout.Infinite);
 
 // Create a mock of the session processor that dispatches messages when StartProcessingAsync
 // is called and does so until StopProcessingAsync is called.
@@ -1006,6 +1047,10 @@ Mock<ServiceBusAdministrationClient> mockAdministrationClient = new();
 Mock<Response<TopicProperties>> mockTopicResponse = new();
 Mock<Response<SubscriptionProperties>> mockSuscriptionResponse = new();
 
+// This sets up the mock administration client to return a mocked topic properties using the
+// service bus model factory. It populates each of the arguments using the CreateTopicOptions instance
+// passed into the method.
+
 mockAdministrationClient
     .Setup(client => client.CreateTopicAsync(
         It.IsAny<CreateTopicOptions>(),
@@ -1027,6 +1072,10 @@ mockAdministrationClient
         mockTopicResponse.Setup(r => r.Value).Returns(mockTopicProperties);
     })
     .ReturnsAsync(mockTopicResponse.Object);
+
+// This sets up the mock administration client to return a mocked subscription properties using the
+// service bus model factory. It populates each of the arguments using the CreateSubscriptionOptions instance
+// passed into the method.
 
 mockAdministrationClient
     .Setup(client => client.CreateSubscriptionAsync(
@@ -1052,7 +1101,9 @@ mockAdministrationClient
     })
     .ReturnsAsync(mockSuscriptionResponse.Object);
 
-var adminClient = mockAdministrationClient.Object;
+ServiceBusAdministrationClient adminClient = mockAdministrationClient.Object;
+
+// This sets up the mock service bus sender and receiver to be returned from the mock ServiceBusClient.
 
 Mock<ServiceBusClient> mockServiceBusClient = new();
 Mock<ServiceBusSender> mockSender = new();
@@ -1062,38 +1113,48 @@ mockServiceBusClient
     .Setup(client => client.CreateSender(It.IsAny<string>()))
     .Returns(mockSender.Object);
 
-mockSender
-    .Setup(sender => sender.SendMessageAsync(
-        It.IsAny<ServiceBusMessage>(),
-        It.IsAny<CancellationToken>()))
-    .Returns(Task.CompletedTask);
-
 mockServiceBusClient
     .Setup(client => client.CreateReceiver(
         It.IsAny<string>(),
         It.IsAny<string>()))
     .Returns(mockReceiver.Object);
 
+// This sets up the sender to dynamically create a list of messages to return from the ServiceBusReceiver mock.
+// See the ServiceBusModelFactory for a complete set of properties that can be populated using the ServiceBusModelFactory.ServiceBusReceivedMessage
+// method.
+
+List<ServiceBusReceivedMessage> messagesToReturn = new();
+
+mockSender
+    .Setup(sender => sender.SendMessageAsync(
+        It.IsAny<ServiceBusMessage>(),
+        It.IsAny<CancellationToken>()))
+    .Callback<ServiceBusMessage, CancellationToken>(
+    (m, ct) => messagesToReturn.Add(ServiceBusModelFactory.ServiceBusReceivedMessage(
+        body: m.Body,
+        messageId: m.MessageId,
+        sessionId: m.SessionId)))
+    .Returns(Task.CompletedTask);
+
+// This is a simple local method that returns an IAsyncEnumerable to use as the return for ReceiveMessagesAsync
+// below, since IAsyncEnumerables cannot be created directly.
+
 async IAsyncEnumerable<ServiceBusReceivedMessage> mockReturn()
 {
-    ServiceBusReceivedMessage message = ServiceBusModelFactory.ServiceBusReceivedMessage(
-        body: new BinaryData("message1"),
-        messageId: "messageId1",
-        partitionKey: "hellokey",
-        correlationId: "correlationId",
-        contentType: "contentType",
-        replyTo: "replyTo"
-        // see the Service Bus Model Factory for more options ...
-        );
-
     // IAsyncEnumerable types can only be returned by async functions, use this no-op await statement to
     // force the method to be async.
 
     await Task.Yield();
 
-    // yield allows more than one message to be returned, only one is being returned here for brevity
+    foreach (ServiceBusReceivedMessage message in messagesToReturn)
+    {
+        // Yield statements allow methods to emit multiple outputs. In async methods this can be over time.
 
-    yield return message;
+        yield return message;
+    }
+
+    // Clear all of the messages already emitted.
+    messagesToReturn.Clear();
 }
 
 mockReceiver
@@ -1101,18 +1162,24 @@ mockReceiver
         It.IsAny<CancellationToken>()))
     .Returns(mockReturn);
 
-var serviceBusClient = mockServiceBusClient.Object;
+ServiceBusClient serviceBusClient = mockServiceBusClient.Object;
 
 // The rest of this snippet illustrates how to send and receive messages using the mocked
 // topic and subscription methods above, this would be where application methods sending and
 // receiving to topics and subscriptions would be called.
 
+// Illustrating creating a topic.
+
 string topicName = "topic";
-var topicOptions = new CreateTopicOptions(topicName);
+
+CreateTopicOptions topicOptions = new(topicName);
 topicOptions.AuthorizationRules.Add(new SharedAccessAuthorizationRule(
     "allClaims",
     new[] { AccessRights.Manage, AccessRights.Send, AccessRights.Listen }));
+
 TopicProperties createdTopic = await adminClient.CreateTopicAsync(topicOptions);
+
+// Illustrating creating a subscription.
 
 string subscriptionName = "subscription";
 var subscriptionOptions = new CreateSubscriptionOptions(topicName, subscriptionName)
@@ -1120,6 +1187,8 @@ var subscriptionOptions = new CreateSubscriptionOptions(topicName, subscriptionN
     UserMetadata= "some metadata"
 };
 SubscriptionProperties createdSubscription = await adminClient.CreateSubscriptionAsync(subscriptionOptions);
+
+// Illustrating sending and receiving from the created topic and subscription.
 
 ServiceBusSender sender = serviceBusClient.CreateSender(topicName);
 
@@ -1135,6 +1204,10 @@ ServiceBusReceivedMessage receivedMessage = await receiver.ReceiveMessageAsync()
 ```C# Snippet:ServiceBus_MockingQueueCreation
 Mock<ServiceBusAdministrationClient> mockAdministrationClient = new();
 Mock<Response<QueueProperties>> mockQueueResponse = new();
+
+// This sets up the mock administration client to return a mocked queue properties using the
+// service bus model factory. It populates each of the arguments using the CreateQueueOptions instance
+// passed into the method.
 
 mockAdministrationClient
     .Setup(client => client.CreateQueueAsync(
@@ -1188,6 +1261,10 @@ QueueProperties createQueue = await administrationClient.CreateQueueAsync(option
 Mock<ServiceBusAdministrationClient> mockAdministrationClient = new();
 Mock<Response<RuleProperties>> mockRuleResponse = new();
 
+// This sets up the mock administration client to return a mocked rule properties using the
+// service bus model factory. It populates each of the arguments using the CreateRuleOptions instance
+// passed into the method.
+
 mockAdministrationClient
     .Setup(client => client.CreateRuleAsync(
         It.IsAny<string>(),
@@ -1227,6 +1304,9 @@ RuleProperties createRule = await administrationClient.CreateRuleAsync(topic, su
 ```C# Snippet:ServiceBus_MockingRuleManager
 Mock<ServiceBusClient> mockClient = new();
 Mock<ServiceBusRuleManager> mockRuleManager = new();
+
+// The following calls set up the Rule Manager to simply return Task.CompletedTask
+// for each of the RuleManager methods being tested.
 
 mockRuleManager
     .Setup(rm => rm.DeleteRuleAsync(
