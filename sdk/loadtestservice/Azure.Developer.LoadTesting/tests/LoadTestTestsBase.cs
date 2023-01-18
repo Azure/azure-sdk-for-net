@@ -21,7 +21,7 @@ namespace Azure.Developer.LoadTesting.Tests
         internal string _testRunId;
         internal string _resourceId;
 
-        public LoadTestTestsBase(bool isAsync) : base(isAsync, RecordedTestMode.Record)
+        public LoadTestTestsBase(bool isAsync) : base(isAsync)
         {
             _testId = "test-from-csharp-sdk-testing-framework";
             _fileName = "sample.jmx";
