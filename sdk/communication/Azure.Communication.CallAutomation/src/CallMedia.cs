@@ -61,7 +61,7 @@ namespace Azure.Communication.CallAutomation
                 var response = await CallMediaRestClient.PlayAsync(CallConnectionId, request, cancellationToken).ConfigureAwait(false);
 
                 var result = new PlayResult();
-                result.SetEventProcessor(EventProcessor, CallConnectionId, playOptions?.OperationContext);
+                result.SetEventProcessor(EventProcessor, CallConnectionId, request.OperationContext);
 
                 return Response.FromValue(result, response);
             }
@@ -91,7 +91,7 @@ namespace Azure.Communication.CallAutomation
                 var response = CallMediaRestClient.Play(CallConnectionId, request, cancellationToken);
 
                 var result = new PlayResult();
-                result.SetEventProcessor(EventProcessor, CallConnectionId, playOptions?.OperationContext);
+                result.SetEventProcessor(EventProcessor, CallConnectionId, request.OperationContext);
 
                 return Response.FromValue(result, response);
             }
@@ -239,7 +239,7 @@ namespace Azure.Communication.CallAutomation
                 var response = await CallMediaRestClient.RecognizeAsync(CallConnectionId, request, cancellationToken).ConfigureAwait(false);
 
                 var result = new StartRecognizingResult();
-                result.SetEventProcessor(EventProcessor, CallConnectionId, recognizeOptions?.OperationContext);
+                result.SetEventProcessor(EventProcessor, CallConnectionId, request.OperationContext);
 
                 return Response.FromValue(result, response);
             }
@@ -267,7 +267,7 @@ namespace Azure.Communication.CallAutomation
                 var response = CallMediaRestClient.Recognize(CallConnectionId, request, cancellationToken);
 
                 var result = new StartRecognizingResult();
-                result.SetEventProcessor(EventProcessor, CallConnectionId, recognizeOptions?.OperationContext);
+                result.SetEventProcessor(EventProcessor, CallConnectionId, request.OperationContext);
 
                 return Response.FromValue(result, response);
             }
