@@ -39,6 +39,8 @@ namespace Azure.ResourceManager.Synapse
         private readonly KustoPoolChildResourceRestOperations _kustoPoolChildResourceRestClient;
         private readonly ClientDiagnostics _synapseClusterPrincipalAssignmentKustoPoolPrincipalAssignmentsClientDiagnostics;
         private readonly KustoPoolPrincipalAssignmentsRestOperations _synapseClusterPrincipalAssignmentKustoPoolPrincipalAssignmentsRestClient;
+        private readonly ClientDiagnostics _kustoPoolPrivateLinkResourcesClientDiagnostics;
+        private readonly KustoPoolPrivateLinkResourcesRestOperations _kustoPoolPrivateLinkResourcesRestClient;
         private readonly SynapseKustoPoolData _data;
 
         /// <summary> Initializes a new instance of the <see cref="SynapseKustoPoolResource"/> class for mocking. </summary>
@@ -68,6 +70,8 @@ namespace Azure.ResourceManager.Synapse
             _synapseClusterPrincipalAssignmentKustoPoolPrincipalAssignmentsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Synapse", SynapseClusterPrincipalAssignmentResource.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(SynapseClusterPrincipalAssignmentResource.ResourceType, out string synapseClusterPrincipalAssignmentKustoPoolPrincipalAssignmentsApiVersion);
             _synapseClusterPrincipalAssignmentKustoPoolPrincipalAssignmentsRestClient = new KustoPoolPrincipalAssignmentsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, synapseClusterPrincipalAssignmentKustoPoolPrincipalAssignmentsApiVersion);
+            _kustoPoolPrivateLinkResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Synapse", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+            _kustoPoolPrivateLinkResourcesRestClient = new KustoPoolPrivateLinkResourcesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -1090,6 +1094,48 @@ namespace Azure.ResourceManager.Synapse
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        /// <summary>
+        /// Lists all Kusto pool PrivateLinkResources.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/kustoPools/{kustoPoolName}/privateLinkResources</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>KustoPoolPrivateLinkResources_List</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="SynapseKustoPoolPrivateLinkData" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<SynapseKustoPoolPrivateLinkData> GetAllKustoPoolPrivateLinkDataAsync(CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _kustoPoolPrivateLinkResourcesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, SynapseKustoPoolPrivateLinkData.DeserializeSynapseKustoPoolPrivateLinkData, _kustoPoolPrivateLinkResourcesClientDiagnostics, Pipeline, "SynapseKustoPoolResource.GetAllKustoPoolPrivateLinkData", "value", null, cancellationToken);
+        }
+
+        /// <summary>
+        /// Lists all Kusto pool PrivateLinkResources.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/kustoPools/{kustoPoolName}/privateLinkResources</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>KustoPoolPrivateLinkResources_List</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="SynapseKustoPoolPrivateLinkData" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<SynapseKustoPoolPrivateLinkData> GetAllKustoPoolPrivateLinkData(CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _kustoPoolPrivateLinkResourcesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, SynapseKustoPoolPrivateLinkData.DeserializeSynapseKustoPoolPrivateLinkData, _kustoPoolPrivateLinkResourcesClientDiagnostics, Pipeline, "SynapseKustoPoolResource.GetAllKustoPoolPrivateLinkData", "value", null, cancellationToken);
         }
 
         /// <summary>
