@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Text;
 using System.Text.Json;
 
@@ -24,28 +25,30 @@ namespace Azure.Core.Dynamic
                     case JsonTokenType.StartObject:
                         writer.WriteStartObject();
                         WriteObjectElement(ref reader, writer);
-                        return;
+                        break;
                     case JsonTokenType.StartArray:
                         writer.WriteStartArray();
                         WriteArrayValues(ref reader, writer);
-                        return;
+                        break;
                     case JsonTokenType.String:
                         WriteString(ref reader, writer);
-                        return;
+                        break;
                     case JsonTokenType.Number:
                         WriteNumber(ref reader, writer);
-                        return;
+                        break;
                     case JsonTokenType.True:
                         writer.WriteBooleanValue(value: true);
-                        return;
+                        break;
                     case JsonTokenType.False:
                         writer.WriteBooleanValue(value: false);
-                        return;
+                        break;
                     case JsonTokenType.Null:
                         writer.WriteNullValue();
-                        return;
+                        break;
                 }
             }
+
+            writer.Flush();
         }
 
         private static void WriteArrayValues(ref Utf8JsonReader reader, Utf8JsonWriter writer)
@@ -100,6 +103,7 @@ namespace Azure.Core.Dynamic
                         continue;
                     case JsonTokenType.PropertyName:
                         writer.WritePropertyName(reader.ValueSpan);
+                        Debug.WriteLine($"PropertyName: {new BinaryData(reader.ValueSpan.ToArray())}, TokenStartIndex: {reader.TokenStartIndex}");
                         continue;
                     case JsonTokenType.String:
                         WriteString(ref reader, writer);

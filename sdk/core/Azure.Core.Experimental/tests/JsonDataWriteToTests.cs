@@ -193,7 +193,7 @@ namespace Azure.Core.Experimental.Tests
             public TestClass[] ArrayProperty { get; set; }
         }
 
-        private static string RemoveWhiteSpace(string value)
+        internal static string RemoveWhiteSpace(string value)
         {
             return value.Replace(" ", "").Replace("\r", "").Replace("\n", "");
         }

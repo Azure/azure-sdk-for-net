@@ -55,6 +55,41 @@ namespace Azure.Core.Experimental.Tests
         }
 
         [Test]
+        public void CanSetProperty_WriteTo()
+        {
+            string json = @"
+                {
+                  ""Baz"" : {
+                     ""A"" : 3.0
+                  },
+                  ""Foo"" : 1.2,
+                  ""Bar"" : ""Hi!""
+                }";
+
+            var jd = JsonData.Parse(json);
+
+            jd.RootElement.GetProperty("Foo").Set(2.2);
+            jd.RootElement.GetProperty("Bar").Set("Hello");
+            jd.RootElement.GetProperty("Baz").GetProperty("A").Set(5.1);
+
+            using MemoryStream stream = new MemoryStream();
+            jd.WriteTo(stream);
+            stream.Position = 0;
+            string jsonString = BinaryData.FromStream(stream).ToString();
+
+            Assert.AreEqual(
+                JsonDataWriteToTests.RemoveWhiteSpace(@"
+                {
+                  ""Baz"" : {
+                     ""A"" : 5.1
+                  },
+                  ""Foo"" : 2.2,
+                  ""Bar"" : ""Hello""
+                }"),
+                jsonString);
+        }
+
+        [Test]
         public void CanSetPropertyMultipleTimes()
         {
             string json = @"

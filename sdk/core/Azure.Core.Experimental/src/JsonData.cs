@@ -69,7 +69,8 @@ namespace Azure.Core.Dynamic
                 return;
             }
 
-            WriteTheHardWay(writer);
+            WriteElementTo(writer);
+            //WriteTheHardWay(writer);
         }
 
         // TODO: if we keep this, make it an extension on stream.
