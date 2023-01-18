@@ -147,7 +147,7 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
                 await transferManager.StartTransferAsync(
                     sourceResource: new BlockBlobStorageResource(sourceBlob, new BlockBlobStorageResourceOptions()
                     {
-                        DestinationConditions = new BlobRequestConditions() { LeaseId = "xyz" }
+                        DestinationConditions = new BlobRequestConditions(){ LeaseId = "xyz" }
                     }),
                     destinationResource: new LocalFileStorageResource(downloadPath2));
                 #endregion
@@ -205,7 +205,6 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
             // Create a client that can authenticate with the SAS URI
             BlobServiceClient service = new BlobServiceClient(sasUri.Uri);
 
-            string connectionString = ConnectionString;
             string containerName = Randomize("sample-container");
 
             // Create a client that can authenticate with a connection string
