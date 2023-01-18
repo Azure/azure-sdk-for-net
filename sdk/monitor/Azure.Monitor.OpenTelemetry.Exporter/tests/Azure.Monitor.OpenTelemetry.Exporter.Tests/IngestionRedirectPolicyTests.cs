@@ -124,6 +124,27 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             Assert.Equal(testToken, token);
         }
 
+        [Fact]
+        public void NullResponseDoesNotImpactPolicy()
+        {
+            var mockTransport = new MockTransport(new MockResponse(307).AddHeader("Location", "http://new.host/"), null);
+
+            AzureMonitorExporterOptions options = new()
+            {
+                Transport = mockTransport,
+            };
+
+            var pipeline = HttpPipelineBuilder.Build(options, new HttpPipelinePolicy[] { new IngestionRedirectPolicy() });
+            var message = new HttpMessage(CreateMockRequest(new Uri("http://host")), new ResponseClassifier());
+            // SendAsync does not throw on null response and fails silently.
+            // It is handled on HttpMessage.Response property.
+            pipeline.SendAsync(message, CancellationToken.None);
+
+            Assert.Equal("http://new.host/", mockTransport.Requests[1].Uri.ToString());
+            Assert.Equal(2, mockTransport.Requests.Count);
+            Assert.Throws<InvalidOperationException>(() => message.Response);
+        }
+
         private static MockRequest CreateMockRequest(Uri uri)
         {
             MockRequest mockRequest = new MockRequest();

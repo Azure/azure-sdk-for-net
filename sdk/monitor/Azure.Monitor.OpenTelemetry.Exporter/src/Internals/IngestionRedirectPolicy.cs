@@ -13,6 +13,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 {
     internal sealed class IngestionRedirectPolicy : HttpPipelinePolicy
     {
+        // To prevent circular redirects, max redirect is set to 10.
         internal const int MaxRedirect = 10;
         internal readonly TimeSpan DefaultCacheExpirationDuration = TimeSpan.FromHours(12);
 
