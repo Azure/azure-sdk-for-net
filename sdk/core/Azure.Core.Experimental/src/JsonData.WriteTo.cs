@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Text;
 using System.Text.Json;
 
@@ -18,17 +19,21 @@ namespace Azure.Core.Dynamic
         {
             Span<byte> original = _original.Span;
             Utf8JsonReader reader = new Utf8JsonReader(original);
+
+            // TODO: Optimize path manipulations with Span<byte>
+            string path = string.Empty;
+
             while (reader.Read())
             {
                 switch (reader.TokenType)
                 {
                     case JsonTokenType.StartObject:
                         writer.WriteStartObject();
-                        WriteObjectElement(ref reader, writer);
+                        WriteObjectElement(path, ref reader, writer);
                         break;
                     case JsonTokenType.StartArray:
                         writer.WriteStartArray();
-                        WriteArrayValues(ref reader, writer);
+                        WriteArrayValues(path, ref reader, writer);
                         break;
                     case JsonTokenType.String:
                         WriteString(ref reader, writer);
@@ -51,7 +56,7 @@ namespace Azure.Core.Dynamic
             writer.Flush();
         }
 
-        private static void WriteArrayValues(ref Utf8JsonReader reader, Utf8JsonWriter writer)
+        private void WriteArrayValues(string path, ref Utf8JsonReader reader, Utf8JsonWriter writer)
         {
             while (reader.Read())
             {
@@ -59,11 +64,11 @@ namespace Azure.Core.Dynamic
                 {
                     case JsonTokenType.StartObject:
                         writer.WriteStartObject();
-                        WriteObjectElement(ref reader, writer);
+                        WriteObjectElement(path, ref reader, writer);
                         continue;
                     case JsonTokenType.StartArray:
                         writer.WriteStartArray();
-                        WriteArrayValues(ref reader, writer);
+                        WriteArrayValues(path, ref reader, writer);
                         continue;
                     case JsonTokenType.String:
                         WriteString(ref reader, writer);
@@ -87,38 +92,81 @@ namespace Azure.Core.Dynamic
             }
         }
 
-        private static void WriteObjectElement(ref Utf8JsonReader reader, Utf8JsonWriter writer)
+        private void WriteObjectElement(string path, ref Utf8JsonReader reader, Utf8JsonWriter writer)
         {
+            bool changed = false;
+            JsonDataChange change = default;
+
             while (reader.Read())
             {
                 switch (reader.TokenType)
                 {
                     case JsonTokenType.StartObject:
                         writer.WriteStartObject();
-                        WriteObjectElement(ref reader, writer);
+                        WriteObjectElement(path, ref reader, writer);
+                        path = PopProperty(path);
                         continue;
                     case JsonTokenType.StartArray:
                         writer.WriteStartArray();
-                        WriteArrayValues(ref reader, writer);
+                        WriteArrayValues(path, ref reader, writer);
+                        path = PopProperty(path);
                         continue;
                     case JsonTokenType.PropertyName:
+                        path = PushProperty(path, reader.ValueSpan);
+
+                        changed = Changes.TryGetChange(path, out change);
+
                         writer.WritePropertyName(reader.ValueSpan);
-                        Debug.WriteLine($"PropertyName: {new BinaryData(reader.ValueSpan.ToArray())}, TokenStartIndex: {reader.TokenStartIndex}");
+                        Debug.WriteLine($"Path: {path}, TokenStartIndex: {reader.TokenStartIndex}");
                         continue;
                     case JsonTokenType.String:
-                        WriteString(ref reader, writer);
+                        if (changed)
+                        {
+                            writer.WriteStringValue((string)change.Value!);
+                        }
+                        else
+                        {
+                            WriteString(ref reader, writer);
+                        }
+                        path = PopProperty(path);
                         continue;
                     case JsonTokenType.Number:
-                        WriteNumber(ref reader, writer);
+                        if (changed)
+                        {
+                            WriteNumber(change, writer);
+                        }
+                        else
+                        {
+                            WriteNumber(ref reader, writer);
+                        }
+                        path = PopProperty(path);
                         continue;
                     case JsonTokenType.True:
-                        writer.WriteBooleanValue(value: true);
+                        if (changed)
+                        {
+                            writer.WriteBooleanValue((bool)change.Value!);
+                        }
+                        else
+                        {
+                            writer.WriteBooleanValue(value: true);
+                        }
+                        path = PopProperty(path);
                         return;
                     case JsonTokenType.False:
-                        writer.WriteBooleanValue(value: false);
+                        if (changed)
+                        {
+                            writer.WriteBooleanValue((bool)change.Value!);
+                        }
+                        else
+                        {
+                            writer.WriteBooleanValue(value: false);
+                        }
+                        path = PopProperty(path);
                         return;
                     case JsonTokenType.Null:
+                        // TODO: Do we want to write the value here if null?
                         writer.WriteNullValue();
+                        path = PopProperty(path);
                         return;
                     case JsonTokenType.EndObject:
                         writer.WriteEndObject();
@@ -131,6 +179,12 @@ namespace Azure.Core.Dynamic
         {
             writer.WriteStringValue(reader.ValueSpan);
             return;
+        }
+
+        private static void WriteNumber(JsonDataChange change, Utf8JsonWriter writer)
+        {
+            // TODO: Extend to support long as well.
+            writer.WriteNumberValue((double)change.Value!);
         }
 
         private static void WriteNumber(ref Utf8JsonReader reader, Utf8JsonWriter writer)
@@ -146,6 +200,26 @@ namespace Azure.Core.Dynamic
                 writer.WriteNumberValue(doubleValue);
                 return;
             }
+        }
+
+        private static string PushProperty(string path, ReadOnlySpan<byte> value)
+        {
+            string propertyName = BinaryData.FromBytes(value.ToArray()).ToString();
+            if (path.Length == 0)
+            {
+                return propertyName;
+            }
+            return $"{path}.{propertyName}";
+        }
+
+        private static string PopProperty(string path)
+        {
+            int lastDelimiter = path.LastIndexOf('.');
+            if (lastDelimiter == -1)
+            {
+                return string.Empty;
+            }
+            return path.Substring(0, lastDelimiter);
         }
 
         private void WriteTheHardWay(Utf8JsonWriter writer)
