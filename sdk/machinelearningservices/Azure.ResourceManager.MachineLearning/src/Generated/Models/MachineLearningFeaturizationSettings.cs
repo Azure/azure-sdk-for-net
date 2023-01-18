@@ -7,10 +7,7 @@
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary>
-    /// Featurization Configuration.
-    /// Serialized Name: FeaturizationSettings
-    /// </summary>
+    /// <summary> Featurization Configuration. </summary>
     public partial class MachineLearningFeaturizationSettings
     {
         /// <summary> Initializes a new instance of MachineLearningFeaturizationSettings. </summary>
@@ -19,19 +16,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Initializes a new instance of MachineLearningFeaturizationSettings. </summary>
-        /// <param name="datasetLanguage">
-        /// Dataset language, useful for the text data.
-        /// Serialized Name: FeaturizationSettings.datasetLanguage
-        /// </param>
+        /// <param name="datasetLanguage"> Dataset language, useful for the text data. </param>
         internal MachineLearningFeaturizationSettings(string datasetLanguage)
         {
             DatasetLanguage = datasetLanguage;
         }
 
-        /// <summary>
-        /// Dataset language, useful for the text data.
-        /// Serialized Name: FeaturizationSettings.datasetLanguage
-        /// </summary>
+        /// <summary> Dataset language, useful for the text data. </summary>
         public string DatasetLanguage { get; set; }
     }
 }

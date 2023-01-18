@@ -40,15 +40,22 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
             options.Retry.MaxRetries = 0;
             ConnectionStringParser.GetValues(options.ConnectionString, out _instrumentationKey, out string ingestionEndpoint);
 
-            HttpPipeline pipeline = null;
+            HttpPipeline pipeline;
             if (credential != null)
             {
-                pipeline = HttpPipelineBuilder.Build(options, new HttpPipelinePolicy[] { new BearerTokenAuthenticationPolicy(credential, "https://monitor.azure.com//.default") });
+                var httpPipelinePolicy = new HttpPipelinePolicy[]
+                                             {
+                                                 new BearerTokenAuthenticationPolicy(credential, "https://monitor.azure.com//.default"),
+                                                 new IngestionRedirectPolicy()
+                                             };
+
+                pipeline = HttpPipelineBuilder.Build(options, httpPipelinePolicy);
                 AzureMonitorExporterEventSource.Log.WriteInformational("SetAADCredentialsToPipeline", "HttpPipelineBuilder is built with AAD Credentials");
             }
             else
             {
-                pipeline = HttpPipelineBuilder.Build(options);
+                var httpPipelinePolicy = new HttpPipelinePolicy[] { new IngestionRedirectPolicy() };
+                pipeline = HttpPipelineBuilder.Build(options, httpPipelinePolicy);
             }
 
             _applicationInsightsRestClient = new ApplicationInsightsRestClient(new ClientDiagnostics(options), pipeline, host: ingestionEndpoint);

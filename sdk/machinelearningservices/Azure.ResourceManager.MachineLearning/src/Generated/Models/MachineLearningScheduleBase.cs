@@ -7,10 +7,7 @@
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary>
-    /// The MachineLearningScheduleBase.
-    /// Serialized Name: ScheduleBase
-    /// </summary>
+    /// <summary> The MachineLearningScheduleBase. </summary>
     public partial class MachineLearningScheduleBase
     {
         /// <summary> Initializes a new instance of MachineLearningScheduleBase. </summary>
@@ -19,18 +16,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Initializes a new instance of MachineLearningScheduleBase. </summary>
-        /// <param name="id">
-        /// A system assigned id for the schedule.
-        /// Serialized Name: ScheduleBase.id
-        /// </param>
-        /// <param name="provisioningStatus">
-        /// The current deployment state of schedule.
-        /// Serialized Name: ScheduleBase.provisioningStatus
-        /// </param>
-        /// <param name="status">
-        /// Is the schedule enabled or disabled?
-        /// Serialized Name: ScheduleBase.status
-        /// </param>
+        /// <param name="id"> A system assigned id for the schedule. </param>
+        /// <param name="provisioningStatus"> The current deployment state of schedule. </param>
+        /// <param name="status"> Is the schedule enabled or disabled?. </param>
         internal MachineLearningScheduleBase(string id, MachineLearningScheduleProvisioningState? provisioningStatus, MachineLearningScheduleStatus? status)
         {
             Id = id;
@@ -38,20 +26,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
             Status = status;
         }
 
-        /// <summary>
-        /// A system assigned id for the schedule.
-        /// Serialized Name: ScheduleBase.id
-        /// </summary>
+        /// <summary> A system assigned id for the schedule. </summary>
         public string Id { get; }
-        /// <summary>
-        /// The current deployment state of schedule.
-        /// Serialized Name: ScheduleBase.provisioningStatus
-        /// </summary>
+        /// <summary> The current deployment state of schedule. </summary>
         public MachineLearningScheduleProvisioningState? ProvisioningStatus { get; }
-        /// <summary>
-        /// Is the schedule enabled or disabled?
-        /// Serialized Name: ScheduleBase.status
-        /// </summary>
+        /// <summary> Is the schedule enabled or disabled?. </summary>
         public MachineLearningScheduleStatus? Status { get; }
     }
 }

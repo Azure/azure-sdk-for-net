@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             IList<int> hours = default;
             IList<int> minutes = default;
             Optional<IList<int>> monthDays = default;
-            Optional<IList<MachineLearningWeekday>> weekDays = default;
+            Optional<IList<MachineLearningDayOfWeek>> weekDays = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("hours"))
@@ -117,10 +117,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         weekDays = null;
                         continue;
                     }
-                    List<MachineLearningWeekday> array = new List<MachineLearningWeekday>();
+                    List<MachineLearningDayOfWeek> array = new List<MachineLearningDayOfWeek>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(new MachineLearningWeekday(item.GetString()));
+                        array.Add(new MachineLearningDayOfWeek(item.GetString()));
                     }
                     weekDays = array;
                     continue;

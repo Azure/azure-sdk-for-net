@@ -7,6 +7,8 @@ Project("{4E60CD65-C8DA-4CC8-A2A6-2636B72D1AAF}") = "Azure.ResourceManager.DataL
 EndProject
 Project("{4E60CD65-C8DA-4CC8-A2A6-2636B72D1AAF}") = "Azure.ResourceManager.DataLakeAnalytics.Tests", "tests\Azure.ResourceManager.DataLakeAnalytics.Tests.csproj", "{9619857F-1D78-4276-AE78-970EDF3E5C79}"
 EndProject
+Project("{4E60CD65-C8DA-4CC8-A2A6-2636B72D1AAF}") = "Azure.ResourceManager.DataLakeAnalytics.Samples", "samples\Azure.ResourceManager.DataLakeAnalytics.Samples.csproj", "{495F8F70-54F7-4CEC-94CB-190D133D8B06}"
+EndProject
 Global
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -502,6 +502,17 @@
       ]
     },
     {
+      "filename": "**/sdk/mobilenetwork/**/*.cs",
+      "words": [
+        "Napt",
+        "Plmn",
+        "Ambr",
+        "Rfsp",
+        "Snssai",
+        "AKSHCI"
+      ]
+    },
+    {
       "filename": "**/sdk/netapp/**/*.cs",
       "words": [
         "mibps",
