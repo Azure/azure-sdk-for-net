@@ -28,7 +28,7 @@ namespace Azure.Communication.CallAutomation
         internal AddParticipantsResult() { }
         public string OperationContext { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.Communication.CallAutomation.CallParticipant> Participants { get { throw null; } }
-        public System.Threading.Tasks.Task<Azure.Communication.CallAutomation.AddParticipantsEventResult> WaitForEvent() { throw null; }
+        public System.Threading.Tasks.Task<Azure.Communication.CallAutomation.AddParticipantsEventResult> WaitForEvent(System.TimeSpan eventTimeout = default(System.TimeSpan)) { throw null; }
     }
     public partial class AddParticipantsSucceeded : Azure.Communication.CallAutomation.CallAutomationEventBase
     {
@@ -55,7 +55,7 @@ namespace Azure.Communication.CallAutomation
         internal AnswerCallResult() { }
         public Azure.Communication.CallAutomation.CallConnection CallConnection { get { throw null; } }
         public Azure.Communication.CallAutomation.CallConnectionProperties CallConnectionProperties { get { throw null; } }
-        public System.Threading.Tasks.Task<Azure.Communication.CallAutomation.AnswerCallEventResult> WaitForEvent() { throw null; }
+        public System.Threading.Tasks.Task<Azure.Communication.CallAutomation.AnswerCallEventResult> WaitForEvent(System.TimeSpan eventTimeout = default(System.TimeSpan)) { throw null; }
     }
     public partial class CallAutomationClient
     {
@@ -348,7 +348,7 @@ namespace Azure.Communication.CallAutomation
     public partial class CancelAllMediaOperationsResult : Azure.Communication.CallAutomation.ResultWithWaitForEventBase
     {
         internal CancelAllMediaOperationsResult() { }
-        public System.Threading.Tasks.Task<Azure.Communication.CallAutomation.CancelAllMediaOperationsEventResult> WaitForEvent() { throw null; }
+        public System.Threading.Tasks.Task<Azure.Communication.CallAutomation.CancelAllMediaOperationsEventResult> WaitForEvent(System.TimeSpan eventTimeout = default(System.TimeSpan)) { throw null; }
     }
     public partial class ChoiceResult
     {
@@ -399,7 +399,7 @@ namespace Azure.Communication.CallAutomation
         internal CreateCallResult() { }
         public Azure.Communication.CallAutomation.CallConnection CallConnection { get { throw null; } }
         public Azure.Communication.CallAutomation.CallConnectionProperties CallConnectionProperties { get { throw null; } }
-        public System.Threading.Tasks.Task<Azure.Communication.CallAutomation.CreateCallEventResult> WaitForEvent() { throw null; }
+        public System.Threading.Tasks.Task<Azure.Communication.CallAutomation.CreateCallEventResult> WaitForEvent(System.TimeSpan eventTimeout = default(System.TimeSpan)) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct DtmfTone : System.IEquatable<Azure.Communication.CallAutomation.DtmfTone>
@@ -440,7 +440,7 @@ namespace Azure.Communication.CallAutomation
         public void DetachOngoingEventProcessor<TEvent>(string callConnectionId) where TEvent : Azure.Communication.CallAutomation.CallAutomationEventBase { }
         public void ProcessEvents(System.Collections.Generic.IEnumerable<Azure.Communication.CallAutomation.CallAutomationEventBase> events) { }
         public void ProcessEvents(System.Collections.Generic.IEnumerable<Azure.Messaging.CloudEvent> events) { }
-        public System.Threading.Tasks.Task<Azure.Communication.CallAutomation.CallAutomationEventBase> WaitForEvent(System.Func<Azure.Communication.CallAutomation.CallAutomationEventBase, bool> predicate) { throw null; }
+        public System.Threading.Tasks.Task<Azure.Communication.CallAutomation.CallAutomationEventBase> WaitForEvent(System.Func<Azure.Communication.CallAutomation.CallAutomationEventBase, bool> predicate, System.TimeSpan eventTimeout = default(System.TimeSpan)) { throw null; }
     }
     public partial class EventProcessorOptions
     {
@@ -624,7 +624,7 @@ namespace Azure.Communication.CallAutomation
     public partial class PlayResult : Azure.Communication.CallAutomation.ResultWithWaitForEventBase
     {
         internal PlayResult() { }
-        public System.Threading.Tasks.Task<Azure.Communication.CallAutomation.PlayEventResult> WaitForEvent() { throw null; }
+        public System.Threading.Tasks.Task<Azure.Communication.CallAutomation.PlayEventResult> WaitForEvent(System.TimeSpan eventTimeout = default(System.TimeSpan)) { throw null; }
     }
     public abstract partial class PlaySource
     {
@@ -867,7 +867,7 @@ namespace Azure.Communication.CallAutomation
     public partial class StartRecognizingResult : Azure.Communication.CallAutomation.ResultWithWaitForEventBase
     {
         internal StartRecognizingResult() { }
-        public System.Threading.Tasks.Task<Azure.Communication.CallAutomation.StartRecognizingEventResult> WaitForEvent() { throw null; }
+        public System.Threading.Tasks.Task<Azure.Communication.CallAutomation.StartRecognizingEventResult> WaitForEvent(System.TimeSpan eventTimeout = default(System.TimeSpan)) { throw null; }
     }
     public partial class StartRecordingOptions
     {
@@ -898,7 +898,7 @@ namespace Azure.Communication.CallAutomation
     {
         internal TransferCallToParticipantResult() { }
         public string OperationContext { get { throw null; } }
-        public System.Threading.Tasks.Task<Azure.Communication.CallAutomation.TransferCallToParticipantEventResult> WaitForEvent() { throw null; }
+        public System.Threading.Tasks.Task<Azure.Communication.CallAutomation.TransferCallToParticipantEventResult> WaitForEvent(System.TimeSpan eventTimeout = default(System.TimeSpan)) { throw null; }
     }
     public partial class TransferToParticipantOptions
     {
