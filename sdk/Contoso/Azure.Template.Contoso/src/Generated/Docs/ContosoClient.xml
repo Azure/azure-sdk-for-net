@@ -1,0 +1,369 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doc>
+  <members>
+    <member name="GetWidgetAsync(String,RequestContext)">
+<example>
+This sample shows how to call GetWidgetAsync with required parameters and parse the result.
+<code><![CDATA[
+var client = new ContosoClient();
+
+Response response = await client.GetWidgetAsync("<widgetName>");
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("manufacturerId").ToString());
+Console.WriteLine(result.GetProperty("sharedModel").GetProperty("tag").ToString());
+Console.WriteLine(result.GetProperty("sharedModel").GetProperty("createdDate").ToString());
+]]></code>
+</example>
+<remarks>
+Below is the JSON schema for the response payload.
+
+Response Body:
+
+Schema for <c>Widget</c>:
+<code>{
+  name: string, # Required.
+  manufacturerId: string, # Required.
+  sharedModel: {
+    tag: string, # Required.
+    createdDate: string (date &amp; time), # Required.
+  }, # Optional.
+}
+</code>
+
+</remarks>
+    </member>
+    <member name="GetWidget(String,RequestContext)">
+<example>
+This sample shows how to call GetWidget with required parameters and parse the result.
+<code><![CDATA[
+var client = new ContosoClient();
+
+Response response = client.GetWidget("<widgetName>");
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("manufacturerId").ToString());
+Console.WriteLine(result.GetProperty("sharedModel").GetProperty("tag").ToString());
+Console.WriteLine(result.GetProperty("sharedModel").GetProperty("createdDate").ToString());
+]]></code>
+</example>
+<remarks>
+Below is the JSON schema for the response payload.
+
+Response Body:
+
+Schema for <c>Widget</c>:
+<code>{
+  name: string, # Required.
+  manufacturerId: string, # Required.
+  sharedModel: {
+    tag: string, # Required.
+    createdDate: string (date &amp; time), # Required.
+  }, # Optional.
+}
+</code>
+
+</remarks>
+    </member>
+    <member name="GetWidgetsAsync(Int32,Int32,Int32,RequestContext)">
+<example>
+This sample shows how to call GetWidgetsAsync and parse the result.
+<code><![CDATA[
+var client = new ContosoClient();
+
+await foreach (var data in client.GetWidgetsAsync())
+{
+    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("name").ToString());
+    Console.WriteLine(result.GetProperty("manufacturerId").ToString());
+}
+]]></code>
+This sample shows how to call GetWidgetsAsync with all parameters, and how to parse the result.
+<code><![CDATA[
+var client = new ContosoClient();
+
+await foreach (var data in client.GetWidgetsAsync(1234, 1234, 1234))
+{
+    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("name").ToString());
+    Console.WriteLine(result.GetProperty("manufacturerId").ToString());
+    Console.WriteLine(result.GetProperty("sharedModel").GetProperty("tag").ToString());
+    Console.WriteLine(result.GetProperty("sharedModel").GetProperty("createdDate").ToString());
+}
+]]></code>
+</example>
+<remarks>
+Below is the JSON schema for one item in the pageable response.
+
+Response Body:
+
+Schema for <c>Array</c>:
+<code>{
+  name: string, # Required.
+  manufacturerId: string, # Required.
+  sharedModel: {
+    tag: string, # Required.
+    createdDate: string (date &amp; time), # Required.
+  }, # Optional.
+}
+</code>
+
+</remarks>
+    </member>
+    <member name="GetWidgets(Int32,Int32,Int32,RequestContext)">
+<example>
+This sample shows how to call GetWidgets and parse the result.
+<code><![CDATA[
+var client = new ContosoClient();
+
+foreach (var data in client.GetWidgets())
+{
+    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("name").ToString());
+    Console.WriteLine(result.GetProperty("manufacturerId").ToString());
+}
+]]></code>
+This sample shows how to call GetWidgets with all parameters, and how to parse the result.
+<code><![CDATA[
+var client = new ContosoClient();
+
+foreach (var data in client.GetWidgets(1234, 1234, 1234))
+{
+    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("name").ToString());
+    Console.WriteLine(result.GetProperty("manufacturerId").ToString());
+    Console.WriteLine(result.GetProperty("sharedModel").GetProperty("tag").ToString());
+    Console.WriteLine(result.GetProperty("sharedModel").GetProperty("createdDate").ToString());
+}
+]]></code>
+</example>
+<remarks>
+Below is the JSON schema for one item in the pageable response.
+
+Response Body:
+
+Schema for <c>Array</c>:
+<code>{
+  name: string, # Required.
+  manufacturerId: string, # Required.
+  sharedModel: {
+    tag: string, # Required.
+    createdDate: string (date &amp; time), # Required.
+  }, # Optional.
+}
+</code>
+
+</remarks>
+    </member>
+    <member name="CreateOrUpdateWidgetAsync(WaitUntil,String,RequestContent,RequestContext)">
+<example>
+This sample shows how to call CreateOrUpdateWidgetAsync with required parameters and request content, and how to parse the result.
+<code><![CDATA[
+var client = new ContosoClient();
+
+var data = new {
+    manufacturerId = "<manufacturerId>",
+};
+
+var operation = await client.CreateOrUpdateWidgetAsync(WaitUntil.Completed, "<widgetName>", RequestContent.Create(data));
+
+BinaryData data = operation.Value;
+JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+Console.WriteLine(result.GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("manufacturerId").ToString());
+]]></code>
+This sample shows how to call CreateOrUpdateWidgetAsync with all parameters and request content, and how to parse the result.
+<code><![CDATA[
+var client = new ContosoClient();
+
+var data = new {
+    manufacturerId = "<manufacturerId>",
+    sharedModel = new {
+        tag = "<tag>",
+        createdDate = "2022-05-10T14:57:31.2311892-04:00",
+    },
+};
+
+var operation = await client.CreateOrUpdateWidgetAsync(WaitUntil.Completed, "<widgetName>", RequestContent.Create(data));
+
+BinaryData data = operation.Value;
+JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+Console.WriteLine(result.GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("manufacturerId").ToString());
+Console.WriteLine(result.GetProperty("sharedModel").GetProperty("tag").ToString());
+Console.WriteLine(result.GetProperty("sharedModel").GetProperty("createdDate").ToString());
+]]></code>
+</example>
+<remarks>
+Below is the JSON schema for the request and response payloads.
+
+Request Body:
+
+Schema for <c>Widget</c>:
+<code>{
+  name: string, # Required.
+  manufacturerId: string, # Required.
+  sharedModel: {
+    tag: string, # Required.
+    createdDate: string (date &amp; time), # Required.
+  }, # Optional.
+}
+</code>
+
+Response Body:
+
+Schema for <c>Widget</c>:
+<code>{
+  name: string, # Required.
+  manufacturerId: string, # Required.
+  sharedModel: {
+    tag: string, # Required.
+    createdDate: string (date &amp; time), # Required.
+  }, # Optional.
+}
+</code>
+
+</remarks>
+    </member>
+    <member name="CreateOrUpdateWidget(WaitUntil,String,RequestContent,RequestContext)">
+<example>
+This sample shows how to call CreateOrUpdateWidget with required parameters and request content, and how to parse the result.
+<code><![CDATA[
+var client = new ContosoClient();
+
+var data = new {
+    manufacturerId = "<manufacturerId>",
+};
+
+var operation = client.CreateOrUpdateWidget(WaitUntil.Completed, "<widgetName>", RequestContent.Create(data));
+
+BinaryData data = operation.Value;
+JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+Console.WriteLine(result.GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("manufacturerId").ToString());
+]]></code>
+This sample shows how to call CreateOrUpdateWidget with all parameters and request content, and how to parse the result.
+<code><![CDATA[
+var client = new ContosoClient();
+
+var data = new {
+    manufacturerId = "<manufacturerId>",
+    sharedModel = new {
+        tag = "<tag>",
+        createdDate = "2022-05-10T14:57:31.2311892-04:00",
+    },
+};
+
+var operation = client.CreateOrUpdateWidget(WaitUntil.Completed, "<widgetName>", RequestContent.Create(data));
+
+BinaryData data = operation.Value;
+JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+Console.WriteLine(result.GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("manufacturerId").ToString());
+Console.WriteLine(result.GetProperty("sharedModel").GetProperty("tag").ToString());
+Console.WriteLine(result.GetProperty("sharedModel").GetProperty("createdDate").ToString());
+]]></code>
+</example>
+<remarks>
+Below is the JSON schema for the request and response payloads.
+
+Request Body:
+
+Schema for <c>Widget</c>:
+<code>{
+  name: string, # Required.
+  manufacturerId: string, # Required.
+  sharedModel: {
+    tag: string, # Required.
+    createdDate: string (date &amp; time), # Required.
+  }, # Optional.
+}
+</code>
+
+Response Body:
+
+Schema for <c>Widget</c>:
+<code>{
+  name: string, # Required.
+  manufacturerId: string, # Required.
+  sharedModel: {
+    tag: string, # Required.
+    createdDate: string (date &amp; time), # Required.
+  }, # Optional.
+}
+</code>
+
+</remarks>
+    </member>
+    <member name="DeleteWidgetAsync(WaitUntil,String,RequestContext)">
+<example>
+This sample shows how to call DeleteWidgetAsync with required parameters and parse the result.
+<code><![CDATA[
+var client = new ContosoClient();
+
+var operation = await client.DeleteWidgetAsync(WaitUntil.Completed, "<widgetName>");
+
+BinaryData data = operation.Value;
+JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+Console.WriteLine(result.GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("manufacturerId").ToString());
+Console.WriteLine(result.GetProperty("sharedModel").GetProperty("tag").ToString());
+Console.WriteLine(result.GetProperty("sharedModel").GetProperty("createdDate").ToString());
+]]></code>
+</example>
+<remarks>
+Below is the JSON schema for the response payload.
+
+Response Body:
+
+Schema for <c>Widget</c>:
+<code>{
+  name: string, # Required.
+  manufacturerId: string, # Required.
+  sharedModel: {
+    tag: string, # Required.
+    createdDate: string (date &amp; time), # Required.
+  }, # Optional.
+}
+</code>
+
+</remarks>
+    </member>
+    <member name="DeleteWidget(WaitUntil,String,RequestContext)">
+<example>
+This sample shows how to call DeleteWidget with required parameters and parse the result.
+<code><![CDATA[
+var client = new ContosoClient();
+
+var operation = client.DeleteWidget(WaitUntil.Completed, "<widgetName>");
+
+BinaryData data = operation.Value;
+JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+Console.WriteLine(result.GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("manufacturerId").ToString());
+Console.WriteLine(result.GetProperty("sharedModel").GetProperty("tag").ToString());
+Console.WriteLine(result.GetProperty("sharedModel").GetProperty("createdDate").ToString());
+]]></code>
+</example>
+<remarks>
+Below is the JSON schema for the response payload.
+
+Response Body:
+
+Schema for <c>Widget</c>:
+<code>{
+  name: string, # Required.
+  manufacturerId: string, # Required.
+  sharedModel: {
+    tag: string, # Required.
+    createdDate: string (date &amp; time), # Required.
+  }, # Optional.
+}
+</code>
+
+</remarks>
+    </member>
+  </members>
+</doc>
