@@ -1,14 +1,10 @@
 # Release History
 
-## 1.1.0-beta.1 (Unreleased)
+## 1.1.0
 
 ### Features Added
 
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
+- Added support for Fade In/Out On Filters class for StandardEncoderPreset
 
 ## 1.0.0 (2022-09-26)
 
