@@ -223,20 +223,20 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs
 
             var container = CreateContainer(blobServiceClient, ContainerName);
             var blobfile = container.GetBlockBlobClient(BlobName);
-            await blobfile.UploadTextAsync(string.Empty);
+            await blobfile.UploadTextAsync("testfile");
 
             var jobHost = host.GetJobHost<BindToParameterBindingDataArray>();
 
             // Act
             await jobHost.CallAsync(nameof(BindToParameterBindingDataArray.Run));
-            BlobClient[] result = program.Result;
+            string[] result = program.Result;
 
             Assert.NotNull(result);
 
             // Assert
             foreach (var blob in result)
             {
-                Assert.AreEqual(BlobName, blob.Name);
+                Assert.AreEqual("testfile", blob);
             }
         }
 
@@ -331,10 +331,10 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs
 
         private class BindToParameterBindingDataArray
         {
-            public BlobClient[] Result { get; set; }
+            public string[] Result { get; set; }
 
             public void Run(
-                [Blob(ContainerName)] BlobClient[] blobs)
+                [Blob(ContainerName)] string[] blobs)
             {
                 this.Result = blobs;
             }
