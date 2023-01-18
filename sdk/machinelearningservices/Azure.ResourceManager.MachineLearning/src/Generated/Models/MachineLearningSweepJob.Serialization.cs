@@ -220,9 +220,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
             Optional<IDictionary<string, MachineLearningJobOutput>> outputs = default;
             SamplingAlgorithm samplingAlgorithm = default;
             BinaryData searchSpace = default;
-            TrialComponent trial = default;
-            Optional<string> componentId = default;
-            Optional<string> computeId = default;
+            MachineLearningTrialComponent trial = default;
+            Optional<ResourceIdentifier> componentId = default;
+            Optional<ResourceIdentifier> computeId = default;
             Optional<string> displayName = default;
             Optional<string> experimentName = default;
             Optional<MachineLearningIdentityConfiguration> identity = default;
@@ -316,7 +316,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (property.NameEquals("trial"))
                 {
-                    trial = TrialComponent.DeserializeTrialComponent(property.Value);
+                    trial = MachineLearningTrialComponent.DeserializeMachineLearningTrialComponent(property.Value);
                     continue;
                 }
                 if (property.NameEquals("componentId"))
@@ -326,7 +326,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         componentId = null;
                         continue;
                     }
-                    componentId = property.Value.GetString();
+                    componentId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("computeId"))
@@ -336,7 +336,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         computeId = null;
                         continue;
                     }
-                    computeId = property.Value.GetString();
+                    computeId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("displayName"))

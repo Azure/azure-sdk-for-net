@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary>
-    /// The MachineLearningDeploymentResourceConfiguration.
-    /// Serialized Name: DeploymentResourceConfiguration
-    /// </summary>
+    /// <summary> The MachineLearningDeploymentResourceConfiguration. </summary>
     public partial class MachineLearningDeploymentResourceConfiguration : MachineLearningResourceConfiguration
     {
         /// <summary> Initializes a new instance of MachineLearningDeploymentResourceConfiguration. </summary>
@@ -22,18 +19,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Initializes a new instance of MachineLearningDeploymentResourceConfiguration. </summary>
-        /// <param name="instanceCount">
-        /// Optional number of instances or nodes used by the compute target.
-        /// Serialized Name: ResourceConfiguration.instanceCount
-        /// </param>
-        /// <param name="instanceType">
-        /// Optional type of VM used as supported by the compute target.
-        /// Serialized Name: ResourceConfiguration.instanceType
-        /// </param>
-        /// <param name="properties">
-        /// Additional properties bag.
-        /// Serialized Name: ResourceConfiguration.properties
-        /// </param>
+        /// <param name="instanceCount"> Optional number of instances or nodes used by the compute target. </param>
+        /// <param name="instanceType"> Optional type of VM used as supported by the compute target. </param>
+        /// <param name="properties"> Additional properties bag. </param>
         internal MachineLearningDeploymentResourceConfiguration(int? instanceCount, string instanceType, IDictionary<string, BinaryData> properties) : base(instanceCount, instanceType, properties)
         {
         }

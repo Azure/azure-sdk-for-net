@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -56,8 +55,16 @@ namespace Azure.ResourceManager.SecurityCenter
 
         /// <summary>
         /// creating settings about where we should store your security data and logs
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Security/workspaceSettings/{workspaceSettingName}
-        /// Operation Id: WorkspaceSettings_Create
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/workspaceSettings/{workspaceSettingName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>WorkspaceSettings_Create</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="workspaceSettingName"> Name of the security setting. </param>
@@ -89,8 +96,16 @@ namespace Azure.ResourceManager.SecurityCenter
 
         /// <summary>
         /// creating settings about where we should store your security data and logs
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Security/workspaceSettings/{workspaceSettingName}
-        /// Operation Id: WorkspaceSettings_Create
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/workspaceSettings/{workspaceSettingName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>WorkspaceSettings_Create</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="workspaceSettingName"> Name of the security setting. </param>
@@ -122,8 +137,16 @@ namespace Azure.ResourceManager.SecurityCenter
 
         /// <summary>
         /// Settings about where we should store your security data and logs. If the result is empty, it means that no custom-workspace configuration was set
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Security/workspaceSettings/{workspaceSettingName}
-        /// Operation Id: WorkspaceSettings_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/workspaceSettings/{workspaceSettingName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>WorkspaceSettings_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="workspaceSettingName"> Name of the security setting. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -151,8 +174,16 @@ namespace Azure.ResourceManager.SecurityCenter
 
         /// <summary>
         /// Settings about where we should store your security data and logs. If the result is empty, it means that no custom-workspace configuration was set
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Security/workspaceSettings/{workspaceSettingName}
-        /// Operation Id: WorkspaceSettings_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/workspaceSettings/{workspaceSettingName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>WorkspaceSettings_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="workspaceSettingName"> Name of the security setting. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -180,92 +211,60 @@ namespace Azure.ResourceManager.SecurityCenter
 
         /// <summary>
         /// Settings about where we should store your security data and logs. If the result is empty, it means that no custom-workspace configuration was set
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Security/workspaceSettings
-        /// Operation Id: WorkspaceSettings_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/workspaceSettings</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>WorkspaceSettings_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="SecurityWorkspaceSettingResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SecurityWorkspaceSettingResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<SecurityWorkspaceSettingResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _securityWorkspaceSettingWorkspaceSettingsClientDiagnostics.CreateScope("SecurityWorkspaceSettingCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _securityWorkspaceSettingWorkspaceSettingsRestClient.ListAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new SecurityWorkspaceSettingResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<SecurityWorkspaceSettingResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _securityWorkspaceSettingWorkspaceSettingsClientDiagnostics.CreateScope("SecurityWorkspaceSettingCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _securityWorkspaceSettingWorkspaceSettingsRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new SecurityWorkspaceSettingResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _securityWorkspaceSettingWorkspaceSettingsRestClient.CreateListRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _securityWorkspaceSettingWorkspaceSettingsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SecurityWorkspaceSettingResource(Client, SecurityWorkspaceSettingData.DeserializeSecurityWorkspaceSettingData(e)), _securityWorkspaceSettingWorkspaceSettingsClientDiagnostics, Pipeline, "SecurityWorkspaceSettingCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Settings about where we should store your security data and logs. If the result is empty, it means that no custom-workspace configuration was set
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Security/workspaceSettings
-        /// Operation Id: WorkspaceSettings_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/workspaceSettings</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>WorkspaceSettings_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="SecurityWorkspaceSettingResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SecurityWorkspaceSettingResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<SecurityWorkspaceSettingResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _securityWorkspaceSettingWorkspaceSettingsClientDiagnostics.CreateScope("SecurityWorkspaceSettingCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _securityWorkspaceSettingWorkspaceSettingsRestClient.List(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new SecurityWorkspaceSettingResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<SecurityWorkspaceSettingResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _securityWorkspaceSettingWorkspaceSettingsClientDiagnostics.CreateScope("SecurityWorkspaceSettingCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _securityWorkspaceSettingWorkspaceSettingsRestClient.ListNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new SecurityWorkspaceSettingResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _securityWorkspaceSettingWorkspaceSettingsRestClient.CreateListRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _securityWorkspaceSettingWorkspaceSettingsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SecurityWorkspaceSettingResource(Client, SecurityWorkspaceSettingData.DeserializeSecurityWorkspaceSettingData(e)), _securityWorkspaceSettingWorkspaceSettingsClientDiagnostics, Pipeline, "SecurityWorkspaceSettingCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Security/workspaceSettings/{workspaceSettingName}
-        /// Operation Id: WorkspaceSettings_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/workspaceSettings/{workspaceSettingName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>WorkspaceSettings_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="workspaceSettingName"> Name of the security setting. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -291,8 +290,16 @@ namespace Azure.ResourceManager.SecurityCenter
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Security/workspaceSettings/{workspaceSettingName}
-        /// Operation Id: WorkspaceSettings_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/workspaceSettings/{workspaceSettingName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>WorkspaceSettings_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="workspaceSettingName"> Name of the security setting. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

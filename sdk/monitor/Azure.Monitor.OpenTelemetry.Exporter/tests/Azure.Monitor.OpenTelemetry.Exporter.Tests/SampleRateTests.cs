@@ -56,7 +56,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
 
             var monitorTags = TraceHelper.EnumerateActivityTags(activity);
             var telemetryItem = new TelemetryItem(activity, ref monitorTags, "RoleName", "RoleInstance", "00000000-0000-0000-0000-000000000000");
-            var expTelemetryItem = new TelemetryItem(telemetryItem, default, default, default);
+            var expTelemetryItem = new TelemetryItem("Exception", telemetryItem, default, default, default);
 
             if (SampleRate is float)
             {
