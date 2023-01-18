@@ -344,7 +344,78 @@ BinaryData state = await sessionReceiver.GetSessionStateAsync(CancellationToken.
 Assert.AreEqual(setState, state);
 ```
 
-## Message Settlement
+### Peeking a message
+
+```C# Snippet:ServiceBus_MockPeek
+// This sets up the ServiceBusClient mock to return the ServiceBusReceiver mock.
+
+Mock<ServiceBusClient> mockClient = new();
+Mock<ServiceBusReceiver> mockReceiver = new();
+
+mockClient
+    .Setup(client => client.CreateReceiver(It.IsAny<string>()))
+    .Returns(mockReceiver.Object);
+
+ServiceBusClient client = mockClient.Object;
+
+// This creates a list of messages to return from the ServiceBusReceiver mock. See the ServiceBusModelFactory
+// for a complete set of properties that can be populated using the ServiceBusModelFactory.ServiceBusReceivedMessage method.
+
+List<ServiceBusReceivedMessage> messagesToReturn = new();
+int numMessages = 3;
+
+for (int i = 0; i < numMessages; i++)
+{
+    string body = $"message-{i}";
+
+    // This mocks a ServiceBusReceivedMessage instance using the model factory. Different arguments can mock different
+    // potential outputs from the broker.
+
+    ServiceBusReceivedMessage messageToReturn = ServiceBusModelFactory.ServiceBusReceivedMessage(
+        body: new BinaryData(body),
+        messageId: $"id-{i}",
+        sequenceNumber: i,
+        partitionKey: "illustrative-partitionKey",
+        correlationId: "illustrative-correlationId",
+        contentType: "illustrative-contentType",
+        replyTo: "illustrative-replyTo"
+        // ...
+        );
+    messagesToReturn.Add(messageToReturn);
+}
+
+// Set up peek to return the next message in the list of messages after each call.
+
+int numCallsPeek = 0;
+mockReceiver
+    .Setup(receiver => receiver.PeekMessageAsync(
+        It.IsAny<long>(),
+        It.IsAny<CancellationToken>()))
+    .ReturnsAsync(() =>
+    {
+        ServiceBusReceivedMessage m = messagesToReturn.ElementAtOrDefault(numCallsPeek);
+        numCallsPeek++;
+        return m;
+    });
+
+// The rest of this snippet illustrates how to peek a service bus message using the mocked
+// service bus receiver above, this would be where application methods peeking a message would be
+// called.
+
+string mockQueueName = "MockQueue";
+ServiceBusReceiver receiver = client.CreateReceiver(mockQueueName);
+
+ServiceBusReceivedMessage peekedMessage = await receiver.PeekMessageAsync(0, CancellationToken.None);
+
+mockReceiver
+    .Verify(receiver => receiver.PeekMessageAsync(
+        It.IsAny<long>(),
+        It.IsAny<CancellationToken>()), Times.Once());
+```
+
+## Message settlement
+
+### Completing a message
 
 ```C# Snippet:ServiceBus_MockingComplete
 // The first section sets up a mock ServiceBusSender. See the Mocking send to queue TODO sample above
@@ -451,6 +522,8 @@ mockReceiver
         It.IsAny<CancellationToken>()),
         Times.Exactly(numCallsReceiveMessage));
 ```
+
+### Deferring a message and receiving deferred messages
 
 ```C# Snippet:ServiceBus_MockDefer
 // The first section sets up a mock ServiceBusReceiver.
@@ -577,72 +650,7 @@ for (int i = 0; i < numMessages; i++)
 Assert.IsEmpty(deferredMessages);
 ```
 
-```C# Snippet:ServiceBus_MockPeek
-// This sets up the ServiceBusClient mock to return the ServiceBusReceiver mock.
-
-Mock<ServiceBusClient> mockClient = new();
-Mock<ServiceBusReceiver> mockReceiver = new();
-
-mockClient
-    .Setup(client => client.CreateReceiver(It.IsAny<string>()))
-    .Returns(mockReceiver.Object);
-
-ServiceBusClient client = mockClient.Object;
-
-// This creates a list of messages to return from the ServiceBusReceiver mock. See the ServiceBusModelFactory
-// for a complete set of properties that can be populated using the ServiceBusModelFactory.ServiceBusReceivedMessage method.
-
-List<ServiceBusReceivedMessage> messagesToReturn = new();
-int numMessages = 3;
-
-for (int i = 0; i < numMessages; i++)
-{
-    string body = $"message-{i}";
-
-    // This mocks a ServiceBusReceivedMessage instance using the model factory. Different arguments can mock different
-    // potential outputs from the broker.
-
-    ServiceBusReceivedMessage messageToReturn = ServiceBusModelFactory.ServiceBusReceivedMessage(
-        body: new BinaryData(body),
-        messageId: $"id-{i}",
-        sequenceNumber: i,
-        partitionKey: "illustrative-partitionKey",
-        correlationId: "illustrative-correlationId",
-        contentType: "illustrative-contentType",
-        replyTo: "illustrative-replyTo"
-        // ...
-        );
-    messagesToReturn.Add(messageToReturn);
-}
-
-// Set up peek to return the next message in the list of messages after each call.
-
-int numCallsPeek = 0;
-mockReceiver
-    .Setup(receiver => receiver.PeekMessageAsync(
-        It.IsAny<long>(),
-        It.IsAny<CancellationToken>()))
-    .ReturnsAsync(() =>
-    {
-        ServiceBusReceivedMessage m = messagesToReturn.ElementAtOrDefault(numCallsPeek);
-        numCallsPeek++;
-        return m;
-    });
-
-// The rest of this snippet illustrates how to peek a service bus message using the mocked
-// service bus receiver above, this would be where application methods peeking a message would be
-// called.
-
-string mockQueueName = "MockQueue";
-ServiceBusReceiver receiver = client.CreateReceiver(mockQueueName);
-
-ServiceBusReceivedMessage peekedMessage = await receiver.PeekMessageAsync(0, CancellationToken.None);
-
-mockReceiver
-    .Verify(receiver => receiver.PeekMessageAsync(
-        It.IsAny<long>(),
-        It.IsAny<CancellationToken>()), Times.Once());
-```
+### Abandoning a message
 
 ```C# Snippet:ServiceBus_MockingAbandon
 // This sets up the ServiceBusClient mock to return the ServiceBusReceiver mock.
@@ -719,9 +727,9 @@ ServiceBusReceivedMessage message = await receiver.ReceiveMessageAsync();
 await receiver.AbandonMessageAsync(message);
 ```
 
-## Testing message handlers
+## Testing processor message handlers
 
-For the `ServiceBusProcessor`:
+### For the `ServiceBusProcessor`:
 
 ```C# Snippet:ServiceBus_TestProcessorHandlers
 Mock<ServiceBusReceiver> mockReceiver = new();
@@ -791,7 +799,7 @@ ProcessErrorEventArgs errorArgs = new(
 Assert.DoesNotThrowAsync(async () => await ErrorHandler(errorArgs));
 ```
 
-For the `ServiceBusSessionProcessor`:
+### For the `ServiceBusSessionProcessor`:
 
 ```C# Snippet:ServiceBus_TestSessionProcessorHandlers
 Mock<ServiceBusSessionReceiver> mockSessionReceiver = new();
@@ -871,6 +879,8 @@ Assert.DoesNotThrowAsync(async () => await ErrorHandler(errorArgs));
 ```
 
 ## Simulating the processor running
+
+### For the `ServiceBusProcessor`
 
 ```C# Snippet:ServiceBus_SimulateRunningTheProcessor
 Mock<ServiceBusClient> mockClient = new();
@@ -955,6 +965,8 @@ await mockProcessor.Object.StartProcessingAsync();
 await mockProcessor.Object.StopProcessingAsync();
 ```
 
+### For the `ServiceBusSessionProcessor`
+
 ```C# Snippet:ServiceBus_SimulateRunningTheSessionProcessor
 Mock<ServiceBusClient> mockClient = new();
 Mock<ServiceBusSessionReceiver> mockSessionReceiver = new();
@@ -1038,7 +1050,6 @@ await mockProcessor.Object.StartProcessingAsync();
 
 await mockProcessor.Object.StopProcessingAsync();
 ```
-
 
 ## Sending and Receiving messages using topics and subscriptions
 
@@ -1199,7 +1210,7 @@ ServiceBusReceiver receiver = serviceBusClient.CreateReceiver(topicName, subscri
 ServiceBusReceivedMessage receivedMessage = await receiver.ReceiveMessageAsync();
 ```
 
-## Queue Creation Mocking
+## Creating a queue using the `ServiceBusAdministrationClient`
 
 ```C# Snippet:ServiceBus_MockingQueueCreation
 Mock<ServiceBusAdministrationClient> mockAdministrationClient = new();
@@ -1255,7 +1266,7 @@ options.AuthorizationRules.Add(new SharedAccessAuthorizationRule(
 QueueProperties createQueue = await administrationClient.CreateQueueAsync(options);
 ```
 
-## Rule Creation Mocking
+## Creating a rule using the `ServiceBusAdministrationClient`
 
 ```C# Snippet:ServiceBus_MockingRules
 Mock<ServiceBusAdministrationClient> mockAdministrationClient = new();
@@ -1299,7 +1310,7 @@ string subscription = "subscription";
 RuleProperties createRule = await administrationClient.CreateRuleAsync(topic, subscription, options);
 ```
 
-## Rule Manager Mocking
+## Creating and deleting rules using the `ServiceBusRuleManager`
 
 ```C# Snippet:ServiceBus_MockingRuleManager
 Mock<ServiceBusClient> mockClient = new();
