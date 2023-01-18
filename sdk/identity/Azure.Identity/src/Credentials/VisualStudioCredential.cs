@@ -24,7 +24,7 @@ namespace Azure.Identity
     public class VisualStudioCredential : TokenCredential
     {
         private static readonly string TokenProviderFilePath = Path.Combine(
-            Environment.GetFolderPath(RuntimeInformation.IsOSPlatform(OSPlatform.Windows) ? 
+            Environment.GetFolderPath(RuntimeInformation.IsOSPlatform(OSPlatform.Windows) ?
                 Environment.SpecialFolder.LocalApplicationData :
                 Environment.SpecialFolder.UserProfile),
             ".IdentityService",
