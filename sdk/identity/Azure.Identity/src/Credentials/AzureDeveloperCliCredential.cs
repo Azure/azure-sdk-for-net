@@ -168,7 +168,7 @@ namespace Azure.Identity
             return token;
         }
 
-        private ProcessStartInfo GetAzureDeveloperCliProcessStartInfo(string fileName, string argument) =>
+        private static ProcessStartInfo GetAzureDeveloperCliProcessStartInfo(string fileName, string argument) =>
             new ProcessStartInfo
             {
                 FileName = fileName,

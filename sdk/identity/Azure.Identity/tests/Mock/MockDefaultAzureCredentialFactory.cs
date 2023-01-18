@@ -54,7 +54,7 @@ namespace Azure.Identity.Tests.Mock
             OnCreateAzureDeveloperCliCredential?.Invoke(mockAzureDeveloperCliCredential);
             return mockAzureDeveloperCliCredential.Object;
         }
-        
+
         public override TokenCredential CreateAzureCliCredential()
         {
             OnCreateAzureCliCredential?.Invoke(mockAzureCliCredential);
