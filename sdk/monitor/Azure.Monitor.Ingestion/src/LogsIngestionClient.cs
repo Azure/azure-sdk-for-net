@@ -4,8 +4,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net.NetworkInformation;
-using System.Runtime.InteropServices;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
@@ -229,7 +227,7 @@ namespace Azure.Monitor.Ingestion
 
                     if (response.Status != 204)
                     {
-                        OnException(batch.LogsCount, options, response, cancellationToken);
+                        UploadLogsOptions.OnException(batch.LogsCount, options, response, cancellationToken);
                     }
                 }
                 catch (Exception ex)
@@ -334,7 +332,7 @@ namespace Azure.Monitor.Ingestion
                             }
                             else
                             {
-                                await OnExceptionAsync(runningTasks[i].LogsCount, options, runningTasks[i].CurrentTask.Result, cancellationToken).ConfigureAwait(false);
+                                await UploadLogsOptions.OnExceptionAsync(runningTasks[i].LogsCount, options, runningTasks[i].CurrentTask.Result, cancellationToken).ConfigureAwait(false);
                             }
                             // Remove completed task from task list
                             runningTasks.RemoveAt(i);
@@ -361,7 +359,7 @@ namespace Azure.Monitor.Ingestion
                 }
                 else
                 {
-                    await OnExceptionAsync(task.LogsCount, options, task.CurrentTask.Result, cancellationToken).ConfigureAwait(false);
+                    await UploadLogsOptions.OnExceptionAsync(task.LogsCount, options, task.CurrentTask.Result, cancellationToken).ConfigureAwait(false);
                 }
             }
             if (exceptions?.Count > 0)
@@ -373,56 +371,6 @@ namespace Azure.Monitor.Ingestion
 
             // If no exceptions return response
             return runningTasks.Select(_ => _.CurrentTask).Last().Result; //204 - response of last batch with header
-        }
-
-        /// <summary>
-        /// test
-        /// </summary>
-        /// <param name="logsCount"></param>
-        /// <param name="options"></param>
-        /// <param name="response"></param>
-        /// <param name="cancellationToken"></param>
-        protected internal virtual async void OnException(int logsCount, UploadLogsOptions options, Response response, CancellationToken cancellationToken = default)
-        {
-            try
-            {
-                if (options == null)
-                {
-                    throw new RequestFailedException(response);
-                }
-                else
-                {
-                    await options.InvokeEvent(isRunningSynchronously: true, logsCount, response, cancellationToken).ConfigureAwait(false);
-                }
-            }
-            catch (Exception)
-            {
-            }
-        }
-
-        /// <summary>
-        /// test
-        /// </summary>
-        /// <param name="logsCount"></param>
-        /// <param name="options"></param>
-        /// <param name="response"></param>
-        /// <param name="cancellationToken"></param>
-        protected internal virtual async Task OnExceptionAsync(int logsCount, UploadLogsOptions options, Response response, CancellationToken cancellationToken = default)
-        {
-            try
-            {
-                if (options == null)
-                {
-                    throw new RequestFailedException(response);
-                }
-                else
-                {
-                    await options.InvokeEvent(isRunningSynchronously: false, logsCount, response, cancellationToken).ConfigureAwait(false);
-                }
-            }
-            catch (Exception)
-            {
-            }
         }
 
         private static void ProcessCompletedTask((Task<Response> CurrentTask, int LogsCount) runningTask, ref List<Exception> exceptions, ref int logsFailed)

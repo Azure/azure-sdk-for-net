@@ -41,5 +41,55 @@ namespace Azure.Monitor.Ingestion
             UploadFailedArgs uploadFailedArgs = new UploadFailedArgs(logsCount, new RequestFailedException(response), isRunningSynchronously, cancellationToken);
             await UploadFailed.RaiseAsync(uploadFailedArgs, nameof(LogsIngestionClient), "Upload", _clientDiagnostics).ConfigureAwait(false);
         }
+
+        /// <summary>
+        /// test
+        /// </summary>
+        /// <param name="logsCount"></param>
+        /// <param name="options"></param>
+        /// <param name="response"></param>
+        /// <param name="cancellationToken"></param>
+        protected internal static async void OnException(int logsCount, UploadLogsOptions options, Response response, CancellationToken cancellationToken = default)
+        {
+            try
+            {
+                if (options == null)
+                {
+                    throw new RequestFailedException(response);
+                }
+                else
+                {
+                    await options.InvokeEvent(isRunningSynchronously: true, logsCount, response, cancellationToken).ConfigureAwait(false);
+                }
+            }
+            catch (Exception)
+            {
+            }
+        }
+
+        /// <summary>
+        /// test
+        /// </summary>
+        /// <param name="logsCount"></param>
+        /// <param name="options"></param>
+        /// <param name="response"></param>
+        /// <param name="cancellationToken"></param>
+        protected internal static async Task OnExceptionAsync(int logsCount, UploadLogsOptions options, Response response, CancellationToken cancellationToken = default)
+        {
+            try
+            {
+                if (options == null)
+                {
+                    throw new RequestFailedException(response);
+                }
+                else
+                {
+                    await options.InvokeEvent(isRunningSynchronously: false, logsCount, response, cancellationToken).ConfigureAwait(false);
+                }
+            }
+            catch (Exception)
+            {
+            }
+        }
     }
 }
