@@ -34,11 +34,6 @@ namespace Azure.Developer.LoadTesting.Tests
                 JsonPath = "$..url",
                 Regex = @"sig=(?<group>.*?)(?=$|&)"
             });
-
-            BodyRegexSanitizers.Add(new BodyRegexSanitizer("[^\\r](?<break>\\n)", "\r\n")
-            {
-                    GroupForReplace = "break"
-            });
         }
 
         internal LoadTestAdministrationClient CreateAdministrationClient()
