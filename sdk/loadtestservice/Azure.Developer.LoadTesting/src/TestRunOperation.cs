@@ -112,9 +112,25 @@ namespace Azure.Developer.LoadTesting
         private Response GetCompletionResponse()
         {
             string testRunStatus;
+            JsonDocument jsonDocument;
 
-            JsonDocument jsonDocument = JsonDocument.Parse(_value.ToString());
-            testRunStatus = jsonDocument.RootElement.GetProperty("status").GetString();
+            try
+            {
+                jsonDocument = JsonDocument.Parse(_value.ToString());
+            }
+            catch (Exception e)
+            {
+                throw new Exception("Unable to parse JOSN " + e.Message);
+            }
+
+            try
+            {
+                testRunStatus = jsonDocument.RootElement.GetProperty("status").GetString();
+            }
+            catch
+            {
+                throw new Exception("No property validationStatus in reposne JSON");
+            }
 
             if (_terminalStatus.Contains(testRunStatus))
             {

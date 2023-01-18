@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// <summary> Initializes a new instance of AvailableWorkloadProfilesCollection. </summary>
         /// <param name="value"> Collection of workload profiles. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal AvailableWorkloadProfilesCollection(IEnumerable<AvailableWorkloadProfile> value)
+        internal AvailableWorkloadProfilesCollection(IEnumerable<ContainerAppAvailableWorkloadProfile> value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -28,14 +28,14 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// <summary> Initializes a new instance of AvailableWorkloadProfilesCollection. </summary>
         /// <param name="value"> Collection of workload profiles. </param>
         /// <param name="nextLink"> Link to next page of resources. </param>
-        internal AvailableWorkloadProfilesCollection(IReadOnlyList<AvailableWorkloadProfile> value, string nextLink)
+        internal AvailableWorkloadProfilesCollection(IReadOnlyList<ContainerAppAvailableWorkloadProfile> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> Collection of workload profiles. </summary>
-        public IReadOnlyList<AvailableWorkloadProfile> Value { get; }
+        public IReadOnlyList<ContainerAppAvailableWorkloadProfile> Value { get; }
         /// <summary> Link to next page of resources. </summary>
         public string NextLink { get; }
     }

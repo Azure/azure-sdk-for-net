@@ -1,15 +1,23 @@
 # Release History
 
-## 1.9.0-beta.1 (Unreleased)
+## 1.10.0-beta.1 (Unreleased)
 
 ### Features Added
-* Upgraded MessagePack for performance and security improvements.
-* Upgraded `Microsoft.Azure.SignalR`, `Microsoft.Azure.SignalR.Management`, `Microsoft.Azure.SignalR.Protocols` from 1.16.1 to 1.18.0
+
 ### Breaking Changes
 
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.9.0 (2023-01-12)
+
+### Bugs Fixed
+* Fixed the bug that the arguments are required in a SignalR message for isolated-process
+
+### Other Changes
+* Upgraded `Microsoft.Azure.SignalR`, `Microsoft.Azure.SignalR.Management`, `Microsoft.Azure.SignalR.Protocols` from 1.16.1 to 1.19.2
+* Upgraded MessagePack for performance and security improvements.
 
 ## 1.8.0 (2022-04-07)
 

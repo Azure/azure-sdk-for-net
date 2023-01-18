@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary>
-    /// Auto save settings.
-    /// Serialized Name: Autosave
-    /// </summary>
+    /// <summary> Auto save settings. </summary>
     public readonly partial struct MachineLearningComputeInstanceAutosave : IEquatable<MachineLearningComputeInstanceAutosave>
     {
         private readonly string _value;
@@ -29,20 +26,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
         private const string LocalValue = "Local";
         private const string RemoteValue = "Remote";
 
-        /// <summary>
-        /// None
-        /// Serialized Name: Autosave.None
-        /// </summary>
+        /// <summary> None. </summary>
         public static MachineLearningComputeInstanceAutosave None { get; } = new MachineLearningComputeInstanceAutosave(NoneValue);
-        /// <summary>
-        /// Local
-        /// Serialized Name: Autosave.Local
-        /// </summary>
+        /// <summary> Local. </summary>
         public static MachineLearningComputeInstanceAutosave Local { get; } = new MachineLearningComputeInstanceAutosave(LocalValue);
-        /// <summary>
-        /// Remote
-        /// Serialized Name: Autosave.Remote
-        /// </summary>
+        /// <summary> Remote. </summary>
         public static MachineLearningComputeInstanceAutosave Remote { get; } = new MachineLearningComputeInstanceAutosave(RemoteValue);
         /// <summary> Determines if two <see cref="MachineLearningComputeInstanceAutosave"/> values are the same. </summary>
         public static bool operator ==(MachineLearningComputeInstanceAutosave left, MachineLearningComputeInstanceAutosave right) => left.Equals(right);

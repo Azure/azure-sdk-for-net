@@ -6,9 +6,7 @@
 #nullable disable
 
 using System;
-using System.Linq;
 using System.Threading;
-using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -45,86 +43,46 @@ namespace Azure.ResourceManager.DevSpaces
 
         /// <summary>
         /// Lists all the Azure Dev Spaces Controllers with their properties in the subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.DevSpaces/controllers
-        /// Operation Id: Controllers_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DevSpaces/controllers</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Controllers_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ControllerResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ControllerResource> GetControllersAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<ControllerResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = ControllerClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetControllers");
-                scope.Start();
-                try
-                {
-                    var response = await ControllerRestClient.ListAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ControllerResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<ControllerResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = ControllerClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetControllers");
-                scope.Start();
-                try
-                {
-                    var response = await ControllerRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ControllerResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => ControllerRestClient.CreateListRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ControllerRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ControllerResource(Client, ControllerData.DeserializeControllerData(e)), ControllerClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetControllers", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Lists all the Azure Dev Spaces Controllers with their properties in the subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.DevSpaces/controllers
-        /// Operation Id: Controllers_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DevSpaces/controllers</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Controllers_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ControllerResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ControllerResource> GetControllers(CancellationToken cancellationToken = default)
         {
-            Page<ControllerResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = ControllerClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetControllers");
-                scope.Start();
-                try
-                {
-                    var response = ControllerRestClient.List(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ControllerResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<ControllerResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = ControllerClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetControllers");
-                scope.Start();
-                try
-                {
-                    var response = ControllerRestClient.ListNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ControllerResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => ControllerRestClient.CreateListRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ControllerRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ControllerResource(Client, ControllerData.DeserializeControllerData(e)), ControllerClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetControllers", "value", "nextLink", cancellationToken);
         }
     }
 }

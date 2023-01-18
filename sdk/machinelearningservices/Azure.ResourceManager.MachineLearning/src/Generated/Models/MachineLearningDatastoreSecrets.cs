@@ -9,7 +9,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary>
     /// Base definition for datastore secrets.
-    /// Serialized Name: DatastoreSecrets
     /// Please note <see cref="MachineLearningDatastoreSecrets"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="MachineLearningCertificateDatastoreSecrets"/>, <see cref="MachineLearningSasDatastoreSecrets"/>, <see cref="MachineLearningServicePrincipalDatastoreSecrets"/> and <see cref="MachineLearningAccountKeyDatastoreSecrets"/>.
     /// </summary>
@@ -21,19 +20,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Initializes a new instance of MachineLearningDatastoreSecrets. </summary>
-        /// <param name="secretsType">
-        /// [Required] Credential type used to authentication with storage.
-        /// Serialized Name: DatastoreSecrets.secretsType
-        /// </param>
+        /// <param name="secretsType"> [Required] Credential type used to authentication with storage. </param>
         internal MachineLearningDatastoreSecrets(SecretsType secretsType)
         {
             SecretsType = secretsType;
         }
 
-        /// <summary>
-        /// [Required] Credential type used to authentication with storage.
-        /// Serialized Name: DatastoreSecrets.secretsType
-        /// </summary>
+        /// <summary> [Required] Credential type used to authentication with storage. </summary>
         internal SecretsType SecretsType { get; set; }
     }
 }

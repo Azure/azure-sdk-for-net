@@ -22,12 +22,14 @@ namespace Azure.ResourceManager.KubernetesConfiguration
         public bool? AutoUpgradeMinorVersion { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> ConfigurationProtectedSettings { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> ConfigurationSettings { get { throw null; } set { } }
+        public string CurrentVersion { get { throw null; } }
         public System.Collections.Generic.IReadOnlyDictionary<string, string> CustomLocationSettings { get { throw null; } }
         public Azure.ResponseError ErrorInfo { get { throw null; } }
         public string ExtensionType { get { throw null; } set { } }
         public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
-        public string InstalledVersion { get { throw null; } }
+        public bool? IsSystemExtension { get { throw null; } }
         public System.Uri PackageUri { get { throw null; } }
+        public Azure.ResourceManager.Models.ArmPlan Plan { get { throw null; } set { } }
         public Azure.ResourceManager.KubernetesConfiguration.Models.KubernetesConfigurationProvisioningState? ProvisioningState { get { throw null; } }
         public string ReleaseTrain { get { throw null; } set { } }
         public Azure.ResourceManager.KubernetesConfiguration.Models.KubernetesClusterExtensionScope Scope { get { throw null; } set { } }

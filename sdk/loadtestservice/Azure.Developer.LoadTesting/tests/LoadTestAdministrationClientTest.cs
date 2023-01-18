@@ -251,7 +251,7 @@ namespace Azure.Developer.LoadTesting.Tests
             LoadTestAdministrationClient loadTestAdministrationClient = CreateAdministrationClient();
             await _testHelper.SetupTestingLoadTestResourceAsync(loadTestAdministrationClient, _testId);
 
-            FileUploadOperation fileUploadOperation = await loadTestAdministrationClient.BeginUploadTestFileAsync(
+            FileUploadOperation fileUploadOperation = await loadTestAdministrationClient.UploadTestFileAsync(
                 WaitUntil.Completed, _testId, _fileName, RequestContent.Create(
                     File.OpenRead(Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), _fileName))
                     )
@@ -264,7 +264,7 @@ namespace Azure.Developer.LoadTesting.Tests
             await loadTestAdministrationClient.DeleteTestAsync(_testId);
 
             await _testHelper.SetupTestingLoadTestResourceAsync(loadTestAdministrationClient, _testId);
-            fileUploadOperation = await loadTestAdministrationClient.BeginUploadTestFileAsync(
+            fileUploadOperation = await loadTestAdministrationClient.UploadTestFileAsync(
                    WaitUntil.Started, _testId, _fileName, RequestContent.Create(
                         File.OpenRead(Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), _fileName))
                     )

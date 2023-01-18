@@ -22,13 +22,13 @@ namespace Azure.Developer.LoadTesting
         /// <exception cref="ArgumentException"> <paramref name="testId"/> or <paramref name="fileName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        public virtual FileUploadOperation BeginUploadTestFile(WaitUntil waitUntil, string testId, string fileName, RequestContent content, TimeSpan? timeSpan = null, string fileType = null, RequestContext context = null)
+        public virtual FileUploadOperation UploadTestFile(WaitUntil waitUntil, string testId, string fileName, RequestContent content, TimeSpan? timeSpan = null, string fileType = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(testId, nameof(testId));
             Argument.AssertNotNullOrEmpty(fileName, nameof(fileName));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("LoadTestAdministrationClient.BeginUploadTestFile");
+            using var scope = ClientDiagnostics.CreateScope("LoadTestAdministrationClient.UploadTestFile");
             scope.Start();
 
             if (timeSpan == null)
@@ -65,13 +65,13 @@ namespace Azure.Developer.LoadTesting
         /// <exception cref="ArgumentException"> <paramref name="testId"/> or <paramref name="fileName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        public virtual async Task<FileUploadOperation> BeginUploadTestFileAsync(WaitUntil waitUntil, string testId, string fileName, RequestContent content, TimeSpan? timeSpan = null, string fileType = null, RequestContext context = null)
+        public virtual async Task<FileUploadOperation> UploadTestFileAsync(WaitUntil waitUntil, string testId, string fileName, RequestContent content, TimeSpan? timeSpan = null, string fileType = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(testId, nameof(testId));
             Argument.AssertNotNullOrEmpty(fileName, nameof(fileName));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("LoadTestAdministrationClient.BeginUploadTestFile");
+            using var scope = ClientDiagnostics.CreateScope("LoadTestAdministrationClient.UploadTestFile");
             scope.Start();
 
             if (timeSpan == null)

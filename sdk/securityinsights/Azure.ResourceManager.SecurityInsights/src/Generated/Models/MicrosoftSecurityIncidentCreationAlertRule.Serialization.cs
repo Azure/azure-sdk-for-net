@@ -78,10 +78,10 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 writer.WritePropertyName("displayName");
                 writer.WriteStringValue(DisplayName);
             }
-            if (Optional.IsDefined(Enabled))
+            if (Optional.IsDefined(IsEnabled))
             {
                 writer.WritePropertyName("enabled");
-                writer.WriteBooleanValue(Enabled.Value);
+                writer.WriteBooleanValue(IsEnabled.Value);
             }
             writer.WriteEndObject();
             writer.WriteEndObject();
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             Optional<IList<string>> displayNamesFilter = default;
             Optional<IList<string>> displayNamesExcludeFilter = default;
             Optional<MicrosoftSecurityProductName> productFilter = default;
-            Optional<IList<AlertSeverity>> severitiesFilter = default;
+            Optional<IList<SecurityInsightsAlertSeverity>> severitiesFilter = default;
             Optional<string> alertRuleTemplateName = default;
             Optional<string> description = default;
             Optional<string> displayName = default;
@@ -202,10 +202,10 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<AlertSeverity> array = new List<AlertSeverity>();
+                            List<SecurityInsightsAlertSeverity> array = new List<SecurityInsightsAlertSeverity>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(new AlertSeverity(item.GetString()));
+                                array.Add(new SecurityInsightsAlertSeverity(item.GetString()));
                             }
                             severitiesFilter = array;
                             continue;

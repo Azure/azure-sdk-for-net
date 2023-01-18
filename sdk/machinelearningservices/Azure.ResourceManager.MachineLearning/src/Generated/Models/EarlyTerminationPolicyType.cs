@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary>
-    /// The EarlyTerminationPolicyType.
-    /// Serialized Name: EarlyTerminationPolicyType
-    /// </summary>
+    /// <summary> The EarlyTerminationPolicyType. </summary>
     internal readonly partial struct EarlyTerminationPolicyType : IEquatable<EarlyTerminationPolicyType>
     {
         private readonly string _value;
@@ -29,20 +26,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
         private const string MedianStoppingValue = "MedianStopping";
         private const string TruncationSelectionValue = "TruncationSelection";
 
-        /// <summary>
-        /// Bandit
-        /// Serialized Name: EarlyTerminationPolicyType.Bandit
-        /// </summary>
+        /// <summary> Bandit. </summary>
         public static EarlyTerminationPolicyType Bandit { get; } = new EarlyTerminationPolicyType(BanditValue);
-        /// <summary>
-        /// MedianStopping
-        /// Serialized Name: EarlyTerminationPolicyType.MedianStopping
-        /// </summary>
+        /// <summary> MedianStopping. </summary>
         public static EarlyTerminationPolicyType MedianStopping { get; } = new EarlyTerminationPolicyType(MedianStoppingValue);
-        /// <summary>
-        /// TruncationSelection
-        /// Serialized Name: EarlyTerminationPolicyType.TruncationSelection
-        /// </summary>
+        /// <summary> TruncationSelection. </summary>
         public static EarlyTerminationPolicyType TruncationSelection { get; } = new EarlyTerminationPolicyType(TruncationSelectionValue);
         /// <summary> Determines if two <see cref="EarlyTerminationPolicyType"/> values are the same. </summary>
         public static bool operator ==(EarlyTerminationPolicyType left, EarlyTerminationPolicyType right) => left.Equals(right);

@@ -19,41 +19,6 @@ namespace Azure.ResourceManager.Synapse
     /// <summary> A class to add extension methods to Azure.ResourceManager.Synapse. </summary>
     public static partial class SynapseExtensions
     {
-        private static TenantResourceExtensionClient GetExtensionClient(TenantResource tenantResource)
-        {
-            return tenantResource.GetCachedClient((client) =>
-            {
-                return new TenantResourceExtensionClient(client, tenantResource.Id);
-            }
-            );
-        }
-
-        /// <summary>
-        /// Lists available operations for the Kusto sub-resources inside Microsoft.Synapse provider.
-        /// Request Path: /providers/Microsoft.Synapse/kustooperations
-        /// Operation Id: KustoOperations_List
-        /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="Models.Operation" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<Models.Operation> GetKustoOperationsAsync(this TenantResource tenantResource, CancellationToken cancellationToken = default)
-        {
-            return GetExtensionClient(tenantResource).GetKustoOperationsAsync(cancellationToken);
-        }
-
-        /// <summary>
-        /// Lists available operations for the Kusto sub-resources inside Microsoft.Synapse provider.
-        /// Request Path: /providers/Microsoft.Synapse/kustooperations
-        /// Operation Id: KustoOperations_List
-        /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="Models.Operation" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<Models.Operation> GetKustoOperations(this TenantResource tenantResource, CancellationToken cancellationToken = default)
-        {
-            return GetExtensionClient(tenantResource).GetKustoOperations(cancellationToken);
-        }
-
         private static SubscriptionResourceExtensionClient GetExtensionClient(SubscriptionResource subscriptionResource)
         {
             return subscriptionResource.GetCachedClient((client) =>
@@ -65,114 +30,178 @@ namespace Azure.ResourceManager.Synapse
 
         /// <summary>
         /// Returns a list of privateLinkHubs in a subscription
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Synapse/privateLinkHubs
-        /// Operation Id: PrivateLinkHubs_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Synapse/privateLinkHubs</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PrivateLinkHubs_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="PrivateLinkHubResource" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<PrivateLinkHubResource> GetPrivateLinkHubsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="SynapsePrivateLinkHubResource" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<SynapsePrivateLinkHubResource> GetSynapsePrivateLinkHubsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(subscriptionResource).GetPrivateLinkHubsAsync(cancellationToken);
+            return GetExtensionClient(subscriptionResource).GetSynapsePrivateLinkHubsAsync(cancellationToken);
         }
 
         /// <summary>
         /// Returns a list of privateLinkHubs in a subscription
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Synapse/privateLinkHubs
-        /// Operation Id: PrivateLinkHubs_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Synapse/privateLinkHubs</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PrivateLinkHubs_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="PrivateLinkHubResource" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<PrivateLinkHubResource> GetPrivateLinkHubs(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="SynapsePrivateLinkHubResource" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<SynapsePrivateLinkHubResource> GetSynapsePrivateLinkHubs(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(subscriptionResource).GetPrivateLinkHubs(cancellationToken);
+            return GetExtensionClient(subscriptionResource).GetSynapsePrivateLinkHubs(cancellationToken);
         }
 
         /// <summary>
         /// Returns a list of workspaces in a subscription
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Synapse/workspaces
-        /// Operation Id: Workspaces_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Synapse/workspaces</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Workspaces_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="WorkspaceResource" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<WorkspaceResource> GetWorkspacesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="SynapseWorkspaceResource" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<SynapseWorkspaceResource> GetSynapseWorkspacesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(subscriptionResource).GetWorkspacesAsync(cancellationToken);
+            return GetExtensionClient(subscriptionResource).GetSynapseWorkspacesAsync(cancellationToken);
         }
 
         /// <summary>
         /// Returns a list of workspaces in a subscription
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Synapse/workspaces
-        /// Operation Id: Workspaces_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Synapse/workspaces</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Workspaces_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="WorkspaceResource" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<WorkspaceResource> GetWorkspaces(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="SynapseWorkspaceResource" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<SynapseWorkspaceResource> GetSynapseWorkspaces(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(subscriptionResource).GetWorkspaces(cancellationToken);
+            return GetExtensionClient(subscriptionResource).GetSynapseWorkspaces(cancellationToken);
         }
 
         /// <summary>
         /// Lists eligible SKUs for Kusto Pool resource.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Synapse/skus
-        /// Operation Id: KustoPools_ListSkus
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Synapse/skus</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>KustoPools_ListSkus</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SkuDescription" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<SkuDescription> GetSkusKustoPoolsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="KustoPoolSkuDescription" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<KustoPoolSkuDescription> GetSkusKustoPoolsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             return GetExtensionClient(subscriptionResource).GetSkusKustoPoolsAsync(cancellationToken);
         }
 
         /// <summary>
         /// Lists eligible SKUs for Kusto Pool resource.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Synapse/skus
-        /// Operation Id: KustoPools_ListSkus
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Synapse/skus</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>KustoPools_ListSkus</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SkuDescription" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<SkuDescription> GetSkusKustoPools(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="KustoPoolSkuDescription" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<KustoPoolSkuDescription> GetSkusKustoPools(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             return GetExtensionClient(subscriptionResource).GetSkusKustoPools(cancellationToken);
         }
 
         /// <summary>
         /// Checks that the kusto pool name is valid and is not already in use.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Synapse/locations/{location}/kustoPoolCheckNameAvailability
-        /// Operation Id: KustoPools_CheckNameAvailability
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Synapse/locations/{location}/kustoPoolCheckNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>KustoPools_CheckNameAvailability</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="location"> The name of Azure region. </param>
         /// <param name="content"> The name of the cluster. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public static async Task<Response<CheckNameResult>> CheckNameAvailabilityKustoPoolAsync(this SubscriptionResource subscriptionResource, AzureLocation location, KustoPoolCheckNameContent content, CancellationToken cancellationToken = default)
+        public static async Task<Response<KustoPoolNameAvailabilityResult>> CheckKustoPoolNameAvailabilityAsync(this SubscriptionResource subscriptionResource, AzureLocation location, KustoPoolNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            return await GetExtensionClient(subscriptionResource).CheckNameAvailabilityKustoPoolAsync(location, content, cancellationToken).ConfigureAwait(false);
+            return await GetExtensionClient(subscriptionResource).CheckKustoPoolNameAvailabilityAsync(location, content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Checks that the kusto pool name is valid and is not already in use.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Synapse/locations/{location}/kustoPoolCheckNameAvailability
-        /// Operation Id: KustoPools_CheckNameAvailability
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Synapse/locations/{location}/kustoPoolCheckNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>KustoPools_CheckNameAvailability</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="location"> The name of Azure region. </param>
         /// <param name="content"> The name of the cluster. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public static Response<CheckNameResult> CheckNameAvailabilityKustoPool(this SubscriptionResource subscriptionResource, AzureLocation location, KustoPoolCheckNameContent content, CancellationToken cancellationToken = default)
+        public static Response<KustoPoolNameAvailabilityResult> CheckKustoPoolNameAvailability(this SubscriptionResource subscriptionResource, AzureLocation location, KustoPoolNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            return GetExtensionClient(subscriptionResource).CheckNameAvailabilityKustoPool(location, content, cancellationToken);
+            return GetExtensionClient(subscriptionResource).CheckKustoPoolNameAvailability(location, content, cancellationToken);
         }
 
         private static ResourceGroupResourceExtensionClient GetExtensionClient(ResourceGroupResource resourceGroupResource)
@@ -184,18 +213,26 @@ namespace Azure.ResourceManager.Synapse
             );
         }
 
-        /// <summary> Gets a collection of PrivateLinkHubResources in the ResourceGroupResource. </summary>
+        /// <summary> Gets a collection of SynapsePrivateLinkHubResources in the ResourceGroupResource. </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <returns> An object representing collection of PrivateLinkHubResources and their operations over a PrivateLinkHubResource. </returns>
-        public static PrivateLinkHubCollection GetPrivateLinkHubs(this ResourceGroupResource resourceGroupResource)
+        /// <returns> An object representing collection of SynapsePrivateLinkHubResources and their operations over a SynapsePrivateLinkHubResource. </returns>
+        public static SynapsePrivateLinkHubCollection GetSynapsePrivateLinkHubs(this ResourceGroupResource resourceGroupResource)
         {
-            return GetExtensionClient(resourceGroupResource).GetPrivateLinkHubs();
+            return GetExtensionClient(resourceGroupResource).GetSynapsePrivateLinkHubs();
         }
 
         /// <summary>
         /// Gets a privateLinkHub
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/privateLinkHubs/{privateLinkHubName}
-        /// Operation Id: PrivateLinkHubs_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/privateLinkHubs/{privateLinkHubName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PrivateLinkHubs_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="privateLinkHubName"> Name of the privateLinkHub. </param>
@@ -203,15 +240,23 @@ namespace Azure.ResourceManager.Synapse
         /// <exception cref="ArgumentException"> <paramref name="privateLinkHubName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="privateLinkHubName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<PrivateLinkHubResource>> GetPrivateLinkHubAsync(this ResourceGroupResource resourceGroupResource, string privateLinkHubName, CancellationToken cancellationToken = default)
+        public static async Task<Response<SynapsePrivateLinkHubResource>> GetSynapsePrivateLinkHubAsync(this ResourceGroupResource resourceGroupResource, string privateLinkHubName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetPrivateLinkHubs().GetAsync(privateLinkHubName, cancellationToken).ConfigureAwait(false);
+            return await resourceGroupResource.GetSynapsePrivateLinkHubs().GetAsync(privateLinkHubName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Gets a privateLinkHub
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/privateLinkHubs/{privateLinkHubName}
-        /// Operation Id: PrivateLinkHubs_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/privateLinkHubs/{privateLinkHubName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PrivateLinkHubs_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="privateLinkHubName"> Name of the privateLinkHub. </param>
@@ -219,23 +264,31 @@ namespace Azure.ResourceManager.Synapse
         /// <exception cref="ArgumentException"> <paramref name="privateLinkHubName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="privateLinkHubName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<PrivateLinkHubResource> GetPrivateLinkHub(this ResourceGroupResource resourceGroupResource, string privateLinkHubName, CancellationToken cancellationToken = default)
+        public static Response<SynapsePrivateLinkHubResource> GetSynapsePrivateLinkHub(this ResourceGroupResource resourceGroupResource, string privateLinkHubName, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetPrivateLinkHubs().Get(privateLinkHubName, cancellationToken);
+            return resourceGroupResource.GetSynapsePrivateLinkHubs().Get(privateLinkHubName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of WorkspaceResources in the ResourceGroupResource. </summary>
+        /// <summary> Gets a collection of SynapseWorkspaceResources in the ResourceGroupResource. </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <returns> An object representing collection of WorkspaceResources and their operations over a WorkspaceResource. </returns>
-        public static WorkspaceCollection GetWorkspaces(this ResourceGroupResource resourceGroupResource)
+        /// <returns> An object representing collection of SynapseWorkspaceResources and their operations over a SynapseWorkspaceResource. </returns>
+        public static SynapseWorkspaceCollection GetSynapseWorkspaces(this ResourceGroupResource resourceGroupResource)
         {
-            return GetExtensionClient(resourceGroupResource).GetWorkspaces();
+            return GetExtensionClient(resourceGroupResource).GetSynapseWorkspaces();
         }
 
         /// <summary>
         /// Gets a workspace
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}
-        /// Operation Id: Workspaces_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Workspaces_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="workspaceName"> The name of the workspace. </param>
@@ -243,15 +296,23 @@ namespace Azure.ResourceManager.Synapse
         /// <exception cref="ArgumentException"> <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<WorkspaceResource>> GetWorkspaceAsync(this ResourceGroupResource resourceGroupResource, string workspaceName, CancellationToken cancellationToken = default)
+        public static async Task<Response<SynapseWorkspaceResource>> GetSynapseWorkspaceAsync(this ResourceGroupResource resourceGroupResource, string workspaceName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetWorkspaces().GetAsync(workspaceName, cancellationToken).ConfigureAwait(false);
+            return await resourceGroupResource.GetSynapseWorkspaces().GetAsync(workspaceName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Gets a workspace
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}
-        /// Operation Id: Workspaces_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Workspaces_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="workspaceName"> The name of the workspace. </param>
@@ -259,63 +320,63 @@ namespace Azure.ResourceManager.Synapse
         /// <exception cref="ArgumentException"> <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<WorkspaceResource> GetWorkspace(this ResourceGroupResource resourceGroupResource, string workspaceName, CancellationToken cancellationToken = default)
+        public static Response<SynapseWorkspaceResource> GetSynapseWorkspace(this ResourceGroupResource resourceGroupResource, string workspaceName, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetWorkspaces().Get(workspaceName, cancellationToken);
+            return resourceGroupResource.GetSynapseWorkspaces().Get(workspaceName, cancellationToken);
         }
 
-        #region AzureADOnlyAuthenticationResource
+        #region SynapseAadOnlyAuthenticationResource
         /// <summary>
-        /// Gets an object representing an <see cref="AzureADOnlyAuthenticationResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="AzureADOnlyAuthenticationResource.CreateResourceIdentifier" /> to create an <see cref="AzureADOnlyAuthenticationResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="SynapseAadOnlyAuthenticationResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SynapseAadOnlyAuthenticationResource.CreateResourceIdentifier" /> to create a <see cref="SynapseAadOnlyAuthenticationResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="AzureADOnlyAuthenticationResource" /> object. </returns>
-        public static AzureADOnlyAuthenticationResource GetAzureADOnlyAuthenticationResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SynapseAadOnlyAuthenticationResource" /> object. </returns>
+        public static SynapseAadOnlyAuthenticationResource GetSynapseAadOnlyAuthenticationResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                AzureADOnlyAuthenticationResource.ValidateResourceId(id);
-                return new AzureADOnlyAuthenticationResource(client, id);
+                SynapseAadOnlyAuthenticationResource.ValidateResourceId(id);
+                return new SynapseAadOnlyAuthenticationResource(client, id);
             }
             );
         }
         #endregion
 
-        #region IPFirewallRuleInfoResource
+        #region SynapseIPFirewallRuleInfoResource
         /// <summary>
-        /// Gets an object representing an <see cref="IPFirewallRuleInfoResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="IPFirewallRuleInfoResource.CreateResourceIdentifier" /> to create an <see cref="IPFirewallRuleInfoResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="SynapseIPFirewallRuleInfoResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SynapseIPFirewallRuleInfoResource.CreateResourceIdentifier" /> to create a <see cref="SynapseIPFirewallRuleInfoResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="IPFirewallRuleInfoResource" /> object. </returns>
-        public static IPFirewallRuleInfoResource GetIPFirewallRuleInfoResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SynapseIPFirewallRuleInfoResource" /> object. </returns>
+        public static SynapseIPFirewallRuleInfoResource GetSynapseIPFirewallRuleInfoResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                IPFirewallRuleInfoResource.ValidateResourceId(id);
-                return new IPFirewallRuleInfoResource(client, id);
+                SynapseIPFirewallRuleInfoResource.ValidateResourceId(id);
+                return new SynapseIPFirewallRuleInfoResource(client, id);
             }
             );
         }
         #endregion
 
-        #region KeyResource
+        #region SynapseKeyResource
         /// <summary>
-        /// Gets an object representing a <see cref="KeyResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="KeyResource.CreateResourceIdentifier" /> to create a <see cref="KeyResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="SynapseKeyResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SynapseKeyResource.CreateResourceIdentifier" /> to create a <see cref="SynapseKeyResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="KeyResource" /> object. </returns>
-        public static KeyResource GetKeyResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SynapseKeyResource" /> object. </returns>
+        public static SynapseKeyResource GetSynapseKeyResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                KeyResource.ValidateResourceId(id);
-                return new KeyResource(client, id);
+                SynapseKeyResource.ValidateResourceId(id);
+                return new SynapseKeyResource(client, id);
             }
             );
         }
@@ -340,951 +401,951 @@ namespace Azure.ResourceManager.Synapse
         }
         #endregion
 
-        #region WorkspacePrivateLinkResource
+        #region SynapseWorkspacePrivateLinkResource
         /// <summary>
-        /// Gets an object representing a <see cref="WorkspacePrivateLinkResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="WorkspacePrivateLinkResource.CreateResourceIdentifier" /> to create a <see cref="WorkspacePrivateLinkResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="SynapseWorkspacePrivateLinkResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SynapseWorkspacePrivateLinkResource.CreateResourceIdentifier" /> to create a <see cref="SynapseWorkspacePrivateLinkResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="WorkspacePrivateLinkResource" /> object. </returns>
-        public static WorkspacePrivateLinkResource GetWorkspacePrivateLinkResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SynapseWorkspacePrivateLinkResource" /> object. </returns>
+        public static SynapseWorkspacePrivateLinkResource GetSynapseWorkspacePrivateLinkResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                WorkspacePrivateLinkResource.ValidateResourceId(id);
-                return new WorkspacePrivateLinkResource(client, id);
+                SynapseWorkspacePrivateLinkResource.ValidateResourceId(id);
+                return new SynapseWorkspacePrivateLinkResource(client, id);
             }
             );
         }
         #endregion
 
-        #region PrivateLinkHubPrivateLinkResource
+        #region SynapsePrivateLinkResource
         /// <summary>
-        /// Gets an object representing a <see cref="PrivateLinkHubPrivateLinkResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="PrivateLinkHubPrivateLinkResource.CreateResourceIdentifier" /> to create a <see cref="PrivateLinkHubPrivateLinkResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="SynapsePrivateLinkResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SynapsePrivateLinkResource.CreateResourceIdentifier" /> to create a <see cref="SynapsePrivateLinkResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="PrivateLinkHubPrivateLinkResource" /> object. </returns>
-        public static PrivateLinkHubPrivateLinkResource GetPrivateLinkHubPrivateLinkResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SynapsePrivateLinkResource" /> object. </returns>
+        public static SynapsePrivateLinkResource GetSynapsePrivateLinkResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                PrivateLinkHubPrivateLinkResource.ValidateResourceId(id);
-                return new PrivateLinkHubPrivateLinkResource(client, id);
+                SynapsePrivateLinkResource.ValidateResourceId(id);
+                return new SynapsePrivateLinkResource(client, id);
             }
             );
         }
         #endregion
 
-        #region PrivateLinkHubResource
+        #region SynapsePrivateLinkHubResource
         /// <summary>
-        /// Gets an object representing a <see cref="PrivateLinkHubResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="PrivateLinkHubResource.CreateResourceIdentifier" /> to create a <see cref="PrivateLinkHubResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="SynapsePrivateLinkHubResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SynapsePrivateLinkHubResource.CreateResourceIdentifier" /> to create a <see cref="SynapsePrivateLinkHubResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="PrivateLinkHubResource" /> object. </returns>
-        public static PrivateLinkHubResource GetPrivateLinkHubResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SynapsePrivateLinkHubResource" /> object. </returns>
+        public static SynapsePrivateLinkHubResource GetSynapsePrivateLinkHubResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                PrivateLinkHubResource.ValidateResourceId(id);
-                return new PrivateLinkHubResource(client, id);
+                SynapsePrivateLinkHubResource.ValidateResourceId(id);
+                return new SynapsePrivateLinkHubResource(client, id);
             }
             );
         }
         #endregion
 
-        #region PrivateEndpointConnectionForPrivateLinkHubResource
+        #region SynapsePrivateEndpointConnectionForPrivateLinkHubResource
         /// <summary>
-        /// Gets an object representing a <see cref="PrivateEndpointConnectionForPrivateLinkHubResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="PrivateEndpointConnectionForPrivateLinkHubResource.CreateResourceIdentifier" /> to create a <see cref="PrivateEndpointConnectionForPrivateLinkHubResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="SynapsePrivateEndpointConnectionForPrivateLinkHubResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SynapsePrivateEndpointConnectionForPrivateLinkHubResource.CreateResourceIdentifier" /> to create a <see cref="SynapsePrivateEndpointConnectionForPrivateLinkHubResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="PrivateEndpointConnectionForPrivateLinkHubResource" /> object. </returns>
-        public static PrivateEndpointConnectionForPrivateLinkHubResource GetPrivateEndpointConnectionForPrivateLinkHubResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SynapsePrivateEndpointConnectionForPrivateLinkHubResource" /> object. </returns>
+        public static SynapsePrivateEndpointConnectionForPrivateLinkHubResource GetSynapsePrivateEndpointConnectionForPrivateLinkHubResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                PrivateEndpointConnectionForPrivateLinkHubResource.ValidateResourceId(id);
-                return new PrivateEndpointConnectionForPrivateLinkHubResource(client, id);
+                SynapsePrivateEndpointConnectionForPrivateLinkHubResource.ValidateResourceId(id);
+                return new SynapsePrivateEndpointConnectionForPrivateLinkHubResource(client, id);
             }
             );
         }
         #endregion
 
-        #region SqlPoolResource
+        #region SynapseSqlPoolResource
         /// <summary>
-        /// Gets an object representing a <see cref="SqlPoolResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SqlPoolResource.CreateResourceIdentifier" /> to create a <see cref="SqlPoolResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="SynapseSqlPoolResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SynapseSqlPoolResource.CreateResourceIdentifier" /> to create a <see cref="SynapseSqlPoolResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SqlPoolResource" /> object. </returns>
-        public static SqlPoolResource GetSqlPoolResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SynapseSqlPoolResource" /> object. </returns>
+        public static SynapseSqlPoolResource GetSynapseSqlPoolResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                SqlPoolResource.ValidateResourceId(id);
-                return new SqlPoolResource(client, id);
+                SynapseSqlPoolResource.ValidateResourceId(id);
+                return new SynapseSqlPoolResource(client, id);
             }
             );
         }
         #endregion
 
-        #region MetadataSyncConfigResource
+        #region SynapseMetadataSyncConfigurationResource
         /// <summary>
-        /// Gets an object representing a <see cref="MetadataSyncConfigResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="MetadataSyncConfigResource.CreateResourceIdentifier" /> to create a <see cref="MetadataSyncConfigResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="SynapseMetadataSyncConfigurationResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SynapseMetadataSyncConfigurationResource.CreateResourceIdentifier" /> to create a <see cref="SynapseMetadataSyncConfigurationResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="MetadataSyncConfigResource" /> object. </returns>
-        public static MetadataSyncConfigResource GetMetadataSyncConfigResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SynapseMetadataSyncConfigurationResource" /> object. </returns>
+        public static SynapseMetadataSyncConfigurationResource GetSynapseMetadataSyncConfigurationResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                MetadataSyncConfigResource.ValidateResourceId(id);
-                return new MetadataSyncConfigResource(client, id);
+                SynapseMetadataSyncConfigurationResource.ValidateResourceId(id);
+                return new SynapseMetadataSyncConfigurationResource(client, id);
             }
             );
         }
         #endregion
 
-        #region GeoBackupPolicyResource
+        #region SynapseGeoBackupPolicyResource
         /// <summary>
-        /// Gets an object representing a <see cref="GeoBackupPolicyResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="GeoBackupPolicyResource.CreateResourceIdentifier" /> to create a <see cref="GeoBackupPolicyResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="SynapseGeoBackupPolicyResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SynapseGeoBackupPolicyResource.CreateResourceIdentifier" /> to create a <see cref="SynapseGeoBackupPolicyResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="GeoBackupPolicyResource" /> object. </returns>
-        public static GeoBackupPolicyResource GetGeoBackupPolicyResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SynapseGeoBackupPolicyResource" /> object. </returns>
+        public static SynapseGeoBackupPolicyResource GetSynapseGeoBackupPolicyResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                GeoBackupPolicyResource.ValidateResourceId(id);
-                return new GeoBackupPolicyResource(client, id);
+                SynapseGeoBackupPolicyResource.ValidateResourceId(id);
+                return new SynapseGeoBackupPolicyResource(client, id);
             }
             );
         }
         #endregion
 
-        #region DataWarehouseUserActivityResource
+        #region SynapseDataWarehouseUserActivityResource
         /// <summary>
-        /// Gets an object representing a <see cref="DataWarehouseUserActivityResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DataWarehouseUserActivityResource.CreateResourceIdentifier" /> to create a <see cref="DataWarehouseUserActivityResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="SynapseDataWarehouseUserActivityResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SynapseDataWarehouseUserActivityResource.CreateResourceIdentifier" /> to create a <see cref="SynapseDataWarehouseUserActivityResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DataWarehouseUserActivityResource" /> object. </returns>
-        public static DataWarehouseUserActivityResource GetDataWarehouseUserActivityResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SynapseDataWarehouseUserActivityResource" /> object. </returns>
+        public static SynapseDataWarehouseUserActivityResource GetSynapseDataWarehouseUserActivityResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                DataWarehouseUserActivityResource.ValidateResourceId(id);
-                return new DataWarehouseUserActivityResource(client, id);
+                SynapseDataWarehouseUserActivityResource.ValidateResourceId(id);
+                return new SynapseDataWarehouseUserActivityResource(client, id);
             }
             );
         }
         #endregion
 
-        #region RestorePointResource
+        #region SynapseRestorePointResource
         /// <summary>
-        /// Gets an object representing a <see cref="RestorePointResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="RestorePointResource.CreateResourceIdentifier" /> to create a <see cref="RestorePointResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="SynapseRestorePointResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SynapseRestorePointResource.CreateResourceIdentifier" /> to create a <see cref="SynapseRestorePointResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="RestorePointResource" /> object. </returns>
-        public static RestorePointResource GetRestorePointResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SynapseRestorePointResource" /> object. </returns>
+        public static SynapseRestorePointResource GetSynapseRestorePointResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                RestorePointResource.ValidateResourceId(id);
-                return new RestorePointResource(client, id);
+                SynapseRestorePointResource.ValidateResourceId(id);
+                return new SynapseRestorePointResource(client, id);
             }
             );
         }
         #endregion
 
-        #region ReplicationLinkResource
+        #region SynapseReplicationLinkResource
         /// <summary>
-        /// Gets an object representing a <see cref="ReplicationLinkResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ReplicationLinkResource.CreateResourceIdentifier" /> to create a <see cref="ReplicationLinkResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="SynapseReplicationLinkResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SynapseReplicationLinkResource.CreateResourceIdentifier" /> to create a <see cref="SynapseReplicationLinkResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ReplicationLinkResource" /> object. </returns>
-        public static ReplicationLinkResource GetReplicationLinkResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SynapseReplicationLinkResource" /> object. </returns>
+        public static SynapseReplicationLinkResource GetSynapseReplicationLinkResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                ReplicationLinkResource.ValidateResourceId(id);
-                return new ReplicationLinkResource(client, id);
+                SynapseReplicationLinkResource.ValidateResourceId(id);
+                return new SynapseReplicationLinkResource(client, id);
             }
             );
         }
         #endregion
 
-        #region MaintenanceWindowResource
+        #region SynapseMaintenanceWindowResource
         /// <summary>
-        /// Gets an object representing a <see cref="MaintenanceWindowResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="MaintenanceWindowResource.CreateResourceIdentifier" /> to create a <see cref="MaintenanceWindowResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="SynapseMaintenanceWindowResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SynapseMaintenanceWindowResource.CreateResourceIdentifier" /> to create a <see cref="SynapseMaintenanceWindowResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="MaintenanceWindowResource" /> object. </returns>
-        public static MaintenanceWindowResource GetMaintenanceWindowResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SynapseMaintenanceWindowResource" /> object. </returns>
+        public static SynapseMaintenanceWindowResource GetSynapseMaintenanceWindowResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                MaintenanceWindowResource.ValidateResourceId(id);
-                return new MaintenanceWindowResource(client, id);
+                SynapseMaintenanceWindowResource.ValidateResourceId(id);
+                return new SynapseMaintenanceWindowResource(client, id);
             }
             );
         }
         #endregion
 
-        #region MaintenanceWindowOptionResource
+        #region SynapseMaintenanceWindowOptionResource
         /// <summary>
-        /// Gets an object representing a <see cref="MaintenanceWindowOptionResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="MaintenanceWindowOptionResource.CreateResourceIdentifier" /> to create a <see cref="MaintenanceWindowOptionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="SynapseMaintenanceWindowOptionResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SynapseMaintenanceWindowOptionResource.CreateResourceIdentifier" /> to create a <see cref="SynapseMaintenanceWindowOptionResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="MaintenanceWindowOptionResource" /> object. </returns>
-        public static MaintenanceWindowOptionResource GetMaintenanceWindowOptionResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SynapseMaintenanceWindowOptionResource" /> object. </returns>
+        public static SynapseMaintenanceWindowOptionResource GetSynapseMaintenanceWindowOptionResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                MaintenanceWindowOptionResource.ValidateResourceId(id);
-                return new MaintenanceWindowOptionResource(client, id);
+                SynapseMaintenanceWindowOptionResource.ValidateResourceId(id);
+                return new SynapseMaintenanceWindowOptionResource(client, id);
             }
             );
         }
         #endregion
 
-        #region TransparentDataEncryptionResource
+        #region SynapseTransparentDataEncryptionResource
         /// <summary>
-        /// Gets an object representing a <see cref="TransparentDataEncryptionResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="TransparentDataEncryptionResource.CreateResourceIdentifier" /> to create a <see cref="TransparentDataEncryptionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="SynapseTransparentDataEncryptionResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SynapseTransparentDataEncryptionResource.CreateResourceIdentifier" /> to create a <see cref="SynapseTransparentDataEncryptionResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="TransparentDataEncryptionResource" /> object. </returns>
-        public static TransparentDataEncryptionResource GetTransparentDataEncryptionResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SynapseTransparentDataEncryptionResource" /> object. </returns>
+        public static SynapseTransparentDataEncryptionResource GetSynapseTransparentDataEncryptionResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                TransparentDataEncryptionResource.ValidateResourceId(id);
-                return new TransparentDataEncryptionResource(client, id);
+                SynapseTransparentDataEncryptionResource.ValidateResourceId(id);
+                return new SynapseTransparentDataEncryptionResource(client, id);
             }
             );
         }
         #endregion
 
-        #region SqlPoolBlobAuditingPolicyResource
+        #region SynapseSqlPoolBlobAuditingPolicyResource
         /// <summary>
-        /// Gets an object representing a <see cref="SqlPoolBlobAuditingPolicyResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SqlPoolBlobAuditingPolicyResource.CreateResourceIdentifier" /> to create a <see cref="SqlPoolBlobAuditingPolicyResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="SynapseSqlPoolBlobAuditingPolicyResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SynapseSqlPoolBlobAuditingPolicyResource.CreateResourceIdentifier" /> to create a <see cref="SynapseSqlPoolBlobAuditingPolicyResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SqlPoolBlobAuditingPolicyResource" /> object. </returns>
-        public static SqlPoolBlobAuditingPolicyResource GetSqlPoolBlobAuditingPolicyResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SynapseSqlPoolBlobAuditingPolicyResource" /> object. </returns>
+        public static SynapseSqlPoolBlobAuditingPolicyResource GetSynapseSqlPoolBlobAuditingPolicyResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                SqlPoolBlobAuditingPolicyResource.ValidateResourceId(id);
-                return new SqlPoolBlobAuditingPolicyResource(client, id);
+                SynapseSqlPoolBlobAuditingPolicyResource.ValidateResourceId(id);
+                return new SynapseSqlPoolBlobAuditingPolicyResource(client, id);
             }
             );
         }
         #endregion
 
-        #region SensitivityLabelResource
+        #region SynapseSensitivityLabelResource
         /// <summary>
-        /// Gets an object representing a <see cref="SensitivityLabelResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SensitivityLabelResource.CreateResourceIdentifier" /> to create a <see cref="SensitivityLabelResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="SynapseSensitivityLabelResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SynapseSensitivityLabelResource.CreateResourceIdentifier" /> to create a <see cref="SynapseSensitivityLabelResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SensitivityLabelResource" /> object. </returns>
-        public static SensitivityLabelResource GetSensitivityLabelResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SynapseSensitivityLabelResource" /> object. </returns>
+        public static SynapseSensitivityLabelResource GetSynapseSensitivityLabelResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                SensitivityLabelResource.ValidateResourceId(id);
-                return new SensitivityLabelResource(client, id);
+                SynapseSensitivityLabelResource.ValidateResourceId(id);
+                return new SynapseSensitivityLabelResource(client, id);
             }
             );
         }
         #endregion
 
-        #region SqlPoolSchemaResource
+        #region SynapseSqlPoolSchemaResource
         /// <summary>
-        /// Gets an object representing a <see cref="SqlPoolSchemaResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SqlPoolSchemaResource.CreateResourceIdentifier" /> to create a <see cref="SqlPoolSchemaResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="SynapseSqlPoolSchemaResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SynapseSqlPoolSchemaResource.CreateResourceIdentifier" /> to create a <see cref="SynapseSqlPoolSchemaResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SqlPoolSchemaResource" /> object. </returns>
-        public static SqlPoolSchemaResource GetSqlPoolSchemaResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SynapseSqlPoolSchemaResource" /> object. </returns>
+        public static SynapseSqlPoolSchemaResource GetSynapseSqlPoolSchemaResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                SqlPoolSchemaResource.ValidateResourceId(id);
-                return new SqlPoolSchemaResource(client, id);
+                SynapseSqlPoolSchemaResource.ValidateResourceId(id);
+                return new SynapseSqlPoolSchemaResource(client, id);
             }
             );
         }
         #endregion
 
-        #region SqlPoolTableResource
+        #region SynapseSqlPoolTableResource
         /// <summary>
-        /// Gets an object representing a <see cref="SqlPoolTableResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SqlPoolTableResource.CreateResourceIdentifier" /> to create a <see cref="SqlPoolTableResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="SynapseSqlPoolTableResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SynapseSqlPoolTableResource.CreateResourceIdentifier" /> to create a <see cref="SynapseSqlPoolTableResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SqlPoolTableResource" /> object. </returns>
-        public static SqlPoolTableResource GetSqlPoolTableResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SynapseSqlPoolTableResource" /> object. </returns>
+        public static SynapseSqlPoolTableResource GetSynapseSqlPoolTableResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                SqlPoolTableResource.ValidateResourceId(id);
-                return new SqlPoolTableResource(client, id);
+                SynapseSqlPoolTableResource.ValidateResourceId(id);
+                return new SynapseSqlPoolTableResource(client, id);
             }
             );
         }
         #endregion
 
-        #region SqlPoolConnectionPolicyResource
+        #region SynapseSqlPoolConnectionPolicyResource
         /// <summary>
-        /// Gets an object representing a <see cref="SqlPoolConnectionPolicyResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SqlPoolConnectionPolicyResource.CreateResourceIdentifier" /> to create a <see cref="SqlPoolConnectionPolicyResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="SynapseSqlPoolConnectionPolicyResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SynapseSqlPoolConnectionPolicyResource.CreateResourceIdentifier" /> to create a <see cref="SynapseSqlPoolConnectionPolicyResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SqlPoolConnectionPolicyResource" /> object. </returns>
-        public static SqlPoolConnectionPolicyResource GetSqlPoolConnectionPolicyResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SynapseSqlPoolConnectionPolicyResource" /> object. </returns>
+        public static SynapseSqlPoolConnectionPolicyResource GetSynapseSqlPoolConnectionPolicyResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                SqlPoolConnectionPolicyResource.ValidateResourceId(id);
-                return new SqlPoolConnectionPolicyResource(client, id);
+                SynapseSqlPoolConnectionPolicyResource.ValidateResourceId(id);
+                return new SynapseSqlPoolConnectionPolicyResource(client, id);
             }
             );
         }
         #endregion
 
-        #region SqlPoolVulnerabilityAssessmentResource
+        #region SynapseSqlPoolVulnerabilityAssessmentResource
         /// <summary>
-        /// Gets an object representing a <see cref="SqlPoolVulnerabilityAssessmentResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SqlPoolVulnerabilityAssessmentResource.CreateResourceIdentifier" /> to create a <see cref="SqlPoolVulnerabilityAssessmentResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="SynapseSqlPoolVulnerabilityAssessmentResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SynapseSqlPoolVulnerabilityAssessmentResource.CreateResourceIdentifier" /> to create a <see cref="SynapseSqlPoolVulnerabilityAssessmentResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SqlPoolVulnerabilityAssessmentResource" /> object. </returns>
-        public static SqlPoolVulnerabilityAssessmentResource GetSqlPoolVulnerabilityAssessmentResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SynapseSqlPoolVulnerabilityAssessmentResource" /> object. </returns>
+        public static SynapseSqlPoolVulnerabilityAssessmentResource GetSynapseSqlPoolVulnerabilityAssessmentResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                SqlPoolVulnerabilityAssessmentResource.ValidateResourceId(id);
-                return new SqlPoolVulnerabilityAssessmentResource(client, id);
+                SynapseSqlPoolVulnerabilityAssessmentResource.ValidateResourceId(id);
+                return new SynapseSqlPoolVulnerabilityAssessmentResource(client, id);
             }
             );
         }
         #endregion
 
-        #region VulnerabilityAssessmentScanRecordResource
+        #region SynapseVulnerabilityAssessmentScanRecordResource
         /// <summary>
-        /// Gets an object representing a <see cref="VulnerabilityAssessmentScanRecordResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="VulnerabilityAssessmentScanRecordResource.CreateResourceIdentifier" /> to create a <see cref="VulnerabilityAssessmentScanRecordResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="SynapseVulnerabilityAssessmentScanRecordResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SynapseVulnerabilityAssessmentScanRecordResource.CreateResourceIdentifier" /> to create a <see cref="SynapseVulnerabilityAssessmentScanRecordResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="VulnerabilityAssessmentScanRecordResource" /> object. </returns>
-        public static VulnerabilityAssessmentScanRecordResource GetVulnerabilityAssessmentScanRecordResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SynapseVulnerabilityAssessmentScanRecordResource" /> object. </returns>
+        public static SynapseVulnerabilityAssessmentScanRecordResource GetSynapseVulnerabilityAssessmentScanRecordResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                VulnerabilityAssessmentScanRecordResource.ValidateResourceId(id);
-                return new VulnerabilityAssessmentScanRecordResource(client, id);
+                SynapseVulnerabilityAssessmentScanRecordResource.ValidateResourceId(id);
+                return new SynapseVulnerabilityAssessmentScanRecordResource(client, id);
             }
             );
         }
         #endregion
 
-        #region SqlPoolSecurityAlertPolicyResource
+        #region SynapseSqlPoolSecurityAlertPolicyResource
         /// <summary>
-        /// Gets an object representing a <see cref="SqlPoolSecurityAlertPolicyResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SqlPoolSecurityAlertPolicyResource.CreateResourceIdentifier" /> to create a <see cref="SqlPoolSecurityAlertPolicyResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="SynapseSqlPoolSecurityAlertPolicyResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SynapseSqlPoolSecurityAlertPolicyResource.CreateResourceIdentifier" /> to create a <see cref="SynapseSqlPoolSecurityAlertPolicyResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SqlPoolSecurityAlertPolicyResource" /> object. </returns>
-        public static SqlPoolSecurityAlertPolicyResource GetSqlPoolSecurityAlertPolicyResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SynapseSqlPoolSecurityAlertPolicyResource" /> object. </returns>
+        public static SynapseSqlPoolSecurityAlertPolicyResource GetSynapseSqlPoolSecurityAlertPolicyResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                SqlPoolSecurityAlertPolicyResource.ValidateResourceId(id);
-                return new SqlPoolSecurityAlertPolicyResource(client, id);
+                SynapseSqlPoolSecurityAlertPolicyResource.ValidateResourceId(id);
+                return new SynapseSqlPoolSecurityAlertPolicyResource(client, id);
             }
             );
         }
         #endregion
 
-        #region SqlPoolVulnerabilityAssessmentRuleBaselineResource
+        #region SynapseSqlPoolVulnerabilityAssessmentRuleBaselineResource
         /// <summary>
-        /// Gets an object representing a <see cref="SqlPoolVulnerabilityAssessmentRuleBaselineResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SqlPoolVulnerabilityAssessmentRuleBaselineResource.CreateResourceIdentifier" /> to create a <see cref="SqlPoolVulnerabilityAssessmentRuleBaselineResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="SynapseSqlPoolVulnerabilityAssessmentRuleBaselineResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SynapseSqlPoolVulnerabilityAssessmentRuleBaselineResource.CreateResourceIdentifier" /> to create a <see cref="SynapseSqlPoolVulnerabilityAssessmentRuleBaselineResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SqlPoolVulnerabilityAssessmentRuleBaselineResource" /> object. </returns>
-        public static SqlPoolVulnerabilityAssessmentRuleBaselineResource GetSqlPoolVulnerabilityAssessmentRuleBaselineResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SynapseSqlPoolVulnerabilityAssessmentRuleBaselineResource" /> object. </returns>
+        public static SynapseSqlPoolVulnerabilityAssessmentRuleBaselineResource GetSynapseSqlPoolVulnerabilityAssessmentRuleBaselineResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                SqlPoolVulnerabilityAssessmentRuleBaselineResource.ValidateResourceId(id);
-                return new SqlPoolVulnerabilityAssessmentRuleBaselineResource(client, id);
+                SynapseSqlPoolVulnerabilityAssessmentRuleBaselineResource.ValidateResourceId(id);
+                return new SynapseSqlPoolVulnerabilityAssessmentRuleBaselineResource(client, id);
             }
             );
         }
         #endregion
 
-        #region ExtendedSqlPoolBlobAuditingPolicyResource
+        #region SynapseExtendedSqlPoolBlobAuditingPolicyResource
         /// <summary>
-        /// Gets an object representing an <see cref="ExtendedSqlPoolBlobAuditingPolicyResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ExtendedSqlPoolBlobAuditingPolicyResource.CreateResourceIdentifier" /> to create an <see cref="ExtendedSqlPoolBlobAuditingPolicyResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="SynapseExtendedSqlPoolBlobAuditingPolicyResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SynapseExtendedSqlPoolBlobAuditingPolicyResource.CreateResourceIdentifier" /> to create a <see cref="SynapseExtendedSqlPoolBlobAuditingPolicyResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ExtendedSqlPoolBlobAuditingPolicyResource" /> object. </returns>
-        public static ExtendedSqlPoolBlobAuditingPolicyResource GetExtendedSqlPoolBlobAuditingPolicyResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SynapseExtendedSqlPoolBlobAuditingPolicyResource" /> object. </returns>
+        public static SynapseExtendedSqlPoolBlobAuditingPolicyResource GetSynapseExtendedSqlPoolBlobAuditingPolicyResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                ExtendedSqlPoolBlobAuditingPolicyResource.ValidateResourceId(id);
-                return new ExtendedSqlPoolBlobAuditingPolicyResource(client, id);
+                SynapseExtendedSqlPoolBlobAuditingPolicyResource.ValidateResourceId(id);
+                return new SynapseExtendedSqlPoolBlobAuditingPolicyResource(client, id);
             }
             );
         }
         #endregion
 
-        #region DataMaskingPolicyResource
+        #region SynapseDataMaskingPolicyResource
         /// <summary>
-        /// Gets an object representing a <see cref="DataMaskingPolicyResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DataMaskingPolicyResource.CreateResourceIdentifier" /> to create a <see cref="DataMaskingPolicyResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="SynapseDataMaskingPolicyResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SynapseDataMaskingPolicyResource.CreateResourceIdentifier" /> to create a <see cref="SynapseDataMaskingPolicyResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DataMaskingPolicyResource" /> object. </returns>
-        public static DataMaskingPolicyResource GetDataMaskingPolicyResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SynapseDataMaskingPolicyResource" /> object. </returns>
+        public static SynapseDataMaskingPolicyResource GetSynapseDataMaskingPolicyResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                DataMaskingPolicyResource.ValidateResourceId(id);
-                return new DataMaskingPolicyResource(client, id);
+                SynapseDataMaskingPolicyResource.ValidateResourceId(id);
+                return new SynapseDataMaskingPolicyResource(client, id);
             }
             );
         }
         #endregion
 
-        #region DataMaskingRuleResource
+        #region SynapseDataMaskingRuleResource
         /// <summary>
-        /// Gets an object representing a <see cref="DataMaskingRuleResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DataMaskingRuleResource.CreateResourceIdentifier" /> to create a <see cref="DataMaskingRuleResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="SynapseDataMaskingRuleResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SynapseDataMaskingRuleResource.CreateResourceIdentifier" /> to create a <see cref="SynapseDataMaskingRuleResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DataMaskingRuleResource" /> object. </returns>
-        public static DataMaskingRuleResource GetDataMaskingRuleResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SynapseDataMaskingRuleResource" /> object. </returns>
+        public static SynapseDataMaskingRuleResource GetSynapseDataMaskingRuleResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                DataMaskingRuleResource.ValidateResourceId(id);
-                return new DataMaskingRuleResource(client, id);
+                SynapseDataMaskingRuleResource.ValidateResourceId(id);
+                return new SynapseDataMaskingRuleResource(client, id);
             }
             );
         }
         #endregion
 
-        #region SqlPoolColumnResource
+        #region SynapseSqlPoolColumnResource
         /// <summary>
-        /// Gets an object representing a <see cref="SqlPoolColumnResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SqlPoolColumnResource.CreateResourceIdentifier" /> to create a <see cref="SqlPoolColumnResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="SynapseSqlPoolColumnResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SynapseSqlPoolColumnResource.CreateResourceIdentifier" /> to create a <see cref="SynapseSqlPoolColumnResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SqlPoolColumnResource" /> object. </returns>
-        public static SqlPoolColumnResource GetSqlPoolColumnResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SynapseSqlPoolColumnResource" /> object. </returns>
+        public static SynapseSqlPoolColumnResource GetSynapseSqlPoolColumnResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                SqlPoolColumnResource.ValidateResourceId(id);
-                return new SqlPoolColumnResource(client, id);
+                SynapseSqlPoolColumnResource.ValidateResourceId(id);
+                return new SynapseSqlPoolColumnResource(client, id);
             }
             );
         }
         #endregion
 
-        #region WorkloadGroupResource
+        #region SynapseWorkloadGroupResource
         /// <summary>
-        /// Gets an object representing a <see cref="WorkloadGroupResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="WorkloadGroupResource.CreateResourceIdentifier" /> to create a <see cref="WorkloadGroupResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="SynapseWorkloadGroupResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SynapseWorkloadGroupResource.CreateResourceIdentifier" /> to create a <see cref="SynapseWorkloadGroupResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="WorkloadGroupResource" /> object. </returns>
-        public static WorkloadGroupResource GetWorkloadGroupResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SynapseWorkloadGroupResource" /> object. </returns>
+        public static SynapseWorkloadGroupResource GetSynapseWorkloadGroupResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                WorkloadGroupResource.ValidateResourceId(id);
-                return new WorkloadGroupResource(client, id);
+                SynapseWorkloadGroupResource.ValidateResourceId(id);
+                return new SynapseWorkloadGroupResource(client, id);
             }
             );
         }
         #endregion
 
-        #region WorkloadClassifierResource
+        #region SynapseWorkloadClassifierResource
         /// <summary>
-        /// Gets an object representing a <see cref="WorkloadClassifierResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="WorkloadClassifierResource.CreateResourceIdentifier" /> to create a <see cref="WorkloadClassifierResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="SynapseWorkloadClassifierResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SynapseWorkloadClassifierResource.CreateResourceIdentifier" /> to create a <see cref="SynapseWorkloadClassifierResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="WorkloadClassifierResource" /> object. </returns>
-        public static WorkloadClassifierResource GetWorkloadClassifierResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SynapseWorkloadClassifierResource" /> object. </returns>
+        public static SynapseWorkloadClassifierResource GetSynapseWorkloadClassifierResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                WorkloadClassifierResource.ValidateResourceId(id);
-                return new WorkloadClassifierResource(client, id);
+                SynapseWorkloadClassifierResource.ValidateResourceId(id);
+                return new SynapseWorkloadClassifierResource(client, id);
             }
             );
         }
         #endregion
 
-        #region ServerBlobAuditingPolicyResource
+        #region SynapseServerBlobAuditingPolicyResource
         /// <summary>
-        /// Gets an object representing a <see cref="ServerBlobAuditingPolicyResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ServerBlobAuditingPolicyResource.CreateResourceIdentifier" /> to create a <see cref="ServerBlobAuditingPolicyResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="SynapseServerBlobAuditingPolicyResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SynapseServerBlobAuditingPolicyResource.CreateResourceIdentifier" /> to create a <see cref="SynapseServerBlobAuditingPolicyResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ServerBlobAuditingPolicyResource" /> object. </returns>
-        public static ServerBlobAuditingPolicyResource GetServerBlobAuditingPolicyResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SynapseServerBlobAuditingPolicyResource" /> object. </returns>
+        public static SynapseServerBlobAuditingPolicyResource GetSynapseServerBlobAuditingPolicyResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                ServerBlobAuditingPolicyResource.ValidateResourceId(id);
-                return new ServerBlobAuditingPolicyResource(client, id);
+                SynapseServerBlobAuditingPolicyResource.ValidateResourceId(id);
+                return new SynapseServerBlobAuditingPolicyResource(client, id);
             }
             );
         }
         #endregion
 
-        #region ExtendedServerBlobAuditingPolicyResource
+        #region SynapseExtendedServerBlobAuditingPolicyResource
         /// <summary>
-        /// Gets an object representing an <see cref="ExtendedServerBlobAuditingPolicyResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ExtendedServerBlobAuditingPolicyResource.CreateResourceIdentifier" /> to create an <see cref="ExtendedServerBlobAuditingPolicyResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="SynapseExtendedServerBlobAuditingPolicyResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SynapseExtendedServerBlobAuditingPolicyResource.CreateResourceIdentifier" /> to create a <see cref="SynapseExtendedServerBlobAuditingPolicyResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ExtendedServerBlobAuditingPolicyResource" /> object. </returns>
-        public static ExtendedServerBlobAuditingPolicyResource GetExtendedServerBlobAuditingPolicyResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SynapseExtendedServerBlobAuditingPolicyResource" /> object. </returns>
+        public static SynapseExtendedServerBlobAuditingPolicyResource GetSynapseExtendedServerBlobAuditingPolicyResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                ExtendedServerBlobAuditingPolicyResource.ValidateResourceId(id);
-                return new ExtendedServerBlobAuditingPolicyResource(client, id);
+                SynapseExtendedServerBlobAuditingPolicyResource.ValidateResourceId(id);
+                return new SynapseExtendedServerBlobAuditingPolicyResource(client, id);
             }
             );
         }
         #endregion
 
-        #region ServerSecurityAlertPolicyResource
+        #region SynapseServerSecurityAlertPolicyResource
         /// <summary>
-        /// Gets an object representing a <see cref="ServerSecurityAlertPolicyResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ServerSecurityAlertPolicyResource.CreateResourceIdentifier" /> to create a <see cref="ServerSecurityAlertPolicyResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="SynapseServerSecurityAlertPolicyResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SynapseServerSecurityAlertPolicyResource.CreateResourceIdentifier" /> to create a <see cref="SynapseServerSecurityAlertPolicyResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ServerSecurityAlertPolicyResource" /> object. </returns>
-        public static ServerSecurityAlertPolicyResource GetServerSecurityAlertPolicyResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SynapseServerSecurityAlertPolicyResource" /> object. </returns>
+        public static SynapseServerSecurityAlertPolicyResource GetSynapseServerSecurityAlertPolicyResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                ServerSecurityAlertPolicyResource.ValidateResourceId(id);
-                return new ServerSecurityAlertPolicyResource(client, id);
+                SynapseServerSecurityAlertPolicyResource.ValidateResourceId(id);
+                return new SynapseServerSecurityAlertPolicyResource(client, id);
             }
             );
         }
         #endregion
 
-        #region ServerVulnerabilityAssessmentResource
+        #region SynapseServerVulnerabilityAssessmentResource
         /// <summary>
-        /// Gets an object representing a <see cref="ServerVulnerabilityAssessmentResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ServerVulnerabilityAssessmentResource.CreateResourceIdentifier" /> to create a <see cref="ServerVulnerabilityAssessmentResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="SynapseServerVulnerabilityAssessmentResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SynapseServerVulnerabilityAssessmentResource.CreateResourceIdentifier" /> to create a <see cref="SynapseServerVulnerabilityAssessmentResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ServerVulnerabilityAssessmentResource" /> object. </returns>
-        public static ServerVulnerabilityAssessmentResource GetServerVulnerabilityAssessmentResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SynapseServerVulnerabilityAssessmentResource" /> object. </returns>
+        public static SynapseServerVulnerabilityAssessmentResource GetSynapseServerVulnerabilityAssessmentResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                ServerVulnerabilityAssessmentResource.ValidateResourceId(id);
-                return new ServerVulnerabilityAssessmentResource(client, id);
+                SynapseServerVulnerabilityAssessmentResource.ValidateResourceId(id);
+                return new SynapseServerVulnerabilityAssessmentResource(client, id);
             }
             );
         }
         #endregion
 
-        #region EncryptionProtectorResource
+        #region SynapseEncryptionProtectorResource
         /// <summary>
-        /// Gets an object representing an <see cref="EncryptionProtectorResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="EncryptionProtectorResource.CreateResourceIdentifier" /> to create an <see cref="EncryptionProtectorResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="SynapseEncryptionProtectorResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SynapseEncryptionProtectorResource.CreateResourceIdentifier" /> to create a <see cref="SynapseEncryptionProtectorResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="EncryptionProtectorResource" /> object. </returns>
-        public static EncryptionProtectorResource GetEncryptionProtectorResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SynapseEncryptionProtectorResource" /> object. </returns>
+        public static SynapseEncryptionProtectorResource GetSynapseEncryptionProtectorResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                EncryptionProtectorResource.ValidateResourceId(id);
-                return new EncryptionProtectorResource(client, id);
+                SynapseEncryptionProtectorResource.ValidateResourceId(id);
+                return new SynapseEncryptionProtectorResource(client, id);
             }
             );
         }
         #endregion
 
-        #region RecoverableSqlPoolResource
+        #region SynapseRecoverableSqlPoolResource
         /// <summary>
-        /// Gets an object representing a <see cref="RecoverableSqlPoolResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="RecoverableSqlPoolResource.CreateResourceIdentifier" /> to create a <see cref="RecoverableSqlPoolResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="SynapseRecoverableSqlPoolResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SynapseRecoverableSqlPoolResource.CreateResourceIdentifier" /> to create a <see cref="SynapseRecoverableSqlPoolResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="RecoverableSqlPoolResource" /> object. </returns>
-        public static RecoverableSqlPoolResource GetRecoverableSqlPoolResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SynapseRecoverableSqlPoolResource" /> object. </returns>
+        public static SynapseRecoverableSqlPoolResource GetSynapseRecoverableSqlPoolResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                RecoverableSqlPoolResource.ValidateResourceId(id);
-                return new RecoverableSqlPoolResource(client, id);
+                SynapseRecoverableSqlPoolResource.ValidateResourceId(id);
+                return new SynapseRecoverableSqlPoolResource(client, id);
             }
             );
         }
         #endregion
 
-        #region DedicatedSQLminimalTlsSettingResource
+        #region SynapseDedicatedSqlMinimalTlsSettingResource
         /// <summary>
-        /// Gets an object representing a <see cref="DedicatedSQLminimalTlsSettingResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DedicatedSQLminimalTlsSettingResource.CreateResourceIdentifier" /> to create a <see cref="DedicatedSQLminimalTlsSettingResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="SynapseDedicatedSqlMinimalTlsSettingResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SynapseDedicatedSqlMinimalTlsSettingResource.CreateResourceIdentifier" /> to create a <see cref="SynapseDedicatedSqlMinimalTlsSettingResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DedicatedSQLminimalTlsSettingResource" /> object. </returns>
-        public static DedicatedSQLminimalTlsSettingResource GetDedicatedSQLminimalTlsSettingResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SynapseDedicatedSqlMinimalTlsSettingResource" /> object. </returns>
+        public static SynapseDedicatedSqlMinimalTlsSettingResource GetSynapseDedicatedSqlMinimalTlsSettingResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                DedicatedSQLminimalTlsSettingResource.ValidateResourceId(id);
-                return new DedicatedSQLminimalTlsSettingResource(client, id);
+                SynapseDedicatedSqlMinimalTlsSettingResource.ValidateResourceId(id);
+                return new SynapseDedicatedSqlMinimalTlsSettingResource(client, id);
             }
             );
         }
         #endregion
 
-        #region WorkspaceResource
+        #region SynapseWorkspaceResource
         /// <summary>
-        /// Gets an object representing a <see cref="WorkspaceResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="WorkspaceResource.CreateResourceIdentifier" /> to create a <see cref="WorkspaceResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="SynapseWorkspaceResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SynapseWorkspaceResource.CreateResourceIdentifier" /> to create a <see cref="SynapseWorkspaceResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="WorkspaceResource" /> object. </returns>
-        public static WorkspaceResource GetWorkspaceResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SynapseWorkspaceResource" /> object. </returns>
+        public static SynapseWorkspaceResource GetSynapseWorkspaceResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                WorkspaceResource.ValidateResourceId(id);
-                return new WorkspaceResource(client, id);
+                SynapseWorkspaceResource.ValidateResourceId(id);
+                return new SynapseWorkspaceResource(client, id);
             }
             );
         }
         #endregion
 
-        #region WorkspaceAdministratorResource
+        #region SynapseWorkspaceAdministratorResource
         /// <summary>
-        /// Gets an object representing a <see cref="WorkspaceAdministratorResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="WorkspaceAdministratorResource.CreateResourceIdentifier" /> to create a <see cref="WorkspaceAdministratorResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="SynapseWorkspaceAdministratorResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SynapseWorkspaceAdministratorResource.CreateResourceIdentifier" /> to create a <see cref="SynapseWorkspaceAdministratorResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="WorkspaceAdministratorResource" /> object. </returns>
-        public static WorkspaceAdministratorResource GetWorkspaceAdministratorResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SynapseWorkspaceAdministratorResource" /> object. </returns>
+        public static SynapseWorkspaceAdministratorResource GetSynapseWorkspaceAdministratorResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                WorkspaceAdministratorResource.ValidateResourceId(id);
-                return new WorkspaceAdministratorResource(client, id);
+                SynapseWorkspaceAdministratorResource.ValidateResourceId(id);
+                return new SynapseWorkspaceAdministratorResource(client, id);
             }
             );
         }
         #endregion
 
-        #region WorkspaceSqlAdministratorResource
+        #region SynapseWorkspaceSqlAdministratorResource
         /// <summary>
-        /// Gets an object representing a <see cref="WorkspaceSqlAdministratorResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="WorkspaceSqlAdministratorResource.CreateResourceIdentifier" /> to create a <see cref="WorkspaceSqlAdministratorResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="SynapseWorkspaceSqlAdministratorResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SynapseWorkspaceSqlAdministratorResource.CreateResourceIdentifier" /> to create a <see cref="SynapseWorkspaceSqlAdministratorResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="WorkspaceSqlAdministratorResource" /> object. </returns>
-        public static WorkspaceSqlAdministratorResource GetWorkspaceSqlAdministratorResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SynapseWorkspaceSqlAdministratorResource" /> object. </returns>
+        public static SynapseWorkspaceSqlAdministratorResource GetSynapseWorkspaceSqlAdministratorResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                WorkspaceSqlAdministratorResource.ValidateResourceId(id);
-                return new WorkspaceSqlAdministratorResource(client, id);
+                SynapseWorkspaceSqlAdministratorResource.ValidateResourceId(id);
+                return new SynapseWorkspaceSqlAdministratorResource(client, id);
             }
             );
         }
         #endregion
 
-        #region ManagedIdentitySqlControlSettingsModelResource
+        #region SynapseManagedIdentitySqlControlSettingResource
         /// <summary>
-        /// Gets an object representing a <see cref="ManagedIdentitySqlControlSettingsModelResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ManagedIdentitySqlControlSettingsModelResource.CreateResourceIdentifier" /> to create a <see cref="ManagedIdentitySqlControlSettingsModelResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="SynapseManagedIdentitySqlControlSettingResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SynapseManagedIdentitySqlControlSettingResource.CreateResourceIdentifier" /> to create a <see cref="SynapseManagedIdentitySqlControlSettingResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ManagedIdentitySqlControlSettingsModelResource" /> object. </returns>
-        public static ManagedIdentitySqlControlSettingsModelResource GetManagedIdentitySqlControlSettingsModelResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SynapseManagedIdentitySqlControlSettingResource" /> object. </returns>
+        public static SynapseManagedIdentitySqlControlSettingResource GetSynapseManagedIdentitySqlControlSettingResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                ManagedIdentitySqlControlSettingsModelResource.ValidateResourceId(id);
-                return new ManagedIdentitySqlControlSettingsModelResource(client, id);
+                SynapseManagedIdentitySqlControlSettingResource.ValidateResourceId(id);
+                return new SynapseManagedIdentitySqlControlSettingResource(client, id);
             }
             );
         }
         #endregion
 
-        #region RestorableDroppedSqlPoolResource
+        #region SynapseRestorableDroppedSqlPoolResource
         /// <summary>
-        /// Gets an object representing a <see cref="RestorableDroppedSqlPoolResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="RestorableDroppedSqlPoolResource.CreateResourceIdentifier" /> to create a <see cref="RestorableDroppedSqlPoolResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="SynapseRestorableDroppedSqlPoolResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SynapseRestorableDroppedSqlPoolResource.CreateResourceIdentifier" /> to create a <see cref="SynapseRestorableDroppedSqlPoolResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="RestorableDroppedSqlPoolResource" /> object. </returns>
-        public static RestorableDroppedSqlPoolResource GetRestorableDroppedSqlPoolResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SynapseRestorableDroppedSqlPoolResource" /> object. </returns>
+        public static SynapseRestorableDroppedSqlPoolResource GetSynapseRestorableDroppedSqlPoolResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                RestorableDroppedSqlPoolResource.ValidateResourceId(id);
-                return new RestorableDroppedSqlPoolResource(client, id);
+                SynapseRestorableDroppedSqlPoolResource.ValidateResourceId(id);
+                return new SynapseRestorableDroppedSqlPoolResource(client, id);
             }
             );
         }
         #endregion
 
-        #region BigDataPoolResourceInfoResource
+        #region SynapseBigDataPoolInfoResource
         /// <summary>
-        /// Gets an object representing a <see cref="BigDataPoolResourceInfoResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="BigDataPoolResourceInfoResource.CreateResourceIdentifier" /> to create a <see cref="BigDataPoolResourceInfoResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="SynapseBigDataPoolInfoResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SynapseBigDataPoolInfoResource.CreateResourceIdentifier" /> to create a <see cref="SynapseBigDataPoolInfoResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="BigDataPoolResourceInfoResource" /> object. </returns>
-        public static BigDataPoolResourceInfoResource GetBigDataPoolResourceInfoResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SynapseBigDataPoolInfoResource" /> object. </returns>
+        public static SynapseBigDataPoolInfoResource GetSynapseBigDataPoolInfoResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                BigDataPoolResourceInfoResource.ValidateResourceId(id);
-                return new BigDataPoolResourceInfoResource(client, id);
+                SynapseBigDataPoolInfoResource.ValidateResourceId(id);
+                return new SynapseBigDataPoolInfoResource(client, id);
             }
             );
         }
         #endregion
 
-        #region LibraryResource
+        #region SynapseLibraryResource
         /// <summary>
-        /// Gets an object representing a <see cref="LibraryResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="LibraryResource.CreateResourceIdentifier" /> to create a <see cref="LibraryResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="SynapseLibraryResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SynapseLibraryResource.CreateResourceIdentifier" /> to create a <see cref="SynapseLibraryResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="LibraryResource" /> object. </returns>
-        public static LibraryResource GetLibraryResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SynapseLibraryResource" /> object. </returns>
+        public static SynapseLibraryResource GetSynapseLibraryResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                LibraryResource.ValidateResourceId(id);
-                return new LibraryResource(client, id);
+                SynapseLibraryResource.ValidateResourceId(id);
+                return new SynapseLibraryResource(client, id);
             }
             );
         }
         #endregion
 
-        #region IntegrationRuntimeResource
+        #region SynapseIntegrationRuntimeResource
         /// <summary>
-        /// Gets an object representing an <see cref="IntegrationRuntimeResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="IntegrationRuntimeResource.CreateResourceIdentifier" /> to create an <see cref="IntegrationRuntimeResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="SynapseIntegrationRuntimeResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SynapseIntegrationRuntimeResource.CreateResourceIdentifier" /> to create a <see cref="SynapseIntegrationRuntimeResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="IntegrationRuntimeResource" /> object. </returns>
-        public static IntegrationRuntimeResource GetIntegrationRuntimeResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SynapseIntegrationRuntimeResource" /> object. </returns>
+        public static SynapseIntegrationRuntimeResource GetSynapseIntegrationRuntimeResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                IntegrationRuntimeResource.ValidateResourceId(id);
-                return new IntegrationRuntimeResource(client, id);
+                SynapseIntegrationRuntimeResource.ValidateResourceId(id);
+                return new SynapseIntegrationRuntimeResource(client, id);
             }
             );
         }
         #endregion
 
-        #region SparkConfigurationResource
+        #region SynapseSparkConfigurationResource
         /// <summary>
-        /// Gets an object representing a <see cref="SparkConfigurationResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SparkConfigurationResource.CreateResourceIdentifier" /> to create a <see cref="SparkConfigurationResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="SynapseSparkConfigurationResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SynapseSparkConfigurationResource.CreateResourceIdentifier" /> to create a <see cref="SynapseSparkConfigurationResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SparkConfigurationResource" /> object. </returns>
-        public static SparkConfigurationResource GetSparkConfigurationResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SynapseSparkConfigurationResource" /> object. </returns>
+        public static SynapseSparkConfigurationResource GetSynapseSparkConfigurationResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                SparkConfigurationResource.ValidateResourceId(id);
-                return new SparkConfigurationResource(client, id);
+                SynapseSparkConfigurationResource.ValidateResourceId(id);
+                return new SynapseSparkConfigurationResource(client, id);
             }
             );
         }
         #endregion
 
-        #region KustoPoolResource
+        #region SynapseKustoPoolResource
         /// <summary>
-        /// Gets an object representing a <see cref="KustoPoolResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="KustoPoolResource.CreateResourceIdentifier" /> to create a <see cref="KustoPoolResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="SynapseKustoPoolResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SynapseKustoPoolResource.CreateResourceIdentifier" /> to create a <see cref="SynapseKustoPoolResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="KustoPoolResource" /> object. </returns>
-        public static KustoPoolResource GetKustoPoolResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SynapseKustoPoolResource" /> object. </returns>
+        public static SynapseKustoPoolResource GetSynapseKustoPoolResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                KustoPoolResource.ValidateResourceId(id);
-                return new KustoPoolResource(client, id);
+                SynapseKustoPoolResource.ValidateResourceId(id);
+                return new SynapseKustoPoolResource(client, id);
             }
             );
         }
         #endregion
 
-        #region AttachedDatabaseConfigurationResource
+        #region SynapseAttachedDatabaseConfigurationResource
         /// <summary>
-        /// Gets an object representing an <see cref="AttachedDatabaseConfigurationResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="AttachedDatabaseConfigurationResource.CreateResourceIdentifier" /> to create an <see cref="AttachedDatabaseConfigurationResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="SynapseAttachedDatabaseConfigurationResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SynapseAttachedDatabaseConfigurationResource.CreateResourceIdentifier" /> to create a <see cref="SynapseAttachedDatabaseConfigurationResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="AttachedDatabaseConfigurationResource" /> object. </returns>
-        public static AttachedDatabaseConfigurationResource GetAttachedDatabaseConfigurationResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SynapseAttachedDatabaseConfigurationResource" /> object. </returns>
+        public static SynapseAttachedDatabaseConfigurationResource GetSynapseAttachedDatabaseConfigurationResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                AttachedDatabaseConfigurationResource.ValidateResourceId(id);
-                return new AttachedDatabaseConfigurationResource(client, id);
+                SynapseAttachedDatabaseConfigurationResource.ValidateResourceId(id);
+                return new SynapseAttachedDatabaseConfigurationResource(client, id);
             }
             );
         }
         #endregion
 
-        #region DatabaseResource
+        #region SynapseDatabaseResource
         /// <summary>
-        /// Gets an object representing a <see cref="DatabaseResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DatabaseResource.CreateResourceIdentifier" /> to create a <see cref="DatabaseResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="SynapseDatabaseResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SynapseDatabaseResource.CreateResourceIdentifier" /> to create a <see cref="SynapseDatabaseResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DatabaseResource" /> object. </returns>
-        public static DatabaseResource GetDatabaseResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SynapseDatabaseResource" /> object. </returns>
+        public static SynapseDatabaseResource GetSynapseDatabaseResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                DatabaseResource.ValidateResourceId(id);
-                return new DatabaseResource(client, id);
+                SynapseDatabaseResource.ValidateResourceId(id);
+                return new SynapseDatabaseResource(client, id);
             }
             );
         }
         #endregion
 
-        #region DataConnectionResource
+        #region SynapseDataConnectionResource
         /// <summary>
-        /// Gets an object representing a <see cref="DataConnectionResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DataConnectionResource.CreateResourceIdentifier" /> to create a <see cref="DataConnectionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="SynapseDataConnectionResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SynapseDataConnectionResource.CreateResourceIdentifier" /> to create a <see cref="SynapseDataConnectionResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DataConnectionResource" /> object. </returns>
-        public static DataConnectionResource GetDataConnectionResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SynapseDataConnectionResource" /> object. </returns>
+        public static SynapseDataConnectionResource GetSynapseDataConnectionResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                DataConnectionResource.ValidateResourceId(id);
-                return new DataConnectionResource(client, id);
+                SynapseDataConnectionResource.ValidateResourceId(id);
+                return new SynapseDataConnectionResource(client, id);
             }
             );
         }
         #endregion
 
-        #region ClusterPrincipalAssignmentResource
+        #region SynapseClusterPrincipalAssignmentResource
         /// <summary>
-        /// Gets an object representing a <see cref="ClusterPrincipalAssignmentResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ClusterPrincipalAssignmentResource.CreateResourceIdentifier" /> to create a <see cref="ClusterPrincipalAssignmentResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="SynapseClusterPrincipalAssignmentResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SynapseClusterPrincipalAssignmentResource.CreateResourceIdentifier" /> to create a <see cref="SynapseClusterPrincipalAssignmentResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ClusterPrincipalAssignmentResource" /> object. </returns>
-        public static ClusterPrincipalAssignmentResource GetClusterPrincipalAssignmentResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SynapseClusterPrincipalAssignmentResource" /> object. </returns>
+        public static SynapseClusterPrincipalAssignmentResource GetSynapseClusterPrincipalAssignmentResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                ClusterPrincipalAssignmentResource.ValidateResourceId(id);
-                return new ClusterPrincipalAssignmentResource(client, id);
+                SynapseClusterPrincipalAssignmentResource.ValidateResourceId(id);
+                return new SynapseClusterPrincipalAssignmentResource(client, id);
             }
             );
         }
         #endregion
 
-        #region DatabasePrincipalAssignmentResource
+        #region SynapseDatabasePrincipalAssignmentResource
         /// <summary>
-        /// Gets an object representing a <see cref="DatabasePrincipalAssignmentResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DatabasePrincipalAssignmentResource.CreateResourceIdentifier" /> to create a <see cref="DatabasePrincipalAssignmentResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="SynapseDatabasePrincipalAssignmentResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SynapseDatabasePrincipalAssignmentResource.CreateResourceIdentifier" /> to create a <see cref="SynapseDatabasePrincipalAssignmentResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DatabasePrincipalAssignmentResource" /> object. </returns>
-        public static DatabasePrincipalAssignmentResource GetDatabasePrincipalAssignmentResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SynapseDatabasePrincipalAssignmentResource" /> object. </returns>
+        public static SynapseDatabasePrincipalAssignmentResource GetSynapseDatabasePrincipalAssignmentResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                DatabasePrincipalAssignmentResource.ValidateResourceId(id);
-                return new DatabasePrincipalAssignmentResource(client, id);
+                SynapseDatabasePrincipalAssignmentResource.ValidateResourceId(id);
+                return new SynapseDatabasePrincipalAssignmentResource(client, id);
             }
             );
         }

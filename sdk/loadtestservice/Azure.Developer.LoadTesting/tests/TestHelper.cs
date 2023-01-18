@@ -63,7 +63,7 @@ namespace Azure.Developer.LoadTesting.Tests.Helper
 
         public void SetupTestScript(LoadTestAdministrationClient loadTestAdministrationClient, string testId, string fileName, WaitUntil waitUntil = WaitUntil.Started)
         {
-            loadTestAdministrationClient.BeginUploadTestFile(
+            loadTestAdministrationClient.UploadTestFile(
                 waitUntil, testId, fileName, RequestContent.Create(
                     File.OpenRead(Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), fileName))
                     )
@@ -72,7 +72,7 @@ namespace Azure.Developer.LoadTesting.Tests.Helper
 
         public async Task SetupTestScriptAsync(LoadTestAdministrationClient loadTestAdministrationClient, string testId, string fileName, WaitUntil waitUntil = WaitUntil.Started)
         {
-            await loadTestAdministrationClient.BeginUploadTestFileAsync(
+            await loadTestAdministrationClient.UploadTestFileAsync(
                  waitUntil, testId, fileName, RequestContent.Create(
                     File.OpenRead(Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), fileName))
                     )
