@@ -6,8 +6,6 @@ namespace Azure.Monitor.Ingestion
         public LogsIngestionClient(System.Uri endpoint, Azure.Core.TokenCredential credential) { }
         public LogsIngestionClient(System.Uri endpoint, Azure.Core.TokenCredential credential, Azure.Monitor.Ingestion.LogsIngestionClientOptions options) { }
         public virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
-        protected internal virtual void OnException(int logsCount, Azure.Monitor.Ingestion.UploadLogsOptions options, Azure.Response response, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { }
-        protected internal virtual System.Threading.Tasks.Task OnExceptionAsync(int logsCount, Azure.Monitor.Ingestion.UploadLogsOptions options, Azure.Response response, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response Upload(string ruleId, string streamName, Azure.Core.RequestContent content, string contentEncoding = null, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Response Upload(string ruleId, string streamName, System.Collections.Generic.IEnumerable<object> logs, Azure.Monitor.Ingestion.UploadLogsOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> UploadAsync(string ruleId, string streamName, Azure.Core.RequestContent content, string contentEncoding = null, Azure.RequestContext context = null) { throw null; }
@@ -33,6 +31,8 @@ namespace Azure.Monitor.Ingestion
         public int MaxConcurrency { get { throw null; } set { } }
         public Azure.Core.Serialization.ObjectSerializer Serializer { get { throw null; } set { } }
         public event Azure.Core.SyncAsyncEventHandler<Azure.Monitor.Ingestion.UploadFailedArgs> UploadFailed { add { } remove { } }
+        protected internal static void OnException(int logsCount, Azure.Monitor.Ingestion.UploadLogsOptions options, Azure.Response response, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { }
+        protected internal static System.Threading.Tasks.Task OnExceptionAsync(int logsCount, Azure.Monitor.Ingestion.UploadLogsOptions options, Azure.Response response, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
 }
 namespace Microsoft.Extensions.Azure
