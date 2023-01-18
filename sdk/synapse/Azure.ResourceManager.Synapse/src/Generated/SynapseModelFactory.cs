@@ -1964,6 +1964,24 @@ namespace Azure.ResourceManager.Synapse.Models
             return new SynapseDatabasePrincipalAssignmentData(id, name, resourceType, systemData, principalId, role, tenantId, principalType, tenantName, principalName, provisioningState, aadObjectId);
         }
 
+        /// <summary> Initializes a new instance of SynapseKustoPoolPrivateLinkData. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="groupId"> The Private link resources GroupId. </param>
+        /// <param name="requiredMembers"> The private link resource required member names. </param>
+        /// <param name="requiredZoneNames"> The private link resource required zone names. </param>
+        /// <param name="provisioningState"> The provisioned state of the resource. </param>
+        /// <returns> A new <see cref="Models.SynapseKustoPoolPrivateLinkData"/> instance for mocking. </returns>
+        public static SynapseKustoPoolPrivateLinkData SynapseKustoPoolPrivateLinkData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string groupId = null, IEnumerable<string> requiredMembers = null, IEnumerable<string> requiredZoneNames = null, ResourceProvisioningState? provisioningState = null)
+        {
+            requiredMembers ??= new List<string>();
+            requiredZoneNames ??= new List<string>();
+
+            return new SynapseKustoPoolPrivateLinkData(id, name, resourceType, systemData, groupId, requiredMembers?.ToList(), requiredZoneNames?.ToList(), provisioningState);
+        }
+
         /// <summary> Initializes a new instance of SynapseManagedIntegrationRuntime. </summary>
         /// <param name="description"> Integration runtime description. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>

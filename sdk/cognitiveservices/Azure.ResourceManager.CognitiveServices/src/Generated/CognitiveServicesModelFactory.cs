@@ -75,16 +75,19 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <param name="restore"></param>
         /// <param name="deletedOn"> The deletion date, only available for deleted account. </param>
         /// <param name="scheduledPurgeDate"> The scheduled purge date, only available for deleted account. </param>
+        /// <param name="locations"> The multiregion settings of Cognitive Services account. </param>
+        /// <param name="commitmentPlanAssociations"> The commitment plan associations of Cognitive Services account. </param>
         /// <returns> A new <see cref="Models.CognitiveServicesAccountProperties"/> instance for mocking. </returns>
-        public static CognitiveServicesAccountProperties CognitiveServicesAccountProperties(ServiceAccountProvisioningState? provisioningState = null, string endpoint = null, IEnumerable<CognitiveServicesSkuCapability> capabilities = null, bool? isMigrated = null, string migrationToken = null, CognitiveServicesSkuChangeInfo skuChangeInfo = null, string customSubDomainName = null, CognitiveServicesNetworkRuleSet networkAcls = null, ServiceAccountEncryptionProperties encryption = null, IEnumerable<ServiceAccountUserOwnedStorage> userOwnedStorage = null, IEnumerable<CognitiveServicesPrivateEndpointConnectionData> privateEndpointConnections = null, ServiceAccountPublicNetworkAccess? publicNetworkAccess = null, ServiceAccountApiProperties apiProperties = null, DateTimeOffset? createdOn = null, ServiceAccountCallRateLimit callRateLimit = null, bool? enableDynamicThrottling = null, ServiceAccountQuotaLimit quotaLimit = null, bool? restrictOutboundNetworkAccess = null, IEnumerable<string> allowedFqdnList = null, bool? disableLocalAuth = null, IReadOnlyDictionary<string, string> endpoints = null, bool? restore = null, DateTimeOffset? deletedOn = null, string scheduledPurgeDate = null)
+        public static CognitiveServicesAccountProperties CognitiveServicesAccountProperties(ServiceAccountProvisioningState? provisioningState = null, string endpoint = null, IEnumerable<CognitiveServicesSkuCapability> capabilities = null, bool? isMigrated = null, string migrationToken = null, CognitiveServicesSkuChangeInfo skuChangeInfo = null, string customSubDomainName = null, CognitiveServicesNetworkRuleSet networkAcls = null, ServiceAccountEncryptionProperties encryption = null, IEnumerable<ServiceAccountUserOwnedStorage> userOwnedStorage = null, IEnumerable<CognitiveServicesPrivateEndpointConnectionData> privateEndpointConnections = null, ServiceAccountPublicNetworkAccess? publicNetworkAccess = null, ServiceAccountApiProperties apiProperties = null, DateTimeOffset? createdOn = null, ServiceAccountCallRateLimit callRateLimit = null, bool? enableDynamicThrottling = null, ServiceAccountQuotaLimit quotaLimit = null, bool? restrictOutboundNetworkAccess = null, IEnumerable<string> allowedFqdnList = null, bool? disableLocalAuth = null, IReadOnlyDictionary<string, string> endpoints = null, bool? restore = null, DateTimeOffset? deletedOn = null, string scheduledPurgeDate = null, CognitiveServicesMultiRegionSettings locations = null, IEnumerable<CommitmentPlanAssociation> commitmentPlanAssociations = null)
         {
             capabilities ??= new List<CognitiveServicesSkuCapability>();
             userOwnedStorage ??= new List<ServiceAccountUserOwnedStorage>();
             privateEndpointConnections ??= new List<CognitiveServicesPrivateEndpointConnectionData>();
             allowedFqdnList ??= new List<string>();
             endpoints ??= new Dictionary<string, string>();
+            commitmentPlanAssociations ??= new List<CommitmentPlanAssociation>();
 
-            return new CognitiveServicesAccountProperties(provisioningState, endpoint, capabilities?.ToList(), isMigrated, migrationToken, skuChangeInfo, customSubDomainName, networkAcls, encryption, userOwnedStorage?.ToList(), privateEndpointConnections?.ToList(), publicNetworkAccess, apiProperties, createdOn, callRateLimit, enableDynamicThrottling, quotaLimit, restrictOutboundNetworkAccess, allowedFqdnList?.ToList(), disableLocalAuth, endpoints, restore, deletedOn, scheduledPurgeDate);
+            return new CognitiveServicesAccountProperties(provisioningState, endpoint, capabilities?.ToList(), isMigrated, migrationToken, skuChangeInfo, customSubDomainName, networkAcls, encryption, userOwnedStorage?.ToList(), privateEndpointConnections?.ToList(), publicNetworkAccess, apiProperties, createdOn, callRateLimit, enableDynamicThrottling, quotaLimit, restrictOutboundNetworkAccess, allowedFqdnList?.ToList(), disableLocalAuth, endpoints, restore, deletedOn, scheduledPurgeDate, locations, commitmentPlanAssociations?.ToList());
         }
 
         /// <summary> Initializes a new instance of CognitiveServicesSkuCapability. </summary>
@@ -247,6 +250,36 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             return new ServiceAccountQuotaLimit(count, renewalPeriod, rules?.ToList());
         }
 
+        /// <summary> Initializes a new instance of CognitiveServicesMultiRegionSettings. </summary>
+        /// <param name="routingMethod"> Multiregion routing methods. </param>
+        /// <param name="regions"></param>
+        /// <returns> A new <see cref="Models.CognitiveServicesMultiRegionSettings"/> instance for mocking. </returns>
+        public static CognitiveServicesMultiRegionSettings CognitiveServicesMultiRegionSettings(CognitiveServicesRoutingMethod? routingMethod = null, IEnumerable<CognitiveServicesRegionSetting> regions = null)
+        {
+            regions ??= new List<CognitiveServicesRegionSetting>();
+
+            return new CognitiveServicesMultiRegionSettings(routingMethod, regions?.ToList());
+        }
+
+        /// <summary> Initializes a new instance of CognitiveServicesRegionSetting. </summary>
+        /// <param name="name"> Name of the region. </param>
+        /// <param name="value"> A value for priority or weighted routing methods. </param>
+        /// <param name="customsubdomain"> Maps the region to the regional custom subdomain. </param>
+        /// <returns> A new <see cref="Models.CognitiveServicesRegionSetting"/> instance for mocking. </returns>
+        public static CognitiveServicesRegionSetting CognitiveServicesRegionSetting(string name = null, float? value = null, string customsubdomain = null)
+        {
+            return new CognitiveServicesRegionSetting(name, value, customsubdomain);
+        }
+
+        /// <summary> Initializes a new instance of CommitmentPlanAssociation. </summary>
+        /// <param name="commitmentPlanId"> The Azure resource id of the commitment plan. </param>
+        /// <param name="commitmentPlanLocation"> The location of of the commitment plan. </param>
+        /// <returns> A new <see cref="Models.CommitmentPlanAssociation"/> instance for mocking. </returns>
+        public static CommitmentPlanAssociation CommitmentPlanAssociation(ResourceIdentifier commitmentPlanId = null, string commitmentPlanLocation = null)
+        {
+            return new CommitmentPlanAssociation(commitmentPlanId, commitmentPlanLocation);
+        }
+
         /// <summary> Initializes a new instance of ServiceAccountApiKeys. </summary>
         /// <param name="key1"> Gets the value of key 1. </param>
         /// <param name="key2"> Gets the value of key 2. </param>
@@ -337,14 +370,17 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <param name="baseModel"> Base Model Identifier. </param>
         /// <param name="maxCapacity"> The max capacity. </param>
         /// <param name="capabilities"> The capabilities. </param>
+        /// <param name="finetuneCapabilities"> The capabilities for finetune models. </param>
         /// <param name="deprecation"> Cognitive Services account ModelDeprecationInfo. </param>
+        /// <param name="lifecycleStatus"> Model lifecycle status. </param>
         /// <param name="systemData"> Metadata pertaining to creation and last modification of the resource. </param>
         /// <returns> A new <see cref="Models.CognitiveServicesAccountModel"/> instance for mocking. </returns>
-        public static CognitiveServicesAccountModel CognitiveServicesAccountModel(string format = null, string name = null, string version = null, ServiceAccountCallRateLimit callRateLimit = null, CognitiveServicesAccountDeploymentModel baseModel = null, int? maxCapacity = null, IDictionary<string, string> capabilities = null, ServiceAccountModelDeprecationInfo deprecation = null, SystemData systemData = null)
+        public static CognitiveServicesAccountModel CognitiveServicesAccountModel(string format = null, string name = null, string version = null, ServiceAccountCallRateLimit callRateLimit = null, CognitiveServicesAccountDeploymentModel baseModel = null, int? maxCapacity = null, IDictionary<string, string> capabilities = null, IDictionary<string, string> finetuneCapabilities = null, ServiceAccountModelDeprecationInfo deprecation = null, ModelLifecycleStatus? lifecycleStatus = null, SystemData systemData = null)
         {
             capabilities ??= new Dictionary<string, string>();
+            finetuneCapabilities ??= new Dictionary<string, string>();
 
-            return new CognitiveServicesAccountModel(format, name, version, callRateLimit, baseModel, maxCapacity, capabilities, deprecation, systemData);
+            return new CognitiveServicesAccountModel(format, name, version, callRateLimit, baseModel, maxCapacity, capabilities, finetuneCapabilities, deprecation, lifecycleStatus, systemData);
         }
 
         /// <summary> Initializes a new instance of CognitiveServicesAccountDeploymentModel. </summary>
@@ -495,14 +531,22 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="etag"> Resource Etag. </param>
+        /// <param name="kind"> The Kind of the resource. </param>
+        /// <param name="sku"> The resource model definition representing SKU. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> Properties of Cognitive Services account commitment plan. </param>
         /// <returns> A new <see cref="CognitiveServices.CommitmentPlanData"/> instance for mocking. </returns>
-        public static CommitmentPlanData CommitmentPlanData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ETag? etag = null, CommitmentPlanProperties properties = null)
+        public static CommitmentPlanData CommitmentPlanData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ETag? etag = null, string kind = null, CognitiveServicesSku sku = null, IDictionary<string, string> tags = null, AzureLocation? location = null, CommitmentPlanProperties properties = null)
         {
-            return new CommitmentPlanData(id, name, resourceType, systemData, etag, properties);
+            tags ??= new Dictionary<string, string>();
+
+            return new CommitmentPlanData(id, name, resourceType, systemData, etag, kind, sku, tags, location, properties);
         }
 
         /// <summary> Initializes a new instance of CommitmentPlanProperties. </summary>
+        /// <param name="provisioningState"> Gets the status of the resource at the time the operation was called. </param>
+        /// <param name="commitmentPlanGuid"> Commitment plan guid. </param>
         /// <param name="hostingModel"> Account hosting model. </param>
         /// <param name="planType"> Commitment plan type. </param>
         /// <param name="current"> Cognitive Services account commitment period. </param>
@@ -510,9 +554,9 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <param name="next"> Cognitive Services account commitment period. </param>
         /// <param name="last"> Cognitive Services account commitment period. </param>
         /// <returns> A new <see cref="Models.CommitmentPlanProperties"/> instance for mocking. </returns>
-        public static CommitmentPlanProperties CommitmentPlanProperties(ServiceAccountHostingModel? hostingModel = null, string planType = null, CommitmentPeriod current = null, bool? autoRenew = null, CommitmentPeriod next = null, CommitmentPeriod last = null)
+        public static CommitmentPlanProperties CommitmentPlanProperties(CommitmentPlanProvisioningState? provisioningState = null, Guid? commitmentPlanGuid = null, ServiceAccountHostingModel? hostingModel = null, string planType = null, CommitmentPeriod current = null, bool? autoRenew = null, CommitmentPeriod next = null, CommitmentPeriod last = null)
         {
-            return new CommitmentPlanProperties(hostingModel, planType, current, autoRenew, next, last);
+            return new CommitmentPlanProperties(provisioningState, commitmentPlanGuid, hostingModel, planType, current, autoRenew, next, last);
         }
 
         /// <summary> Initializes a new instance of CommitmentPeriod. </summary>
@@ -525,6 +569,19 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         public static CommitmentPeriod CommitmentPeriod(string tier = null, int? count = null, CommitmentQuota quota = null, DateTimeOffset? startOn = null, DateTimeOffset? endOn = null)
         {
             return new CommitmentPeriod(tier, count, quota, startOn, endOn);
+        }
+
+        /// <summary> Initializes a new instance of CommitmentPlanAccountAssociationData. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="etag"> Resource Etag. </param>
+        /// <param name="accountId"> The Azure resource id of the account. </param>
+        /// <returns> A new <see cref="CognitiveServices.CommitmentPlanAccountAssociationData"/> instance for mocking. </returns>
+        public static CommitmentPlanAccountAssociationData CommitmentPlanAccountAssociationData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ETag? etag = null, string accountId = null)
+        {
+            return new CommitmentPlanAccountAssociationData(id, name, resourceType, systemData, etag, accountId);
         }
     }
 }

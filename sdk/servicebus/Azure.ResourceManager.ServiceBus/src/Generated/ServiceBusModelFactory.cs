@@ -26,6 +26,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
         /// <param name="location"> The location. </param>
         /// <param name="sku"> Properties of SKU. </param>
         /// <param name="identity"> Properties of BYOK Identity description. </param>
+        /// <param name="minimumTlsVersion"> The minimum TLS version for the cluster to support, e.g. &apos;1.2&apos;. </param>
         /// <param name="provisioningState"> Provisioning state of the namespace. </param>
         /// <param name="status"> Status of the namespace. </param>
         /// <param name="createdOn"> The time the namespace was created. </param>
@@ -37,19 +38,21 @@ namespace Azure.ResourceManager.ServiceBus.Models
         /// <param name="privateEndpointConnections"> List of private endpoint connections. </param>
         /// <param name="disableLocalAuth"> This property disables SAS authentication for the Service Bus namespace. </param>
         /// <param name="alternateName"> Alternate name for namespace. </param>
+        /// <param name="publicNetworkAccess"> This determines if traffic is allowed over public network. By default it is enabled. </param>
+        /// <param name="premiumMessagingPartitions"> The number of partitions of a Service Bus namespace. This property is only applicable to Premium SKU namespaces. The default value is 1 and possible values are 1, 2 and 4. </param>
         /// <returns> A new <see cref="ServiceBus.ServiceBusNamespaceData"/> instance for mocking. </returns>
-        public static ServiceBusNamespaceData ServiceBusNamespaceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ServiceBusSku sku = null, ManagedServiceIdentity identity = null, string provisioningState = null, string status = null, DateTimeOffset? createdOn = null, DateTimeOffset? updatedOn = null, string serviceBusEndpoint = null, string metricId = null, bool? isZoneRedundant = null, ServiceBusEncryption encryption = null, IEnumerable<ServiceBusPrivateEndpointConnectionData> privateEndpointConnections = null, bool? disableLocalAuth = null, string alternateName = null)
+        public static ServiceBusNamespaceData ServiceBusNamespaceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ServiceBusSku sku = null, ManagedServiceIdentity identity = null, ServiceBusMinimumTlsVersion? minimumTlsVersion = null, string provisioningState = null, string status = null, DateTimeOffset? createdOn = null, DateTimeOffset? updatedOn = null, string serviceBusEndpoint = null, string metricId = null, bool? isZoneRedundant = null, ServiceBusEncryption encryption = null, IEnumerable<ServiceBusPrivateEndpointConnectionData> privateEndpointConnections = null, bool? disableLocalAuth = null, string alternateName = null, ServiceBusPublicNetworkAccess? publicNetworkAccess = null, int? premiumMessagingPartitions = null)
         {
             tags ??= new Dictionary<string, string>();
             privateEndpointConnections ??= new List<ServiceBusPrivateEndpointConnectionData>();
 
-            return new ServiceBusNamespaceData(id, name, resourceType, systemData, tags, location, sku, identity, provisioningState, status, createdOn, updatedOn, serviceBusEndpoint, metricId, isZoneRedundant, encryption, privateEndpointConnections?.ToList(), disableLocalAuth, alternateName);
+            return new ServiceBusNamespaceData(id, name, resourceType, systemData, tags, location, sku, identity, minimumTlsVersion, provisioningState, status, createdOn, updatedOn, serviceBusEndpoint, metricId, isZoneRedundant, encryption, privateEndpointConnections?.ToList(), disableLocalAuth, alternateName, publicNetworkAccess, premiumMessagingPartitions);
         }
 
         /// <summary> Initializes a new instance of ServiceBusSku. </summary>
         /// <param name="name"> Name of this SKU. </param>
         /// <param name="tier"> The billing tier of this particular SKU. </param>
-        /// <param name="capacity"> The specified messaging units for the tier. For Premium tier, capacity are 1,2 and 4. </param>
+        /// <param name="capacity"> Messaging units for your service bus premium namespace. Valid capacities are {1, 2, 4, 8, 16} multiples of your properties.premiumMessagingPartitions setting. For example, If properties.premiumMessagingPartitions is 1 then possible capacity values are 1, 2, 4, 8, and 16. If properties.premiumMessagingPartitions is 4 then possible capacity values are 4, 8, 16, 32 and 64. </param>
         /// <returns> A new <see cref="Models.ServiceBusSku"/> instance for mocking. </returns>
         public static ServiceBusSku ServiceBusSku(ServiceBusSkuName name = default, ServiceBusSkuTier? tier = null, int? capacity = null)
         {

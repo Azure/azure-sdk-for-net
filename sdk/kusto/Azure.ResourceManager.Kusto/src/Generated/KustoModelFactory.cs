@@ -109,10 +109,11 @@ namespace Azure.ResourceManager.Kusto.Models
 
         /// <summary> Initializes a new instance of KustoLanguageExtension. </summary>
         /// <param name="languageExtensionName"> The language extension name. </param>
+        /// <param name="languageExtensionImageName"> The language extension image name. </param>
         /// <returns> A new <see cref="Models.KustoLanguageExtension"/> instance for mocking. </returns>
-        public static KustoLanguageExtension KustoLanguageExtension(KustoLanguageExtensionName? languageExtensionName = null)
+        public static KustoLanguageExtension KustoLanguageExtension(KustoLanguageExtensionName? languageExtensionName = null, KustoLanguageExtensionImageName? languageExtensionImageName = null)
         {
-            return new KustoLanguageExtension(languageExtensionName);
+            return new KustoLanguageExtension(languageExtensionName, languageExtensionImageName);
         }
 
         /// <summary> Initializes a new instance of AcceptedAudience. </summary>
@@ -287,12 +288,35 @@ namespace Azure.ResourceManager.Kusto.Models
         /// <summary> Initializes a new instance of KustoSkuLocationInfoItem. </summary>
         /// <param name="location"> The available location of the SKU. </param>
         /// <param name="zones"> The available zone of the SKU. </param>
+        /// <param name="zoneDetails"> Gets details of capabilities available to a SKU in specific zones. </param>
         /// <returns> A new <see cref="Models.KustoSkuLocationInfoItem"/> instance for mocking. </returns>
-        public static KustoSkuLocationInfoItem KustoSkuLocationInfoItem(AzureLocation location = default, IEnumerable<string> zones = null)
+        public static KustoSkuLocationInfoItem KustoSkuLocationInfoItem(AzureLocation location = default, IEnumerable<string> zones = null, IEnumerable<KustoResourceSkuZoneDetails> zoneDetails = null)
         {
             zones ??= new List<string>();
+            zoneDetails ??= new List<KustoResourceSkuZoneDetails>();
 
-            return new KustoSkuLocationInfoItem(location, zones?.ToList());
+            return new KustoSkuLocationInfoItem(location, zones?.ToList(), zoneDetails?.ToList());
+        }
+
+        /// <summary> Initializes a new instance of KustoResourceSkuZoneDetails. </summary>
+        /// <param name="name"> The set of zones that the SKU is available in with the specified capabilities. </param>
+        /// <param name="capabilities"> A list of capabilities that are available for the SKU in the specified list of zones. </param>
+        /// <returns> A new <see cref="Models.KustoResourceSkuZoneDetails"/> instance for mocking. </returns>
+        public static KustoResourceSkuZoneDetails KustoResourceSkuZoneDetails(IEnumerable<string> name = null, IEnumerable<KustoResourceSkuCapabilities> capabilities = null)
+        {
+            name ??= new List<string>();
+            capabilities ??= new List<KustoResourceSkuCapabilities>();
+
+            return new KustoResourceSkuZoneDetails(name?.ToList(), capabilities?.ToList());
+        }
+
+        /// <summary> Initializes a new instance of KustoResourceSkuCapabilities. </summary>
+        /// <param name="name"> An invariant to describe the feature. </param>
+        /// <param name="value"> An invariant if the feature is measured by quantity. </param>
+        /// <returns> A new <see cref="Models.KustoResourceSkuCapabilities"/> instance for mocking. </returns>
+        public static KustoResourceSkuCapabilities KustoResourceSkuCapabilities(string name = null, string value = null)
+        {
+            return new KustoResourceSkuCapabilities(name, value);
         }
 
         /// <summary> Initializes a new instance of KustoAvailableSkuDetails. </summary>
@@ -613,6 +637,27 @@ namespace Azure.ResourceManager.Kusto.Models
         public static KustoEventGridDataConnection KustoEventGridDataConnection(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, AzureLocation? location = null, ResourceIdentifier storageAccountResourceId = null, ResourceIdentifier eventGridResourceId = null, ResourceIdentifier eventHubResourceId = null, string consumerGroup = null, string tableName = null, string mappingRuleName = null, KustoEventGridDataFormat? dataFormat = null, bool? isFirstRecordIgnored = null, BlobStorageEventType? blobStorageEventType = null, ResourceIdentifier managedIdentityResourceId = null, Guid? managedIdentityObjectId = null, KustoDatabaseRouting? databaseRouting = null, KustoProvisioningState? provisioningState = null)
         {
             return new KustoEventGridDataConnection(id, name, resourceType, systemData, location, DataConnectionKind.EventGrid, storageAccountResourceId, eventGridResourceId, eventHubResourceId, consumerGroup, tableName, mappingRuleName, dataFormat, isFirstRecordIgnored, blobStorageEventType, managedIdentityResourceId, managedIdentityObjectId, databaseRouting, provisioningState);
+        }
+
+        /// <summary> Initializes a new instance of KustoCosmosDBDataConnection. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="location"> Resource location. </param>
+        /// <param name="tableName"> The case-sensitive name of the existing target table in your cluster. Retrieved data is ingested into this table. </param>
+        /// <param name="mappingRuleName"> The name of an existing mapping rule to use when ingesting the retrieved data. </param>
+        /// <param name="managedIdentityResourceId"> The resource ID of a managed system or user-assigned identity. The identity is used to authenticate with Cosmos DB. </param>
+        /// <param name="managedIdentityObjectId"> The object ID of the managed identity resource. </param>
+        /// <param name="cosmosDBAccountResourceId"> The resource ID of the Cosmos DB account used to create the data connection. </param>
+        /// <param name="cosmosDBDatabase"> The name of an existing database in the Cosmos DB account. </param>
+        /// <param name="cosmosDBContainer"> The name of an existing container in the Cosmos DB database. </param>
+        /// <param name="retrievalStartOn"> Optional. If defined, the data connection retrieves Cosmos DB documents created or updated after the specified retrieval start date. </param>
+        /// <param name="provisioningState"> The provisioned state of the resource. </param>
+        /// <returns> A new <see cref="Models.KustoCosmosDBDataConnection"/> instance for mocking. </returns>
+        public static KustoCosmosDBDataConnection KustoCosmosDBDataConnection(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, AzureLocation? location = null, string tableName = null, string mappingRuleName = null, ResourceIdentifier managedIdentityResourceId = null, Guid? managedIdentityObjectId = null, ResourceIdentifier cosmosDBAccountResourceId = null, string cosmosDBDatabase = null, string cosmosDBContainer = null, DateTimeOffset? retrievalStartOn = null, KustoProvisioningState? provisioningState = null)
+        {
+            return new KustoCosmosDBDataConnection(id, name, resourceType, systemData, location, DataConnectionKind.CosmosDB, tableName, mappingRuleName, managedIdentityResourceId, managedIdentityObjectId, cosmosDBAccountResourceId, cosmosDBDatabase, cosmosDBContainer, retrievalStartOn, provisioningState);
         }
     }
 }
