@@ -31,7 +31,22 @@ namespace Azure.Developer.LoadTesting
         /// <summary>
         /// Value.
         /// </summary>
-        public override BinaryData Value => _value;
+        public override BinaryData Value
+        {
+            get {
+                if (HasCompleted && !HasValue)
+                {
+                    RequestFailedException requestFailed = new RequestFailedException(_response);
+#pragma warning disable CA1065 // Do not raise exceptions in unexpected locations
+                    throw requestFailed;
+#pragma warning restore CA1065 // Do not raise exceptions in unexpected locations
+                }
+                else
+                {
+                    return _value;
+                }
+            }
+        }
 
         /// <summary>
         /// HasValue
@@ -87,8 +102,15 @@ namespace Azure.Developer.LoadTesting
                 return GetRawResponse();
             }
 
-            _response = _client.GetTestRun(_testRunId);
-            _value = _response.Content;
+            try
+            {
+                _response = _client.GetTestRun(_testRunId);
+                _value = _response.Content;
+            }
+            catch
+            {
+                throw new RequestFailedException(_response);
+            }
 
             return GetCompletionResponse();
         }
@@ -103,8 +125,15 @@ namespace Azure.Developer.LoadTesting
                 return GetRawResponse();
             }
 
-            _response = await _client.GetTestRunAsync(_testRunId).ConfigureAwait(false);
-            _value = _response.Content;
+            try
+            {
+                _response = await _client.GetTestRunAsync(_testRunId).ConfigureAwait(false);
+                _value = _response.Content;
+            }
+            catch
+            {
+                throw new RequestFailedException(_response);
+            }
 
             return GetCompletionResponse();
         }
@@ -116,11 +145,11 @@ namespace Azure.Developer.LoadTesting
 
             try
             {
-                jsonDocument = JsonDocument.Parse(_value.ToString());
+                jsonDocument = JsonDocument.Parse(_value.ToMemory());
             }
             catch (Exception e)
             {
-                throw new Exception("Unable to parse JOSN " + e.Message);
+                throw new RequestFailedException("Unable to parse JOSN: " + e.Message);
             }
 
             try
@@ -129,7 +158,7 @@ namespace Azure.Developer.LoadTesting
             }
             catch
             {
-                throw new Exception("No property validationStatus in reposne JSON");
+                throw new RequestFailedException("No property validationStatus in reposne JSON: " + _value.ToString());
             }
 
             if (_terminalStatus.Contains(testRunStatus))

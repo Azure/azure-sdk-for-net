@@ -7,7 +7,8 @@ The sample below demonstrates how to upload JMX script and check for validation 
 ## Create LoadTestAdministrationClient
 ```C# Snippet:Azure_Developer_LoadTesting_CreateAdminClient
 // The data-plane endpoint is obtained from Control Plane APIs with "https://"
-Uri endpointUrl = new Uri("https://data-plane-guid.region.cnt-prod.loadtesting.azure.com");
+// To obtain endpoint please follow: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/loadtestservice/Azure.Developer.LoadTesting#data-plane-endpoint
+Uri endpointUrl = new Uri("https://" + <your resource URI obtained from steps above>);
 TokenCredential credential = new DefaultAzureCredential();
 
 // creating LoadTesting Administration Client
