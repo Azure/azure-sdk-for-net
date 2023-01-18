@@ -390,7 +390,10 @@ namespace Azure.Monitor.Ingestion
                 {
                     throw new RequestFailedException(response);
                 }
-                await options.InvokeEvent(isRunningSynchronously: true, logsCount, response, cancellationToken).ConfigureAwait(false);
+                else
+                {
+                    await options.InvokeEvent(isRunningSynchronously: true, logsCount, response, cancellationToken).ConfigureAwait(false);
+                }
             }
             catch (Exception)
             {
@@ -412,7 +415,10 @@ namespace Azure.Monitor.Ingestion
                 {
                     throw new RequestFailedException(response);
                 }
-                await options.InvokeEvent(isRunningSynchronously: false, logsCount, response, cancellationToken).ConfigureAwait(false);
+                else
+                {
+                    await options.InvokeEvent(isRunningSynchronously: false, logsCount, response, cancellationToken).ConfigureAwait(false);
+                }
             }
             catch (Exception)
             {
