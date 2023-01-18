@@ -23,7 +23,13 @@ namespace Azure.Identity
     /// </summary>
     public class VisualStudioCredential : TokenCredential
     {
-        private static readonly string TokenProviderFilePath = Path.Combine(Environment.GetFolderPath(RuntimeInformation.IsOSPlatform(OSPlatform.Windows) ? Environment.SpecialFolder.LocalApplicationData : Environment.SpecialFolder.UserProfile), ".IdentityService", "AzureServiceAuth", "tokenprovider.json");
+        private static readonly string TokenProviderFilePath = Path.Combine(
+            Environment.GetFolderPath(RuntimeInformation.IsOSPlatform(OSPlatform.Windows) ? 
+                Environment.SpecialFolder.LocalApplicationData :
+                Environment.SpecialFolder.UserProfile),
+            ".IdentityService",
+            "AzureServiceAuth",
+            "tokenprovider.json");
         private const string ResourceArgumentName = "--resource";
         private const string TenantArgumentName = "--tenant";
 
