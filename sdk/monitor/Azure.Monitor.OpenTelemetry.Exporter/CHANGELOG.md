@@ -4,6 +4,8 @@
 
 ### Features Added
 
+* Added support for parsing AADAudience from ConnectionString ([#33593](https://github.com/Azure/azure-sdk-for-net/pull/33593))
+
 ### Breaking Changes
 
 ### Bugs Fixed
