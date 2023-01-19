@@ -8,6 +8,7 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.SecurityInsights;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
@@ -16,7 +17,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         internal static ThreatIntelligenceInformationList DeserializeThreatIntelligenceInformationList(JsonElement element)
         {
             Optional<string> nextLink = default;
-            IReadOnlyList<ThreatIntelligenceInformation> value = default;
+            IReadOnlyList<SecurityInsightsThreatIntelligenceIndicatorBaseData> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("nextLink"))
@@ -26,10 +27,10 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
                 if (property.NameEquals("value"))
                 {
-                    List<ThreatIntelligenceInformation> array = new List<ThreatIntelligenceInformation>();
+                    List<SecurityInsightsThreatIntelligenceIndicatorBaseData> array = new List<SecurityInsightsThreatIntelligenceIndicatorBaseData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ThreatIntelligenceInformation.DeserializeThreatIntelligenceInformation(item));
+                        array.Add(SecurityInsightsThreatIntelligenceIndicatorBaseData.DeserializeSecurityInsightsThreatIntelligenceIndicatorBaseData(item));
                     }
                     value = array;
                     continue;

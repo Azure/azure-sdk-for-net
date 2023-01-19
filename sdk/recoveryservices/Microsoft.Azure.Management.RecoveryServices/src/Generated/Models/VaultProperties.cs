@@ -50,11 +50,16 @@ namespace Microsoft.Azure.Management.RecoveryServices.Models
         /// 'PartialSuccess'</param>
         /// <param name="backupStorageVersion">Backup storage version. Possible
         /// values include: 'V1', 'V2', 'Unassigned'</param>
+        /// <param name="publicNetworkAccess">property to enable or disable
+        /// resource provider inbound network traffic from public clients.
+        /// Possible values include: 'Enabled', 'Disabled'</param>
         /// <param name="monitoringSettings">Monitoring Settings of the
         /// vault</param>
         /// <param name="redundancySettings">The redundancy Settings of a
         /// Vault</param>
-        public VaultProperties(string provisioningState = default(string), UpgradeDetails upgradeDetails = default(UpgradeDetails), IList<PrivateEndpointConnectionVaultProperties> privateEndpointConnections = default(IList<PrivateEndpointConnectionVaultProperties>), string privateEndpointStateForBackup = default(string), string privateEndpointStateForSiteRecovery = default(string), VaultPropertiesEncryption encryption = default(VaultPropertiesEncryption), VaultPropertiesMoveDetails moveDetails = default(VaultPropertiesMoveDetails), string moveState = default(string), string backupStorageVersion = default(string), MonitoringSettings monitoringSettings = default(MonitoringSettings), VaultPropertiesRedundancySettings redundancySettings = default(VaultPropertiesRedundancySettings))
+        /// <param name="securitySettings">Security Settings of the
+        /// vault</param>
+        public VaultProperties(string provisioningState = default(string), UpgradeDetails upgradeDetails = default(UpgradeDetails), IList<PrivateEndpointConnectionVaultProperties> privateEndpointConnections = default(IList<PrivateEndpointConnectionVaultProperties>), string privateEndpointStateForBackup = default(string), string privateEndpointStateForSiteRecovery = default(string), VaultPropertiesEncryption encryption = default(VaultPropertiesEncryption), VaultPropertiesMoveDetails moveDetails = default(VaultPropertiesMoveDetails), string moveState = default(string), string backupStorageVersion = default(string), string publicNetworkAccess = default(string), MonitoringSettings monitoringSettings = default(MonitoringSettings), VaultPropertiesRedundancySettings redundancySettings = default(VaultPropertiesRedundancySettings), SecuritySettings securitySettings = default(SecuritySettings))
         {
             ProvisioningState = provisioningState;
             UpgradeDetails = upgradeDetails;
@@ -65,8 +70,10 @@ namespace Microsoft.Azure.Management.RecoveryServices.Models
             MoveDetails = moveDetails;
             MoveState = moveState;
             BackupStorageVersion = backupStorageVersion;
+            PublicNetworkAccess = publicNetworkAccess;
             MonitoringSettings = monitoringSettings;
             RedundancySettings = redundancySettings;
+            SecuritySettings = securitySettings;
             CustomInit();
         }
 
@@ -136,6 +143,14 @@ namespace Microsoft.Azure.Management.RecoveryServices.Models
         public string BackupStorageVersion { get; private set; }
 
         /// <summary>
+        /// Gets or sets property to enable or disable resource provider
+        /// inbound network traffic from public clients. Possible values
+        /// include: 'Enabled', 'Disabled'
+        /// </summary>
+        [JsonProperty(PropertyName = "publicNetworkAccess")]
+        public string PublicNetworkAccess { get; set; }
+
+        /// <summary>
         /// Gets or sets monitoring Settings of the vault
         /// </summary>
         [JsonProperty(PropertyName = "monitoringSettings")]
@@ -146,6 +161,12 @@ namespace Microsoft.Azure.Management.RecoveryServices.Models
         /// </summary>
         [JsonProperty(PropertyName = "redundancySettings")]
         public VaultPropertiesRedundancySettings RedundancySettings { get; set; }
+
+        /// <summary>
+        /// Gets or sets security Settings of the vault
+        /// </summary>
+        [JsonProperty(PropertyName = "securitySettings")]
+        public SecuritySettings SecuritySettings { get; set; }
 
     }
 }

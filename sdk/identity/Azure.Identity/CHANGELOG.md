@@ -3,12 +3,15 @@
 ## 1.9.0-beta.2 (Unreleased)
 
 ### Features Added
+ - Allow `VisualStudioCredential` on non-windows platforms
 
 ### Breaking Changes
 
 ### Bugs Fixed
 - Fixed error message parsing in `AzureCliCredential` which would misinterpret AAD errors with the need to login with `az login`.
+- Fixed error message parsing in `AzurePowerShellCredential` which would misinterpret AAD errors with the need to install PowerShell.
 - `ManagedIdentityCredential` will no longer fail when a response received from the endpoint is invalid JSON. It now treats this scenario as if the credential is unavailable.
+- Fixed an issue when using `ManagedIdentityCredential` in combination with authorities other than Azure public cloud that resulted in a bogus instance metadata validation error. [#32498](https://github.com/Azure/azure-sdk-for-net/issues/32498)
 
 ### Other Changes
 

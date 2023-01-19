@@ -1,0 +1,110 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <RequiredTargetFrameworks>netstandard2.0</RequiredTargetFrameworks>
+    <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
+    <IncludeGeneratorSharedCode>true</IncludeGeneratorSharedCode>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyTitle>Microsoft Azure.Storage.DataMovement.Blobs client library</AssemblyTitle>
+    <Version>12.0.0-beta.2</Version>
+    <DefineConstants>BlobDataMovementSDK;$(DefineConstants)</DefineConstants>
+    <PackageTags>Microsoft Azure Storage DataMovement, DataMovement, Microsoft, Azure, StorageScalable, azureofficial</PackageTags>
+    <Description>
+      This client library enables working with the Microsoft Azure Storage services which include the blob and file services for storing binary and text data, and the queue service for storing messages that may be accessed by a client.
+      For this release see notes - https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/storage/Azure.Storage.Blob.DataMovement/README.md and https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/storage/Azure.Storage.Blob.DataMovement/CHANGELOG.md
+      in addition to the breaking changes https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/storage/Azure.Storage.Blob.DataMovement/BreakingChanges.txt
+      Microsoft Azure Storage quickstarts and tutorials - https://docs.microsoft.com/en-us/azure/storage/
+      Microsoft Azure Storage REST API Reference - https://docs.microsoft.com/en-us/rest/api/storageservices/
+    </Description>
+    <IncludeOperationsSharedSource>true</IncludeOperationsSharedSource>
+    <RootNamespace>Azure.Storage.DataMovement.Blobs</RootNamespace>
+    <PackageId />
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(TargetFramework)' == 'netstandard2.0'">
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+  <ItemGroup Condition="'$(TargetFramework)' == 'netstandard2.0'">
+    <Compile Include="$(AzureStorageSharedSources)AesGcm\**\*.cs" LinkBase="Shared\Storage" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="System.Threading.Channels" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="$(MSBuildThisFileDirectory)..\..\Azure.Storage.DataMovement\src\Azure.Storage.DataMovement.csproj" />
+    <ProjectReference Include="$(MSBuildThisFileDirectory)..\..\Azure.Storage.Blobs\src\Azure.Storage.Blobs.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="$(AzureCoreSharedSources)ArrayBufferWriter.cs" LinkBase="Shared\Core" />
+    <Compile Include="$(AzureCoreSharedSources)AuthorizationChallengeParser.cs" LinkBase="Shared\Core" />
+    <Compile Include="$(AzureCoreSharedSources)AzureSasCredentialSynchronousPolicy.cs" LinkBase="Shared\Core" />
+    <Compile Include="$(AzureCoreSharedSources)CancellationHelper.cs" LinkBase="SharedCore" />
+    <Compile Include="$(AzureCoreSharedSources)ForwardsClientCallsAttribute.cs" LinkBase="Shared\Core" />
+    <Compile Include="$(AzureCoreSharedSources)NoBodyResponseOfT.cs" LinkBase="Shared\Core" />
+    <Compile Include="$(AzureCoreSharedSources)SyncAsyncEventHandlerExtensions.cs" LinkBase="Shared\Core" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Azure.Core" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="$(AzureStorageSharedSources)ClientsideEncryption\*.cs" LinkBase="Shared\Storage" />
+    <Compile Include="$(AzureStorageSharedSources)ClientsideEncryption\Models\*.cs" LinkBase="Shared\Storage" />
+    <Compile Include="$(AzureStorageSharedSources)AggregatingProgressIncrementer.cs" LinkBase="Shared\Storage" />
+    <Compile Include="$(AzureStorageSharedSources)Constants.cs" LinkBase="Shared\Storage" />
+    <Compile Include="$(AzureStorageSharedSources)ContentHasher.cs" LinkBase="Shared\Storage" />
+    <Compile Include="$(AzureStorageSharedSources)Errors.cs" LinkBase="Shared\Storage" />
+    <Compile Include="$(AzureStorageSharedSources)Errors.Clients.cs" LinkBase="Shared\Storage" />
+    <Compile Include="$(AzureStorageSharedSources)GeoRedundantReadPolicy.cs" LinkBase="Shared\Storage" />
+    <Compile Include="$(AzureStorageSharedSources)HashAlgorithmHasher.cs" LinkBase="Shared\Storage" />
+    <Compile Include="$(AzureStorageSharedSources)IDownloadedContent.cs" LinkBase="Shared\Storage" />
+    <Compile Include="$(AzureStorageSharedSources)IHasher.cs" LinkBase="Shared\Storage" />
+    <Compile Include="$(AzureStorageSharedSources)LoggingExtensions.cs" LinkBase="Shared\Storage" />
+    <Compile Include="$(AzureStorageSharedSources)NonCryptographicHashAlgorithmHasher.cs" LinkBase="Shared\Storage" />
+    <Compile Include="$(AzureStorageSharedSources)NonDisposingStream.cs" LinkBase="Shared\Storage" />
+    <Compile Include="$(AzureStorageSharedSources)PartitionedUploader.cs" LinkBase="Shared\Storage" />
+    <Compile Include="$(AzureStorageSharedSources)PartitionedStream.cs" LinkBase="Shared\Storage" />
+    <Compile Include="$(AzureStorageSharedSources)PooledMemoryStream.cs" LinkBase="Shared\Storage" />
+    <Compile Include="$(AzureStorageSharedSources)ProgressIncrementingStream.cs" LinkBase="Shared\Storage" />
+    <Compile Include="$(AzureStorageSharedSources)SasExtensions.cs" LinkBase="Shared\Storage" />
+    <Compile Include="$(AzureStorageSharedSources)SasQueryParametersInternals.cs" LinkBase="Shared\Storage" />
+    <Compile Include="$(AzureStorageSharedSources)SharedAccessSignatureCredentials.cs" LinkBase="Shared\Storage" />
+    <Compile Include="$(AzureStorageSharedSources)SlicedStream.cs" LinkBase="Shared\Storage" />
+    <Compile Include="$(AzureStorageSharedSources)StorageClientConfiguration.cs" LinkBase="Shared\Storage" />
+    <Compile Include="$(AzureStorageSharedSources)StorageClientOptions.cs" LinkBase="Shared\Storage" />
+    <Compile Include="$(AzureStorageSharedSources)StorageConnectionString.cs" LinkBase="Shared\Storage" />
+    <Compile Include="$(AzureStorageSharedSources)StorageCollectionEnumerator.cs" LinkBase="Shared\Storage" />
+    <Compile Include="$(AzureStorageSharedSources)StorageExtensions.cs" LinkBase="Shared\Storage" />
+    <Compile Include="$(AzureStorageSharedSources)StorageExceptionExtensions.cs" LinkBase="Shared\Storage" />
+    <Compile Include="$(AzureStorageSharedSources)StorageRequestFailedDetailsParser.cs" LinkBase="Shared" />
+    <Compile Include="$(AzureStorageSharedSources)StorageRequestValidationPipelinePolicy.cs" LinkBase="Shared\Storage" />
+    <Compile Include="$(AzureStorageSharedSources)StorageProgressExtensions.cs" LinkBase="Shared\Storage" />
+    <Compile Include="$(AzureStorageSharedSources)StorageSharedKeyCredentialInternals.cs" LinkBase="Shared\Storage" />
+    <Compile Include="$(AzureStorageSharedSources)StorageSharedKeyPipelinePolicy.cs" LinkBase="Shared\Storage" />
+    <Compile Include="$(AzureStorageSharedSources)StorageResponseClassifier.cs" LinkBase="Shared\Storage" />
+    <Compile Include="$(AzureStorageSharedSources)StorageServerTimeoutPolicy.cs" LinkBase="Shared\Storage" />
+    <Compile Include="$(AzureStorageSharedSources)StorageVersionExtensions.cs" LinkBase="Shared\Storage" />
+    <Compile Include="$(AzureStorageSharedSources)UriExtensions.cs" LinkBase="Shared\Storage" />
+    <Compile Include="$(AzureStorageSharedSources)UriQueryParamsCollection.cs" LinkBase="Shared\Storage" />
+    <Compile Include="$(AzureStorageSharedSources)UserDelegationKeyProperties.cs" LinkBase="Shared\Storage" />
+    <Compile Include="$(AzureStorageSharedSources)LazyLoadingReadOnlyStream.cs" LinkBase="Shared\Storage" />
+    <Compile Include="$(AzureStorageSharedSources)WindowStream.cs" LinkBase="Shared\Storage" />
+    <Compile Include="$(AzureStorageSharedSources)StorageWriteStream.cs" LinkBase="Shared\Storage" />
+    <Compile Include="$(AzureStorageSharedSources)StorageBearerTokenChallengeAuthorizationPolicy.cs" LinkBase="Shared\Storage" />
+    <Compile Include="$(AzureStorageSharedSources)TransferValidationOptionsExtensions.cs" LinkBase="Shared\Storage" />
+    <Compile Include="$(AzureStorageSharedSources)ISupportsTenantIdChallenges.cs" LinkBase="Shared\Storage" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="$(AzureStorageDataMovementSharedSources)Errors.DataMovement.cs" LinkBase="Shared\DataMovement" />
+    <Compile Include="$(AzureStorageDataMovementSharedSources)DataMovementConstants.cs" LinkBase="Shared\DataMovement" />
+    <Compile Include="$(AzureStorageDataMovementSharedSources)PartitionedProgressIncrementer.cs" LinkBase="Shared\DataMovement" />
+    <Compile Include="$(AzureStorageDataMovementSharedSources)ProgressMultipleParititonedStream.cs" LinkBase="Shared\DataMovement" />
+    <Compile Include="$(AzureStorageDataMovementSharedSources)PathScanner.cs" LinkBase="Shared\DataMovement" />
+    <Compile Include="$(AzureStorageDataMovementSharedSources)PathScannerFactory.cs" LinkBase="Shared\DataMovement" />
+    <Compile Include="$(AzureStorageDataMovementSharedSources)PlanJobWriter.cs" LinkBase="Shared\DataMovement" />
+    <Compile Include="$(AzureStorageDataMovementSharedSources)PlanJobWriterFactory.cs" LinkBase="Shared\DataMovement" />
+    <Compile Include="$(AzureStorageDataMovementSharedSources)StorageManagerTransferStatus.cs" LinkBase="Shared\DataMovement" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="$(AzureStorageBlobsSharedSources)BlobErrors.cs" LinkBase="Shared\Blobs" />
+    <Compile Include="$(AzureStorageBlobsSharedSources)BlobClientConfiguration.cs" LinkBase="Shared\Blobs" />
+  </ItemGroup>
+</Project>

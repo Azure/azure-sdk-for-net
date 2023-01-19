@@ -102,6 +102,8 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <param name="timeCreated">Specifies the time at which the Virtual
         /// Machine Scale Set resource was created.&lt;br&gt;&lt;br&gt;Minimum
         /// api-version: 2021-11-01.</param>
+        /// <param name="constrainedMaximumCapacity">Optional property which
+        /// must either be set to True or omitted.</param>
         /// <param name="identity">The identity of the virtual machine scale
         /// set, if configured.</param>
         /// <param name="zones">The virtual machine scale set zones. NOTE:
@@ -109,7 +111,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// set</param>
         /// <param name="extendedLocation">The extended location of the Virtual
         /// Machine Scale Set.</param>
-        public VirtualMachineScaleSet(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), Sku sku = default(Sku), Plan plan = default(Plan), UpgradePolicy upgradePolicy = default(UpgradePolicy), AutomaticRepairsPolicy automaticRepairsPolicy = default(AutomaticRepairsPolicy), VirtualMachineScaleSetVMProfile virtualMachineProfile = default(VirtualMachineScaleSetVMProfile), string provisioningState = default(string), bool? overprovision = default(bool?), bool? doNotRunExtensionsOnOverprovisionedVMs = default(bool?), string uniqueId = default(string), bool? singlePlacementGroup = default(bool?), bool? zoneBalance = default(bool?), int? platformFaultDomainCount = default(int?), SubResource proximityPlacementGroup = default(SubResource), SubResource hostGroup = default(SubResource), AdditionalCapabilities additionalCapabilities = default(AdditionalCapabilities), ScaleInPolicy scaleInPolicy = default(ScaleInPolicy), string orchestrationMode = default(string), SpotRestorePolicy spotRestorePolicy = default(SpotRestorePolicy), PriorityMixPolicy priorityMixPolicy = default(PriorityMixPolicy), System.DateTime? timeCreated = default(System.DateTime?), VirtualMachineScaleSetIdentity identity = default(VirtualMachineScaleSetIdentity), IList<string> zones = default(IList<string>), ExtendedLocation extendedLocation = default(ExtendedLocation))
+        public VirtualMachineScaleSet(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), Sku sku = default(Sku), Plan plan = default(Plan), UpgradePolicy upgradePolicy = default(UpgradePolicy), AutomaticRepairsPolicy automaticRepairsPolicy = default(AutomaticRepairsPolicy), VirtualMachineScaleSetVMProfile virtualMachineProfile = default(VirtualMachineScaleSetVMProfile), string provisioningState = default(string), bool? overprovision = default(bool?), bool? doNotRunExtensionsOnOverprovisionedVMs = default(bool?), string uniqueId = default(string), bool? singlePlacementGroup = default(bool?), bool? zoneBalance = default(bool?), int? platformFaultDomainCount = default(int?), SubResource proximityPlacementGroup = default(SubResource), SubResource hostGroup = default(SubResource), AdditionalCapabilities additionalCapabilities = default(AdditionalCapabilities), ScaleInPolicy scaleInPolicy = default(ScaleInPolicy), string orchestrationMode = default(string), SpotRestorePolicy spotRestorePolicy = default(SpotRestorePolicy), PriorityMixPolicy priorityMixPolicy = default(PriorityMixPolicy), System.DateTime? timeCreated = default(System.DateTime?), bool? constrainedMaximumCapacity = default(bool?), VirtualMachineScaleSetIdentity identity = default(VirtualMachineScaleSetIdentity), IList<string> zones = default(IList<string>), ExtendedLocation extendedLocation = default(ExtendedLocation))
             : base(location, id, name, type, tags)
         {
             Sku = sku;
@@ -132,6 +134,7 @@ namespace Microsoft.Azure.Management.Compute.Models
             SpotRestorePolicy = spotRestorePolicy;
             PriorityMixPolicy = priorityMixPolicy;
             TimeCreated = timeCreated;
+            ConstrainedMaximumCapacity = constrainedMaximumCapacity;
             Identity = identity;
             Zones = zones;
             ExtendedLocation = extendedLocation;
@@ -297,6 +300,13 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.timeCreated")]
         public System.DateTime? TimeCreated { get; private set; }
+
+        /// <summary>
+        /// Gets or sets optional property which must either be set to True or
+        /// omitted.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.constrainedMaximumCapacity")]
+        public bool? ConstrainedMaximumCapacity { get; set; }
 
         /// <summary>
         /// Gets or sets the identity of the virtual machine scale set, if

@@ -1,6 +1,8 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+#nullable disable // TODO: remove and fix errors
+
 using System;
 
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.ConnectionString;
@@ -157,10 +159,10 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
 
         private void RunTest(string connectionString, string expectedIngestionEndpoint, string expectedInstrumentationKey)
         {
-            ConnectionStringParser.GetValues(connectionString, out string ikey, out string endpoint);
+            var connectionVars = ConnectionStringParser.GetValues(connectionString);
 
-            Assert.Equal(expectedIngestionEndpoint, endpoint);
-            Assert.Equal(expectedInstrumentationKey, ikey);
+            Assert.Equal(expectedIngestionEndpoint, connectionVars.IngestionEndpoint);
+            Assert.Equal(expectedInstrumentationKey, connectionVars.InstrumentationKey);
         }
     }
 }

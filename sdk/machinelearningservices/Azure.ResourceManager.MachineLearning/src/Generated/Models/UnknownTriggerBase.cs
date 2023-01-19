@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> The UnknownTriggerBase. </summary>
-    internal partial class UnknownTriggerBase : TriggerBase
+    internal partial class UnknownTriggerBase : MachineLearningTriggerBase
     {
         /// <summary> Initializes a new instance of UnknownTriggerBase. </summary>
         /// <param name="endTime">
@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// TimeZone should follow Windows time zone format. Refer: https://docs.microsoft.com/en-us/windows-hardware/manufacture/desktop/default-time-zones?view=windows-11
         /// </param>
         /// <param name="triggerType"> [Required]. </param>
-        internal UnknownTriggerBase(string endTime, string startTime, string timeZone, TriggerType triggerType) : base(endTime, startTime, timeZone, triggerType)
+        internal UnknownTriggerBase(string endTime, string startTime, string timeZone, MachineLearningTriggerType triggerType) : base(endTime, startTime, timeZone, triggerType)
         {
             TriggerType = triggerType;
         }

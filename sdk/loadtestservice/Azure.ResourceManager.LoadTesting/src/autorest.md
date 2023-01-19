@@ -8,8 +8,7 @@ azure-arm: true
 csharp: true
 library-name: LoadTesting
 namespace: Azure.ResourceManager.LoadTesting
-require: https://github.com/Azure/azure-rest-api-specs/blob/ec278eb936001b993e0413d66d8cc88e73540331/specification/loadtestservice/resource-manager/readme.md
-tag: package-2022-12-01
+require: https://github.com/Azure/azure-rest-api-specs/blob/3dae9445631a0e27d743c1355f8cb82391d1634f/specification/loadtestservice/resource-manager/readme.md
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 skip-csproj: true
@@ -19,10 +18,14 @@ modelerfour:
 irregular-plural-words:
   quota: quota
 
+override-operation-name:
+  Quotas_CheckAvailability: CheckLoadTestingQuotaAvailability
+
 rename-mapping:
-  LoadTestResource: LoadTesting
+  Resource: LoadTestingBaseResource
+  LoadTestResource: LoadTestingResource
   QuotaResource: LoadTestingQuota
-  CheckQuotaAvailabilityResponse: LoadTestingQuotaAvailabilityResponse
+  CheckQuotaAvailabilityResponse: LoadTestingQuotaAvailabilityResult
   EncryptionProperties: CustomerManagedKeyEncryptionProperties
   EncryptionPropertiesIdentity: CustomerManagedKeyIdentity
   EndpointDependency: LoadTestingEndpointDependency

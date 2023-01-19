@@ -6,9 +6,6 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
-using System.Runtime.CompilerServices;
-using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
@@ -16,7 +13,7 @@ using Azure.Core.Pipeline;
 
 namespace Azure.IoT.DeviceUpdate
 {
-    // Data plane generated client. The DeviceManagement service client.
+    // Data plane generated client.
     /// <summary> The DeviceManagement service client. </summary>
     public partial class DeviceManagementClient
     {
@@ -1508,24 +1505,9 @@ namespace Azure.IoT.DeviceUpdate
         /// <include file="Docs/DeviceManagementClient.xml" path="doc/members/member[@name='GetDeviceClassesAsync(String,RequestContext)']/*" />
         public virtual AsyncPageable<BinaryData> GetDeviceClassesAsync(string filter = null, RequestContext context = null)
         {
-            return GetDeviceClassesImplementationAsync("DeviceManagementClient.GetDeviceClasses", filter, context);
-        }
-
-        private AsyncPageable<BinaryData> GetDeviceClassesImplementationAsync(string diagnosticsScopeName, string filter, RequestContext context)
-        {
-            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, ClientDiagnostics, diagnosticsScopeName);
-            async IAsyncEnumerable<Page<BinaryData>> CreateEnumerableAsync(string nextLink, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken = default)
-            {
-                do
-                {
-                    var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetDeviceClassesRequest(filter, context)
-                        : CreateGetDeviceClassesNextPageRequest(nextLink, filter, context);
-                    var page = await LowLevelPageableHelpers.ProcessMessageAsync(_pipeline, message, context, "value", "nextLink", cancellationToken).ConfigureAwait(false);
-                    nextLink = page.ContinuationToken;
-                    yield return page;
-                } while (!string.IsNullOrEmpty(nextLink));
-            }
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetDeviceClassesRequest(filter, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetDeviceClassesNextPageRequest(nextLink, filter, context);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "DeviceManagementClient.GetDeviceClasses", "value", "nextLink", context);
         }
 
         /// <summary> Gets a list of all device classes (sets of devices compatible with the same updates based on the model Id and compat properties reported in the Device Update PnP interface in IoT Hub) for all devices connected to Device Update for IoT Hub. </summary>
@@ -1536,24 +1518,9 @@ namespace Azure.IoT.DeviceUpdate
         /// <include file="Docs/DeviceManagementClient.xml" path="doc/members/member[@name='GetDeviceClasses(String,RequestContext)']/*" />
         public virtual Pageable<BinaryData> GetDeviceClasses(string filter = null, RequestContext context = null)
         {
-            return GetDeviceClassesImplementation("DeviceManagementClient.GetDeviceClasses", filter, context);
-        }
-
-        private Pageable<BinaryData> GetDeviceClassesImplementation(string diagnosticsScopeName, string filter, RequestContext context)
-        {
-            return PageableHelpers.CreatePageable(CreateEnumerable, ClientDiagnostics, diagnosticsScopeName);
-            IEnumerable<Page<BinaryData>> CreateEnumerable(string nextLink, int? pageSizeHint)
-            {
-                do
-                {
-                    var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetDeviceClassesRequest(filter, context)
-                        : CreateGetDeviceClassesNextPageRequest(nextLink, filter, context);
-                    var page = LowLevelPageableHelpers.ProcessMessage(_pipeline, message, context, "value", "nextLink");
-                    nextLink = page.ContinuationToken;
-                    yield return page;
-                } while (!string.IsNullOrEmpty(nextLink));
-            }
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetDeviceClassesRequest(filter, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetDeviceClassesNextPageRequest(nextLink, filter, context);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "DeviceManagementClient.GetDeviceClasses", "value", "nextLink", context);
         }
 
         /// <summary> Gets a list of installable updates for a device class. </summary>
@@ -1568,24 +1535,9 @@ namespace Azure.IoT.DeviceUpdate
         {
             Argument.AssertNotNullOrEmpty(deviceClassId, nameof(deviceClassId));
 
-            return GetInstallableUpdatesForDeviceClassesImplementationAsync("DeviceManagementClient.GetInstallableUpdatesForDeviceClasses", deviceClassId, context);
-        }
-
-        private AsyncPageable<BinaryData> GetInstallableUpdatesForDeviceClassesImplementationAsync(string diagnosticsScopeName, string deviceClassId, RequestContext context)
-        {
-            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, ClientDiagnostics, diagnosticsScopeName);
-            async IAsyncEnumerable<Page<BinaryData>> CreateEnumerableAsync(string nextLink, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken = default)
-            {
-                do
-                {
-                    var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetInstallableUpdatesForDeviceClassesRequest(deviceClassId, context)
-                        : CreateGetInstallableUpdatesForDeviceClassesNextPageRequest(nextLink, deviceClassId, context);
-                    var page = await LowLevelPageableHelpers.ProcessMessageAsync(_pipeline, message, context, "value", "nextLink", cancellationToken).ConfigureAwait(false);
-                    nextLink = page.ContinuationToken;
-                    yield return page;
-                } while (!string.IsNullOrEmpty(nextLink));
-            }
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetInstallableUpdatesForDeviceClassesRequest(deviceClassId, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetInstallableUpdatesForDeviceClassesNextPageRequest(nextLink, deviceClassId, context);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "DeviceManagementClient.GetInstallableUpdatesForDeviceClasses", "value", "nextLink", context);
         }
 
         /// <summary> Gets a list of installable updates for a device class. </summary>
@@ -1600,24 +1552,9 @@ namespace Azure.IoT.DeviceUpdate
         {
             Argument.AssertNotNullOrEmpty(deviceClassId, nameof(deviceClassId));
 
-            return GetInstallableUpdatesForDeviceClassesImplementation("DeviceManagementClient.GetInstallableUpdatesForDeviceClasses", deviceClassId, context);
-        }
-
-        private Pageable<BinaryData> GetInstallableUpdatesForDeviceClassesImplementation(string diagnosticsScopeName, string deviceClassId, RequestContext context)
-        {
-            return PageableHelpers.CreatePageable(CreateEnumerable, ClientDiagnostics, diagnosticsScopeName);
-            IEnumerable<Page<BinaryData>> CreateEnumerable(string nextLink, int? pageSizeHint)
-            {
-                do
-                {
-                    var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetInstallableUpdatesForDeviceClassesRequest(deviceClassId, context)
-                        : CreateGetInstallableUpdatesForDeviceClassesNextPageRequest(nextLink, deviceClassId, context);
-                    var page = LowLevelPageableHelpers.ProcessMessage(_pipeline, message, context, "value", "nextLink");
-                    nextLink = page.ContinuationToken;
-                    yield return page;
-                } while (!string.IsNullOrEmpty(nextLink));
-            }
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetInstallableUpdatesForDeviceClassesRequest(deviceClassId, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetInstallableUpdatesForDeviceClassesNextPageRequest(nextLink, deviceClassId, context);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "DeviceManagementClient.GetInstallableUpdatesForDeviceClasses", "value", "nextLink", context);
         }
 
         /// <summary> Gets a list of devices connected to Device Update for IoT Hub. </summary>
@@ -1628,24 +1565,9 @@ namespace Azure.IoT.DeviceUpdate
         /// <include file="Docs/DeviceManagementClient.xml" path="doc/members/member[@name='GetDevicesAsync(String,RequestContext)']/*" />
         public virtual AsyncPageable<BinaryData> GetDevicesAsync(string filter = null, RequestContext context = null)
         {
-            return GetDevicesImplementationAsync("DeviceManagementClient.GetDevices", filter, context);
-        }
-
-        private AsyncPageable<BinaryData> GetDevicesImplementationAsync(string diagnosticsScopeName, string filter, RequestContext context)
-        {
-            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, ClientDiagnostics, diagnosticsScopeName);
-            async IAsyncEnumerable<Page<BinaryData>> CreateEnumerableAsync(string nextLink, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken = default)
-            {
-                do
-                {
-                    var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetDevicesRequest(filter, context)
-                        : CreateGetDevicesNextPageRequest(nextLink, filter, context);
-                    var page = await LowLevelPageableHelpers.ProcessMessageAsync(_pipeline, message, context, "value", "nextLink", cancellationToken).ConfigureAwait(false);
-                    nextLink = page.ContinuationToken;
-                    yield return page;
-                } while (!string.IsNullOrEmpty(nextLink));
-            }
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetDevicesRequest(filter, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetDevicesNextPageRequest(nextLink, filter, context);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "DeviceManagementClient.GetDevices", "value", "nextLink", context);
         }
 
         /// <summary> Gets a list of devices connected to Device Update for IoT Hub. </summary>
@@ -1656,24 +1578,9 @@ namespace Azure.IoT.DeviceUpdate
         /// <include file="Docs/DeviceManagementClient.xml" path="doc/members/member[@name='GetDevices(String,RequestContext)']/*" />
         public virtual Pageable<BinaryData> GetDevices(string filter = null, RequestContext context = null)
         {
-            return GetDevicesImplementation("DeviceManagementClient.GetDevices", filter, context);
-        }
-
-        private Pageable<BinaryData> GetDevicesImplementation(string diagnosticsScopeName, string filter, RequestContext context)
-        {
-            return PageableHelpers.CreatePageable(CreateEnumerable, ClientDiagnostics, diagnosticsScopeName);
-            IEnumerable<Page<BinaryData>> CreateEnumerable(string nextLink, int? pageSizeHint)
-            {
-                do
-                {
-                    var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetDevicesRequest(filter, context)
-                        : CreateGetDevicesNextPageRequest(nextLink, filter, context);
-                    var page = LowLevelPageableHelpers.ProcessMessage(_pipeline, message, context, "value", "nextLink");
-                    nextLink = page.ContinuationToken;
-                    yield return page;
-                } while (!string.IsNullOrEmpty(nextLink));
-            }
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetDevicesRequest(filter, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetDevicesNextPageRequest(nextLink, filter, context);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "DeviceManagementClient.GetDevices", "value", "nextLink", context);
         }
 
         /// <summary> Gets a list of all device groups.  The $default group will always be returned first. </summary>
@@ -1684,24 +1591,9 @@ namespace Azure.IoT.DeviceUpdate
         /// <include file="Docs/DeviceManagementClient.xml" path="doc/members/member[@name='GetGroupsAsync(String,RequestContext)']/*" />
         public virtual AsyncPageable<BinaryData> GetGroupsAsync(string orderBy = null, RequestContext context = null)
         {
-            return GetGroupsImplementationAsync("DeviceManagementClient.GetGroups", orderBy, context);
-        }
-
-        private AsyncPageable<BinaryData> GetGroupsImplementationAsync(string diagnosticsScopeName, string orderBy, RequestContext context)
-        {
-            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, ClientDiagnostics, diagnosticsScopeName);
-            async IAsyncEnumerable<Page<BinaryData>> CreateEnumerableAsync(string nextLink, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken = default)
-            {
-                do
-                {
-                    var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetGroupsRequest(orderBy, context)
-                        : CreateGetGroupsNextPageRequest(nextLink, orderBy, context);
-                    var page = await LowLevelPageableHelpers.ProcessMessageAsync(_pipeline, message, context, "value", "nextLink", cancellationToken).ConfigureAwait(false);
-                    nextLink = page.ContinuationToken;
-                    yield return page;
-                } while (!string.IsNullOrEmpty(nextLink));
-            }
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetGroupsRequest(orderBy, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetGroupsNextPageRequest(nextLink, orderBy, context);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "DeviceManagementClient.GetGroups", "value", "nextLink", context);
         }
 
         /// <summary> Gets a list of all device groups.  The $default group will always be returned first. </summary>
@@ -1712,24 +1604,9 @@ namespace Azure.IoT.DeviceUpdate
         /// <include file="Docs/DeviceManagementClient.xml" path="doc/members/member[@name='GetGroups(String,RequestContext)']/*" />
         public virtual Pageable<BinaryData> GetGroups(string orderBy = null, RequestContext context = null)
         {
-            return GetGroupsImplementation("DeviceManagementClient.GetGroups", orderBy, context);
-        }
-
-        private Pageable<BinaryData> GetGroupsImplementation(string diagnosticsScopeName, string orderBy, RequestContext context)
-        {
-            return PageableHelpers.CreatePageable(CreateEnumerable, ClientDiagnostics, diagnosticsScopeName);
-            IEnumerable<Page<BinaryData>> CreateEnumerable(string nextLink, int? pageSizeHint)
-            {
-                do
-                {
-                    var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetGroupsRequest(orderBy, context)
-                        : CreateGetGroupsNextPageRequest(nextLink, orderBy, context);
-                    var page = LowLevelPageableHelpers.ProcessMessage(_pipeline, message, context, "value", "nextLink");
-                    nextLink = page.ContinuationToken;
-                    yield return page;
-                } while (!string.IsNullOrEmpty(nextLink));
-            }
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetGroupsRequest(orderBy, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetGroupsNextPageRequest(nextLink, orderBy, context);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "DeviceManagementClient.GetGroups", "value", "nextLink", context);
         }
 
         /// <summary> Get the best available updates for a device group and a count of how many devices need each update. </summary>
@@ -1744,24 +1621,9 @@ namespace Azure.IoT.DeviceUpdate
         {
             Argument.AssertNotNullOrEmpty(groupId, nameof(groupId));
 
-            return GetBestUpdatesForGroupsImplementationAsync("DeviceManagementClient.GetBestUpdatesForGroups", groupId, context);
-        }
-
-        private AsyncPageable<BinaryData> GetBestUpdatesForGroupsImplementationAsync(string diagnosticsScopeName, string groupId, RequestContext context)
-        {
-            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, ClientDiagnostics, diagnosticsScopeName);
-            async IAsyncEnumerable<Page<BinaryData>> CreateEnumerableAsync(string nextLink, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken = default)
-            {
-                do
-                {
-                    var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetBestUpdatesForGroupsRequest(groupId, context)
-                        : CreateGetBestUpdatesForGroupsNextPageRequest(nextLink, groupId, context);
-                    var page = await LowLevelPageableHelpers.ProcessMessageAsync(_pipeline, message, context, "value", "nextLink", cancellationToken).ConfigureAwait(false);
-                    nextLink = page.ContinuationToken;
-                    yield return page;
-                } while (!string.IsNullOrEmpty(nextLink));
-            }
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetBestUpdatesForGroupsRequest(groupId, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetBestUpdatesForGroupsNextPageRequest(nextLink, groupId, context);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "DeviceManagementClient.GetBestUpdatesForGroups", "value", "nextLink", context);
         }
 
         /// <summary> Get the best available updates for a device group and a count of how many devices need each update. </summary>
@@ -1776,24 +1638,9 @@ namespace Azure.IoT.DeviceUpdate
         {
             Argument.AssertNotNullOrEmpty(groupId, nameof(groupId));
 
-            return GetBestUpdatesForGroupsImplementation("DeviceManagementClient.GetBestUpdatesForGroups", groupId, context);
-        }
-
-        private Pageable<BinaryData> GetBestUpdatesForGroupsImplementation(string diagnosticsScopeName, string groupId, RequestContext context)
-        {
-            return PageableHelpers.CreatePageable(CreateEnumerable, ClientDiagnostics, diagnosticsScopeName);
-            IEnumerable<Page<BinaryData>> CreateEnumerable(string nextLink, int? pageSizeHint)
-            {
-                do
-                {
-                    var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetBestUpdatesForGroupsRequest(groupId, context)
-                        : CreateGetBestUpdatesForGroupsNextPageRequest(nextLink, groupId, context);
-                    var page = LowLevelPageableHelpers.ProcessMessage(_pipeline, message, context, "value", "nextLink");
-                    nextLink = page.ContinuationToken;
-                    yield return page;
-                } while (!string.IsNullOrEmpty(nextLink));
-            }
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetBestUpdatesForGroupsRequest(groupId, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetBestUpdatesForGroupsNextPageRequest(nextLink, groupId, context);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "DeviceManagementClient.GetBestUpdatesForGroups", "value", "nextLink", context);
         }
 
         /// <summary> Gets a list of deployments for a device group. </summary>
@@ -1809,24 +1656,9 @@ namespace Azure.IoT.DeviceUpdate
         {
             Argument.AssertNotNullOrEmpty(groupId, nameof(groupId));
 
-            return GetDeploymentsForGroupsImplementationAsync("DeviceManagementClient.GetDeploymentsForGroups", groupId, orderBy, context);
-        }
-
-        private AsyncPageable<BinaryData> GetDeploymentsForGroupsImplementationAsync(string diagnosticsScopeName, string groupId, string orderBy, RequestContext context)
-        {
-            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, ClientDiagnostics, diagnosticsScopeName);
-            async IAsyncEnumerable<Page<BinaryData>> CreateEnumerableAsync(string nextLink, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken = default)
-            {
-                do
-                {
-                    var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetDeploymentsForGroupsRequest(groupId, orderBy, context)
-                        : CreateGetDeploymentsForGroupsNextPageRequest(nextLink, groupId, orderBy, context);
-                    var page = await LowLevelPageableHelpers.ProcessMessageAsync(_pipeline, message, context, "value", "nextLink", cancellationToken).ConfigureAwait(false);
-                    nextLink = page.ContinuationToken;
-                    yield return page;
-                } while (!string.IsNullOrEmpty(nextLink));
-            }
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetDeploymentsForGroupsRequest(groupId, orderBy, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetDeploymentsForGroupsNextPageRequest(nextLink, groupId, orderBy, context);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "DeviceManagementClient.GetDeploymentsForGroups", "value", "nextLink", context);
         }
 
         /// <summary> Gets a list of deployments for a device group. </summary>
@@ -1842,24 +1674,9 @@ namespace Azure.IoT.DeviceUpdate
         {
             Argument.AssertNotNullOrEmpty(groupId, nameof(groupId));
 
-            return GetDeploymentsForGroupsImplementation("DeviceManagementClient.GetDeploymentsForGroups", groupId, orderBy, context);
-        }
-
-        private Pageable<BinaryData> GetDeploymentsForGroupsImplementation(string diagnosticsScopeName, string groupId, string orderBy, RequestContext context)
-        {
-            return PageableHelpers.CreatePageable(CreateEnumerable, ClientDiagnostics, diagnosticsScopeName);
-            IEnumerable<Page<BinaryData>> CreateEnumerable(string nextLink, int? pageSizeHint)
-            {
-                do
-                {
-                    var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetDeploymentsForGroupsRequest(groupId, orderBy, context)
-                        : CreateGetDeploymentsForGroupsNextPageRequest(nextLink, groupId, orderBy, context);
-                    var page = LowLevelPageableHelpers.ProcessMessage(_pipeline, message, context, "value", "nextLink");
-                    nextLink = page.ContinuationToken;
-                    yield return page;
-                } while (!string.IsNullOrEmpty(nextLink));
-            }
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetDeploymentsForGroupsRequest(groupId, orderBy, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetDeploymentsForGroupsNextPageRequest(nextLink, groupId, orderBy, context);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "DeviceManagementClient.GetDeploymentsForGroups", "value", "nextLink", context);
         }
 
         /// <summary> Get the device class subgroups for the group. A device class subgroup is the set of devices within the group that share the same device class. All devices within the same device class are compatible with the same updates. </summary>
@@ -1875,24 +1692,9 @@ namespace Azure.IoT.DeviceUpdate
         {
             Argument.AssertNotNullOrEmpty(groupId, nameof(groupId));
 
-            return GetDeviceClassSubgroupsForGroupsImplementationAsync("DeviceManagementClient.GetDeviceClassSubgroupsForGroups", groupId, filter, context);
-        }
-
-        private AsyncPageable<BinaryData> GetDeviceClassSubgroupsForGroupsImplementationAsync(string diagnosticsScopeName, string groupId, string filter, RequestContext context)
-        {
-            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, ClientDiagnostics, diagnosticsScopeName);
-            async IAsyncEnumerable<Page<BinaryData>> CreateEnumerableAsync(string nextLink, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken = default)
-            {
-                do
-                {
-                    var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetDeviceClassSubgroupsForGroupsRequest(groupId, filter, context)
-                        : CreateGetDeviceClassSubgroupsForGroupsNextPageRequest(nextLink, groupId, filter, context);
-                    var page = await LowLevelPageableHelpers.ProcessMessageAsync(_pipeline, message, context, "value", "nextLink", cancellationToken).ConfigureAwait(false);
-                    nextLink = page.ContinuationToken;
-                    yield return page;
-                } while (!string.IsNullOrEmpty(nextLink));
-            }
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetDeviceClassSubgroupsForGroupsRequest(groupId, filter, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetDeviceClassSubgroupsForGroupsNextPageRequest(nextLink, groupId, filter, context);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "DeviceManagementClient.GetDeviceClassSubgroupsForGroups", "value", "nextLink", context);
         }
 
         /// <summary> Get the device class subgroups for the group. A device class subgroup is the set of devices within the group that share the same device class. All devices within the same device class are compatible with the same updates. </summary>
@@ -1908,24 +1710,9 @@ namespace Azure.IoT.DeviceUpdate
         {
             Argument.AssertNotNullOrEmpty(groupId, nameof(groupId));
 
-            return GetDeviceClassSubgroupsForGroupsImplementation("DeviceManagementClient.GetDeviceClassSubgroupsForGroups", groupId, filter, context);
-        }
-
-        private Pageable<BinaryData> GetDeviceClassSubgroupsForGroupsImplementation(string diagnosticsScopeName, string groupId, string filter, RequestContext context)
-        {
-            return PageableHelpers.CreatePageable(CreateEnumerable, ClientDiagnostics, diagnosticsScopeName);
-            IEnumerable<Page<BinaryData>> CreateEnumerable(string nextLink, int? pageSizeHint)
-            {
-                do
-                {
-                    var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetDeviceClassSubgroupsForGroupsRequest(groupId, filter, context)
-                        : CreateGetDeviceClassSubgroupsForGroupsNextPageRequest(nextLink, groupId, filter, context);
-                    var page = LowLevelPageableHelpers.ProcessMessage(_pipeline, message, context, "value", "nextLink");
-                    nextLink = page.ContinuationToken;
-                    yield return page;
-                } while (!string.IsNullOrEmpty(nextLink));
-            }
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetDeviceClassSubgroupsForGroupsRequest(groupId, filter, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetDeviceClassSubgroupsForGroupsNextPageRequest(nextLink, groupId, filter, context);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "DeviceManagementClient.GetDeviceClassSubgroupsForGroups", "value", "nextLink", context);
         }
 
         /// <summary> Gets a list of deployments for a device class subgroup. </summary>
@@ -1943,24 +1730,9 @@ namespace Azure.IoT.DeviceUpdate
             Argument.AssertNotNullOrEmpty(groupId, nameof(groupId));
             Argument.AssertNotNullOrEmpty(deviceClassId, nameof(deviceClassId));
 
-            return GetDeploymentsForDeviceClassSubgroupsImplementationAsync("DeviceManagementClient.GetDeploymentsForDeviceClassSubgroups", groupId, deviceClassId, orderBy, context);
-        }
-
-        private AsyncPageable<BinaryData> GetDeploymentsForDeviceClassSubgroupsImplementationAsync(string diagnosticsScopeName, string groupId, string deviceClassId, string orderBy, RequestContext context)
-        {
-            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, ClientDiagnostics, diagnosticsScopeName);
-            async IAsyncEnumerable<Page<BinaryData>> CreateEnumerableAsync(string nextLink, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken = default)
-            {
-                do
-                {
-                    var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetDeploymentsForDeviceClassSubgroupsRequest(groupId, deviceClassId, orderBy, context)
-                        : CreateGetDeploymentsForDeviceClassSubgroupsNextPageRequest(nextLink, groupId, deviceClassId, orderBy, context);
-                    var page = await LowLevelPageableHelpers.ProcessMessageAsync(_pipeline, message, context, "value", "nextLink", cancellationToken).ConfigureAwait(false);
-                    nextLink = page.ContinuationToken;
-                    yield return page;
-                } while (!string.IsNullOrEmpty(nextLink));
-            }
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetDeploymentsForDeviceClassSubgroupsRequest(groupId, deviceClassId, orderBy, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetDeploymentsForDeviceClassSubgroupsNextPageRequest(nextLink, groupId, deviceClassId, orderBy, context);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "DeviceManagementClient.GetDeploymentsForDeviceClassSubgroups", "value", "nextLink", context);
         }
 
         /// <summary> Gets a list of deployments for a device class subgroup. </summary>
@@ -1978,24 +1750,9 @@ namespace Azure.IoT.DeviceUpdate
             Argument.AssertNotNullOrEmpty(groupId, nameof(groupId));
             Argument.AssertNotNullOrEmpty(deviceClassId, nameof(deviceClassId));
 
-            return GetDeploymentsForDeviceClassSubgroupsImplementation("DeviceManagementClient.GetDeploymentsForDeviceClassSubgroups", groupId, deviceClassId, orderBy, context);
-        }
-
-        private Pageable<BinaryData> GetDeploymentsForDeviceClassSubgroupsImplementation(string diagnosticsScopeName, string groupId, string deviceClassId, string orderBy, RequestContext context)
-        {
-            return PageableHelpers.CreatePageable(CreateEnumerable, ClientDiagnostics, diagnosticsScopeName);
-            IEnumerable<Page<BinaryData>> CreateEnumerable(string nextLink, int? pageSizeHint)
-            {
-                do
-                {
-                    var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetDeploymentsForDeviceClassSubgroupsRequest(groupId, deviceClassId, orderBy, context)
-                        : CreateGetDeploymentsForDeviceClassSubgroupsNextPageRequest(nextLink, groupId, deviceClassId, orderBy, context);
-                    var page = LowLevelPageableHelpers.ProcessMessage(_pipeline, message, context, "value", "nextLink");
-                    nextLink = page.ContinuationToken;
-                    yield return page;
-                } while (!string.IsNullOrEmpty(nextLink));
-            }
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetDeploymentsForDeviceClassSubgroupsRequest(groupId, deviceClassId, orderBy, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetDeploymentsForDeviceClassSubgroupsNextPageRequest(nextLink, groupId, deviceClassId, orderBy, context);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "DeviceManagementClient.GetDeploymentsForDeviceClassSubgroups", "value", "nextLink", context);
         }
 
         /// <summary> Gets a list of devices in a deployment along with their state. Useful for getting a list of failed devices. </summary>
@@ -2015,24 +1772,9 @@ namespace Azure.IoT.DeviceUpdate
             Argument.AssertNotNullOrEmpty(deviceClassId, nameof(deviceClassId));
             Argument.AssertNotNullOrEmpty(deploymentId, nameof(deploymentId));
 
-            return GetDeviceStatesForDeviceClassSubgroupDeploymentsImplementationAsync("DeviceManagementClient.GetDeviceStatesForDeviceClassSubgroupDeployments", groupId, deviceClassId, deploymentId, filter, context);
-        }
-
-        private AsyncPageable<BinaryData> GetDeviceStatesForDeviceClassSubgroupDeploymentsImplementationAsync(string diagnosticsScopeName, string groupId, string deviceClassId, string deploymentId, string filter, RequestContext context)
-        {
-            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, ClientDiagnostics, diagnosticsScopeName);
-            async IAsyncEnumerable<Page<BinaryData>> CreateEnumerableAsync(string nextLink, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken = default)
-            {
-                do
-                {
-                    var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetDeviceStatesForDeviceClassSubgroupDeploymentsRequest(groupId, deviceClassId, deploymentId, filter, context)
-                        : CreateGetDeviceStatesForDeviceClassSubgroupDeploymentsNextPageRequest(nextLink, groupId, deviceClassId, deploymentId, filter, context);
-                    var page = await LowLevelPageableHelpers.ProcessMessageAsync(_pipeline, message, context, "value", "nextLink", cancellationToken).ConfigureAwait(false);
-                    nextLink = page.ContinuationToken;
-                    yield return page;
-                } while (!string.IsNullOrEmpty(nextLink));
-            }
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetDeviceStatesForDeviceClassSubgroupDeploymentsRequest(groupId, deviceClassId, deploymentId, filter, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetDeviceStatesForDeviceClassSubgroupDeploymentsNextPageRequest(nextLink, groupId, deviceClassId, deploymentId, filter, context);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "DeviceManagementClient.GetDeviceStatesForDeviceClassSubgroupDeployments", "value", "nextLink", context);
         }
 
         /// <summary> Gets a list of devices in a deployment along with their state. Useful for getting a list of failed devices. </summary>
@@ -2052,24 +1794,9 @@ namespace Azure.IoT.DeviceUpdate
             Argument.AssertNotNullOrEmpty(deviceClassId, nameof(deviceClassId));
             Argument.AssertNotNullOrEmpty(deploymentId, nameof(deploymentId));
 
-            return GetDeviceStatesForDeviceClassSubgroupDeploymentsImplementation("DeviceManagementClient.GetDeviceStatesForDeviceClassSubgroupDeployments", groupId, deviceClassId, deploymentId, filter, context);
-        }
-
-        private Pageable<BinaryData> GetDeviceStatesForDeviceClassSubgroupDeploymentsImplementation(string diagnosticsScopeName, string groupId, string deviceClassId, string deploymentId, string filter, RequestContext context)
-        {
-            return PageableHelpers.CreatePageable(CreateEnumerable, ClientDiagnostics, diagnosticsScopeName);
-            IEnumerable<Page<BinaryData>> CreateEnumerable(string nextLink, int? pageSizeHint)
-            {
-                do
-                {
-                    var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetDeviceStatesForDeviceClassSubgroupDeploymentsRequest(groupId, deviceClassId, deploymentId, filter, context)
-                        : CreateGetDeviceStatesForDeviceClassSubgroupDeploymentsNextPageRequest(nextLink, groupId, deviceClassId, deploymentId, filter, context);
-                    var page = LowLevelPageableHelpers.ProcessMessage(_pipeline, message, context, "value", "nextLink");
-                    nextLink = page.ContinuationToken;
-                    yield return page;
-                } while (!string.IsNullOrEmpty(nextLink));
-            }
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetDeviceStatesForDeviceClassSubgroupDeploymentsRequest(groupId, deviceClassId, deploymentId, filter, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetDeviceStatesForDeviceClassSubgroupDeploymentsNextPageRequest(nextLink, groupId, deviceClassId, deploymentId, filter, context);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "DeviceManagementClient.GetDeviceStatesForDeviceClassSubgroupDeployments", "value", "nextLink", context);
         }
 
         /// <summary> Get a list of all device import operations. Completed operations are kept for 7 days before auto-deleted. </summary>
@@ -2081,24 +1808,9 @@ namespace Azure.IoT.DeviceUpdate
         /// <include file="Docs/DeviceManagementClient.xml" path="doc/members/member[@name='GetOperationStatusesAsync(String,Int32,RequestContext)']/*" />
         public virtual AsyncPageable<BinaryData> GetOperationStatusesAsync(string filter = null, int? top = null, RequestContext context = null)
         {
-            return GetOperationStatusesImplementationAsync("DeviceManagementClient.GetOperationStatuses", filter, top, context);
-        }
-
-        private AsyncPageable<BinaryData> GetOperationStatusesImplementationAsync(string diagnosticsScopeName, string filter, int? top, RequestContext context)
-        {
-            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, ClientDiagnostics, diagnosticsScopeName);
-            async IAsyncEnumerable<Page<BinaryData>> CreateEnumerableAsync(string nextLink, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken = default)
-            {
-                do
-                {
-                    var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetOperationStatusesRequest(filter, top, context)
-                        : CreateGetOperationStatusesNextPageRequest(nextLink, filter, top, context);
-                    var page = await LowLevelPageableHelpers.ProcessMessageAsync(_pipeline, message, context, "value", "nextLink", cancellationToken).ConfigureAwait(false);
-                    nextLink = page.ContinuationToken;
-                    yield return page;
-                } while (!string.IsNullOrEmpty(nextLink));
-            }
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetOperationStatusesRequest(filter, top, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetOperationStatusesNextPageRequest(nextLink, filter, top, context);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "DeviceManagementClient.GetOperationStatuses", "value", "nextLink", context);
         }
 
         /// <summary> Get a list of all device import operations. Completed operations are kept for 7 days before auto-deleted. </summary>
@@ -2110,24 +1822,9 @@ namespace Azure.IoT.DeviceUpdate
         /// <include file="Docs/DeviceManagementClient.xml" path="doc/members/member[@name='GetOperationStatuses(String,Int32,RequestContext)']/*" />
         public virtual Pageable<BinaryData> GetOperationStatuses(string filter = null, int? top = null, RequestContext context = null)
         {
-            return GetOperationStatusesImplementation("DeviceManagementClient.GetOperationStatuses", filter, top, context);
-        }
-
-        private Pageable<BinaryData> GetOperationStatusesImplementation(string diagnosticsScopeName, string filter, int? top, RequestContext context)
-        {
-            return PageableHelpers.CreatePageable(CreateEnumerable, ClientDiagnostics, diagnosticsScopeName);
-            IEnumerable<Page<BinaryData>> CreateEnumerable(string nextLink, int? pageSizeHint)
-            {
-                do
-                {
-                    var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetOperationStatusesRequest(filter, top, context)
-                        : CreateGetOperationStatusesNextPageRequest(nextLink, filter, top, context);
-                    var page = LowLevelPageableHelpers.ProcessMessage(_pipeline, message, context, "value", "nextLink");
-                    nextLink = page.ContinuationToken;
-                    yield return page;
-                } while (!string.IsNullOrEmpty(nextLink));
-            }
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetOperationStatusesRequest(filter, top, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetOperationStatusesNextPageRequest(nextLink, filter, top, context);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "DeviceManagementClient.GetOperationStatuses", "value", "nextLink", context);
         }
 
         /// <summary> Get all device diagnostics log collections. </summary>
@@ -2137,24 +1834,9 @@ namespace Azure.IoT.DeviceUpdate
         /// <include file="Docs/DeviceManagementClient.xml" path="doc/members/member[@name='GetLogCollectionsAsync(RequestContext)']/*" />
         public virtual AsyncPageable<BinaryData> GetLogCollectionsAsync(RequestContext context = null)
         {
-            return GetLogCollectionsImplementationAsync("DeviceManagementClient.GetLogCollections", context);
-        }
-
-        private AsyncPageable<BinaryData> GetLogCollectionsImplementationAsync(string diagnosticsScopeName, RequestContext context)
-        {
-            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, ClientDiagnostics, diagnosticsScopeName);
-            async IAsyncEnumerable<Page<BinaryData>> CreateEnumerableAsync(string nextLink, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken = default)
-            {
-                do
-                {
-                    var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetLogCollectionsRequest(context)
-                        : CreateGetLogCollectionsNextPageRequest(nextLink, context);
-                    var page = await LowLevelPageableHelpers.ProcessMessageAsync(_pipeline, message, context, "value", "nextLink", cancellationToken).ConfigureAwait(false);
-                    nextLink = page.ContinuationToken;
-                    yield return page;
-                } while (!string.IsNullOrEmpty(nextLink));
-            }
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetLogCollectionsRequest(context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetLogCollectionsNextPageRequest(nextLink, context);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "DeviceManagementClient.GetLogCollections", "value", "nextLink", context);
         }
 
         /// <summary> Get all device diagnostics log collections. </summary>
@@ -2164,24 +1846,9 @@ namespace Azure.IoT.DeviceUpdate
         /// <include file="Docs/DeviceManagementClient.xml" path="doc/members/member[@name='GetLogCollections(RequestContext)']/*" />
         public virtual Pageable<BinaryData> GetLogCollections(RequestContext context = null)
         {
-            return GetLogCollectionsImplementation("DeviceManagementClient.GetLogCollections", context);
-        }
-
-        private Pageable<BinaryData> GetLogCollectionsImplementation(string diagnosticsScopeName, RequestContext context)
-        {
-            return PageableHelpers.CreatePageable(CreateEnumerable, ClientDiagnostics, diagnosticsScopeName);
-            IEnumerable<Page<BinaryData>> CreateEnumerable(string nextLink, int? pageSizeHint)
-            {
-                do
-                {
-                    var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetLogCollectionsRequest(context)
-                        : CreateGetLogCollectionsNextPageRequest(nextLink, context);
-                    var page = LowLevelPageableHelpers.ProcessMessage(_pipeline, message, context, "value", "nextLink");
-                    nextLink = page.ContinuationToken;
-                    yield return page;
-                } while (!string.IsNullOrEmpty(nextLink));
-            }
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetLogCollectionsRequest(context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetLogCollectionsNextPageRequest(nextLink, context);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "DeviceManagementClient.GetLogCollections", "value", "nextLink", context);
         }
 
         /// <summary> Get list of device health. </summary>
@@ -2195,24 +1862,9 @@ namespace Azure.IoT.DeviceUpdate
         {
             Argument.AssertNotNull(filter, nameof(filter));
 
-            return GetHealthOfDevicesImplementationAsync("DeviceManagementClient.GetHealthOfDevices", filter, context);
-        }
-
-        private AsyncPageable<BinaryData> GetHealthOfDevicesImplementationAsync(string diagnosticsScopeName, string filter, RequestContext context)
-        {
-            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, ClientDiagnostics, diagnosticsScopeName);
-            async IAsyncEnumerable<Page<BinaryData>> CreateEnumerableAsync(string nextLink, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken = default)
-            {
-                do
-                {
-                    var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetHealthOfDevicesRequest(filter, context)
-                        : CreateGetHealthOfDevicesNextPageRequest(nextLink, filter, context);
-                    var page = await LowLevelPageableHelpers.ProcessMessageAsync(_pipeline, message, context, "value", "nextLink", cancellationToken).ConfigureAwait(false);
-                    nextLink = page.ContinuationToken;
-                    yield return page;
-                } while (!string.IsNullOrEmpty(nextLink));
-            }
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetHealthOfDevicesRequest(filter, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetHealthOfDevicesNextPageRequest(nextLink, filter, context);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "DeviceManagementClient.GetHealthOfDevices", "value", "nextLink", context);
         }
 
         /// <summary> Get list of device health. </summary>
@@ -2226,24 +1878,9 @@ namespace Azure.IoT.DeviceUpdate
         {
             Argument.AssertNotNull(filter, nameof(filter));
 
-            return GetHealthOfDevicesImplementation("DeviceManagementClient.GetHealthOfDevices", filter, context);
-        }
-
-        private Pageable<BinaryData> GetHealthOfDevicesImplementation(string diagnosticsScopeName, string filter, RequestContext context)
-        {
-            return PageableHelpers.CreatePageable(CreateEnumerable, ClientDiagnostics, diagnosticsScopeName);
-            IEnumerable<Page<BinaryData>> CreateEnumerable(string nextLink, int? pageSizeHint)
-            {
-                do
-                {
-                    var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetHealthOfDevicesRequest(filter, context)
-                        : CreateGetHealthOfDevicesNextPageRequest(nextLink, filter, context);
-                    var page = LowLevelPageableHelpers.ProcessMessage(_pipeline, message, context, "value", "nextLink");
-                    nextLink = page.ContinuationToken;
-                    yield return page;
-                } while (!string.IsNullOrEmpty(nextLink));
-            }
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetHealthOfDevicesRequest(filter, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetHealthOfDevicesNextPageRequest(nextLink, filter, context);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "DeviceManagementClient.GetHealthOfDevices", "value", "nextLink", context);
         }
 
         /// <summary> Import existing devices from IoT Hub. This is a long-running-operation; use Operation-Location response header value to check for operation status. </summary>

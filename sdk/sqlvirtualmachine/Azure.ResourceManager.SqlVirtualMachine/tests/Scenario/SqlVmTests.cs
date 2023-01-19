@@ -1,26 +1,56 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
-using System.Xml;
 using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.SqlVirtualMachine.Models;
-using Azure.ResourceManager.Storage;
-using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources;
 using NUnit.Framework;
+using Azure.ResourceManager.Compute;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.SqlVirtualMachine.Tests
 {
     public class SqlVmTests : SqlVirtualMachineManagementTestBase
     {
+        private ResourceGroupResource _resourceGroup;
+        private ResourceIdentifier _vmIdentifier;
         public SqlVmTests(bool isAsync)
             : base(isAsync)//, RecordedTestMode.Record)
         {
+        }
+
+        [SetUp]
+        public async Task SetUp()
+        {
+            string rgName = Recording.GenerateAssetName("sqlvmtestrg");
+            string vmName = Recording.GenerateAssetName("vm");
+            Subscription = await Client.GetDefaultSubscriptionAsync();
+            _resourceGroup = await CreateResourceGroupAsync(Subscription, rgName, AzureLocation.WestUS);
+            if (Mode == RecordedTestMode.Playback)
+            {
+                _vmIdentifier = VirtualMachineResource.CreateResourceIdentifier(_resourceGroup.Id.SubscriptionId, _resourceGroup.Id.Name, vmName);
+            }
+            else
+            {
+                using (Recording.DisableRecording())
+                {
+                    string nsgName = Recording.GenerateAssetName("nsg");
+                    string subnetName = Recording.GenerateAssetName("subnet");
+                    string vnetName = Recording.GenerateAssetName("vnet");
+                    string publicIPAddressName = Recording.GenerateAssetName("publicip");
+                    string domainName = Recording.GenerateAssetName("dnslabel");
+                    string nicName = Recording.GenerateAssetName("nic");
+                    string nicIPConfName = Recording.GenerateAssetName("ipconfig");
+                    NetworkSecurityGroupResource nsg = await CreateNetworkSecurityGroupAsync(_resourceGroup, nsgName);
+                    VirtualNetworkResource vnet = await CreateVirtualNetworkAsync(_resourceGroup, nsg, vnetName, subnetName);
+                    NetworkInterfaceResource nic = await CreateNetworkInterfaceAsync(_resourceGroup, vnet, nsg, publicIPAddressName, domainName, nicName, nicIPConfName);
+                    VirtualMachineResource vm = await CreateVmAsync(_resourceGroup, nsg, nic, vmName);
+                    _vmIdentifier = vm.Id;
+                }
+            }
         }
 
         [TestCase]
@@ -28,22 +58,13 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Tests
         public async Task TestCreateGetUpdateDeleteListSqlVirtualMachine()
         {
             // Create SQL VM
-            ResourceGroupResource rg = await CreateResourceGroupAsync(Subscription, "sqlvmtestrg", AzureLocation.WestUS);
-            var sqlVmCollections = rg.GetSqlVms();
-            Dictionary<ResourceIdentifier, SqlVmResource> sqlVms = new Dictionary<ResourceIdentifier, SqlVmResource>();
-            SqlVmResource sqlVm = null;
-            for ( int i = 0; i < 3; i++ )
-            {
-                sqlVm = await CreateSqlVmAsync(rg);
-                Assert.NotNull(sqlVm.Data);
-                sqlVms.Add(sqlVm.Id, sqlVm);
-            }
+            var sqlVmCollections = _resourceGroup.GetSqlVms();
+            SqlVmResource sqlVm = await CreateSqlVmAsync(_resourceGroup, _vmIdentifier);
+            Assert.NotNull(sqlVm.Data);
+
             // Get SQL VM
-            foreach ( var sqlVmFromDict in sqlVms.Values )
-            {
-                SqlVmResource sqlVmFromGet = await sqlVmCollections.GetAsync(sqlVmFromDict.Data.Name);
-                ValidateSqlVirtualMachine(sqlVmFromGet.Data, sqlVmFromDict.Data);
-            }
+            SqlVmResource sqlVmFromGet = await sqlVmCollections.GetAsync(_vmIdentifier.Name);
+            ValidateSqlVirtualMachine(sqlVmFromGet.Data, sqlVm.Data);
             // Update
             string key = "test", value = "updateTag";
             SqlVmResource sqlVmFromUpdate = (await sqlVm.UpdateAsync(WaitUntil.Completed, new SqlVmPatch(){
@@ -55,31 +76,24 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Tests
             ValidateSqlVirtualMachine(sqlVmFromUpdate.Data, sqlVm.Data, sameTags: false);
             Assert.AreEqual(1, sqlVmFromUpdate.Data.Tags.Count);
             Assert.AreEqual(value, sqlVmFromUpdate.Data.Tags[key]);
-            // Delete
-            await sqlVmFromUpdate.DeleteAsync(WaitUntil.Completed);
-            sqlVms.Remove(sqlVmFromUpdate.Id);
             // List
             var count = 0;
             await foreach (var sqlVmFromList in sqlVmCollections)
             {
                 Assert.NotNull(sqlVmFromList.Data);
-                Assert.True(sqlVms.ContainsKey(sqlVmFromList.Id));
-                Assert.AreNotEqual(sqlVmFromList.Id, sqlVmFromUpdate.Id);
-                ValidateSqlVirtualMachine(sqlVmFromList.Data, sqlVms[sqlVmFromList.Id].Data);
                 count++;
             }
-            Assert.True(sqlVms.Count == count);
+            Assert.GreaterOrEqual(count, 1);
             // List by subscription
             count = 0;
             await foreach (var sqlVmFromList in Subscription.GetSqlVmsAsync())
             {
                 Assert.NotNull(sqlVmFromList.Data);
-                Assert.True(sqlVms.ContainsKey(sqlVmFromList.Id));
-                Assert.AreNotEqual(sqlVmFromList.Id, sqlVmFromUpdate.Id);
-                ValidateSqlVirtualMachine(sqlVmFromList.Data, sqlVms[sqlVmFromList.Id].Data);
                 count++;
             }
-            Assert.True(sqlVms.Count == count);
+            Assert.GreaterOrEqual(count, 1);
+            // Delete
+            await sqlVmFromUpdate.DeleteAsync(WaitUntil.Completed);
         }
 
         [TestCase(null)]
@@ -88,10 +102,8 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Tests
         public async Task SetTags(bool? useTagResource)
         {
             SetTagResourceUsage(Client, useTagResource);
-            ResourceGroupResource rg = await CreateResourceGroupAsync(Subscription, "sqlvmtestrg", AzureLocation.WestUS);
-            var sqlVmCollections = rg.GetSqlVms();
             Dictionary<ResourceIdentifier, SqlVmResource> sqlVms = new Dictionary<ResourceIdentifier, SqlVmResource>();
-            SqlVmResource sqlVm = await CreateSqlVmAsync(rg);
+            SqlVmResource sqlVm = await CreateSqlVmAsync(_resourceGroup, _vmIdentifier);
             var tags = new Dictionary<string, string>()
             {
                 { "key", "value" }

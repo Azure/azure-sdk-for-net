@@ -205,7 +205,7 @@ var data = new {
 
 var operation = await client.ReinstateAsync(WaitUntil.Completed, "<sentShareName>", "<acceptedSentShareName>", RequestContent.Create(data));
 
-BinaryData data = await operation.WaitForCompletionAsync();
+BinaryData data = operation.Value;
 JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
 Console.WriteLine(result.GetProperty("shareKind").ToString());
 Console.WriteLine(result.ToString());
@@ -224,7 +224,7 @@ var data = new {
 
 var operation = await client.ReinstateAsync(WaitUntil.Completed, "<sentShareName>", "<acceptedSentShareName>", RequestContent.Create(data), "<repeatabilityRequestId>");
 
-BinaryData data = await operation.WaitForCompletionAsync();
+BinaryData data = operation.Value;
 JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
 Console.WriteLine(result.GetProperty("shareKind").ToString());
 Console.WriteLine(result.GetProperty("id").ToString());
@@ -303,7 +303,7 @@ var data = new {
 
 var operation = client.Reinstate(WaitUntil.Completed, "<sentShareName>", "<acceptedSentShareName>", RequestContent.Create(data));
 
-BinaryData data = operation.WaitForCompletion();
+BinaryData data = operation.Value;
 JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
 Console.WriteLine(result.GetProperty("shareKind").ToString());
 Console.WriteLine(result.ToString());
@@ -322,7 +322,7 @@ var data = new {
 
 var operation = client.Reinstate(WaitUntil.Completed, "<sentShareName>", "<acceptedSentShareName>", RequestContent.Create(data), "<repeatabilityRequestId>");
 
-BinaryData data = operation.WaitForCompletion();
+BinaryData data = operation.Value;
 JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
 Console.WriteLine(result.GetProperty("shareKind").ToString());
 Console.WriteLine(result.GetProperty("id").ToString());
@@ -396,7 +396,7 @@ var client = new AcceptedSentSharesClient("<https://my-service.azure.com>", cred
 
 var operation = await client.RevokeAsync(WaitUntil.Completed, "<sentShareName>", "<acceptedSentShareName>");
 
-BinaryData data = await operation.WaitForCompletionAsync();
+BinaryData data = operation.Value;
 JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
 Console.WriteLine(result.GetProperty("shareKind").ToString());
 Console.WriteLine(result.ToString());
@@ -408,7 +408,7 @@ var client = new AcceptedSentSharesClient("<https://my-service.azure.com>", cred
 
 var operation = await client.RevokeAsync(WaitUntil.Completed, "<sentShareName>", "<acceptedSentShareName>", "<repeatabilityRequestId>");
 
-BinaryData data = await operation.WaitForCompletionAsync();
+BinaryData data = operation.Value;
 JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
 Console.WriteLine(result.GetProperty("shareKind").ToString());
 Console.WriteLine(result.GetProperty("id").ToString());
@@ -457,7 +457,7 @@ var client = new AcceptedSentSharesClient("<https://my-service.azure.com>", cred
 
 var operation = client.Revoke(WaitUntil.Completed, "<sentShareName>", "<acceptedSentShareName>");
 
-BinaryData data = operation.WaitForCompletion();
+BinaryData data = operation.Value;
 JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
 Console.WriteLine(result.GetProperty("shareKind").ToString());
 Console.WriteLine(result.ToString());
@@ -469,7 +469,7 @@ var client = new AcceptedSentSharesClient("<https://my-service.azure.com>", cred
 
 var operation = client.Revoke(WaitUntil.Completed, "<sentShareName>", "<acceptedSentShareName>", "<repeatabilityRequestId>");
 
-BinaryData data = operation.WaitForCompletion();
+BinaryData data = operation.Value;
 JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
 Console.WriteLine(result.GetProperty("shareKind").ToString());
 Console.WriteLine(result.GetProperty("id").ToString());
@@ -523,7 +523,7 @@ var data = new {
 
 var operation = await client.UpdateExpirationAsync(WaitUntil.Completed, "<sentShareName>", "<acceptedSentShareName>", RequestContent.Create(data));
 
-BinaryData data = await operation.WaitForCompletionAsync();
+BinaryData data = operation.Value;
 JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
 Console.WriteLine(result.GetProperty("shareKind").ToString());
 Console.WriteLine(result.ToString());
@@ -542,7 +542,7 @@ var data = new {
 
 var operation = await client.UpdateExpirationAsync(WaitUntil.Completed, "<sentShareName>", "<acceptedSentShareName>", RequestContent.Create(data), "<repeatabilityRequestId>");
 
-BinaryData data = await operation.WaitForCompletionAsync();
+BinaryData data = operation.Value;
 JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
 Console.WriteLine(result.GetProperty("shareKind").ToString());
 Console.WriteLine(result.GetProperty("id").ToString());
@@ -621,7 +621,7 @@ var data = new {
 
 var operation = client.UpdateExpiration(WaitUntil.Completed, "<sentShareName>", "<acceptedSentShareName>", RequestContent.Create(data));
 
-BinaryData data = operation.WaitForCompletion();
+BinaryData data = operation.Value;
 JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
 Console.WriteLine(result.GetProperty("shareKind").ToString());
 Console.WriteLine(result.ToString());
@@ -640,7 +640,7 @@ var data = new {
 
 var operation = client.UpdateExpiration(WaitUntil.Completed, "<sentShareName>", "<acceptedSentShareName>", RequestContent.Create(data), "<repeatabilityRequestId>");
 
-BinaryData data = operation.WaitForCompletion();
+BinaryData data = operation.Value;
 JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
 Console.WriteLine(result.GetProperty("shareKind").ToString());
 Console.WriteLine(result.GetProperty("id").ToString());

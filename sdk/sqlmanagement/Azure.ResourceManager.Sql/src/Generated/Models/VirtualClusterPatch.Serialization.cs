@@ -28,15 +28,10 @@ namespace Azure.ResourceManager.Sql.Models
             }
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
-            if (Optional.IsDefined(Family))
+            if (Optional.IsDefined(Version))
             {
-                writer.WritePropertyName("family");
-                writer.WriteStringValue(Family);
-            }
-            if (Optional.IsDefined(MaintenanceConfigurationId))
-            {
-                writer.WritePropertyName("maintenanceConfigurationId");
-                writer.WriteStringValue(MaintenanceConfigurationId);
+                writer.WritePropertyName("version");
+                writer.WriteStringValue(Version);
             }
             writer.WriteEndObject();
             writer.WriteEndObject();

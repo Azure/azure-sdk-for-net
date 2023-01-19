@@ -1,0 +1,31 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://chrissidentity-webapp.azurewebsites.net/test",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "User-Agent": "azsdk-net-Identity/1.9.0-alpha.20221205.1 (.NET 6.0.11; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "da316510b79eb7bb601cb0177206c845",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Content-Type": "text/plain; charset=utf-8",
+        "Date": "Mon, 05 Dec 2022 21:01:43 GMT",
+        "Server": "Microsoft-IIS/10.0",
+        "Set-Cookie": [
+          "ARRAffinity=79e06db539acb57119e709978d2cf1da299e8341753d6f6345007fcab3f69bc5;Path=/;HttpOnly;Secure;Domain=chrissidentity-webapp.azurewebsites.net",
+          "ARRAffinitySameSite=79e06db539acb57119e709978d2cf1da299e8341753d6f6345007fcab3f69bc5;Path=/;HttpOnly;SameSite=None;Secure;Domain=chrissidentity-webapp.azurewebsites.net"
+        ],
+        "Transfer-Encoding": "chunked",
+        "X-Powered-By": "ASP.NET"
+      },
+      "ResponseBody": "Successfully acquired a token from ManagedIdentityCredential"
+    }
+  ],
+  "Variables": {
+    "IDENTITY_WEBAPP_NAME": "chrissidentity-webapp",
+    "RandomSeed": "958608913"
+  }
+}

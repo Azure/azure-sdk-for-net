@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
@@ -18,6 +19,32 @@ namespace Azure.ResourceManager.CognitiveServices
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
+            if (Optional.IsDefined(Kind))
+            {
+                writer.WritePropertyName("kind");
+                writer.WriteStringValue(Kind);
+            }
+            if (Optional.IsDefined(Sku))
+            {
+                writer.WritePropertyName("sku");
+                writer.WriteObjectValue(Sku);
+            }
+            if (Optional.IsCollectionDefined(Tags))
+            {
+                writer.WritePropertyName("tags");
+                writer.WriteStartObject();
+                foreach (var item in Tags)
+                {
+                    writer.WritePropertyName(item.Key);
+                    writer.WriteStringValue(item.Value);
+                }
+                writer.WriteEndObject();
+            }
+            if (Optional.IsDefined(Location))
+            {
+                writer.WritePropertyName("location");
+                writer.WriteStringValue(Location.Value);
+            }
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties");
@@ -29,6 +56,10 @@ namespace Azure.ResourceManager.CognitiveServices
         internal static CommitmentPlanData DeserializeCommitmentPlanData(JsonElement element)
         {
             Optional<ETag> etag = default;
+            Optional<string> kind = default;
+            Optional<CognitiveServicesSku> sku = default;
+            Optional<IDictionary<string, string>> tags = default;
+            Optional<AzureLocation> location = default;
             Optional<CommitmentPlanProperties> properties = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -44,6 +75,46 @@ namespace Azure.ResourceManager.CognitiveServices
                         continue;
                     }
                     etag = new ETag(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("kind"))
+                {
+                    kind = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("sku"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    sku = CognitiveServicesSku.DeserializeCognitiveServicesSku(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("tags"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    Dictionary<string, string> dictionary = new Dictionary<string, string>();
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        dictionary.Add(property0.Name, property0.Value.GetString());
+                    }
+                    tags = dictionary;
+                    continue;
+                }
+                if (property.NameEquals("location"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    location = new AzureLocation(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("properties"))
@@ -78,11 +149,11 @@ namespace Azure.ResourceManager.CognitiveServices
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
             }
-            return new CommitmentPlanData(id, name, type, systemData.Value, Optional.ToNullable(etag), properties.Value);
+            return new CommitmentPlanData(id, name, type, systemData.Value, Optional.ToNullable(etag), kind.Value, sku.Value, Optional.ToDictionary(tags), Optional.ToNullable(location), properties.Value);
         }
     }
 }

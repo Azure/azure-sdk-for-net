@@ -1,6 +1,8 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+#nullable disable // TODO: remove and fix errors
+
 using System;
 using System.Diagnostics.Metrics;
 using System.Globalization;
@@ -130,9 +132,9 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
         {
             if (s_statsBeat_ConnectionString == null)
             {
-                ConnectionStringParser.GetValues(connectionString, out string instrumentationKey, out string ingestionEndpoint);
+                var connectionVars = ConnectionStringParser.GetValues(connectionString);
 
-                s_customer_Ikey = instrumentationKey;
+                s_customer_Ikey = connectionVars.InstrumentationKey;
 
                 // TODO: adjust based on customer's endpoint EU vs Non-EU.
                 s_statsBeat_ConnectionString = StatsBeat_ConnectionString_NonEU;

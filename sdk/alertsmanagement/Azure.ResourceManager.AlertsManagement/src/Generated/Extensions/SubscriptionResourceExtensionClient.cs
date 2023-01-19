@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -64,92 +63,60 @@ namespace Azure.ResourceManager.AlertsManagement
 
         /// <summary>
         /// List all alert processing rules in a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.AlertsManagement/actionRules
-        /// Operation Id: AlertProcessingRules_ListBySubscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.AlertsManagement/actionRules</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AlertProcessingRules_ListBySubscription</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="AlertProcessingRuleResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<AlertProcessingRuleResource> GetAlertProcessingRulesAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<AlertProcessingRuleResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = AlertProcessingRuleClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetAlertProcessingRules");
-                scope.Start();
-                try
-                {
-                    var response = await AlertProcessingRuleRestClient.ListBySubscriptionAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new AlertProcessingRuleResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<AlertProcessingRuleResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = AlertProcessingRuleClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetAlertProcessingRules");
-                scope.Start();
-                try
-                {
-                    var response = await AlertProcessingRuleRestClient.ListBySubscriptionNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new AlertProcessingRuleResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => AlertProcessingRuleRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => AlertProcessingRuleRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new AlertProcessingRuleResource(Client, AlertProcessingRuleData.DeserializeAlertProcessingRuleData(e)), AlertProcessingRuleClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetAlertProcessingRules", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// List all alert processing rules in a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.AlertsManagement/actionRules
-        /// Operation Id: AlertProcessingRules_ListBySubscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.AlertsManagement/actionRules</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AlertProcessingRules_ListBySubscription</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="AlertProcessingRuleResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<AlertProcessingRuleResource> GetAlertProcessingRules(CancellationToken cancellationToken = default)
         {
-            Page<AlertProcessingRuleResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = AlertProcessingRuleClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetAlertProcessingRules");
-                scope.Start();
-                try
-                {
-                    var response = AlertProcessingRuleRestClient.ListBySubscription(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new AlertProcessingRuleResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<AlertProcessingRuleResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = AlertProcessingRuleClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetAlertProcessingRules");
-                scope.Start();
-                try
-                {
-                    var response = AlertProcessingRuleRestClient.ListBySubscriptionNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new AlertProcessingRuleResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => AlertProcessingRuleRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => AlertProcessingRuleRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new AlertProcessingRuleResource(Client, AlertProcessingRuleData.DeserializeAlertProcessingRuleData(e)), AlertProcessingRuleClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetAlertProcessingRules", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Get a summarized count of your alerts grouped by various parameters (e.g. grouping by &apos;Severity&apos; returns the count of alerts for each severity).
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.AlertsManagement/alertsSummary
-        /// Operation Id: Alerts_GetSummary
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.AlertsManagement/alertsSummary</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Alerts_GetSummary</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="groupby"> This parameter allows the result set to be grouped by input fields (Maximum 2 comma separated fields supported). For example, groupby=severity or groupby=severity,alertstate. </param>
         /// <param name="includeSmartGroupsCount"> Include count of the SmartGroups as part of the summary. Default value is &apos;false&apos;. </param>
@@ -182,8 +149,16 @@ namespace Azure.ResourceManager.AlertsManagement
 
         /// <summary>
         /// Get a summarized count of your alerts grouped by various parameters (e.g. grouping by &apos;Severity&apos; returns the count of alerts for each severity).
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.AlertsManagement/alertsSummary
-        /// Operation Id: Alerts_GetSummary
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.AlertsManagement/alertsSummary</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Alerts_GetSummary</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="groupby"> This parameter allows the result set to be grouped by input fields (Maximum 2 comma separated fields supported). For example, groupby=severity or groupby=severity,alertstate. </param>
         /// <param name="includeSmartGroupsCount"> Include count of the SmartGroups as part of the summary. Default value is &apos;false&apos;. </param>

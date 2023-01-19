@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="trainingData"> [Required] Training data input. </param>
         /// <param name="limitSettings"> [Required] Limit settings for the AutoML job. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="trainingData"/> or <paramref name="limitSettings"/> is null. </exception>
-        public ImageInstanceSegmentation(MLTableJobInput trainingData, ImageLimitSettings limitSettings) : base(trainingData)
+        public ImageInstanceSegmentation(MachineLearningTableJobInput trainingData, ImageLimitSettings limitSettings) : base(trainingData)
         {
             Argument.AssertNotNull(trainingData, nameof(trainingData));
             Argument.AssertNotNull(limitSettings, nameof(limitSettings));
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// Values between (0.0 , 1.0)
         /// Applied when validation dataset is not provided.
         /// </param>
-        internal ImageInstanceSegmentation(LogVerbosity? logVerbosity, string targetColumnName, TaskType taskType, MLTableJobInput trainingData, InstanceSegmentationPrimaryMetric? primaryMetric, ImageModelSettingsObjectDetection modelSettings, IList<ImageModelDistributionSettingsObjectDetection> searchSpace, ImageLimitSettings limitSettings, ImageSweepSettings sweepSettings, MLTableJobInput validationData, double? validationDataSize) : base(logVerbosity, targetColumnName, taskType, trainingData)
+        internal ImageInstanceSegmentation(MachineLearningLogVerbosity? logVerbosity, string targetColumnName, TaskType taskType, MachineLearningTableJobInput trainingData, InstanceSegmentationPrimaryMetric? primaryMetric, ImageModelSettingsObjectDetection modelSettings, IList<ImageModelDistributionSettingsObjectDetection> searchSpace, ImageLimitSettings limitSettings, ImageSweepSettings sweepSettings, MachineLearningTableJobInput validationData, double? validationDataSize) : base(logVerbosity, targetColumnName, taskType, trainingData)
         {
             PrimaryMetric = primaryMetric;
             ModelSettings = modelSettings;
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary> Model sweeping and hyperparameter sweeping related settings. </summary>
         public ImageSweepSettings SweepSettings { get; set; }
         /// <summary> Validation data inputs. </summary>
-        public MLTableJobInput ValidationData { get; set; }
+        public MachineLearningTableJobInput ValidationData { get; set; }
         /// <summary>
         /// The fraction of training dataset that needs to be set aside for validation purpose.
         /// Values between (0.0 , 1.0)

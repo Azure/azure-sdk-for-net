@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary> The user assigned identity resource id that represents the workspace identity. </summary>
         public string PrimaryUserAssignedIdentity { get; set; }
         /// <summary> Whether requests from Public Network are allowed. </summary>
-        public PublicNetworkAccess? PublicNetworkAccess { get; set; }
+        public MachineLearningPublicNetworkAccess? PublicNetworkAccess { get; set; }
         /// <summary> ARM id of the application insights associated with this workspace. </summary>
         public string ApplicationInsights { get; set; }
         /// <summary> ARM id of the container registry associated with this workspace. </summary>

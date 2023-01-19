@@ -165,6 +165,11 @@ namespace Azure.ResourceManager.Compute
                 writer.WritePropertyName("dataAccessAuthMode");
                 writer.WriteStringValue(DataAccessAuthMode.Value.ToString());
             }
+            if (Optional.IsDefined(IsOptimizedForFrequentAttach))
+            {
+                writer.WritePropertyName("optimizedForFrequentAttach");
+                writer.WriteBooleanValue(IsOptimizedForFrequentAttach.Value);
+            }
             writer.WriteEndObject();
             writer.WriteEndObject();
         }
@@ -203,6 +208,7 @@ namespace Azure.ResourceManager.Compute
             Optional<IReadOnlyList<ShareInfoElement>> shareInfo = default;
             Optional<NetworkAccessPolicy> networkAccessPolicy = default;
             Optional<ResourceIdentifier> diskAccessId = default;
+            Optional<DateTimeOffset> burstingEnabledTime = default;
             Optional<string> tier = default;
             Optional<bool> burstingEnabled = default;
             Optional<PropertyUpdatesInProgress> propertyUpdatesInProgress = default;
@@ -211,6 +217,7 @@ namespace Azure.ResourceManager.Compute
             Optional<float> completionPercent = default;
             Optional<DiskPublicNetworkAccess> publicNetworkAccess = default;
             Optional<DataAccessAuthMode> dataAccessAuthMode = default;
+            Optional<bool> optimizedForFrequentAttach = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("managedBy"))
@@ -270,7 +277,7 @@ namespace Azure.ResourceManager.Compute
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    extendedLocation = JsonSerializer.Deserialize<ExtendedLocation>(property.Value.ToString());
+                    extendedLocation = JsonSerializer.Deserialize<ExtendedLocation>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("tags"))
@@ -315,7 +322,7 @@ namespace Azure.ResourceManager.Compute
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("properties"))
@@ -532,6 +539,16 @@ namespace Azure.ResourceManager.Compute
                             diskAccessId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
+                        if (property0.NameEquals("burstingEnabledTime"))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            burstingEnabledTime = property0.Value.GetDateTimeOffset("O");
+                            continue;
+                        }
                         if (property0.NameEquals("tier"))
                         {
                             tier = property0.Value.GetString();
@@ -607,11 +624,21 @@ namespace Azure.ResourceManager.Compute
                             dataAccessAuthMode = new DataAccessAuthMode(property0.Value.GetString());
                             continue;
                         }
+                        if (property0.NameEquals("optimizedForFrequentAttach"))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            optimizedForFrequentAttach = property0.Value.GetBoolean();
+                            continue;
+                        }
                     }
                     continue;
                 }
             }
-            return new ManagedDiskData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, managedBy.Value, Optional.ToList(managedByExtended), sku.Value, Optional.ToList(zones), extendedLocation, Optional.ToNullable(timeCreated), Optional.ToNullable(osType), Optional.ToNullable(hyperVGeneration), purchasePlan.Value, supportedCapabilities.Value, creationData.Value, Optional.ToNullable(diskSizeGB), Optional.ToNullable(diskSizeBytes), uniqueId.Value, encryptionSettingsGroup.Value, provisioningState.Value, Optional.ToNullable(diskIOPSReadWrite), Optional.ToNullable(diskMBpsReadWrite), Optional.ToNullable(diskIOPSReadOnly), Optional.ToNullable(diskMBpsReadOnly), Optional.ToNullable(diskState), encryption.Value, Optional.ToNullable(maxShares), Optional.ToList(shareInfo), Optional.ToNullable(networkAccessPolicy), diskAccessId.Value, tier.Value, Optional.ToNullable(burstingEnabled), propertyUpdatesInProgress.Value, Optional.ToNullable(supportsHibernation), securityProfile.Value, Optional.ToNullable(completionPercent), Optional.ToNullable(publicNetworkAccess), Optional.ToNullable(dataAccessAuthMode));
+            return new ManagedDiskData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, managedBy.Value, Optional.ToList(managedByExtended), sku.Value, Optional.ToList(zones), extendedLocation, Optional.ToNullable(timeCreated), Optional.ToNullable(osType), Optional.ToNullable(hyperVGeneration), purchasePlan.Value, supportedCapabilities.Value, creationData.Value, Optional.ToNullable(diskSizeGB), Optional.ToNullable(diskSizeBytes), uniqueId.Value, encryptionSettingsGroup.Value, provisioningState.Value, Optional.ToNullable(diskIOPSReadWrite), Optional.ToNullable(diskMBpsReadWrite), Optional.ToNullable(diskIOPSReadOnly), Optional.ToNullable(diskMBpsReadOnly), Optional.ToNullable(diskState), encryption.Value, Optional.ToNullable(maxShares), Optional.ToList(shareInfo), Optional.ToNullable(networkAccessPolicy), diskAccessId.Value, Optional.ToNullable(burstingEnabledTime), tier.Value, Optional.ToNullable(burstingEnabled), propertyUpdatesInProgress.Value, Optional.ToNullable(supportsHibernation), securityProfile.Value, Optional.ToNullable(completionPercent), Optional.ToNullable(publicNetworkAccess), Optional.ToNullable(dataAccessAuthMode), Optional.ToNullable(optimizedForFrequentAttach));
         }
     }
 }

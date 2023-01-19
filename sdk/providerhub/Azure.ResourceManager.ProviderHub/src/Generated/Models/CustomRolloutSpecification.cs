@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
 
         /// <summary> Gets or sets the canary. </summary>
         internal CustomRolloutSpecificationCanary Canary { get; set; }
-        /// <summary> Gets the regions. </summary>
+        /// <summary> Gets the canary regions. </summary>
         public IList<string> CanaryRegions
         {
             get

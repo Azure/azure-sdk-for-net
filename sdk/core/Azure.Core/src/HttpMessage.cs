@@ -64,6 +64,8 @@ namespace Azure.Core
         /// </summary>
         public bool HasResponse => _response != null;
 
+        internal void ClearResponse() => _response = null;
+
         /// <summary>
         /// The <see cref="System.Threading.CancellationToken"/> to be used during the <see cref="HttpMessage"/> processing.
         /// </summary>
@@ -92,7 +94,7 @@ namespace Azure.Core
         /// <summary>
         /// The processing context for the message.
         /// </summary>
-        public ProcessingContext ProcessingContext => new(this);
+        public MessageProcessingContext ProcessingContext => new(this);
 
         internal void ApplyRequestContext(RequestContext? context, ResponseClassifier? classifier)
         {
@@ -161,7 +163,7 @@ namespace Azure.Core
         /// <param name="type">The property type.</param>
         /// <param name="value">The property value.</param>
         /// <returns><c>true</c> if property exists, otherwise. <c>false</c>.</returns>
-        internal bool TryGetInternalProperty(Type type, out object? value)
+        public bool TryGetProperty(Type type, out object? value)
         {
             value = null;
             return _typeProperties?.TryGetValue(type, out value) == true;
@@ -173,7 +175,7 @@ namespace Azure.Core
         /// </summary>
         /// <param name="type">The key for the value.</param>
         /// <param name="value">The property value.</param>
-        internal void SetInternalProperty(Type type, object value)
+        public void SetProperty(Type type, object value)
         {
             _typeProperties ??= new Dictionary<Type, object>();
             _typeProperties[type] = value;

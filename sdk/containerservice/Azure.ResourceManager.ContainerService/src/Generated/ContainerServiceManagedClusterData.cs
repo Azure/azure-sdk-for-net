@@ -52,6 +52,7 @@ namespace Azure.ResourceManager.ContainerService
         /// <param name="servicePrincipalProfile"> Information about a service principal identity for the cluster to use for manipulating Azure APIs. </param>
         /// <param name="addonProfiles"> The profile of managed cluster add-on. </param>
         /// <param name="podIdentityProfile"> See [use AAD pod identity](https://docs.microsoft.com/azure/aks/use-azure-ad-pod-identity) for more details on AAD pod identity integration. </param>
+        /// <param name="oidcIssuerProfile"> The OIDC issuer profile of the Managed Cluster. </param>
         /// <param name="nodeResourceGroup"> The name of the resource group containing agent pool nodes. </param>
         /// <param name="enableRbac"> Whether to enable Kubernetes Role-Based Access Control. </param>
         /// <param name="enablePodSecurityPolicy"> (DEPRECATING) Whether to enable Kubernetes pod security policy (preview). This feature is set for removal on October 15th, 2020. Learn more at aka.ms/aks/azpodpolicy. </param>
@@ -68,7 +69,7 @@ namespace Azure.ResourceManager.ContainerService
         /// <param name="securityProfile"> Security profile for the managed cluster. </param>
         /// <param name="storageProfile"> Storage profile for the managed cluster. </param>
         /// <param name="publicNetworkAccess"> Allow or deny public network access for AKS. </param>
-        internal ContainerServiceManagedClusterData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedClusterSku sku, ExtendedLocation extendedLocation, ManagedServiceIdentity identity, string provisioningState, ContainerServicePowerState powerState, int? maxAgentPools, string kubernetesVersion, string currentKubernetesVersion, string dnsPrefix, string fqdnSubdomain, string fqdn, string privateFqdn, string azurePortalFqdn, IList<ManagedClusterAgentPoolProfile> agentPoolProfiles, ContainerServiceLinuxProfile linuxProfile, ManagedClusterWindowsProfile windowsProfile, ManagedClusterServicePrincipalProfile servicePrincipalProfile, IDictionary<string, ManagedClusterAddonProfile> addonProfiles, ManagedClusterPodIdentityProfile podIdentityProfile, string nodeResourceGroup, bool? enableRbac, bool? enablePodSecurityPolicy, ContainerServiceNetworkProfile networkProfile, ManagedClusterAadProfile aadProfile, ManagedClusterAutoUpgradeProfile autoUpgradeProfile, ManagedClusterAutoScalerProfile autoScalerProfile, ManagedClusterApiServerAccessProfile apiServerAccessProfile, ResourceIdentifier diskEncryptionSetId, IDictionary<string, ContainerServiceUserAssignedIdentity> identityProfile, IList<ContainerServicePrivateLinkResourceData> privateLinkResources, bool? disableLocalAccounts, ManagedClusterHttpProxyConfig httpProxyConfig, ManagedClusterSecurityProfile securityProfile, ManagedClusterStorageProfile storageProfile, ContainerServicePublicNetworkAccess? publicNetworkAccess) : base(id, name, resourceType, systemData, tags, location)
+        internal ContainerServiceManagedClusterData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedClusterSku sku, ExtendedLocation extendedLocation, ManagedServiceIdentity identity, string provisioningState, ContainerServicePowerState powerState, int? maxAgentPools, string kubernetesVersion, string currentKubernetesVersion, string dnsPrefix, string fqdnSubdomain, string fqdn, string privateFqdn, string azurePortalFqdn, IList<ManagedClusterAgentPoolProfile> agentPoolProfiles, ContainerServiceLinuxProfile linuxProfile, ManagedClusterWindowsProfile windowsProfile, ManagedClusterServicePrincipalProfile servicePrincipalProfile, IDictionary<string, ManagedClusterAddonProfile> addonProfiles, ManagedClusterPodIdentityProfile podIdentityProfile, ManagedClusterOidcIssuerProfile oidcIssuerProfile, string nodeResourceGroup, bool? enableRbac, bool? enablePodSecurityPolicy, ContainerServiceNetworkProfile networkProfile, ManagedClusterAadProfile aadProfile, ManagedClusterAutoUpgradeProfile autoUpgradeProfile, ManagedClusterAutoScalerProfile autoScalerProfile, ManagedClusterApiServerAccessProfile apiServerAccessProfile, ResourceIdentifier diskEncryptionSetId, IDictionary<string, ContainerServiceUserAssignedIdentity> identityProfile, IList<ContainerServicePrivateLinkResourceData> privateLinkResources, bool? disableLocalAccounts, ManagedClusterHttpProxyConfig httpProxyConfig, ManagedClusterSecurityProfile securityProfile, ManagedClusterStorageProfile storageProfile, ContainerServicePublicNetworkAccess? publicNetworkAccess) : base(id, name, resourceType, systemData, tags, location)
         {
             Sku = sku;
             ExtendedLocation = extendedLocation;
@@ -89,6 +90,7 @@ namespace Azure.ResourceManager.ContainerService
             ServicePrincipalProfile = servicePrincipalProfile;
             AddonProfiles = addonProfiles;
             PodIdentityProfile = podIdentityProfile;
+            OidcIssuerProfile = oidcIssuerProfile;
             NodeResourceGroup = nodeResourceGroup;
             EnableRbac = enableRbac;
             EnablePodSecurityPolicy = enablePodSecurityPolicy;
@@ -151,6 +153,8 @@ namespace Azure.ResourceManager.ContainerService
         public IDictionary<string, ManagedClusterAddonProfile> AddonProfiles { get; }
         /// <summary> See [use AAD pod identity](https://docs.microsoft.com/azure/aks/use-azure-ad-pod-identity) for more details on AAD pod identity integration. </summary>
         public ManagedClusterPodIdentityProfile PodIdentityProfile { get; set; }
+        /// <summary> The OIDC issuer profile of the Managed Cluster. </summary>
+        public ManagedClusterOidcIssuerProfile OidcIssuerProfile { get; set; }
         /// <summary> The name of the resource group containing agent pool nodes. </summary>
         public string NodeResourceGroup { get; set; }
         /// <summary> Whether to enable Kubernetes Role-Based Access Control. </summary>
@@ -190,19 +194,7 @@ namespace Azure.ResourceManager.ContainerService
         /// <summary> Configurations for provisioning the cluster with HTTP proxy servers. </summary>
         public ManagedClusterHttpProxyConfig HttpProxyConfig { get; set; }
         /// <summary> Security profile for the managed cluster. </summary>
-        internal ManagedClusterSecurityProfile SecurityProfile { get; set; }
-        /// <summary> Azure Defender settings for the security profile. </summary>
-        public ManagedClusterSecurityProfileAzureDefender SecurityAzureDefender
-        {
-            get => SecurityProfile is null ? default : SecurityProfile.AzureDefender;
-            set
-            {
-                if (SecurityProfile is null)
-                    SecurityProfile = new ManagedClusterSecurityProfile();
-                SecurityProfile.AzureDefender = value;
-            }
-        }
-
+        public ManagedClusterSecurityProfile SecurityProfile { get; set; }
         /// <summary> Storage profile for the managed cluster. </summary>
         public ManagedClusterStorageProfile StorageProfile { get; set; }
         /// <summary> Allow or deny public network access for AKS. </summary>

@@ -30,8 +30,16 @@ namespace Azure.ResourceManager.MachineLearning
 
         /// <summary>
         /// Lists all the available machine learning workspaces under the specified subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.MachineLearningServices/workspaces
-        /// Operation Id: Workspaces_ListBySubscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.MachineLearningServices/workspaces</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Workspaces_ListBySubscription</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="skip"> Continuation token for pagination. </param>
@@ -44,8 +52,16 @@ namespace Azure.ResourceManager.MachineLearning
 
         /// <summary>
         /// Lists all the available machine learning workspaces under the specified subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.MachineLearningServices/workspaces
-        /// Operation Id: Workspaces_ListBySubscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.MachineLearningServices/workspaces</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Workspaces_ListBySubscription</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="skip"> Continuation token for pagination. </param>
@@ -58,122 +74,186 @@ namespace Azure.ResourceManager.MachineLearning
 
         /// <summary>
         /// Gets the current usage information as well as limits for AML resources for given subscription and location.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.MachineLearningServices/locations/{location}/usages
-        /// Operation Id: Usages_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.MachineLearningServices/locations/{location}/usages</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Usages_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="location"> The location for which resource usage is queried. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="MachineLearningUsage" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<MachineLearningUsage> GetUsagesAsync(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
+        public static AsyncPageable<MachineLearningUsage> GetMachineLearningUsagesAsync(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(subscriptionResource).GetUsagesAsync(location, cancellationToken);
+            return GetExtensionClient(subscriptionResource).GetMachineLearningUsagesAsync(location, cancellationToken);
         }
 
         /// <summary>
         /// Gets the current usage information as well as limits for AML resources for given subscription and location.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.MachineLearningServices/locations/{location}/usages
-        /// Operation Id: Usages_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.MachineLearningServices/locations/{location}/usages</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Usages_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="location"> The location for which resource usage is queried. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="MachineLearningUsage" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<MachineLearningUsage> GetUsages(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
+        public static Pageable<MachineLearningUsage> GetMachineLearningUsages(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(subscriptionResource).GetUsages(location, cancellationToken);
+            return GetExtensionClient(subscriptionResource).GetMachineLearningUsages(location, cancellationToken);
         }
 
         /// <summary>
         /// Returns supported VM Sizes in a location
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.MachineLearningServices/locations/{location}/vmSizes
-        /// Operation Id: VirtualMachineSizes_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.MachineLearningServices/locations/{location}/vmSizes</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>VirtualMachineSizes_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="location"> The location upon which virtual-machine-sizes is queried. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="VirtualMachineSize" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<VirtualMachineSize> GetVirtualMachineSizesAsync(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="MachineLearningVmSize" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<MachineLearningVmSize> GetMachineLearningVmSizesAsync(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(subscriptionResource).GetVirtualMachineSizesAsync(location, cancellationToken);
+            return GetExtensionClient(subscriptionResource).GetMachineLearningVmSizesAsync(location, cancellationToken);
         }
 
         /// <summary>
         /// Returns supported VM Sizes in a location
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.MachineLearningServices/locations/{location}/vmSizes
-        /// Operation Id: VirtualMachineSizes_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.MachineLearningServices/locations/{location}/vmSizes</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>VirtualMachineSizes_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="location"> The location upon which virtual-machine-sizes is queried. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="VirtualMachineSize" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<VirtualMachineSize> GetVirtualMachineSizes(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="MachineLearningVmSize" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<MachineLearningVmSize> GetMachineLearningVmSizes(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(subscriptionResource).GetVirtualMachineSizes(location, cancellationToken);
+            return GetExtensionClient(subscriptionResource).GetMachineLearningVmSizes(location, cancellationToken);
         }
 
         /// <summary>
         /// Update quota for each VM family in workspace.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.MachineLearningServices/locations/{location}/updateQuotas
-        /// Operation Id: Quotas_Update
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.MachineLearningServices/locations/{location}/updateQuotas</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Quotas_Update</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="location"> The location for update quota is queried. </param>
         /// <param name="content"> Quota update parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <returns> An async collection of <see cref="UpdateWorkspaceQuotas" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<UpdateWorkspaceQuotas> UpdateAllQuotaAsync(this SubscriptionResource subscriptionResource, AzureLocation location, QuotaUpdateContent content, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="MachineLearningWorkspaceQuotaUpdate" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<MachineLearningWorkspaceQuotaUpdate> UpdateMachineLearningQuotasAsync(this SubscriptionResource subscriptionResource, AzureLocation location, MachineLearningQuotaUpdateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            return GetExtensionClient(subscriptionResource).UpdateAllQuotaAsync(location, content, cancellationToken);
+            return GetExtensionClient(subscriptionResource).UpdateMachineLearningQuotasAsync(location, content, cancellationToken);
         }
 
         /// <summary>
         /// Update quota for each VM family in workspace.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.MachineLearningServices/locations/{location}/updateQuotas
-        /// Operation Id: Quotas_Update
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.MachineLearningServices/locations/{location}/updateQuotas</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Quotas_Update</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="location"> The location for update quota is queried. </param>
         /// <param name="content"> Quota update parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <returns> A collection of <see cref="UpdateWorkspaceQuotas" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<UpdateWorkspaceQuotas> UpdateAllQuota(this SubscriptionResource subscriptionResource, AzureLocation location, QuotaUpdateContent content, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="MachineLearningWorkspaceQuotaUpdate" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<MachineLearningWorkspaceQuotaUpdate> UpdateMachineLearningQuotas(this SubscriptionResource subscriptionResource, AzureLocation location, MachineLearningQuotaUpdateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            return GetExtensionClient(subscriptionResource).UpdateAllQuota(location, content, cancellationToken);
+            return GetExtensionClient(subscriptionResource).UpdateMachineLearningQuotas(location, content, cancellationToken);
         }
 
         /// <summary>
         /// Gets the currently assigned Workspace Quotas based on VMFamily.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.MachineLearningServices/locations/{location}/quotas
-        /// Operation Id: Quotas_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.MachineLearningServices/locations/{location}/quotas</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Quotas_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="location"> The location for which resource usage is queried. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ResourceQuota" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<ResourceQuota> GetAllQuotaAsync(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="MachineLearningResourceQuota" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<MachineLearningResourceQuota> GetMachineLearningQuotasAsync(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(subscriptionResource).GetAllQuotaAsync(location, cancellationToken);
+            return GetExtensionClient(subscriptionResource).GetMachineLearningQuotasAsync(location, cancellationToken);
         }
 
         /// <summary>
         /// Gets the currently assigned Workspace Quotas based on VMFamily.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.MachineLearningServices/locations/{location}/quotas
-        /// Operation Id: Quotas_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.MachineLearningServices/locations/{location}/quotas</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Quotas_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="location"> The location for which resource usage is queried. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ResourceQuota" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<ResourceQuota> GetAllQuota(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="MachineLearningResourceQuota" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<MachineLearningResourceQuota> GetMachineLearningQuotas(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(subscriptionResource).GetAllQuota(location, cancellationToken);
+            return GetExtensionClient(subscriptionResource).GetMachineLearningQuotas(location, cancellationToken);
         }
 
         private static ResourceGroupResourceExtensionClient GetExtensionClient(ResourceGroupResource resourceGroupResource)
@@ -195,8 +275,16 @@ namespace Azure.ResourceManager.MachineLearning
 
         /// <summary>
         /// Gets the properties of the specified machine learning workspace.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}
-        /// Operation Id: Workspaces_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Workspaces_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="workspaceName"> Name of Azure Machine Learning workspace. </param>
@@ -211,8 +299,16 @@ namespace Azure.ResourceManager.MachineLearning
 
         /// <summary>
         /// Gets the properties of the specified machine learning workspace.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}
-        /// Operation Id: Workspaces_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Workspaces_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="workspaceName"> Name of Azure Machine Learning workspace. </param>
@@ -282,229 +378,229 @@ namespace Azure.ResourceManager.MachineLearning
         }
         #endregion
 
-        #region WorkspaceConnectionPropertiesV2BasicResource
+        #region MachineLearningWorkspaceConnectionResource
         /// <summary>
-        /// Gets an object representing a <see cref="WorkspaceConnectionPropertiesV2BasicResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="WorkspaceConnectionPropertiesV2BasicResource.CreateResourceIdentifier" /> to create a <see cref="WorkspaceConnectionPropertiesV2BasicResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="MachineLearningWorkspaceConnectionResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="MachineLearningWorkspaceConnectionResource.CreateResourceIdentifier" /> to create a <see cref="MachineLearningWorkspaceConnectionResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="WorkspaceConnectionPropertiesV2BasicResource" /> object. </returns>
-        public static WorkspaceConnectionPropertiesV2BasicResource GetWorkspaceConnectionPropertiesV2BasicResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="MachineLearningWorkspaceConnectionResource" /> object. </returns>
+        public static MachineLearningWorkspaceConnectionResource GetMachineLearningWorkspaceConnectionResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                WorkspaceConnectionPropertiesV2BasicResource.ValidateResourceId(id);
-                return new WorkspaceConnectionPropertiesV2BasicResource(client, id);
+                MachineLearningWorkspaceConnectionResource.ValidateResourceId(id);
+                return new MachineLearningWorkspaceConnectionResource(client, id);
             }
             );
         }
         #endregion
 
-        #region BatchEndpointResource
+        #region MachineLearningBatchEndpointResource
         /// <summary>
-        /// Gets an object representing a <see cref="BatchEndpointResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="BatchEndpointResource.CreateResourceIdentifier" /> to create a <see cref="BatchEndpointResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="MachineLearningBatchEndpointResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="MachineLearningBatchEndpointResource.CreateResourceIdentifier" /> to create a <see cref="MachineLearningBatchEndpointResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="BatchEndpointResource" /> object. </returns>
-        public static BatchEndpointResource GetBatchEndpointResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="MachineLearningBatchEndpointResource" /> object. </returns>
+        public static MachineLearningBatchEndpointResource GetMachineLearningBatchEndpointResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                BatchEndpointResource.ValidateResourceId(id);
-                return new BatchEndpointResource(client, id);
+                MachineLearningBatchEndpointResource.ValidateResourceId(id);
+                return new MachineLearningBatchEndpointResource(client, id);
             }
             );
         }
         #endregion
 
-        #region BatchDeploymentResource
+        #region MachineLearningBatchDeploymentResource
         /// <summary>
-        /// Gets an object representing a <see cref="BatchDeploymentResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="BatchDeploymentResource.CreateResourceIdentifier" /> to create a <see cref="BatchDeploymentResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="MachineLearningBatchDeploymentResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="MachineLearningBatchDeploymentResource.CreateResourceIdentifier" /> to create a <see cref="MachineLearningBatchDeploymentResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="BatchDeploymentResource" /> object. </returns>
-        public static BatchDeploymentResource GetBatchDeploymentResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="MachineLearningBatchDeploymentResource" /> object. </returns>
+        public static MachineLearningBatchDeploymentResource GetMachineLearningBatchDeploymentResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                BatchDeploymentResource.ValidateResourceId(id);
-                return new BatchDeploymentResource(client, id);
+                MachineLearningBatchDeploymentResource.ValidateResourceId(id);
+                return new MachineLearningBatchDeploymentResource(client, id);
             }
             );
         }
         #endregion
 
-        #region CodeContainerResource
+        #region MachineLearningCodeContainerResource
         /// <summary>
-        /// Gets an object representing a <see cref="CodeContainerResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="CodeContainerResource.CreateResourceIdentifier" /> to create a <see cref="CodeContainerResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="MachineLearningCodeContainerResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="MachineLearningCodeContainerResource.CreateResourceIdentifier" /> to create a <see cref="MachineLearningCodeContainerResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="CodeContainerResource" /> object. </returns>
-        public static CodeContainerResource GetCodeContainerResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="MachineLearningCodeContainerResource" /> object. </returns>
+        public static MachineLearningCodeContainerResource GetMachineLearningCodeContainerResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                CodeContainerResource.ValidateResourceId(id);
-                return new CodeContainerResource(client, id);
+                MachineLearningCodeContainerResource.ValidateResourceId(id);
+                return new MachineLearningCodeContainerResource(client, id);
             }
             );
         }
         #endregion
 
-        #region CodeVersionResource
+        #region MachineLearningCodeVersionResource
         /// <summary>
-        /// Gets an object representing a <see cref="CodeVersionResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="CodeVersionResource.CreateResourceIdentifier" /> to create a <see cref="CodeVersionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="MachineLearningCodeVersionResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="MachineLearningCodeVersionResource.CreateResourceIdentifier" /> to create a <see cref="MachineLearningCodeVersionResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="CodeVersionResource" /> object. </returns>
-        public static CodeVersionResource GetCodeVersionResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="MachineLearningCodeVersionResource" /> object. </returns>
+        public static MachineLearningCodeVersionResource GetMachineLearningCodeVersionResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                CodeVersionResource.ValidateResourceId(id);
-                return new CodeVersionResource(client, id);
+                MachineLearningCodeVersionResource.ValidateResourceId(id);
+                return new MachineLearningCodeVersionResource(client, id);
             }
             );
         }
         #endregion
 
-        #region ComponentContainerResource
+        #region MachineLearningComponentContainerResource
         /// <summary>
-        /// Gets an object representing a <see cref="ComponentContainerResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ComponentContainerResource.CreateResourceIdentifier" /> to create a <see cref="ComponentContainerResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="MachineLearningComponentContainerResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="MachineLearningComponentContainerResource.CreateResourceIdentifier" /> to create a <see cref="MachineLearningComponentContainerResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ComponentContainerResource" /> object. </returns>
-        public static ComponentContainerResource GetComponentContainerResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="MachineLearningComponentContainerResource" /> object. </returns>
+        public static MachineLearningComponentContainerResource GetMachineLearningComponentContainerResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                ComponentContainerResource.ValidateResourceId(id);
-                return new ComponentContainerResource(client, id);
+                MachineLearningComponentContainerResource.ValidateResourceId(id);
+                return new MachineLearningComponentContainerResource(client, id);
             }
             );
         }
         #endregion
 
-        #region ComponentVersionResource
+        #region MachineLearningComponentVersionResource
         /// <summary>
-        /// Gets an object representing a <see cref="ComponentVersionResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ComponentVersionResource.CreateResourceIdentifier" /> to create a <see cref="ComponentVersionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="MachineLearningComponentVersionResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="MachineLearningComponentVersionResource.CreateResourceIdentifier" /> to create a <see cref="MachineLearningComponentVersionResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ComponentVersionResource" /> object. </returns>
-        public static ComponentVersionResource GetComponentVersionResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="MachineLearningComponentVersionResource" /> object. </returns>
+        public static MachineLearningComponentVersionResource GetMachineLearningComponentVersionResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                ComponentVersionResource.ValidateResourceId(id);
-                return new ComponentVersionResource(client, id);
+                MachineLearningComponentVersionResource.ValidateResourceId(id);
+                return new MachineLearningComponentVersionResource(client, id);
             }
             );
         }
         #endregion
 
-        #region DataContainerResource
+        #region MachineLearningDataContainerResource
         /// <summary>
-        /// Gets an object representing a <see cref="DataContainerResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DataContainerResource.CreateResourceIdentifier" /> to create a <see cref="DataContainerResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="MachineLearningDataContainerResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="MachineLearningDataContainerResource.CreateResourceIdentifier" /> to create a <see cref="MachineLearningDataContainerResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DataContainerResource" /> object. </returns>
-        public static DataContainerResource GetDataContainerResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="MachineLearningDataContainerResource" /> object. </returns>
+        public static MachineLearningDataContainerResource GetMachineLearningDataContainerResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                DataContainerResource.ValidateResourceId(id);
-                return new DataContainerResource(client, id);
+                MachineLearningDataContainerResource.ValidateResourceId(id);
+                return new MachineLearningDataContainerResource(client, id);
             }
             );
         }
         #endregion
 
-        #region DataVersionResource
+        #region MachineLearningDataVersionResource
         /// <summary>
-        /// Gets an object representing a <see cref="DataVersionResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DataVersionResource.CreateResourceIdentifier" /> to create a <see cref="DataVersionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="MachineLearningDataVersionResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="MachineLearningDataVersionResource.CreateResourceIdentifier" /> to create a <see cref="MachineLearningDataVersionResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DataVersionResource" /> object. </returns>
-        public static DataVersionResource GetDataVersionResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="MachineLearningDataVersionResource" /> object. </returns>
+        public static MachineLearningDataVersionResource GetMachineLearningDataVersionResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                DataVersionResource.ValidateResourceId(id);
-                return new DataVersionResource(client, id);
+                MachineLearningDataVersionResource.ValidateResourceId(id);
+                return new MachineLearningDataVersionResource(client, id);
             }
             );
         }
         #endregion
 
-        #region DatastoreResource
+        #region MachineLearningDatastoreResource
         /// <summary>
-        /// Gets an object representing a <see cref="DatastoreResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DatastoreResource.CreateResourceIdentifier" /> to create a <see cref="DatastoreResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="MachineLearningDatastoreResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="MachineLearningDatastoreResource.CreateResourceIdentifier" /> to create a <see cref="MachineLearningDatastoreResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DatastoreResource" /> object. </returns>
-        public static DatastoreResource GetDatastoreResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="MachineLearningDatastoreResource" /> object. </returns>
+        public static MachineLearningDatastoreResource GetMachineLearningDatastoreResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                DatastoreResource.ValidateResourceId(id);
-                return new DatastoreResource(client, id);
+                MachineLearningDatastoreResource.ValidateResourceId(id);
+                return new MachineLearningDatastoreResource(client, id);
             }
             );
         }
         #endregion
 
-        #region EnvironmentContainerResource
+        #region MachineLearningEnvironmentContainerResource
         /// <summary>
-        /// Gets an object representing an <see cref="EnvironmentContainerResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="EnvironmentContainerResource.CreateResourceIdentifier" /> to create an <see cref="EnvironmentContainerResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="MachineLearningEnvironmentContainerResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="MachineLearningEnvironmentContainerResource.CreateResourceIdentifier" /> to create a <see cref="MachineLearningEnvironmentContainerResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="EnvironmentContainerResource" /> object. </returns>
-        public static EnvironmentContainerResource GetEnvironmentContainerResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="MachineLearningEnvironmentContainerResource" /> object. </returns>
+        public static MachineLearningEnvironmentContainerResource GetMachineLearningEnvironmentContainerResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                EnvironmentContainerResource.ValidateResourceId(id);
-                return new EnvironmentContainerResource(client, id);
+                MachineLearningEnvironmentContainerResource.ValidateResourceId(id);
+                return new MachineLearningEnvironmentContainerResource(client, id);
             }
             );
         }
         #endregion
 
-        #region EnvironmentVersionResource
+        #region MachineLearningEnvironmentVersionResource
         /// <summary>
-        /// Gets an object representing an <see cref="EnvironmentVersionResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="EnvironmentVersionResource.CreateResourceIdentifier" /> to create an <see cref="EnvironmentVersionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="MachineLearningEnvironmentVersionResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="MachineLearningEnvironmentVersionResource.CreateResourceIdentifier" /> to create a <see cref="MachineLearningEnvironmentVersionResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="EnvironmentVersionResource" /> object. </returns>
-        public static EnvironmentVersionResource GetEnvironmentVersionResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="MachineLearningEnvironmentVersionResource" /> object. </returns>
+        public static MachineLearningEnvironmentVersionResource GetMachineLearningEnvironmentVersionResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                EnvironmentVersionResource.ValidateResourceId(id);
-                return new EnvironmentVersionResource(client, id);
+                MachineLearningEnvironmentVersionResource.ValidateResourceId(id);
+                return new MachineLearningEnvironmentVersionResource(client, id);
             }
             );
         }
@@ -529,96 +625,96 @@ namespace Azure.ResourceManager.MachineLearning
         }
         #endregion
 
-        #region ModelContainerResource
+        #region MachineLearningModelContainerResource
         /// <summary>
-        /// Gets an object representing a <see cref="ModelContainerResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ModelContainerResource.CreateResourceIdentifier" /> to create a <see cref="ModelContainerResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="MachineLearningModelContainerResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="MachineLearningModelContainerResource.CreateResourceIdentifier" /> to create a <see cref="MachineLearningModelContainerResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ModelContainerResource" /> object. </returns>
-        public static ModelContainerResource GetModelContainerResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="MachineLearningModelContainerResource" /> object. </returns>
+        public static MachineLearningModelContainerResource GetMachineLearningModelContainerResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                ModelContainerResource.ValidateResourceId(id);
-                return new ModelContainerResource(client, id);
+                MachineLearningModelContainerResource.ValidateResourceId(id);
+                return new MachineLearningModelContainerResource(client, id);
             }
             );
         }
         #endregion
 
-        #region ModelVersionResource
+        #region MachineLearningModelVersionResource
         /// <summary>
-        /// Gets an object representing a <see cref="ModelVersionResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ModelVersionResource.CreateResourceIdentifier" /> to create a <see cref="ModelVersionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="MachineLearningModelVersionResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="MachineLearningModelVersionResource.CreateResourceIdentifier" /> to create a <see cref="MachineLearningModelVersionResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ModelVersionResource" /> object. </returns>
-        public static ModelVersionResource GetModelVersionResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="MachineLearningModelVersionResource" /> object. </returns>
+        public static MachineLearningModelVersionResource GetMachineLearningModelVersionResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                ModelVersionResource.ValidateResourceId(id);
-                return new ModelVersionResource(client, id);
+                MachineLearningModelVersionResource.ValidateResourceId(id);
+                return new MachineLearningModelVersionResource(client, id);
             }
             );
         }
         #endregion
 
-        #region OnlineEndpointResource
+        #region MachineLearningOnlineEndpointResource
         /// <summary>
-        /// Gets an object representing an <see cref="OnlineEndpointResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="OnlineEndpointResource.CreateResourceIdentifier" /> to create an <see cref="OnlineEndpointResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="MachineLearningOnlineEndpointResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="MachineLearningOnlineEndpointResource.CreateResourceIdentifier" /> to create a <see cref="MachineLearningOnlineEndpointResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="OnlineEndpointResource" /> object. </returns>
-        public static OnlineEndpointResource GetOnlineEndpointResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="MachineLearningOnlineEndpointResource" /> object. </returns>
+        public static MachineLearningOnlineEndpointResource GetMachineLearningOnlineEndpointResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                OnlineEndpointResource.ValidateResourceId(id);
-                return new OnlineEndpointResource(client, id);
+                MachineLearningOnlineEndpointResource.ValidateResourceId(id);
+                return new MachineLearningOnlineEndpointResource(client, id);
             }
             );
         }
         #endregion
 
-        #region OnlineDeploymentResource
+        #region MachineLearningOnlineDeploymentResource
         /// <summary>
-        /// Gets an object representing an <see cref="OnlineDeploymentResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="OnlineDeploymentResource.CreateResourceIdentifier" /> to create an <see cref="OnlineDeploymentResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="MachineLearningOnlineDeploymentResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="MachineLearningOnlineDeploymentResource.CreateResourceIdentifier" /> to create a <see cref="MachineLearningOnlineDeploymentResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="OnlineDeploymentResource" /> object. </returns>
-        public static OnlineDeploymentResource GetOnlineDeploymentResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="MachineLearningOnlineDeploymentResource" /> object. </returns>
+        public static MachineLearningOnlineDeploymentResource GetMachineLearningOnlineDeploymentResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                OnlineDeploymentResource.ValidateResourceId(id);
-                return new OnlineDeploymentResource(client, id);
+                MachineLearningOnlineDeploymentResource.ValidateResourceId(id);
+                return new MachineLearningOnlineDeploymentResource(client, id);
             }
             );
         }
         #endregion
 
-        #region ScheduleResource
+        #region MachineLearningScheduleResource
         /// <summary>
-        /// Gets an object representing a <see cref="ScheduleResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ScheduleResource.CreateResourceIdentifier" /> to create a <see cref="ScheduleResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="MachineLearningScheduleResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="MachineLearningScheduleResource.CreateResourceIdentifier" /> to create a <see cref="MachineLearningScheduleResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ScheduleResource" /> object. </returns>
-        public static ScheduleResource GetScheduleResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="MachineLearningScheduleResource" /> object. </returns>
+        public static MachineLearningScheduleResource GetMachineLearningScheduleResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                ScheduleResource.ValidateResourceId(id);
-                return new ScheduleResource(client, id);
+                MachineLearningScheduleResource.ValidateResourceId(id);
+                return new MachineLearningScheduleResource(client, id);
             }
             );
         }
