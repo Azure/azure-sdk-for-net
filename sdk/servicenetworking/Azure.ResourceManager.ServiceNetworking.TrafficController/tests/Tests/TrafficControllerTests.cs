@@ -14,6 +14,9 @@ using Azure.ResourceManager.Network;
 using Azure.Core;
 using NUnit.Framework;
 using Azure.ResourceManager.ServiceNetworking.TrafficController.Models;
+using System.IO.Pipelines;
+using Castle.Core.Resource;
+using System.Xml.Linq;
 
 namespace Azure.ResourceManager.ServiceNetworking.TrafficController.Tests.Tests
 {
@@ -31,23 +34,83 @@ namespace Azure.ResourceManager.ServiceNetworking.TrafficController.Tests.Tests
 
         private TrafficControllerResource CreateTrafficController(string location, string resourceGroup, string tcName)
         {
+            //Obtaining the Collection object of TrafficController to perform the Create/PUT operation.
             TrafficControllerCollection trafficControllerCollection = GetTrafficControllers(resourceGroup);
             TrafficControllerData tcgw = new TrafficControllerData(location);
-            TrafficControllerResource tc = trafficControllerCollection.CreateOrUpdateAsync(WaitUntil.Completed, tcName, tcgw).Result.Value;
-            return tc;
-        }
-
-        private async Task<TrafficControllerResource> GetTrafficControllerAsync(string resourceGroup, string tcName)
-        {
-            TrafficControllerCollection trafficControllerCollection = GetTrafficControllers(resourceGroup);
-            TrafficControllerResource tc = await trafficControllerCollection.GetAsync(tcName);
+            TrafficControllerResource tc = trafficControllerCollection.CreateOrUpdate(WaitUntil.Completed, tcName, tcgw).Value;
             return tc;
         }
 
         private TrafficControllerResource GetTrafficController(string resourceGroup, string tcName)
         {
+            //Obtaining the Collection object of TrafficController to perform the GET operation.
             TrafficControllerCollection trafficControllerCollection = GetTrafficControllers(resourceGroup);
             return trafficControllerCollection.Get(tcName);
+        }
+
+        private FrontendResource CreateFrontend(ResourceGroupResource rgResource, string frontendName, TrafficControllerResource tc, string location) {
+            //Obtaining the Collection object of the Frontend to perform the Create/PUT operation.
+            FrontendCollection frontends = GetFrontends(tc);
+
+            //Creating a public IP (PIP) Address Resource. The resource ID of the resouce is passed on to the Frontend.
+            PublicIPAddressCollection publicIPAddresses = rgResource.GetPublicIPAddresses();
+            string pipName = "tc-pip";
+            var pipData = new PublicIPAddressData()
+            {
+                PublicIPAddressVersion = Network.Models.NetworkIPVersion.IPv6,
+            };
+            PublicIPAddressResource pip = publicIPAddresses.CreateOrUpdate(WaitUntil.Completed, pipName, pipData).Value;
+
+            //Frontend Data object that is used to create the new frontend object.
+            FrontendData fnd = new FrontendData(location)
+            {
+                IPAddressVersion = FrontendIPAddressVersion.IPv6,
+                Mode = FrontendMode.Public,
+                PublicIPAddressId = pip.Id,
+            };
+            //Performing the Create/PUT operation and returning the result.
+            return frontends.CreateOrUpdate(WaitUntil.Completed, frontendName, fnd).Value;
+        }
+
+        private FrontendResource GetFrontend( string frontendName, TrafficControllerResource tc)
+        {
+            //Obtaining the Collection object of Frontend to perform the GET operation.
+            FrontendCollection frontends = GetFrontends(tc);
+            //Performing the GET operation and returning the result.
+            return frontends.Get(frontendName).Value;
+        }
+
+        private AssociationResource CreateAssociation(string resourceGroup, string associationName, TrafficControllerResource tc, string location) {
+            //Obtaining the Collection object of the Frontend to perform the Create/PUT operation.
+            AssociationCollection associations = GetAssociations(tc);
+
+            //Creating the virtual network (vnet) and subnet required for creating an association object. 
+            VirtualNetworkCollection vnets = GetVirtualNetworks(resourceGroup);
+            VirtualNetworkData vnetData = new VirtualNetworkData();
+            VirtualNetworkResource vnet = vnets.CreateOrUpdate(WaitUntil.Completed, "tc-vnet", vnetData).Value;
+            SubnetCollection subnets = vnet.GetSubnets();
+            SubnetData subnetData = new SubnetData();
+            SubnetResource subnet = subnets.CreateOrUpdate(WaitUntil.Completed, "tc-subnet", subnetData).Value;
+
+            //Association Data object that is used to create the new frontend object.
+            AssociationData associationData = new AssociationData(location)
+            {
+                AssociationType = AssociationType.Subnets,
+                SubnetId = subnet.Id,
+            };
+            //Performing the Create/PUT operation
+            AssociationResource associationCreate = associations.CreateOrUpdate(WaitUntil.Completed, associationName, associationData).Value;
+            return associationCreate;
+        }
+
+        private AssociationResource GetAssociation(string associationName, TrafficControllerResource tc)
+        {
+
+            //Obtaining the Collection object of Association to perform the GET operation.
+            AssociationCollection associations = GetAssociations(tc);
+            //Performing the GET operation and returning the result.
+            AssociationResource association = associations.Get(associationName).Value;
+            return association;
         }
 
         [Test]
@@ -58,8 +121,7 @@ namespace Azure.ResourceManager.ServiceNetworking.TrafficController.Tests.Tests
             string tcName = "tc-test";
 
             //Creating a resource group and validating its creation
-            var rgResource = await CreateResourceGroup(Subscription, resourceGroupName, location); //TODO: Validate that this won't be an issue (name reused)
-            Assert.NotNull(rgResource, "Resource Group not created successfully");
+            var rgResource = CreateResourceGroup(Subscription, resourceGroupName, location);
 
             //Testing PUT Operation
             TrafficControllerResource tcCreate = CreateTrafficController(location, resourceGroupName, tcName);
@@ -86,46 +148,28 @@ namespace Azure.ResourceManager.ServiceNetworking.TrafficController.Tests.Tests
             string location = "CanadaEast";
             string tcName = "tc-test";
 
-            //Creating a resource group and validating its creation
-            var rgResource = await CreateResourceGroup(Subscription, resourceGroupName, location);
-            Assert.NotNull(rgResource, "Resource Group not created successfully");
-
             //Creating Traffic Controller and obtaining Frontends object for performing tests of CRUD functions
             TrafficControllerResource tc = CreateTrafficController(location, resourceGroupName, tcName);
-            FrontendCollection frontends = GetFrontends(tc);
 
-            //Creating a public IP Address
-            PublicIPAddressCollection publicIPAddresses = rgResource.GetPublicIPAddresses();
-            string pipName = "tc-pip";
-            var pipData = new PublicIPAddressData()
-            {
-                PublicIPAddressVersion = Network.Models.NetworkIPVersion.IPv6,
-            };
-
-            PublicIPAddressResource pip = publicIPAddresses.CreateOrUpdate(WaitUntil.Completed, pipName, pipData).Value;
+            //Creating a resource group and validating its creation
+            var rgResource = CreateResourceGroup(Subscription, resourceGroupName, location);
 
             //Testing PUT Operation
             string frontendName = "frontend1";
-            FrontendData fnd = new FrontendData(location)
-            {
-                IPAddressVersion = FrontendIPAddressVersion.IPv6,
-                Mode = FrontendMode.Public,
-                PublicIPAddressId = pip.Id,
-            };
-            var frontendCreation = frontends.CreateOrUpdate(WaitUntil.Completed, frontendName, fnd).Value;
+            var frontendCreation = CreateFrontend(rgResource, frontendName, tc, location);
             Assert.IsNotNull(frontendCreation);
             Assert.AreEqual(frontendCreation.Data.Name, frontendName);
             Assert.AreEqual(frontendCreation.Data.ProvisioningState.ToString(), "Succeeded");
 
             //Testing GET Operation
-            var frontendGet = frontends.Get(frontendName).Value;
+            var frontendGet = GetFrontend(frontendName, tc);
             Assert.IsNotNull(frontendGet);
             Assert.AreEqual(frontendGet.Data.Name, frontendName);
             Assert.AreEqual(frontendGet.Data.ProvisioningState.ToString(), "Succeeded");
 
             //Testing DELETE Operation
             await frontendGet.DeleteAsync(WaitUntil.Completed);
-            frontendGet = frontends.Get(frontendName).Value;
+            frontendGet = GetFrontend(frontendName, tc);
             Assert.AreEqual(frontendGet.Data.ProvisioningState.ToString(), "Deleted", "The Frontend is NOT Deleted");
         }
 
@@ -137,42 +181,26 @@ namespace Azure.ResourceManager.ServiceNetworking.TrafficController.Tests.Tests
             string tcName = "tc-test";
 
             //Creating a resource group and validating its creation
-            var rgResource = await CreateResourceGroup(Subscription, resourceGroupName, location);
-            Assert.NotNull(rgResource, "Resource Group not created successfully");
+            var rgResource = CreateResourceGroup(Subscription, resourceGroupName, location);
 
             //Creating Traffic Controller and obtaining Associations object for performing tests of CRUD functions
             TrafficControllerResource tc = CreateTrafficController(location, resourceGroupName, tcName);
-            AssociationCollection associations = GetAssociations(tc);
 
-            //Creating required Association realted resources
-            VirtualNetworkCollection vnets = GetVirtualNetworks(resourceGroupName);
-            VirtualNetworkData vnetData = new VirtualNetworkData();
-            VirtualNetworkResource vnet = vnets.CreateOrUpdate(WaitUntil.Completed, "tc-vnet", vnetData).Value;
-            SubnetCollection subnets = vnet.GetSubnets();
-            SubnetData subnetData = new SubnetData();
-            SubnetResource subnet = subnets.CreateOrUpdate(WaitUntil.Completed, "tc-subnet", subnetData).Value;
-
-            //Testing the PUT Operation
-            AssociationData associationData = new AssociationData(location)
-            {
-                AssociationType = AssociationType.Subnets,
-                SubnetId = subnet.Id,
-            };
             string associationName = "tc-association";
-            AssociationResource associationCreate = associations.CreateOrUpdate(WaitUntil.Completed, associationName, associationData).Value;
+            AssociationResource associationCreate = CreateAssociation(resourceGroupName, associationName, tc, location);
             Assert.IsNotNull(associationCreate);
             Assert.AreEqual(associationCreate.Data.Name, associationName);
             Assert.AreEqual(associationCreate.Data.ProvisioningState.ToString(), "Succeeded");
 
             //Testing the GET Operation
-            AssociationResource associationGet = associations.Get(associationName).Value;
+            AssociationResource associationGet = GetAssociation(associationName, tc);
             Assert.IsNotNull(associationGet);
             Assert.AreEqual(associationGet.Data.Name, associationName);
             Assert.AreEqual(associationGet.Data.ProvisioningState.ToString(), "Succeeded");
 
             //Testing the DELETE Operatoin
             await associationGet.DeleteAsync(WaitUntil.Completed);
-            associationGet = associations.Get(associationName).Value;
+            associationGet = GetAssociation(associationName, tc);
             Assert.IsNull(associationGet);
         }
     }

@@ -6,6 +6,7 @@ using Azure.Core.TestFramework;
 using Azure.ResourceManager.Network;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.TestFramework;
+using Castle.Core.Resource;
 using NUnit.Framework;
 using System.Threading.Tasks;
 
@@ -47,7 +48,7 @@ namespace Azure.ResourceManager.ServiceNetworking.TrafficController.Tests
 
         protected TrafficControllerCollection GetTrafficControllers(string resourceGroupName)
         {
-            return GetResourceGroup(resourceGroupName).GetTrafficControllers();
+            return GetTrafficControllerCollection(resourceGroupName);
         }
 
         protected FrontendCollection GetFrontends(TrafficControllerResource trafficController)
@@ -65,13 +66,22 @@ namespace Azure.ResourceManager.ServiceNetworking.TrafficController.Tests
             return GetResourceGroup(resourceGroupName).GetVirtualNetworks();
         }
 
+        protected ResourceGroupResource CreateResourceGroup(SubscriptionResource subscription, string rgNamePrefix, AzureLocation location)
+        {
+            var rgResourceTask = CreateResourceGroupAsync(Subscription, rgNamePrefix, location);
+            rgResourceTask.Wait();
+            var rgResource = rgResourceTask.Result;
+            Assert.NotNull(rgResource, "Resource Group not created successfully");  //TODO: Validate that this won't be an issue (name reused)
+            return rgResource;
+        }
+
         [SetUp]
         public void CreateCommonClient()
         {
             Client = GetArmClient();
         }
 
-        protected async Task<ResourceGroupResource> CreateResourceGroup(SubscriptionResource subscription, string rgNamePrefix, AzureLocation location)
+        protected async Task<ResourceGroupResource> CreateResourceGroupAsync(SubscriptionResource subscription, string rgNamePrefix, AzureLocation location)
         {
             string rgName = Recording.GenerateAssetName(rgNamePrefix);
             ResourceGroupData input = new ResourceGroupData(location);
