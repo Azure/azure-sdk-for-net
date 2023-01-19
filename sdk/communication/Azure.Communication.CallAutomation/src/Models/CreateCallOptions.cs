@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Text;
 
 namespace Azure.Communication.CallAutomation
@@ -21,6 +22,9 @@ namespace Azure.Communication.CallAutomation
         {
             CallTarget = callTarget;
             CallbackUri = callbackUri;
+            CallSource = new CallSource(callTarget.TargetIdentity);
+            Targets = new ReadOnlyCollection<CommunicationIdentifier>(new List<CommunicationIdentifier> {{ callTarget.TargetIdentity }});
+            RepeatabilityHeaders = new RepeatabilityHeaders();
         }
 
         /// <summary>

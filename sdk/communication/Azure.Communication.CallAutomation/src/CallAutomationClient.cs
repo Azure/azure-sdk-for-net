@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Communication.Pipeline;
+using System.Net.WebSockets;
 
 namespace Azure.Communication.CallAutomation
 {
@@ -441,6 +442,223 @@ namespace Azure.Communication.CallAutomation
 
                 return Response.FromValue(new CreateCallResult(GetCallConnection(createCallResponse.Value.CallConnectionId), new CallConnectionProperties(createCallResponse.Value)),
                     createCallResponse.GetRawResponse());
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="targetPhoneNumber"></param>
+        /// <param name="callerIdNumber"></param>
+        /// <param name="callbackUri"></param>
+        /// <param name="callerIdName"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        public virtual async Task<Response<CreateCallResult>> CreateCallAsync(
+            string targetPhoneNumber,
+            string callerIdNumber,
+            Uri callbackUri,
+            string callerIdName = null,
+            CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallAutomationClient)}.{nameof(CreateCall)}");
+            scope.Start();
+
+            try
+            {
+                var options = new CreateCallOptions(new CallTarget(targetPhoneNumber, callerIdNumber), callbackUri);
+                options.CallSource.DisplayName = callerIdName;
+
+                CreateCallRequestInternal request = CreateCallRequest(options);
+                options.RepeatabilityHeaders?.GenerateIfRepeatabilityHeadersNotProvided();
+
+                var createCallResponse = await AzureCommunicationServicesRestClient.CreateCallAsync(
+                    request,
+                    options.RepeatabilityHeaders?.RepeatabilityRequestId,
+                    options.RepeatabilityHeaders?.GetRepeatabilityFirstSentString(),
+                    cancellationToken
+                    ).ConfigureAwait(false);
+
+                return Response.FromValue(new CreateCallResult(GetCallConnection(createCallResponse.Value.CallConnectionId), new CallConnectionProperties(createCallResponse.Value)),
+                    createCallResponse.GetRawResponse());
+
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="targetIdentity"></param>
+        /// <param name="callbackUri"></param>
+        /// <param name="callerIdName"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        public virtual async Task<Response<CreateCallResult>> CreateCallAsync(
+            string targetIdentity,
+            Uri callbackUri,
+            string callerIdName = null,
+            CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallAutomationClient)}.{nameof(CreateCall)}");
+            scope.Start();
+
+            try
+            {
+                var options = new CreateCallOptions(new CallTarget(targetIdentity), callbackUri);
+                options.CallSource.DisplayName = callerIdName;
+
+                CreateCallRequestInternal request = CreateCallRequest(options);
+                options.RepeatabilityHeaders?.GenerateIfRepeatabilityHeadersNotProvided();
+
+                var createCallResponse = await AzureCommunicationServicesRestClient.CreateCallAsync(
+                    request,
+                    options.RepeatabilityHeaders?.RepeatabilityRequestId,
+                    options.RepeatabilityHeaders?.GetRepeatabilityFirstSentString(),
+                    cancellationToken
+                    ).ConfigureAwait(false);
+
+                return Response.FromValue(new CreateCallResult(GetCallConnection(createCallResponse.Value.CallConnectionId), new CallConnectionProperties(createCallResponse.Value)),
+                    createCallResponse.GetRawResponse());
+
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="options"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        public virtual async Task<Response<CreateCallResult>> CreateSimRingCallAsync(CreateSimRingCallOptions options, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallAutomationClient)}.{nameof(CreateCall)}");
+            scope.Start();
+
+            try
+            {
+                var callSource = new CallSource(options.SourceIdentity)
+                {
+                    DisplayName = options.CallerIdName,
+                    CallerId = options.CallerIdNumber,
+                };
+                var createCallOptions = new CreateCallOptions(callSource, options.Targets, options.CallbackUri);
+
+                CreateCallRequestInternal request = CreateCallRequest(createCallOptions);
+                options.RepeatabilityHeaders?.GenerateIfRepeatabilityHeadersNotProvided();
+
+                var createCallResponse = await AzureCommunicationServicesRestClient.CreateCallAsync(
+                    request,
+                    options.RepeatabilityHeaders?.RepeatabilityRequestId,
+                    options.RepeatabilityHeaders?.GetRepeatabilityFirstSentString(),
+                    cancellationToken
+                    ).ConfigureAwait(false);
+
+                return Response.FromValue(new CreateCallResult(GetCallConnection(createCallResponse.Value.CallConnectionId), new CallConnectionProperties(createCallResponse.Value)),
+                    createCallResponse.GetRawResponse());
+
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="targetPhoneNumber"></param>
+        /// <param name="callerIdNumber"></param>
+        /// <param name="callbackUri"></param>
+        /// <param name="callerIdName"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        public virtual Response<CreateCallResult> CreateCall(
+            string targetPhoneNumber,
+            string callerIdNumber,
+            Uri callbackUri,
+            string callerIdName = null,
+            CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallAutomationClient)}.{nameof(CreateCall)}");
+            scope.Start();
+
+            try
+            {
+                var options = new CreateCallOptions(new CallTarget(targetPhoneNumber, callerIdNumber), callbackUri);
+                options.CallSource.DisplayName = callerIdName;
+
+                CreateCallRequestInternal request = CreateCallRequest(options);
+                options.RepeatabilityHeaders?.GenerateIfRepeatabilityHeadersNotProvided();
+
+                var createCallResponse =  AzureCommunicationServicesRestClient.CreateCall(
+                    request,
+                    options.RepeatabilityHeaders?.RepeatabilityRequestId,
+                    options.RepeatabilityHeaders?.GetRepeatabilityFirstSentString(),
+                    cancellationToken
+                    );
+
+                return Response.FromValue(new CreateCallResult(GetCallConnection(createCallResponse.Value.CallConnectionId), new CallConnectionProperties(createCallResponse.Value)),
+                    createCallResponse.GetRawResponse());
+
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="targetIdentity"></param>
+        /// <param name="callbackUri"></param>
+        /// <param name="callerIdName"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        public virtual  Response<CreateCallResult> CreateCall(
+            string targetIdentity,
+            Uri callbackUri,
+            string callerIdName = null,
+            CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallAutomationClient)}.{nameof(CreateCall)}");
+            scope.Start();
+
+            try
+            {
+                var options = new CreateCallOptions(new CallTarget(targetIdentity), callbackUri);
+                options.CallSource.DisplayName = callerIdName;
+
+                CreateCallRequestInternal request = CreateCallRequest(options);
+                options.RepeatabilityHeaders?.GenerateIfRepeatabilityHeadersNotProvided();
+
+                var createCallResponse =  AzureCommunicationServicesRestClient.CreateCall(
+                    request,
+                    options.RepeatabilityHeaders?.RepeatabilityRequestId,
+                    options.RepeatabilityHeaders?.GetRepeatabilityFirstSentString(),
+                    cancellationToken
+                    );
+
+                return Response.FromValue(new CreateCallResult(GetCallConnection(createCallResponse.Value.CallConnectionId), new CallConnectionProperties(createCallResponse.Value)),
+                    createCallResponse.GetRawResponse());
+
             }
             catch (Exception ex)
             {

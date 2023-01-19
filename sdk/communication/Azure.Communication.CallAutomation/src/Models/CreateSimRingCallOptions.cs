@@ -15,43 +15,19 @@ namespace Azure.Communication.CallAutomation
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="callTarget"></param>
-        /// <param name="callbackUri"></param>
-        public CreateSimRingCallOptions(CallTarget callTarget, Uri callbackUri)
-        {
-            CallTarget = callTarget;
-            CallbackUri = callbackUri;
-        }
-
-        /// <summary>
-        /// Creates a new CreateCallOptions object.
-        /// </summary>
         /// <param name="targets"></param>
-        /// <param name="callSource"></param>
         /// <param name="callbackUri"></param>
-        public CreateSimRingCallOptions(CallSource callSource, IEnumerable<CommunicationIdentifier> targets, Uri callbackUri)
+        public CreateSimRingCallOptions(IEnumerable<CommunicationIdentifier> targets, Uri callbackUri)
         {
             Targets = (IReadOnlyList<CommunicationIdentifier>)targets;
-            CallSource = callSource;
             CallbackUri = callbackUri;
             RepeatabilityHeaders = new RepeatabilityHeaders();
         }
 
         /// <summary>
-        /// 
-        /// </summary>
-        /// <value></value>
-        public CallTarget CallTarget { get; }
-
-        /// <summary>
         /// The targets of the call.
         /// </summary>
         public IReadOnlyList<CommunicationIdentifier> Targets { get; }
-
-        /// <summary>
-        /// The source of the call.
-        /// </summary>
-        public CallSource CallSource { get; }
 
         /// <summary>
         /// The callback Uri.
@@ -62,12 +38,24 @@ namespace Azure.Communication.CallAutomation
         /// 
         /// </summary>
         /// <value></value>
-        public string CallerDisplayName { get; set; }
+        public string CallerIdName { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <value></value>
+        public PhoneNumberIdentifier CallerIdNumber { get; set; }
 
         /// <summary>
         /// The Operation context.
         /// </summary>
         public string OperationContext { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <value></value>
+        public CommunicationUserIdentifier SourceIdentity { get; set; }
 
         /// <summary>
         /// Media Streaming Configuration.

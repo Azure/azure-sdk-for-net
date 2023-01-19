@@ -51,6 +51,15 @@ namespace Azure.Communication.CallAutomation
         /// <summary>
         /// 
         /// </summary>
+        /// <param name="targetRawId"></param>
+        public CallTarget(string targetRawId)
+        {
+            TargetIdentity = CommunicationIdentifier.FromRawId(targetRawId);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
         /// <value></value>
         public CommunicationIdentifier TargetIdentity { get; }
 
