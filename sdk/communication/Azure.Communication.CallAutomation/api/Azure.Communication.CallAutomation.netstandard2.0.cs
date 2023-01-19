@@ -324,13 +324,13 @@ namespace Azure.Communication.CallAutomation
         internal CallTransferFailed() { }
         public static Azure.Communication.CallAutomation.CallTransferFailed Deserialize(string content) { throw null; }
     }
-    public partial class ChoiceResult
+    public partial class ChoiceResult : Azure.Communication.CallAutomation.RecognizeResult
     {
         internal ChoiceResult() { }
         public string Label { get { throw null; } }
         public string RecognizedPhrase { get { throw null; } }
     }
-    public partial class CollectTonesResult
+    public partial class CollectTonesResult : Azure.Communication.CallAutomation.RecognizeResult
     {
         internal CollectTonesResult() { }
         public System.Collections.Generic.IReadOnlyList<Azure.Communication.CallAutomation.DtmfTone> Tones { get { throw null; } }
@@ -611,7 +611,7 @@ namespace Azure.Communication.CallAutomation
     }
     public partial class RecognizeCompleted : Azure.Communication.CallAutomation.CallAutomationEventWithReasonCodeName
     {
-        internal RecognizeCompleted() { }
+        public RecognizeCompleted(string callConnectionId, string serverCallId, string correlationId, string operationContext, Azure.Communication.CallAutomation.ResultInformation resultInformation, Azure.Communication.CallAutomation.CallMediaRecognitionType recognitionType, Azure.Communication.CallAutomation.RecognizeResult recognizeResult) { }
         public Azure.Communication.CallAutomation.ChoiceResult ChoiceResult { get { throw null; } }
         public Azure.Communication.CallAutomation.CollectTonesResult CollectTonesResult { get { throw null; } }
         public Azure.Communication.CallAutomation.CallMediaRecognitionType RecognitionType { get { throw null; } set { } }
@@ -639,6 +639,10 @@ namespace Azure.Communication.CallAutomation
         public static implicit operator Azure.Communication.CallAutomation.RecognizeInputType (string value) { throw null; }
         public static bool operator !=(Azure.Communication.CallAutomation.RecognizeInputType left, Azure.Communication.CallAutomation.RecognizeInputType right) { throw null; }
         public override string ToString() { throw null; }
+    }
+    public abstract partial class RecognizeResult
+    {
+        protected RecognizeResult() { }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct RecordingChannel : System.IEquatable<Azure.Communication.CallAutomation.RecordingChannel>
@@ -806,6 +810,8 @@ namespace Azure.Communication.CallAutomation
     public partial class TextSource : Azure.Communication.CallAutomation.PlaySource
     {
         public TextSource(string text) { }
+        public TextSource(string text, System.Globalization.CultureInfo sourceLocale, Azure.Communication.CallAutomation.GenderType gender) { }
+        public TextSource(string text, string voiceName) { }
         public string SourceLocale { get { throw null; } set { } }
         public string Text { get { throw null; } }
         public Azure.Communication.CallAutomation.GenderType? VoiceGender { get { throw null; } set { } }
