@@ -64,8 +64,16 @@ namespace Azure.ResourceManager.Reservations
 
         /// <summary>
         /// List the reservations and the roll up counts of reservations group by provisioning states that the user has access to in the current tenant.
-        /// Request Path: /providers/Microsoft.Capacity/reservations
-        /// Operation Id: Reservation_ListAll
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Capacity/reservations</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Reservation_ListAll</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="filter"> May be used to filter by reservation properties. The filter supports &apos;eq&apos;, &apos;or&apos;, and &apos;and&apos;. It does not currently support &apos;ne&apos;, &apos;gt&apos;, &apos;le&apos;, &apos;ge&apos;, or &apos;not&apos;. Reservation properties include sku/name, properties/{appliedScopeType, archived, displayName, displayProvisioningState, effectiveDateTime, expiryDate, provisioningState, quantity, renew, reservedResourceType, term, userFriendlyAppliedScopeType, userFriendlyRenewState}. </param>
         /// <param name="orderby"> May be used to sort order by reservation properties. </param>
@@ -84,8 +92,16 @@ namespace Azure.ResourceManager.Reservations
 
         /// <summary>
         /// List the reservations and the roll up counts of reservations group by provisioning states that the user has access to in the current tenant.
-        /// Request Path: /providers/Microsoft.Capacity/reservations
-        /// Operation Id: Reservation_ListAll
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Capacity/reservations</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Reservation_ListAll</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="filter"> May be used to filter by reservation properties. The filter supports &apos;eq&apos;, &apos;or&apos;, and &apos;and&apos;. It does not currently support &apos;ne&apos;, &apos;gt&apos;, &apos;le&apos;, &apos;ge&apos;, or &apos;not&apos;. Reservation properties include sku/name, properties/{appliedScopeType, archived, displayName, displayProvisioningState, effectiveDateTime, expiryDate, provisioningState, quantity, renew, reservedResourceType, term, userFriendlyAppliedScopeType, userFriendlyRenewState}. </param>
         /// <param name="orderby"> May be used to sort order by reservation properties. </param>
@@ -104,8 +120,16 @@ namespace Azure.ResourceManager.Reservations
 
         /// <summary>
         /// Calculate price for placing a `ReservationOrder`.
-        /// Request Path: /providers/Microsoft.Capacity/calculatePrice
-        /// Operation Id: ReservationOrder_Calculate
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Capacity/calculatePrice</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ReservationOrder_Calculate</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="content"> Information needed for calculate or purchase reservation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -127,8 +151,16 @@ namespace Azure.ResourceManager.Reservations
 
         /// <summary>
         /// Calculate price for placing a `ReservationOrder`.
-        /// Request Path: /providers/Microsoft.Capacity/calculatePrice
-        /// Operation Id: ReservationOrder_Calculate
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Capacity/calculatePrice</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ReservationOrder_Calculate</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="content"> Information needed for calculate or purchase reservation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -151,8 +183,16 @@ namespace Azure.ResourceManager.Reservations
         /// <summary>
         /// Calculates price for exchanging `Reservations` if there are no policy errors.
         /// 
-        /// Request Path: /providers/Microsoft.Capacity/calculateExchange
-        /// Operation Id: CalculateExchange_Post
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Capacity/calculateExchange</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>CalculateExchange_Post</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="content"> Request containing purchases and refunds that need to be executed. </param>
@@ -179,8 +219,16 @@ namespace Azure.ResourceManager.Reservations
         /// <summary>
         /// Calculates price for exchanging `Reservations` if there are no policy errors.
         /// 
-        /// Request Path: /providers/Microsoft.Capacity/calculateExchange
-        /// Operation Id: CalculateExchange_Post
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Capacity/calculateExchange</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>CalculateExchange_Post</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="content"> Request containing purchases and refunds that need to be executed. </param>
@@ -207,8 +255,16 @@ namespace Azure.ResourceManager.Reservations
         /// <summary>
         /// Returns one or more `Reservations` in exchange for one or more `Reservation` purchases.
         /// 
-        /// Request Path: /providers/Microsoft.Capacity/exchange
-        /// Operation Id: Exchange_Post
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Capacity/exchange</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Exchange_Post</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="content"> Request containing the refunds and purchases that need to be executed. </param>
@@ -235,8 +291,16 @@ namespace Azure.ResourceManager.Reservations
         /// <summary>
         /// Returns one or more `Reservations` in exchange for one or more `Reservation` purchases.
         /// 
-        /// Request Path: /providers/Microsoft.Capacity/exchange
-        /// Operation Id: Exchange_Post
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Capacity/exchange</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Exchange_Post</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="content"> Request containing the refunds and purchases that need to be executed. </param>

@@ -43,8 +43,16 @@ namespace Azure.ResourceManager.RecoveryServices
 
         /// <summary>
         /// Fetches all the resources of the specified type in the subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.RecoveryServices/vaults
-        /// Operation Id: Vaults_ListBySubscriptionId
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.RecoveryServices/vaults</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Vaults_ListBySubscriptionId</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="VaultResource" /> that may take multiple service requests to iterate over. </returns>
@@ -57,8 +65,16 @@ namespace Azure.ResourceManager.RecoveryServices
 
         /// <summary>
         /// Fetches all the resources of the specified type in the subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.RecoveryServices/vaults
-        /// Operation Id: Vaults_ListBySubscriptionId
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.RecoveryServices/vaults</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Vaults_ListBySubscriptionId</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="VaultResource" /> that may take multiple service requests to iterate over. </returns>

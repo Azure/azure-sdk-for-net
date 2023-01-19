@@ -586,13 +586,17 @@ namespace Azure.Storage.Test.Shared
         ///
         /// At most it's a 1 second difference wait. But most of the time there's no wait.
         /// </summary>
-        public void CheckModifiedSinceAndWait(Response<BlobContentInfo> uploadResponse)
+        /// <returns>Returns the time the IfModifiedSince should be for the Download Request to cause a 304</returns>
+        public DateTimeOffset CheckModifiedSinceAndWait(Response<BlobContentInfo> uploadResponse)
         {
             DateTimeOffset offsetNow = Recording.UtcNow;
             if (DateTimeOffset.Compare(uploadResponse.Value.LastModified, offsetNow) > 0)
             {
+                // Wait the difference plus 2 second
                 Thread.Sleep(uploadResponse.Value.LastModified.Subtract(offsetNow));
+                offsetNow = uploadResponse.Value.LastModified;
             }
+            return offsetNow;
         }
     }
 }

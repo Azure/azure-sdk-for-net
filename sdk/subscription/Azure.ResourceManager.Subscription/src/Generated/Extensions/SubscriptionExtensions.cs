@@ -38,8 +38,16 @@ namespace Azure.ResourceManager.Subscription
 
         /// <summary>
         /// Get Alias Subscription.
-        /// Request Path: /providers/Microsoft.Subscription/aliases/{aliasName}
-        /// Operation Id: Alias_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Subscription/aliases/{aliasName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Alias_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="aliasName"> AliasName is the name for the subscription creation request. Note that this is not the same as subscription name and this doesn’t have any other lifecycle need beyond the request for subscription creation. </param>
@@ -54,8 +62,16 @@ namespace Azure.ResourceManager.Subscription
 
         /// <summary>
         /// Get Alias Subscription.
-        /// Request Path: /providers/Microsoft.Subscription/aliases/{aliasName}
-        /// Operation Id: Alias_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Subscription/aliases/{aliasName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Alias_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="aliasName"> AliasName is the name for the subscription creation request. Note that this is not the same as subscription name and this doesn’t have any other lifecycle need beyond the request for subscription creation. </param>
@@ -86,8 +102,16 @@ namespace Azure.ResourceManager.Subscription
 
         /// <summary>
         /// Get Billing Account Policy.
-        /// Request Path: /providers/Microsoft.Billing/billingAccounts/{billingAccountId}/providers/Microsoft.Subscription/policies/default
-        /// Operation Id: BillingAccount_GetPolicy
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountId}/providers/Microsoft.Subscription/policies/default</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>BillingAccount_GetPolicy</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="billingAccountId"> Billing Account Id. </param>
@@ -102,8 +126,16 @@ namespace Azure.ResourceManager.Subscription
 
         /// <summary>
         /// Get Billing Account Policy.
-        /// Request Path: /providers/Microsoft.Billing/billingAccounts/{billingAccountId}/providers/Microsoft.Subscription/policies/default
-        /// Operation Id: BillingAccount_GetPolicy
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountId}/providers/Microsoft.Subscription/policies/default</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>BillingAccount_GetPolicy</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="billingAccountId"> Billing Account Id. </param>
@@ -118,8 +150,16 @@ namespace Azure.ResourceManager.Subscription
 
         /// <summary>
         /// Accept subscription ownership.
-        /// Request Path: /providers/Microsoft.Subscription/subscriptions/{subscriptionId}/acceptOwnership
-        /// Operation Id: Subscription_AcceptOwnership
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Subscription/subscriptions/{subscriptionId}/acceptOwnership</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Subscription_AcceptOwnership</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -138,8 +178,16 @@ namespace Azure.ResourceManager.Subscription
 
         /// <summary>
         /// Accept subscription ownership.
-        /// Request Path: /providers/Microsoft.Subscription/subscriptions/{subscriptionId}/acceptOwnership
-        /// Operation Id: Subscription_AcceptOwnership
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Subscription/subscriptions/{subscriptionId}/acceptOwnership</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Subscription_AcceptOwnership</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -158,8 +206,16 @@ namespace Azure.ResourceManager.Subscription
 
         /// <summary>
         /// Accept subscription ownership status.
-        /// Request Path: /providers/Microsoft.Subscription/subscriptions/{subscriptionId}/acceptOwnershipStatus
-        /// Operation Id: Subscription_AcceptOwnershipStatus
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Subscription/subscriptions/{subscriptionId}/acceptOwnershipStatus</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Subscription_AcceptOwnershipStatus</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="subscriptionId"> Subscription Id. </param>
@@ -175,8 +231,16 @@ namespace Azure.ResourceManager.Subscription
 
         /// <summary>
         /// Accept subscription ownership status.
-        /// Request Path: /providers/Microsoft.Subscription/subscriptions/{subscriptionId}/acceptOwnershipStatus
-        /// Operation Id: Subscription_AcceptOwnershipStatus
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Subscription/subscriptions/{subscriptionId}/acceptOwnershipStatus</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Subscription_AcceptOwnershipStatus</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="subscriptionId"> Subscription Id. </param>
@@ -201,8 +265,16 @@ namespace Azure.ResourceManager.Subscription
 
         /// <summary>
         /// The operation to cancel a subscription
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Subscription/cancel
-        /// Operation Id: Subscription_Cancel
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Subscription/cancel</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Subscription_Cancel</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -213,8 +285,16 @@ namespace Azure.ResourceManager.Subscription
 
         /// <summary>
         /// The operation to cancel a subscription
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Subscription/cancel
-        /// Operation Id: Subscription_Cancel
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Subscription/cancel</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Subscription_Cancel</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -225,8 +305,16 @@ namespace Azure.ResourceManager.Subscription
 
         /// <summary>
         /// The operation to rename a subscription
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Subscription/rename
-        /// Operation Id: Subscription_Rename
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Subscription/rename</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Subscription_Rename</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="body"> Subscription Name. </param>
@@ -241,8 +329,16 @@ namespace Azure.ResourceManager.Subscription
 
         /// <summary>
         /// The operation to rename a subscription
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Subscription/rename
-        /// Operation Id: Subscription_Rename
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Subscription/rename</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Subscription_Rename</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="body"> Subscription Name. </param>
@@ -257,8 +353,16 @@ namespace Azure.ResourceManager.Subscription
 
         /// <summary>
         /// The operation to enable a subscription
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Subscription/enable
-        /// Operation Id: Subscription_Enable
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Subscription/enable</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Subscription_Enable</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -269,8 +373,16 @@ namespace Azure.ResourceManager.Subscription
 
         /// <summary>
         /// The operation to enable a subscription
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Subscription/enable
-        /// Operation Id: Subscription_Enable
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Subscription/enable</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Subscription_Enable</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

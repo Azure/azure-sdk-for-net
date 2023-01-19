@@ -53,8 +53,16 @@ namespace Azure.ResourceManager.MixedReality
 
         /// <summary>
         /// Check Name Availability for local uniqueness
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.MixedReality/locations/{location}/checkNameAvailability
-        /// Operation Id: CheckNameAvailabilityLocal
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.MixedReality/locations/{location}/checkNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>CheckNameAvailabilityLocal</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="location"> The location in which uniqueness will be verified. </param>
         /// <param name="content"> Check Name Availability Request. </param>
@@ -77,8 +85,16 @@ namespace Azure.ResourceManager.MixedReality
 
         /// <summary>
         /// Check Name Availability for local uniqueness
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.MixedReality/locations/{location}/checkNameAvailability
-        /// Operation Id: CheckNameAvailabilityLocal
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.MixedReality/locations/{location}/checkNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>CheckNameAvailabilityLocal</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="location"> The location in which uniqueness will be verified. </param>
         /// <param name="content"> Check Name Availability Request. </param>
@@ -101,8 +117,16 @@ namespace Azure.ResourceManager.MixedReality
 
         /// <summary>
         /// List Spatial Anchors Accounts by Subscription
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.MixedReality/spatialAnchorsAccounts
-        /// Operation Id: SpatialAnchorsAccounts_ListBySubscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.MixedReality/spatialAnchorsAccounts</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SpatialAnchorsAccounts_ListBySubscription</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="SpatialAnchorsAccountResource" /> that may take multiple service requests to iterate over. </returns>
@@ -115,8 +139,16 @@ namespace Azure.ResourceManager.MixedReality
 
         /// <summary>
         /// List Spatial Anchors Accounts by Subscription
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.MixedReality/spatialAnchorsAccounts
-        /// Operation Id: SpatialAnchorsAccounts_ListBySubscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.MixedReality/spatialAnchorsAccounts</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SpatialAnchorsAccounts_ListBySubscription</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="SpatialAnchorsAccountResource" /> that may take multiple service requests to iterate over. </returns>
@@ -129,8 +161,16 @@ namespace Azure.ResourceManager.MixedReality
 
         /// <summary>
         /// List Remote Rendering Accounts by Subscription
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.MixedReality/remoteRenderingAccounts
-        /// Operation Id: RemoteRenderingAccounts_ListBySubscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.MixedReality/remoteRenderingAccounts</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>RemoteRenderingAccounts_ListBySubscription</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="RemoteRenderingAccountResource" /> that may take multiple service requests to iterate over. </returns>
@@ -143,8 +183,16 @@ namespace Azure.ResourceManager.MixedReality
 
         /// <summary>
         /// List Remote Rendering Accounts by Subscription
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.MixedReality/remoteRenderingAccounts
-        /// Operation Id: RemoteRenderingAccounts_ListBySubscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.MixedReality/remoteRenderingAccounts</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>RemoteRenderingAccounts_ListBySubscription</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="RemoteRenderingAccountResource" /> that may take multiple service requests to iterate over. </returns>

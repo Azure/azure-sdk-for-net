@@ -3,6 +3,7 @@
 ## 1.9.0-beta.2 (Unreleased)
 
 ### Features Added
+ - Allow `VisualStudioCredential` on non-windows platforms
 
 ### Breaking Changes
 
