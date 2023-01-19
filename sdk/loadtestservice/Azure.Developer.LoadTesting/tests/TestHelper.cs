@@ -116,5 +116,27 @@ namespace Azure.Developer.LoadTesting.Tests.Helper
                     }
                 ));
         }
+
+        public TestRunOperation SetupTestRun(LoadTestRunClient loadTestRunClient, string testId, WaitUntil waitUntil)
+        {
+            return loadTestRunClient.BeginTestRun(waitUntil, testId, RequestContent.Create(
+                    new
+                    {
+                        testId = testId,
+                        displayName = "Run created from dotnet testing framework"
+                    }
+                ));
+        }
+
+        public async Task<TestRunOperation> SetupTestRunAsync(LoadTestRunClient loadTestRunClient, string testRunId, string testId, WaitUntil waitUntil)
+        {
+            return await loadTestRunClient.BeginTestRunAsync(waitUntil, testRunId, RequestContent.Create(
+                    new
+                    {
+                        testId = testId,
+                        displayName = "Run created from dotnet testing framework"
+                    }
+                ));
+        }
     }
 }

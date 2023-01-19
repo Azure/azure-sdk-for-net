@@ -8,9 +8,9 @@
         "Authorization": "Sanitized",
         "Content-Length": "256",
         "Content-Type": "application/merge-patch\u002Bjson",
-        "traceparent": "00-bab64700a30e2410d3e91823606d6fc6-59d0c5f48bae2e22-00",
+        "traceparent": "00-a60d06f0c2dc8bffb60c32b0804dcf7e-848e6e3110e8dbf1-00",
         "User-Agent": "azsdk-net-Developer.LoadTesting/1.0.0-alpha.20230119.1 (.NET 6.0.13; Microsoft Windows 10.0.22621)",
-        "x-ms-client-request-id": "1f7a49281de01d57b9d7d871ae7640c4",
+        "x-ms-client-request-id": "4d8ce654a3a5f4fbf40d53a7572fe93d",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -30,14 +30,14 @@
       "ResponseHeaders": {
         "api-supported-versions": "2021-07-01-preview, 2022-06-01-preview, 2022-11-01",
         "Connection": "keep-alive",
-        "Content-Length": "434",
+        "Content-Length": "436",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Thu, 19 Jan 2023 11:47:17 GMT",
+        "Date": "Thu, 19 Jan 2023 16:22:56 GMT",
         "Location": "https://f878fc34-142f-4312-8577-a04c47da9c0b.eastasia.cnt-prod.loadtesting.azure.com/tests/test-from-csharp-sdk-testing-framework?api-version=2022-11-01",
-        "mise-correlation-id": "52c7382b-e67a-4ea4-bcc0-ec49df16c032",
+        "mise-correlation-id": "b2a0b8ab-2613-4fa0-98a2-015f64d26b80",
         "Strict-Transport-Security": "max-age=15724800; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "030e5cb8-659e-40c9-a0db-f20a90e905f9"
+        "x-ms-correlation-request-id": "e1bd09a1-45e1-45af-875e-87a5b4e6d2b4"
       },
       "ResponseBody": {
         "passFailCriteria": {
@@ -54,8 +54,8 @@
         "testId": "test-from-csharp-sdk-testing-framework",
         "description": "This test was created through loadtesting C# SDK",
         "displayName": "Dotnet Testing Framework Loadtest",
-        "createdDateTime": "2023-01-19T11:47:17.82Z",
-        "lastModifiedDateTime": "2023-01-19T11:47:17.82Z"
+        "createdDateTime": "2023-01-19T16:22:56.968Z",
+        "lastModifiedDateTime": "2023-01-19T16:22:56.968Z"
       }
     },
     {
@@ -64,9 +64,9 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-0b6266e2e91ca9f2dccf2272f5f40fb4-3753c1d512c85216-00",
+        "traceparent": "00-02e80de154c509815f931bab58c6e66f-406e679d89295eb3-00",
         "User-Agent": "azsdk-net-Developer.LoadTesting/1.0.0-alpha.20230119.1 (.NET 6.0.13; Microsoft Windows 10.0.22621)",
-        "x-ms-client-request-id": "78535720626e3f79f3fec4cbf3a94736",
+        "x-ms-client-request-id": "bf95c76f51f6b18c45c2c4715af0da57",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -74,13 +74,13 @@
       "ResponseHeaders": {
         "api-supported-versions": "2021-07-01-preview, 2022-06-01-preview, 2022-11-01",
         "Connection": "keep-alive",
-        "Content-Length": "446",
+        "Content-Length": "448",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Thu, 19 Jan 2023 11:47:18 GMT",
-        "mise-correlation-id": "e732d5fe-bfde-4bec-8b40-3d000a123292",
+        "Date": "Thu, 19 Jan 2023 16:22:57 GMT",
+        "mise-correlation-id": "6ba4c778-18e5-4a5e-8334-27ed1d40c3ff",
         "Strict-Transport-Security": "max-age=15724800; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "021e1619-0f1a-4f94-90ea-3d43121085cb"
+        "x-ms-correlation-request-id": "faf3868c-f855-4548-9b52-ebf3546ba3f3"
       },
       "ResponseBody": {
         "value": [
@@ -99,8 +99,8 @@
             "testId": "test-from-csharp-sdk-testing-framework",
             "description": "This test was created through loadtesting C# SDK",
             "displayName": "Dotnet Testing Framework Loadtest",
-            "createdDateTime": "2023-01-19T11:47:17.82Z",
-            "lastModifiedDateTime": "2023-01-19T11:47:17.82Z"
+            "createdDateTime": "2023-01-19T16:22:56.968Z",
+            "lastModifiedDateTime": "2023-01-19T16:22:56.968Z"
           }
         ]
       }
@@ -111,9 +111,9 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-ec565c4683729ec2454d37c91c716a22-b2411142aaca74ec-00",
+        "traceparent": "00-28f22503c147acae0bb9228b4bfbf9cc-7e0da487f6f5721f-00",
         "User-Agent": "azsdk-net-Developer.LoadTesting/1.0.0-alpha.20230119.1 (.NET 6.0.13; Microsoft Windows 10.0.22621)",
-        "x-ms-client-request-id": "9639acbd22518c0339c6fdcf1ec86fed",
+        "x-ms-client-request-id": "17485797fb01e168614f70a1163afbbc",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -121,11 +121,11 @@
       "ResponseHeaders": {
         "api-supported-versions": "2021-07-01-preview, 2022-06-01-preview, 2022-11-01",
         "Connection": "keep-alive",
-        "Date": "Thu, 19 Jan 2023 11:47:18 GMT",
-        "mise-correlation-id": "3e7289e8-e4b7-4aae-9bdf-27b629244f5f",
+        "Date": "Thu, 19 Jan 2023 16:22:57 GMT",
+        "mise-correlation-id": "f814dce7-d2a7-416d-b8a0-343ee09106e2",
         "Strict-Transport-Security": "max-age=15724800; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "cedb3531-3a70-4862-9038-7effba11250b"
+        "x-ms-correlation-request-id": "e0872af2-e1f6-48ca-b2ce-075fb56f563f"
       },
       "ResponseBody": null
     }
@@ -133,6 +133,6 @@
   "Variables": {
     "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com/",
     "LOADTESTSERVICE_ENDPOINT": "f878fc34-142f-4312-8577-a04c47da9c0b.eastasia.cnt-prod.loadtesting.azure.com",
-    "RandomSeed": "318983512"
+    "RandomSeed": "307055266"
   }
 }

@@ -19,14 +19,36 @@ namespace Azure.Developer.LoadTesting.Tests
     {
         public LoadTestRunClientTest(bool isAsync): base(isAsync) { }
 
+        [SetUp]
+        public async Task SetUp()
+        {
+            _loadTestAdministrationClient = CreateAdministrationClient();
+            _loadTestRunClient = CreateRunClient();
+
+            await _testHelper.SetupTestingLoadTestResourceAsync(_loadTestAdministrationClient, _testId);
+            await _testHelper.SetupTestScriptAsync(_loadTestAdministrationClient, _testId, _fileName, waitUntil: WaitUntil.Completed);
+
+            if (!CheckForSkipTestRun())
+            {
+                _testRunOperation = await _testHelper.SetupTestRunAsync(_loadTestRunClient, _testRunId, _testId, WaitUntil.Started);
+            }
+        }
+
+        [TearDown]
+        public async Task TearDown()
+        {
+            if (!CheckForSkipDeleteTestRun())
+            {
+                await _loadTestRunClient.DeleteTestRunAsync(_testRunId);
+            }
+            await _loadTestAdministrationClient.DeleteTestAsync(_testId);
+        }
+
         [Test]
+        [Category(SKIP_TEST_RUN)]
         public async Task BeginCreateOrUpdateTestRun()
         {
-            LoadTestRunClient loadTestRunClient = CreateRunClient();
-            _loadTestAdministrationClient = CreateAdministrationClient();
-            await _testHelper.SetupLoadTestResourceAndTestScriptAsync(_loadTestAdministrationClient, _testId, _fileName);
-
-            TestRunOperation testRunOperation = await loadTestRunClient.BeginTestRunAsync(
+           TestRunOperation testRunOperation = await _loadTestRunClient.BeginTestRunAsync(
                 WaitUntil.Completed, _testRunId, RequestContent.Create(
                     new
                     {
@@ -35,13 +57,17 @@ namespace Azure.Developer.LoadTesting.Tests
                     }
                 ));
 
+            JsonDocument jsonDocument = JsonDocument.Parse(testRunOperation.Value.ToString());
+            Assert.AreEqual(_testRunId, jsonDocument.RootElement.GetProperty("testRunId").ToString());
+            Assert.AreEqual(_testId, jsonDocument.RootElement.GetProperty("testId").ToString());
+            Assert.AreEqual("DONE", jsonDocument.RootElement.GetProperty("status").ToString());
             Assert.IsTrue(testRunOperation.HasValue);
-            Assert.NotNull(testRunOperation.Value);
             Assert.IsTrue(testRunOperation.HasCompleted);
 
-            await loadTestRunClient.DeleteTestRunAsync(_testRunId);
+            await _loadTestRunClient.DeleteTestRunAsync(_testRunId);
             await _testHelper.SetupLoadTestResourceAndTestScriptAsync(_loadTestAdministrationClient, _testId, _fileName);
-            testRunOperation = await loadTestRunClient.BeginTestRunAsync(
+
+            testRunOperation = await _loadTestRunClient.BeginTestRunAsync(
                    WaitUntil.Completed, _testRunId, RequestContent.Create(
                         new
                         {
@@ -51,79 +77,91 @@ namespace Azure.Developer.LoadTesting.Tests
                    ));
 
             await testRunOperation.WaitForCompletionAsync();
+
+            jsonDocument = JsonDocument.Parse(testRunOperation.Value.ToString());
+            Assert.AreEqual(_testRunId, jsonDocument.RootElement.GetProperty("testRunId").ToString());
+            Assert.AreEqual(_testId, jsonDocument.RootElement.GetProperty("testId").ToString());
+            Assert.AreEqual("DONE", jsonDocument.RootElement.GetProperty("status").ToString());
             Assert.IsTrue(testRunOperation.HasValue);
-            Assert.NotNull(testRunOperation.Value);
             Assert.IsTrue(testRunOperation.HasCompleted);
         }
 
         [Test]
         public async Task GetTestRun()
         {
-            LoadTestRunClient loadTestRunClient = CreateRunClient();
-            _loadTestAdministrationClient = CreateAdministrationClient();
+            Response response = await _loadTestRunClient.GetTestRunAsync(_testRunId);
 
-            Response response = await loadTestRunClient.GetTestRunAsync(_testRunId);
-            Assert.NotNull(response);
+            Console.WriteLine(response.Content.ToString());
+            JsonDocument jsonDocument = JsonDocument.Parse(response.Content.ToString());
+            Assert.AreEqual(_testRunId, jsonDocument.RootElement.GetProperty("testRunId").ToString());
+            Assert.AreEqual(_testId, jsonDocument.RootElement.GetProperty("testId").ToString());
         }
 
         [Test]
         public async Task GetTestRunFile()
         {
-            LoadTestRunClient loadTestRunClient = CreateRunClient();
-            _loadTestAdministrationClient = CreateAdministrationClient();
+            Response response = await _loadTestRunClient.GetTestRunFileAsync(_testRunId, _fileName);
 
-            Response response = await loadTestRunClient.GetTestRunFileAsync(_testRunId, _fileName);
-            Assert.NotNull(response);
+            Console.WriteLine(response.Content.ToString());
+            JsonDocument jsonDocument = JsonDocument.Parse(response.Content.ToString());
+            Assert.AreEqual(_fileName, jsonDocument.RootElement.GetProperty("fileName").ToString());
+            Assert.AreEqual("VALIDATION_SUCCESS", jsonDocument.RootElement.GetProperty("validationStatus").ToString());
         }
 
         [Test]
         public async Task ListTestRuns()
         {
-            LoadTestRunClient loadTestRunClient = CreateRunClient();
-            _loadTestAdministrationClient = CreateAdministrationClient();
+            AsyncPageable<BinaryData> responsePageable = _loadTestRunClient.GetTestRunsAsync();
 
-            await _testHelper.SetupTestRunWithLoadTestAsync(_loadTestAdministrationClient, _testId, _fileName, loadTestRunClient, _testRunId, waitUntil: WaitUntil.Started);
-            AsyncPageable<BinaryData> reponse = loadTestRunClient.GetTestRunsAsync();
+            await foreach (var page in responsePageable.AsPages())
+            {
+                foreach (var testRun in page.Values)
+                {
+                    Console.WriteLine(testRun.ToString());
 
-            Assert.NotNull(reponse);
+                    JsonDocument jsonDocument = JsonDocument.Parse(testRun.ToString());
+                    Assert.AreEqual(_testId, jsonDocument.RootElement.GetProperty("testId").ToString());
+                }
+            }
         }
 
         [Test]
+        [Category(SKIP_DELETE_TEST_RUN)]
         public async Task DeleteTestRun()
         {
-            LoadTestRunClient loadTestRunClient = CreateRunClient();
-            _loadTestAdministrationClient = CreateAdministrationClient();
+            Response response = await _loadTestRunClient.DeleteTestRunAsync(_testRunId);
 
-            await _testHelper.SetupTestRunWithLoadTestAsync(_loadTestAdministrationClient, _testId, _fileName, loadTestRunClient, _testRunId, waitUntil: WaitUntil.Started);
-            Response response = await loadTestRunClient.DeleteTestRunAsync(_testRunId);
-
-            Assert.NotNull(response);
+            try
+            {
+                await _loadTestRunClient.DeleteTestRunAsync(_testRunId);
+                Assert.Fail();
+            }
+            catch (RequestFailedException)
+            {
+                Assert.Pass();
+            }
+            catch (Exception)
+            {
+                Assert.Fail();
+            }
         }
 
         [Test]
         public async Task StopTestRun()
         {
-            LoadTestRunClient loadTestRunClient = CreateRunClient();
-            _loadTestAdministrationClient = CreateAdministrationClient();
+            Response response = await _loadTestRunClient.StopTestRunAsync(_testRunId);
 
-            await loadTestRunClient.DeleteTestRunAsync(_testRunId);
-            await _testHelper.SetupTestRunWithLoadTestAsync(_loadTestAdministrationClient, _testId, _fileName, loadTestRunClient, _testRunId, waitUntil: WaitUntil.Started);
-
-            Response response = await loadTestRunClient.StopTestRunAsync(_testRunId);
-            Assert.NotNull(response);
+            JsonDocument jsonDocument = JsonDocument.Parse(response.Content.ToString());
+            Assert.AreEqual(_testId, jsonDocument.RootElement.GetProperty("testId").ToString());
+            Assert.AreEqual(_testRunId, jsonDocument.RootElement.GetProperty("testRunId").ToString());
         }
 
         [Test]
         public async Task CreateOrUpdateAppComponents()
         {
-            LoadTestRunClient loadTestRunClient = CreateRunClient();
-            _loadTestAdministrationClient = CreateAdministrationClient();
-
-            await _testHelper.SetupTestRunWithLoadTestAsync(_loadTestAdministrationClient, _testId, _fileName, loadTestRunClient, _testRunId, waitUntil: WaitUntil.Started);
-
             _resourceId = TestEnvironment.ResourceId;
 
-            Response response = await loadTestRunClient.CreateOrUpdateAppComponentsAsync(
+            Response response = await _loadTestRunClient.CreateOrUpdateAppComponentsAsync(
                     _testRunId,
                     RequestContent.Create(
                         new Dictionary<string, Dictionary<string, Dictionary<string, string>>>
@@ -144,18 +182,16 @@ namespace Azure.Developer.LoadTesting.Tests
                     )
                 );
 
-            Assert.NotNull(response);
+            JsonDocument jsonDocument = JsonDocument.Parse(response.Content.ToString());
+            Assert.AreEqual(_resourceId, jsonDocument.RootElement.GetProperty("components").GetProperty(_resourceId).GetProperty("resourceId").ToString());
         }
 
         [Test]
         public async Task GetAppComponents()
         {
-            LoadTestRunClient loadTestRunClient = CreateRunClient();
-            _loadTestAdministrationClient = CreateAdministrationClient();
-            await _testHelper.SetupTestRunWithLoadTestAsync(_loadTestAdministrationClient, _testId, _fileName, loadTestRunClient, _testRunId, waitUntil: WaitUntil.Started);
             _resourceId = TestEnvironment.ResourceId;
 
-            await loadTestRunClient.CreateOrUpdateAppComponentsAsync(
+            await _loadTestRunClient.CreateOrUpdateAppComponentsAsync(
                     _testRunId,
                     RequestContent.Create(
                         new Dictionary<string, Dictionary<string, Dictionary<string, string>>>
@@ -176,22 +212,18 @@ namespace Azure.Developer.LoadTesting.Tests
                     )
                 );
 
-            Response response = await loadTestRunClient.GetAppComponentsAsync(_testRunId);
+            Response response = await _loadTestRunClient.GetAppComponentsAsync(_testRunId);
 
-            Assert.NotNull(response);
+            JsonDocument jsonDocument = JsonDocument.Parse(response.Content.ToString());
+            Assert.AreEqual(_resourceId, jsonDocument.RootElement.GetProperty("components").GetProperty(_resourceId).GetProperty("resourceId").ToString());
         }
 
         [Test]
         public async Task CreateOrUpdateServerMetricsConfig()
         {
-            LoadTestRunClient loadTestRunClient = CreateRunClient();
-            _loadTestAdministrationClient = CreateAdministrationClient();
-
-            await _testHelper.SetupTestRunWithLoadTestAsync(_loadTestAdministrationClient, _testId, _fileName, loadTestRunClient, _testRunId, waitUntil: WaitUntil.Started);
-
             _resourceId = TestEnvironment.ResourceId;
 
-            Response response = await loadTestRunClient.CreateOrUpdateServerMetricsConfigAsync(
+            Response response = await _loadTestRunClient.CreateOrUpdateServerMetricsConfigAsync(
                     _testRunId,
                     RequestContent.Create(
                         new Dictionary<string, Dictionary<string, Dictionary<string, string>>>
@@ -216,20 +248,15 @@ namespace Azure.Developer.LoadTesting.Tests
                         }
                     )
                 );
-            Assert.NotNull( response );
+            JsonDocument jsonDocument = JsonDocument.Parse(response.Content.ToString());
+            Assert.AreEqual(_resourceId, jsonDocument.RootElement.GetProperty("metrics").GetProperty(_resourceId).GetProperty("resourceId").ToString());
         }
 
         [Test]
         public async Task GetServerMetricsConfig()
         {
-            LoadTestRunClient loadTestRunClient = CreateRunClient();
-            _loadTestAdministrationClient = CreateAdministrationClient();
-
-            await _testHelper.SetupTestRunWithLoadTestAsync(_loadTestAdministrationClient, _testId, _fileName, loadTestRunClient, _testRunId, waitUntil: WaitUntil.Started);
-
             _resourceId = TestEnvironment.ResourceId;
-
-            await loadTestRunClient.CreateOrUpdateServerMetricsConfigAsync(
+            await _loadTestRunClient.CreateOrUpdateServerMetricsConfigAsync(
                     _testRunId,
                     RequestContent.Create(
                         new Dictionary<string, Dictionary<string, Dictionary<string, string>>>
@@ -255,9 +282,10 @@ namespace Azure.Developer.LoadTesting.Tests
                     )
                 );
 
-            Response response = await loadTestRunClient.GetServerMetricsConfigAsync(_testRunId);
+            Response response = await _loadTestRunClient.GetServerMetricsConfigAsync(_testRunId);
 
-            Assert.NotNull(response);
+            JsonDocument jsonDocument = JsonDocument.Parse(response.Content.ToString());
+            Assert.AreEqual(_resourceId, jsonDocument.RootElement.GetProperty("metrics").GetProperty(_resourceId).GetProperty("resourceId").ToString());
         }
 
         [Test]

@@ -21,11 +21,15 @@ namespace Azure.Developer.LoadTesting.Tests
         internal string _fileName;
         internal TestHelper _testHelper;
         internal LoadTestAdministrationClient _loadTestAdministrationClient;
+        internal LoadTestRunClient _loadTestRunClient;
         internal string _testRunId;
         internal string _resourceId;
         internal const string SKIP_SET_UP = "SkipSetUp";
         internal const string SKIP_TEAR_DOWN = "SkipTearDown";
         internal const string UPLOAD_TEST_FILE = "UploadTestFile";
+        internal const string SKIP_TEST_RUN = "SkipTestRun";
+        internal const string SKIP_DELETE_TEST_RUN = "SkipDeleteTestRun";
+        internal TestRunOperation _testRunOperation;
 
         internal bool CheckForSkipSetUp()
         {
@@ -45,7 +49,19 @@ namespace Azure.Developer.LoadTesting.Tests
             return categories != null && categories.Contains(UPLOAD_TEST_FILE);
         }
 
-        public LoadTestTestsBase(bool isAsync) : base(isAsync)
+        internal bool CheckForSkipTestRun()
+        {
+            var categories = CurrentContext.Test.Properties["Category"];
+            return categories != null && categories.Contains(SKIP_TEST_RUN);
+        }
+
+        internal bool CheckForSkipDeleteTestRun()
+        {
+            var categories = CurrentContext.Test.Properties["Category"];
+            return categories != null && categories.Contains(SKIP_DELETE_TEST_RUN);
+        }
+
+        public LoadTestTestsBase(bool isAsync) : base(isAsync, RecordedTestMode.Playback)
         {
             _testId = "test-from-csharp-sdk-testing-framework";
             _fileName = "sample.jmx";
