@@ -808,6 +808,8 @@ namespace Compute.Tests
             EnsureClientsInitialized(context);
 
             ImageReference imageRef = imageReference ?? GetPlatformVMImage(useWindowsImage: true);
+            const string expectedOSName = "Windows Server 2012 R2 Datacenter", expectedOSVersion = "Microsoft Windows NT 6.3.9600.0", expectedComputerName = "test000000", expectedHyperVGeneration = "V1";
+
             // Create resource group
             var rgName = TestUtilities.GenerateName(TestPrefix);
             var vmssName = TestUtilities.GenerateName("vmss");
@@ -975,7 +977,7 @@ namespace Compute.Tests
                 if (validateVmssVMInstanceView)
                 {
                     VirtualMachineScaleSetVMInstanceView vmssVMInstanceView = m_CrpClient.VirtualMachineScaleSetVMs.GetInstanceView(rgName, vmssName, "0");
-                    ValidateVMScaleSetVMInstanceView(vmssVMInstanceView, hasManagedDisks, dedicatedHostReferenceId);
+                    ValidateVMScaleSetVMInstanceView(vmssVMInstanceView, hasManagedDisks, expectedComputerName, expectedOSName, expectedOSVersion, expectedHyperVGeneration, dedicatedHostReferenceId);
                 }
 
                 vmScaleSetValidator?.Invoke(getResponse);
