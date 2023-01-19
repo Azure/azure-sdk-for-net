@@ -65,14 +65,14 @@ namespace Azure.Identity.Tests
         }
 
         [Test]
-        public void ValidateAllUnavailable([Values(true, false)]bool excludeEnvironmentCredential,
-                                           [Values(true, false)]bool excludeManagedIdentityCredential,
-                                           [Values(true, false)]bool excludeSharedTokenCacheCredential,
-                                           [Values(true, false)]bool excludeVisualStudioCredential,
-                                           [Values(true, false)]bool excludeVisualStudioCodeCredential,
-                                           [Values(true, false)]bool excludeCliCredential,
-                                           [Values(true, false)]bool excludePowerShellCredential,
-                                           [Values(true, false)]bool excludeInteractiveBrowserCredential)
+        public void ValidateAllUnavailable([Values(true, false)] bool excludeEnvironmentCredential,
+                                           [Values(true, false)] bool excludeManagedIdentityCredential,
+                                           [Values(true, false)] bool excludeSharedTokenCacheCredential,
+                                           [Values(true, false)] bool excludeVisualStudioCredential,
+                                           [Values(true, false)] bool excludeVisualStudioCodeCredential,
+                                           [Values(true, false)] bool excludeCliCredential,
+                                           [Values(true, false)] bool excludePowerShellCredential,
+                                           [Values(true, false)] bool excludeInteractiveBrowserCredential)
         {
             if (excludeEnvironmentCredential && excludeManagedIdentityCredential && excludeSharedTokenCacheCredential && excludeVisualStudioCredential && excludeVisualStudioCodeCredential && excludeCliCredential && excludeInteractiveBrowserCredential)
             {
@@ -246,7 +246,7 @@ namespace Azure.Identity.Tests
 
             var credFactory = GetMockDefaultAzureCredentialFactory(options, availableCredential, expToken, calledCredentials);
 
-            var cred = new DefaultAzureCredential(credFactory);
+            var cred = InstrumentClient(new DefaultAzureCredential(credFactory));
 
             AccessToken actToken = await cred.GetTokenAsync(new TokenRequestContext(MockScopes.Default));
 
@@ -293,7 +293,7 @@ namespace Azure.Identity.Tests
 
             var credFactory = GetMockDefaultAzureCredentialFactory(options, availableCredential, expToken, calledCredentials);
 
-            var cred = new DefaultAzureCredential(credFactory);
+            var cred = InstrumentClient(new DefaultAzureCredential(credFactory));
 
             await cred.GetTokenAsync(new TokenRequestContext(MockScopes.Default));
 
@@ -304,13 +304,23 @@ namespace Azure.Identity.Tests
         {
             var credFactory = new MockDefaultAzureCredentialFactory(options);
 
-            void SetupMockForException<T>(Mock<T> mock) where T : TokenCredential =>
-                mock.Setup(m => m.GetTokenAsync(It.IsAny<TokenRequestContext>(), It.IsAny<CancellationToken>()))
-                    .Callback(() => calledCredentials.Add(typeof(T)))
-                    .ReturnsAsync(() =>
-                    {
-                        return availableCredential == typeof(T) ? expToken : throw new CredentialUnavailableException("Unavailable");
-                    });
+            void SetupMockForException<T>(Mock<T> mock) where T : TokenCredential
+            {
+                if (IsAsync)
+                    mock.Setup(m => m.GetTokenAsync(It.IsAny<TokenRequestContext>(), It.IsAny<CancellationToken>()))
+                        .Callback(() => calledCredentials.Add(typeof(T)))
+                        .ReturnsAsync(() =>
+                        {
+                            return availableCredential == typeof(T) ? expToken : throw new CredentialUnavailableException("Unavailable");
+                        });
+                else
+                    mock.Setup(m => m.GetToken(It.IsAny<TokenRequestContext>(), It.IsAny<CancellationToken>()))
+                        .Callback(() => calledCredentials.Add(typeof(T)))
+                        .Returns(() =>
+                        {
+                            return availableCredential == typeof(T) ? expToken : throw new CredentialUnavailableException("Unavailable");
+                        });
+            }
 
             credFactory.OnCreateEnvironmentCredential = c =>
                 SetupMockForException(c);
