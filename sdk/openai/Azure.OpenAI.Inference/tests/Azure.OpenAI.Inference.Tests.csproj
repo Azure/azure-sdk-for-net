@@ -25,41 +25,4 @@
     <Folder Include="SessionRecords\" />
   </ItemGroup>
 
-  <!-- This can go away when we get a real authoring client -->
-  <ItemGroup>
-    <Compile Include="$(AzureCoreSharedSources)ClientDiagnostics.cs" LinkBase="Shared/Core" />
-    <Compile Include="$(AzureCoreSharedSources)DiagnosticScopeFactory.cs" LinkBase="Shared/Core" />
-    <Compile Include="$(AzureCoreSharedSources)HttpMessageSanitizer.cs" LinkBase="Shared/Core" />
-    <Compile Include="$(AzureCoreSharedSources)DiagnosticScope.cs" LinkBase="Shared/Core" />
-    <Compile Include="$(AzureCoreSharedSources)AppContextSwitchHelper.cs" LinkBase="Shared/Core" />
-    <Compile Include="$(AzureCoreSharedSources)ContentTypeUtilities.cs" LinkBase="Shared/Core" />
-    <Compile Include="$(AzureCoreSharedSources)TaskExtensions.cs" LinkBase="Shared/Core" />
-    <Compile Include="$(AzureCoreSharedSources)OperationInternalOfT.cs" LinkBase="Shared/Core" />
-    <Compile Include="$(AzureCoreSharedSources)OperationInternal.cs" LinkBase="Shared/Core" />
-    <Compile Include="$(AzureCoreSharedSources)OperationInternalBase.cs" LinkBase="Shared/Core" />
-    <Compile Include="$(AzureCoreSharedSources)VoidValue.cs" LinkBase="Shared/Core" />
-    <Compile Include="$(AzureCoreSharedSources)DelayStrategy.cs" LinkBase="Shared/Core" />
-    <Compile Include="$(AzureCoreSharedSources)AsyncLockWithValue.cs" LinkBase="Shared/Core" />
-    <Compile Include="$(AzureCoreSharedSources)Argument.cs" LinkBase="Shared/Core" />
-    <Compile Include="$(AzureCoreSharedSources)OperationPoller.cs" LinkBase="Shared/Core" />
-    <Compile Include="$(AzureCoreSharedSources)RetryAfterDelayStrategy.cs" LinkBase="Shared/Core" />
-    <Compile Include="$(AzureCoreSharedSources)ConstantDelayStrategy.cs" LinkBase="Shared/Core" />
-
-    <Compile Include="$(AutoRestSharedCodeDirectory)IUtf8JsonSerializable.cs" LinkBase="Shared/AutoRest" />
-    <Compile Include="$(AutoRestSharedCodeDirectory)Utf8JsonWriterExtensions.cs" LinkBase="Shared/AutoRest" />
-    <Compile Include="$(AutoRestSharedCodeDirectory)TypeFormatters.cs" LinkBase="Shared/AutoRest" />
-    <Compile Include="$(AutoRestSharedCodeDirectory)JsonElementExtensions.cs" LinkBase="Shared/AutoRest" />
-    <Compile Include="$(AutoRestSharedCodeDirectory)ChangeTrackingList.cs" LinkBase="Shared/Core" />
-    <Compile Include="$(AutoRestSharedCodeDirectory)Optional.cs" LinkBase="Shared/Core" />
-    <Compile Include="$(AutoRestSharedCodeDirectory)ChangeTrackingDictionary.cs" LinkBase="Shared/Core" />
-    <Compile Include="$(AutoRestSharedCodeDirectory)Page.cs" LinkBase="Shared/Core" />
-    <Compile Include="$(AutoRestSharedCodeDirectory)PageableHelpers.cs" LinkBase="Shared/Core" />
-    <Compile Include="$(AutoRestSharedCodeDirectory)OperationFinalStateVia.cs" LinkBase="Shared/Core" />
-    <Compile Include="$(AutoRestSharedCodeDirectory)HttpPipelineExtensions.cs" LinkBase="Shared/Core" />
-    <Compile Include="$(AutoRestSharedCodeDirectory)ErrorResponse.cs" LinkBase="Shared/Core" />
-    <Compile Include="$(AutoRestSharedCodeDirectory)ProtocolOperation.cs" LinkBase="Shared/Core" />
-    <Compile Include="$(AutoRestSharedCodeDirectory)NextLinkOperationImplementation.cs" LinkBase="Shared/Core" />
-    <Compile Include="$(AutoRestSharedCodeDirectory)IOperationSource.cs" LinkBase="Shared/Core" />
-  </ItemGroup>
-
 </Project>
