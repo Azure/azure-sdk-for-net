@@ -29,8 +29,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             Assert.Throws<InvalidOperationException>(() => RunTest(
                 connectionString: "EndpointSuffix=ingestion.azuremonitor.com",
                 expectedIngestionEndpoint: null,
-                expectedInstrumentationKey: null,
-                expectedAadAudience: null));
+                expectedInstrumentationKey: null));
         }
 
         [Fact]
@@ -39,8 +38,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             Assert.Throws<InvalidOperationException>(() => RunTest(
                 connectionString: "InstrumentationKey=;EndpointSuffix=ingestion.azuremonitor.com",
                 expectedIngestionEndpoint: null,
-                expectedInstrumentationKey: null,
-                expectedAadAudience: null));
+                expectedInstrumentationKey: null));
         }
 
         [Fact]
@@ -49,8 +47,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             RunTest(
                 connectionString: "InstrumentationKey=00000000-0000-0000-0000-000000000000",
                 expectedIngestionEndpoint: Constants.DefaultIngestionEndpoint,
-                expectedInstrumentationKey: "00000000-0000-0000-0000-000000000000",
-                expectedAadAudience: null);
+                expectedInstrumentationKey: "00000000-0000-0000-0000-000000000000");
         }
 
         [Fact]
@@ -59,8 +56,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             RunTest(
                 connectionString: "InstrumentationKey=00000000-0000-0000-0000-000000000000;EndpointSuffix=ingestion.azuremonitor.com",
                 expectedIngestionEndpoint: "https://dc.ingestion.azuremonitor.com/",
-                expectedInstrumentationKey: "00000000-0000-0000-0000-000000000000",
-                expectedAadAudience: null);
+                expectedInstrumentationKey: "00000000-0000-0000-0000-000000000000");
         }
 
         [Fact]
@@ -69,8 +65,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             RunTest(
                 connectionString: "InstrumentationKey=00000000-0000-0000-0000-000000000000;EndpointSuffix=ingestion.azuremonitor.com;IngestionEndpoint=https://custom.contoso.com:444/",
                 expectedIngestionEndpoint: "https://custom.contoso.com:444/",
-                expectedInstrumentationKey: "00000000-0000-0000-0000-000000000000",
-                expectedAadAudience: null);
+                expectedInstrumentationKey: "00000000-0000-0000-0000-000000000000");
         }
 
         [Fact]
@@ -79,8 +74,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             RunTest(
                 connectionString: "InstrumentationKey=00000000-0000-0000-0000-000000000000;EndpointSuffix=ingestion.azuremonitor.com;Location=westus2",
                 expectedIngestionEndpoint: "https://westus2.dc.ingestion.azuremonitor.com/",
-                expectedInstrumentationKey: "00000000-0000-0000-0000-000000000000",
-                expectedAadAudience: null);
+                expectedInstrumentationKey: "00000000-0000-0000-0000-000000000000");
         }
 
         [Fact]
@@ -89,8 +83,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             RunTest(
                 connectionString: "InstrumentationKey=00000000-0000-0000-0000-000000000000;EndpointSuffix=ingestion.azuremonitor.com;Location=westus2;IngestionEndpoint=https://custom.contoso.com:444/",
                 expectedIngestionEndpoint: "https://custom.contoso.com:444/",
-                expectedInstrumentationKey: "00000000-0000-0000-0000-000000000000",
-                expectedAadAudience: null);
+                expectedInstrumentationKey: "00000000-0000-0000-0000-000000000000");
         }
 
         [Fact]
@@ -99,8 +92,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             RunTest(
                 connectionString: "InstrumentationKey=00000000-0000-0000-0000-000000000000;IngestionEndpoint=http://custom.contoso.com:444/",
                 expectedIngestionEndpoint: "http://custom.contoso.com:444/",
-                expectedInstrumentationKey: "00000000-0000-0000-0000-000000000000",
-                expectedAadAudience: null);
+                expectedInstrumentationKey: "00000000-0000-0000-0000-000000000000");
         }
 
         [Fact]
@@ -109,8 +101,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             Assert.Throws<InvalidOperationException>(() => RunTest(
                 connectionString: "InstrumentationKey=00000000-0000-0000-0000-000000000000;IngestionEndpoint=https:////custom.contoso.com",
                 expectedIngestionEndpoint: null,
-                expectedInstrumentationKey: null,
-                expectedAadAudience: null));
+                expectedInstrumentationKey: null));
         }
 
         [Fact]
@@ -119,8 +110,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             Assert.Throws<InvalidOperationException>(() => RunTest(
                 connectionString: "InstrumentationKey=00000000-0000-0000-0000-000000000000;IngestionEndpoint=https://www.~!@#$%&^*()_{}{}><?<?>:L\":\"_+_+_",
                 expectedIngestionEndpoint: null,
-                expectedInstrumentationKey: null,
-                expectedAadAudience: null));
+                expectedInstrumentationKey: null));
         }
 
         [Fact]
@@ -129,8 +119,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             Assert.Throws<InvalidOperationException>(() => RunTest(
                 connectionString: "InstrumentationKey=00000000-0000-0000-0000-000000000000;EndpointSuffix=~!@#$%&^*()_{}{}><?<?>:L\":\"_+_+_",
                 expectedIngestionEndpoint: null,
-                expectedInstrumentationKey: null,
-                expectedAadAudience: null));
+                expectedInstrumentationKey: null));
         }
 
         [Fact]
@@ -139,8 +128,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             Assert.Throws<InvalidOperationException>(() => RunTest(
                 connectionString: "InstrumentationKey=00000000-0000-0000-0000-000000000000;EndpointSuffix=ingestion.azuremonitor.com;Location=~!@#$%&^*()_{}{}><?<?>:L\":\"_+_+_",
                 expectedIngestionEndpoint: null,
-                expectedInstrumentationKey: null,
-                expectedAadAudience: null));
+                expectedInstrumentationKey: null));
         }
 
         [Fact]
@@ -149,8 +137,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             Assert.Throws<InvalidOperationException>(() => RunTest(
                 connectionString: new string('*', Constants.ConnectionStringMaxLength + 1),
                 expectedIngestionEndpoint: null,
-                expectedInstrumentationKey: null,
-                expectedAadAudience: null));
+                expectedInstrumentationKey: null));
         }
 
         [Fact]
@@ -159,8 +146,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             Assert.Throws<InvalidOperationException>(() => RunTest(
                 connectionString: null,
                 expectedIngestionEndpoint: null,
-                expectedInstrumentationKey: null,
-                expectedAadAudience: null));
+                expectedInstrumentationKey: null));
         }
 
         [Fact]
@@ -169,8 +155,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             Assert.Throws<InvalidOperationException>(() => RunTest(
                 connectionString: "",
                 expectedIngestionEndpoint: null,
-                expectedInstrumentationKey: null,
-                expectedAadAudience: null));
+                expectedInstrumentationKey: null));
         }
 
         [Fact]
@@ -179,11 +164,10 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             Assert.Throws<InvalidOperationException>(() => RunTest(
                 connectionString: "key1=value1;key2=value2;key3=value3",
                 expectedIngestionEndpoint: null,
-                expectedInstrumentationKey: null,
-                expectedAadAudience: null));
+                expectedInstrumentationKey: null));
         }
 
-        private void RunTest(string connectionString, string expectedIngestionEndpoint, string expectedInstrumentationKey, string expectedAadAudience)
+        private void RunTest(string connectionString, string expectedIngestionEndpoint, string expectedInstrumentationKey, string expectedAadAudience = null)
         {
             var connectionVars = ConnectionStringParser.GetValues(connectionString);
 
