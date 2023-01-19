@@ -3,7 +3,7 @@
 
 namespace Azure.Communication.CallAutomation
 {
-    /// <summary>Event Result returned from WaitForEvent method.</summary>
+    /// <summary>Base class that supports WaitForEvent method.</summary>
     public abstract class EventResultBase
     {
         /// <summary>

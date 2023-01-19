@@ -49,7 +49,7 @@ namespace Azure.Communication.CallAutomation
         /// <param name="cancellationToken"></param>
         /// <param name="playTo"></param>
         /// <param name="playOptions"></param>
-        /// <returns></returns>
+        /// <returns>Returns <see cref="PlayResult"/>, which can be used to wait for Play's related events.</returns>
         public virtual async Task<Response<PlayResult>> PlayAsync(PlaySource playSource, IEnumerable<CommunicationIdentifier> playTo, PlayOptions playOptions = default, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallMedia)}.{nameof(Play)}");
@@ -79,7 +79,7 @@ namespace Azure.Communication.CallAutomation
         /// <param name="cancellationToken"></param>
         /// <param name="playTo"></param>
         /// <param name="playOptions"></param>
-        /// <returns></returns>
+        /// <returns>Returns <see cref="PlayResult"/>, which can be used to wait for Play's related events.</returns>
         public virtual Response<PlayResult> Play(PlaySource playSource, IEnumerable<CommunicationIdentifier> playTo, PlayOptions playOptions = default, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallMedia)}.{nameof(Play)}");
@@ -134,7 +134,7 @@ namespace Azure.Communication.CallAutomation
         /// <param name="playSource"></param>
         /// <param name="playOptions"></param>
         /// <param name="cancellationToken"></param>
-        /// <returns></returns>
+        /// <returns>Returns <see cref="PlayResult"/>, which can be used to wait for Play's related events.</returns>
         public virtual async Task<Response<PlayResult>> PlayToAllAsync(PlaySource playSource, PlayOptions playOptions = default, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallMedia)}.{nameof(PlayToAll)}");
@@ -156,7 +156,7 @@ namespace Azure.Communication.CallAutomation
         /// <param name="playSource"></param>
         /// <param name="playOptions"></param>
         /// <param name="cancellationToken"></param>
-        /// <returns></returns>
+        /// <returns>Returns <see cref="PlayResult"/>, which can be used to wait for Play's related events.</returns>
         public virtual Response<PlayResult> PlayToAll(PlaySource playSource, PlayOptions playOptions = default, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallMedia)}.{nameof(PlayToAll)}");
@@ -176,7 +176,7 @@ namespace Azure.Communication.CallAutomation
         /// Cancel any media operation to all participants.
         /// </summary>
         /// <param name="cancellationToken"></param>
-        /// <returns></returns>
+        /// <returns>Returns <see cref="CancelAllMediaOperationsResult"/>, which can be used to wait for CancelAllMediaOperations' related events.</returns>
         public virtual async Task<Response<CancelAllMediaOperationsResult>> CancelAllMediaOperationsAsync(CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallMedia)}.{nameof(CancelAllMediaOperations)}");
@@ -201,7 +201,7 @@ namespace Azure.Communication.CallAutomation
         /// Cancel any media operation to all participants.
         /// </summary>
         /// <param name="cancellationToken"></param>
-        /// <returns></returns>
+        /// <returns>Returns <see cref="CancelAllMediaOperationsResult"/>, which can be used to wait for CancelAllMediaOperations' related events.</returns>
         public virtual Response<CancelAllMediaOperationsResult> CancelAllMediaOperations(CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallMedia)}.{nameof(CancelAllMediaOperations)}");
@@ -227,7 +227,7 @@ namespace Azure.Communication.CallAutomation
         /// </summary>
         /// <param name="recognizeOptions">Configuration attributes for recognize.</param>
         /// <param name="cancellationToken"></param>
-        /// <returns></returns>
+        /// <returns>Returns <see cref="StartRecognizingResult"/>, which can be used to wait for StartRecognizing's related events.</returns>
         public virtual async Task<Response<StartRecognizingResult>> StartRecognizingAsync(CallMediaRecognizeOptions recognizeOptions, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallMedia)}.{nameof(StartRecognizing)}");
@@ -255,7 +255,7 @@ namespace Azure.Communication.CallAutomation
         /// </summary>
         /// <param name="recognizeOptions">Configuration attributes for recognize.</param>
         /// <param name="cancellationToken"></param>
-        /// <returns></returns>
+        /// <returns>Returns <see cref="StartRecognizingResult"/>, which can be used to wait for StartRecognizing's related events.</returns>
         public virtual Response<StartRecognizingResult> StartRecognizing(CallMediaRecognizeOptions recognizeOptions, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallMedia)}.{nameof(StartRecognizing)}");

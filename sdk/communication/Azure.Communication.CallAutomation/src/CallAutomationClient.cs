@@ -599,7 +599,7 @@ namespace Azure.Communication.CallAutomation
             }
         }
 
-        /// <summary> Get CallAtumation's EventProcessor for handling Call Automation's event more easily. </summary>
+        /// <summary>Get CallAtumation's EventProcessor for handling Call Automation's event more easily.</summary>
         public virtual EventProcessor GetEventProcessor()
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallAutomationClient)}.{nameof(GetEventProcessor)}");

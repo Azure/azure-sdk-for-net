@@ -16,7 +16,7 @@ namespace Azure.Communication.CallAutomation
         /// <summary>
         /// Wait for <see cref="PlayEventResult"/> using <see cref="EventProcessor"/>.
         /// </summary>
-        /// <returns>Returns <see cref="PlayEventResult"/> which contains either <see cref="PlayCompleted"/> event or <see cref="PlayFailed"/> event event.</returns>
+        /// <returns>Returns <see cref="PlayEventResult"/> which contains either <see cref="PlayCompleted"/> event or <see cref="PlayFailed"/> event.</returns>
         public async Task<PlayEventResult> WaitForEvent(TimeSpan eventTimeout = default)
         {
             if (_evHandler is null)

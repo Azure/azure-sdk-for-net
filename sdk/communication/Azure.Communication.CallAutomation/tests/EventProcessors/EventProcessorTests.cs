@@ -24,12 +24,12 @@ namespace Azure.Communication.CallAutomation.Tests.EventProcessors
                 => ev.CallConnectionId == CallConnectionId
                 && ev.GetType() == typeof(CallConnected));
 
-            // create and send event to event processor
+            // Create and send event to event processor
             SendAndProcessEvent(handler, new CallConnected(CallConnectionId, ServerCallId, CorelationId, null));
 
             CallAutomationEventBase returnedBaseEvent = await baseEventTask;
 
-            // assert
+            // Assert
             Assert.NotNull(returnedBaseEvent);
             Assert.AreEqual(typeof(CallConnected), returnedBaseEvent.GetType());
             Assert.AreEqual(CallConnectionId, returnedBaseEvent.CallConnectionId);
@@ -42,7 +42,7 @@ namespace Azure.Communication.CallAutomation.Tests.EventProcessors
             CallAutomationClient callAutomationClient = CreateMockCallAutomationClient(200);
             EventProcessor handler = callAutomationClient.GetEventProcessor();
 
-            // create and send event to event processor first
+            // Create and send event to event processor first
             SendAndProcessEvent(handler, new CallConnected(CallConnectionId, ServerCallId, CorelationId, null));
 
             // Wait for Event after
@@ -50,7 +50,7 @@ namespace Azure.Communication.CallAutomation.Tests.EventProcessors
                 => ev.CallConnectionId == CallConnectionId
                 && ev.GetType() == typeof(CallConnected));
 
-            // assert
+            // Assert
             Assert.NotNull(returnedBaseEvent);
             Assert.AreEqual(typeof(CallConnected), returnedBaseEvent.GetType());
             Assert.AreEqual(CallConnectionId, returnedBaseEvent.CallConnectionId);
@@ -59,7 +59,7 @@ namespace Azure.Communication.CallAutomation.Tests.EventProcessors
         [Test]
         public async Task NoMatchTimeOutException()
         {
-            // check to see Timesout on exception when predicate do not match
+            // Check to see Timesout on exception when predicate do not match
             CallAutomationClient callAutomationClient = CreateMockCallAutomationClient(200);
             EventProcessor handler = callAutomationClient.GetEventProcessor();
 
@@ -74,7 +74,7 @@ namespace Azure.Communication.CallAutomation.Tests.EventProcessors
                 && ev.GetType() == typeof(CallDisconnected))
             };
 
-            // create and send event to event processor
+            // Create and send event to event processor
             SendAndProcessEvent(handler, new CallConnected(CallConnectionId, ServerCallId, CorelationId, null));
 
             try
@@ -98,7 +98,7 @@ namespace Azure.Communication.CallAutomation.Tests.EventProcessors
             EventProcessor handler = callAutomationClient.GetEventProcessor();
             int eventsSent = 5;
 
-            // create and send multiple events to event processor
+            // Create and send multiple events to event processor
             for (int i = 0; i < eventsSent; i++)
             {
                 var task = handler.WaitForSingleEvent(ev
@@ -126,16 +126,16 @@ namespace Azure.Communication.CallAutomation.Tests.EventProcessors
                 => ev.CallConnectionId == CallConnectionId
                 && ev.GetType() == typeof(CallConnected));
 
-            // create and send multiple events to event processor AT ONCE
+            // Create and send multiple events to event processor AT ONCE
             for (int i = 0; i < eventsSent; i++)
             {
                 SendAndProcessEvent(handler, new CallConnected(CallConnectionId, ServerCallId, CorelationId, null));
             }
 
-            // wait for event in sequence
+            // Wait for event in sequence
             for (int i = 0; i < eventsSent; i++)
             {
-                // assert
+                // Assert
                 CallAutomationEventBase returnedBaseEvent = await eventAwaiter;
                 Assert.NotNull(returnedBaseEvent);
                 Assert.AreEqual(typeof(CallConnected), returnedBaseEvent.GetType());

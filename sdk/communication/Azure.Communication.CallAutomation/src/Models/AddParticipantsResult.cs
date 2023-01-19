@@ -31,7 +31,7 @@ namespace Azure.Communication.CallAutomation
         /// <summary>
         /// Wait for <see cref="AddParticipantsEventResult"/> using <see cref="EventProcessor"/>.
         /// </summary>
-        /// <returns>Returns <see cref="AddParticipantsEventResult"/> which contains either <see cref="AddParticipantsSucceeded"/> event or <see cref="AddParticipantsFailed"/> event event.</returns>
+        /// <returns>Returns <see cref="AddParticipantsEventResult"/> which contains either <see cref="AddParticipantsSucceeded"/> event or <see cref="AddParticipantsFailed"/> event.</returns>
         public async Task<AddParticipantsEventResult> WaitForEvent(TimeSpan eventTimeout = default)
         {
             if (_evHandler is null)

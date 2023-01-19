@@ -13,7 +13,7 @@ namespace Azure.Communication.CallAutomation
         /// <summary>
         /// Wait for <see cref="TransferCallToParticipantEventResult"/> using <see cref="EventProcessor"/>.
         /// </summary>
-        /// <returns>Returns <see cref="TransferCallToParticipantEventResult"/> which contains either <see cref="CallTransferAccepted"/> event or <see cref="CallTransferFailed"/> event event.</returns>
+        /// <returns>Returns <see cref="TransferCallToParticipantEventResult"/> which contains either <see cref="CallTransferAccepted"/> event or <see cref="CallTransferFailed"/> event.</returns>
         public async Task<TransferCallToParticipantEventResult> WaitForEvent(TimeSpan eventTimeout = default)
         {
             if (_evHandler is null)

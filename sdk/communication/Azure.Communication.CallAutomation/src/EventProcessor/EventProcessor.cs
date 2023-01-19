@@ -89,8 +89,8 @@ namespace Azure.Communication.CallAutomation
             var ongoingAwaiter = new EventAwaiterOngoing<TEvent>(callConnectionId, eventProcessor);
             EventHandler<EventProcessorArgs> handler = (o, arg) => ongoingAwaiter.OnEventReceived(o, arg);
 
-            // on new addition, add it to the dictionary
-            // on update, update the last eventProcessor with new eventProcessor
+            // On new addition, add it to the dictionary
+            // On update, update the last eventProcessor with new eventProcessor
             _ongoingEvents.AddOrUpdate((callConnectionId, typeof(TEvent)), handler, (key, oldValue) => handler);
             _eventReceived += handler;
         }
@@ -160,8 +160,8 @@ namespace Azure.Communication.CallAutomation
         /// <returns>Returns the event once matching event arrives.</returns>
         public async Task<TEvent> WaitForSingleEvent<TEvent>(string connectionId = default, string operationContext = default, TimeSpan eventTimeout = default) where TEvent : CallAutomationEventBase
             => (TEvent)await WaitForSingleEvent(predicate
-                => predicate.CallConnectionId == connectionId
-                && predicate.OperationContext == operationContext
+                => (predicate.CallConnectionId == connectionId || connectionId is null)
+                && (predicate.OperationContext == operationContext || operationContext is null)
                 && predicate is TEvent,
                 eventTimeout).ConfigureAwait(false);
 

@@ -3,7 +3,7 @@
 
 namespace Azure.Communication.CallAutomation
 {
-    /// <summary>AnswerCallEventResult is returned from WaitForEvent of <see cref="AnswerCallResult"/>.</summary>
+    /// <summary><see cref="AnswerCallEventResult"/> is returned from WaitForEvent of <see cref="AnswerCallResult"/>.</summary>
     public class AnswerCallEventResult : EventResultBase
     {
         /// <summary>
