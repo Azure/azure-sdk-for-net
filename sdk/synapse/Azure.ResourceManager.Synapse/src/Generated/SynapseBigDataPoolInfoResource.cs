@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.Synapse
         }
 
         /// <summary>
-        /// Delete a Big Data pool from the workspace.
+        /// Delete a Big Data pool from the workspace. You can call ToObjectFromJson&lt;SynapseBigDataPoolInfoData&gt;() against the Value property of the result to get specified type.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.Synapse
         }
 
         /// <summary>
-        /// Delete a Big Data pool from the workspace.
+        /// Delete a Big Data pool from the workspace. You can call ToObjectFromJson&lt;SynapseBigDataPoolInfoData&gt;() against the Value property of the result to get specified type.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>

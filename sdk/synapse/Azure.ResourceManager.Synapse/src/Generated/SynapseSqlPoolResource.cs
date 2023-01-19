@@ -719,7 +719,7 @@ namespace Azure.ResourceManager.Synapse
         }
 
         /// <summary>
-        /// Delete a SQL pool
+        /// Delete a SQL pool. You can call ToObjectFromJson&lt;SynapseSqlPoolData&gt;() against the Value property of the result to get specified type.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -753,7 +753,7 @@ namespace Azure.ResourceManager.Synapse
         }
 
         /// <summary>
-        /// Delete a SQL pool
+        /// Delete a SQL pool. You can call ToObjectFromJson&lt;SynapseSqlPoolData&gt;() against the Value property of the result to get specified type.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -799,10 +799,11 @@ namespace Azure.ResourceManager.Synapse
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="patch"> The updated SQL pool properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual async Task<Response<SynapseSqlPoolResource>> UpdateAsync(SynapseSqlPoolPatch patch, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<SynapseSqlPoolResource>> UpdateAsync(WaitUntil waitUntil, SynapseSqlPoolPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
@@ -811,7 +812,10 @@ namespace Azure.ResourceManager.Synapse
             try
             {
                 var response = await _synapseSqlPoolSqlPoolsRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new SynapseSqlPoolResource(Client, response.Value), response.GetRawResponse());
+                var operation = new SynapseArmOperation<SynapseSqlPoolResource>(new SynapseSqlPoolOperationSource(Client), _synapseSqlPoolSqlPoolsClientDiagnostics, Pipeline, _synapseSqlPoolSqlPoolsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
             }
             catch (Exception e)
             {
@@ -833,10 +837,11 @@ namespace Azure.ResourceManager.Synapse
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="patch"> The updated SQL pool properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual Response<SynapseSqlPoolResource> Update(SynapseSqlPoolPatch patch, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<SynapseSqlPoolResource> Update(WaitUntil waitUntil, SynapseSqlPoolPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
@@ -845,7 +850,10 @@ namespace Azure.ResourceManager.Synapse
             try
             {
                 var response = _synapseSqlPoolSqlPoolsRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch, cancellationToken);
-                return Response.FromValue(new SynapseSqlPoolResource(Client, response.Value), response.GetRawResponse());
+                var operation = new SynapseArmOperation<SynapseSqlPoolResource>(new SynapseSqlPoolOperationSource(Client), _synapseSqlPoolSqlPoolsClientDiagnostics, Pipeline, _synapseSqlPoolSqlPoolsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    operation.WaitForCompletion(cancellationToken);
+                return operation;
             }
             catch (Exception e)
             {
@@ -855,7 +863,7 @@ namespace Azure.ResourceManager.Synapse
         }
 
         /// <summary>
-        /// Pause a SQL pool
+        /// Pause a SQL pool. You can call ToObjectFromJson&lt;SynapseSqlPoolData&gt;() against the Value property of the result to get specified type.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -889,7 +897,7 @@ namespace Azure.ResourceManager.Synapse
         }
 
         /// <summary>
-        /// Pause a SQL pool
+        /// Pause a SQL pool. You can call ToObjectFromJson&lt;SynapseSqlPoolData&gt;() against the Value property of the result to get specified type.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -923,7 +931,7 @@ namespace Azure.ResourceManager.Synapse
         }
 
         /// <summary>
-        /// Resume a SQL pool
+        /// Resume a SQL pool. You can call ToObjectFromJson&lt;SynapseSqlPoolData&gt;() against the Value property of the result to get specified type.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -957,7 +965,7 @@ namespace Azure.ResourceManager.Synapse
         }
 
         /// <summary>
-        /// Resume a SQL pool
+        /// Resume a SQL pool. You can call ToObjectFromJson&lt;SynapseSqlPoolData&gt;() against the Value property of the result to get specified type.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -1453,8 +1461,8 @@ namespace Azure.ResourceManager.Synapse
                         patch.Tags.Add(tag);
                     }
                     patch.Tags[key] = value;
-                    var result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return result;
+                    var result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
             catch (Exception e)
@@ -1507,8 +1515,8 @@ namespace Azure.ResourceManager.Synapse
                         patch.Tags.Add(tag);
                     }
                     patch.Tags[key] = value;
-                    var result = Update(patch, cancellationToken: cancellationToken);
-                    return result;
+                    var result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
+                    return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
             catch (Exception e)
@@ -1556,8 +1564,8 @@ namespace Azure.ResourceManager.Synapse
                     var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
                     var patch = new SynapseSqlPoolPatch();
                     patch.Tags.ReplaceWith(tags);
-                    var result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return result;
+                    var result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
             catch (Exception e)
@@ -1605,8 +1613,8 @@ namespace Azure.ResourceManager.Synapse
                     var current = Get(cancellationToken: cancellationToken).Value.Data;
                     var patch = new SynapseSqlPoolPatch();
                     patch.Tags.ReplaceWith(tags);
-                    var result = Update(patch, cancellationToken: cancellationToken);
-                    return result;
+                    var result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
+                    return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
             catch (Exception e)
@@ -1657,8 +1665,8 @@ namespace Azure.ResourceManager.Synapse
                         patch.Tags.Add(tag);
                     }
                     patch.Tags.Remove(key);
-                    var result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return result;
+                    var result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
             catch (Exception e)
@@ -1709,8 +1717,8 @@ namespace Azure.ResourceManager.Synapse
                         patch.Tags.Add(tag);
                     }
                     patch.Tags.Remove(key);
-                    var result = Update(patch, cancellationToken: cancellationToken);
-                    return result;
+                    var result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
+                    return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
             catch (Exception e)
