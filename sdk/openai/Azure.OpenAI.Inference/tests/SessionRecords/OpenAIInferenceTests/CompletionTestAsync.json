@@ -1,0 +1,73 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://sdk.openai.azure.com/openai/deployments/text-davinci-002/completions?api-version=2022-06-01-preview",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "api-key": "***********",
+        "Content-Length": "61",
+        "Content-Type": "application/json",
+        "traceparent": "00-8abe2128b51b513328c4e556857df966-457a999db5e2ff7a-00",
+        "User-Agent": "azsdk-net-OpenAI.Inference/1.0.0-alpha.20230119.1 (.NET 6.0.13; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "056a21608b976cc485c0c52eacb7e80c",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "prompt": [
+          "Hello world",
+          "running over the same old ground"
+        ]
+      },
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Access-Control-Allow-Origin": "*",
+        "apim-request-id": "d852ce3d-b936-41c1-986a-d28f54b0904d",
+        "Cache-Control": "must-revalidate, no-cache",
+        "Content-Length": "381",
+        "Content-Type": "application/json",
+        "Date": "Thu, 19 Jan 2023 19:00:22 GMT",
+        "openai-model": "text-davinci-002",
+        "openai-processing-ms": "330.8683",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "x-accel-buffering": "no",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "056a21608b976cc485c0c52eacb7e80c",
+        "x-ms-region": "South Central US",
+        "X-Request-ID": "8d358ac1-1ad7-499a-a2b4-5475c58876cc"
+      },
+      "ResponseBody": {
+        "id": "cmpl-6aUR4faPgyPlPbfnxOeN7RnqHutjG",
+        "object": "text_completion",
+        "created": 1674154822,
+        "model": "text-davinci-002",
+        "choices": [
+          {
+            "text": "!\n",
+            "index": 0,
+            "finish_reason": "stop",
+            "logprobs": null
+          },
+          {
+            "text": "\n\ntreading on thin ice\n\nFor today\u2019s photo prompt",
+            "index": 1,
+            "finish_reason": "length",
+            "logprobs": null
+          }
+        ],
+        "usage": {
+          "completion_tokens": 18,
+          "prompt_tokens": 8,
+          "total_tokens": 26
+        }
+      }
+    }
+  ],
+  "Variables": {
+    "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com",
+    "OPENAI_DEPLOYMENT_ID": "text-davinci-002",
+    "OPENAI_ENDPOINT": "https://sdk.openai.azure.com/",
+    "RandomSeed": "2017985883",
+    "SUBSCRIPTION_ID": "faa080af-c1d8-40ad-9cce-e1a450ca5b57"
+  }
+}

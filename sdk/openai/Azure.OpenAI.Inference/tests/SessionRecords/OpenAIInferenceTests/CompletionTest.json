@@ -1,0 +1,73 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://sdk.openai.azure.com/openai/deployments/text-davinci-002/completions?api-version=2022-06-01-preview",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "api-key": "***********",
+        "Content-Length": "61",
+        "Content-Type": "application/json",
+        "traceparent": "00-e7ea5adcb31c8ad9638bfd3bda02315d-180fbd46553b5bd9-00",
+        "User-Agent": "azsdk-net-OpenAI.Inference/1.0.0-alpha.20230119.1 (.NET 6.0.13; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "9d1b431fb7159597f5bdb29cf8dcdc62",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "prompt": [
+          "Hello world",
+          "running over the same old ground"
+        ]
+      },
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Access-Control-Allow-Origin": "*",
+        "apim-request-id": "ced72e56-1d95-4367-bef2-fe7e2cf63672",
+        "Cache-Control": "must-revalidate, no-cache",
+        "Content-Length": "458",
+        "Content-Type": "application/json",
+        "Date": "Thu, 19 Jan 2023 19:00:20 GMT",
+        "openai-model": "text-davinci-002",
+        "openai-processing-ms": "330.6727",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "x-accel-buffering": "no",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "9d1b431fb7159597f5bdb29cf8dcdc62",
+        "x-ms-region": "South Central US",
+        "X-Request-ID": "24918e56-53fc-4104-8685-396c6f13b630"
+      },
+      "ResponseBody": {
+        "id": "cmpl-6aUR2iy7RecieFvHva9bOeImsb1Mz",
+        "object": "text_completion",
+        "created": 1674154820,
+        "model": "text-davinci-002",
+        "choices": [
+          {
+            "text": "\u0022\u0060\n                     ^    ^\n        optional values ||   default value of",
+            "index": 0,
+            "finish_reason": "length",
+            "logprobs": null
+          },
+          {
+            "text": " as usual? Shaking off a loser\u2019s habit like a cold?",
+            "index": 1,
+            "finish_reason": "length",
+            "logprobs": null
+          }
+        ],
+        "usage": {
+          "completion_tokens": 32,
+          "prompt_tokens": 8,
+          "total_tokens": 40
+        }
+      }
+    }
+  ],
+  "Variables": {
+    "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com",
+    "OPENAI_DEPLOYMENT_ID": "text-davinci-002",
+    "OPENAI_ENDPOINT": "https://sdk.openai.azure.com/",
+    "RandomSeed": "896465553",
+    "SUBSCRIPTION_ID": "faa080af-c1d8-40ad-9cce-e1a450ca5b57"
+  }
+}
