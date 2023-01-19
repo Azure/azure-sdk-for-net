@@ -3,34 +3,27 @@
 
 namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.ConnectionString
 {
-    /// <summary>
-    /// Helper for working with AAD (Azure Activity Directory).
-    /// </summary>
-    /// <remarks>
-    /// The AUDIENCE is a url that identifies Azure Monitor in a specific cloud (For example: "https://monitor.azure.com/").
-    /// The SCOPE is the audience + the permission (For example: "https://monitor.azure.com//.default").
-    /// </remarks>
     internal static class AadHelper
     {
         /// <summary>
-        /// Default AAD Audience for Ingestion (aka Breeze).
+        /// Default AAD Scope for Ingestion.
         /// IMPORTANT: This value only works in the Public Azure Cloud.
-        /// For Sovereign Azure Clouds, this value MUST come from the Connection String.
+        /// For Sovereign Azure Clouds, this value MUST be built from the Connection String.
         /// </summary>
-        public const string DefaultAADAudience = "https://monitor.azure.com//.default";
+        public const string DefaultAadScope = "https://monitor.azure.com//.default";
 
-        public const string DefaultPermission = ".default";
-
+        /// <summary>
+        /// Get the Scope value required for AAD authentication.
+        /// </summary>
+        /// <remarks>
+        /// The AUDIENCE is a url that identifies Azure Monitor in a specific cloud (For example: "https://monitor.azure.com/").
+        /// The SCOPE is the audience + the permission (For example: "https://monitor.azure.com//.default").
+        /// </remarks>
         public static string GetScope(string? audience = null)
         {
-            if (audience == null)
-            {
-                return DefaultAADAudience;
-            }
-            else
-            {
-                return audience + "/.default";
-            }
+            return string.IsNullOrWhiteSpace(audience)
+                ? DefaultAadScope
+                : audience + "/.default";
         }
     }
 }
