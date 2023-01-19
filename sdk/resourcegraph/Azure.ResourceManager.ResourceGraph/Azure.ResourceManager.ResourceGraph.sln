@@ -7,6 +7,10 @@ Project("{AD56747C-0C43-49DB-BF56-497D51ABFCB0}") = "Azure.ResourceManager.Resou
 EndProject
 Project("{AD56747C-0C43-49DB-BF56-497D51ABFCB0}") = "Azure.ResourceManager.ResourceGraph.Tests", "tests\Azure.ResourceManager.ResourceGraph.Tests.csproj", "{1D70D114-109F-4CC2-A825-4E83491AD7A0}"
 EndProject
+Project("{AD56747C-0C43-49DB-BF56-497D51ABFCB0}") = "Azure.ResourceManager.ResourceGraph.Samples", "samples\Azure.ResourceManager.ResourceGraph.Samples.csproj", "{890CBAEE-7994-4B5A-AB1C-2FC4814E1A30}"
+EndProject
+Project("{AD56747C-0C43-49DB-BF56-497D51ABFCB0}") = "Azure.ResourceManager.ResourceGraph.Samples", "samples\Azure.ResourceManager.ResourceGraph.Samples.csproj", "{A98C6227-8EC3-48EE-B994-251EC4B969E9}"
+EndProject
 Global
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

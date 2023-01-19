@@ -6,14 +6,15 @@
       "RequestHeaders": {
         "Accept": "application/json; odata.metadata=minimal",
         "api-key": "Sanitized",
+        "Connection": "keep-alive",
         "Content-Length": "880",
         "Content-Type": "application/json",
-        "User-Agent": "azsdk-net-Search.Documents/11.5.0-alpha.20230106.1 (.NET 6.0.12; Microsoft Windows 10.0.22621)",
-        "x-ms-client-request-id": "95d163af73b3faa1d09079e4c06671da",
+        "User-Agent": "azsdk-net-Search.Documents/11.5.0-alpha.20230107.1 (.NET Framework 4.8.9105.0; Microsoft Windows 10.0.22621 )",
+        "x-ms-client-request-id": "cec40a359cce22d0aaf5d57721eb5173",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
-        "name": "vgvemcrc",
+        "name": "kswwhqpx",
         "fields": [
           {
             "name": "id",
@@ -82,25 +83,25 @@
       "StatusCode": 201,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "client-request-id": "95d163af-73b3-faa1-d090-79e4c06671da",
+        "client-request-id": "cec40a35-9cce-22d0-aaf5-d57721eb5173",
         "Content-Length": "1711",
         "Content-Type": "application/json; odata.metadata=minimal",
-        "Date": "Fri, 06 Jan 2023 21:04:43 GMT",
-        "elapsed-time": "696",
-        "ETag": "W/\u00220x8DAF029A2ACD163\u0022",
+        "Date": "Mon, 09 Jan 2023 18:07:19 GMT",
+        "elapsed-time": "689",
+        "ETag": "W/\u00220x8DAF26C59576010\u0022",
         "Expires": "-1",
-        "Location": "https://azs-net-shrejaazsearch.search.windows.net/indexes(\u0027vgvemcrc\u0027)?api-version=2021-04-30-Preview",
+        "Location": "https://azs-net-shrejaazsearch.search.windows.net/indexes(\u0027kswwhqpx\u0027)?api-version=2021-04-30-Preview",
         "OData-Version": "4.0",
         "Pragma": "no-cache",
         "Preference-Applied": "odata.include-annotations=\u0022*\u0022",
-        "request-id": "95d163af-73b3-faa1-d090-79e4c06671da",
+        "request-id": "cec40a35-9cce-22d0-aaf5-d57721eb5173",
         "Strict-Transport-Security": "max-age=15724800; includeSubDomains",
-        "x-ms-client-request-id": "95d163af-73b3-faa1-d090-79e4c06671da"
+        "x-ms-client-request-id": "cec40a35-9cce-22d0-aaf5-d57721eb5173"
       },
       "ResponseBody": {
         "@odata.context": "https://azs-net-shrejaazsearch.search.windows.net/$metadata#indexes/$entity",
-        "@odata.etag": "\u00220x8DAF029A2ACD163\u0022",
-        "name": "vgvemcrc",
+        "@odata.etag": "\u00220x8DAF26C59576010\u0022",
+        "name": "kswwhqpx",
         "defaultScoringProfile": null,
         "fields": [
           {
@@ -205,49 +206,49 @@
       }
     },
     {
-      "RequestUri": "https://azs-net-shrejaazsearch.search.windows.net/indexes(\u0027vgvemcrc\u0027)/docs/search.index?api-version=2021-04-30-Preview",
+      "RequestUri": "https://azs-net-shrejaazsearch.search.windows.net/indexes(\u0027kswwhqpx\u0027)/docs/search.index?api-version=2021-04-30-Preview",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json; odata.metadata=none",
         "api-key": "Sanitized",
-        "Content-Length": "177",
+        "Content-Length": "192",
         "Content-Type": "application/json",
-        "User-Agent": "azsdk-net-Search.Documents/11.5.0-alpha.20230106.1 (.NET 6.0.12; Microsoft Windows 10.0.22621)",
-        "x-ms-client-request-id": "2d7261a75e236fcad703e002502f9648",
+        "User-Agent": "azsdk-net-Search.Documents/11.5.0-alpha.20230107.1 (.NET Framework 4.8.9105.0; Microsoft Windows 10.0.22621 )",
+        "x-ms-client-request-id": "ade8aec40a39369b5bd79f3dca8239de",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
         "value": [
           {
             "@search.action": "upload",
-            "id": "1cd576f819b748aca2b5456544011313",
+            "id": "147ca0f2e7c74db6a256e1b2b469d48b",
             "name": "The Lord of the Rings: The Return of the King",
             "genre": "Fantasy",
             "year": 2003,
-            "rating": 9.1
+            "rating": 9.0999999999999996
           }
         ]
       },
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "client-request-id": "2d7261a7-5e23-6fca-d703-e002502f9648",
+        "client-request-id": "ade8aec4-0a39-369b-5bd7-9f3dca8239de",
         "Content-Length": "105",
         "Content-Type": "application/json; odata.metadata=none",
-        "Date": "Fri, 06 Jan 2023 21:04:44 GMT",
-        "elapsed-time": "90",
+        "Date": "Mon, 09 Jan 2023 18:07:19 GMT",
+        "elapsed-time": "97",
         "Expires": "-1",
         "OData-Version": "4.0",
         "Pragma": "no-cache",
         "Preference-Applied": "odata.include-annotations=\u0022*\u0022",
-        "request-id": "2d7261a7-5e23-6fca-d703-e002502f9648",
+        "request-id": "ade8aec4-0a39-369b-5bd7-9f3dca8239de",
         "Strict-Transport-Security": "max-age=15724800; includeSubDomains",
-        "x-ms-client-request-id": "2d7261a7-5e23-6fca-d703-e002502f9648"
+        "x-ms-client-request-id": "ade8aec4-0a39-369b-5bd7-9f3dca8239de"
       },
       "ResponseBody": {
         "value": [
           {
-            "key": "1cd576f819b748aca2b5456544011313",
+            "key": "147ca0f2e7c74db6a256e1b2b469d48b",
             "status": true,
             "errorMessage": null,
             "statusCode": 201
@@ -256,35 +257,36 @@
       }
     },
     {
-      "RequestUri": "https://azs-net-shrejaazsearch.search.windows.net/indexes(\u0027vgvemcrc\u0027)?api-version=2021-04-30-Preview",
+      "RequestUri": "https://azs-net-shrejaazsearch.search.windows.net/indexes(\u0027kswwhqpx\u0027)?api-version=2021-04-30-Preview",
       "RequestMethod": "DELETE",
       "RequestHeaders": {
         "Accept": "application/json; odata.metadata=minimal",
         "api-key": "Sanitized",
-        "traceparent": "00-7680fce688d1edf3da39e58789953dfe-3781df7a7c4a1ded-00",
-        "User-Agent": "azsdk-net-Search.Documents/11.5.0-alpha.20230106.1 (.NET 6.0.12; Microsoft Windows 10.0.22621)",
-        "x-ms-client-request-id": "ede29331530ce6d4b46a34467ca77623",
+        "Content-Length": "0",
+        "traceparent": "00-e0bdf32364e0df4b99eea864b2f00fb5-6adef58d89bf9d4e-00",
+        "User-Agent": "azsdk-net-Search.Documents/11.5.0-alpha.20230107.1 (.NET Framework 4.8.9105.0; Microsoft Windows 10.0.22621 )",
+        "x-ms-client-request-id": "a63d85a72cae890b0f3ad43156a9b63f",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 204,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "client-request-id": "ede29331-530c-e6d4-b46a-34467ca77623",
-        "Date": "Fri, 06 Jan 2023 21:04:44 GMT",
-        "elapsed-time": "182",
+        "client-request-id": "a63d85a7-2cae-890b-0f3a-d43156a9b63f",
+        "Date": "Mon, 09 Jan 2023 18:07:21 GMT",
+        "elapsed-time": "189",
         "Expires": "-1",
         "Pragma": "no-cache",
-        "request-id": "ede29331-530c-e6d4-b46a-34467ca77623",
+        "request-id": "a63d85a7-2cae-890b-0f3a-d43156a9b63f",
         "Strict-Transport-Security": "max-age=15724800; includeSubDomains",
-        "x-ms-client-request-id": "ede29331-530c-e6d4-b46a-34467ca77623"
+        "x-ms-client-request-id": "a63d85a7-2cae-890b-0f3a-d43156a9b63f"
       },
       "ResponseBody": null
     }
   ],
   "Variables": {
-    "RandomSeed": "1565912648",
-    "SearchIndexName": "vgvemcrc",
+    "RandomSeed": "511290995",
+    "SearchIndexName": "kswwhqpx",
     "SEARCH_ADMIN_API_KEY": "Sanitized",
     "SEARCH_ENDPOINT_SUFFIX": "search.windows.net",
     "SEARCH_SERVICE_NAME": "azs-net-shrejaazsearch"

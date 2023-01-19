@@ -14,6 +14,8 @@ namespace Azure.Communication.CallAutomation
         public System.Collections.Generic.IEnumerable<Azure.Communication.CommunicationIdentifier> ParticipantsToAdd { get { throw null; } }
         public Azure.Communication.CallAutomation.RepeatabilityHeaders RepeatabilityHeaders { get { throw null; } set { } }
         public Azure.Communication.PhoneNumberIdentifier SourceCallerId { get { throw null; } set { } }
+        public string SourceDisplayName { get { throw null; } set { } }
+        public Azure.Communication.CommunicationIdentifier SourceIdentifier { get { throw null; } set { } }
     }
     public partial class AddParticipantsResult
     {

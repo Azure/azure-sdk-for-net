@@ -8,7 +8,6 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -45,8 +44,16 @@ namespace Azure.ResourceManager.SecurityCenter
 
         /// <summary>
         /// Security Compliance Result
-        /// Request Path: /{resourceId}/providers/Microsoft.Security/complianceResults/{complianceResultName}
-        /// Operation Id: ComplianceResults_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{resourceId}/providers/Microsoft.Security/complianceResults/{complianceResultName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ComplianceResults_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="complianceResultName"> name of the desired assessment compliance result. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -74,8 +81,16 @@ namespace Azure.ResourceManager.SecurityCenter
 
         /// <summary>
         /// Security Compliance Result
-        /// Request Path: /{resourceId}/providers/Microsoft.Security/complianceResults/{complianceResultName}
-        /// Operation Id: ComplianceResults_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{resourceId}/providers/Microsoft.Security/complianceResults/{complianceResultName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ComplianceResults_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="complianceResultName"> name of the desired assessment compliance result. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -103,92 +118,60 @@ namespace Azure.ResourceManager.SecurityCenter
 
         /// <summary>
         /// Security compliance results in the subscription
-        /// Request Path: /{scope}/providers/Microsoft.Security/complianceResults
-        /// Operation Id: ComplianceResults_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{scope}/providers/Microsoft.Security/complianceResults</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ComplianceResults_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ComplianceResultResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ComplianceResultResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<ComplianceResultResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _complianceResultClientDiagnostics.CreateScope("ComplianceResultCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _complianceResultRestClient.ListAsync(Id, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ComplianceResultResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<ComplianceResultResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _complianceResultClientDiagnostics.CreateScope("ComplianceResultCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _complianceResultRestClient.ListNextPageAsync(nextLink, Id, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ComplianceResultResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _complianceResultRestClient.CreateListRequest(Id);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _complianceResultRestClient.CreateListNextPageRequest(nextLink, Id);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ComplianceResultResource(Client, ComplianceResultData.DeserializeComplianceResultData(e)), _complianceResultClientDiagnostics, Pipeline, "ComplianceResultCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Security compliance results in the subscription
-        /// Request Path: /{scope}/providers/Microsoft.Security/complianceResults
-        /// Operation Id: ComplianceResults_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{scope}/providers/Microsoft.Security/complianceResults</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ComplianceResults_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ComplianceResultResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ComplianceResultResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<ComplianceResultResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _complianceResultClientDiagnostics.CreateScope("ComplianceResultCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _complianceResultRestClient.List(Id, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ComplianceResultResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<ComplianceResultResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _complianceResultClientDiagnostics.CreateScope("ComplianceResultCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _complianceResultRestClient.ListNextPage(nextLink, Id, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ComplianceResultResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _complianceResultRestClient.CreateListRequest(Id);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _complianceResultRestClient.CreateListNextPageRequest(nextLink, Id);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ComplianceResultResource(Client, ComplianceResultData.DeserializeComplianceResultData(e)), _complianceResultClientDiagnostics, Pipeline, "ComplianceResultCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /{resourceId}/providers/Microsoft.Security/complianceResults/{complianceResultName}
-        /// Operation Id: ComplianceResults_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{resourceId}/providers/Microsoft.Security/complianceResults/{complianceResultName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ComplianceResults_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="complianceResultName"> name of the desired assessment compliance result. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -214,8 +197,16 @@ namespace Azure.ResourceManager.SecurityCenter
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /{resourceId}/providers/Microsoft.Security/complianceResults/{complianceResultName}
-        /// Operation Id: ComplianceResults_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{resourceId}/providers/Microsoft.Security/complianceResults/{complianceResultName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ComplianceResults_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="complianceResultName"> name of the desired assessment compliance result. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

@@ -1,31 +1,31 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://azs-net-shrejaazsearch.search.windows.net/indexes(\u0027agvwmqbx\u0027)/docs(\u00271\u0027)?api-version=2020-06-30",
+      "RequestUri": "https://azs-net-shrejaazsearch.search.windows.net/indexes(\u0027ylixaavx\u0027)/docs(\u00271\u0027)?api-version=2020-06-30",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json; odata.metadata=none",
         "api-key": "Sanitized",
-        "User-Agent": "azsdk-net-Search.Documents/11.5.0-alpha.20230106.1 (.NET 6.0.12; Microsoft Windows 10.0.22621)",
-        "x-ms-client-request-id": "107f85f3b6a26c4d93865dc4324d6938",
+        "User-Agent": "azsdk-net-Search.Documents/11.5.0-alpha.20230107.1 (.NET Framework 4.8.9105.0; Microsoft Windows 10.0.22621 )",
+        "x-ms-client-request-id": "1bb94858d4473947cf67929fec4238a9",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "client-request-id": "107f85f3-b6a2-6c4d-9386-5dc4324d6938",
+        "client-request-id": "1bb94858-d447-3947-cf67-929fec4238a9",
         "Content-Length": "1065",
         "Content-Type": "application/json; odata.metadata=none",
-        "Date": "Fri, 06 Jan 2023 20:43:36 GMT",
-        "elapsed-time": "98",
+        "Date": "Mon, 09 Jan 2023 17:57:48 GMT",
+        "elapsed-time": "101",
         "Expires": "-1",
         "OData-Version": "4.0",
         "Pragma": "no-cache",
         "Preference-Applied": "odata.include-annotations=\u0022*\u0022",
-        "request-id": "107f85f3-b6a2-6c4d-9386-5dc4324d6938",
+        "request-id": "1bb94858-d447-3947-cf67-929fec4238a9",
         "Strict-Transport-Security": "max-age=15724800; includeSubDomains",
-        "x-ms-client-request-id": "107f85f3-b6a2-6c4d-9386-5dc4324d6938"
+        "x-ms-client-request-id": "1bb94858-d447-3947-cf67-929fec4238a9"
       },
       "ResponseBody": {
         "HotelId": "1",
@@ -75,8 +75,8 @@
     }
   ],
   "Variables": {
-    "RandomSeed": "1978895706",
-    "SearchIndexName": "agvwmqbx",
+    "RandomSeed": "1774837192",
+    "SearchIndexName": "ylixaavx",
     "SEARCH_ENDPOINT_SUFFIX": "search.windows.net",
     "SEARCH_QUERY_API_KEY": "Sanitized",
     "SEARCH_SERVICE_NAME": "azs-net-shrejaazsearch"

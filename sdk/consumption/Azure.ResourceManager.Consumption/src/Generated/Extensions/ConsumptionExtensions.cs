@@ -40,8 +40,16 @@ namespace Azure.ResourceManager.Consumption
 
         /// <summary>
         /// Gets the price sheet for a subscription. Price sheet is available via this API only for May 1, 2014 or later.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Consumption/pricesheets/default
-        /// Operation Id: PriceSheet_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Consumption/pricesheets/default</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PriceSheet_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="expand"> May be used to expand the properties/meterDetails within a price sheet. By default, these fields are not included when returning price sheet. </param>
@@ -55,8 +63,16 @@ namespace Azure.ResourceManager.Consumption
 
         /// <summary>
         /// Gets the price sheet for a subscription. Price sheet is available via this API only for May 1, 2014 or later.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Consumption/pricesheets/default
-        /// Operation Id: PriceSheet_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Consumption/pricesheets/default</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PriceSheet_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="expand"> May be used to expand the properties/meterDetails within a price sheet. By default, these fields are not included when returning price sheet. </param>
@@ -79,8 +95,16 @@ namespace Azure.ResourceManager.Consumption
 
         /// <summary>
         /// Provides the aggregate cost of a management group and all child management groups by current billing period.
-        /// Request Path: /providers/Microsoft.Management/managementGroups/{managementGroupId}/providers/Microsoft.Consumption/aggregatedcost
-        /// Operation Id: AggregatedCost_GetByManagementGroup
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Management/managementGroups/{managementGroupId}/providers/Microsoft.Consumption/aggregatedcost</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AggregatedCost_GetByManagementGroup</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="managementGroupResource"> The <see cref="ManagementGroupResource" /> instance the method will execute against. </param>
         /// <param name="filter"> May be used to filter aggregated cost by properties/usageStart (Utc time), properties/usageEnd (Utc time). The filter supports &apos;eq&apos;, &apos;lt&apos;, &apos;gt&apos;, &apos;le&apos;, &apos;ge&apos;, and &apos;and&apos;. It does not currently support &apos;ne&apos;, &apos;or&apos;, or &apos;not&apos;. Tag filter is a key value pair string where key and value is separated by a colon (:). </param>
@@ -92,8 +116,16 @@ namespace Azure.ResourceManager.Consumption
 
         /// <summary>
         /// Provides the aggregate cost of a management group and all child management groups by current billing period.
-        /// Request Path: /providers/Microsoft.Management/managementGroups/{managementGroupId}/providers/Microsoft.Consumption/aggregatedcost
-        /// Operation Id: AggregatedCost_GetByManagementGroup
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Management/managementGroups/{managementGroupId}/providers/Microsoft.Consumption/aggregatedcost</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AggregatedCost_GetByManagementGroup</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="managementGroupResource"> The <see cref="ManagementGroupResource" /> instance the method will execute against. </param>
         /// <param name="filter"> May be used to filter aggregated cost by properties/usageStart (Utc time), properties/usageEnd (Utc time). The filter supports &apos;eq&apos;, &apos;lt&apos;, &apos;gt&apos;, &apos;le&apos;, &apos;ge&apos;, and &apos;and&apos;. It does not currently support &apos;ne&apos;, &apos;or&apos;, or &apos;not&apos;. Tag filter is a key value pair string where key and value is separated by a colon (:). </param>
@@ -132,8 +164,16 @@ namespace Azure.ResourceManager.Consumption
 
         /// <summary>
         /// Gets the budget for the scope by budget name.
-        /// Request Path: /{scope}/providers/Microsoft.Consumption/budgets/{budgetName}
-        /// Operation Id: Budgets_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{scope}/providers/Microsoft.Consumption/budgets/{budgetName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Budgets_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="scope"> The scope that the resource will apply against. </param>
@@ -149,8 +189,16 @@ namespace Azure.ResourceManager.Consumption
 
         /// <summary>
         /// Gets the budget for the scope by budget name.
-        /// Request Path: /{scope}/providers/Microsoft.Consumption/budgets/{budgetName}
-        /// Operation Id: Budgets_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{scope}/providers/Microsoft.Consumption/budgets/{budgetName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Budgets_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="scope"> The scope that the resource will apply against. </param>
