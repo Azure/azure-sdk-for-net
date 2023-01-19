@@ -1,6 +1,16 @@
 # Release History
 
-## 1.1.0-beta.5 (Unreleased)
+## 1.1.0-beta.6 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
+## 1.1.0-beta.5 (2023-01-10)
 
 ### Features Added
 
@@ -10,10 +20,6 @@
 ### Breaking Changes
 
 - Changed type of `Manifest` property on `DownloadManifestResult` from `OciManifest` to `ArtifactManfest` to accommodate non-OCI manifest types in the future.  Callers must now downcast `Manifest` to the appropriate type.
-
-### Bugs Fixed
-
-### Other Changes
 
 ## 1.1.0-beta.4 (2022-04-05)
 

@@ -38,10 +38,26 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 }
                 writer.WriteEndObject();
             }
+            if (Optional.IsCollectionDefined(FinetuneCapabilities))
+            {
+                writer.WritePropertyName("finetuneCapabilities");
+                writer.WriteStartObject();
+                foreach (var item in FinetuneCapabilities)
+                {
+                    writer.WritePropertyName(item.Key);
+                    writer.WriteStringValue(item.Value);
+                }
+                writer.WriteEndObject();
+            }
             if (Optional.IsDefined(Deprecation))
             {
                 writer.WritePropertyName("deprecation");
                 writer.WriteObjectValue(Deprecation);
+            }
+            if (Optional.IsDefined(LifecycleStatus))
+            {
+                writer.WritePropertyName("lifecycleStatus");
+                writer.WriteStringValue(LifecycleStatus.Value.ToString());
             }
             if (Optional.IsDefined(Format))
             {
@@ -66,7 +82,9 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             Optional<CognitiveServicesAccountDeploymentModel> baseModel = default;
             Optional<int> maxCapacity = default;
             Optional<IDictionary<string, string>> capabilities = default;
+            Optional<IDictionary<string, string>> finetuneCapabilities = default;
             Optional<ServiceAccountModelDeprecationInfo> deprecation = default;
+            Optional<ModelLifecycleStatus> lifecycleStatus = default;
             Optional<SystemData> systemData = default;
             Optional<string> format = default;
             Optional<string> name = default;
@@ -109,6 +127,21 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     capabilities = dictionary;
                     continue;
                 }
+                if (property.NameEquals("finetuneCapabilities"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    Dictionary<string, string> dictionary = new Dictionary<string, string>();
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        dictionary.Add(property0.Name, property0.Value.GetString());
+                    }
+                    finetuneCapabilities = dictionary;
+                    continue;
+                }
                 if (property.NameEquals("deprecation"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -117,6 +150,16 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                         continue;
                     }
                     deprecation = ServiceAccountModelDeprecationInfo.DeserializeServiceAccountModelDeprecationInfo(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("lifecycleStatus"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    lifecycleStatus = new ModelLifecycleStatus(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("systemData"))
@@ -155,7 +198,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     continue;
                 }
             }
-            return new CognitiveServicesAccountModel(format.Value, name.Value, version.Value, callRateLimit.Value, baseModel.Value, Optional.ToNullable(maxCapacity), Optional.ToDictionary(capabilities), deprecation.Value, systemData);
+            return new CognitiveServicesAccountModel(format.Value, name.Value, version.Value, callRateLimit.Value, baseModel.Value, Optional.ToNullable(maxCapacity), Optional.ToDictionary(capabilities), Optional.ToDictionary(finetuneCapabilities), deprecation.Value, Optional.ToNullable(lifecycleStatus), systemData);
         }
     }
 }

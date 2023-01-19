@@ -7,6 +7,8 @@ Project("{6731F8D6-AED2-486F-8FEB-22D03AFAB55B}") = "Azure.ResourceManager.DataS
 EndProject
 Project("{6731F8D6-AED2-486F-8FEB-22D03AFAB55B}") = "Azure.ResourceManager.DataShare.Tests", "tests\Azure.ResourceManager.DataShare.Tests.csproj", "{E914ED0B-E1DF-4667-8452-2116E11F3C1D}"
 EndProject
+Project("{6731F8D6-AED2-486F-8FEB-22D03AFAB55B}") = "Azure.ResourceManager.DataShare.Samples", "samples\Azure.ResourceManager.DataShare.Samples.csproj", "{60AF48D8-8568-4291-BC8E-363480CE144E}"
+EndProject
 Global
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

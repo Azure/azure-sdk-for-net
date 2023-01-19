@@ -4271,10 +4271,9 @@ var client = new DeviceManagementClient(endpoint, "<instanceId>", credential);
 
 var data = "Devices";
 
-var operation = await client.ImportDevicesAsync(WaitUntil.Started, RequestContent.Create(data));
+var operation = await client.ImportDevicesAsync(WaitUntil.Completed, RequestContent.Create(data));
 
-var response = await operation.WaitForCompletionResponseAsync();
-Console.WriteLine(response.Status)
+Console.WriteLine(operation.GetRawResponse().Status)
 ]]></code>
 </example>
     </member>
@@ -4288,10 +4287,9 @@ var client = new DeviceManagementClient(endpoint, "<instanceId>", credential);
 
 var data = "Devices";
 
-var operation = client.ImportDevices(WaitUntil.Started, RequestContent.Create(data));
+var operation = client.ImportDevices(WaitUntil.Completed, RequestContent.Create(data));
 
-var response = operation.WaitForCompletionResponse();
-Console.WriteLine(response.Status)
+Console.WriteLine(operation.GetRawResponse().Status)
 ]]></code>
 </example>
     </member>

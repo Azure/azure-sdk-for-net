@@ -12,21 +12,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary>
-    /// The MachineLearningRecurrenceSchedule.
-    /// Serialized Name: RecurrenceSchedule
-    /// </summary>
+    /// <summary> The MachineLearningRecurrenceSchedule. </summary>
     public partial class MachineLearningRecurrenceSchedule
     {
         /// <summary> Initializes a new instance of MachineLearningRecurrenceSchedule. </summary>
-        /// <param name="hours">
-        /// [Required] List of hours for the schedule.
-        /// Serialized Name: RecurrenceSchedule.hours
-        /// </param>
-        /// <param name="minutes">
-        /// [Required] List of minutes for the schedule.
-        /// Serialized Name: RecurrenceSchedule.minutes
-        /// </param>
+        /// <param name="hours"> [Required] List of hours for the schedule. </param>
+        /// <param name="minutes"> [Required] List of minutes for the schedule. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="hours"/> or <paramref name="minutes"/> is null. </exception>
         public MachineLearningRecurrenceSchedule(IEnumerable<int> hours, IEnumerable<int> minutes)
         {
@@ -36,27 +27,15 @@ namespace Azure.ResourceManager.MachineLearning.Models
             Hours = hours.ToList();
             Minutes = minutes.ToList();
             MonthDays = new ChangeTrackingList<int>();
-            WeekDays = new ChangeTrackingList<MachineLearningWeekday>();
+            WeekDays = new ChangeTrackingList<MachineLearningDayOfWeek>();
         }
 
         /// <summary> Initializes a new instance of MachineLearningRecurrenceSchedule. </summary>
-        /// <param name="hours">
-        /// [Required] List of hours for the schedule.
-        /// Serialized Name: RecurrenceSchedule.hours
-        /// </param>
-        /// <param name="minutes">
-        /// [Required] List of minutes for the schedule.
-        /// Serialized Name: RecurrenceSchedule.minutes
-        /// </param>
-        /// <param name="monthDays">
-        /// List of month days for the schedule
-        /// Serialized Name: RecurrenceSchedule.monthDays
-        /// </param>
-        /// <param name="weekDays">
-        /// List of days for the schedule.
-        /// Serialized Name: RecurrenceSchedule.weekDays
-        /// </param>
-        internal MachineLearningRecurrenceSchedule(IList<int> hours, IList<int> minutes, IList<int> monthDays, IList<MachineLearningWeekday> weekDays)
+        /// <param name="hours"> [Required] List of hours for the schedule. </param>
+        /// <param name="minutes"> [Required] List of minutes for the schedule. </param>
+        /// <param name="monthDays"> List of month days for the schedule. </param>
+        /// <param name="weekDays"> List of days for the schedule. </param>
+        internal MachineLearningRecurrenceSchedule(IList<int> hours, IList<int> minutes, IList<int> monthDays, IList<MachineLearningDayOfWeek> weekDays)
         {
             Hours = hours;
             Minutes = minutes;
@@ -64,25 +43,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
             WeekDays = weekDays;
         }
 
-        /// <summary>
-        /// [Required] List of hours for the schedule.
-        /// Serialized Name: RecurrenceSchedule.hours
-        /// </summary>
+        /// <summary> [Required] List of hours for the schedule. </summary>
         public IList<int> Hours { get; }
-        /// <summary>
-        /// [Required] List of minutes for the schedule.
-        /// Serialized Name: RecurrenceSchedule.minutes
-        /// </summary>
+        /// <summary> [Required] List of minutes for the schedule. </summary>
         public IList<int> Minutes { get; }
-        /// <summary>
-        /// List of month days for the schedule
-        /// Serialized Name: RecurrenceSchedule.monthDays
-        /// </summary>
+        /// <summary> List of month days for the schedule. </summary>
         public IList<int> MonthDays { get; set; }
-        /// <summary>
-        /// List of days for the schedule.
-        /// Serialized Name: RecurrenceSchedule.weekDays
-        /// </summary>
-        public IList<MachineLearningWeekday> WeekDays { get; set; }
+        /// <summary> List of days for the schedule. </summary>
+        public IList<MachineLearningDayOfWeek> WeekDays { get; set; }
     }
 }

@@ -7,6 +7,8 @@ Project("{CAFFAE84-F81C-40DA-A83C-A6C0D1E72ED7}") = "Azure.ResourceManager.HDIns
 EndProject
 Project("{CAFFAE84-F81C-40DA-A83C-A6C0D1E72ED7}") = "Azure.ResourceManager.HDInsight.Tests", "tests\Azure.ResourceManager.HDInsight.Tests.csproj", "{B73D1EEA-FEC2-4D30-B2ED-96E3AAA8475C}"
 EndProject
+Project("{CAFFAE84-F81C-40DA-A83C-A6C0D1E72ED7}") = "Azure.ResourceManager.HDInsight.Samples", "samples\Azure.ResourceManager.HDInsight.Samples.csproj", "{56b1958b-529b-4d6b-ba4f-395606f2ca61}"
+EndProject
 Global
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

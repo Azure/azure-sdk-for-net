@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.ContainerInstance.Tests
             return containerGroup;
         }
 
-        protected static ContainerGroupData CreateContainerGroupData(string containerGroupName, ContainerGroupPriority priority, bool isConfidentialSku = false, string ccepolicy = null, bool doNotEncrypt = false)
+        protected static ContainerGroupData CreateContainerGroupData(string containerGroupName, string priority = null, bool isConfidentialSku = false, string ccepolicy = null, bool doNotEncrypt = false)
         {
             var containers = new ContainerInstanceContainer[]
             {
@@ -98,8 +98,9 @@ namespace Azure.ResourceManager.ContainerInstance.Tests
                 keyName: "testencryptionkey",
                 keyVersion: "804d3f1d5ce2456b9bc3dc9e35aaa67e");
 
+	    var containerGroupPriority = new ContainerGroupPriority(priority);
             var confidentialComputeProperties = isConfidentialSku ? null: new ConfidentialComputeProperties(ccepolicy);
-            var containerGroupSku = isConfidentialSku ? ContainerGroupSku.Confidential : containerGroupSku;
+            var containerGroupSku = isConfidentialSku ? ContainerGroupSku.Confidential : ContainerGroupSku.Standard;
 
             var containerGroup = new ContainerGroupData(
                 location: "westus",
@@ -118,7 +119,6 @@ namespace Azure.ResourceManager.ContainerInstance.Tests
                         logAnalytics: new ContainerGroupLogAnalytics(
                             workspaceId: "workspaceid",
                             workspaceKey: "workspacekey")),
-                Sku = ContainerGroupSku.Standard,
                 InitContainers = {
                     new InitContainerDefinitionContent($"{containerGroupName}init")
                     {
@@ -137,9 +137,9 @@ namespace Azure.ResourceManager.ContainerInstance.Tests
                     }
                 },
                 EncryptionProperties = encryptionProps,
-                Priority = priority,
-                ConfidentlalComputeProperties =  confidentialComputeProperties,
-                containerGroupSku = containerGroupSku
+                Priority = containerGroupPriority,
+                ConfidentialComputeProperties =  confidentialComputeProperties,
+                Sku = containerGroupSku
             };
             return containerGroup;
         }
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.ContainerInstance.Tests
             Assert.AreEqual(expected.InitContainers[0].Image, actual.InitContainers[0].Image);
             Assert.AreEqual(expected.Priority, actual.Priority);
             Assert.AreEqual(expected.ConfidentialComputeProperties.CcePolicy, actual.ConfidentialComputeProperties.CcePolicy);
-            Assert.AreEqual(expected.ContainerGroupSku, actual.ContainerGroupSku)
+            Assert.AreEqual(expected.Sku, actual.Sku);
         }
     }
 }

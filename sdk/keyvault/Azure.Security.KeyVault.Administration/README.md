@@ -58,14 +58,14 @@ Only the designated administrators that were assigned during the create command 
 
 To activate your HSM you need:
 
-* Minimum 3 RSA key-pairs (maximum 10)
-* Specify minimum number of keys required to decrypt the security domain (quorum)
+* A minimum of 3 RSA key-pairs (maximum 10)
+* Specify the minimum number of keys required to decrypt the security domain (quorum)
 
 To activate the HSM you send at least 3 (maximum 10) RSA public keys to the HSM. The HSM encrypts the security domain with these keys and sends it back.
 Once this security domain is successfully downloaded, your HSM is ready to use.
 You also need to specify quorum, which is the minimum number of private keys required to decrypt the security domain.
 
-The example below shows how to use openssl to generate 3 self signed certificate.
+The example below shows how to use openssl to generate 3 self-signed certificates.
 
 ```PowerShell
 openssl req -newkey rsa:2048 -nodes -keyout cert_0.key -x509 -days 365 -out cert_0.cer
@@ -74,7 +74,7 @@ openssl req -newkey rsa:2048 -nodes -keyout cert_2.key -x509 -days 365 -out cert
 ```
 
 Use the `az keyvault security-domain download` command to download the security domain and activate your managed HSM.
-The example below, uses 3 RSA key pairs (only public keys are needed for this command) and sets the quorum to 2.
+The example below uses 3 RSA key pairs (only public keys are needed for this command) and sets the quorum to 2.
 
 ```PowerShell
 az keyvault security-domain download --hsm-name <your-managed-hsm-name> --sd-wrapping-keys ./certs/cert_0.cer ./certs/cert_1.cer ./certs/cert_2.cer --sd-quorum 2 --security-domain-file ContosoMHSM-SD.json
@@ -95,7 +95,7 @@ Please read [best practices][best_practices] for properly securing your managed 
 
 #### Create KeyVaultAccessControlClient
 
-Instantiate a `DefaultAzureCredential` to pass to the [KeyVaultAccessControlClient][rbac_client].
+Instantiate a `DefaultAzureCredential` to pass to the `KeyVaultAccessControlClient`.
 The same instance of a token credential can be used with multiple clients if they will be authenticating with the same identity.
 
 ```C# Snippet:HelloCreateKeyVaultAccessControlClient
@@ -104,7 +104,7 @@ KeyVaultAccessControlClient client = new KeyVaultAccessControlClient(new Uri(man
 
 #### Create KeyVaultBackupClient
 
-Instantiate a `DefaultAzureCredential` to pass to the [KeyVaultBackupClient][backup_client].
+Instantiate a `DefaultAzureCredential` to pass to the `KeyVaultBackupClient`.
 The same instance of a token credential can be used with multiple clients if they will be authenticating with the same identity.
 
 ```C# Snippet:HelloCreateKeyVaultBackupClient
@@ -113,7 +113,7 @@ KeyVaultBackupClient client = new KeyVaultBackupClient(new Uri(managedHsmUrl), n
 
 #### Create KeyVaultSettingClient
 
-Instantiate a `DefaultAzureCredential` to pass to the [KeyVaultSettingsClient][settings_client].
+Instantiate a `DefaultAzureCredential` to pass to the `KeyVaultSettingsClient`.
 The same instance of a token credential can be used with multiple clients if they will be authenticating with the same identity.
 
 ```C# Snippet:KeyVaultSettingsClient_Create
@@ -201,7 +201,7 @@ for details on how to diagnose various failure scenarios.
 
 ### General
 
-When you interact with the Azure Key Vault administration library using the .NET SDK, errors returned by the service correspond to the same HTTP status codes returned for [REST API][keyvault_rest] requests.
+When you interact with the Azure Key Vault Administration library using the .NET SDK, errors returned by the service correspond to the same HTTP status codes returned for [REST API][keyvault_rest] requests.
 
 For example, if you try to retrieve a role assignment that doesn't exist in your Azure Key Vault, a `404` error is returned, indicating "Not Found".
 
@@ -233,7 +233,7 @@ Content-Type: application/json
 ### Setting up console logging
 
 The simplest way to see the logs is to enable the console logging.
-To create an Azure SDK log listener that outputs messages to console use AzureEventSourceListener.CreateConsoleLogger method.
+To create an Azure SDK log listener that outputs messages to console, use the `AzureEventSourceListener.CreateConsoleLogger` method.
 
 ```c#
 // Setup a listener to monitor logged events.
@@ -268,9 +268,6 @@ additional questions or comments.
 [best_practices]: https://learn.microsoft.com/azure/key-vault/managed-hsm/best-practices
 [built_in_roles]: https://learn.microsoft.com/azure/key-vault/managed-hsm/built-in-roles
 [code_of_conduct]: https://opensource.microsoft.com/codeofconduct/
-[rbac_client]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/keyvault/Azure.Security.KeyVault.Administration/src/KeyVaultAccessControlClient.cs
-[backup_client]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/keyvault/Azure.Security.KeyVault.Administration/src/KeyVaultBackupClient.cs
-[settings_client]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/keyvault/Azure.Security.KeyVault.Administration/src/KeyVaultSettingsClient.cs
 [managedhsm_docs]: https://learn.microsoft.com/azure/key-vault/managed-hsm/
 [keyvault_rest]: https://learn.microsoft.com/rest/api/keyvault/
 [admin_client_nuget_package]: https://www.nuget.org/packages?q=Azure.Security.KeyVault.Administration

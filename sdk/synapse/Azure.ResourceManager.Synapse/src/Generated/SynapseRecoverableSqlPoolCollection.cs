@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -55,8 +54,16 @@ namespace Azure.ResourceManager.Synapse
 
         /// <summary>
         /// Get recoverable sql pools for workspace managed sql server.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/recoverableSqlPools/{sqlPoolName}
-        /// Operation Id: WorkspaceManagedSqlServerRecoverableSqlPools_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/recoverableSqlPools/{sqlPoolName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>WorkspaceManagedSqlServerRecoverableSqlPools_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="sqlPoolName"> The name of the sql pool. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -84,8 +91,16 @@ namespace Azure.ResourceManager.Synapse
 
         /// <summary>
         /// Get recoverable sql pools for workspace managed sql server.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/recoverableSqlPools/{sqlPoolName}
-        /// Operation Id: WorkspaceManagedSqlServerRecoverableSqlPools_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/recoverableSqlPools/{sqlPoolName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>WorkspaceManagedSqlServerRecoverableSqlPools_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="sqlPoolName"> The name of the sql pool. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -113,92 +128,60 @@ namespace Azure.ResourceManager.Synapse
 
         /// <summary>
         /// Get list of recoverable sql pools for workspace managed sql server.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/recoverableSqlPools
-        /// Operation Id: WorkspaceManagedSqlServerRecoverableSqlPools_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/recoverableSqlPools</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>WorkspaceManagedSqlServerRecoverableSqlPools_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="SynapseRecoverableSqlPoolResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SynapseRecoverableSqlPoolResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<SynapseRecoverableSqlPoolResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _synapseRecoverableSqlPoolWorkspaceManagedSqlServerRecoverableSqlPoolsClientDiagnostics.CreateScope("SynapseRecoverableSqlPoolCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _synapseRecoverableSqlPoolWorkspaceManagedSqlServerRecoverableSqlPoolsRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new SynapseRecoverableSqlPoolResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<SynapseRecoverableSqlPoolResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _synapseRecoverableSqlPoolWorkspaceManagedSqlServerRecoverableSqlPoolsClientDiagnostics.CreateScope("SynapseRecoverableSqlPoolCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _synapseRecoverableSqlPoolWorkspaceManagedSqlServerRecoverableSqlPoolsRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new SynapseRecoverableSqlPoolResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _synapseRecoverableSqlPoolWorkspaceManagedSqlServerRecoverableSqlPoolsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _synapseRecoverableSqlPoolWorkspaceManagedSqlServerRecoverableSqlPoolsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SynapseRecoverableSqlPoolResource(Client, SynapseRecoverableSqlPoolData.DeserializeSynapseRecoverableSqlPoolData(e)), _synapseRecoverableSqlPoolWorkspaceManagedSqlServerRecoverableSqlPoolsClientDiagnostics, Pipeline, "SynapseRecoverableSqlPoolCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Get list of recoverable sql pools for workspace managed sql server.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/recoverableSqlPools
-        /// Operation Id: WorkspaceManagedSqlServerRecoverableSqlPools_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/recoverableSqlPools</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>WorkspaceManagedSqlServerRecoverableSqlPools_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="SynapseRecoverableSqlPoolResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SynapseRecoverableSqlPoolResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<SynapseRecoverableSqlPoolResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _synapseRecoverableSqlPoolWorkspaceManagedSqlServerRecoverableSqlPoolsClientDiagnostics.CreateScope("SynapseRecoverableSqlPoolCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _synapseRecoverableSqlPoolWorkspaceManagedSqlServerRecoverableSqlPoolsRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new SynapseRecoverableSqlPoolResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<SynapseRecoverableSqlPoolResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _synapseRecoverableSqlPoolWorkspaceManagedSqlServerRecoverableSqlPoolsClientDiagnostics.CreateScope("SynapseRecoverableSqlPoolCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _synapseRecoverableSqlPoolWorkspaceManagedSqlServerRecoverableSqlPoolsRestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new SynapseRecoverableSqlPoolResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _synapseRecoverableSqlPoolWorkspaceManagedSqlServerRecoverableSqlPoolsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _synapseRecoverableSqlPoolWorkspaceManagedSqlServerRecoverableSqlPoolsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SynapseRecoverableSqlPoolResource(Client, SynapseRecoverableSqlPoolData.DeserializeSynapseRecoverableSqlPoolData(e)), _synapseRecoverableSqlPoolWorkspaceManagedSqlServerRecoverableSqlPoolsClientDiagnostics, Pipeline, "SynapseRecoverableSqlPoolCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/recoverableSqlPools/{sqlPoolName}
-        /// Operation Id: WorkspaceManagedSqlServerRecoverableSqlPools_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/recoverableSqlPools/{sqlPoolName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>WorkspaceManagedSqlServerRecoverableSqlPools_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="sqlPoolName"> The name of the sql pool. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -224,8 +207,16 @@ namespace Azure.ResourceManager.Synapse
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/recoverableSqlPools/{sqlPoolName}
-        /// Operation Id: WorkspaceManagedSqlServerRecoverableSqlPools_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/recoverableSqlPools/{sqlPoolName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>WorkspaceManagedSqlServerRecoverableSqlPools_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="sqlPoolName"> The name of the sql pool. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

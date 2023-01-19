@@ -8,7 +8,6 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -46,8 +45,16 @@ namespace Azure.ResourceManager.Automanage
 
         /// <summary>
         /// Creates an association between a VM and Automanage configuration profile
-        /// Request Path: /{scope}/providers/Microsoft.Automanage/configurationProfileAssignments/{configurationProfileAssignmentName}
-        /// Operation Id: ConfigurationProfileAssignments_CreateOrUpdate
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{scope}/providers/Microsoft.Automanage/configurationProfileAssignments/{configurationProfileAssignmentName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ConfigurationProfileAssignments_CreateOrUpdate</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="configurationProfileAssignmentName"> Name of the configuration profile assignment. Only default is supported. </param>
@@ -79,8 +86,16 @@ namespace Azure.ResourceManager.Automanage
 
         /// <summary>
         /// Creates an association between a VM and Automanage configuration profile
-        /// Request Path: /{scope}/providers/Microsoft.Automanage/configurationProfileAssignments/{configurationProfileAssignmentName}
-        /// Operation Id: ConfigurationProfileAssignments_CreateOrUpdate
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{scope}/providers/Microsoft.Automanage/configurationProfileAssignments/{configurationProfileAssignmentName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ConfigurationProfileAssignments_CreateOrUpdate</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="configurationProfileAssignmentName"> Name of the configuration profile assignment. Only default is supported. </param>
@@ -112,8 +127,16 @@ namespace Azure.ResourceManager.Automanage
 
         /// <summary>
         /// Get information about a configuration profile assignment
-        /// Request Path: /{scope}/providers/Microsoft.Automanage/configurationProfileAssignments/{configurationProfileAssignmentName}
-        /// Operation Id: ConfigurationProfileAssignments_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{scope}/providers/Microsoft.Automanage/configurationProfileAssignments/{configurationProfileAssignmentName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ConfigurationProfileAssignments_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="configurationProfileAssignmentName"> The configuration profile assignment name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -141,8 +164,16 @@ namespace Azure.ResourceManager.Automanage
 
         /// <summary>
         /// Get information about a configuration profile assignment
-        /// Request Path: /{scope}/providers/Microsoft.Automanage/configurationProfileAssignments/{configurationProfileAssignmentName}
-        /// Operation Id: ConfigurationProfileAssignments_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{scope}/providers/Microsoft.Automanage/configurationProfileAssignments/{configurationProfileAssignmentName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ConfigurationProfileAssignments_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="configurationProfileAssignmentName"> The configuration profile assignment name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -170,16 +201,48 @@ namespace Azure.ResourceManager.Automanage
 
         /// <summary>
         /// Get list of configuration profile assignments
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/providers/Microsoft.Automanage/configurationProfileAssignments
-        /// Operation Id: ConfigurationProfileAssignments_ListByVirtualMachines
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automanage/configurationProfileAssignments
-        /// Operation Id: ConfigurationProfileAssignments_List
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Automanage/configurationProfileAssignments
-        /// Operation Id: ConfigurationProfileAssignments_ListBySubscription
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridCompute/machines/{machineName}/providers/Microsoft.Automanage/configurationProfileAssignments
-        /// Operation Id: ConfigurationProfileAssignments_ListByMachineName
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHci/clusters/{clusterName}/providers/Microsoft.Automanage/configurationProfileAssignments
-        /// Operation Id: ConfigurationProfileAssignments_ListByClusterName
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/providers/Microsoft.Automanage/configurationProfileAssignments</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ConfigurationProfileAssignments_ListByVirtualMachines</description>
+        /// </item>
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automanage/configurationProfileAssignments</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ConfigurationProfileAssignments_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Automanage/configurationProfileAssignments</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ConfigurationProfileAssignments_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridCompute/machines/{machineName}/providers/Microsoft.Automanage/configurationProfileAssignments</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ConfigurationProfileAssignments_ListByMachineName</description>
+        /// </item>
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHci/clusters/{clusterName}/providers/Microsoft.Automanage/configurationProfileAssignments</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ConfigurationProfileAssignments_ListByClusterName</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ConfigurationProfileAssignmentResource" /> that may take multiple service requests to iterate over. </returns>
@@ -187,98 +250,28 @@ namespace Azure.ResourceManager.Automanage
         {
             if (Id.ResourceType == "Microsoft.Compute/virtualMachines")
             {
-                async Task<Page<ConfigurationProfileAssignmentResource>> FirstPageFunc(int? pageSizeHint)
-                {
-                    using var scope = _configurationProfileAssignmentClientDiagnostics.CreateScope("ConfigurationProfileAssignmentCollection.GetAll");
-                    scope.Start();
-                    try
-                    {
-                        var response = await _configurationProfileAssignmentRestClient.ListByVirtualMachinesAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                        return Page.FromValues(response.Value.Value.Select(value => new ConfigurationProfileAssignmentResource(Client, value)), null, response.GetRawResponse());
-                    }
-                    catch (Exception e)
-                    {
-                        scope.Failed(e);
-                        throw;
-                    }
-                }
-                return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
+                HttpMessage FirstPageRequest(int? pageSizeHint) => _configurationProfileAssignmentRestClient.CreateListByVirtualMachinesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+                return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new ConfigurationProfileAssignmentResource(Client, ConfigurationProfileAssignmentData.DeserializeConfigurationProfileAssignmentData(e)), _configurationProfileAssignmentClientDiagnostics, Pipeline, "ConfigurationProfileAssignmentCollection.GetAll", "value", null, cancellationToken);
             }
             else if (Id.ResourceType == ResourceGroupResource.ResourceType)
             {
-                async Task<Page<ConfigurationProfileAssignmentResource>> FirstPageFunc(int? pageSizeHint)
-                {
-                    using var scope = _configurationProfileAssignmentClientDiagnostics.CreateScope("ConfigurationProfileAssignmentCollection.GetAll");
-                    scope.Start();
-                    try
-                    {
-                        var response = await _configurationProfileAssignmentRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                        return Page.FromValues(response.Value.Value.Select(value => new ConfigurationProfileAssignmentResource(Client, value)), null, response.GetRawResponse());
-                    }
-                    catch (Exception e)
-                    {
-                        scope.Failed(e);
-                        throw;
-                    }
-                }
-                return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
+                HttpMessage FirstPageRequest(int? pageSizeHint) => _configurationProfileAssignmentRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName);
+                return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new ConfigurationProfileAssignmentResource(Client, ConfigurationProfileAssignmentData.DeserializeConfigurationProfileAssignmentData(e)), _configurationProfileAssignmentClientDiagnostics, Pipeline, "ConfigurationProfileAssignmentCollection.GetAll", "value", null, cancellationToken);
             }
             else if (Id.ResourceType == SubscriptionResource.ResourceType)
             {
-                async Task<Page<ConfigurationProfileAssignmentResource>> FirstPageFunc(int? pageSizeHint)
-                {
-                    using var scope = _configurationProfileAssignmentClientDiagnostics.CreateScope("ConfigurationProfileAssignmentCollection.GetAll");
-                    scope.Start();
-                    try
-                    {
-                        var response = await _configurationProfileAssignmentRestClient.ListBySubscriptionAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                        return Page.FromValues(response.Value.Value.Select(value => new ConfigurationProfileAssignmentResource(Client, value)), null, response.GetRawResponse());
-                    }
-                    catch (Exception e)
-                    {
-                        scope.Failed(e);
-                        throw;
-                    }
-                }
-                return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
+                HttpMessage FirstPageRequest(int? pageSizeHint) => _configurationProfileAssignmentRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+                return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new ConfigurationProfileAssignmentResource(Client, ConfigurationProfileAssignmentData.DeserializeConfigurationProfileAssignmentData(e)), _configurationProfileAssignmentClientDiagnostics, Pipeline, "ConfigurationProfileAssignmentCollection.GetAll", "value", null, cancellationToken);
             }
             else if (Id.ResourceType == "Microsoft.HybridCompute/machines")
             {
-                async Task<Page<ConfigurationProfileAssignmentResource>> FirstPageFunc(int? pageSizeHint)
-                {
-                    using var scope = _configurationProfileAssignmentClientDiagnostics.CreateScope("ConfigurationProfileAssignmentCollection.GetAll");
-                    scope.Start();
-                    try
-                    {
-                        var response = await _configurationProfileAssignmentRestClient.ListByMachineNameAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                        return Page.FromValues(response.Value.Value.Select(value => new ConfigurationProfileAssignmentResource(Client, value)), null, response.GetRawResponse());
-                    }
-                    catch (Exception e)
-                    {
-                        scope.Failed(e);
-                        throw;
-                    }
-                }
-                return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
+                HttpMessage FirstPageRequest(int? pageSizeHint) => _configurationProfileAssignmentRestClient.CreateListByMachineNameRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+                return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new ConfigurationProfileAssignmentResource(Client, ConfigurationProfileAssignmentData.DeserializeConfigurationProfileAssignmentData(e)), _configurationProfileAssignmentClientDiagnostics, Pipeline, "ConfigurationProfileAssignmentCollection.GetAll", "value", null, cancellationToken);
             }
             else if (Id.ResourceType == "Microsoft.AzureStackHci/clusters")
             {
-                async Task<Page<ConfigurationProfileAssignmentResource>> FirstPageFunc(int? pageSizeHint)
-                {
-                    using var scope = _configurationProfileAssignmentClientDiagnostics.CreateScope("ConfigurationProfileAssignmentCollection.GetAll");
-                    scope.Start();
-                    try
-                    {
-                        var response = await _configurationProfileAssignmentRestClient.ListByClusterNameAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                        return Page.FromValues(response.Value.Value.Select(value => new ConfigurationProfileAssignmentResource(Client, value)), null, response.GetRawResponse());
-                    }
-                    catch (Exception e)
-                    {
-                        scope.Failed(e);
-                        throw;
-                    }
-                }
-                return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
+                HttpMessage FirstPageRequest(int? pageSizeHint) => _configurationProfileAssignmentRestClient.CreateListByClusterNameRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+                return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new ConfigurationProfileAssignmentResource(Client, ConfigurationProfileAssignmentData.DeserializeConfigurationProfileAssignmentData(e)), _configurationProfileAssignmentClientDiagnostics, Pipeline, "ConfigurationProfileAssignmentCollection.GetAll", "value", null, cancellationToken);
             }
             else
             {
@@ -288,16 +281,48 @@ namespace Azure.ResourceManager.Automanage
 
         /// <summary>
         /// Get list of configuration profile assignments
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/providers/Microsoft.Automanage/configurationProfileAssignments
-        /// Operation Id: ConfigurationProfileAssignments_ListByVirtualMachines
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automanage/configurationProfileAssignments
-        /// Operation Id: ConfigurationProfileAssignments_List
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Automanage/configurationProfileAssignments
-        /// Operation Id: ConfigurationProfileAssignments_ListBySubscription
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridCompute/machines/{machineName}/providers/Microsoft.Automanage/configurationProfileAssignments
-        /// Operation Id: ConfigurationProfileAssignments_ListByMachineName
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHci/clusters/{clusterName}/providers/Microsoft.Automanage/configurationProfileAssignments
-        /// Operation Id: ConfigurationProfileAssignments_ListByClusterName
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/providers/Microsoft.Automanage/configurationProfileAssignments</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ConfigurationProfileAssignments_ListByVirtualMachines</description>
+        /// </item>
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automanage/configurationProfileAssignments</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ConfigurationProfileAssignments_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Automanage/configurationProfileAssignments</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ConfigurationProfileAssignments_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridCompute/machines/{machineName}/providers/Microsoft.Automanage/configurationProfileAssignments</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ConfigurationProfileAssignments_ListByMachineName</description>
+        /// </item>
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHci/clusters/{clusterName}/providers/Microsoft.Automanage/configurationProfileAssignments</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ConfigurationProfileAssignments_ListByClusterName</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ConfigurationProfileAssignmentResource" /> that may take multiple service requests to iterate over. </returns>
@@ -305,98 +330,28 @@ namespace Azure.ResourceManager.Automanage
         {
             if (Id.ResourceType == "Microsoft.Compute/virtualMachines")
             {
-                Page<ConfigurationProfileAssignmentResource> FirstPageFunc(int? pageSizeHint)
-                {
-                    using var scope = _configurationProfileAssignmentClientDiagnostics.CreateScope("ConfigurationProfileAssignmentCollection.GetAll");
-                    scope.Start();
-                    try
-                    {
-                        var response = _configurationProfileAssignmentRestClient.ListByVirtualMachines(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                        return Page.FromValues(response.Value.Value.Select(value => new ConfigurationProfileAssignmentResource(Client, value)), null, response.GetRawResponse());
-                    }
-                    catch (Exception e)
-                    {
-                        scope.Failed(e);
-                        throw;
-                    }
-                }
-                return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
+                HttpMessage FirstPageRequest(int? pageSizeHint) => _configurationProfileAssignmentRestClient.CreateListByVirtualMachinesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+                return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new ConfigurationProfileAssignmentResource(Client, ConfigurationProfileAssignmentData.DeserializeConfigurationProfileAssignmentData(e)), _configurationProfileAssignmentClientDiagnostics, Pipeline, "ConfigurationProfileAssignmentCollection.GetAll", "value", null, cancellationToken);
             }
             else if (Id.ResourceType == ResourceGroupResource.ResourceType)
             {
-                Page<ConfigurationProfileAssignmentResource> FirstPageFunc(int? pageSizeHint)
-                {
-                    using var scope = _configurationProfileAssignmentClientDiagnostics.CreateScope("ConfigurationProfileAssignmentCollection.GetAll");
-                    scope.Start();
-                    try
-                    {
-                        var response = _configurationProfileAssignmentRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
-                        return Page.FromValues(response.Value.Value.Select(value => new ConfigurationProfileAssignmentResource(Client, value)), null, response.GetRawResponse());
-                    }
-                    catch (Exception e)
-                    {
-                        scope.Failed(e);
-                        throw;
-                    }
-                }
-                return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
+                HttpMessage FirstPageRequest(int? pageSizeHint) => _configurationProfileAssignmentRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName);
+                return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new ConfigurationProfileAssignmentResource(Client, ConfigurationProfileAssignmentData.DeserializeConfigurationProfileAssignmentData(e)), _configurationProfileAssignmentClientDiagnostics, Pipeline, "ConfigurationProfileAssignmentCollection.GetAll", "value", null, cancellationToken);
             }
             else if (Id.ResourceType == SubscriptionResource.ResourceType)
             {
-                Page<ConfigurationProfileAssignmentResource> FirstPageFunc(int? pageSizeHint)
-                {
-                    using var scope = _configurationProfileAssignmentClientDiagnostics.CreateScope("ConfigurationProfileAssignmentCollection.GetAll");
-                    scope.Start();
-                    try
-                    {
-                        var response = _configurationProfileAssignmentRestClient.ListBySubscription(Id.SubscriptionId, cancellationToken: cancellationToken);
-                        return Page.FromValues(response.Value.Value.Select(value => new ConfigurationProfileAssignmentResource(Client, value)), null, response.GetRawResponse());
-                    }
-                    catch (Exception e)
-                    {
-                        scope.Failed(e);
-                        throw;
-                    }
-                }
-                return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
+                HttpMessage FirstPageRequest(int? pageSizeHint) => _configurationProfileAssignmentRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+                return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new ConfigurationProfileAssignmentResource(Client, ConfigurationProfileAssignmentData.DeserializeConfigurationProfileAssignmentData(e)), _configurationProfileAssignmentClientDiagnostics, Pipeline, "ConfigurationProfileAssignmentCollection.GetAll", "value", null, cancellationToken);
             }
             else if (Id.ResourceType == "Microsoft.HybridCompute/machines")
             {
-                Page<ConfigurationProfileAssignmentResource> FirstPageFunc(int? pageSizeHint)
-                {
-                    using var scope = _configurationProfileAssignmentClientDiagnostics.CreateScope("ConfigurationProfileAssignmentCollection.GetAll");
-                    scope.Start();
-                    try
-                    {
-                        var response = _configurationProfileAssignmentRestClient.ListByMachineName(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                        return Page.FromValues(response.Value.Value.Select(value => new ConfigurationProfileAssignmentResource(Client, value)), null, response.GetRawResponse());
-                    }
-                    catch (Exception e)
-                    {
-                        scope.Failed(e);
-                        throw;
-                    }
-                }
-                return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
+                HttpMessage FirstPageRequest(int? pageSizeHint) => _configurationProfileAssignmentRestClient.CreateListByMachineNameRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+                return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new ConfigurationProfileAssignmentResource(Client, ConfigurationProfileAssignmentData.DeserializeConfigurationProfileAssignmentData(e)), _configurationProfileAssignmentClientDiagnostics, Pipeline, "ConfigurationProfileAssignmentCollection.GetAll", "value", null, cancellationToken);
             }
             else if (Id.ResourceType == "Microsoft.AzureStackHci/clusters")
             {
-                Page<ConfigurationProfileAssignmentResource> FirstPageFunc(int? pageSizeHint)
-                {
-                    using var scope = _configurationProfileAssignmentClientDiagnostics.CreateScope("ConfigurationProfileAssignmentCollection.GetAll");
-                    scope.Start();
-                    try
-                    {
-                        var response = _configurationProfileAssignmentRestClient.ListByClusterName(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                        return Page.FromValues(response.Value.Value.Select(value => new ConfigurationProfileAssignmentResource(Client, value)), null, response.GetRawResponse());
-                    }
-                    catch (Exception e)
-                    {
-                        scope.Failed(e);
-                        throw;
-                    }
-                }
-                return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
+                HttpMessage FirstPageRequest(int? pageSizeHint) => _configurationProfileAssignmentRestClient.CreateListByClusterNameRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+                return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new ConfigurationProfileAssignmentResource(Client, ConfigurationProfileAssignmentData.DeserializeConfigurationProfileAssignmentData(e)), _configurationProfileAssignmentClientDiagnostics, Pipeline, "ConfigurationProfileAssignmentCollection.GetAll", "value", null, cancellationToken);
             }
             else
             {
@@ -406,8 +361,16 @@ namespace Azure.ResourceManager.Automanage
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /{scope}/providers/Microsoft.Automanage/configurationProfileAssignments/{configurationProfileAssignmentName}
-        /// Operation Id: ConfigurationProfileAssignments_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{scope}/providers/Microsoft.Automanage/configurationProfileAssignments/{configurationProfileAssignmentName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ConfigurationProfileAssignments_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="configurationProfileAssignmentName"> The configuration profile assignment name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -433,8 +396,16 @@ namespace Azure.ResourceManager.Automanage
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /{scope}/providers/Microsoft.Automanage/configurationProfileAssignments/{configurationProfileAssignmentName}
-        /// Operation Id: ConfigurationProfileAssignments_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{scope}/providers/Microsoft.Automanage/configurationProfileAssignments/{configurationProfileAssignmentName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ConfigurationProfileAssignments_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="configurationProfileAssignmentName"> The configuration profile assignment name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
