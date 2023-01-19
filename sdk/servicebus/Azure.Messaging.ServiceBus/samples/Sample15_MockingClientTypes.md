@@ -12,7 +12,7 @@ The following examples focus on scenarios likely to occur in applications, and d
   - [Receiving messages from a queue](#receiving-messages-from-a-queue)
   - [Sending a batch of messages](#sending-a-batch-of-messages)
   - [Sending and receiving messages using sessions](#session-sending-and-receiving)
-  - [Peeking a messages](#peeking-a-message)
+  - [Peeking a message](#peeking-a-message)
 - **Message Settlement**
   - [Completing a message](#completing-a-message)
   - [Deferring a message and receiving deferred messages](#deferring-a-message-and-receiving-deferred-messages)
