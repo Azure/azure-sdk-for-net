@@ -4,7 +4,7 @@
 
 ### Features Added
 - Allow `VisualStudioCredential` on non-windows platforms
-- Added `AzureDeveloperCredential` for Azure Developer CLI. 
+- Added `AzureDeveloperCredential` for Azure Developer CLI
 
 ### Breaking Changes
 
