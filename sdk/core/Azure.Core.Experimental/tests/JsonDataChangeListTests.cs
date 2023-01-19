@@ -191,7 +191,7 @@ namespace Azure.Core.Experimental.Tests
         }
 
         [Test]
-        public void CanRemovePropertyFromObject()
+        public void CanRemovePropertyFromRootObject()
         {
             string json = @"
                 {
@@ -201,8 +201,7 @@ namespace Azure.Core.Experimental.Tests
 
             var jd = JsonData.Parse(json);
 
-            // Removal per https://www.rfc-editor.org/rfc/rfc7386
-            jd.RootElement.GetProperty("Bar").Set(null);
+            jd.RootElement.RemoveProperty("Bar");
 
             // Assert:
 
@@ -210,17 +209,60 @@ namespace Azure.Core.Experimental.Tests
             Assert.AreEqual(1.2, jd.RootElement.GetProperty("Foo").GetDouble());
 
             // 2. New property not present.
-            // TODO: right now this should be null, but we discussed a null sentinel API
-            Assert.IsNull(jd.RootElement.GetProperty("Bar"));
-            Assert.AreEqual("hi", jd.RootElement.GetProperty("Bar").GetString());
+            Assert.IsFalse(jd.RootElement.TryGetProperty("Bar", out var _));
 
             // 3. Type round-trips correctly.
             using MemoryStream stream = new();
             jd.WriteTo(stream);
-            var val = new BinaryData(stream.GetBuffer()).ToString();
-            var dict = JsonSerializer.Deserialize<Dictionary<string, object>>(val);
-            Assert.AreEqual(1.2, dict["Foo"]);
-            Assert.IsFalse(dict.TryGetValue("Bar", out var _));
+            stream.Position = 0;
+            string jsonString = BinaryData.FromStream(stream).ToString();
+            JsonDocument doc = JsonDocument.Parse(jsonString);
+            Assert.AreEqual(1.2, doc.RootElement.GetProperty("Foo").GetDouble());
+            Assert.IsFalse(doc.RootElement.TryGetProperty("Bar", out JsonElement _));
+
+            Assert.AreEqual(JsonDataWriteToTests.RemoveWhiteSpace(@"
+                {
+                  ""Foo"" : 1.2
+                }"), jsonString);
+        }
+
+        [Test]
+        public void CanRemovePropertyFromObject()
+        {
+            string json = @"
+                {
+                  ""Foo"" : {
+                    ""A"": 1.2,
+                    ""B"": ""hi""
+                    }
+                }";
+
+            var jd = JsonData.Parse(json);
+
+            jd.RootElement.GetProperty("Foo").RemoveProperty("B");
+
+            // Assert:
+
+            // 1. Old property is present.
+            Assert.AreEqual(1.2, jd.RootElement.GetProperty("Foo").GetProperty("A").GetDouble());
+
+            // 2. New property is absent.
+            Assert.IsFalse(jd.RootElement.GetProperty("Foo").TryGetProperty("B", out var _));
+
+            // 3. Type round-trips correctly.
+            using MemoryStream stream = new();
+            jd.WriteTo(stream);
+            stream.Position = 0;
+            string jsonString = BinaryData.FromStream(stream).ToString();
+            JsonDocument doc = JsonDocument.Parse(jsonString);
+            Assert.AreEqual(1.2, doc.RootElement.GetProperty("Foo").GetProperty("A").GetDouble());
+
+            Assert.AreEqual(JsonDataWriteToTests.RemoveWhiteSpace(@"
+                {
+                  ""Foo"" : {
+                    ""A"": 1.2
+                    }
+                }"), jsonString);
         }
 
         [Test]

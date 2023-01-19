@@ -61,6 +61,41 @@ namespace Azure.Core.Dynamic
             return new JsonDataElement(_root, _element.GetProperty(name), path);
         }
 
+        internal bool TryGetProperty(string name, out JsonDataElement value)
+        {
+            if (_element.ValueKind != JsonValueKind.Object)
+            {
+                throw new InvalidOperationException($"Expected an 'Object' type but was {_element.ValueKind}.");
+            }
+
+            JsonElement element = _element;
+
+            var path = _path.Length == 0 ? name : _path + "." + name;
+
+            if (Changes.TryGetChange(path, out JsonDataChange change))
+            {
+                if (change.Value == null)
+                {
+                    // TODO: handle this.
+                    //throw new InvalidCastException("Property has been removed");
+                }
+
+                if (change.ReplacesJsonElement)
+                {
+                    element = (JsonElement)change.Value!;
+                }
+            }
+
+            if (element.TryGetProperty(name, out _))
+            {
+                value = new JsonDataElement(_root, element, path);
+                return true;
+            }
+
+            value = default;
+            return false;
+        }
+
         internal JsonDataElement GetIndexElement(int index)
         {
             if (_element.ValueKind != JsonValueKind.Array)
@@ -121,6 +156,8 @@ namespace Azure.Core.Dynamic
                 throw new InvalidOperationException($"Expected an 'Object' type but was {_element.ValueKind}.");
             }
 
+            // TODO: check for changes first?
+
             var path = _path.Length == 0 ? name : _path + "." + name;
 
             // Per copying Dictionary semantics, if the property already exists, just replace the value.
@@ -143,12 +180,36 @@ namespace Azure.Core.Dynamic
             Changes.AddChange(_path, newElement, true);
         }
 
+        internal void RemoveProperty(string name)
+        {
+            if (_element.ValueKind != JsonValueKind.Object)
+            {
+                throw new InvalidOperationException($"Expected an 'Object' type but was {_element.ValueKind}.");
+            }
+
+            // TODO: Removal per JSON Merge Patch https://www.rfc-editor.org/rfc/rfc7386?
+
+            if (!_element.TryGetProperty(name, out _))
+            {
+                throw new InvalidOperationException($"Object does not have property: {name}.");
+            }
+
+            Dictionary<string, object> dict = JsonSerializer.Deserialize<Dictionary<string, object>>(_element.ToString());
+            dict.Remove(name);
+
+            byte[] bytes = JsonSerializer.SerializeToUtf8Bytes(dict);
+            JsonElement newElement = JsonDocument.Parse(bytes).RootElement;
+
+            Changes.AddChange(_path, newElement, true);
+        }
+
         internal void Set(double value) => Changes.AddChange(_path, value);
 
         internal void Set(int value) => Changes.AddChange(_path, value);
 
         internal void Set(string value) => Changes.AddChange(_path, value);
 
+        // TODO: This will need to change to handle serializing the object value.
         internal void Set(object value) => Changes.AddChange(_path, value);
     }
 }
