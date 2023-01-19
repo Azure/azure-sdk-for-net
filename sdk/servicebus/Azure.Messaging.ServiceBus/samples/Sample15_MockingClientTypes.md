@@ -274,7 +274,7 @@ It may be helpful for your application to mock the `CreateSender` and `AcceptNex
 This snippet also demonstrates how to mock `GetSessionStateAsync` and `SetSessionStateAsync` for the `ServiceBusSessionReceiver`.
 
 ```C# Snippet:ServiceBus_MockingSessionReceiver
-// This sets up the mock ServiceBusSender.
+// This sets up the mock ServiceBusClient to return the mock ServiceBusSender.
 
 Mock<ServiceBusClient> mockClient = new();
 Mock<ServiceBusSender> mockSender = new();
@@ -284,7 +284,7 @@ mockClient
     .Setup(client => client.CreateSender(It.IsAny<string>()))
     .Returns(mockSender.Object);
 
-// This sets up the ServiceBusClient to return the mock ServiceBusSessionProcessor when
+// This sets up the ServiceBusClient to return the mock ServiceBusSessionReceiver when
 // AcceptNextSession is called.
 
 mockClient
@@ -296,25 +296,9 @@ mockClient
 
 ServiceBusClient client = mockClient.Object;
 
-// This sets up a set of messages to send to the session.
+// This sets up the session sender to enqueue each message passed into send to the queue of messages to return.
 
-List<ServiceBusMessage> testSessionMessages = new();
 Queue<ServiceBusReceivedMessage> messagesToReturn = new();
-
-var mockSessionId = "mySession";
-var numMessagesInSession = 5;
-
-for (var i=0; i<numMessagesInSession; i++)
-{
-    ServiceBusMessage sentMessage = new($"message{i}")
-    {
-        SessionId = mockSessionId,
-        MessageId = $"messageId{i}"
-    };
-    testSessionMessages.Add(sentMessage);
-}
-
-// This sets up the session sender to enqueue each message sent to the queue of messages to return.
 
 mockSender
     .Setup(sender => sender.SendMessageAsync(
@@ -327,7 +311,7 @@ mockSender
         sessionId:m.SessionId)))
     .Returns(Task.CompletedTask);
 
-// This sets up the receiver to return a sent message off of the queue, or return null.
+// This sets up the receiver to return a message off of the queue, or return null if there are no messages waiting to be received.
 
 mockSessionReceiver
     .Setup(receiver => receiver.ReceiveMessageAsync(
@@ -346,7 +330,7 @@ mockSessionReceiver
     .Callback<BinaryData, CancellationToken>((st, ct) => mockSessionState = st)
     .Returns(Task.CompletedTask);
 
-// ReturnsAsync needs to be called with a lambda to eagerly access the most up to date session state.
+// ReturnsAsync needs to be called with a lambda in order to eagerly access the most up to date session state.
 
 mockSessionReceiver
     .Setup(receiver => receiver.GetSessionStateAsync(
@@ -360,10 +344,31 @@ mockSessionReceiver
 var mockQueueName = "MockQueueName";
 ServiceBusSender sender = client.CreateSender(mockQueueName);
 
+// This creates a set of messages to use in the test.
+
+List<ServiceBusMessage> testSessionMessages = new();
+
+var mockSessionId = "mySession";
+var numMessagesInSession = 5;
+
+for (var i = 0; i < numMessagesInSession; i++)
+{
+    ServiceBusMessage sentMessage = new($"message{i}")
+    {
+        SessionId = mockSessionId,
+        MessageId = $"messageId{i}"
+    };
+    testSessionMessages.Add(sentMessage);
+}
+
+// This sends all of the messages defined above.
+
 foreach (ServiceBusMessage message in testSessionMessages)
 {
     await sender.SendMessageAsync(message);
 }
+
+// The last part of the test receives all of the messages sent to this session.
 
 TimeSpan maxWait = TimeSpan.FromSeconds(30);
 
