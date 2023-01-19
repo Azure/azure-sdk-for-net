@@ -12,22 +12,22 @@ namespace Azure.Communication.CallAutomation
         /// 
         /// </summary>
         /// <param name="targetPhoneNumberIdentity"></param>
-        /// <param name="callerPhoneNumber"></param>
-        public CallTarget(PhoneNumberIdentifier targetPhoneNumberIdentity, PhoneNumberIdentifier callerPhoneNumber)
+        /// <param name="callerIdNumber"></param>
+        public CallTarget(PhoneNumberIdentifier targetPhoneNumberIdentity, PhoneNumberIdentifier callerIdNumber)
         {
             TargetIdentity = targetPhoneNumberIdentity;
-            CallerPhoneNumber = callerPhoneNumber;
+            CallerIdNumber = callerIdNumber;
         }
 
         /// <summary>
         /// 
         /// </summary>
         /// <param name="targetPhoneNumber"></param>
-        /// <param name="callerPhoneNumber"></param>
-        public CallTarget(string targetPhoneNumber, string callerPhoneNumber)
+        /// <param name="callerIdNumber"></param>
+        public CallTarget(string targetPhoneNumber, string callerIdNumber)
         {
             TargetIdentity = new PhoneNumberIdentifier(targetPhoneNumber);
-            CallerPhoneNumber = new PhoneNumberIdentifier(callerPhoneNumber);
+            CallerIdNumber = new PhoneNumberIdentifier(callerIdNumber);
         }
 
         /// <summary>
@@ -67,6 +67,6 @@ namespace Azure.Communication.CallAutomation
         /// 
         /// </summary>
         /// <value></value>
-        public PhoneNumberIdentifier CallerPhoneNumber { get; set; }
+        public PhoneNumberIdentifier CallerIdNumber { get; set; }
     }
 }

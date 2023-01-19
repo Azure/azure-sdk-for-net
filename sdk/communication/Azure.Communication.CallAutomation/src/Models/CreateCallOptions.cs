@@ -22,7 +22,7 @@ namespace Azure.Communication.CallAutomation
         {
             CallTarget = callTarget;
             CallbackUri = callbackUri;
-            CallSource = new CallSource(callTarget.TargetIdentity);
+            CallSource = new CallSource(new CommunicationUserIdentifier(Guid.NewGuid().ToString()));
             Targets = new ReadOnlyCollection<CommunicationIdentifier>(new List<CommunicationIdentifier> {{ callTarget.TargetIdentity }});
             RepeatabilityHeaders = new RepeatabilityHeaders();
         }
@@ -61,6 +61,12 @@ namespace Azure.Communication.CallAutomation
         /// The callback Uri.
         /// </summary>
         public Uri CallbackUri { get; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <value></value>
+        public CommunicationIdentifier SourceIdentity { get; set; }
 
         /// <summary>
         /// 

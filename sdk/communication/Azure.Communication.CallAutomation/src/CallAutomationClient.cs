@@ -25,6 +25,7 @@ namespace Azure.Communication.CallAutomation
         internal AzureCommunicationServicesRestClient AzureCommunicationServicesRestClient { get; }
         internal CallMediaRestClient CallMediaRestClient { get; }
         internal CallRecordingRestClient CallRecordingRestClient { get; }
+        internal CommunicationIdentifier SourceIdentity { get; }
 
         #region public constructors
         /// <summary> Initializes a new instance of <see cref="CallAutomationClient"/>.</summary>
@@ -85,6 +86,7 @@ namespace Azure.Communication.CallAutomation
             CallConnectionRestClient = new CallConnectionRestClient(_clientDiagnostics, httpPipeline, endpoint, options.ApiVersion);
             CallMediaRestClient = new CallMediaRestClient(_clientDiagnostics, httpPipeline, endpoint, options.ApiVersion);
             CallRecordingRestClient = new CallRecordingRestClient(_clientDiagnostics, httpPipeline, endpoint, options.ApiVersion);
+            SourceIdentity = options.SourceIdenty;
         }
 
         private CallAutomationClient(Uri endpoint, CallAutomationClientOptions options, ConnectionString connectionString)
@@ -428,7 +430,14 @@ namespace Azure.Communication.CallAutomation
             try
             {
                 if (options == null)
+                {
                     throw new ArgumentNullException(nameof(options));
+                }
+
+                if (options.SourceIdentity == null)
+                {
+                    options.SourceIdentity = SourceIdentity;
+                }
 
                 CreateCallRequestInternal request = CreateCallRequest(options);
                 options.RepeatabilityHeaders?.GenerateIfRepeatabilityHeadersNotProvided();
@@ -706,6 +715,47 @@ namespace Azure.Communication.CallAutomation
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="options"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        public virtual Response<CreateCallResult> CreateSimRingCall(CreateSimRingCallOptions options, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallAutomationClient)}.{nameof(CreateCall)}");
+            scope.Start();
+
+            try
+            {
+                var callSource = new CallSource(options.SourceIdentity)
+                {
+                    DisplayName = options.CallerIdName,
+                    CallerId = options.CallerIdNumber,
+                };
+                var createCallOptions = new CreateCallOptions(callSource, options.Targets, options.CallbackUri);
+
+                CreateCallRequestInternal request = CreateCallRequest(createCallOptions);
+                options.RepeatabilityHeaders?.GenerateIfRepeatabilityHeadersNotProvided();
+
+                var createCallResponse = AzureCommunicationServicesRestClient.CreateCall(
+                    request,
+                    options.RepeatabilityHeaders?.RepeatabilityRequestId,
+                    options.RepeatabilityHeaders?.GetRepeatabilityFirstSentString(),
+                    cancellationToken
+                    );
+
+                return Response.FromValue(new CreateCallResult(GetCallConnection(createCallResponse.Value.CallConnectionId), new CallConnectionProperties(createCallResponse.Value)),
+                    createCallResponse.GetRawResponse());
+
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
         private static CreateCallRequestInternal CreateCallRequest(CreateCallOptions options)
         {
             // when create call to PSTN, the CallSource.CallerId must be provided.
@@ -723,7 +773,7 @@ namespace Azure.Communication.CallAutomation
                 throw new ArgumentException(CallAutomationErrorMessages.InvalidHttpsUriMessage, nameof(options));
             }
 
-            CallSourceInternal sourceDto = new CallSourceInternal(CommunicationIdentifierSerializer.Serialize(options.CallSource.Identifier));
+            CallSourceInternal sourceDto = new CallSourceInternal(CommunicationIdentifierSerializer.Serialize(options.SourceIdentity ?? options.CallSource.Identifier));
             sourceDto.CallerId = options.CallSource.CallerId == null ? null : new PhoneNumberIdentifierModel(options.CallSource.CallerId.PhoneNumber);
             sourceDto.DisplayName = options.CallSource.DisplayName;
 
