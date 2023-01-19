@@ -19,8 +19,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 {
     internal static class Statsbeat
     {
-        private static bool s_isEnabled = true;
-
         internal const string StatsBeat_ConnectionString_NonEU = "<Non-EU-ConnectionString>";
 
         internal const string StatsBeat_ConnectionString_EU = "EU-ConnectionString";
@@ -30,6 +28,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
         internal const int AttachStatsBeatInterval = 86400000;
 
         private static readonly Meter s_myMeter = new("AttachStatsBeatMeter", "1.0");
+
+        private static bool s_isEnabled = true;
 
         internal static string s_statsBeat_ConnectionString;
 
@@ -50,53 +50,40 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
         internal static Regex s_endpoint_pattern = new("^https?://(?:www\\.)?([^/.-]+)");
 
         internal static readonly HashSet<string> EU_Endpoints = new()
-        {
-            "westeurope",
-            "northeurope",
-            "francecentral",
-            "francesouth",
-            "germanywestcentral",
-            "norwayeast",
-            "norwaywest",
-            "swedencentral",
-            "switzerlandnorth",
-            "switzerlandwest",
-            "uksouth",
-            "ukwest"
-        };
+        { "francecentral", "francesouth", "northeurope", "norwayeast", "norwaywest", "swedencentral", "switzerlandnorth", "switzerlandwest", "uksouth", "ukwest", "westeurope", };
 
         internal static readonly HashSet<string> Non_EU_Endpoints = new()
         {
-            "eastasia",
-            "southeastasia",
-            "chinaeast2",
-            "chinaeast3",
-            "chinanorth3",
-            "centralindia",
-            "southindia",
-            "jioindiacentral",
-            "jioindiawest",
-            "japaneast",
-            "japanwest",
-            "koreacentral",
-            "koreasouth",
             "australiacentral",
             "australiacentral2",
             "australiaeast",
             "australiasoutheast",
-            "canadacentral",
-            "canadaeast",
-            "qatarcentral",
-            "uaecentral",
-            "uaenorth",
-            "southafricanorth",
             "brazilsouth",
             "brazilsoutheast",
+            "canadacentral",
+            "canadaeast",
+            "centralindia",
             "centralus",
+            "chinaeast2",
+            "chinaeast3",
+            "chinanorth3",
+            "eastasia",
             "eastus",
             "eastus2",
+            "japaneast",
+            "japanwest",
+            "jioindiacentral",
+            "jioindiawest",
+            "koreacentral",
+            "koreasouth",
             "northcentralus",
+            "qatarcentral",
+            "southafricanorth",
             "southcentralus",
+            "southeastasia",
+            "southindia",
+            "uaecentral",
+            "uaenorth",
             "westus",
             "westus2",
             "westus3",
@@ -127,9 +114,9 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             {
                 if (s_statsBeat_ConnectionString == null)
                 {
-                    ConnectionStringParser.GetValues(connectionString, out string instrumentationKey, out string ingestionEndpoint);
-                    SetCustomerIkey(instrumentationKey);
-                    SetStatsbeatConnectionString(ingestionEndpoint);
+                    var parsedConectionString = ConnectionStringParser.GetValues(connectionString);
+                    SetCustomerIkey(parsedConectionString.InstrumentationKey);
+                    SetStatsbeatConnectionString(parsedConectionString.IngestionEndpoint);
                 }
 
                 if (!s_isEnabled)
@@ -220,19 +207,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             {
                 AzureMonitorExporterEventSource.Log.WriteInformational("Failed to get VM metadata details", ex.ToInvariantString());
                 return null;
-            }
-        }
-
-        private static void SetStatsBeatConnectionStringAndCustomerIkey(string connectionString)
-        {
-            if (s_statsBeat_ConnectionString == null)
-            {
-                var connectionVars = ConnectionStringParser.GetValues(connectionString);
-
-                s_customer_Ikey = connectionVars.InstrumentationKey;
-
-                // TODO: adjust based on customer's endpoint EU vs Non-EU.
-                s_statsBeat_ConnectionString = StatsBeat_ConnectionString_NonEU;
             }
         }
 
