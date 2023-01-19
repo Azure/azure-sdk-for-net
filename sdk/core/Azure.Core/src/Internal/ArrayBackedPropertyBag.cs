@@ -47,7 +47,7 @@ namespace Azure.Core
             }
         }
 
-        public void Add(ulong key, object value)
+        public void Set(ulong key, object value)
         {
             var index = GetIndex(key);
             if (index < 0)

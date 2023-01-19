@@ -141,7 +141,7 @@ namespace Azure.Core
             if (!_propertyBag.TryGetValue((ulong)typeof(MessagePropertyKey).TypeHandle.Value, out var rawValue))
             {
                 properties = new Dictionary<string, object>();
-                _propertyBag.Add((ulong)typeof(MessagePropertyKey).TypeHandle.Value, properties);
+                _propertyBag.Set((ulong)typeof(MessagePropertyKey).TypeHandle.Value, properties);
             }
             else
             {
@@ -172,7 +172,7 @@ namespace Azure.Core
         /// <param name="type">The key for the value.</param>
         /// <param name="value">The property value.</param>
         public void SetProperty(Type type, object value) =>
-            _propertyBag.Add((ulong)type.TypeHandle.Value, value);
+            _propertyBag.Set((ulong)type.TypeHandle.Value, value);
 
         /// <summary>
         /// Returns the response content stream and releases it ownership to the caller. After calling this methods using <see cref="Azure.Response.ContentStream"/> or <see cref="Azure.Response.Content"/> would result in exception.

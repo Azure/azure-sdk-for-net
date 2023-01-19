@@ -20,7 +20,7 @@ namespace Azure.Core.Tests
             ArrayBackedPropertyBag target = new();
             for (ulong i = 0; i < count; i++)
             {
-                target.Add(i, i);
+                target.Set(i, i);
                 Assert.True(target.TryGetValue(i, out object value));
                 Assert.AreEqual(i, (ulong)value);
             }
@@ -35,13 +35,13 @@ namespace Azure.Core.Tests
             ArrayBackedPropertyBag target = new();
             for (ulong i = 0; i < 5; i++)
             {
-                target.Add(i, i);
+                target.Set(i, i);
                 Assert.True(target.TryGetValue(i, out object value));
                 Assert.AreEqual(i, (ulong)value);
             }
             for (int i = 0; i < readLoops; i++)
             {
-                target.Add(3, i);
+                target.Set(3, i);
             }
             for (int i = 0; i < readLoops; i++)
             {
@@ -58,14 +58,14 @@ namespace Azure.Core.Tests
             ArrayBackedPropertyBag target = new();
             for (ulong i = 1; i <= count; i++)
             {
-                target.Add(i, i);
+                target.Set(i, i);
                 Assert.True(target.TryGetValue(i, out object value));
                 Assert.AreEqual(i, (ulong)value);
             }
 
             // add a duplicate key and set the value to the negative of its original value
             ulong lastKey = count;
-            target.Add(lastKey, lastKey * 10L);
+            target.Set(lastKey, lastKey * 10L);
             Assert.True(target.TryGetValue(lastKey, out object newValue));
             Assert.AreEqual(lastKey * 10, (ulong)newValue);
         }
@@ -74,7 +74,7 @@ namespace Azure.Core.Tests
         public void TryGetValueReturnsFalseWhenKeyNotExists()
         {
             ArrayBackedPropertyBag target = new();
-            target.Add(1, 1);
+            target.Set(1, 1);
 
             Assert.False(target.TryGetValue(2, out _));
         }
