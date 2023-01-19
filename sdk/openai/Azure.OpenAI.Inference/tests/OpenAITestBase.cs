@@ -17,11 +17,9 @@ namespace Azure.OpenAI.Inference.Tests
     {
         private const string DeploymentIdVariable = "OPENAI_DEPLOYMENT_ID";
         private const string EndpointVariable = "OPENAI_ENDPOINT";
-        private const string Model = "curie";
         private const string ResourceGroupName = "openai-test-rg";
         private const string CognitiveServicesAccountName = "openai-test-account";
         private const string SubDomain = "sdk";
-        private const string DeploymentName = "curie-deployment";
         private static AzureLocation Location = AzureLocation.SouthCentralUS;
         private CognitiveServicesAccountResource _cognitiveServiceAccount;
         private string _key = "DUMMY_VALUE";
