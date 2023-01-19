@@ -23,7 +23,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.ConnectionString
         /// <exception cref="InvalidOperationException">
         /// Any exceptions that occur while parsing the connection string will be wrapped and re-thrown.
         /// </exception>
-        public static void GetValues(string connectionString, out string instrumentationKey, out string ingestionEndpoint)
+        public static ConnectionVars GetValues(string connectionString)
         {
             try
             {
@@ -37,8 +37,10 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.ConnectionString
                 }
 
                 var connString = AzureCoreConnectionString.Parse(connectionString);
-                instrumentationKey = connString.GetInstrumentationKey();
-                ingestionEndpoint = connString.GetIngestionEndpoint();
+
+                return new ConnectionVars(
+                    instrumentationKey: connString.GetInstrumentationKey(),
+                    ingestionEndpoint: connString.GetIngestionEndpoint());
             }
             catch (Exception ex)
             {
