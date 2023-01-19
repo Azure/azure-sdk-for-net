@@ -51,7 +51,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
                                             };
 
                 pipeline = HttpPipelineBuilder.Build(options, httpPipelinePolicy);
-                AzureMonitorExporterEventSource.Log.WriteInformational("SetAADCredentialsToPipeline", "HttpPipelineBuilder is built with AAD Credentials"); // TODO: CONSIDER INCLUDING TYPE NAME OF TokenCredential and SCOPE value.
+                AzureMonitorExporterEventSource.Log.WriteInformational("SetAADCredentialsToPipeline", $"HttpPipelineBuilder is built with AAD Credentials. TokenCredential: {credential.GetType().Name} Scope: {scope}");
             }
             else
             {
