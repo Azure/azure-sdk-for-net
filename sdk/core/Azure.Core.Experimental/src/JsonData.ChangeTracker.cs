@@ -23,28 +23,6 @@ namespace Azure.Core.Dynamic
 
             internal bool HasChanges => _changes != null && _changes.Count > 0;
 
-            //internal bool TryGetChange(string path, out object? value)
-            //{
-            //    if (_changes == null)
-            //    {
-            //        value = null;
-            //        return false;
-            //    }
-
-            //    for (int i = _changes.Count - 1; i >= 0; i--)
-            //    {
-            //        var change = _changes[i];
-            //        if (change.Path == path)
-            //        {
-            //            value = change.Value;
-            //            return true;
-            //        }
-            //    }
-
-            //    value = null;
-            //    return false;
-            //}
-
             internal bool TryGetChange(ReadOnlySpan<byte> path, out JsonDataChange change)
             {
                 if (_changes == null)
@@ -102,31 +80,41 @@ namespace Azure.Core.Dynamic
 
             internal void AddChange(string path, object? value, bool replaceJsonElement = false)
             {
-                //// Assignment of an object or an array is special, because it potentially
-                //// changes the structure of the JSON.
-                //// TODO: Handle the case where a primitive leaf node is assigned
-                //// an object or an array ... this changes the structure as well.
-
-                //// We handle this here as a removal and a change.  The presence of a removal
-                //// indicates that the structure of the JSON has changed and additional care
-                //// must be taken for any child elements of the removed element.
-                //if (element.ValueKind == JsonValueKind.Object ||
-                //    element.ValueKind == JsonValueKind.Array)
-                //{
-                //    if (_removals == null)
-                //    {
-                //        _removals = new List<JsonDataChange>();
-                //    }
-
-                //    _removals.Add(new JsonDataChange() { Path = path, Value = null });
-                //}
-
                 if (_changes == null)
                 {
                     _changes = new List<JsonDataChange>();
                 }
 
                 _changes.Add(new JsonDataChange() { Path = path, Value = value, ReplacesJsonElement = replaceJsonElement });
+            }
+
+            internal static string PushProperty(string path, string value)
+            {
+                if (path.Length == 0)
+                {
+                    return value;
+                }
+                return $"{path}.{value}";
+            }
+
+            internal static string PushProperty(string path, ReadOnlySpan<byte> value)
+            {
+                string propertyName = BinaryData.FromBytes(value.ToArray()).ToString();
+                if (path.Length == 0)
+                {
+                    return propertyName;
+                }
+                return $"{path}.{propertyName}";
+            }
+
+            internal static string PopProperty(string path)
+            {
+                int lastDelimiter = path.LastIndexOf('.');
+                if (lastDelimiter == -1)
+                {
+                    return string.Empty;
+                }
+                return path.Substring(0, lastDelimiter);
             }
         }
     }

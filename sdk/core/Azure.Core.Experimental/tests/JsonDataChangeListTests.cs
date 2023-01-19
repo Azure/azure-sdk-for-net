@@ -278,7 +278,7 @@ namespace Azure.Core.Experimental.Tests
 
             var jd = JsonData.Parse(json);
 
-            jd.RootElement.GetProperty("Baz").Set(new { B = 5.0 });
+            jd.RootElement.GetProperty("Baz").Set(new { B = 5.5 });
 
             // Assert:
 
@@ -286,16 +286,25 @@ namespace Azure.Core.Experimental.Tests
             Assert.AreEqual(1.2, jd.RootElement.GetProperty("Foo").GetDouble());
 
             // 2. Object structure has been rewritten
-            Assert.IsNull(jd.RootElement.GetProperty("Baz").GetProperty("A"));
-            Assert.AreEqual(5.0, jd.RootElement.GetProperty("Baz").GetProperty("B").GetDouble());
+            Assert.IsFalse(jd.RootElement.GetProperty("Baz").TryGetProperty("A", out var _));
+            Assert.AreEqual(5.5, jd.RootElement.GetProperty("Baz").GetProperty("B").GetDouble());
 
             // 3. Type round-trips correctly.
             using MemoryStream stream = new();
             jd.WriteTo(stream);
-            var val = new BinaryData(stream.GetBuffer()).ToString();
-            BazB baz = JsonSerializer.Deserialize<BazB>(val);
+            stream.Position = 0;
+            string jsonString = BinaryData.FromStream(stream).ToString();
+            BazB baz = JsonSerializer.Deserialize<BazB>(jsonString);
             Assert.AreEqual(1.2, baz.Foo);
-            Assert.AreEqual(5.0, baz.Baz.B);
+            Assert.AreEqual(5.5, baz.Baz.B);
+
+            Assert.AreEqual(JsonDataWriteToTests.RemoveWhiteSpace(@"
+                {
+                  ""Baz"" : {
+                     ""B"" : 5.5
+                  },
+                  ""Foo"" : 1.2
+                }"), jsonString);
         }
 
         private class BazA

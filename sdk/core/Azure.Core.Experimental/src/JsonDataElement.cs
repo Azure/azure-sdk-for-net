@@ -30,7 +30,9 @@ namespace Azure.Core.Dynamic
             _path = path;
         }
 
-        // Note: Gets the JsonDataElement for the value of the property with the specified name.
+        /// <summary>
+        /// Gets the JsonDataElement for the value of the property with the specified name.
+        /// </summary>
         internal JsonDataElement GetProperty(string name)
         {
             if (_element.ValueKind != JsonValueKind.Object)
@@ -38,11 +40,7 @@ namespace Azure.Core.Dynamic
                 throw new InvalidOperationException($"Expected an 'Object' type but was {_element.ValueKind}.");
             }
 
-            // TODO: (Issue) relying on paths means mutations can be misinterpreted, e.g.
-            // what if a property of an object is changed first, and then the object is replaced.
-            // the property change will "apply" to the new object.
-            // I think we can deal with this by more clever merge logic, but it will be tricky
-            var path = _path.Length == 0 ? name : _path + "." + name;
+            var path = JsonData.ChangeTracker.PushProperty(_path, name);
 
             if (Changes.TryGetChange(path, out JsonDataChange change))
             {
@@ -70,7 +68,7 @@ namespace Azure.Core.Dynamic
 
             JsonElement element = _element;
 
-            var path = _path.Length == 0 ? name : _path + "." + name;
+            var path = JsonData.ChangeTracker.PushProperty(_path, name);
 
             if (Changes.TryGetChange(path, out JsonDataChange change))
             {
@@ -103,8 +101,7 @@ namespace Azure.Core.Dynamic
                 throw new InvalidOperationException($"Expected an 'Array' type but was {_element.ValueKind}.");
             }
 
-            var pathIndex = $"[{index}]";
-            var path = _path.Length == 0 ? pathIndex : _path + pathIndex;
+            var path = JsonData.ChangeTracker.PushProperty(_path, $"{index}");
 
             return new JsonDataElement(_root, _element[index], path);
         }
@@ -158,7 +155,7 @@ namespace Azure.Core.Dynamic
 
             // TODO: check for changes first?
 
-            var path = _path.Length == 0 ? name : _path + "." + name;
+            var path = JsonData.ChangeTracker.PushProperty(_path, name);
 
             // Per copying Dictionary semantics, if the property already exists, just replace the value.
             // If the property already exists, just set it.
@@ -209,7 +206,14 @@ namespace Azure.Core.Dynamic
 
         internal void Set(string value) => Changes.AddChange(_path, value);
 
-        // TODO: This will need to change to handle serializing the object value.
-        internal void Set(object value) => Changes.AddChange(_path, value);
+        internal void Set(object value)
+        {
+            // TODO: respect serializer options
+
+            byte[] bytes = JsonSerializer.SerializeToUtf8Bytes(value);
+            JsonElement newElement = JsonDocument.Parse(bytes).RootElement;
+
+            Changes.AddChange(_path, newElement, true);
+        }
     }
 }

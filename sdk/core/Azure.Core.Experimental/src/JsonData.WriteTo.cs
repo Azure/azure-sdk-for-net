@@ -2,10 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.IO;
-using System.Text;
 using System.Text.Json;
 
 namespace Azure.Core.Dynamic
@@ -126,36 +123,36 @@ namespace Azure.Core.Dynamic
                             WriteObjectProperties(path, ref reader, writer);
                         }
 
-                        path = PopProperty(path);
+                        path = ChangeTracker.PopProperty(path);
                         continue;
                     case JsonTokenType.StartArray:
                         writer.WriteStartArray();
                         WriteArrayValues(path, ref reader, writer);
-                        path = PopProperty(path);
+                        path = ChangeTracker.PopProperty(path);
                         continue;
                     case JsonTokenType.PropertyName:
-                        path = PushProperty(path, reader.ValueSpan);
+                        path = ChangeTracker.PushProperty(path, reader.ValueSpan);
 
                         writer.WritePropertyName(reader.ValueSpan);
                         Debug.WriteLine($"Path: {path}, TokenStartIndex: {reader.TokenStartIndex}");
                         continue;
                     case JsonTokenType.String:
                         WriteString(path, ref reader, writer);
-                        path = PopProperty(path);
+                        path = ChangeTracker.PopProperty(path);
                         continue;
                     case JsonTokenType.Number:
                         WriteNumber(path, ref reader, writer);
-                        path = PopProperty(path);
+                        path = ChangeTracker.PopProperty(path);
                         continue;
                     case JsonTokenType.True:
                     case JsonTokenType.False:
                         WriteBoolean(path, reader.TokenType, writer);
-                        path = PopProperty(path);
+                        path = ChangeTracker.PopProperty(path);
                         return;
                     case JsonTokenType.Null:
                         // TODO: Do we want to write the value here if null?
                         writer.WriteNullValue();
-                        path = PopProperty(path);
+                        path = ChangeTracker.PopProperty(path);
                         return;
                     case JsonTokenType.EndObject:
                         writer.WriteEndObject();
@@ -215,26 +212,6 @@ namespace Azure.Core.Dynamic
             }
 
             writer.WriteBooleanValue(value: token == JsonTokenType.True);
-        }
-
-        private static string PushProperty(string path, ReadOnlySpan<byte> value)
-        {
-            string propertyName = BinaryData.FromBytes(value.ToArray()).ToString();
-            if (path.Length == 0)
-            {
-                return propertyName;
-            }
-            return $"{path}.{propertyName}";
-        }
-
-        private static string PopProperty(string path)
-        {
-            int lastDelimiter = path.LastIndexOf('.');
-            if (lastDelimiter == -1)
-            {
-                return string.Empty;
-            }
-            return path.Substring(0, lastDelimiter);
         }
 
         private void WriteTheHardWay(Utf8JsonWriter writer)
