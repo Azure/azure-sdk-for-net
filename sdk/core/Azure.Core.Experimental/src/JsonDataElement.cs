@@ -30,6 +30,7 @@ namespace Azure.Core.Dynamic
             _path = path;
         }
 
+        // Note: Gets the JsonDataElement for the value of the property with the specified name.
         internal JsonDataElement GetProperty(string name)
         {
             if (_element.ValueKind != JsonValueKind.Object)
@@ -37,39 +38,25 @@ namespace Azure.Core.Dynamic
                 throw new InvalidOperationException($"Expected an 'Object' type but was {_element.ValueKind}.");
             }
 
-            // Note: if we are in this element, we can assume we've already
-            // addressed those changes.
-
             // TODO: (Issue) relying on paths means mutations can be misinterpreted, e.g.
             // what if a property of an object is changed first, and then the object is replaced.
             // the property change will "apply" to the new object.
             // I think we can deal with this by more clever merge logic, but it will be tricky
             var path = _path.Length == 0 ? name : _path + "." + name;
 
-            // TODO: Check for changes?
-            //if (Changes.Tra)
+            if (Changes.TryGetChange(path, out JsonDataChange change))
+            {
+                if (change.Value == null)
+                {
+                    // TODO: handle this.
+                    //throw new InvalidCastException("Property has been removed");
+                }
 
-            //// If the object referred to has been changed, we need to refer to
-            //// the new object. (See CanAssignObject test case.)
-            ////
-            //// This case is different, because it changes the structure of the JSON --
-            //// the JsonDocument and JsonElements we're holding at the root no longer
-            //// reflect the structure of the end-state of the JsonData.  We may want to
-            //// set a dirty-bit at the root level to indicate that to the serialization
-            //// methods.
-            //if ((_element.ValueKind == JsonValueKind.Object) &&
-            //    _root.TryGetChange(path, out object? value))
-            //{
-            //    // Need to make new node to use for this element
-            //    // TODO: using this constructor for convenience - rewrite for clarity
-            //    var jd = new JsonData(value);
-            //    return new JsonDataElement(_root, jd.RootElement._element, path);
-
-            //    // TODO: if we keep this approach, we'd want to cache the serialized JsonElement
-            //    // so we don't re-serialize it each time.  Would we store it back on the change record?
-            //    // Or would it be better to start building a shadow JSON tree if we have
-            //    // to store these things anyway?
-            //}
+                if (change.ReplacesJsonElement)
+                {
+                    return new JsonDataElement(_root, (JsonElement)change.Value!, path);
+                }
+            }
 
             return new JsonDataElement(_root, _element.GetProperty(name), path);
         }

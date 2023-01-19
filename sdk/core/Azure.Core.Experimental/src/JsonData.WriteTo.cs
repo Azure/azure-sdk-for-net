@@ -105,16 +105,24 @@ namespace Azure.Core.Dynamic
                 switch (reader.TokenType)
                 {
                     case JsonTokenType.StartObject:
-                        writer.WriteStartObject();
-
                         bool changed = Changes.TryGetChange(path, out JsonDataChange change);
                         if (changed)
                         {
                             Utf8JsonReader changedElementReader = change.GetReader();
+
+                            // TODO: Note case where new element isn't an object?
+                            changedElementReader.Read(); // Read StartObject element
+                            Debug.Assert(changedElementReader.TokenType == JsonTokenType.StartObject);
+
+                            writer.WriteStartObject();
                             WriteObjectProperties(path, ref changedElementReader, writer);
+
+                            // Skip this element in the original data.
+                            reader.Skip();
                         }
                         else
                         {
+                            writer.WriteStartObject();
                             WriteObjectProperties(path, ref reader, writer);
                         }
 

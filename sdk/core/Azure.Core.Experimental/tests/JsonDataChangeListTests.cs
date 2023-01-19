@@ -111,7 +111,7 @@ namespace Azure.Core.Experimental.Tests
         }
 
         [Test]
-        public void CanAddPropertyToObject()
+        public void CanAddPropertyToRootObject()
         {
             string json = @"
                 {
@@ -137,10 +137,57 @@ namespace Azure.Core.Experimental.Tests
             using MemoryStream stream = new();
             jd.WriteTo(stream);
             stream.Position = 0;
-            string value = BinaryData.FromStream(stream).ToString();
-            JsonDocument doc = JsonDocument.Parse(value);
+            string jsonString = BinaryData.FromStream(stream).ToString();
+            JsonDocument doc = JsonDocument.Parse(jsonString);
             Assert.AreEqual(1.2, doc.RootElement.GetProperty("Foo").GetDouble());
             Assert.AreEqual("hi", doc.RootElement.GetProperty("Bar").GetString());
+
+            Assert.AreEqual(JsonDataWriteToTests.RemoveWhiteSpace(@"
+                {
+                  ""Foo"" : 1.2,
+                  ""Bar"" : ""hi""
+                }"), jsonString);
+        }
+
+        [Test]
+        public void CanAddPropertyToObject()
+        {
+            string json = @"
+                {
+                  ""Foo"" : {
+                    ""A"": 1.2
+                    }
+                }";
+
+            var jd = JsonData.Parse(json);
+
+            jd.RootElement.GetProperty("Foo").SetProperty("B", "hi");
+
+            // Assert:
+
+            // 1. Old property is present.
+            Assert.AreEqual(1.2, jd.RootElement.GetProperty("Foo").GetProperty("A").GetDouble());
+
+            // 2. New property is present.
+            Assert.IsNotNull(jd.RootElement.GetProperty("Foo").GetProperty("B"));
+            Assert.AreEqual("hi", jd.RootElement.GetProperty("Foo").GetProperty("B").GetString());
+
+            // 3. Type round-trips correctly.
+            using MemoryStream stream = new();
+            jd.WriteTo(stream);
+            stream.Position = 0;
+            string jsonString = BinaryData.FromStream(stream).ToString();
+            JsonDocument doc = JsonDocument.Parse(jsonString);
+            Assert.AreEqual(1.2, doc.RootElement.GetProperty("Foo").GetProperty("A").GetDouble());
+            Assert.AreEqual("hi", doc.RootElement.GetProperty("Foo").GetProperty("B").GetString());
+
+            Assert.AreEqual(JsonDataWriteToTests.RemoveWhiteSpace(@"
+                {
+                  ""Foo"" : {
+                    ""A"": 1.2,
+                    ""B"": ""hi""
+                    }
+                }"), jsonString);
         }
 
         [Test]
