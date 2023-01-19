@@ -17,11 +17,21 @@ namespace Azure.Core.Dynamic
         // prove correctness.
         internal void WriteElementTo(Utf8JsonWriter writer)
         {
-            Span<byte> original = _original.Span;
-            Utf8JsonReader reader = new Utf8JsonReader(original);
-
             // TODO: Optimize path manipulations with Span<byte>
             string path = string.Empty;
+
+            Utf8JsonReader reader;
+
+            // Check for changes at the root.
+            bool changed = Changes.TryGetChange(path, out JsonDataChange change);
+            if (changed)
+            {
+                reader = change.GetReader();
+            }
+            else
+            {
+                reader = new Utf8JsonReader(_original.Span);
+            }
 
             while (reader.Read())
             {
@@ -29,7 +39,7 @@ namespace Azure.Core.Dynamic
                 {
                     case JsonTokenType.StartObject:
                         writer.WriteStartObject();
-                        WriteObjectElement(path, ref reader, writer);
+                        WriteObjectProperties(path, ref reader, writer);
                         break;
                     case JsonTokenType.StartArray:
                         writer.WriteStartArray();
@@ -62,7 +72,7 @@ namespace Azure.Core.Dynamic
                 {
                     case JsonTokenType.StartObject:
                         writer.WriteStartObject();
-                        WriteObjectElement(path, ref reader, writer);
+                        WriteObjectProperties(path, ref reader, writer);
                         continue;
                     case JsonTokenType.StartArray:
                         writer.WriteStartArray();
@@ -88,7 +98,7 @@ namespace Azure.Core.Dynamic
             }
         }
 
-        private void WriteObjectElement(string path, ref Utf8JsonReader reader, Utf8JsonWriter writer)
+        private void WriteObjectProperties(string path, ref Utf8JsonReader reader, Utf8JsonWriter writer)
         {
             while (reader.Read())
             {
@@ -96,7 +106,18 @@ namespace Azure.Core.Dynamic
                 {
                     case JsonTokenType.StartObject:
                         writer.WriteStartObject();
-                        WriteObjectElement(path, ref reader, writer);
+
+                        bool changed = Changes.TryGetChange(path, out JsonDataChange change);
+                        if (changed)
+                        {
+                            Utf8JsonReader changedElementReader = change.GetReader();
+                            WriteObjectProperties(path, ref changedElementReader, writer);
+                        }
+                        else
+                        {
+                            WriteObjectProperties(path, ref reader, writer);
+                        }
+
                         path = PopProperty(path);
                         continue;
                     case JsonTokenType.StartArray:

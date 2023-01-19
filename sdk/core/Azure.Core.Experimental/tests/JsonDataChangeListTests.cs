@@ -296,7 +296,7 @@ namespace Azure.Core.Experimental.Tests
             a.GetProperty("Foo").Set(6);
 
             Assert.AreEqual(5, jd.RootElement.GetIndexElement(0).GetInt32());
-            Assert.AreEqual(6, a.GetProperty("Foo").GetIndexElement(0).GetInt32());
+            Assert.AreEqual(6, a.GetProperty("Foo").GetInt32());
 
             jd.RootElement.GetIndexElement(0).Set(a);
 

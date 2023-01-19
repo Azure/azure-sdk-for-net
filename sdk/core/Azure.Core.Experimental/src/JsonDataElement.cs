@@ -150,8 +150,8 @@ namespace Azure.Core.Dynamic
             Dictionary<string, object> dict = JsonSerializer.Deserialize<Dictionary<string, object>>(_element.ToString());
             dict[name] = value;
 
-            var bytes = JsonSerializer.SerializeToUtf8Bytes(dict);
-            var newElement = JsonDocument.Parse(bytes).RootElement;
+            byte[] bytes = JsonSerializer.SerializeToUtf8Bytes(dict);
+            JsonElement newElement = JsonDocument.Parse(bytes).RootElement;
 
             Changes.AddChange(_path, newElement, true);
         }
