@@ -249,7 +249,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
                 // application control
             }
 
-            // This is where applications can verify that the ServiceBusReceivedMessages output by the ServiceBusReceiver were
+            // This is where applications can verify that the ServiceBusReceivedMessage's output by the ServiceBusReceiver were
             // handled as expected.
 
             #endregion
@@ -260,21 +260,10 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
         {
             #region Snippet:ServiceBus_MockingComplete
 
-            // The first section sets up a mock ServiceBusSender. See the Mocking send to queue TODO sample above
-            // for a more detailed explanation.
+            // The first section sets up the ServiceBusClient to return the mock ServiceBusReceiver when CreateReceiver
+            // is called.
 
             Mock<ServiceBusClient> mockClient = new();
-            Mock<ServiceBusSender> mockSender = new();
-
-            mockClient
-                .Setup(client => client.CreateSender(It.IsAny<string>()))
-                .Returns(mockSender.Object);
-
-            mockSender
-                .Setup(sender => sender.SendMessageAsync(
-                    It.IsAny<ServiceBusMessage>(),
-                    It.IsAny<CancellationToken>()))
-                .Returns(Task.CompletedTask);
 
             ServiceBusClient client = mockClient.Object;
 
@@ -284,26 +273,19 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
                 .Setup(client => client.CreateReceiver(It.IsAny<string>()))
                 .Returns(mockReceiver.Object);
 
-            // This creates two lists, a list of messages to send and a list of messages to return from the ServiceBusReceiver mock.
-            // See the ServiceBusModelFactory for a complete set of properties that can be populated using the
-            // ServiceBusModelFactory.ServiceBusReceivedMessage method.
+            // This creates a list of messages to return from the ServiceBusReceiver mock. See the ServiceBusModelFactory for a
+            // complete set of properties that can be populated using the ServiceBusModelFactory.ServiceBusReceivedMessage method.
 
-            List<ServiceBusMessage> messagesToSend = new();
             List<ServiceBusReceivedMessage> messagesToReturn = new();
-            int numMessagesToSend = 3;
+            int numMessages= 3;
 
-            for (int i = 0; i < numMessagesToSend; i++)
+            for (int i = 0; i < numMessages; i++)
             {
-                string body = $"message-{i}";
-
-                ServiceBusMessage messageToSend = new(body);
-                messagesToSend.Add(messageToSend);
-
                 // This mocks a ServiceBusReceivedMessage instance using the model factory. Different arguments can mock different
                 // potential outputs from the broker.
 
                 ServiceBusReceivedMessage messageToReturn = ServiceBusModelFactory.ServiceBusReceivedMessage(
-                    body: new BinaryData(body),
+                    body: new BinaryData($"message-{i}"),
                     messageId: $"id-{i}",
                     partitionKey: "illustrative-partitionKey",
                     correlationId: "illustrative-correlationId",
@@ -334,18 +316,12 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
                     It.IsAny<CancellationToken>())).Callback(() => numCallsCompleteMessage++)
                 .Returns(Task.CompletedTask);
 
-            // The rest of this snippet illustrates how to send a service bus message using the mocked
-            // service bus client above, this would be where application methods sending a message would be
+            // The rest of this snippet illustrates how to receive and complete a service bus message using the mocked
+            // service bus client above, this would be where application methods receiving and completing a message would be
             // called.
 
             string mockQueueName = "MockQueueName";
-            ServiceBusSender sender = client.CreateSender(mockQueueName);
             ServiceBusReceiver receiver = client.CreateReceiver(mockQueueName);
-
-            foreach (ServiceBusMessage message in messagesToSend)
-            {
-                await sender.SendMessageAsync(message);
-            }
 
             // ReceiveMessageAsync can be called multiple times.
 
@@ -440,7 +416,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
                 .Returns(Task.CompletedTask);
 
             // This sets up the ServiceBusReceiver mock to retrieve the ServiceBusReceivedMessage that has been deferred.
-            // If a message has been deferred with the given sequence number, throw a ServiceBusException (as expected).
+            // If a message has not been deferred with the given sequence number, throw a ServiceBusException (as expected).
 
             mockReceiver
                 .Setup(receiver => receiver.ReceiveDeferredMessageAsync(

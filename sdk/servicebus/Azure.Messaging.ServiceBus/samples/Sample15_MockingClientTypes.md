@@ -7,9 +7,31 @@ The following examples focus on scenarios likely to occur in applications, and d
 
 ## Table of contents
 
-TODO
+- **Sending and receiving messages**
+  - [Sending a message to a queue](#sending-messages-to-a-queue)
+  - [Receiving messages from a queue](#receiving-messages-from-a-queue)
+  - [Sending a batch of messages](#sending-a-batch-of-messages)
+  - [Sending and receiving messages using sessions](#session-sending-and-receiving)
+  - [Peeking a messages](#peeking-a-message)
+- **Message Settlement**
+  - [Completing a message](#completing-a-message)
+  - [Deferring a message and receiving deferred messages](#deferring-a-message-and-receiving-deferred-messages)
+  - [Abandoning a messages](#abandoning-a-message)
+- **Testing the processor**
+  - [Testing the `ServiceBusProcessor` handlers](#for-the-servicebusprocessor)
+  - [Testing the `ServiceBusSessionProcessor` handlers](#for-the-servicebussessionprocessor)
+  - [Simulating the `ServiceBusProcessor` running](#for-the-servicebusprocessor-1)
+  - [Simulating the `ServiceBusSessionProcessor` running](#for-the-servicebussessionprocessor-1)
+- **CRUD operations**
+  - [Sending and receiving messages using topics and subscriptions](#sending-and-receiving-messages-using-topics-and-subscriptions)
+  - [Creating a queue](#creating-a-queue-using-the-servicebusadministrationclient)
+  - [Creating a rule](#creating-a-rule-using-the-servicebusadministrationclient)
+- **Rule Manager**
+  - [Managing rules](#creating-and-deleting-rules-using-the-servicebusrulemanager)
 
 ## Sending messages to a queue
+
+When sending messages to a Service Bus queue, the key interaction with the `ServiceBusSender` is calling `SendMessageAsync` and/or `SendMessagesAsync`. Mocking these calls is relatively straightforward. It may also be helpful for your application to mock the `CreateSender` call on the `ServiceBusClient`. This is demonstrated in the snippet below as well.
 
 ```C# Snippet:ServiceBus_MockingSendToQueue
 Mock<ServiceBusClient> mockClient = new();
@@ -50,7 +72,10 @@ mockSender
         It.Is<ServiceBusMessage>(m => (m.MessageId == message.MessageId)),
         It.IsAny<CancellationToken>()));
 ```
+
 ## Receiving messages from a queue
+
+When testing code that is dependent on the `ServiceBusReceiver`, it may be useful to create a known set of expected messages to verify that their application receives them correctly. Tests can mock `ServiceBusReceivedMessage` instances coming from the broker using the `ServiceBusModelFactory`. These can be used within the receiver mock to mock returns from `ReceiveMessageAsync` or `ReceiveMessagesAsync`. It may also be helpful for your application to mock the `CreateReceiver` call on the `ServiceBusClient`. This is demonstrated in the snippet below as well.
 
 ```C# Snippet:ServiceBus_MockingReceiveFromQueue
 Mock<ServiceBusClient> mockClient = new();
@@ -129,12 +154,15 @@ await foreach (ServiceBusReceivedMessage message in receiver.ReceiveMessagesAsyn
     // application control
 }
 
-// This is where applications can verify that the ServiceBusReceivedMessages output by the ServiceBusReceiver were
+// This is where applications can verify that the ServiceBusReceivedMessage's output by the ServiceBusReceiver were
 // handled as expected.
 ```
 
-
 ## Sending a batch of messages
+
+When using batches to send messages to a Service Bus queue, the key interactions with the `ServiceBusSender` are calling `CreateMessageBatchAsync` to create the batch, and `SendMessagesAsync` to send it. Mocked batches accept a `List<ServiceBusMessage>` that is used as a backing store and can be inspected to verify that the application is adding events to the batch as expected. The custom `TryAddMessage` callback can be ysed to control the decision for whether a message is accepted into the batch or rejected. 
+
+This snippet demonstrates mocking the `ServiceBusReceiver` and creating a `ServiceBusMessageBatch` using the `ServiceBusModelFactory`.
 
 ```C# Snippet:ServiceBus_MockingSendBatch
 Mock<ServiceBusClient> mockClient = new();
@@ -236,6 +264,14 @@ Assert.AreEqual(backingList.Count, sourceMessages.Count);
 ```
 
 ## Session sending and receiving
+
+When sending session messages to a Service Bus queue, the key interaction with the `ServiceBusSender` is calling `SendMessageAsync` and/or `SendMessagesAsync` with a session id added to each `ServiceBusMessage` to send. Mocking these calls is relatively straightforward.
+
+When receiving session messages from a Service Bus queue, the key interaction with the `ServiceBusSessionReceiver` is calling `ReceiveMessageAsync` and/or `ReceiveMessagesAsync`. In some cases, a developer may want to create a known set of expected events to verify that their application receives them correctly. This can be done for the `ServiceBusSessionReceiver` in the same manner as is demonstrated using the `ServiceBusReceiver` in the [Receiving messages from a queue](#receiving-messages-from-a-queue) section above. This snippet illustrates how to receive the same set of events that is passed in through the `SendMessageAsync` call.
+
+It may be helpful for your application to mock the `CreateSender` and `AcceptNextSessionAsync` calls on the `ServiceBusClient` to create the `ServiceBusSender` and `ServiceBusSessionReceiver`. This is demonstrated in the snippet below. 
+
+This snippet also demonstrates how to mock `GetSessionStateAsync` and `SetSessionStateAsync` for the `ServiceBusSessionReceiver`.
 
 ```C# Snippet:ServiceBus_MockingSessionReceiver
 // This sets up the mock ServiceBusSender.
@@ -344,7 +380,9 @@ BinaryData state = await sessionReceiver.GetSessionStateAsync(CancellationToken.
 Assert.AreEqual(setState, state);
 ```
 
-### Peeking a message
+## Peeking a message
+
+The snippet below demonstrates how to mock a `ServiceBusReceiver` to return a pre-defined message for each call to `PeekMessageAsync`. It uses the `ServiceBusModelFactory` to mock the `ServiceBusReceivedMessage` to return.
 
 ```C# Snippet:ServiceBus_MockPeek
 // This sets up the ServiceBusClient mock to return the ServiceBusReceiver mock.
@@ -417,22 +455,13 @@ mockReceiver
 
 ### Completing a message
 
+Message settlement is a key aspect of receiving `ServiceBusReceivedMessages`. The following snippet demonstrates how to mock receiveing a message and then use the mock `ServiceBusReceiver` to complete the message. For illustrative purposes it demonstrates verifying that `ReceiveMessageAsync` and `CompleteMessageAsync` were called the same number of times.
+
 ```C# Snippet:ServiceBus_MockingComplete
-// The first section sets up a mock ServiceBusSender. See the Mocking send to queue TODO sample above
-// for a more detailed explanation.
+// The first section sets up the ServiceBusClient to return the mock ServiceBusReceiver when CreateReceiver
+// is called.
 
 Mock<ServiceBusClient> mockClient = new();
-Mock<ServiceBusSender> mockSender = new();
-
-mockClient
-    .Setup(client => client.CreateSender(It.IsAny<string>()))
-    .Returns(mockSender.Object);
-
-mockSender
-    .Setup(sender => sender.SendMessageAsync(
-        It.IsAny<ServiceBusMessage>(),
-        It.IsAny<CancellationToken>()))
-    .Returns(Task.CompletedTask);
 
 ServiceBusClient client = mockClient.Object;
 
@@ -442,26 +471,19 @@ mockClient
     .Setup(client => client.CreateReceiver(It.IsAny<string>()))
     .Returns(mockReceiver.Object);
 
-// This creates two lists, a list of messages to send and a list of messages to return from the ServiceBusReceiver mock.
-// See the ServiceBusModelFactory for a complete set of properties that can be populated using the
-// ServiceBusModelFactory.ServiceBusReceivedMessage method.
+// This creates a list of messages to return from the ServiceBusReceiver mock. See the ServiceBusModelFactory for a
+// complete set of properties that can be populated using the ServiceBusModelFactory.ServiceBusReceivedMessage method.
 
-List<ServiceBusMessage> messagesToSend = new();
 List<ServiceBusReceivedMessage> messagesToReturn = new();
-int numMessagesToSend = 3;
+int numMessages= 3;
 
-for (int i = 0; i < numMessagesToSend; i++)
+for (int i = 0; i < numMessages; i++)
 {
-    string body = $"message-{i}";
-
-    ServiceBusMessage messageToSend = new(body);
-    messagesToSend.Add(messageToSend);
-
     // This mocks a ServiceBusReceivedMessage instance using the model factory. Different arguments can mock different
     // potential outputs from the broker.
 
     ServiceBusReceivedMessage messageToReturn = ServiceBusModelFactory.ServiceBusReceivedMessage(
-        body: new BinaryData(body),
+        body: new BinaryData($"message-{i}"),
         messageId: $"id-{i}",
         partitionKey: "illustrative-partitionKey",
         correlationId: "illustrative-correlationId",
@@ -492,18 +514,12 @@ mockReceiver
         It.IsAny<CancellationToken>())).Callback(() => numCallsCompleteMessage++)
     .Returns(Task.CompletedTask);
 
-// The rest of this snippet illustrates how to send a service bus message using the mocked
-// service bus client above, this would be where application methods sending a message would be
+// The rest of this snippet illustrates how to receive and complete a service bus message using the mocked
+// service bus client above, this would be where application methods receiving and completing a message would be
 // called.
 
 string mockQueueName = "MockQueueName";
-ServiceBusSender sender = client.CreateSender(mockQueueName);
 ServiceBusReceiver receiver = client.CreateReceiver(mockQueueName);
-
-foreach (ServiceBusMessage message in messagesToSend)
-{
-    await sender.SendMessageAsync(message);
-}
 
 // ReceiveMessageAsync can be called multiple times.
 
@@ -524,6 +540,8 @@ mockReceiver
 ```
 
 ### Deferring a message and receiving deferred messages
+
+When testing code that receives, defers, and then receives a deferred message, it may be useful to use a pre-determined set of messages that can be propagated through each mocked method. The following snippet demonstrates how to mock the call to `ReceiveMessageAsync`, `DeferMessageAsync`, and `ReceiveDeferredMessageAsync`. The pre-determined set of messages are returned through `ReceiveMessageAsync`. `DeferMessageAsync` and `ReceiveDeferredMessageAsync` use a shared dictionary mapping sequence numbers to `ServiceBusReceivedMessage` instances to keep track of deferred messages.
 
 ```C# Snippet:ServiceBus_MockDefer
 // The first section sets up a mock ServiceBusReceiver.
@@ -595,7 +613,7 @@ mockReceiver
     .Returns(Task.CompletedTask);
 
 // This sets up the ServiceBusReceiver mock to retrieve the ServiceBusReceivedMessage that has been deferred.
-// If a message has been deferred with the given sequence number, throw a ServiceBusException (as expected).
+// If a message has not been deferred with the given sequence number, throw a ServiceBusException (as expected).
 
 mockReceiver
     .Setup(receiver => receiver.ReceiveDeferredMessageAsync(
@@ -645,6 +663,8 @@ Assert.IsEmpty(deferredMessages);
 ```
 
 ### Abandoning a message
+
+This snippet demonstrates how to mock `AbandonMessageAsync` for the `ServiceBusReceiver`. This is done by creating a pre-defined set of messages to return from `ReceiveMessageAsync`. When `AbandonMessageAsync` is called on the message returned from `ReceiveMessageAsync`, the message is re-inserted into the list of messages, and will be received again if `ReceiveMessageAsync` is called again. 
 
 ```C# Snippet:ServiceBus_MockingAbandon
 // This sets up the ServiceBusClient mock to return the ServiceBusReceiver mock.
@@ -722,6 +742,10 @@ await receiver.AbandonMessageAsync(message);
 ```
 
 ## Testing processor message handlers
+
+Interacting with a `ServiceBusProcessor` or `ServiceBusSessionProcessor` in an application is done through various handler methods. The Service Bus library guarantees that each of these handlers will be called at the appropriate times while the processor is running. Therefore, it is recommended that handlers be tested by calling them directly, rather than attempting to simulate having the processor invoke them.
+
+The most common of these handlers are the process message and process error handlers. The necessary inputs to these handlers can be mocked either using the `ServiceBusModelFactory` or created directly and then passed into their respective handler definitions, this is demonstrated below.
 
 ### For the `ServiceBusProcessor`:
 
@@ -873,6 +897,10 @@ Assert.DoesNotThrowAsync(async () => await ErrorHandler(errorArgs));
 ```
 
 ## Simulating the processor running
+
+While calling the handler methods directly is recommended for testing their logic, there may be times where it is desirable to test how an application interacts with the `ServiceBusProcessor` or `ServiceBusSessionProcessor` more generally, such as to start and stop processing. For these scenarios, it may be helpful to mock the `StartProcessingAsync` and `StopProcessingAsync` methods and simulate dispatching messages or exceptions. This allows for testing application logic while simulating normal behavior of the processor.
+
+This can be accomplished by using a timer to call handler methods when the `ServiceBusProcessor` or `ServiceBusSessionProcessor` is started and to cease doing so when the processor is stopped. The necessary inputs to these handlers can be mocked using the `ServiceBusModelFactory`. The example below demonstrates a timer dispatching messages to the handler for processing while the processor is "running".
 
 ### For the `ServiceBusProcessor`
 
@@ -1047,6 +1075,12 @@ await mockProcessor.Object.StopProcessingAsync();
 
 ## Sending and Receiving messages using topics and subscriptions
 
+The following snippet demonstrates how to mock the `ServiceBusAdministrationClient` and `ServiceBusClient` to send messages using topics and subscriptions.
+
+The key interactions with the `ServiceBusAdministrationClient` when using topics and subscriptions are `CreateTopicAsync` and the `CreateSubscriptionAsync`. The outputs from these methods can be mocked using the `ServiceBusModelFactory`.
+
+The key interactions with the `ServiceBusClient` when using topics and subscriptions are `SendMessageAsync` and `ReceiveMessageAsync`. These methods are mocked using very similar methods as the snippets above, where messages are being sent to a Service Bus queue instead.
+
 ```C# Snippet:ServiceBus_MockingTopicSubscriptionSend
 Mock<ServiceBusAdministrationClient> mockAdministrationClient = new();
 Mock<Response<TopicProperties>> mockTopicResponse = new();
@@ -1206,6 +1240,8 @@ ServiceBusReceivedMessage receivedMessage = await receiver.ReceiveMessageAsync()
 
 ## Creating a queue using the `ServiceBusAdministrationClient`
 
+The following snippet demonstrates how to mock the `ServiceBusAdministrationClient` to create a Service Bus queue. The key interaction in this scenario is mocking `CreateQueueAsync`. The output from this method can be mocked using the `ServiceBusModelFactory`.
+
 ```C# Snippet:ServiceBus_MockingQueueCreation
 Mock<ServiceBusAdministrationClient> mockAdministrationClient = new();
 Mock<Response<QueueProperties>> mockQueueResponse = new();
@@ -1262,6 +1298,8 @@ QueueProperties createQueue = await administrationClient.CreateQueueAsync(option
 
 ## Creating a rule using the `ServiceBusAdministrationClient`
 
+The following snippet demonstrates how to mock the `ServiceBusAdministrationClient` to create a rule. The key interaction in this scenario is mocking `CreateRuleAsync`. The output from this method can be mocked using the `ServiceBusModelFactory`.
+
 ```C# Snippet:ServiceBus_MockingRules
 Mock<ServiceBusAdministrationClient> mockAdministrationClient = new();
 Mock<Response<RuleProperties>> mockRuleResponse = new();
@@ -1305,6 +1343,8 @@ RuleProperties createRule = await administrationClient.CreateRuleAsync(topic, su
 ```
 
 ## Creating and deleting rules using the `ServiceBusRuleManager`
+
+The following snippet demonstrates how to mock the `ServiceBusRuleManager` to create and delete rules. The key interactions in this scenario are mocking `CreateRuleAsync` and `DeleteRuleAsync`.
 
 ```C# Snippet:ServiceBus_MockingRuleManager
 Mock<ServiceBusClient> mockClient = new();
