@@ -1,139 +1,148 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
-using System.Collections.Generic;
+using System.Buffers;
+using System.Runtime.CompilerServices;
 
 namespace Azure.Core
 {
     /// <summary>
     /// A property bag which is optimized for storage of a small number of items.
     /// If the item count is less than 2, there are no allocations. Any additional items are stored in an array which will grow as needed.
+    /// MUST be passed by ref only.
     /// </summary>
-    internal class ArrayBackedPropertyBag<TKey, TValue> where TKey : IEquatable<TKey>
+    internal struct ArrayBackedPropertyBag
     {
-        private int _totalCount;
-        private int _arrayCount;
-        private (TKey Key, TValue Value)[]? _array;
-        private TKey? _key1, _key2;
-        private TValue? _value1, _value2;
+        private KVP _first;
+        private KVP _second;
+        private KVP[] _rest;
+        private int _count;
 
-        /// <summary>
-        /// Adds a value to the property bag.
-        /// </summary>
-        /// <param name="key">The key of the value to add.</param>
-        /// <param name="value">The value to add.</param>
-        public void Add(TKey key, TValue value)
+        private readonly struct KVP
         {
-            Argument.AssertNotNull(key, nameof(key));
+            public readonly ulong Key;
+            public readonly object Value;
 
-            bool duplicateKeyDetected = false;
-            switch (_totalCount)
+            public KVP(ulong key, object value)
             {
-                case 0:
-                    _key1 = key;
-                    _value1 = value;
-                    break;
-
-                case 1:
-                    if (EqualityComparer<TKey>.Default.Equals(key, _key1!))
-                    {
-                        duplicateKeyDetected = true;
-                        _value1 = value;
-                        break;
-                    }
-                    _key2 = key;
-                    _value2 = value;
-                    break;
-
-                default:
-                    if (EqualityComparer<TKey>.Default.Equals(key, _key1!))
-                    {
-                        duplicateKeyDetected = true;
-                        _value1 = value;
-                        break;
-                    }
-                    if (EqualityComparer<TKey>.Default.Equals(key, _key2!))
-                    {
-                        duplicateKeyDetected = true;
-                        _value2 = value;
-                        break;
-                    }
-                    _array ??= new (TKey Key, TValue Value)[8];
-                    if (_arrayCount >= _array.Length)
-                    {
-                        // The array must be re-sized
-                        (TKey Key, TValue Value)[] newItems = new (TKey Key, TValue Value)[_array.Length * 2];
-                        Array.Copy(_array, newItems, _array.Length);
-                        _array = newItems;
-                    }
-                    _array[_arrayCount] = new(key, value);
-                    _arrayCount++;
-                    break;
-            }
-            if (!duplicateKeyDetected)
-            {
-                _totalCount++;
+                Key = key;
+                Value = value;
             }
         }
 
-        /// <summary>
-        /// Gets a value from the property bag.
-        /// </summary>
-        /// <param name="key">The key of the item to get.</param>
-        /// <param name="value">The out parameter that will store the value, if found.</param>
-        /// <returns><c>true</c> if found, else <c>false</c>.</returns>
-        public bool TryGetValue(TKey key, out TValue? value)
+        public bool IsEmpty => _count == 0;
+
+        public bool TryGetValue(ulong key, out object? value)
         {
-            Argument.AssertNotNull(key, nameof(key));
-
-            switch (_totalCount)
+            var index = GetIndex(key);
+            if (index < 0)
             {
-                case 0:
-                    value = default;
-                    return false;
+                value = null;
+                return false;
+            }
+            else
+            {
+                value = GetAt(index);
+                return true;
+            }
+        }
 
-                case 1:
-                    if (EqualityComparer<TKey>.Default.Equals(key, _key1!))
-                    {
-                        value = _value1;
-                        return true;
-                    }
+        public void Add(ulong key, object value)
+        {
+            var index = GetIndex(key);
+            if (index < 0)
+                AddInternal(key, value);
+            else
+                SetAt(index, new KVP(key, value));
+        }
 
-                    value = default;
-                    return false;
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private void AddInternal(ulong key, object value)
+        {
+            if (_count == 0)
+            {
+                _first = new KVP(key, value);
+                _count = 1;
+                return;
+            }
 
-                default:
-                    if (EqualityComparer<TKey>.Default.Equals(key, _key1!))
-                    {
-                        value = _value1;
-                        return true;
-                    }
+            if (_count == 1)
+            {
+                if (_first.Key == key)
+                {
+                    _first = new KVP(_first.Key, value);
+                }
+                else
+                {
+                    _second = new KVP(key, value);
+                    _count = 2;
+                }
+                return;
+            }
 
-                    if (EqualityComparer<TKey>.Default.Equals(key, _key2!))
-                    {
-                        value = _value2;
-                        return true;
-                    }
+            if (_rest == null)
+            {
+                _rest = ArrayPool<KVP>.Shared.Rent(8);
+                _rest[_count++ - 2] = new KVP(key, value);
+                return;
+            }
 
-                    if (_array == null)
-                    {
-                        value = default;
-                        return false;
-                    }
+            if (_rest.Length <= _count)
+            {
+                var larger = ArrayPool<KVP>.Shared.Rent(_rest.Length << 1);
+                _rest.CopyTo(larger, 0);
+                var old = _rest;
+                _rest = larger;
+                ArrayPool<KVP>.Shared.Return(old, true);
+            }
+            _rest[_count++ - 2] = new KVP(key, value);
+        }
 
-                    // search the array in reverse to favor the last item added in the case of duplicate keys.
-                    for (int i = _arrayCount - 1; i >= 0; i--)
-                    {
-                        if (EqualityComparer<TKey>.Default.Equals(key, _array[i].Key))
-                        {
-                            value = _array[i].Value;
-                            return true;
-                        }
-                    }
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private void SetAt(int index, KVP value)
+        {
+            if (index == 0)
+                _first = value;
+            else if (index == 1)
+                _second = value;
+            else
+                _rest[index - 2] = value;
+        }
 
-                    value = default;
-                    return false;
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private object GetAt(int index)
+        {
+            if (index == 0)
+                return _first.Value;
+            if (index == 1)
+                return _second.Value;
+            return _rest[index - 2].Value;
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private int GetIndex(ulong key)
+        {
+            if (_count == 0)
+                return -1;
+            if (_first.Key == key)
+                return 0;
+            if (_second.Key == key)
+                return 1;
+
+            int max = _count - 2;
+            for (var i = 0; i < max; i++)
+            {
+                if (_rest[i].Key == key)
+                    return i + 2;
+            }
+            return -1;
+        }
+
+        internal void Dispose()
+        {
+            if (_rest != null)
+            {
+                ArrayPool<KVP>.Shared.Return(_rest, true);
             }
         }
     }

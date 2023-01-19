@@ -1,7 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
 
@@ -10,127 +9,74 @@ namespace Azure.Core.Tests
     public class ArrayBackedPropertyBagTests
     {
         [Test]
-        [TestCase(1)]
-        [TestCase(2)]
-        [TestCase(3)]
-        [TestCase(5)]
-        [TestCase(20)]
-        [TestCase(1000)]
-        public void AddAndGetItems(int count)
+        [TestCase((ulong)1)]
+        [TestCase((ulong)2)]
+        [TestCase((ulong)3)]
+        [TestCase((ulong)5)]
+        [TestCase((ulong)20)]
+        [TestCase((ulong)1000)]
+        public void AddAndGetItems(ulong count)
         {
-            ArrayBackedPropertyBagPool<int, int> target = new();
-            for (int i = 0; i < count; i++)
+            ArrayBackedPropertyBag target = new();
+            for (ulong i = 0; i < count; i++)
             {
                 target.Add(i, i);
-                Assert.True(target.TryGetValue(i, out int value));
-                Assert.AreEqual(i, value);
+                Assert.True(target.TryGetValue(i, out object value));
+                Assert.AreEqual(i, (ulong)value);
             }
-        }
-
-        private struct T1
-        {
-            public int Value { get; set; }
-        }
-
-        private struct T2
-        {
-            public int Value { get; set; }
-        }
-
-        private struct T3
-        {
-            public int Value { get; set; }
-        }
-
-        private struct T4
-        {
-            public int Value { get; set; }
-        }
-
-        private struct T5
-        {
-            public int Value { get; set; }
         }
 
         [Test]
         public void NoDupeTest()
         {
             int readLoops = 1000;
-            using HttpMessage message = new HttpMessage(new MockRequest(), new ResponseClassifier());
-            var t3 = new T3() { Value = 1234 };
-            message.SetProperty(typeof(T1), new T1() { Value = 1234 });
-            message.SetProperty(typeof(T2), new T2() { Value = 1234 });
-            message.SetProperty(typeof(T3), new T3() { Value = 1234 });
-            message.SetProperty(typeof(T4), new T4() { Value = 1234 });
-            message.SetProperty(typeof(T5), new T5() { Value = 1234 });
-            for (int i = 0; i < readLoops; i++)
+            using HttpMessage message = new HttpMessage(new MockRequest(), ResponseClassifier.Shared);
+
+            ArrayBackedPropertyBag target = new();
+            for (ulong i = 0; i < 5; i++)
             {
-                t3.Value = i;
-                message.SetProperty(typeof(T3), i);
+                target.Add(i, i);
+                Assert.True(target.TryGetValue(i, out object value));
+                Assert.AreEqual(i, (ulong)value);
             }
             for (int i = 0; i < readLoops; i++)
             {
-                message.TryGetProperty(typeof(T4), out var val4);
+                target.Add(3, i);
             }
-            // ArrayBackedPropertyBagPool<int, int> target = new();
-            // for (int i = 0; i < 5; i++)
-            // {
-            //     target.Add(i, i);
-            //     Assert.True(target.TryGetValue(i, out int value));
-            //     Assert.AreEqual(i, value);
-            // }
-            // for (int i = 0; i < readLoops; i++)
-            // {
-            //     target.Add(3, i);
-            // }
-            // for (int i = 0; i < readLoops; i++)
-            // {
-            //     target.TryGetValue(4, out var val4);
-            // }
+            for (int i = 0; i < readLoops; i++)
+            {
+                target.TryGetValue(4, out var val4);
+            }
         }
 
         [Test]
-        [TestCase(1)]
-        [TestCase(2)]
-        [TestCase(3)]
-        public void DuplicateKeysFetchLastAddedItem(int count)
+        [TestCase((ulong)1)]
+        [TestCase((ulong)2)]
+        [TestCase((ulong)3)]
+        public void DuplicateKeysFetchLastAddedItem(ulong count)
         {
-            ArrayBackedPropertyBagPool<int, int> target = new();
-            for (int i = 1; i <= count; i++)
+            ArrayBackedPropertyBag target = new();
+            for (ulong i = 1; i <= count; i++)
             {
                 target.Add(i, i);
-                Assert.True(target.TryGetValue(i, out int value));
-                Assert.AreEqual(i, value);
+                Assert.True(target.TryGetValue(i, out object value));
+                Assert.AreEqual(i, (ulong)value);
             }
 
             // add a duplicate key and set the value to the negative of its original value
-            int lastKey = count;
-            target.Add(lastKey, lastKey * -1);
-            Assert.True(target.TryGetValue(lastKey, out int newValue));
-            Assert.AreEqual(-lastKey, newValue);
-        }
-
-        [Test]
-        public void AddThrowsWithNullKey()
-        {
-            ArrayBackedPropertyBagPool<string, int> target = new();
-            Assert.Throws<ArgumentNullException>(() => target.Add(null, 1));
-        }
-
-        [Test]
-        public void TryGetValueThrowsWithNullKey()
-        {
-            ArrayBackedPropertyBagPool<string, int> target = new();
-            Assert.Throws<ArgumentNullException>(() => target.TryGetValue(null, out _));
+            ulong lastKey = count;
+            target.Add(lastKey, lastKey * 10L);
+            Assert.True(target.TryGetValue(lastKey, out object newValue));
+            Assert.AreEqual(lastKey * 10, (ulong)newValue);
         }
 
         [Test]
         public void TryGetValueReturnsFalseWhenKeyNotExists()
         {
-            ArrayBackedPropertyBagPool<string, int> target = new();
-            target.Add("exists", 1);
+            ArrayBackedPropertyBag target = new();
+            target.Add(1, 1);
 
-            Assert.False(target.TryGetValue("does not exist", out _));
+            Assert.False(target.TryGetValue(2, out _));
         }
     }
 }
