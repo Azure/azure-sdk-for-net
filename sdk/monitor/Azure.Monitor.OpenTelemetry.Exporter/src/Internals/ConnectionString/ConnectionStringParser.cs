@@ -41,7 +41,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.ConnectionString
                 return new ConnectionVars(
                     instrumentationKey: connString.GetInstrumentationKey(),
                     ingestionEndpoint: connString.GetIngestionEndpoint(),
-                    aadAudience = connString.GetAADAudience());
+                    aadAudience: connString.GetAADAudience());
             }
             catch (Exception ex)
             {

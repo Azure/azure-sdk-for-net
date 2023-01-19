@@ -43,7 +43,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
             HttpPipeline pipeline;
             if (credential != null)
             {
-                var scope = AadHelper.GetScope(aadAudience);
+                var scope = AadHelper.GetScope(_connectionVars.AadAudience);
                 var httpPipelinePolicy = new HttpPipelinePolicy[]
                                             {
                                                 new BearerTokenAuthenticationPolicy(credential, scope),
