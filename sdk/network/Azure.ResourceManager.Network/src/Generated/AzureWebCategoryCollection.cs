@@ -55,8 +55,16 @@ namespace Azure.ResourceManager.Network
 
         /// <summary>
         /// Gets the specified Azure Web Category.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/azureWebCategories/{name}
-        /// Operation Id: WebCategories_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/azureWebCategories/{name}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>WebCategories_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="name"> The name of the azureWebCategory. </param>
         /// <param name="expand"> Expands resourceIds back referenced by the azureWebCategory resource. </param>
@@ -85,8 +93,16 @@ namespace Azure.ResourceManager.Network
 
         /// <summary>
         /// Gets the specified Azure Web Category.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/azureWebCategories/{name}
-        /// Operation Id: WebCategories_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/azureWebCategories/{name}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>WebCategories_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="name"> The name of the azureWebCategory. </param>
         /// <param name="expand"> Expands resourceIds back referenced by the azureWebCategory resource. </param>
@@ -115,8 +131,16 @@ namespace Azure.ResourceManager.Network
 
         /// <summary>
         /// Gets all the Azure Web Categories in a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/azureWebCategories
-        /// Operation Id: WebCategories_ListBySubscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/azureWebCategories</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>WebCategories_ListBySubscription</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="AzureWebCategoryResource" /> that may take multiple service requests to iterate over. </returns>
@@ -129,8 +153,16 @@ namespace Azure.ResourceManager.Network
 
         /// <summary>
         /// Gets all the Azure Web Categories in a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/azureWebCategories
-        /// Operation Id: WebCategories_ListBySubscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/azureWebCategories</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>WebCategories_ListBySubscription</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="AzureWebCategoryResource" /> that may take multiple service requests to iterate over. </returns>
@@ -143,8 +175,16 @@ namespace Azure.ResourceManager.Network
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/azureWebCategories/{name}
-        /// Operation Id: WebCategories_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/azureWebCategories/{name}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>WebCategories_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="name"> The name of the azureWebCategory. </param>
         /// <param name="expand"> Expands resourceIds back referenced by the azureWebCategory resource. </param>
@@ -171,8 +211,16 @@ namespace Azure.ResourceManager.Network
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/azureWebCategories/{name}
-        /// Operation Id: WebCategories_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/azureWebCategories/{name}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>WebCategories_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="name"> The name of the azureWebCategory. </param>
         /// <param name="expand"> Expands resourceIds back referenced by the azureWebCategory resource. </param>

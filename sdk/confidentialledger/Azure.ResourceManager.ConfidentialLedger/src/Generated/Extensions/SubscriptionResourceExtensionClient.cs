@@ -49,8 +49,16 @@ namespace Azure.ResourceManager.ConfidentialLedger
 
         /// <summary>
         /// To check whether a resource name is available.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.ConfidentialLedger/checkNameAvailability
-        /// Operation Id: CheckNameAvailability
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ConfidentialLedger/checkNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>CheckNameAvailability</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="content"> Name availability request payload. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -72,8 +80,16 @@ namespace Azure.ResourceManager.ConfidentialLedger
 
         /// <summary>
         /// To check whether a resource name is available.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.ConfidentialLedger/checkNameAvailability
-        /// Operation Id: CheckNameAvailability
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ConfidentialLedger/checkNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>CheckNameAvailability</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="content"> Name availability request payload. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -95,8 +111,16 @@ namespace Azure.ResourceManager.ConfidentialLedger
 
         /// <summary>
         /// Retrieves the properties of all Confidential Ledgers.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.ConfidentialLedger/ledgers
-        /// Operation Id: Ledger_ListBySubscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ConfidentialLedger/ledgers</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Ledger_ListBySubscription</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="filter"> The filter to apply on the list operation. eg. $filter=ledgerType eq &apos;Public&apos;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -110,8 +134,16 @@ namespace Azure.ResourceManager.ConfidentialLedger
 
         /// <summary>
         /// Retrieves the properties of all Confidential Ledgers.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.ConfidentialLedger/ledgers
-        /// Operation Id: Ledger_ListBySubscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ConfidentialLedger/ledgers</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Ledger_ListBySubscription</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="filter"> The filter to apply on the list operation. eg. $filter=ledgerType eq &apos;Public&apos;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

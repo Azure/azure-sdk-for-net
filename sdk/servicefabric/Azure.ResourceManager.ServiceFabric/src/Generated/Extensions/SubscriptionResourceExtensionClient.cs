@@ -48,8 +48,16 @@ namespace Azure.ResourceManager.ServiceFabric
 
         /// <summary>
         /// Gets all Service Fabric cluster resources created or in the process of being created in the subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.ServiceFabric/clusters
-        /// Operation Id: Clusters_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ServiceFabric/clusters</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Clusters_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ServiceFabricClusterResource" /> that may take multiple service requests to iterate over. </returns>
@@ -61,8 +69,16 @@ namespace Azure.ResourceManager.ServiceFabric
 
         /// <summary>
         /// Gets all Service Fabric cluster resources created or in the process of being created in the subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.ServiceFabric/clusters
-        /// Operation Id: Clusters_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ServiceFabric/clusters</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Clusters_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ServiceFabricClusterResource" /> that may take multiple service requests to iterate over. </returns>
@@ -74,8 +90,16 @@ namespace Azure.ResourceManager.ServiceFabric
 
         /// <summary>
         /// Gets information about an available Service Fabric cluster code version.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.ServiceFabric/locations/{location}/clusterVersions/{clusterVersion}
-        /// Operation Id: ClusterVersions_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ServiceFabric/locations/{location}/clusterVersions/{clusterVersion}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ClusterVersions_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="location"> The location for the cluster code versions. This is different from cluster location. </param>
         /// <param name="clusterVersion"> The cluster code version. </param>
@@ -89,8 +113,16 @@ namespace Azure.ResourceManager.ServiceFabric
 
         /// <summary>
         /// Gets information about an available Service Fabric cluster code version.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.ServiceFabric/locations/{location}/clusterVersions/{clusterVersion}
-        /// Operation Id: ClusterVersions_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ServiceFabric/locations/{location}/clusterVersions/{clusterVersion}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ClusterVersions_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="location"> The location for the cluster code versions. This is different from cluster location. </param>
         /// <param name="clusterVersion"> The cluster code version. </param>
@@ -104,8 +136,16 @@ namespace Azure.ResourceManager.ServiceFabric
 
         /// <summary>
         /// Gets information about an available Service Fabric cluster code version by environment.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.ServiceFabric/locations/{location}/environments/{environment}/clusterVersions/{clusterVersion}
-        /// Operation Id: ClusterVersions_GetByEnvironment
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ServiceFabric/locations/{location}/environments/{environment}/clusterVersions/{clusterVersion}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ClusterVersions_GetByEnvironment</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="location"> The location for the cluster code versions. This is different from cluster location. </param>
         /// <param name="environment"> The operating system of the cluster. The default means all. </param>
@@ -120,8 +160,16 @@ namespace Azure.ResourceManager.ServiceFabric
 
         /// <summary>
         /// Gets information about an available Service Fabric cluster code version by environment.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.ServiceFabric/locations/{location}/environments/{environment}/clusterVersions/{clusterVersion}
-        /// Operation Id: ClusterVersions_GetByEnvironment
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ServiceFabric/locations/{location}/environments/{environment}/clusterVersions/{clusterVersion}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ClusterVersions_GetByEnvironment</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="location"> The location for the cluster code versions. This is different from cluster location. </param>
         /// <param name="environment"> The operating system of the cluster. The default means all. </param>
@@ -136,8 +184,16 @@ namespace Azure.ResourceManager.ServiceFabric
 
         /// <summary>
         /// Gets all available code versions for Service Fabric cluster resources by location.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.ServiceFabric/locations/{location}/clusterVersions
-        /// Operation Id: ClusterVersions_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ServiceFabric/locations/{location}/clusterVersions</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ClusterVersions_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="location"> The location for the cluster code versions. This is different from cluster location. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -150,8 +206,16 @@ namespace Azure.ResourceManager.ServiceFabric
 
         /// <summary>
         /// Gets all available code versions for Service Fabric cluster resources by location.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.ServiceFabric/locations/{location}/clusterVersions
-        /// Operation Id: ClusterVersions_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ServiceFabric/locations/{location}/clusterVersions</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ClusterVersions_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="location"> The location for the cluster code versions. This is different from cluster location. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -164,8 +228,16 @@ namespace Azure.ResourceManager.ServiceFabric
 
         /// <summary>
         /// Gets all available code versions for Service Fabric cluster resources by environment.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.ServiceFabric/locations/{location}/environments/{environment}/clusterVersions
-        /// Operation Id: ClusterVersions_ListByEnvironment
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ServiceFabric/locations/{location}/environments/{environment}/clusterVersions</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ClusterVersions_ListByEnvironment</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="location"> The location for the cluster code versions. This is different from cluster location. </param>
         /// <param name="environment"> The operating system of the cluster. The default means all. </param>
@@ -179,8 +251,16 @@ namespace Azure.ResourceManager.ServiceFabric
 
         /// <summary>
         /// Gets all available code versions for Service Fabric cluster resources by environment.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.ServiceFabric/locations/{location}/environments/{environment}/clusterVersions
-        /// Operation Id: ClusterVersions_ListByEnvironment
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ServiceFabric/locations/{location}/environments/{environment}/clusterVersions</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ClusterVersions_ListByEnvironment</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="location"> The location for the cluster code versions. This is different from cluster location. </param>
         /// <param name="environment"> The operating system of the cluster. The default means all. </param>

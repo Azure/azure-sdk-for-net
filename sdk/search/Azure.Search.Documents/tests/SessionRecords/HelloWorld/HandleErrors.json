@@ -6,26 +6,26 @@
       "RequestHeaders": {
         "Accept": "application/json; odata.metadata=none",
         "api-key": "Sanitized",
-        "User-Agent": "azsdk-net-Search.Documents/11.5.0-alpha.20230106.1 (.NET 6.0.12; Microsoft Windows 10.0.22621)",
-        "x-ms-client-request-id": "4d22cff75e8f00dcc4d6824ecd38aa7e",
+        "User-Agent": "azsdk-net-Search.Documents/11.5.0-alpha.20230107.1 (.NET Framework 4.8.9105.0; Microsoft Windows 10.0.22621 )",
+        "x-ms-client-request-id": "d6d788ed2373085a1e5dfc7ea42b40a0",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 404,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "client-request-id": "4d22cff7-5e8f-00dc-c4d6-824ecd38aa7e",
+        "client-request-id": "d6d788ed-2373-085a-1e5d-fc7ea42b40a0",
         "Content-Language": "en",
         "Content-Length": "110",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 06 Jan 2023 20:48:04 GMT",
+        "Date": "Mon, 09 Jan 2023 18:03:25 GMT",
         "elapsed-time": "8",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Preference-Applied": "odata.include-annotations=\u0022*\u0022",
-        "request-id": "4d22cff7-5e8f-00dc-c4d6-824ecd38aa7e",
+        "request-id": "d6d788ed-2373-085a-1e5d-fc7ea42b40a0",
         "Strict-Transport-Security": "max-age=15724800; includeSubDomains",
-        "x-ms-client-request-id": "4d22cff7-5e8f-00dc-c4d6-824ecd38aa7e"
+        "x-ms-client-request-id": "d6d788ed-2373-085a-1e5d-fc7ea42b40a0"
       },
       "ResponseBody": {
         "error": {
@@ -36,8 +36,8 @@
     }
   ],
   "Variables": {
-    "RandomSeed": "591289965",
-    "SearchIndexName": "urwsditp",
+    "RandomSeed": "293472250",
+    "SearchIndexName": "dlnpqugf",
     "SEARCH_ADMIN_API_KEY": "Sanitized",
     "SEARCH_ENDPOINT_SUFFIX": "search.windows.net",
     "SEARCH_SERVICE_NAME": "azs-net-shrejaazsearch"

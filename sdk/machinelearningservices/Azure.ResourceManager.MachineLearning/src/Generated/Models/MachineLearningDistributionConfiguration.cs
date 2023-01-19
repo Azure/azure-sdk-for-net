@@ -9,7 +9,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary>
     /// Base definition for job distribution configuration.
-    /// Serialized Name: DistributionConfiguration
     /// Please note <see cref="MachineLearningDistributionConfiguration"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="MpiDistributionConfiguration"/>, <see cref="PyTorchDistributionConfiguration"/> and <see cref="TensorFlowDistributionConfiguration"/>.
     /// </summary>
@@ -21,19 +20,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Initializes a new instance of MachineLearningDistributionConfiguration. </summary>
-        /// <param name="distributionType">
-        /// [Required] Specifies the type of distribution framework.
-        /// Serialized Name: DistributionConfiguration.distributionType
-        /// </param>
+        /// <param name="distributionType"> [Required] Specifies the type of distribution framework. </param>
         internal MachineLearningDistributionConfiguration(DistributionType distributionType)
         {
             DistributionType = distributionType;
         }
 
-        /// <summary>
-        /// [Required] Specifies the type of distribution framework.
-        /// Serialized Name: DistributionConfiguration.distributionType
-        /// </summary>
+        /// <summary> [Required] Specifies the type of distribution framework. </summary>
         internal DistributionType DistributionType { get; set; }
     }
 }

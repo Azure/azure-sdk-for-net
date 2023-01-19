@@ -19,19 +19,19 @@ namespace Azure.Communication.CallAutomation
     public class CallConnection
     {
         private readonly ClientDiagnostics _clientDiagnostics;
-        internal CallConnectionsRestClient RestClient { get; }
-        internal ContentRestClient ContentRestClient { get; }
+        internal CallConnectionRestClient RestClient { get; }
+        internal CallMediaRestClient CallMediaRestClient { get; }
 
         /// <summary>
         /// The call connection id.
         /// </summary>
         public virtual string CallConnectionId { get; internal set; }
 
-        internal CallConnection(string callConnectionId, CallConnectionsRestClient callConnectionRestClient, ContentRestClient callContentRestClient, ClientDiagnostics clientDiagnostics)
+        internal CallConnection(string callConnectionId, CallConnectionRestClient callConnectionRestClient, CallMediaRestClient callCallMediaRestClient, ClientDiagnostics clientDiagnostics)
         {
             CallConnectionId = callConnectionId;
             RestClient = callConnectionRestClient;
-            ContentRestClient = callContentRestClient;
+            CallMediaRestClient = callCallMediaRestClient;
             _clientDiagnostics = clientDiagnostics;
         }
 
@@ -40,7 +40,7 @@ namespace Azure.Communication.CallAutomation
         {
             _clientDiagnostics = null;
             RestClient = null;
-            ContentRestClient = null;
+            CallMediaRestClient = null;
             CallConnectionId = null;
         }
 
@@ -373,6 +373,8 @@ namespace Azure.Communication.CallAutomation
             AddParticipantsRequestInternal request = new AddParticipantsRequestInternal(options.ParticipantsToAdd.Select(t => CommunicationIdentifierSerializer.Serialize(t)).ToList());
 
             request.SourceCallerId = options.SourceCallerId == null ? null : new PhoneNumberIdentifierModel(options.SourceCallerId.PhoneNumber);
+            request.SourceDisplayName = options.SourceDisplayName;
+            request.SourceIdentifier = options.SourceIdentifier != null ? CommunicationIdentifierSerializer.Serialize(options.SourceIdentifier) : null;
             request.OperationContext = options.OperationContext;
             if (options.InvitationTimeoutInSeconds != null &&
                 (options.InvitationTimeoutInSeconds < CallAutomationConstants.InputValidation.MinInvitationTimeoutInSeconds ||
@@ -617,7 +619,7 @@ namespace Azure.Communication.CallAutomation
             scope.Start();
             try
             {
-                return new CallMedia(CallConnectionId, ContentRestClient, _clientDiagnostics);
+                return new CallMedia(CallConnectionId, CallMediaRestClient, _clientDiagnostics);
             }
             catch (Exception ex)
             {

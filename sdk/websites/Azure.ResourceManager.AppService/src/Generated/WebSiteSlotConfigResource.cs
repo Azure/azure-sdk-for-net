@@ -101,8 +101,16 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary>
         /// Description for Gets a snapshot of the configuration of an app at a previous point in time.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/config/web/snapshots/{snapshotId}
-        /// Operation Id: WebApps_GetConfigurationSnapshotSlot
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/config/web/snapshots/{snapshotId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>WebApps_GetConfigurationSnapshotSlot</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="snapshotId"> The ID of the snapshot to read. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -116,8 +124,16 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary>
         /// Description for Gets a snapshot of the configuration of an app at a previous point in time.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/config/web/snapshots/{snapshotId}
-        /// Operation Id: WebApps_GetConfigurationSnapshotSlot
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/config/web/snapshots/{snapshotId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>WebApps_GetConfigurationSnapshotSlot</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="snapshotId"> The ID of the snapshot to read. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -131,8 +147,16 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary>
         /// Description for Gets the configuration of an app, such as platform version and bitness, default documents, virtual applications, Always On, etc.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/config/web
-        /// Operation Id: WebApps_GetConfigurationSlot
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/config/web</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>WebApps_GetConfigurationSlot</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<WebSiteSlotConfigResource>> GetAsync(CancellationToken cancellationToken = default)
@@ -155,8 +179,16 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary>
         /// Description for Gets the configuration of an app, such as platform version and bitness, default documents, virtual applications, Always On, etc.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/config/web
-        /// Operation Id: WebApps_GetConfigurationSlot
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/config/web</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>WebApps_GetConfigurationSlot</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<WebSiteSlotConfigResource> Get(CancellationToken cancellationToken = default)
@@ -179,8 +211,16 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary>
         /// Description for Updates the configuration of an app.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/config/web
-        /// Operation Id: WebApps_UpdateConfigurationSlot
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/config/web</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>WebApps_UpdateConfigurationSlot</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="data"> JSON representation of a SiteConfig object. See example. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -205,8 +245,16 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary>
         /// Description for Updates the configuration of an app.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/config/web
-        /// Operation Id: WebApps_UpdateConfigurationSlot
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/config/web</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>WebApps_UpdateConfigurationSlot</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="data"> JSON representation of a SiteConfig object. See example. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -231,8 +279,16 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary>
         /// Description for Updates the configuration of an app.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/config/web
-        /// Operation Id: WebApps_CreateOrUpdateConfigurationSlot
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/config/web</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>WebApps_CreateOrUpdateConfigurationSlot</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="data"> JSON representation of a SiteConfig object. See example. </param>
@@ -261,8 +317,16 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary>
         /// Description for Updates the configuration of an app.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/config/web
-        /// Operation Id: WebApps_CreateOrUpdateConfigurationSlot
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/config/web</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>WebApps_CreateOrUpdateConfigurationSlot</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="data"> JSON representation of a SiteConfig object. See example. </param>
@@ -291,8 +355,16 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary>
         /// Description for Gets a list of web app configuration snapshots identifiers. Each element of the list contains a timestamp and the ID of the snapshot.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/config/web/snapshots
-        /// Operation Id: WebApps_ListConfigurationSnapshotInfoSlot
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/config/web/snapshots</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>WebApps_ListConfigurationSnapshotInfoSlot</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="SiteConfigurationSnapshotInfo" /> that may take multiple service requests to iterate over. </returns>
@@ -305,8 +377,16 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary>
         /// Description for Gets a list of web app configuration snapshots identifiers. Each element of the list contains a timestamp and the ID of the snapshot.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/config/web/snapshots
-        /// Operation Id: WebApps_ListConfigurationSnapshotInfoSlot
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/config/web/snapshots</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>WebApps_ListConfigurationSnapshotInfoSlot</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="SiteConfigurationSnapshotInfo" /> that may take multiple service requests to iterate over. </returns>

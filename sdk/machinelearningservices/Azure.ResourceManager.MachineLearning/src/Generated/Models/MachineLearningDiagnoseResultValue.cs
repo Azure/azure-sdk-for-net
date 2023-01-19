@@ -10,10 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary>
-    /// The MachineLearningDiagnoseResultValue.
-    /// Serialized Name: DiagnoseResponseResultValue
-    /// </summary>
+    /// <summary> The MachineLearningDiagnoseResultValue. </summary>
     public partial class MachineLearningDiagnoseResultValue
     {
         /// <summary> Initializes a new instance of MachineLearningDiagnoseResultValue. </summary>
@@ -31,15 +28,15 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Initializes a new instance of MachineLearningDiagnoseResultValue. </summary>
-        /// <param name="userDefinedRouteResults"> Serialized Name: DiagnoseResponseResultValue.userDefinedRouteResults. </param>
-        /// <param name="networkSecurityRuleResults"> Serialized Name: DiagnoseResponseResultValue.networkSecurityRuleResults. </param>
-        /// <param name="resourceLockResults"> Serialized Name: DiagnoseResponseResultValue.resourceLockResults. </param>
-        /// <param name="dnsResolutionResults"> Serialized Name: DiagnoseResponseResultValue.dnsResolutionResults. </param>
-        /// <param name="storageAccountResults"> Serialized Name: DiagnoseResponseResultValue.storageAccountResults. </param>
-        /// <param name="keyVaultResults"> Serialized Name: DiagnoseResponseResultValue.keyVaultResults. </param>
-        /// <param name="containerRegistryResults"> Serialized Name: DiagnoseResponseResultValue.containerRegistryResults. </param>
-        /// <param name="applicationInsightsResults"> Serialized Name: DiagnoseResponseResultValue.applicationInsightsResults. </param>
-        /// <param name="otherResults"> Serialized Name: DiagnoseResponseResultValue.otherResults. </param>
+        /// <param name="userDefinedRouteResults"></param>
+        /// <param name="networkSecurityRuleResults"></param>
+        /// <param name="resourceLockResults"></param>
+        /// <param name="dnsResolutionResults"></param>
+        /// <param name="storageAccountResults"></param>
+        /// <param name="keyVaultResults"></param>
+        /// <param name="containerRegistryResults"></param>
+        /// <param name="applicationInsightsResults"></param>
+        /// <param name="otherResults"></param>
         internal MachineLearningDiagnoseResultValue(IReadOnlyList<MachineLearningDiagnoseResult> userDefinedRouteResults, IReadOnlyList<MachineLearningDiagnoseResult> networkSecurityRuleResults, IReadOnlyList<MachineLearningDiagnoseResult> resourceLockResults, IReadOnlyList<MachineLearningDiagnoseResult> dnsResolutionResults, IReadOnlyList<MachineLearningDiagnoseResult> storageAccountResults, IReadOnlyList<MachineLearningDiagnoseResult> keyVaultResults, IReadOnlyList<MachineLearningDiagnoseResult> containerRegistryResults, IReadOnlyList<MachineLearningDiagnoseResult> applicationInsightsResults, IReadOnlyList<MachineLearningDiagnoseResult> otherResults)
         {
             UserDefinedRouteResults = userDefinedRouteResults;
@@ -53,23 +50,23 @@ namespace Azure.ResourceManager.MachineLearning.Models
             OtherResults = otherResults;
         }
 
-        /// <summary> Serialized Name: DiagnoseResponseResultValue.userDefinedRouteResults. </summary>
+        /// <summary> Gets the user defined route results. </summary>
         public IReadOnlyList<MachineLearningDiagnoseResult> UserDefinedRouteResults { get; }
-        /// <summary> Serialized Name: DiagnoseResponseResultValue.networkSecurityRuleResults. </summary>
+        /// <summary> Gets the network security rule results. </summary>
         public IReadOnlyList<MachineLearningDiagnoseResult> NetworkSecurityRuleResults { get; }
-        /// <summary> Serialized Name: DiagnoseResponseResultValue.resourceLockResults. </summary>
+        /// <summary> Gets the resource lock results. </summary>
         public IReadOnlyList<MachineLearningDiagnoseResult> ResourceLockResults { get; }
-        /// <summary> Serialized Name: DiagnoseResponseResultValue.dnsResolutionResults. </summary>
+        /// <summary> Gets the dns resolution results. </summary>
         public IReadOnlyList<MachineLearningDiagnoseResult> DnsResolutionResults { get; }
-        /// <summary> Serialized Name: DiagnoseResponseResultValue.storageAccountResults. </summary>
+        /// <summary> Gets the storage account results. </summary>
         public IReadOnlyList<MachineLearningDiagnoseResult> StorageAccountResults { get; }
-        /// <summary> Serialized Name: DiagnoseResponseResultValue.keyVaultResults. </summary>
+        /// <summary> Gets the key vault results. </summary>
         public IReadOnlyList<MachineLearningDiagnoseResult> KeyVaultResults { get; }
-        /// <summary> Serialized Name: DiagnoseResponseResultValue.containerRegistryResults. </summary>
+        /// <summary> Gets the container registry results. </summary>
         public IReadOnlyList<MachineLearningDiagnoseResult> ContainerRegistryResults { get; }
-        /// <summary> Serialized Name: DiagnoseResponseResultValue.applicationInsightsResults. </summary>
+        /// <summary> Gets the application insights results. </summary>
         public IReadOnlyList<MachineLearningDiagnoseResult> ApplicationInsightsResults { get; }
-        /// <summary> Serialized Name: DiagnoseResponseResultValue.otherResults. </summary>
+        /// <summary> Gets the other results. </summary>
         public IReadOnlyList<MachineLearningDiagnoseResult> OtherResults { get; }
     }
 }

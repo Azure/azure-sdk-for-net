@@ -7,10 +7,7 @@
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary>
-    /// Version of computeInstance.
-    /// Serialized Name: ComputeInstanceVersion
-    /// </summary>
+    /// <summary> Version of computeInstance. </summary>
     internal partial class ComputeInstanceVersion
     {
         /// <summary> Initializes a new instance of ComputeInstanceVersion. </summary>
@@ -19,19 +16,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Initializes a new instance of ComputeInstanceVersion. </summary>
-        /// <param name="runtime">
-        /// Runtime of compute instance.
-        /// Serialized Name: ComputeInstanceVersion.runtime
-        /// </param>
+        /// <param name="runtime"> Runtime of compute instance. </param>
         internal ComputeInstanceVersion(string runtime)
         {
             Runtime = runtime;
         }
 
-        /// <summary>
-        /// Runtime of compute instance.
-        /// Serialized Name: ComputeInstanceVersion.runtime
-        /// </summary>
+        /// <summary> Runtime of compute instance. </summary>
         public string Runtime { get; }
     }
 }

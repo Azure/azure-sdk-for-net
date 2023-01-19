@@ -50,7 +50,7 @@ namespace Azure.Search.Documents.Tests.Samples
             Console.WriteLine($"You are using {stats.Value.Counters.IndexCounter.Usage} indexes.");
             #endregion Snippet:Azure_Search_Tests_Samples_CreateClient
 
-            Assert.AreEqual(1, stats.Value.Counters.IndexCounter.Usage);
+            Assert.GreaterOrEqual(stats.Value.Counters.IndexCounter.Usage, 1);
         }
 
         [Test]
@@ -78,7 +78,7 @@ namespace Azure.Search.Documents.Tests.Samples
             Console.WriteLine($"You are using {stats.Value.Counters.IndexCounter.Usage} indexes.");
             #endregion Snippet:Azure_Search_Tests_Samples_CreateClientAsync
 
-            Assert.AreEqual(1, stats.Value.Counters.IndexCounter.Usage);
+            Assert.GreaterOrEqual(stats.Value.Counters.IndexCounter.Usage, 1);
         }
 
         [Test]

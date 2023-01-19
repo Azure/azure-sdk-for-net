@@ -6,14 +6,15 @@
       "RequestHeaders": {
         "Accept": "application/json; odata.metadata=minimal",
         "api-key": "Sanitized",
+        "Connection": "keep-alive",
         "Content-Length": "1331",
         "Content-Type": "application/json",
-        "User-Agent": "azsdk-net-Search.Documents/11.5.0-alpha.20230106.1 (.NET 6.0.12; Microsoft Windows 10.0.22621)",
-        "x-ms-client-request-id": "a2b43ccc7dd61a474c17c02fc0a61b36",
+        "User-Agent": "azsdk-net-Search.Documents/11.5.0-alpha.20230107.1 (.NET Framework 4.8.9105.0; Microsoft Windows 10.0.22621 )",
+        "x-ms-client-request-id": "4bedc29a00ad70de714c29ffd6c104fd",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
-        "name": "cuujwfwu",
+        "name": "nqhxuhpc",
         "fields": [
           {
             "name": "HotelId",
@@ -115,25 +116,25 @@
       "StatusCode": 201,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "client-request-id": "a2b43ccc-7dd6-1a47-4c17-c02fc0a61b36",
+        "client-request-id": "4bedc29a-00ad-70de-714c-29ffd6c104fd",
         "Content-Length": "2317",
         "Content-Type": "application/json; odata.metadata=minimal",
-        "Date": "Fri, 06 Jan 2023 20:43:29 GMT",
-        "elapsed-time": "699",
-        "ETag": "W/\u00220x8DAF026AADB762A\u0022",
+        "Date": "Mon, 09 Jan 2023 17:57:40 GMT",
+        "elapsed-time": "773",
+        "ETag": "W/\u00220x8DAF26B003FD0DA\u0022",
         "Expires": "-1",
-        "Location": "https://azs-net-shrejaazsearch.search.windows.net/indexes(\u0027cuujwfwu\u0027)?api-version=2020-06-30",
+        "Location": "https://azs-net-shrejaazsearch.search.windows.net/indexes(\u0027nqhxuhpc\u0027)?api-version=2020-06-30",
         "OData-Version": "4.0",
         "Pragma": "no-cache",
         "Preference-Applied": "odata.include-annotations=\u0022*\u0022",
-        "request-id": "a2b43ccc-7dd6-1a47-4c17-c02fc0a61b36",
+        "request-id": "4bedc29a-00ad-70de-714c-29ffd6c104fd",
         "Strict-Transport-Security": "max-age=15724800; includeSubDomains",
-        "x-ms-client-request-id": "a2b43ccc-7dd6-1a47-4c17-c02fc0a61b36"
+        "x-ms-client-request-id": "4bedc29a-00ad-70de-714c-29ffd6c104fd"
       },
       "ResponseBody": {
         "@odata.context": "https://azs-net-shrejaazsearch.search.windows.net/$metadata#indexes/$entity",
-        "@odata.etag": "\u00220x8DAF026AADB762A\u0022",
-        "name": "cuujwfwu",
+        "@odata.etag": "\u00220x8DAF26B003FD0DA\u0022",
+        "name": "nqhxuhpc",
         "defaultScoringProfile": null,
         "fields": [
           {
@@ -279,35 +280,36 @@
       }
     },
     {
-      "RequestUri": "https://azs-net-shrejaazsearch.search.windows.net/indexes(\u0027cuujwfwu\u0027)?api-version=2020-06-30",
+      "RequestUri": "https://azs-net-shrejaazsearch.search.windows.net/indexes(\u0027nqhxuhpc\u0027)?api-version=2020-06-30",
       "RequestMethod": "DELETE",
       "RequestHeaders": {
         "Accept": "application/json; odata.metadata=minimal",
         "api-key": "Sanitized",
-        "traceparent": "00-514436dd83e23ed828551784d1cb9aad-b0d7649dfb3bd488-00",
-        "User-Agent": "azsdk-net-Search.Documents/11.5.0-alpha.20230106.1 (.NET 6.0.12; Microsoft Windows 10.0.22621)",
-        "x-ms-client-request-id": "0958dd3586bbb15492107dd54b39dc67",
+        "Content-Length": "0",
+        "traceparent": "00-3a3a71af4ac8aa4bbff5b20eb5813883-16a004884c67b741-00",
+        "User-Agent": "azsdk-net-Search.Documents/11.5.0-alpha.20230107.1 (.NET Framework 4.8.9105.0; Microsoft Windows 10.0.22621 )",
+        "x-ms-client-request-id": "dece39fa913f3e23bf14fa428b60e430",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 204,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "client-request-id": "0958dd35-86bb-b154-9210-7dd54b39dc67",
-        "Date": "Fri, 06 Jan 2023 20:43:29 GMT",
-        "elapsed-time": "219",
+        "client-request-id": "dece39fa-913f-3e23-bf14-fa428b60e430",
+        "Date": "Mon, 09 Jan 2023 17:57:40 GMT",
+        "elapsed-time": "191",
         "Expires": "-1",
         "Pragma": "no-cache",
-        "request-id": "0958dd35-86bb-b154-9210-7dd54b39dc67",
+        "request-id": "dece39fa-913f-3e23-bf14-fa428b60e430",
         "Strict-Transport-Security": "max-age=15724800; includeSubDomains",
-        "x-ms-client-request-id": "0958dd35-86bb-b154-9210-7dd54b39dc67"
+        "x-ms-client-request-id": "dece39fa-913f-3e23-bf14-fa428b60e430"
       },
       "ResponseBody": null
     }
   ],
   "Variables": {
-    "RandomSeed": "523236120",
-    "SearchIndexName": "cuujwfwu",
+    "RandomSeed": "2107052790",
+    "SearchIndexName": "nqhxuhpc",
     "SEARCH_ADMIN_API_KEY": "Sanitized",
     "SEARCH_ENDPOINT_SUFFIX": "search.windows.net",
     "SEARCH_SERVICE_NAME": "azs-net-shrejaazsearch"

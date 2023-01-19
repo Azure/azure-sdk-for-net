@@ -7,6 +7,8 @@ Project("{C148A7DB-27DA-465E-84D8-8F633EC83FAA}") = "Azure.ResourceManager.Alert
 EndProject
 Project("{C148A7DB-27DA-465E-84D8-8F633EC83FAA}") = "Azure.ResourceManager.AlertsManagement.Tests", "tests\Azure.ResourceManager.AlertsManagement.Tests.csproj", "{0D9E83A9-1023-46C6-B6C0-66AADAFD55AA}"
 EndProject
+Project("{C148A7DB-27DA-465E-84D8-8F633EC83FAA}") = "Azure.ResourceManager.AlertsManagement.Samples", "samples\Azure.ResourceManager.AlertsManagement.Samples.csproj", "{828A9FDE-BC61-4CE5-8926-768E85F6E8CD}"
+EndProject
 Global
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

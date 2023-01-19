@@ -54,8 +54,16 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary>
         /// Gets a target execution.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/jobAgents/{jobAgentName}/jobs/{jobName}/executions/{jobExecutionId}/steps/{stepName}/targets/{targetId}
-        /// Operation Id: JobTargetExecutions_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/jobAgents/{jobAgentName}/jobs/{jobName}/executions/{jobExecutionId}/steps/{stepName}/targets/{targetId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>JobTargetExecutions_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="targetId"> The target id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -79,8 +87,16 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary>
         /// Gets a target execution.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/jobAgents/{jobAgentName}/jobs/{jobName}/executions/{jobExecutionId}/steps/{stepName}/targets/{targetId}
-        /// Operation Id: JobTargetExecutions_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/jobAgents/{jobAgentName}/jobs/{jobName}/executions/{jobExecutionId}/steps/{stepName}/targets/{targetId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>JobTargetExecutions_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="targetId"> The target id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -104,8 +120,16 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary>
         /// Lists the target executions of a job step execution.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/jobAgents/{jobAgentName}/jobs/{jobName}/executions/{jobExecutionId}/steps/{stepName}/targets
-        /// Operation Id: JobTargetExecutions_ListByStep
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/jobAgents/{jobAgentName}/jobs/{jobName}/executions/{jobExecutionId}/steps/{stepName}/targets</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>JobTargetExecutions_ListByStep</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="createTimeMin"> If specified, only job executions created at or after the specified time are included. </param>
         /// <param name="createTimeMax"> If specified, only job executions created before the specified time are included. </param>
@@ -125,8 +149,16 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary>
         /// Lists the target executions of a job step execution.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/jobAgents/{jobAgentName}/jobs/{jobName}/executions/{jobExecutionId}/steps/{stepName}/targets
-        /// Operation Id: JobTargetExecutions_ListByStep
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/jobAgents/{jobAgentName}/jobs/{jobName}/executions/{jobExecutionId}/steps/{stepName}/targets</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>JobTargetExecutions_ListByStep</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="createTimeMin"> If specified, only job executions created at or after the specified time are included. </param>
         /// <param name="createTimeMax"> If specified, only job executions created before the specified time are included. </param>
@@ -146,8 +178,16 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/jobAgents/{jobAgentName}/jobs/{jobName}/executions/{jobExecutionId}/steps/{stepName}/targets/{targetId}
-        /// Operation Id: JobTargetExecutions_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/jobAgents/{jobAgentName}/jobs/{jobName}/executions/{jobExecutionId}/steps/{stepName}/targets/{targetId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>JobTargetExecutions_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="targetId"> The target id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -169,8 +209,16 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/jobAgents/{jobAgentName}/jobs/{jobName}/executions/{jobExecutionId}/steps/{stepName}/targets/{targetId}
-        /// Operation Id: JobTargetExecutions_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/jobAgents/{jobAgentName}/jobs/{jobName}/executions/{jobExecutionId}/steps/{stepName}/targets/{targetId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>JobTargetExecutions_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="targetId"> The target id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

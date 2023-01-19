@@ -48,8 +48,16 @@ namespace Azure.ResourceManager.ContainerInstance
 
         /// <summary>
         /// Get a list of container groups in the specified subscription. This operation returns properties of each container group including containers, image registry credentials, restart policy, IP address type, OS type, state, and volumes.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.ContainerInstance/containerGroups
-        /// Operation Id: ContainerGroups_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ContainerInstance/containerGroups</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ContainerGroups_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ContainerGroupResource" /> that may take multiple service requests to iterate over. </returns>
@@ -62,8 +70,16 @@ namespace Azure.ResourceManager.ContainerInstance
 
         /// <summary>
         /// Get a list of container groups in the specified subscription. This operation returns properties of each container group including containers, image registry credentials, restart policy, IP address type, OS type, state, and volumes.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.ContainerInstance/containerGroups
-        /// Operation Id: ContainerGroups_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ContainerInstance/containerGroups</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ContainerGroups_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ContainerGroupResource" /> that may take multiple service requests to iterate over. </returns>
@@ -76,8 +92,16 @@ namespace Azure.ResourceManager.ContainerInstance
 
         /// <summary>
         /// Get the usage for a subscription
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.ContainerInstance/locations/{location}/usages
-        /// Operation Id: Location_ListUsage
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ContainerInstance/locations/{location}/usages</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Location_ListUsage</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="location"> The identifier for the physical azure location. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -90,8 +114,16 @@ namespace Azure.ResourceManager.ContainerInstance
 
         /// <summary>
         /// Get the usage for a subscription
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.ContainerInstance/locations/{location}/usages
-        /// Operation Id: Location_ListUsage
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ContainerInstance/locations/{location}/usages</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Location_ListUsage</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="location"> The identifier for the physical azure location. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -104,8 +136,16 @@ namespace Azure.ResourceManager.ContainerInstance
 
         /// <summary>
         /// Get the list of cached images on specific OS type for a subscription in a region.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.ContainerInstance/locations/{location}/cachedImages
-        /// Operation Id: Location_ListCachedImages
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ContainerInstance/locations/{location}/cachedImages</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Location_ListCachedImages</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="location"> The identifier for the physical azure location. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -119,8 +159,16 @@ namespace Azure.ResourceManager.ContainerInstance
 
         /// <summary>
         /// Get the list of cached images on specific OS type for a subscription in a region.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.ContainerInstance/locations/{location}/cachedImages
-        /// Operation Id: Location_ListCachedImages
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ContainerInstance/locations/{location}/cachedImages</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Location_ListCachedImages</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="location"> The identifier for the physical azure location. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -134,8 +182,16 @@ namespace Azure.ResourceManager.ContainerInstance
 
         /// <summary>
         /// Get the list of CPU/memory/GPU capabilities of a region.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.ContainerInstance/locations/{location}/capabilities
-        /// Operation Id: Location_ListCapabilities
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ContainerInstance/locations/{location}/capabilities</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Location_ListCapabilities</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="location"> The identifier for the physical azure location. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -149,8 +205,16 @@ namespace Azure.ResourceManager.ContainerInstance
 
         /// <summary>
         /// Get the list of CPU/memory/GPU capabilities of a region.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.ContainerInstance/locations/{location}/capabilities
-        /// Operation Id: Location_ListCapabilities
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ContainerInstance/locations/{location}/capabilities</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Location_ListCapabilities</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="location"> The identifier for the physical azure location. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

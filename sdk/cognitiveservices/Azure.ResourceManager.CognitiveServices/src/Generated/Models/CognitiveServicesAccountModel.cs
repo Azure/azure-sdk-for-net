@@ -18,6 +18,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         public CognitiveServicesAccountModel()
         {
             Capabilities = new ChangeTrackingDictionary<string, string>();
+            FinetuneCapabilities = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of CognitiveServicesAccountModel. </summary>
@@ -28,14 +29,18 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <param name="baseModel"> Base Model Identifier. </param>
         /// <param name="maxCapacity"> The max capacity. </param>
         /// <param name="capabilities"> The capabilities. </param>
+        /// <param name="finetuneCapabilities"> The capabilities for finetune models. </param>
         /// <param name="deprecation"> Cognitive Services account ModelDeprecationInfo. </param>
+        /// <param name="lifecycleStatus"> Model lifecycle status. </param>
         /// <param name="systemData"> Metadata pertaining to creation and last modification of the resource. </param>
-        internal CognitiveServicesAccountModel(string format, string name, string version, ServiceAccountCallRateLimit callRateLimit, CognitiveServicesAccountDeploymentModel baseModel, int? maxCapacity, IDictionary<string, string> capabilities, ServiceAccountModelDeprecationInfo deprecation, SystemData systemData) : base(format, name, version, callRateLimit)
+        internal CognitiveServicesAccountModel(string format, string name, string version, ServiceAccountCallRateLimit callRateLimit, CognitiveServicesAccountDeploymentModel baseModel, int? maxCapacity, IDictionary<string, string> capabilities, IDictionary<string, string> finetuneCapabilities, ServiceAccountModelDeprecationInfo deprecation, ModelLifecycleStatus? lifecycleStatus, SystemData systemData) : base(format, name, version, callRateLimit)
         {
             BaseModel = baseModel;
             MaxCapacity = maxCapacity;
             Capabilities = capabilities;
+            FinetuneCapabilities = finetuneCapabilities;
             Deprecation = deprecation;
+            LifecycleStatus = lifecycleStatus;
             SystemData = systemData;
         }
 
@@ -45,8 +50,12 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         public int? MaxCapacity { get; set; }
         /// <summary> The capabilities. </summary>
         public IDictionary<string, string> Capabilities { get; }
+        /// <summary> The capabilities for finetune models. </summary>
+        public IDictionary<string, string> FinetuneCapabilities { get; }
         /// <summary> Cognitive Services account ModelDeprecationInfo. </summary>
         public ServiceAccountModelDeprecationInfo Deprecation { get; set; }
+        /// <summary> Model lifecycle status. </summary>
+        public ModelLifecycleStatus? LifecycleStatus { get; set; }
         /// <summary> Metadata pertaining to creation and last modification of the resource. </summary>
         public SystemData SystemData { get; }
     }

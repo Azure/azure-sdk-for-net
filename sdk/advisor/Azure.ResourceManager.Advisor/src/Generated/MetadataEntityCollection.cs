@@ -55,8 +55,16 @@ namespace Azure.ResourceManager.Advisor
 
         /// <summary>
         /// Gets the metadata entity.
-        /// Request Path: /providers/Microsoft.Advisor/metadata/{name}
-        /// Operation Id: RecommendationMetadata_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Advisor/metadata/{name}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>RecommendationMetadata_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="name"> Name of metadata entity. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -84,8 +92,16 @@ namespace Azure.ResourceManager.Advisor
 
         /// <summary>
         /// Gets the metadata entity.
-        /// Request Path: /providers/Microsoft.Advisor/metadata/{name}
-        /// Operation Id: RecommendationMetadata_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Advisor/metadata/{name}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>RecommendationMetadata_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="name"> Name of metadata entity. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -113,8 +129,16 @@ namespace Azure.ResourceManager.Advisor
 
         /// <summary>
         /// Gets the list of metadata entities.
-        /// Request Path: /providers/Microsoft.Advisor/metadata
-        /// Operation Id: RecommendationMetadata_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Advisor/metadata</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>RecommendationMetadata_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="MetadataEntityResource" /> that may take multiple service requests to iterate over. </returns>
@@ -127,8 +151,16 @@ namespace Azure.ResourceManager.Advisor
 
         /// <summary>
         /// Gets the list of metadata entities.
-        /// Request Path: /providers/Microsoft.Advisor/metadata
-        /// Operation Id: RecommendationMetadata_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Advisor/metadata</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>RecommendationMetadata_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="MetadataEntityResource" /> that may take multiple service requests to iterate over. </returns>
@@ -141,8 +173,16 @@ namespace Azure.ResourceManager.Advisor
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /providers/Microsoft.Advisor/metadata/{name}
-        /// Operation Id: RecommendationMetadata_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Advisor/metadata/{name}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>RecommendationMetadata_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="name"> Name of metadata entity. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -168,8 +208,16 @@ namespace Azure.ResourceManager.Advisor
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /providers/Microsoft.Advisor/metadata/{name}
-        /// Operation Id: RecommendationMetadata_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Advisor/metadata/{name}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>RecommendationMetadata_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="name"> Name of metadata entity. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

@@ -10,17 +10,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary>
-    /// Configuration for a scoring code asset.
-    /// Serialized Name: CodeConfiguration
-    /// </summary>
+    /// <summary> Configuration for a scoring code asset. </summary>
     public partial class MachineLearningCodeConfiguration
     {
         /// <summary> Initializes a new instance of MachineLearningCodeConfiguration. </summary>
-        /// <param name="scoringScript">
-        /// [Required] The script to execute on startup. eg. &quot;score.py&quot;
-        /// Serialized Name: CodeConfiguration.scoringScript
-        /// </param>
+        /// <param name="scoringScript"> [Required] The script to execute on startup. eg. &quot;score.py&quot;. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scoringScript"/> is null. </exception>
         public MachineLearningCodeConfiguration(string scoringScript)
         {
@@ -30,29 +24,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Initializes a new instance of MachineLearningCodeConfiguration. </summary>
-        /// <param name="codeId">
-        /// ARM resource ID of the code asset.
-        /// Serialized Name: CodeConfiguration.codeId
-        /// </param>
-        /// <param name="scoringScript">
-        /// [Required] The script to execute on startup. eg. &quot;score.py&quot;
-        /// Serialized Name: CodeConfiguration.scoringScript
-        /// </param>
-        internal MachineLearningCodeConfiguration(string codeId, string scoringScript)
+        /// <param name="codeId"> ARM resource ID of the code asset. </param>
+        /// <param name="scoringScript"> [Required] The script to execute on startup. eg. &quot;score.py&quot;. </param>
+        internal MachineLearningCodeConfiguration(ResourceIdentifier codeId, string scoringScript)
         {
             CodeId = codeId;
             ScoringScript = scoringScript;
         }
 
-        /// <summary>
-        /// ARM resource ID of the code asset.
-        /// Serialized Name: CodeConfiguration.codeId
-        /// </summary>
-        public string CodeId { get; set; }
-        /// <summary>
-        /// [Required] The script to execute on startup. eg. &quot;score.py&quot;
-        /// Serialized Name: CodeConfiguration.scoringScript
-        /// </summary>
+        /// <summary> ARM resource ID of the code asset. </summary>
+        public ResourceIdentifier CodeId { get; set; }
+        /// <summary> [Required] The script to execute on startup. eg. &quot;score.py&quot;. </summary>
         public string ScoringScript { get; set; }
     }
 }

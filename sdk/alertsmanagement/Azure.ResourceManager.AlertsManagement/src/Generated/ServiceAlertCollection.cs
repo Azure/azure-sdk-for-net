@@ -56,8 +56,16 @@ namespace Azure.ResourceManager.AlertsManagement
 
         /// <summary>
         /// Get information related to a specific alert
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.AlertsManagement/alerts/{alertId}
-        /// Operation Id: Alerts_GetById
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.AlertsManagement/alerts/{alertId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Alerts_GetById</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="alertId"> Unique ID of an alert instance. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -81,8 +89,16 @@ namespace Azure.ResourceManager.AlertsManagement
 
         /// <summary>
         /// Get information related to a specific alert
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.AlertsManagement/alerts/{alertId}
-        /// Operation Id: Alerts_GetById
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.AlertsManagement/alerts/{alertId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Alerts_GetById</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="alertId"> Unique ID of an alert instance. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -106,8 +122,16 @@ namespace Azure.ResourceManager.AlertsManagement
 
         /// <summary>
         /// List all existing alerts, where the results can be filtered on the basis of multiple parameters (e.g. time range). The results can then be sorted on the basis specific fields, with the default being lastModifiedDateTime. 
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.AlertsManagement/alerts
-        /// Operation Id: Alerts_GetAll
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.AlertsManagement/alerts</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Alerts_GetAll</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="targetResource"> Filter by target resource( which is full ARM ID) Default value is select all. </param>
         /// <param name="targetResourceType"> Filter by target resource type. Default value is select all. </param>
@@ -137,8 +161,16 @@ namespace Azure.ResourceManager.AlertsManagement
 
         /// <summary>
         /// List all existing alerts, where the results can be filtered on the basis of multiple parameters (e.g. time range). The results can then be sorted on the basis specific fields, with the default being lastModifiedDateTime. 
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.AlertsManagement/alerts
-        /// Operation Id: Alerts_GetAll
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.AlertsManagement/alerts</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Alerts_GetAll</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="targetResource"> Filter by target resource( which is full ARM ID) Default value is select all. </param>
         /// <param name="targetResourceType"> Filter by target resource type. Default value is select all. </param>
@@ -168,8 +200,16 @@ namespace Azure.ResourceManager.AlertsManagement
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.AlertsManagement/alerts/{alertId}
-        /// Operation Id: Alerts_GetById
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.AlertsManagement/alerts/{alertId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Alerts_GetById</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="alertId"> Unique ID of an alert instance. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -191,8 +231,16 @@ namespace Azure.ResourceManager.AlertsManagement
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.AlertsManagement/alerts/{alertId}
-        /// Operation Id: Alerts_GetById
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.AlertsManagement/alerts/{alertId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Alerts_GetById</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="alertId"> Unique ID of an alert instance. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

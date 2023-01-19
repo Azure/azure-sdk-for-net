@@ -6,27 +6,27 @@
       "RequestHeaders": {
         "Accept": "application/json; odata.metadata=minimal",
         "api-key": "Sanitized",
-        "traceparent": "00-62714bac10791a3c63fb1ec13d836d3b-90f59e6bfa724df6-00",
-        "User-Agent": "azsdk-net-Search.Documents/11.5.0-alpha.20230106.1 (.NET 6.0.12; Microsoft Windows 10.0.22621)",
-        "x-ms-client-request-id": "44c04d4692d1c4f4601cfe0e549b2664",
+        "traceparent": "00-d908e30ab6d2a846880bade767e47521-a6c077c96944e946-00",
+        "User-Agent": "azsdk-net-Search.Documents/11.5.0-alpha.20230107.1 (.NET Framework 4.8.9105.0; Microsoft Windows 10.0.22621 )",
+        "x-ms-client-request-id": "b9632ec201eafab0b8a6055c90d5ce5c",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "client-request-id": "44c04d46-92d1-c4f4-601c-fe0e549b2664",
+        "client-request-id": "b9632ec2-01ea-fab0-b8a6-055c90d5ce5c",
         "Content-Length": "591",
         "Content-Type": "application/json; odata.metadata=minimal",
-        "Date": "Fri, 06 Jan 2023 20:48:31 GMT",
+        "Date": "Mon, 09 Jan 2023 18:03:48 GMT",
         "elapsed-time": "2",
         "Expires": "-1",
         "OData-Version": "4.0",
         "Pragma": "no-cache",
         "Preference-Applied": "odata.include-annotations=\u0022*\u0022",
-        "request-id": "44c04d46-92d1-c4f4-601c-fe0e549b2664",
+        "request-id": "b9632ec2-01ea-fab0-b8a6-055c90d5ce5c",
         "Strict-Transport-Security": "max-age=15724800; includeSubDomains",
-        "x-ms-client-request-id": "44c04d46-92d1-c4f4-601c-fe0e549b2664"
+        "x-ms-client-request-id": "b9632ec2-01ea-fab0-b8a6-055c90d5ce5c"
       },
       "ResponseBody": {
         "@odata.context": "https://azs-net-shrejaazsearch.search.windows.net/$metadata#Microsoft.Azure.Search.V2020_06_30.ServiceStatistics",
@@ -36,7 +36,7 @@
             "quota": null
           },
           "indexesCount": {
-            "usage": 2,
+            "usage": 1,
             "quota": 50
           },
           "indexersCount": {
@@ -70,8 +70,8 @@
     }
   ],
   "Variables": {
-    "RandomSeed": "2090541886",
-    "SearchIndexName": "urwsditp",
+    "RandomSeed": "476847218",
+    "SearchIndexName": "dlnpqugf",
     "SEARCH_ADMIN_API_KEY": "Sanitized",
     "SEARCH_ENDPOINT_SUFFIX": "search.windows.net",
     "SEARCH_SERVICE_NAME": "azs-net-shrejaazsearch"

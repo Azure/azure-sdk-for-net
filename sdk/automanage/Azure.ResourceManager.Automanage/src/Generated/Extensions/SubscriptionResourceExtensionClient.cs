@@ -50,8 +50,16 @@ namespace Azure.ResourceManager.Automanage
 
         /// <summary>
         /// Retrieve a list of configuration profile within a subscription
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Automanage/configurationProfiles
-        /// Operation Id: ConfigurationProfiles_ListBySubscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Automanage/configurationProfiles</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ConfigurationProfiles_ListBySubscription</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ConfigurationProfileResource" /> that may take multiple service requests to iterate over. </returns>
@@ -63,8 +71,16 @@ namespace Azure.ResourceManager.Automanage
 
         /// <summary>
         /// Retrieve a list of configuration profile within a subscription
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Automanage/configurationProfiles
-        /// Operation Id: ConfigurationProfiles_ListBySubscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Automanage/configurationProfiles</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ConfigurationProfiles_ListBySubscription</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ConfigurationProfileResource" /> that may take multiple service requests to iterate over. </returns>
