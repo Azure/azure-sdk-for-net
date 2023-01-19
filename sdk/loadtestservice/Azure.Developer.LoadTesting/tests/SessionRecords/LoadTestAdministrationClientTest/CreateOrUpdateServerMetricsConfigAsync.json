@@ -8,9 +8,9 @@
         "Authorization": "Sanitized",
         "Content-Length": "256",
         "Content-Type": "application/merge-patch\u002Bjson",
-        "traceparent": "00-b7538b3f02b7c1cba09cf32bb9d62141-91d4977474922847-00",
-        "User-Agent": "azsdk-net-Developer.LoadTesting/1.0.0-alpha.20230118.1 (.NET 6.0.13; Microsoft Windows 10.0.22621)",
-        "x-ms-client-request-id": "8501aa5338c47ea2e93297479f50417f",
+        "traceparent": "00-49d380353e85a3c6fac5be1edb5fea32-0c20fdbaf8ca7012-00",
+        "User-Agent": "azsdk-net-Developer.LoadTesting/1.0.0-alpha.20230119.1 (.NET 6.0.13; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "3833761cf7019c0ce578b3e50171a508",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -26,17 +26,18 @@
           "passFailMetrics": {}
         }
       },
-      "StatusCode": 200,
+      "StatusCode": 201,
       "ResponseHeaders": {
         "api-supported-versions": "2021-07-01-preview, 2022-06-01-preview, 2022-11-01",
         "Connection": "keep-alive",
-        "Content-Length": "958",
+        "Content-Length": "436",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 18 Jan 2023 18:00:17 GMT",
-        "mise-correlation-id": "0735758b-b1fe-4591-a6d6-9dfd5bc4031e",
+        "Date": "Thu, 19 Jan 2023 11:47:44 GMT",
+        "Location": "https://f878fc34-142f-4312-8577-a04c47da9c0b.eastasia.cnt-prod.loadtesting.azure.com/tests/test-from-csharp-sdk-testing-framework?api-version=2022-11-01",
+        "mise-correlation-id": "a8d5f833-6c0b-48dc-8290-56c534ad04bd",
         "Strict-Transport-Security": "max-age=15724800; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "cd80290b-161a-46c9-b025-c9b2cd97081c"
+        "x-ms-correlation-request-id": "7e1571b7-cfc5-4687-95d8-0c028ccf6001"
       },
       "ResponseBody": {
         "passFailCriteria": {
@@ -48,20 +49,13 @@
           "quickStartTest": false
         },
         "inputArtifacts": {
-          "testScriptFileInfo": {
-            "url": "https://maltccstorageaccounthk.blob.core.windows.net/98e2866a-f935-47ca-8988-bedccb02e951/3532dfca-b7b9-42ac-8d33-e1c607d7cf25?skoid=fe06edb5-033b-4f33-bef0-9489f8feffb8\u0026sktid=33e01921-4d64-4f8c-a055-5bdaffd5e33d\u0026skt=2023-01-18T13%3A38%3A06Z\u0026ske=2023-01-19T03%3A38%3A06Z\u0026sks=b\u0026skv=2021-08-06\u0026sv=2021-08-06\u0026se=2023-01-18T19%3A00%3A17Z\u0026sr=b\u0026sp=r\u0026sig=Sanitized",
-            "fileName": "sample.jmx",
-            "fileType": "JMX_FILE",
-            "expireDateTime": "2023-01-18T19:00:17.9187469",
-            "validationStatus": "VALIDATION_SUCCESS"
-          },
           "additionalFileInfo": []
         },
         "testId": "test-from-csharp-sdk-testing-framework",
         "description": "This test was created through loadtesting C# SDK",
         "displayName": "Dotnet Testing Framework Loadtest",
-        "createdDateTime": "2023-01-18T18:00:07.551Z",
-        "lastModifiedDateTime": "2023-01-18T18:00:17.912Z"
+        "createdDateTime": "2023-01-19T11:47:44.619Z",
+        "lastModifiedDateTime": "2023-01-19T11:47:44.619Z"
       }
     },
     {
@@ -72,9 +66,9 @@
         "Authorization": "Sanitized",
         "Content-Length": "528",
         "Content-Type": "application/merge-patch\u002Bjson",
-        "traceparent": "00-0388201a6063ad1b305b0ba3b682cfa0-f4b7dc1c748affeb-00",
-        "User-Agent": "azsdk-net-Developer.LoadTesting/1.0.0-alpha.20230118.1 (.NET 6.0.13; Microsoft Windows 10.0.22621)",
-        "x-ms-client-request-id": "c9fe94be9c3bab96ada16d661af6ba76",
+        "traceparent": "00-9643ca258757d846ad083a2d264ba0be-0f9e0005d279338b-00",
+        "User-Agent": "azsdk-net-Developer.LoadTesting/1.0.0-alpha.20230119.1 (.NET 6.0.13; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "a92161e7f7d802aaec978dcd110202ba",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -90,45 +84,22 @@
           }
         }
       },
-      "StatusCode": 200,
+      "StatusCode": 201,
       "ResponseHeaders": {
         "api-supported-versions": "2021-07-01-preview, 2022-06-01-preview, 2022-11-01",
         "Connection": "keep-alive",
-        "Content-Length": "3013",
+        "Content-Length": "893",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 18 Jan 2023 18:00:18 GMT",
-        "mise-correlation-id": "b6ce4d1b-6438-45e8-9080-80aeb024cfb5",
+        "Date": "Thu, 19 Jan 2023 11:47:44 GMT",
+        "Location": "https://f878fc34-142f-4312-8577-a04c47da9c0b.eastasia.cnt-prod.loadtesting.azure.com/tests/test-from-csharp-sdk-testing-framework/server-metrics-config?api-version=2022-11-01",
+        "mise-correlation-id": "c90e77d7-9ea2-4e2b-b39a-721e295078c9",
         "Strict-Transport-Security": "max-age=15724800; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "d4dbba6b-2613-4e7a-8e56-c82cd99bc6ea"
+        "x-ms-correlation-request-id": "55afba8b-9d23-4d13-ab07-98374c1ebd3f"
       },
       "ResponseBody": {
         "testId": "test-from-csharp-sdk-testing-framework",
         "metrics": {
-          "/subscriptions/7c71b563-0dc0-4bc0-bcf6-06f8f0516c7a/resourceGroups/App-Service-Sample-Demo-rg/providers/Microsoft.Web/sites/App-Service-Sample-Demo/providers/microsoft.insights/metricdefinitions/Http5xx": {
-            "id": "/subscriptions/7c71b563-0dc0-4bc0-bcf6-06f8f0516c7a/resourceGroups/App-Service-Sample-Demo-rg/providers/Microsoft.Web/sites/App-Service-Sample-Demo/providers/microsoft.insights/metricdefinitions/Http5xx",
-            "resourceId": "/subscriptions/7c71b563-0dc0-4bc0-bcf6-06f8f0516c7a/resourceGroups/App-Service-Sample-Demo-rg/providers/Microsoft.Web/sites/App-Service-Sample-Demo",
-            "metricNamespace": "microsoft.web/sites",
-            "name": "Http5xx",
-            "aggregation": "Total",
-            "resourceType": "microsoft.web/sites"
-          },
-          "/subscriptions/7c71b563-0dc0-4bc0-bcf6-06f8f0516c7a/resourceGroups/App-Service-Sample-Demo-rg/providers/Microsoft.Web/sites/App-Service-Sample-Demo/providers/microsoft.insights/metricdefinitions/Requests": {
-            "id": "/subscriptions/7c71b563-0dc0-4bc0-bcf6-06f8f0516c7a/resourceGroups/App-Service-Sample-Demo-rg/providers/Microsoft.Web/sites/App-Service-Sample-Demo/providers/microsoft.insights/metricdefinitions/Requests",
-            "resourceId": "/subscriptions/7c71b563-0dc0-4bc0-bcf6-06f8f0516c7a/resourceGroups/App-Service-Sample-Demo-rg/providers/Microsoft.Web/sites/App-Service-Sample-Demo",
-            "metricNamespace": "microsoft.web/sites",
-            "name": "Requests",
-            "aggregation": "Total",
-            "resourceType": "microsoft.web/sites"
-          },
-          "/subscriptions/7c71b563-0dc0-4bc0-bcf6-06f8f0516c7a/resourceGroups/App-Service-Sample-Demo-rg/providers/Microsoft.Web/sites/App-Service-Sample-Demo/providers/microsoft.insights/metricdefinitions/HttpResponseTime": {
-            "id": "/subscriptions/7c71b563-0dc0-4bc0-bcf6-06f8f0516c7a/resourceGroups/App-Service-Sample-Demo-rg/providers/Microsoft.Web/sites/App-Service-Sample-Demo/providers/microsoft.insights/metricdefinitions/HttpResponseTime",
-            "resourceId": "/subscriptions/7c71b563-0dc0-4bc0-bcf6-06f8f0516c7a/resourceGroups/App-Service-Sample-Demo-rg/providers/Microsoft.Web/sites/App-Service-Sample-Demo",
-            "metricNamespace": "microsoft.web/sites",
-            "name": "HttpResponseTime",
-            "aggregation": "Average",
-            "resourceType": "microsoft.web/sites"
-          },
           "/subscriptions/7c71b563-0dc0-4bc0-bcf6-06f8f0516c7a/resourceGroups/App-Service-Sample-Demo-rg/providers/Microsoft.Web/sites/App-Service-Sample-Demo": {
             "id": "/subscriptions/7c71b563-0dc0-4bc0-bcf6-06f8f0516c7a/resourceGroups/App-Service-Sample-Demo-rg/providers/Microsoft.Web/sites/App-Service-Sample-Demo/providers/microsoft.insights/metricdefinitions/requests/duration",
             "resourceId": "/subscriptions/7c71b563-0dc0-4bc0-bcf6-06f8f0516c7a/resourceGroups/App-Service-Sample-Demo-rg/providers/Microsoft.Web/sites/App-Service-Sample-Demo",
@@ -140,15 +111,39 @@
             "resourceType": "microsoft.insights/components"
           }
         },
-        "createdDateTime": "2023-01-18T18:00:17.398Z",
-        "lastModifiedDateTime": "2023-01-18T18:00:18.283Z"
+        "createdDateTime": "2023-01-19T11:47:44.949Z",
+        "lastModifiedDateTime": "2023-01-19T11:47:44.949Z"
       }
+    },
+    {
+      "RequestUri": "https://f878fc34-142f-4312-8577-a04c47da9c0b.eastasia.cnt-prod.loadtesting.azure.com/tests/test-from-csharp-sdk-testing-framework?api-version=2022-11-01",
+      "RequestMethod": "DELETE",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-16af0304baee4877f8a7aca2e7f2e0bf-3407ca30f5c3af05-00",
+        "User-Agent": "azsdk-net-Developer.LoadTesting/1.0.0-alpha.20230119.1 (.NET 6.0.13; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "5c830f4b4ac58ff168b37fc6210faefc",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 204,
+      "ResponseHeaders": {
+        "api-supported-versions": "2021-07-01-preview, 2022-06-01-preview, 2022-11-01",
+        "Connection": "keep-alive",
+        "Date": "Thu, 19 Jan 2023 11:47:45 GMT",
+        "mise-correlation-id": "dd15a8b9-3708-48d2-9bd8-93a1ddb582ea",
+        "Strict-Transport-Security": "max-age=15724800; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "77eed820-9905-45ef-94d3-246e8a606aca"
+      },
+      "ResponseBody": null
     }
   ],
   "Variables": {
     "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com/",
     "LOADTESTSERVICE_ENDPOINT": "f878fc34-142f-4312-8577-a04c47da9c0b.eastasia.cnt-prod.loadtesting.azure.com",
     "LOADTESTSERVICE_RESOURCE_ID": "/subscriptions/7c71b563-0dc0-4bc0-bcf6-06f8f0516c7a/resourceGroups/App-Service-Sample-Demo-rg/providers/Microsoft.Web/sites/App-Service-Sample-Demo",
-    "RandomSeed": "836986263"
+    "RandomSeed": "1396878942"
   }
 }

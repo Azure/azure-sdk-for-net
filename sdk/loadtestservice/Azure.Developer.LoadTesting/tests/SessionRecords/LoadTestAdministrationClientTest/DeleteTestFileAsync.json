@@ -8,9 +8,9 @@
         "Authorization": "Sanitized",
         "Content-Length": "256",
         "Content-Type": "application/merge-patch\u002Bjson",
-        "traceparent": "00-aa44852cc9815e32bed3888d34d6bc80-d5eb0b8d76d7bf6a-00",
-        "User-Agent": "azsdk-net-Developer.LoadTesting/1.0.0-alpha.20230118.1 (.NET 6.0.13; Microsoft Windows 10.0.22621)",
-        "x-ms-client-request-id": "18c1895ab3956727c0b86fb392486635",
+        "traceparent": "00-a7a30932f3c799b167da81e1f889a260-41781fee5289b94e-00",
+        "User-Agent": "azsdk-net-Developer.LoadTesting/1.0.0-alpha.20230119.1 (.NET 6.0.13; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "edaf60e0f38905cba8ab2cfdb6b4be5a",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -30,14 +30,14 @@
       "ResponseHeaders": {
         "api-supported-versions": "2021-07-01-preview, 2022-06-01-preview, 2022-11-01",
         "Connection": "keep-alive",
-        "Content-Length": "434",
+        "Content-Length": "436",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 18 Jan 2023 18:00:20 GMT",
+        "Date": "Thu, 19 Jan 2023 11:47:47 GMT",
         "Location": "https://f878fc34-142f-4312-8577-a04c47da9c0b.eastasia.cnt-prod.loadtesting.azure.com/tests/test-from-csharp-sdk-testing-framework?api-version=2022-11-01",
-        "mise-correlation-id": "d3fc1b23-ec0a-4ab9-8add-cd44774ce176",
+        "mise-correlation-id": "a747807a-4537-414b-b881-d2f184872f74",
         "Strict-Transport-Security": "max-age=15724800; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "fc2bf319-712a-4936-a7bc-d78e6bfa1454"
+        "x-ms-correlation-request-id": "d936851d-3c31-4132-acbf-a344fb17f2c1"
       },
       "ResponseBody": {
         "passFailCriteria": {
@@ -54,8 +54,8 @@
         "testId": "test-from-csharp-sdk-testing-framework",
         "description": "This test was created through loadtesting C# SDK",
         "displayName": "Dotnet Testing Framework Loadtest",
-        "createdDateTime": "2023-01-18T18:00:20.36Z",
-        "lastModifiedDateTime": "2023-01-18T18:00:20.36Z"
+        "createdDateTime": "2023-01-19T11:47:47.806Z",
+        "lastModifiedDateTime": "2023-01-19T11:47:47.806Z"
       }
     },
     {
@@ -66,9 +66,9 @@
         "Authorization": "Sanitized",
         "Content-Length": "4729",
         "Content-Type": "application/octet-stream",
-        "traceparent": "00-614bb98b85c0fc692946fd419d232726-882cb34cd45f4349-00",
-        "User-Agent": "azsdk-net-Developer.LoadTesting/1.0.0-alpha.20230118.1 (.NET 6.0.13; Microsoft Windows 10.0.22621)",
-        "x-ms-client-request-id": "4a156d7b5dccf19387816956bcbe3e11",
+        "traceparent": "00-27086cf213c903a9ed350ad7a1bef142-b8fb7c88539ca5cd-00",
+        "User-Agent": "azsdk-net-Developer.LoadTesting/1.0.0-alpha.20230119.1 (.NET 6.0.13; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "59ad5bf763c787bbcc0e1d68aa20feb4",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": "PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4gPGptZXRlclRlc3RQbGFuIHZlcnNpb249IjEuMiIgcHJvcGVydGllcz0iNS4wIiBqbWV0ZXI9IjUuNC4xIj4gPGhhc2hUcmVlPiA8VGVzdFBsYW4gZ3VpY2xhc3M9IlRlc3RQbGFuR3VpIiB0ZXN0Y2xhc3M9IlRlc3RQbGFuIiB0ZXN0bmFtZT0iQXp1cmUgTG9hZCBUZXN0aW5nIFF1aWNrc3RhcnQiIGVuYWJsZWQ9InRydWUiPiA8c3RyaW5nUHJvcCBuYW1lPSJUZXN0UGxhbi5jb21tZW50cyI\u002BPC9zdHJpbmdQcm9wPiA8Ym9vbFByb3AgbmFtZT0iVGVzdFBsYW4uZnVuY3Rpb25hbF9tb2RlIj5mYWxzZTwvYm9vbFByb3A\u002BIDxib29sUHJvcCBuYW1lPSJUZXN0UGxhbi50ZWFyRG93bl9vbl9zaHV0ZG93biI\u002BdHJ1ZTwvYm9vbFByb3A\u002BIDxib29sUHJvcCBuYW1lPSJUZXN0UGxhbi5zZXJpYWxpemVfdGhyZWFkZ3JvdXBzIj5mYWxzZTwvYm9vbFByb3A\u002BIDxlbGVtZW50UHJvcCBuYW1lPSJUZXN0UGxhbi51c2VyX2RlZmluZWRfdmFyaWFibGVzIiBlbGVtZW50VHlwZT0iQXJndW1lbnRzIiBndWljbGFzcz0iQXJndW1lbnRzUGFuZWwiIHRlc3RjbGFzcz0iQXJndW1lbnRzIiB0ZXN0bmFtZT0iVXNlciBEZWZpbmVkIFZhcmlhYmxlcyIgZW5hYmxlZD0idHJ1ZSI\u002BIDxjb2xsZWN0aW9uUHJvcCBuYW1lPSJBcmd1bWVudHMuYXJndW1lbnRzIi8\u002BIDwvZWxlbWVudFByb3A\u002BIDxzdHJpbmdQcm9wIG5hbWU9IlRlc3RQbGFuLnVzZXJfZGVmaW5lX2NsYXNzcGF0aCI\u002BPC9zdHJpbmdQcm9wPiA8L1Rlc3RQbGFuPiA8aGFzaFRyZWU\u002BIDxBcmd1bWVudHMgZ3VpY2xhc3M9IkFyZ3VtZW50c1BhbmVsIiB0ZXN0Y2xhc3M9IkFyZ3VtZW50cyIgdGVzdG5hbWU9IlVzZXIgRGVmaW5lZCBWYXJpYWJsZXMiIGVuYWJsZWQ9InRydWUiPiA8Y29sbGVjdGlvblByb3AgbmFtZT0iQXJndW1lbnRzLmFyZ3VtZW50cyI\u002BIDxlbGVtZW50UHJvcCBuYW1lPSJ0aHJlYWRzX3Blcl9lbmdpbmUiIGVsZW1lbnRUeXBlPSJBcmd1bWVudCI\u002BIDxzdHJpbmdQcm9wIG5hbWU9IkFyZ3VtZW50Lm5hbWUiPnRocmVhZHNfcGVyX2VuZ2luZTwvc3RyaW5nUHJvcD4gPHN0cmluZ1Byb3AgbmFtZT0iQXJndW1lbnQudmFsdWUiPiR7X19CZWFuU2hlbGwoIFN5c3RlbS5nZXRlbnYoInRocmVhZHNfcGVyX2VuZ2luZSIpICl9PC9zdHJpbmdQcm9wPiA8c3RyaW5nUHJvcCBuYW1lPSJBcmd1bWVudC5tZXRhZGF0YSI\u002BPTwvc3RyaW5nUHJvcD4gPC9lbGVtZW50UHJvcD4gPGVsZW1lbnRQcm9wIG5hbWU9InJhbXBfdXBfdGltZSIgZWxlbWVudFR5cGU9IkFyZ3VtZW50Ij4gPHN0cmluZ1Byb3AgbmFtZT0iQXJndW1lbnQubmFtZSI\u002BcmFtcF91cF90aW1lPC9zdHJpbmdQcm9wPiA8c3RyaW5nUHJvcCBuYW1lPSJBcmd1bWVudC52YWx1ZSI\u002BJHtfX0JlYW5TaGVsbCggU3lzdGVtLmdldGVudigicmFtcF91cF90aW1lIikgKX08L3N0cmluZ1Byb3A\u002BIDxzdHJpbmdQcm9wIG5hbWU9IkFyZ3VtZW50Lm1ldGFkYXRhIj49PC9zdHJpbmdQcm9wPiA8L2VsZW1lbnRQcm9wPiA8ZWxlbWVudFByb3AgbmFtZT0iZHVyYXRpb25faW5fc2VjIiBlbGVtZW50VHlwZT0iQXJndW1lbnQiPiA8c3RyaW5nUHJvcCBuYW1lPSJBcmd1bWVudC5uYW1lIj5kdXJhdGlvbl9pbl9zZWM8L3N0cmluZ1Byb3A\u002BIDxzdHJpbmdQcm9wIG5hbWU9IkFyZ3VtZW50LnZhbHVlIj4ke19fQmVhblNoZWxsKCBTeXN0ZW0uZ2V0ZW52KCJkdXJhdGlvbl9pbl9zZWMiKSApfTwvc3RyaW5nUHJvcD4gPHN0cmluZ1Byb3AgbmFtZT0iQXJndW1lbnQubWV0YWRhdGEiPj08L3N0cmluZ1Byb3A\u002BIDwvZWxlbWVudFByb3A\u002BIDxlbGVtZW50UHJvcCBuYW1lPSJkb21haW4iIGVsZW1lbnRUeXBlPSJBcmd1bWVudCI\u002BIDxzdHJpbmdQcm9wIG5hbWU9IkFyZ3VtZW50Lm5hbWUiPmRvbWFpbjwvc3RyaW5nUHJvcD4gPHN0cmluZ1Byb3AgbmFtZT0iQXJndW1lbnQudmFsdWUiPiR7X19CZWFuU2hlbGwoIFN5c3RlbS5nZXRlbnYoImRvbWFpbiIpICl9PC9zdHJpbmdQcm9wPiA8c3RyaW5nUHJvcCBuYW1lPSJBcmd1bWVudC5tZXRhZGF0YSI\u002BPTwvc3RyaW5nUHJvcD4gPC9lbGVtZW50UHJvcD4gPGVsZW1lbnRQcm9wIG5hbWU9InByb3RvY29sIiBlbGVtZW50VHlwZT0iQXJndW1lbnQiPiA8c3RyaW5nUHJvcCBuYW1lPSJBcmd1bWVudC5uYW1lIj5wcm90b2NvbDwvc3RyaW5nUHJvcD4gPHN0cmluZ1Byb3AgbmFtZT0iQXJndW1lbnQudmFsdWUiPiR7X19CZWFuU2hlbGwoIFN5c3RlbS5nZXRlbnYoInByb3RvY29sIikgKX08L3N0cmluZ1Byb3A\u002BIDxzdHJpbmdQcm9wIG5hbWU9IkFyZ3VtZW50Lm1ldGFkYXRhIj49PC9zdHJpbmdQcm9wPiA8L2VsZW1lbnRQcm9wPiA8ZWxlbWVudFByb3AgbmFtZT0icGF0aCIgZWxlbWVudFR5cGU9IkFyZ3VtZW50Ij4gPHN0cmluZ1Byb3AgbmFtZT0iQXJndW1lbnQubmFtZSI\u002BcGF0aDwvc3RyaW5nUHJvcD4gPHN0cmluZ1Byb3AgbmFtZT0iQXJndW1lbnQudmFsdWUiPiR7X19CZWFuU2hlbGwoIFN5c3RlbS5nZXRlbnYoInBhdGgiKSApfTwvc3RyaW5nUHJvcD4gPHN0cmluZ1Byb3AgbmFtZT0iQXJndW1lbnQubWV0YWRhdGEiPj08L3N0cmluZ1Byb3A\u002BIDwvZWxlbWVudFByb3A\u002BIDwvY29sbGVjdGlvblByb3A\u002BIDwvQXJndW1lbnRzPiA8aGFzaFRyZWUvPiA8VGhyZWFkR3JvdXAgZ3VpY2xhc3M9IlRocmVhZEdyb3VwR3VpIiB0ZXN0Y2xhc3M9IlRocmVhZEdyb3VwIiB0ZXN0bmFtZT0iVGhyZWFkIEdyb3VwIiBlbmFibGVkPSJ0cnVlIj4gPHN0cmluZ1Byb3AgbmFtZT0iVGhyZWFkR3JvdXAub25fc2FtcGxlX2Vycm9yIj5jb250aW51ZTwvc3RyaW5nUHJvcD4gPGVsZW1lbnRQcm9wIG5hbWU9IlRocmVhZEdyb3VwLm1haW5fY29udHJvbGxlciIgZWxlbWVudFR5cGU9Ikxvb3BDb250cm9sbGVyIiBndWljbGFzcz0iTG9vcENvbnRyb2xQYW5lbCIgdGVzdGNsYXNzPSJMb29wQ29udHJvbGxlciIgdGVzdG5hbWU9Ikxvb3AgQ29udHJvbGxlciIgZW5hYmxlZD0idHJ1ZSI\u002BIDxib29sUHJvcCBuYW1lPSJMb29wQ29udHJvbGxlci5jb250aW51ZV9mb3JldmVyIj5mYWxzZTwvYm9vbFByb3A\u002BIDxpbnRQcm9wIG5hbWU9Ikxvb3BDb250cm9sbGVyLmxvb3BzIj4tMTwvaW50UHJvcD4gPC9lbGVtZW50UHJvcD4gPHN0cmluZ1Byb3AgbmFtZT0iVGhyZWFkR3JvdXAubnVtX3RocmVhZHMiPiR7dGhyZWFkc19wZXJfZW5naW5lfTwvc3RyaW5nUHJvcD4gPHN0cmluZ1Byb3AgbmFtZT0iVGhyZWFkR3JvdXAucmFtcF90aW1lIj4ke3JhbXBfdXBfdGltZX08L3N0cmluZ1Byb3A\u002BIDxib29sUHJvcCBuYW1lPSJUaHJlYWRHcm91cC5zY2hlZHVsZXIiPnRydWU8L2Jvb2xQcm9wPiA8c3RyaW5nUHJvcCBuYW1lPSJUaHJlYWRHcm91cC5kdXJhdGlvbiI\u002BJHtkdXJhdGlvbl9pbl9zZWN9PC9zdHJpbmdQcm9wPiA8c3RyaW5nUHJvcCBuYW1lPSJUaHJlYWRHcm91cC5kZWxheSI\u002BNTwvc3RyaW5nUHJvcD4gPGJvb2xQcm9wIG5hbWU9IlRocmVhZEdyb3VwLnNhbWVfdXNlcl9vbl9uZXh0X2l0ZXJhdGlvbiI\u002BdHJ1ZTwvYm9vbFByb3A\u002BIDwvVGhyZWFkR3JvdXA\u002BIDxoYXNoVHJlZT4gPEhUVFBTYW1wbGVyUHJveHkgZ3VpY2xhc3M9Ikh0dHBUZXN0U2FtcGxlR3VpIiB0ZXN0Y2xhc3M9IkhUVFBTYW1wbGVyUHJveHkiIHRlc3RuYW1lPSJIb21lcGFnZSIgZW5hYmxlZD0idHJ1ZSI\u002BIDxlbGVtZW50UHJvcCBuYW1lPSJIVFRQc2FtcGxlci5Bcmd1bWVudHMiIGVsZW1lbnRUeXBlPSJBcmd1bWVudHMiIGd1aWNsYXNzPSJIVFRQQXJndW1lbnRzUGFuZWwiIHRlc3RjbGFzcz0iQXJndW1lbnRzIiB0ZXN0bmFtZT0iVXNlciBEZWZpbmVkIFZhcmlhYmxlcyIgZW5hYmxlZD0idHJ1ZSI\u002BIDxjb2xsZWN0aW9uUHJvcCBuYW1lPSJBcmd1bWVudHMuYXJndW1lbnRzIi8\u002BIDwvZWxlbWVudFByb3A\u002BIDxzdHJpbmdQcm9wIG5hbWU9IkhUVFBTYW1wbGVyLmRvbWFpbiI\u002BJHtkb21haW59PC9zdHJpbmdQcm9wPiA8c3RyaW5nUHJvcCBuYW1lPSJIVFRQU2FtcGxlci5wb3J0Ij48L3N0cmluZ1Byb3A\u002BIDxzdHJpbmdQcm9wIG5hbWU9IkhUVFBTYW1wbGVyLnByb3RvY29sIj4ke3Byb3RvY29sfTwvc3RyaW5nUHJvcD4gPHN0cmluZ1Byb3AgbmFtZT0iSFRUUFNhbXBsZXIuY29udGVudEVuY29kaW5nIj48L3N0cmluZ1Byb3A\u002BIDxzdHJpbmdQcm9wIG5hbWU9IkhUVFBTYW1wbGVyLnBhdGgiPiR7cGF0aH08L3N0cmluZ1Byb3A\u002BIDxzdHJpbmdQcm9wIG5hbWU9IkhUVFBTYW1wbGVyLm1ldGhvZCI\u002BR0VUPC9zdHJpbmdQcm9wPiA8Ym9vbFByb3AgbmFtZT0iSFRUUFNhbXBsZXIuZm9sbG93X3JlZGlyZWN0cyI\u002BdHJ1ZTwvYm9vbFByb3A\u002BIDxib29sUHJvcCBuYW1lPSJIVFRQU2FtcGxlci5hdXRvX3JlZGlyZWN0cyI\u002BZmFsc2U8L2Jvb2xQcm9wPiA8Ym9vbFByb3AgbmFtZT0iSFRUUFNhbXBsZXIudXNlX2tlZXBhbGl2ZSI\u002BdHJ1ZTwvYm9vbFByb3A\u002BIDxib29sUHJvcCBuYW1lPSJIVFRQU2FtcGxlci5ET19NVUxUSVBBUlRfUE9TVCI\u002BZmFsc2U8L2Jvb2xQcm9wPiA8c3RyaW5nUHJvcCBuYW1lPSJIVFRQU2FtcGxlci5lbWJlZGRlZF91cmxfcmUiPjwvc3RyaW5nUHJvcD4gPHN0cmluZ1Byb3AgbmFtZT0iSFRUUFNhbXBsZXIuY29ubmVjdF90aW1lb3V0Ij48L3N0cmluZ1Byb3A\u002BIDxzdHJpbmdQcm9wIG5hbWU9IkhUVFBTYW1wbGVyLnJlc3BvbnNlX3RpbWVvdXQiPjwvc3RyaW5nUHJvcD4gPC9IVFRQU2FtcGxlclByb3h5PiA8aGFzaFRyZWUvPiA8L2hhc2hUcmVlPiA8L2hhc2hUcmVlPiA8L2hhc2hUcmVlPiA8L2ptZXRlclRlc3RQbGFuPg==",
@@ -78,18 +78,18 @@
         "Connection": "keep-alive",
         "Content-Length": "502",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 18 Jan 2023 18:00:20 GMT",
+        "Date": "Thu, 19 Jan 2023 11:47:48 GMT",
         "Location": "https://f878fc34-142f-4312-8577-a04c47da9c0b.eastasia.cnt-prod.loadtesting.azure.com/tests/test-from-csharp-sdk-testing-framework/files/sample.jmx?api-version=2022-11-01",
-        "mise-correlation-id": "1d5cb449-0150-46e2-a3ef-eb788c354408",
+        "mise-correlation-id": "dd62dac9-b6da-4a7a-8e20-a06d3aa3c522",
         "Strict-Transport-Security": "max-age=15724800; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "467d5c42-a2e2-446f-8fe4-d35baa0a26f2"
+        "x-ms-correlation-request-id": "4347172e-f6ce-4a45-ac53-5d20b949e1e7"
       },
       "ResponseBody": {
-        "url": "https://maltccstorageaccounthk.blob.core.windows.net/9480ab47-7320-4e4f-b06d-1e4ee82c4da4/81135592-3818-4a65-9d08-6f9ff9882fc1?skoid=fe06edb5-033b-4f33-bef0-9489f8feffb8\u0026sktid=33e01921-4d64-4f8c-a055-5bdaffd5e33d\u0026skt=2023-01-18T16%3A27%3A08Z\u0026ske=2023-01-19T06%3A27%3A08Z\u0026sks=b\u0026skv=2021-08-06\u0026sv=2021-08-06\u0026se=2023-01-18T18%3A10%3A20Z\u0026sr=b\u0026sp=r\u0026sig=Sanitized",
+        "url": "https://maltccstorageaccounthk.blob.core.windows.net/7605e35c-09a9-4dd6-94a0-cd89c543e2b7/2a9a83b6-3dd1-43a3-a058-731d6c32ff25?skoid=fe06edb5-033b-4f33-bef0-9489f8feffb8\u0026sktid=33e01921-4d64-4f8c-a055-5bdaffd5e33d\u0026skt=2023-01-19T11%3A47%3A24Z\u0026ske=2023-01-20T01%3A47%3A24Z\u0026sks=b\u0026skv=2021-08-06\u0026sv=2021-08-06\u0026se=2023-01-19T11%3A57%3A48Z\u0026sr=b\u0026sp=r\u0026sig=Sanitized",
         "fileName": "sample.jmx",
         "fileType": "JMX_FILE",
-        "expireDateTime": "2023-01-18T18:10:20.8218935",
+        "expireDateTime": "2023-01-19T11:57:48.2546793",
         "validationStatus": "VALIDATION_INITIATED"
       }
     },
@@ -99,9 +99,9 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-f5b79e6607bc3ae32d72eb392c8d8cda-89ad3645ba9ed579-00",
-        "User-Agent": "azsdk-net-Developer.LoadTesting/1.0.0-alpha.20230118.1 (.NET 6.0.13; Microsoft Windows 10.0.22621)",
-        "x-ms-client-request-id": "9fb1a51227706668d743db522ea5c89a",
+        "traceparent": "00-3a3a78b7dc4c743d46eea46f7df6ae74-c2c0cbd378b23153-00",
+        "User-Agent": "azsdk-net-Developer.LoadTesting/1.0.0-alpha.20230119.1 (.NET 6.0.13; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "f3a4b302c7d94ce60e0a5a9e0a183f01",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -109,11 +109,66 @@
       "ResponseHeaders": {
         "api-supported-versions": "2021-07-01-preview, 2022-06-01-preview, 2022-11-01",
         "Connection": "keep-alive",
-        "Date": "Wed, 18 Jan 2023 18:00:21 GMT",
-        "mise-correlation-id": "893a61a7-7992-465e-be86-f9bb57b85f72",
+        "Date": "Thu, 19 Jan 2023 11:47:48 GMT",
+        "mise-correlation-id": "ff8a9bf7-f5af-4ea0-bb56-caa0865d865d",
         "Strict-Transport-Security": "max-age=15724800; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "56f761e9-2139-411b-a818-4702e4023610"
+        "x-ms-correlation-request-id": "41cfa46a-6c64-4336-aaff-b8e2eb53d207"
+      },
+      "ResponseBody": null
+    },
+    {
+      "RequestUri": "https://f878fc34-142f-4312-8577-a04c47da9c0b.eastasia.cnt-prod.loadtesting.azure.com/tests/test-from-csharp-sdk-testing-framework/files/sample.jmx?api-version=2022-11-01",
+      "RequestMethod": "DELETE",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-020e94f803093c81b59c5a17d0376e33-53fad450e9da3c87-00",
+        "User-Agent": "azsdk-net-Developer.LoadTesting/1.0.0-alpha.20230119.1 (.NET 6.0.13; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "344756bc8cda7de6a528217ad6625b88",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 404,
+      "ResponseHeaders": {
+        "api-supported-versions": "2021-07-01-preview, 2022-06-01-preview, 2022-11-01",
+        "Connection": "keep-alive",
+        "Content-Length": "136",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 19 Jan 2023 11:47:48 GMT",
+        "mise-correlation-id": "3fcf1946-1bd9-4476-a956-52979875699f",
+        "Strict-Transport-Security": "max-age=15724800; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "0f609d10-fe5d-4062-88bc-7a13e2a4a3f5"
+      },
+      "ResponseBody": {
+        "error": {
+          "code": "TestFileNotFound",
+          "message": "Test file not found with given name \u0022No file exists with given name in given Test.\u0022."
+        }
+      }
+    },
+    {
+      "RequestUri": "https://f878fc34-142f-4312-8577-a04c47da9c0b.eastasia.cnt-prod.loadtesting.azure.com/tests/test-from-csharp-sdk-testing-framework?api-version=2022-11-01",
+      "RequestMethod": "DELETE",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-9297e36fb89fc1ab53cd80c5764a8901-fb7a46b637cf3f73-00",
+        "User-Agent": "azsdk-net-Developer.LoadTesting/1.0.0-alpha.20230119.1 (.NET 6.0.13; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "03fb78acca0f308174614abc081c7db3",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 204,
+      "ResponseHeaders": {
+        "api-supported-versions": "2021-07-01-preview, 2022-06-01-preview, 2022-11-01",
+        "Connection": "keep-alive",
+        "Date": "Thu, 19 Jan 2023 11:47:49 GMT",
+        "mise-correlation-id": "d3ea6b75-ae35-4698-bbe7-0194b2f89bf8",
+        "Strict-Transport-Security": "max-age=15724800; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "71af7d6a-2b92-43af-a70a-27fbf8b57f76"
       },
       "ResponseBody": null
     }
@@ -121,6 +176,6 @@
   "Variables": {
     "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com/",
     "LOADTESTSERVICE_ENDPOINT": "f878fc34-142f-4312-8577-a04c47da9c0b.eastasia.cnt-prod.loadtesting.azure.com",
-    "RandomSeed": "928987589"
+    "RandomSeed": "1056141453"
   }
 }

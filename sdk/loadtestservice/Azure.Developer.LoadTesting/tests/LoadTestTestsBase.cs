@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,6 +10,8 @@ using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using Azure.Core.TestFramework.Models;
 using Azure.Developer.LoadTesting.Tests.Helper;
+using NUnit.Framework;
+using static NUnit.Framework.TestContext;
 
 namespace Azure.Developer.LoadTesting.Tests
 {
@@ -20,6 +23,27 @@ namespace Azure.Developer.LoadTesting.Tests
         internal LoadTestAdministrationClient _loadTestAdministrationClient;
         internal string _testRunId;
         internal string _resourceId;
+        internal const string SKIP_SET_UP = "SkipSetUp";
+        internal const string SKIP_TEAR_DOWN = "SkipTearDown";
+        internal const string UPLOAD_TEST_FILE = "UploadTestFile";
+
+        internal bool CheckForSkipSetUp()
+        {
+            var categories = CurrentContext.Test.Properties["Category"];
+            return categories != null && categories.Contains(SKIP_SET_UP);
+        }
+
+        internal bool CheckForSkipTearDown()
+        {
+            var categories = CurrentContext.Test.Properties["Category"];
+            return categories != null && categories.Contains(SKIP_TEAR_DOWN);
+        }
+
+        internal bool CheckForUploadTestFile()
+        {
+            var categories = CurrentContext.Test.Properties["Category"];
+            return categories != null && categories.Contains(UPLOAD_TEST_FILE);
+        }
 
         public LoadTestTestsBase(bool isAsync) : base(isAsync)
         {
