@@ -683,21 +683,23 @@ namespace Azure.Containers.ContainerRegistry.Specialized
             byte[] buffer = ArrayPool<byte>.Shared.Rent(_maxChunkSize);
             long bytesDownloaded = 0;
             using SHA256 sha256 = SHA256.Create();
-            long blobSize = _maxChunkSize;
+            long? blobSize = default;
 
             try
             {
                 Response result = null;
                 do
                 {
-                    int chunkSize = (int)Math.Min(blobSize - bytesDownloaded, _maxChunkSize);
+                    int chunkSize = blobSize.HasValue ?
+                        (int)Math.Min(blobSize.Value - bytesDownloaded, _maxChunkSize) :
+                        _maxChunkSize;
                     HttpRange range = new HttpRange(bytesDownloaded, chunkSize);
 
                     var chunkResult = async ?
                         await _blobRestClient.GetChunkAsync(_repositoryName, digest, range.ToString(), cancellationToken).ConfigureAwait(false) :
                         _blobRestClient.GetChunk(_repositoryName, digest, range.ToString(), cancellationToken);
 
-                    blobSize = GetBlobSizeFromContentRange(chunkResult.Headers.ContentRange);
+                    blobSize ??= GetBlobSizeFromContentRange(chunkResult.Headers.ContentRange);
                     chunkSize = (int)chunkResult.Value.Length;
 
                     if (async)
@@ -717,7 +719,7 @@ namespace Azure.Containers.ContainerRegistry.Specialized
 
                     result = chunkResult.GetRawResponse();
                 }
-                while (bytesDownloaded < blobSize);
+                while (bytesDownloaded < blobSize.Value);
 
                 // Complete hash computation.
                 sha256.TransformFinalBlock(buffer, 0, 0);
