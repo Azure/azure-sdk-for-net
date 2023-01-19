@@ -4,8 +4,7 @@
   </PropertyGroup>
   
     <ItemGroup>
-    <PackageReference Include="Microsoft.CSharp" VersionOverride="4.7.0" />
-    <PackageReference Include="Microsoft.NET.Test.Sdk" VersionOverride="17.4.1" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" />
     <PackageReference Include="Moq" />
   </ItemGroup>
 
