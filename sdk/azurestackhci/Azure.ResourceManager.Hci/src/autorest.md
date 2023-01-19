@@ -8,7 +8,7 @@ azure-arm: true
 csharp: true
 library-name: Hci
 namespace: Azure.ResourceManager.Hci
-require: https://github.com/Azure/azure-rest-api-specs/blob/324a148497f28ef7588eee7bdb61dcd28b74f505/specification/azurestackhci/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/7d1f6b268def6736833a08311c87cc96740eaf03/specification/azurestackhci/resource-manager/readme.md
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 skip-csproj: true
@@ -78,4 +78,8 @@ directive:
   - from: swagger-document
     where: $.definitions..systemData
     transform: $["x-ms-client-flatten"] = false
+  - from: updateRuns.json
+    where: $.definitions.UpdateRunProperties.properties
+    transform: >
+      $.duration['x-ms-format'] = 'string';
 ```

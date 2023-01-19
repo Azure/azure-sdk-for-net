@@ -37,6 +37,8 @@ namespace Azure.ResourceManager.Hci.Models
         private const string PartiallySucceededValue = "PartiallySucceeded";
         private const string PartiallyConnectedValue = "PartiallyConnected";
         private const string InProgressValue = "InProgress";
+        private const string AcceptedValue = "Accepted";
+        private const string ProvisioningValue = "Provisioning";
 
         /// <summary> NotSpecified. </summary>
         public static ArcExtensionAggregateState NotSpecified { get; } = new ArcExtensionAggregateState(NotSpecifiedValue);
@@ -68,6 +70,10 @@ namespace Azure.ResourceManager.Hci.Models
         public static ArcExtensionAggregateState PartiallyConnected { get; } = new ArcExtensionAggregateState(PartiallyConnectedValue);
         /// <summary> InProgress. </summary>
         public static ArcExtensionAggregateState InProgress { get; } = new ArcExtensionAggregateState(InProgressValue);
+        /// <summary> Accepted. </summary>
+        public static ArcExtensionAggregateState Accepted { get; } = new ArcExtensionAggregateState(AcceptedValue);
+        /// <summary> Provisioning. </summary>
+        public static ArcExtensionAggregateState Provisioning { get; } = new ArcExtensionAggregateState(ProvisioningValue);
         /// <summary> Determines if two <see cref="ArcExtensionAggregateState"/> values are the same. </summary>
         public static bool operator ==(ArcExtensionAggregateState left, ArcExtensionAggregateState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ArcExtensionAggregateState"/> values are not the same. </summary>

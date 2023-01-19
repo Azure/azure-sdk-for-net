@@ -49,6 +49,25 @@ namespace Azure.ResourceManager.Hci.Models
                 writer.WriteObjectValue(DesiredProperties);
             }
             writer.WriteEndObject();
+            writer.WritePropertyName("identity");
+            writer.WriteStartObject();
+            if (Optional.IsDefined(ManagedServiceIdentityType))
+            {
+                writer.WritePropertyName("type");
+                writer.WriteStringValue(ManagedServiceIdentityType.Value.ToString());
+            }
+            if (Optional.IsCollectionDefined(UserAssignedIdentities))
+            {
+                writer.WritePropertyName("userAssignedIdentities");
+                writer.WriteStartObject();
+                foreach (var item in UserAssignedIdentities)
+                {
+                    writer.WritePropertyName(item.Key);
+                    JsonSerializer.Serialize(writer, item.Value);
+                }
+                writer.WriteEndObject();
+            }
+            writer.WriteEndObject();
             writer.WriteEndObject();
         }
     }
