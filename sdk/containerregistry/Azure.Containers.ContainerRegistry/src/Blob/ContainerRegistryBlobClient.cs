@@ -19,6 +19,7 @@ namespace Azure.Containers.ContainerRegistry.Specialized
     public class ContainerRegistryBlobClient
     {
         private const int DefaultChunkSize = 4 * 1024 * 1024; // 4MB
+        private readonly int _maxChunkSize;
 
         private readonly Uri _endpoint;
         private readonly string _registryName;
@@ -105,6 +106,7 @@ namespace Azure.Containers.ContainerRegistry.Specialized
             _endpoint = endpoint;
             _registryName = endpoint.Host.Split('.')[0];
             _repositoryName = repository;
+            _maxChunkSize = options?.MaxChunkSize ?? DefaultChunkSize;
             _clientDiagnostics = new ClientDiagnostics(options);
 
             _acrAuthPipeline = HttpPipelineBuilder.Build(options);
@@ -316,12 +318,10 @@ namespace Azure.Containers.ContainerRegistry.Specialized
             scope.Start();
             try
             {
-                int maxChunkSize = options?.MaxChunkSize ?? DefaultChunkSize;
-
                 ResponseWithHeaders<ContainerRegistryBlobStartUploadHeaders> startUploadResult =
                     _blobRestClient.StartUpload(_repositoryName, cancellationToken);
 
-                var result = UploadInChunksInternalAsync(startUploadResult.Headers.Location, stream, maxChunkSize, async: false, cancellationToken: cancellationToken).EnsureCompleted();
+                var result = UploadInChunksInternalAsync(startUploadResult.Headers.Location, stream, _maxChunkSize, async: false, cancellationToken: cancellationToken).EnsureCompleted();
 
                 ResponseWithHeaders<ContainerRegistryBlobCompleteUploadHeaders> completeUploadResult =
                     _blobRestClient.CompleteUpload(result.Digest, result.Location, null, cancellationToken);
@@ -352,12 +352,10 @@ namespace Azure.Containers.ContainerRegistry.Specialized
             scope.Start();
             try
             {
-                int maxChunkSize = options?.MaxChunkSize ?? DefaultChunkSize;
-
                 ResponseWithHeaders<ContainerRegistryBlobStartUploadHeaders> startUploadResult =
                     await _blobRestClient.StartUploadAsync(_repositoryName, cancellationToken).ConfigureAwait(false);
 
-                var result = await UploadInChunksInternalAsync(startUploadResult.Headers.Location, stream, maxChunkSize, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var result = await UploadInChunksInternalAsync(startUploadResult.Headers.Location, stream, _maxChunkSize, cancellationToken: cancellationToken).ConfigureAwait(false);
 
                 ResponseWithHeaders<ContainerRegistryBlobCompleteUploadHeaders> completeUploadResult =
                     await _blobRestClient.CompleteUploadAsync(result.Digest, result.Location, null, cancellationToken).ConfigureAwait(false);
@@ -454,6 +452,12 @@ namespace Azure.Containers.ContainerRegistry.Specialized
         {
             var endRange = (offset + length - 1).ToString(CultureInfo.InvariantCulture);
             return FormattableString.Invariant($"{offset}-{endRange}");
+        }
+
+        private static long GetBlobSizeFromContentRange(string contentRange)
+        {
+            string size = contentRange.Split('/')[1];
+            return long.Parse(size, CultureInfo.InvariantCulture);
         }
 
         // Some streams will throw if you try to access their length so we wrap
@@ -628,10 +632,9 @@ namespace Azure.Containers.ContainerRegistry.Specialized
         /// </summary>
         /// <param name="digest">The digest of the blob to download.</param>
         /// <param name="destination">Destination for the downloaded blob.</param>
-        /// <param name="options">Options for the blob download.</param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns>The raw response corresponding to the final GET blob chunk request.</returns>
-        public virtual Response DownloadBlobTo(string digest, Stream destination, DownloadBlobToOptions options = default, CancellationToken cancellationToken = default)
+        public virtual Response DownloadBlobTo(string digest, Stream destination, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(digest, nameof(digest));
             Argument.AssertNotNull(destination, nameof(destination));
@@ -640,9 +643,7 @@ namespace Azure.Containers.ContainerRegistry.Specialized
             scope.Start();
             try
             {
-                int maxChunkSize = options?.MaxChunkSize ?? DefaultChunkSize;
-                long blobLength = options?.BlobSize ?? GetBlobLengthAsync(digest, false, cancellationToken).EnsureCompleted();
-                return DownloadBlobToInternalAsync(digest, blobLength, maxChunkSize, destination, false, cancellationToken).EnsureCompleted();
+                return DownloadBlobToInternalAsync(digest, destination, false, cancellationToken).EnsureCompleted();
             }
             catch (Exception e)
             {
@@ -657,10 +658,9 @@ namespace Azure.Containers.ContainerRegistry.Specialized
         /// </summary>
         /// <param name="digest">The digest of the blob to download.</param>
         /// <param name="destination">Destination for the downloaded blob.</param>
-        /// <param name="options">Options for the blob download.</param>
         /// <param name="cancellationToken"> The cancellation token to use.</param>
         /// <returns>The raw response corresponding to the final GET blob chunk request.</returns>
-        public virtual async Task<Response> DownloadBlobToAsync(string digest, Stream destination, DownloadBlobToOptions options = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> DownloadBlobToAsync(string digest, Stream destination, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(digest, nameof(digest));
             Argument.AssertNotNull(destination, nameof(destination));
@@ -669,9 +669,7 @@ namespace Azure.Containers.ContainerRegistry.Specialized
             scope.Start();
             try
             {
-                int maxChunkSize = options?.MaxChunkSize ?? DefaultChunkSize;
-                long blobLength = options?.BlobSize ?? await GetBlobLengthAsync(digest, true, cancellationToken).ConfigureAwait(false);
-                return await DownloadBlobToInternalAsync(digest, blobLength, maxChunkSize, destination, true, cancellationToken).ConfigureAwait(false);
+                return await DownloadBlobToInternalAsync(digest, destination, true, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -680,47 +678,27 @@ namespace Azure.Containers.ContainerRegistry.Specialized
             }
         }
 
-        private async Task<Response> DownloadBlobToInternalAsync(string digest, long blobLength, int maxChunkSize, Stream destination, bool async, CancellationToken cancellationToken)
+        private async Task<Response> DownloadBlobToInternalAsync(string digest, Stream destination, bool async, CancellationToken cancellationToken)
         {
-            if (blobLength <= maxChunkSize)
-            {
-                // Download in a single chunk
-                var downloadResult = async ?
-                    await DownloadBlobInternalAsync(digest, true, cancellationToken).ConfigureAwait(false) :
-                    DownloadBlobInternalAsync(digest, false, cancellationToken).EnsureCompleted();
-
-                if (async)
-                {
-                    await downloadResult.Value.Content.ToStream().CopyToAsync(destination).ConfigureAwait(false);
-                    await destination.FlushAsync(cancellationToken).ConfigureAwait(false);
-                }
-                else
-                {
-                    downloadResult.Value.Content.ToStream().CopyTo(destination);
-                    destination.Flush();
-                }
-
-                return downloadResult.GetRawResponse();
-            }
-
-            // Download in multiple chunks.
-            byte[] buffer = ArrayPool<byte>.Shared.Rent(maxChunkSize);
-            long chunkCount = 0;
+            byte[] buffer = ArrayPool<byte>.Shared.Rent(_maxChunkSize);
             long bytesDownloaded = 0;
             using SHA256 sha256 = SHA256.Create();
+            long blobSize = _maxChunkSize;
 
             try
             {
                 Response result = null;
-
-                while (bytesDownloaded < blobLength)
+                do
                 {
-                    int chunkSize = (int)Math.Min(blobLength - bytesDownloaded, maxChunkSize);
+                    int chunkSize = (int)Math.Min(blobSize - bytesDownloaded, _maxChunkSize);
                     HttpRange range = new HttpRange(bytesDownloaded, chunkSize);
 
-                    ResponseWithHeaders<Stream, ContainerRegistryBlobGetChunkHeaders> chunkResult = async ?
+                    var chunkResult = async ?
                         await _blobRestClient.GetChunkAsync(_repositoryName, digest, range.ToString(), cancellationToken).ConfigureAwait(false) :
                         _blobRestClient.GetChunk(_repositoryName, digest, range.ToString(), cancellationToken);
+
+                    blobSize = GetBlobSizeFromContentRange(chunkResult.Headers.ContentRange);
+                    chunkSize = (int)chunkResult.Value.Length;
 
                     if (async)
                     {
@@ -735,11 +713,11 @@ namespace Azure.Containers.ContainerRegistry.Specialized
                         destination.Write(buffer, 0, chunkSize);
                     }
 
-                    chunkCount++;
                     bytesDownloaded += chunkSize;
 
                     result = chunkResult.GetRawResponse();
                 }
+                while (bytesDownloaded < blobSize);
 
                 // Complete hash computation.
                 sha256.TransformFinalBlock(buffer, 0, 0);
@@ -763,15 +741,6 @@ namespace Azure.Containers.ContainerRegistry.Specialized
             {
                 ArrayPool<byte>.Shared.Return(buffer);
             }
-        }
-
-        private async Task<long> GetBlobLengthAsync(string digest, bool async, CancellationToken cancellationToken)
-        {
-            ResponseWithHeaders<ContainerRegistryBlobCheckBlobExistsHeaders> response = async ?
-                await _blobRestClient.CheckBlobExistsAsync(_repositoryName, digest, cancellationToken).ConfigureAwait(false) :
-                _blobRestClient.CheckBlobExists(_repositoryName, digest, cancellationToken);
-
-            return response.Headers.ContentLength.Value;
         }
 
         /// <summary>

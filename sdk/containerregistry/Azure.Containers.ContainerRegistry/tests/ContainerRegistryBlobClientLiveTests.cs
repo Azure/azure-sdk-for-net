@@ -501,11 +501,11 @@ namespace Azure.Containers.ContainerRegistry.Tests
         public async Task CanDownloadBlobToStreamInEqualSizeChunks()
         {
             // Arrange
-            var repositoryId = Recording.Random.NewGuid().ToString();
-            var client = CreateBlobClient(repositoryId);
-
             int blobSize = 1024;
             int chunkSize = 1024 / 4; // Four equal-sized chunks
+
+            var repositoryId = Recording.Random.NewGuid().ToString();
+            var client = CreateBlobClient(repositoryId, chunkSize);
 
             var data = GetConstantBuffer(blobSize, 10);
 
@@ -515,8 +515,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
 
             // Act
             using var downloadStream = new MemoryStream();
-            var options = new DownloadBlobToOptions(chunkSize);
-            await client.DownloadBlobToAsync(digest, downloadStream, options);
+            await client.DownloadBlobToAsync(digest, downloadStream);
             downloadStream.Position = 0;
 
             BinaryData downloadedData = BinaryData.FromStream(downloadStream);
@@ -534,13 +533,13 @@ namespace Azure.Containers.ContainerRegistry.Tests
         public async Task CanDownloadBlobToStreamInUnequalChunks()
         {
             // Arrange
-            var repositoryId = Recording.Random.NewGuid().ToString();
-            var client = CreateBlobClient(repositoryId);
-
             int blobSize = 1024;
             int chunkSize = 1024 / 4;    // Equal-sized chunks
             int remainderChunkSize = 20;
             blobSize += remainderChunkSize;
+
+            var repositoryId = Recording.Random.NewGuid().ToString();
+            var client = CreateBlobClient(repositoryId, chunkSize);
 
             var data = GetConstantBuffer(blobSize, 11);
 
@@ -550,8 +549,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
 
             // Act
             using var downloadStream = new MemoryStream();
-            var options = new DownloadBlobToOptions(chunkSize);
-            await client.DownloadBlobToAsync(digest, downloadStream, options);
+            await client.DownloadBlobToAsync(digest, downloadStream);
             downloadStream.Position = 0;
 
             BinaryData downloadedData = BinaryData.FromStream(downloadStream);
