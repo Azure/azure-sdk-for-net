@@ -63,35 +63,45 @@ namespace Azure.Core.Dynamic
 
         private void WriteArrayValues(string path, ref Utf8JsonReader reader, Utf8JsonWriter writer)
         {
+            int index = 0;
+
             while (reader.Read())
             {
                 switch (reader.TokenType)
                 {
                     case JsonTokenType.StartObject:
-                        writer.WriteStartObject();
-                        WriteObjectProperties(path, ref reader, writer);
-                        continue;
+                        path = ChangeTracker.PushIndex(path, index);
+                        WriteObject(path, ref reader, writer);
+                        break;
                     case JsonTokenType.StartArray:
+                        path = ChangeTracker.PushIndex(path, index);
                         writer.WriteStartArray();
                         WriteArrayValues(path, ref reader, writer);
-                        continue;
+                        break;
                     case JsonTokenType.String:
+                        path = ChangeTracker.PushIndex(path, index);
                         WriteString(path, ref reader, writer);
-                        continue;
+                        break;
                     case JsonTokenType.Number:
+                        path = ChangeTracker.PushIndex(path, index);
                         WriteNumber(path, ref reader, writer);
-                        continue;
+                        break;
                     case JsonTokenType.True:
                     case JsonTokenType.False:
+                        path = ChangeTracker.PushIndex(path, index);
                         WriteBoolean(path, reader.TokenType, writer);
-                        return;
+                        break;
                     case JsonTokenType.Null:
+                        path = ChangeTracker.PushIndex(path, index);
                         writer.WriteNullValue();
-                        return;
+                        break;
                     case JsonTokenType.EndArray:
                         writer.WriteEndArray();
                         return;
                 }
+
+                path = ChangeTracker.PopIndex(path);
+                index++;
             }
         }
 
@@ -102,27 +112,7 @@ namespace Azure.Core.Dynamic
                 switch (reader.TokenType)
                 {
                     case JsonTokenType.StartObject:
-                        bool changed = Changes.TryGetChange(path, out JsonDataChange change);
-                        if (changed)
-                        {
-                            Utf8JsonReader changedElementReader = change.GetReader();
-
-                            // TODO: Note case where new element isn't an object?
-                            changedElementReader.Read(); // Read StartObject element
-                            Debug.Assert(changedElementReader.TokenType == JsonTokenType.StartObject);
-
-                            writer.WriteStartObject();
-                            WriteObjectProperties(path, ref changedElementReader, writer);
-
-                            // Skip this element in the original data.
-                            reader.Skip();
-                        }
-                        else
-                        {
-                            writer.WriteStartObject();
-                            WriteObjectProperties(path, ref reader, writer);
-                        }
-
+                        WriteObject(path, ref reader, writer);
                         path = ChangeTracker.PopProperty(path);
                         continue;
                     case JsonTokenType.StartArray:
@@ -161,6 +151,30 @@ namespace Azure.Core.Dynamic
             }
         }
 
+        private void WriteObject(string path, ref Utf8JsonReader reader, Utf8JsonWriter writer)
+        {
+            bool changed = Changes.TryGetChange(path, out JsonDataChange change);
+            if (changed)
+            {
+                Utf8JsonReader changedElementReader = change.GetReader();
+
+                // TODO: Note case where new element isn't an object?
+                changedElementReader.Read(); // Read StartObject element
+                Debug.Assert(changedElementReader.TokenType == JsonTokenType.StartObject);
+
+                writer.WriteStartObject();
+                WriteObjectProperties(path, ref changedElementReader, writer);
+
+                // Skip this element in the original data.
+                reader.Skip();
+            }
+            else
+            {
+                writer.WriteStartObject();
+                WriteObjectProperties(path, ref reader, writer);
+            }
+        }
+
         private void WriteString(string path, ref Utf8JsonReader reader, Utf8JsonWriter writer)
         {
             bool changed = Changes.TryGetChange(path, out JsonDataChange change);
@@ -177,13 +191,25 @@ namespace Azure.Core.Dynamic
 
         private void WriteNumber(string path, ref Utf8JsonReader reader, Utf8JsonWriter writer)
         {
-            bool changed = Changes.TryGetChange(path, out JsonDataChange change);
-
-            if (changed)
+            if (Changes.TryGetChange(path, out JsonDataChange change))
             {
-                // TODO: Extend to support long as well.
-                writer.WriteNumberValue((double)change.Value!);
-                return;
+                switch (change.Value)
+                {
+                    case long l:
+                        writer.WriteNumberValue(l);
+                        return;
+                    case int i:
+                        writer.WriteNumberValue(i);
+                        return;
+                    case double d:
+                        writer.WriteNumberValue(d);
+                        return;
+                    case float f:
+                        writer.WriteNumberValue(f);
+                        return;
+                    default:
+                        throw new InvalidOperationException("Change doesn't store a number value.");
+                }
             }
 
             if (reader.TryGetInt64(out long longValue))

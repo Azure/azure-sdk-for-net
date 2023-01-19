@@ -266,7 +266,7 @@ namespace Azure.Core.Experimental.Tests
         }
 
         [Test]
-        public void CanReplaceObject()
+        public void CanReplaceObjectWithAnonymousType()
         {
             string json = @"
                 {
@@ -364,6 +364,33 @@ namespace Azure.Core.Experimental.Tests
         }
 
         [Test]
+        public void CanSetArrayElement_WriteTo()
+        {
+            string json = @"
+                {
+                  ""Foo"" : [ 1, 2, 3 ]
+                }";
+
+            var jd = JsonData.Parse(json);
+
+            jd.RootElement.GetProperty("Foo").GetIndexElement(0).Set(5);
+            jd.RootElement.GetProperty("Foo").GetIndexElement(1).Set(6);
+            jd.RootElement.GetProperty("Foo").GetIndexElement(2).Set(7);
+
+            using MemoryStream stream = new MemoryStream();
+            jd.WriteTo(stream);
+            stream.Position = 0;
+            string jsonString = BinaryData.FromStream(stream).ToString();
+
+            Assert.AreEqual(
+                JsonDataWriteToTests.RemoveWhiteSpace(@"
+                {
+                  ""Foo"" : [ 5, 6, 7 ]
+                }"),
+                jsonString);
+        }
+
+        [Test]
         public void CanSetArrayElementMultipleTimes()
         {
             string json = @"
@@ -403,6 +430,7 @@ namespace Azure.Core.Experimental.Tests
         }
 
         [Test]
+        [Ignore("TODO: Implement")]
         public void CanSetProperty_StringToNumber()
         {
             // TODO: This will change how serialization works
@@ -411,12 +439,14 @@ namespace Azure.Core.Experimental.Tests
         }
 
         [Test]
+        [Ignore("TODO: Implement")]
         public void CanSetProperty_StringToBool()
         {
             throw new NotImplementedException();
         }
 
         [Test]
+        [Ignore("TODO: Implement")]
         public void CanSetProperty_StringToObject()
         {
             // This modifies the JSON structure
@@ -425,6 +455,7 @@ namespace Azure.Core.Experimental.Tests
         }
 
         [Test]
+        [Ignore("TODO: Implement")]
         public void CanSetProperty_StringToArray()
         {
             // This modifies the JSON structure

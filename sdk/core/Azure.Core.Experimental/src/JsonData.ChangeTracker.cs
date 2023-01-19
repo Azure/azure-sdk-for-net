@@ -88,6 +88,16 @@ namespace Azure.Core.Dynamic
                 _changes.Add(new JsonDataChange() { Path = path, Value = value, ReplacesJsonElement = replaceJsonElement });
             }
 
+            internal static string PushIndex(string path, int index)
+            {
+                return PushProperty(path, $"{index}");
+            }
+
+            internal static string PopIndex(string path)
+            {
+                return PopProperty(path);
+            }
+
             internal static string PushProperty(string path, string value)
             {
                 if (path.Length == 0)
