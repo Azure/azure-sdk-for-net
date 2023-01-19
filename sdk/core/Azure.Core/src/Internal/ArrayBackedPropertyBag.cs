@@ -124,9 +124,9 @@ namespace Azure.Core
         {
             if (_count == 0)
                 return -1;
-            if (_first.Key == key)
+            if (_count > 0 &&_first.Key == key)
                 return 0;
-            if (_second.Key == key)
+            if (_count > 1 && _second.Key == key)
                 return 1;
 
             int max = _count - 2;
