@@ -82,12 +82,12 @@ namespace Azure.Identity.Tests
         {
             var sb = new StringBuilder("{");
 
-            if (testEnvironment.TestTenantId != default)
+            if (testEnvironment.IdentityTenantId != default)
             {
-                sb.AppendFormat("\"azure.tenant\": \"{0}\"", testEnvironment.TestTenantId);
+                sb.AppendFormat("\"azure.tenant\": \"{0}\"", testEnvironment.IdentityTenantId);
             }
 
-            if (testEnvironment.TestTenantId != default && cloudName != default)
+            if (testEnvironment.IdentityTenantId != default && cloudName != default)
             {
                 sb.Append(',');
             }
@@ -117,7 +117,7 @@ namespace Azure.Identity.Tests
 
             var username = testEnvironment.Username;
             var password = testEnvironment.Password;
-            var tenantId = testEnvironment.TestTenantId;
+            var tenantId = testEnvironment.IdentityTenantId;
 
             var result = await PublicClientApplicationBuilder.Create(clientId)
                 .WithTenantId(tenantId)
@@ -138,7 +138,7 @@ namespace Azure.Identity.Tests
             var clientId = "aebc6443-996d-45c2-90f0-388ff96faa56";
             var username = testEnvironment.Username;
             var password = testEnvironment.Password;
-            var authorityUri = new Uri(new Uri(testEnvironment.AuthorityHostUrl), testEnvironment.TestTenantId).ToString();
+            var authorityUri = new Uri(new Uri(testEnvironment.AuthorityHostUrl), testEnvironment.IdentityTenantId).ToString();
 
             var client = PublicClientApplicationBuilder.Create(clientId)
                 .WithAuthority(authorityUri)

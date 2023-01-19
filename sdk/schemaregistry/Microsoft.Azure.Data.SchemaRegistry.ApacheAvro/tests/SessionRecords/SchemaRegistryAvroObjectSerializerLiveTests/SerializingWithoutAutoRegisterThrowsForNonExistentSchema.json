@@ -1,15 +1,15 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://jolovschemaregistry.servicebus.windows.net/$schemaGroups/azsdk_net_test_group/schemas/TestSchema.Employee_Unregistered:get-id?api-version=2021-10",
+      "RequestUri": "https://mreddingschemaregistry-avro.servicebus.windows.net/$schemaGroups/azsdk_net_test_group/schemas/TestSchema.Employee_Unregistered:get-id?api-version=2022-10",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
         "Content-Length": "180",
         "Content-Type": "application/json; serialization=Avro",
-        "User-Agent": "azsdk-net-Data.SchemaRegistry/1.1.0 (.NET 6.0.0-rtm.21522.10; Microsoft Windows 10.0.22000)",
-        "x-ms-client-request-id": "5e9e36d229f18dac0a927ebb0c0a5467",
+        "User-Agent": "azsdk-net-Data.SchemaRegistry/1.4.0-alpha.20230112.1 (.NET Core 3.1.32; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "a71dc488c5eb81dcf590b1854f0aefe1",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -33,7 +33,7 @@
       "StatusCode": 404,
       "ResponseHeaders": {
         "Content-Type": "application/json",
-        "Date": "Tue, 22 Mar 2022 06:03:11 GMT",
+        "Date": "Thu, 12 Jan 2023 23:50:05 GMT",
         "Server": "Microsoft-HTTPAPI/2.0",
         "Strict-Transport-Security": "max-age=31536000",
         "Transfer-Encoding": "chunked",
@@ -42,14 +42,15 @@
       "ResponseBody": {
         "error": {
           "code": "ItemNotFound",
-          "message": "Schema azsdk_net_test_group/TestSchema.Employee_Unregistered does not exist. TrackingId:37581016-c3a1-4229-8033-8b238f1729f3_G27, SystemTracker:jolovschemaregistry.servicebus.windows.net:$schemaGroups/azsdk_net_test_group/schemas/TestSchema.Employee_Unregistered:get-id, Timestamp:2022-03-22T06:03:12"
+          "message": "Schema azsdk_net_test_group/TestSchema.Employee_Unregistered does not exist. TrackingId:0ac37e59-1a77-4fea-86d2-5c1c9d44b395_G14, SystemTracker:mreddingschemaregistry-avro.servicebus.windows.net:$schemaGroups/azsdk_net_test_group/schemas/TestSchema.Employee_Unregistered:get-id, Timestamp:2023-01-12T23:50:05"
         }
       }
     }
   ],
   "Variables": {
-    "RandomSeed": "649261457",
-    "SCHEMAREGISTRY_ENDPOINT": "jolovschemaregistry.servicebus.windows.net",
+    "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com/",
+    "RandomSeed": "1832609350",
+    "SCHEMAREGISTRY_ENDPOINT_AVRO": "mreddingschemaregistry-avro.servicebus.windows.net",
     "SCHEMAREGISTRY_GROUP": "azsdk_net_test_group"
   }
 }

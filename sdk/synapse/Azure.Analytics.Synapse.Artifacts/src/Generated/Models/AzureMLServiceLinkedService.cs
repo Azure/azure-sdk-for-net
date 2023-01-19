@@ -42,7 +42,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="resourceGroupName"> Azure ML Service workspace resource group name. Type: string (or Expression with resultType string). </param>
         /// <param name="mlWorkspaceName"> Azure ML Service workspace name. Type: string (or Expression with resultType string). </param>
         /// <param name="servicePrincipalId"> The ID of the service principal used to authenticate against the endpoint of a published Azure ML Service pipeline. Type: string (or Expression with resultType string). </param>
-        /// <param name="servicePrincipalKey"> The key of the service principal used to authenticate against the endpoint of a published Azure ML Service pipeline. </param>
+        /// <param name="servicePrincipalKey">
+        /// The key of the service principal used to authenticate against the endpoint of a published Azure ML Service pipeline.
+        /// Please note <see cref="SecretBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="AzureKeyVaultSecretReference"/> and <see cref="SecureString"/>.
+        /// </param>
         /// <param name="tenant"> The name or ID of the tenant to which the service principal belongs. Type: string (or Expression with resultType string). </param>
         /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression with resultType string). </param>
         internal AzureMLServiceLinkedService(string type, IntegrationRuntimeReference connectVia, string description, IDictionary<string, ParameterSpecification> parameters, IList<object> annotations, IDictionary<string, object> additionalProperties, object subscriptionId, object resourceGroupName, object mlWorkspaceName, object servicePrincipalId, SecretBase servicePrincipalKey, object tenant, object encryptedCredential) : base(type, connectVia, description, parameters, annotations, additionalProperties)
@@ -65,7 +69,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public object MlWorkspaceName { get; set; }
         /// <summary> The ID of the service principal used to authenticate against the endpoint of a published Azure ML Service pipeline. Type: string (or Expression with resultType string). </summary>
         public object ServicePrincipalId { get; set; }
-        /// <summary> The key of the service principal used to authenticate against the endpoint of a published Azure ML Service pipeline. </summary>
+        /// <summary>
+        /// The key of the service principal used to authenticate against the endpoint of a published Azure ML Service pipeline.
+        /// Please note <see cref="SecretBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="AzureKeyVaultSecretReference"/> and <see cref="SecureString"/>.
+        /// </summary>
         public SecretBase ServicePrincipalKey { get; set; }
         /// <summary> The name or ID of the tenant to which the service principal belongs. Type: string (or Expression with resultType string). </summary>
         public object Tenant { get; set; }

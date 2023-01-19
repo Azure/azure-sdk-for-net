@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.AppContainers
 
         private readonly ClientDiagnostics _containerAppDetectorContainerAppsDiagnosticsClientDiagnostics;
         private readonly ContainerAppsDiagnosticsRestOperations _containerAppDetectorContainerAppsDiagnosticsRestClient;
-        private readonly DiagnosticData _data;
+        private readonly ContainerAppDiagnosticData _data;
 
         /// <summary> Initializes a new instance of the <see cref="ContainerAppDetectorResource"/> class for mocking. </summary>
         protected ContainerAppDetectorResource()
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.AppContainers
         /// <summary> Initializes a new instance of the <see cref = "ContainerAppDetectorResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal ContainerAppDetectorResource(ArmClient client, DiagnosticData data) : this(client, data.Id)
+        internal ContainerAppDetectorResource(ArmClient client, ContainerAppDiagnosticData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.AppContainers
 
         /// <summary> Gets the data representing this Feature. </summary>
         /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
-        public virtual DiagnosticData Data
+        public virtual ContainerAppDiagnosticData Data
         {
             get
             {
@@ -88,8 +88,16 @@ namespace Azure.ResourceManager.AppContainers
 
         /// <summary>
         /// Get a diagnostics result of a Container App.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/containerApps/{containerAppName}/detectors/{detectorName}
-        /// Operation Id: ContainerAppsDiagnostics_GetDetector
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/containerApps/{containerAppName}/detectors/{detectorName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ContainerAppsDiagnostics_GetDetector</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<ContainerAppDetectorResource>> GetAsync(CancellationToken cancellationToken = default)
@@ -112,8 +120,16 @@ namespace Azure.ResourceManager.AppContainers
 
         /// <summary>
         /// Get a diagnostics result of a Container App.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/containerApps/{containerAppName}/detectors/{detectorName}
-        /// Operation Id: ContainerAppsDiagnostics_GetDetector
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/containerApps/{containerAppName}/detectors/{detectorName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ContainerAppsDiagnostics_GetDetector</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<ContainerAppDetectorResource> Get(CancellationToken cancellationToken = default)

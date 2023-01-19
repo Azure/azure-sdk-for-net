@@ -29,8 +29,16 @@ namespace Azure.ResourceManager.NetworkFunction
 
         /// <summary>
         /// Return list of Azure Traffic Collectors in a subscription
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.NetworkFunction/azureTrafficCollectors
-        /// Operation Id: AzureTrafficCollectorsBySubscription_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.NetworkFunction/azureTrafficCollectors</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AzureTrafficCollectorsBySubscription_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -42,8 +50,16 @@ namespace Azure.ResourceManager.NetworkFunction
 
         /// <summary>
         /// Return list of Azure Traffic Collectors in a subscription
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.NetworkFunction/azureTrafficCollectors
-        /// Operation Id: AzureTrafficCollectorsBySubscription_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.NetworkFunction/azureTrafficCollectors</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AzureTrafficCollectorsBySubscription_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -72,8 +88,16 @@ namespace Azure.ResourceManager.NetworkFunction
 
         /// <summary>
         /// Gets the specified Azure Traffic Collector in a specified resource group
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkFunction/azureTrafficCollectors/{azureTrafficCollectorName}
-        /// Operation Id: AzureTrafficCollectors_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkFunction/azureTrafficCollectors/{azureTrafficCollectorName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AzureTrafficCollectors_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="azureTrafficCollectorName"> Azure Traffic Collector name. </param>
@@ -88,8 +112,16 @@ namespace Azure.ResourceManager.NetworkFunction
 
         /// <summary>
         /// Gets the specified Azure Traffic Collector in a specified resource group
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkFunction/azureTrafficCollectors/{azureTrafficCollectorName}
-        /// Operation Id: AzureTrafficCollectors_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkFunction/azureTrafficCollectors/{azureTrafficCollectorName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AzureTrafficCollectors_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="azureTrafficCollectorName"> Azure Traffic Collector name. </param>

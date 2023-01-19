@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    errorDetails = JsonSerializer.Deserialize<ResponseError>(property.Value.ToString());
+                    errorDetails = JsonSerializer.Deserialize<ResponseError>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("status"))

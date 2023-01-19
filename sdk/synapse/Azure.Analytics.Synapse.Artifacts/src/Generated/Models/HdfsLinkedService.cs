@@ -36,7 +36,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="authenticationType"> Type of authentication used to connect to the HDFS. Possible values are: Anonymous and Windows. Type: string (or Expression with resultType string). </param>
         /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression with resultType string). </param>
         /// <param name="userName"> User name for Windows authentication. Type: string (or Expression with resultType string). </param>
-        /// <param name="password"> Password for Windows authentication. </param>
+        /// <param name="password">
+        /// Password for Windows authentication.
+        /// Please note <see cref="SecretBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="AzureKeyVaultSecretReference"/> and <see cref="SecureString"/>.
+        /// </param>
         internal HdfsLinkedService(string type, IntegrationRuntimeReference connectVia, string description, IDictionary<string, ParameterSpecification> parameters, IList<object> annotations, IDictionary<string, object> additionalProperties, object url, object authenticationType, object encryptedCredential, object userName, SecretBase password) : base(type, connectVia, description, parameters, annotations, additionalProperties)
         {
             Url = url;
@@ -55,7 +59,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public object EncryptedCredential { get; set; }
         /// <summary> User name for Windows authentication. Type: string (or Expression with resultType string). </summary>
         public object UserName { get; set; }
-        /// <summary> Password for Windows authentication. </summary>
+        /// <summary>
+        /// Password for Windows authentication.
+        /// Please note <see cref="SecretBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="AzureKeyVaultSecretReference"/> and <see cref="SecureString"/>.
+        /// </summary>
         public SecretBase Password { get; set; }
     }
 }

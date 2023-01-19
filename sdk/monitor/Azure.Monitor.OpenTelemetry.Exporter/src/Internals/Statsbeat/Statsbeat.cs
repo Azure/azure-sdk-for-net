@@ -1,6 +1,8 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+#nullable disable // TODO: remove and fix errors
+
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.Metrics;
@@ -218,6 +220,19 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             {
                 AzureMonitorExporterEventSource.Log.WriteInformational("Failed to get VM metadata details", ex.ToInvariantString());
                 return null;
+            }
+        }
+
+        private static void SetStatsBeatConnectionStringAndCustomerIkey(string connectionString)
+        {
+            if (s_statsBeat_ConnectionString == null)
+            {
+                var connectionVars = ConnectionStringParser.GetValues(connectionString);
+
+                s_customer_Ikey = connectionVars.InstrumentationKey;
+
+                // TODO: adjust based on customer's endpoint EU vs Non-EU.
+                s_statsBeat_ConnectionString = StatsBeat_ConnectionString_NonEU;
             }
         }
 

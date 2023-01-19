@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -55,8 +54,16 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary>
         /// Gets a target execution.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/jobAgents/{jobAgentName}/jobs/{jobName}/executions/{jobExecutionId}/steps/{stepName}/targets/{targetId}
-        /// Operation Id: JobTargetExecutions_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/jobAgents/{jobAgentName}/jobs/{jobName}/executions/{jobExecutionId}/steps/{stepName}/targets/{targetId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>JobTargetExecutions_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="targetId"> The target id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -80,8 +87,16 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary>
         /// Gets a target execution.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/jobAgents/{jobAgentName}/jobs/{jobName}/executions/{jobExecutionId}/steps/{stepName}/targets/{targetId}
-        /// Operation Id: JobTargetExecutions_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/jobAgents/{jobAgentName}/jobs/{jobName}/executions/{jobExecutionId}/steps/{stepName}/targets/{targetId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>JobTargetExecutions_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="targetId"> The target id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -105,8 +120,16 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary>
         /// Lists the target executions of a job step execution.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/jobAgents/{jobAgentName}/jobs/{jobName}/executions/{jobExecutionId}/steps/{stepName}/targets
-        /// Operation Id: JobTargetExecutions_ListByStep
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/jobAgents/{jobAgentName}/jobs/{jobName}/executions/{jobExecutionId}/steps/{stepName}/targets</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>JobTargetExecutions_ListByStep</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="createTimeMin"> If specified, only job executions created at or after the specified time are included. </param>
         /// <param name="createTimeMax"> If specified, only job executions created before the specified time are included. </param>
@@ -119,43 +142,23 @@ namespace Azure.ResourceManager.Sql
         /// <returns> An async collection of <see cref="SqlServerJobExecutionStepTargetResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SqlServerJobExecutionStepTargetResource> GetAllAsync(DateTimeOffset? createTimeMin = null, DateTimeOffset? createTimeMax = null, DateTimeOffset? endTimeMin = null, DateTimeOffset? endTimeMax = null, bool? isActive = null, int? skip = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<SqlServerJobExecutionStepTargetResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _sqlServerJobExecutionStepTargetJobTargetExecutionsClientDiagnostics.CreateScope("SqlServerJobExecutionStepTargetCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _sqlServerJobExecutionStepTargetJobTargetExecutionsRestClient.ListByStepAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Parent.Name, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Guid.Parse(Id.Parent.Name), Id.Name, createTimeMin, createTimeMax, endTimeMin, endTimeMax, isActive, skip, top, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new SqlServerJobExecutionStepTargetResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<SqlServerJobExecutionStepTargetResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _sqlServerJobExecutionStepTargetJobTargetExecutionsClientDiagnostics.CreateScope("SqlServerJobExecutionStepTargetCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _sqlServerJobExecutionStepTargetJobTargetExecutionsRestClient.ListByStepNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Parent.Name, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Guid.Parse(Id.Parent.Name), Id.Name, createTimeMin, createTimeMax, endTimeMin, endTimeMax, isActive, skip, top, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new SqlServerJobExecutionStepTargetResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _sqlServerJobExecutionStepTargetJobTargetExecutionsRestClient.CreateListByStepRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Parent.Name, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Guid.Parse(Id.Parent.Name), Id.Name, createTimeMin, createTimeMax, endTimeMin, endTimeMax, isActive, skip, top);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _sqlServerJobExecutionStepTargetJobTargetExecutionsRestClient.CreateListByStepNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Parent.Name, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Guid.Parse(Id.Parent.Name), Id.Name, createTimeMin, createTimeMax, endTimeMin, endTimeMax, isActive, skip, top);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SqlServerJobExecutionStepTargetResource(Client, SqlServerJobExecutionData.DeserializeSqlServerJobExecutionData(e)), _sqlServerJobExecutionStepTargetJobTargetExecutionsClientDiagnostics, Pipeline, "SqlServerJobExecutionStepTargetCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Lists the target executions of a job step execution.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/jobAgents/{jobAgentName}/jobs/{jobName}/executions/{jobExecutionId}/steps/{stepName}/targets
-        /// Operation Id: JobTargetExecutions_ListByStep
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/jobAgents/{jobAgentName}/jobs/{jobName}/executions/{jobExecutionId}/steps/{stepName}/targets</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>JobTargetExecutions_ListByStep</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="createTimeMin"> If specified, only job executions created at or after the specified time are included. </param>
         /// <param name="createTimeMax"> If specified, only job executions created before the specified time are included. </param>
@@ -168,43 +171,23 @@ namespace Azure.ResourceManager.Sql
         /// <returns> A collection of <see cref="SqlServerJobExecutionStepTargetResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SqlServerJobExecutionStepTargetResource> GetAll(DateTimeOffset? createTimeMin = null, DateTimeOffset? createTimeMax = null, DateTimeOffset? endTimeMin = null, DateTimeOffset? endTimeMax = null, bool? isActive = null, int? skip = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            Page<SqlServerJobExecutionStepTargetResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _sqlServerJobExecutionStepTargetJobTargetExecutionsClientDiagnostics.CreateScope("SqlServerJobExecutionStepTargetCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _sqlServerJobExecutionStepTargetJobTargetExecutionsRestClient.ListByStep(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Parent.Name, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Guid.Parse(Id.Parent.Name), Id.Name, createTimeMin, createTimeMax, endTimeMin, endTimeMax, isActive, skip, top, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new SqlServerJobExecutionStepTargetResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<SqlServerJobExecutionStepTargetResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _sqlServerJobExecutionStepTargetJobTargetExecutionsClientDiagnostics.CreateScope("SqlServerJobExecutionStepTargetCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _sqlServerJobExecutionStepTargetJobTargetExecutionsRestClient.ListByStepNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Parent.Name, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Guid.Parse(Id.Parent.Name), Id.Name, createTimeMin, createTimeMax, endTimeMin, endTimeMax, isActive, skip, top, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new SqlServerJobExecutionStepTargetResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _sqlServerJobExecutionStepTargetJobTargetExecutionsRestClient.CreateListByStepRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Parent.Name, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Guid.Parse(Id.Parent.Name), Id.Name, createTimeMin, createTimeMax, endTimeMin, endTimeMax, isActive, skip, top);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _sqlServerJobExecutionStepTargetJobTargetExecutionsRestClient.CreateListByStepNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Parent.Name, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Guid.Parse(Id.Parent.Name), Id.Name, createTimeMin, createTimeMax, endTimeMin, endTimeMax, isActive, skip, top);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SqlServerJobExecutionStepTargetResource(Client, SqlServerJobExecutionData.DeserializeSqlServerJobExecutionData(e)), _sqlServerJobExecutionStepTargetJobTargetExecutionsClientDiagnostics, Pipeline, "SqlServerJobExecutionStepTargetCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/jobAgents/{jobAgentName}/jobs/{jobName}/executions/{jobExecutionId}/steps/{stepName}/targets/{targetId}
-        /// Operation Id: JobTargetExecutions_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/jobAgents/{jobAgentName}/jobs/{jobName}/executions/{jobExecutionId}/steps/{stepName}/targets/{targetId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>JobTargetExecutions_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="targetId"> The target id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -226,8 +209,16 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/jobAgents/{jobAgentName}/jobs/{jobName}/executions/{jobExecutionId}/steps/{stepName}/targets/{targetId}
-        /// Operation Id: JobTargetExecutions_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/jobAgents/{jobAgentName}/jobs/{jobName}/executions/{jobExecutionId}/steps/{stepName}/targets/{targetId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>JobTargetExecutions_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="targetId"> The target id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

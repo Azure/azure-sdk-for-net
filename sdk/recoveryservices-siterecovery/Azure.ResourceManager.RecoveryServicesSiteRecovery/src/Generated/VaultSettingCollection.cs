@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -62,8 +61,16 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
 
         /// <summary>
         /// The operation to configure vault setting.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationVaultSettings/{vaultSettingName}
-        /// Operation Id: ReplicationVaultSetting_Create
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationVaultSettings/{vaultSettingName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ReplicationVaultSetting_Create</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="vaultSettingName"> Vault setting name. </param>
@@ -95,8 +102,16 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
 
         /// <summary>
         /// The operation to configure vault setting.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationVaultSettings/{vaultSettingName}
-        /// Operation Id: ReplicationVaultSetting_Create
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationVaultSettings/{vaultSettingName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ReplicationVaultSetting_Create</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="vaultSettingName"> Vault setting name. </param>
@@ -128,8 +143,16 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
 
         /// <summary>
         /// Gets the vault setting. This includes the Migration Hub connection settings.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationVaultSettings/{vaultSettingName}
-        /// Operation Id: ReplicationVaultSetting_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationVaultSettings/{vaultSettingName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ReplicationVaultSetting_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="vaultSettingName"> Vault setting name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -157,8 +180,16 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
 
         /// <summary>
         /// Gets the vault setting. This includes the Migration Hub connection settings.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationVaultSettings/{vaultSettingName}
-        /// Operation Id: ReplicationVaultSetting_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationVaultSettings/{vaultSettingName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ReplicationVaultSetting_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="vaultSettingName"> Vault setting name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -186,92 +217,60 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
 
         /// <summary>
         /// Gets the list of vault setting. This includes the Migration Hub connection settings.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationVaultSettings
-        /// Operation Id: ReplicationVaultSetting_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationVaultSettings</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ReplicationVaultSetting_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="VaultSettingResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<VaultSettingResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<VaultSettingResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _vaultSettingReplicationVaultSettingClientDiagnostics.CreateScope("VaultSettingCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _vaultSettingReplicationVaultSettingRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, _resourceName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new VaultSettingResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<VaultSettingResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _vaultSettingReplicationVaultSettingClientDiagnostics.CreateScope("VaultSettingCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _vaultSettingReplicationVaultSettingRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, _resourceName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new VaultSettingResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _vaultSettingReplicationVaultSettingRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, _resourceName);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _vaultSettingReplicationVaultSettingRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, _resourceName);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new VaultSettingResource(Client, VaultSettingData.DeserializeVaultSettingData(e)), _vaultSettingReplicationVaultSettingClientDiagnostics, Pipeline, "VaultSettingCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Gets the list of vault setting. This includes the Migration Hub connection settings.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationVaultSettings
-        /// Operation Id: ReplicationVaultSetting_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationVaultSettings</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ReplicationVaultSetting_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="VaultSettingResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<VaultSettingResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<VaultSettingResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _vaultSettingReplicationVaultSettingClientDiagnostics.CreateScope("VaultSettingCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _vaultSettingReplicationVaultSettingRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, _resourceName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new VaultSettingResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<VaultSettingResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _vaultSettingReplicationVaultSettingClientDiagnostics.CreateScope("VaultSettingCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _vaultSettingReplicationVaultSettingRestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, _resourceName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new VaultSettingResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _vaultSettingReplicationVaultSettingRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, _resourceName);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _vaultSettingReplicationVaultSettingRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, _resourceName);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new VaultSettingResource(Client, VaultSettingData.DeserializeVaultSettingData(e)), _vaultSettingReplicationVaultSettingClientDiagnostics, Pipeline, "VaultSettingCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationVaultSettings/{vaultSettingName}
-        /// Operation Id: ReplicationVaultSetting_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationVaultSettings/{vaultSettingName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ReplicationVaultSetting_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="vaultSettingName"> Vault setting name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -297,8 +296,16 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationVaultSettings/{vaultSettingName}
-        /// Operation Id: ReplicationVaultSetting_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationVaultSettings/{vaultSettingName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ReplicationVaultSetting_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="vaultSettingName"> Vault setting name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

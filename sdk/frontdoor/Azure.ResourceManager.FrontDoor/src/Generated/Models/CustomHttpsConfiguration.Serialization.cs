@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            vault = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.ToString());
+                            vault = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("secretName"))

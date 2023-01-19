@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -55,8 +54,16 @@ namespace Azure.ResourceManager.HybridData
 
         /// <summary>
         /// Gets the data service that matches the data service name given.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridData/dataManagers/{dataManagerName}/dataServices/{dataServiceName}
-        /// Operation Id: DataServices_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridData/dataManagers/{dataManagerName}/dataServices/{dataServiceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DataServices_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="dataServiceName"> The name of the data service that is being queried. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -84,8 +91,16 @@ namespace Azure.ResourceManager.HybridData
 
         /// <summary>
         /// Gets the data service that matches the data service name given.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridData/dataManagers/{dataManagerName}/dataServices/{dataServiceName}
-        /// Operation Id: DataServices_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridData/dataManagers/{dataManagerName}/dataServices/{dataServiceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DataServices_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="dataServiceName"> The name of the data service that is being queried. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -113,92 +128,60 @@ namespace Azure.ResourceManager.HybridData
 
         /// <summary>
         /// This method gets all the data services.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridData/dataManagers/{dataManagerName}/dataServices
-        /// Operation Id: DataServices_ListByDataManager
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridData/dataManagers/{dataManagerName}/dataServices</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DataServices_ListByDataManager</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="HybridDataServiceResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<HybridDataServiceResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<HybridDataServiceResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _hybridDataServiceDataServicesClientDiagnostics.CreateScope("HybridDataServiceCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _hybridDataServiceDataServicesRestClient.ListByDataManagerAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new HybridDataServiceResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<HybridDataServiceResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _hybridDataServiceDataServicesClientDiagnostics.CreateScope("HybridDataServiceCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _hybridDataServiceDataServicesRestClient.ListByDataManagerNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new HybridDataServiceResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _hybridDataServiceDataServicesRestClient.CreateListByDataManagerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _hybridDataServiceDataServicesRestClient.CreateListByDataManagerNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new HybridDataServiceResource(Client, HybridDataServiceData.DeserializeHybridDataServiceData(e)), _hybridDataServiceDataServicesClientDiagnostics, Pipeline, "HybridDataServiceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// This method gets all the data services.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridData/dataManagers/{dataManagerName}/dataServices
-        /// Operation Id: DataServices_ListByDataManager
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridData/dataManagers/{dataManagerName}/dataServices</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DataServices_ListByDataManager</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="HybridDataServiceResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<HybridDataServiceResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<HybridDataServiceResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _hybridDataServiceDataServicesClientDiagnostics.CreateScope("HybridDataServiceCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _hybridDataServiceDataServicesRestClient.ListByDataManager(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new HybridDataServiceResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<HybridDataServiceResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _hybridDataServiceDataServicesClientDiagnostics.CreateScope("HybridDataServiceCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _hybridDataServiceDataServicesRestClient.ListByDataManagerNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new HybridDataServiceResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _hybridDataServiceDataServicesRestClient.CreateListByDataManagerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _hybridDataServiceDataServicesRestClient.CreateListByDataManagerNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new HybridDataServiceResource(Client, HybridDataServiceData.DeserializeHybridDataServiceData(e)), _hybridDataServiceDataServicesClientDiagnostics, Pipeline, "HybridDataServiceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridData/dataManagers/{dataManagerName}/dataServices/{dataServiceName}
-        /// Operation Id: DataServices_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridData/dataManagers/{dataManagerName}/dataServices/{dataServiceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DataServices_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="dataServiceName"> The name of the data service that is being queried. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -224,8 +207,16 @@ namespace Azure.ResourceManager.HybridData
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridData/dataManagers/{dataManagerName}/dataServices/{dataServiceName}
-        /// Operation Id: DataServices_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridData/dataManagers/{dataManagerName}/dataServices/{dataServiceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DataServices_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="dataServiceName"> The name of the data service that is being queried. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

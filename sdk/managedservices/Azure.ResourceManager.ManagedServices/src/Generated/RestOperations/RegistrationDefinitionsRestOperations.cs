@@ -33,11 +33,11 @@ namespace Azure.ResourceManager.ManagedServices
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2022-01-01-preview";
+            _apiVersion = apiVersion ?? "2022-10-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
-        internal HttpMessage CreateGetRequest(string scope, string registrationDefinitionId)
+        internal HttpMessage CreateGetRequest(string scope, string registrationId)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.ManagedServices
             uri.AppendPath("/", false);
             uri.AppendPath(scope, false);
             uri.AppendPath("/providers/Microsoft.ManagedServices/registrationDefinitions/", false);
-            uri.AppendPath(registrationDefinitionId, true);
+            uri.AppendPath(registrationId, true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -57,28 +57,28 @@ namespace Azure.ResourceManager.ManagedServices
 
         /// <summary> Gets the registration definition details. </summary>
         /// <param name="scope"> The scope of the resource. </param>
-        /// <param name="registrationDefinitionId"> The GUID of the registration definition. </param>
+        /// <param name="registrationId"> The GUID of the registration definition. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="registrationDefinitionId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="registrationDefinitionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<RegistrationDefinitionData>> GetAsync(string scope, string registrationDefinitionId, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="registrationId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="registrationId"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<ManagedServicesRegistrationData>> GetAsync(string scope, string registrationId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(scope, nameof(scope));
-            Argument.AssertNotNullOrEmpty(registrationDefinitionId, nameof(registrationDefinitionId));
+            Argument.AssertNotNullOrEmpty(registrationId, nameof(registrationId));
 
-            using var message = CreateGetRequest(scope, registrationDefinitionId);
+            using var message = CreateGetRequest(scope, registrationId);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        RegistrationDefinitionData value = default;
+                        ManagedServicesRegistrationData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = RegistrationDefinitionData.DeserializeRegistrationDefinitionData(document.RootElement);
+                        value = ManagedServicesRegistrationData.DeserializeManagedServicesRegistrationData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((RegistrationDefinitionData)null, message.Response);
+                    return Response.FromValue((ManagedServicesRegistrationData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -86,34 +86,34 @@ namespace Azure.ResourceManager.ManagedServices
 
         /// <summary> Gets the registration definition details. </summary>
         /// <param name="scope"> The scope of the resource. </param>
-        /// <param name="registrationDefinitionId"> The GUID of the registration definition. </param>
+        /// <param name="registrationId"> The GUID of the registration definition. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="registrationDefinitionId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="registrationDefinitionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<RegistrationDefinitionData> Get(string scope, string registrationDefinitionId, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="registrationId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="registrationId"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<ManagedServicesRegistrationData> Get(string scope, string registrationId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(scope, nameof(scope));
-            Argument.AssertNotNullOrEmpty(registrationDefinitionId, nameof(registrationDefinitionId));
+            Argument.AssertNotNullOrEmpty(registrationId, nameof(registrationId));
 
-            using var message = CreateGetRequest(scope, registrationDefinitionId);
+            using var message = CreateGetRequest(scope, registrationId);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        RegistrationDefinitionData value = default;
+                        ManagedServicesRegistrationData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = RegistrationDefinitionData.DeserializeRegistrationDefinitionData(document.RootElement);
+                        value = ManagedServicesRegistrationData.DeserializeManagedServicesRegistrationData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((RegistrationDefinitionData)null, message.Response);
+                    return Response.FromValue((ManagedServicesRegistrationData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateDeleteRequest(string scope, string registrationDefinitionId)
+        internal HttpMessage CreateDeleteRequest(string scope, string registrationId)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.ManagedServices
             uri.AppendPath("/", false);
             uri.AppendPath(scope, false);
             uri.AppendPath("/providers/Microsoft.ManagedServices/registrationDefinitions/", false);
-            uri.AppendPath(registrationDefinitionId, true);
+            uri.AppendPath(registrationId, true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -133,16 +133,16 @@ namespace Azure.ResourceManager.ManagedServices
 
         /// <summary> Deletes the registration definition. </summary>
         /// <param name="scope"> The scope of the resource. </param>
-        /// <param name="registrationDefinitionId"> The GUID of the registration definition. </param>
+        /// <param name="registrationId"> The GUID of the registration definition. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="registrationDefinitionId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="registrationDefinitionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> DeleteAsync(string scope, string registrationDefinitionId, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="registrationId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="registrationId"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response> DeleteAsync(string scope, string registrationId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(scope, nameof(scope));
-            Argument.AssertNotNullOrEmpty(registrationDefinitionId, nameof(registrationDefinitionId));
+            Argument.AssertNotNullOrEmpty(registrationId, nameof(registrationId));
 
-            using var message = CreateDeleteRequest(scope, registrationDefinitionId);
+            using var message = CreateDeleteRequest(scope, registrationId);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -156,16 +156,16 @@ namespace Azure.ResourceManager.ManagedServices
 
         /// <summary> Deletes the registration definition. </summary>
         /// <param name="scope"> The scope of the resource. </param>
-        /// <param name="registrationDefinitionId"> The GUID of the registration definition. </param>
+        /// <param name="registrationId"> The GUID of the registration definition. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="registrationDefinitionId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="registrationDefinitionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response Delete(string scope, string registrationDefinitionId, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="registrationId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="registrationId"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response Delete(string scope, string registrationId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(scope, nameof(scope));
-            Argument.AssertNotNullOrEmpty(registrationDefinitionId, nameof(registrationDefinitionId));
+            Argument.AssertNotNullOrEmpty(registrationId, nameof(registrationId));
 
-            using var message = CreateDeleteRequest(scope, registrationDefinitionId);
+            using var message = CreateDeleteRequest(scope, registrationId);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.ManagedServices
             }
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string scope, string registrationDefinitionId, RegistrationDefinitionData data)
+        internal HttpMessage CreateCreateOrUpdateRequest(string scope, string registrationId, ManagedServicesRegistrationData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.ManagedServices
             uri.AppendPath("/", false);
             uri.AppendPath(scope, false);
             uri.AppendPath("/providers/Microsoft.ManagedServices/registrationDefinitions/", false);
-            uri.AppendPath(registrationDefinitionId, true);
+            uri.AppendPath(registrationId, true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -201,18 +201,18 @@ namespace Azure.ResourceManager.ManagedServices
 
         /// <summary> Creates or updates a registration definition. </summary>
         /// <param name="scope"> The scope of the resource. </param>
-        /// <param name="registrationDefinitionId"> The GUID of the registration definition. </param>
+        /// <param name="registrationId"> The GUID of the registration definition. </param>
         /// <param name="data"> The parameters required to create a new registration definition. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="scope"/>, <paramref name="registrationDefinitionId"/> or <paramref name="data"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="registrationDefinitionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> CreateOrUpdateAsync(string scope, string registrationDefinitionId, RegistrationDefinitionData data, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/>, <paramref name="registrationId"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="registrationId"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response> CreateOrUpdateAsync(string scope, string registrationId, ManagedServicesRegistrationData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(scope, nameof(scope));
-            Argument.AssertNotNullOrEmpty(registrationDefinitionId, nameof(registrationDefinitionId));
+            Argument.AssertNotNullOrEmpty(registrationId, nameof(registrationId));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var message = CreateCreateOrUpdateRequest(scope, registrationDefinitionId, data);
+            using var message = CreateCreateOrUpdateRequest(scope, registrationId, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -226,18 +226,18 @@ namespace Azure.ResourceManager.ManagedServices
 
         /// <summary> Creates or updates a registration definition. </summary>
         /// <param name="scope"> The scope of the resource. </param>
-        /// <param name="registrationDefinitionId"> The GUID of the registration definition. </param>
+        /// <param name="registrationId"> The GUID of the registration definition. </param>
         /// <param name="data"> The parameters required to create a new registration definition. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="scope"/>, <paramref name="registrationDefinitionId"/> or <paramref name="data"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="registrationDefinitionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response CreateOrUpdate(string scope, string registrationDefinitionId, RegistrationDefinitionData data, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/>, <paramref name="registrationId"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="registrationId"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response CreateOrUpdate(string scope, string registrationId, ManagedServicesRegistrationData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(scope, nameof(scope));
-            Argument.AssertNotNullOrEmpty(registrationDefinitionId, nameof(registrationDefinitionId));
+            Argument.AssertNotNullOrEmpty(registrationId, nameof(registrationId));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var message = CreateCreateOrUpdateRequest(scope, registrationDefinitionId, data);
+            using var message = CreateCreateOrUpdateRequest(scope, registrationId, data);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -275,7 +275,7 @@ namespace Azure.ResourceManager.ManagedServices
         /// <param name="filter"> The filter query parameter to filter managed services resources by. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
-        public async Task<Response<RegistrationDefinitionList>> ListAsync(string scope, string filter = null, CancellationToken cancellationToken = default)
+        public async Task<Response<ManagedServicesRegistrationListResult>> ListAsync(string scope, string filter = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(scope, nameof(scope));
 
@@ -285,9 +285,9 @@ namespace Azure.ResourceManager.ManagedServices
             {
                 case 200:
                     {
-                        RegistrationDefinitionList value = default;
+                        ManagedServicesRegistrationListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = RegistrationDefinitionList.DeserializeRegistrationDefinitionList(document.RootElement);
+                        value = ManagedServicesRegistrationListResult.DeserializeManagedServicesRegistrationListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -300,7 +300,7 @@ namespace Azure.ResourceManager.ManagedServices
         /// <param name="filter"> The filter query parameter to filter managed services resources by. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
-        public Response<RegistrationDefinitionList> List(string scope, string filter = null, CancellationToken cancellationToken = default)
+        public Response<ManagedServicesRegistrationListResult> List(string scope, string filter = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(scope, nameof(scope));
 
@@ -310,9 +310,9 @@ namespace Azure.ResourceManager.ManagedServices
             {
                 case 200:
                     {
-                        RegistrationDefinitionList value = default;
+                        ManagedServicesRegistrationListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = RegistrationDefinitionList.DeserializeRegistrationDefinitionList(document.RootElement);
+                        value = ManagedServicesRegistrationListResult.DeserializeManagedServicesRegistrationListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -340,7 +340,7 @@ namespace Azure.ResourceManager.ManagedServices
         /// <param name="filter"> The filter query parameter to filter managed services resources by. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="scope"/> is null. </exception>
-        public async Task<Response<RegistrationDefinitionList>> ListNextPageAsync(string nextLink, string scope, string filter = null, CancellationToken cancellationToken = default)
+        public async Task<Response<ManagedServicesRegistrationListResult>> ListNextPageAsync(string nextLink, string scope, string filter = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNull(scope, nameof(scope));
@@ -351,9 +351,9 @@ namespace Azure.ResourceManager.ManagedServices
             {
                 case 200:
                     {
-                        RegistrationDefinitionList value = default;
+                        ManagedServicesRegistrationListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = RegistrationDefinitionList.DeserializeRegistrationDefinitionList(document.RootElement);
+                        value = ManagedServicesRegistrationListResult.DeserializeManagedServicesRegistrationListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -367,7 +367,7 @@ namespace Azure.ResourceManager.ManagedServices
         /// <param name="filter"> The filter query parameter to filter managed services resources by. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="scope"/> is null. </exception>
-        public Response<RegistrationDefinitionList> ListNextPage(string nextLink, string scope, string filter = null, CancellationToken cancellationToken = default)
+        public Response<ManagedServicesRegistrationListResult> ListNextPage(string nextLink, string scope, string filter = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNull(scope, nameof(scope));
@@ -378,9 +378,9 @@ namespace Azure.ResourceManager.ManagedServices
             {
                 case 200:
                     {
-                        RegistrationDefinitionList value = default;
+                        ManagedServicesRegistrationListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = RegistrationDefinitionList.DeserializeRegistrationDefinitionList(document.RootElement);
+                        value = ManagedServicesRegistrationListResult.DeserializeManagedServicesRegistrationListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

@@ -135,6 +135,11 @@ namespace Azure.ResourceManager.Compute
                 writer.WritePropertyName("spotRestorePolicy");
                 writer.WriteObjectValue(SpotRestorePolicy);
             }
+            if (Optional.IsDefined(PriorityMixPolicy))
+            {
+                writer.WritePropertyName("priorityMixPolicy");
+                writer.WriteObjectValue(PriorityMixPolicy);
+            }
             writer.WriteEndObject();
             writer.WriteEndObject();
         }
@@ -168,6 +173,7 @@ namespace Azure.ResourceManager.Compute
             Optional<ScaleInPolicy> scaleInPolicy = default;
             Optional<OrchestrationMode> orchestrationMode = default;
             Optional<SpotRestorePolicy> spotRestorePolicy = default;
+            Optional<VirtualMachineScaleSetPriorityMixPolicy> priorityMixPolicy = default;
             Optional<DateTimeOffset> timeCreated = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -198,7 +204,7 @@ namespace Azure.ResourceManager.Compute
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.ToString());
+                    identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("zones"))
@@ -223,7 +229,7 @@ namespace Azure.ResourceManager.Compute
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    extendedLocation = JsonSerializer.Deserialize<ExtendedLocation>(property.Value.ToString());
+                    extendedLocation = JsonSerializer.Deserialize<ExtendedLocation>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("tags"))
@@ -268,7 +274,7 @@ namespace Azure.ResourceManager.Compute
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("properties"))
@@ -377,7 +383,7 @@ namespace Azure.ResourceManager.Compute
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            proximityPlacementGroup = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.ToString());
+                            proximityPlacementGroup = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("hostGroup"))
@@ -387,7 +393,7 @@ namespace Azure.ResourceManager.Compute
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            hostGroup = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.ToString());
+                            hostGroup = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("additionalCapabilities"))
@@ -430,6 +436,16 @@ namespace Azure.ResourceManager.Compute
                             spotRestorePolicy = SpotRestorePolicy.DeserializeSpotRestorePolicy(property0.Value);
                             continue;
                         }
+                        if (property0.NameEquals("priorityMixPolicy"))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            priorityMixPolicy = VirtualMachineScaleSetPriorityMixPolicy.DeserializeVirtualMachineScaleSetPriorityMixPolicy(property0.Value);
+                            continue;
+                        }
                         if (property0.NameEquals("timeCreated"))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -444,7 +460,7 @@ namespace Azure.ResourceManager.Compute
                     continue;
                 }
             }
-            return new VirtualMachineScaleSetData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, sku.Value, plan.Value, identity, Optional.ToList(zones), extendedLocation, upgradePolicy.Value, automaticRepairsPolicy.Value, virtualMachineProfile.Value, provisioningState.Value, Optional.ToNullable(overprovision), Optional.ToNullable(doNotRunExtensionsOnOverprovisionedVms), uniqueId.Value, Optional.ToNullable(singlePlacementGroup), Optional.ToNullable(zoneBalance), Optional.ToNullable(platformFaultDomainCount), proximityPlacementGroup, hostGroup, additionalCapabilities.Value, scaleInPolicy.Value, Optional.ToNullable(orchestrationMode), spotRestorePolicy.Value, Optional.ToNullable(timeCreated));
+            return new VirtualMachineScaleSetData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, sku.Value, plan.Value, identity, Optional.ToList(zones), extendedLocation, upgradePolicy.Value, automaticRepairsPolicy.Value, virtualMachineProfile.Value, provisioningState.Value, Optional.ToNullable(overprovision), Optional.ToNullable(doNotRunExtensionsOnOverprovisionedVms), uniqueId.Value, Optional.ToNullable(singlePlacementGroup), Optional.ToNullable(zoneBalance), Optional.ToNullable(platformFaultDomainCount), proximityPlacementGroup, hostGroup, additionalCapabilities.Value, scaleInPolicy.Value, Optional.ToNullable(orchestrationMode), spotRestorePolicy.Value, priorityMixPolicy.Value, Optional.ToNullable(timeCreated));
         }
     }
 }

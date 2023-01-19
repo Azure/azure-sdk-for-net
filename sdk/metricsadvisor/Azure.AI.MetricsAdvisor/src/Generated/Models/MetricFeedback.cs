@@ -11,8 +11,12 @@ using Azure.Core;
 
 namespace Azure.AI.MetricsAdvisor
 {
-    /// <summary> The MetricFeedback. </summary>
-    public partial class MetricFeedback
+    /// <summary>
+    /// The MetricFeedback.
+    /// Please note <see cref="MetricFeedback"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+    /// The available derived classes include <see cref="MetricAnomalyFeedback"/>, <see cref="MetricChangePointFeedback"/>, <see cref="MetricCommentFeedback"/> and <see cref="MetricPeriodFeedback"/>.
+    /// </summary>
+    public abstract partial class MetricFeedback
     {
     }
 }

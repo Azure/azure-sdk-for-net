@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Communication.CallAutomation.Models;
 using Azure.Core.Pipeline;
 
 namespace Azure.Communication.CallAutomation
@@ -16,17 +17,17 @@ namespace Azure.Communication.CallAutomation
     public class CallMedia
     {
         private readonly ClientDiagnostics _clientDiagnostics;
-        internal ContentRestClient ContentRestClient { get; }
+        internal CallMediaRestClient CallMediaRestClient { get; }
 
         /// <summary>
         /// The call connection id.
         /// </summary>
         public virtual string CallConnectionId { get; internal set; }
 
-        internal CallMedia(string callConnectionId, ContentRestClient callContentRestClient, ClientDiagnostics clientDiagnostics)
+        internal CallMedia(string callConnectionId, CallMediaRestClient callCallMediaRestClient, ClientDiagnostics clientDiagnostics)
         {
             CallConnectionId = callConnectionId;
-            ContentRestClient = callContentRestClient;
+            CallMediaRestClient = callCallMediaRestClient;
             _clientDiagnostics = clientDiagnostics;
         }
 
@@ -34,7 +35,7 @@ namespace Azure.Communication.CallAutomation
         protected CallMedia()
         {
             _clientDiagnostics = null;
-            ContentRestClient = null;
+            CallMediaRestClient = null;
             CallConnectionId = null;
         }
 
@@ -54,7 +55,7 @@ namespace Azure.Communication.CallAutomation
             {
                 PlayRequestInternal request = CreatePlayRequest(playSource, playTo, playOptions);
 
-                return await ContentRestClient.PlayAsync(CallConnectionId, request, cancellationToken).ConfigureAwait(false);
+                return await CallMediaRestClient.PlayAsync(CallConnectionId, request, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception ex)
             {
@@ -79,7 +80,7 @@ namespace Azure.Communication.CallAutomation
             {
                 PlayRequestInternal request = CreatePlayRequest(playSource, playTo, playOptions);
 
-                return ContentRestClient.Play(CallConnectionId, request, cancellationToken);
+                return CallMediaRestClient.Play(CallConnectionId, request, cancellationToken);
             }
             catch (Exception ex)
             {
@@ -90,13 +91,10 @@ namespace Azure.Communication.CallAutomation
 
         private static PlayRequestInternal CreatePlayRequest(PlaySource playSource, IEnumerable<CommunicationIdentifier> playTo, PlayOptions options)
         {
-            if (playSource is FileSource fileSource)
-            {
-                PlaySourceInternal sourceInternal;
-                sourceInternal = new PlaySourceInternal(PlaySourceTypeInternal.File);
-                sourceInternal.FileSource = new FileSourceInternal(fileSource.FileUri.AbsoluteUri);
-                sourceInternal.PlaySourceId = playSource.PlaySourceId;
+            PlaySourceInternal sourceInternal = TranslatePlaySourceToInternal(playSource);
 
+            if (sourceInternal != null)
+            {
                 PlayRequestInternal request = new PlayRequestInternal(sourceInternal);
                 request.PlayTo = playTo.Select(t => CommunicationIdentifierSerializer.Serialize(t)).ToList();
 
@@ -105,7 +103,6 @@ namespace Azure.Communication.CallAutomation
                     request.PlayOptions = new PlayOptionsInternal(options.Loop);
                     request.OperationContext = options.OperationContext;
                 }
-
                 return request;
             }
 
@@ -167,7 +164,7 @@ namespace Azure.Communication.CallAutomation
             scope.Start();
             try
             {
-                return await ContentRestClient.CancelAllMediaOperationsAsync(CallConnectionId, cancellationToken).ConfigureAwait(false);
+                return await CallMediaRestClient.CancelAllMediaOperationsAsync(CallConnectionId, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception ex)
             {
@@ -187,7 +184,7 @@ namespace Azure.Communication.CallAutomation
             scope.Start();
             try
             {
-                return ContentRestClient.CancelAllMediaOperations(CallConnectionId, cancellationToken);
+                return CallMediaRestClient.CancelAllMediaOperations(CallConnectionId, cancellationToken);
             }
             catch (Exception ex)
             {
@@ -209,7 +206,7 @@ namespace Azure.Communication.CallAutomation
             try
             {
                 RecognizeRequestInternal request = CreateRecognizeRequest(recognizeOptions);
-                return await ContentRestClient.RecognizeAsync(CallConnectionId, request, cancellationToken).ConfigureAwait(false);
+                return await CallMediaRestClient.RecognizeAsync(CallConnectionId, request, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception ex)
             {
@@ -231,7 +228,7 @@ namespace Azure.Communication.CallAutomation
             try
             {
                 RecognizeRequestInternal request = CreateRecognizeRequest(recognizeOptions);
-                return ContentRestClient.Recognize(CallConnectionId, request, cancellationToken);
+                return CallMediaRestClient.Recognize(CallConnectionId, request, cancellationToken);
             }
             catch (Exception ex)
             {
@@ -263,19 +260,25 @@ namespace Azure.Communication.CallAutomation
 
                 RecognizeRequestInternal request = new RecognizeRequestInternal(recognizeDtmfOptions.InputType, recognizeConfigurationsInternal);
 
-                if (recognizeDtmfOptions.Prompt != null && recognizeDtmfOptions.Prompt is FileSource fileSource)
-                {
-                    PlaySourceInternal sourceInternal;
-                    sourceInternal = new PlaySourceInternal(PlaySourceTypeInternal.File);
-                    sourceInternal.FileSource = new FileSourceInternal(fileSource.FileUri.AbsoluteUri);
-                    sourceInternal.PlaySourceId = recognizeOptions.Prompt.PlaySourceId;
+                request.PlayPrompt = TranslatePlaySourceToInternal(recognizeDtmfOptions.Prompt);
+                request.InterruptCallMediaOperation = recognizeOptions.InterruptCallMediaOperation;
+                request.OperationContext = recognizeOptions.OperationContext;
 
-                    request.PlayPrompt = sourceInternal;
-                }
-                else if (recognizeOptions.Prompt != null)
+                return request;
+            }
+            else if (recognizeOptions is CallMediaRecognizeChoiceOptions recognizeChoiceOptions)
+            {
+                RecognizeOptionsInternal recognizeConfigurationsInternal = new RecognizeOptionsInternal(CommunicationIdentifierSerializer.Serialize(recognizeChoiceOptions.TargetParticipant))
                 {
-                    throw new NotSupportedException(recognizeOptions.Prompt.GetType().Name);
-                }
+                    InterruptPrompt = recognizeChoiceOptions.InterruptPrompt,
+                };
+
+                recognizeChoiceOptions.RecognizeChoices
+                    .ToList().ForEach(t => recognizeConfigurationsInternal.Choices.Add(t));
+
+                RecognizeRequestInternal request = new RecognizeRequestInternal(recognizeChoiceOptions.InputType, recognizeConfigurationsInternal);
+
+                request.PlayPrompt = TranslatePlaySourceToInternal(recognizeChoiceOptions.Prompt);
                 request.InterruptCallMediaOperation = recognizeOptions.InterruptCallMediaOperation;
                 request.OperationContext = recognizeOptions.OperationContext;
 
@@ -285,6 +288,31 @@ namespace Azure.Communication.CallAutomation
             {
                 throw new NotSupportedException(recognizeOptions.GetType().Name);
             }
+        }
+
+        private static PlaySourceInternal TranslatePlaySourceToInternal(PlaySource playSource)
+        {
+            PlaySourceInternal sourceInternal;
+
+            if (playSource != null && playSource is FileSource fileSource)
+            {
+                sourceInternal = new PlaySourceInternal(PlaySourceTypeInternal.File);
+                sourceInternal.FileSource = new FileSourceInternal(fileSource.FileUri.AbsoluteUri);
+                sourceInternal.PlaySourceId = fileSource.PlaySourceId;
+                return sourceInternal;
+            }
+            else if (playSource != null && playSource is TextSource textSource)
+            {
+                sourceInternal = new PlaySourceInternal(PlaySourceTypeInternal.Text);
+                sourceInternal.TextSource = new TextSourceInternal(textSource.Text);
+                sourceInternal.TextSource.SourceLocale = textSource.SourceLocale ?? null;
+                sourceInternal.TextSource.VoiceGender = textSource.VoiceGender ?? GenderType.Male;
+                sourceInternal.TextSource.VoiceName = textSource.VoiceName ?? null;
+                sourceInternal.PlaySourceId = textSource.PlaySourceId;
+                return sourceInternal;
+            }
+            else
+            { return null; }
         }
     }
 }

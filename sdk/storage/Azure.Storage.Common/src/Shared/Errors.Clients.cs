@@ -102,12 +102,8 @@ namespace Azure.Storage
         public static ArgumentException VersionNotSupported(string paramName)
             => new ArgumentException($"The version specified by {paramName} is not supported by this library.");
 
-        public static RequestFailedException ClientRequestIdMismatch(ClientDiagnostics clientDiagnostics, Response response, string echo, string original)
-            => clientDiagnostics.CreateRequestFailedException(
-                response,
-                new ResponseError(
-                    response.GetErrorCode(null),
-                    $"Response x-ms-client-request-id '{echo}' does not match the original expected request id, '{original}'."));
+        public static RequestFailedException ClientRequestIdMismatch(Response response, string echo, string original)
+            => new RequestFailedException(response.Status, $"Response x-ms-client-request-id '{echo}' does not match the original expected request id, '{original}'.", null);
 
         public static ArgumentException TransactionalHashingNotSupportedWithClientSideEncryption()
             => new ArgumentException("Client-side encryption and transactional hashing are not supported at the same time.");

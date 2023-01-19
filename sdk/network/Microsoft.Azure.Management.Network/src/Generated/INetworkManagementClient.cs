@@ -151,6 +151,11 @@ namespace Microsoft.Azure.Management.Network
         IPublicIPAddressesOperations PublicIPAddresses { get; }
 
         /// <summary>
+        /// Gets the IVipSwapOperations.
+        /// </summary>
+        IVipSwapOperations VipSwap { get; }
+
+        /// <summary>
         /// Gets the ICustomIPPrefixesOperations.
         /// </summary>
         ICustomIPPrefixesOperations CustomIPPrefixes { get; }
@@ -724,11 +729,6 @@ namespace Microsoft.Azure.Management.Network
         /// Gets the IWebApplicationFirewallPoliciesOperations.
         /// </summary>
         IWebApplicationFirewallPoliciesOperations WebApplicationFirewallPolicies { get; }
-
-        /// <summary>
-        /// Gets the IVipSwapOperations.
-        /// </summary>
-        IVipSwapOperations VipSwap { get; }
 
         /// <summary>
         /// Creates a Bastion Shareable Links for all the VMs specified in the

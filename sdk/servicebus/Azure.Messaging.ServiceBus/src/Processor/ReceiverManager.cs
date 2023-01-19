@@ -59,9 +59,7 @@ namespace Azure.Messaging.ServiceBus
             _scopeFactory = scopeFactory;
         }
 
-        public virtual async Task CloseReceiverIfNeeded(
-            CancellationToken cancellationToken,
-            bool forceClose = false)
+        public virtual async Task CloseReceiverIfNeeded(CancellationToken cancellationToken)
         {
             var capturedReceiver = Receiver;
             if (capturedReceiver != null)
@@ -120,6 +118,16 @@ namespace Azure.Messaging.ServiceBus
                         Processor.Identifier,
                         cancellationToken))
                     .ConfigureAwait(false);
+            }
+        }
+
+        public virtual Task CancelAsync() => Task.CompletedTask;
+
+        public virtual void UpdatePrefetchCount(int prefetchCount)
+        {
+            if (Receiver != null && Receiver.PrefetchCount != prefetchCount)
+            {
+                Receiver.PrefetchCount = prefetchCount;
             }
         }
 

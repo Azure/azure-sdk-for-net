@@ -146,7 +146,7 @@ namespace Azure.Messaging.ServiceBus.Tests
             var cancellationSource = new CancellationTokenSource();
             var mockSession = new AmqpSession(mockConnection, new AmqpSessionSettings(), Mock.Of<ILinkFactory>());
 
-            var mockScope = new Mock<AmqpConnectionScope>(endpoint, endpoint, credential.Object, ServiceBusTransportType.AmqpTcp, null, false, default, default)
+            var mockScope = new Mock<AmqpConnectionScope>(endpoint, endpoint, credential.Object, ServiceBusTransportType.AmqpTcp, null, false, default)
             {
                 CallBase = true,
             };
@@ -160,8 +160,7 @@ namespace Azure.Messaging.ServiceBus.Tests
                 ItExpr.IsAny<ServiceBusTransportType>(),
                 ItExpr.IsAny<IWebProxy>(),
                 ItExpr.IsAny<string>(),
-                ItExpr.IsAny<TimeSpan>(),
-                ItExpr.IsAny<ServiceBusTransportMetrics>())
+                ItExpr.IsAny<TimeSpan>())
                 .Returns(Task.FromResult(mockConnection))
                 .Verifiable();
 
@@ -215,7 +214,7 @@ namespace Azure.Messaging.ServiceBus.Tests
             var cancellationSource = new CancellationTokenSource();
             var mockSession = new AmqpSession(mockConnection, new AmqpSessionSettings(), Mock.Of<ILinkFactory>());
 
-            var mockScope = new Mock<AmqpConnectionScope>(endpoint, endpoint, credential.Object, ServiceBusTransportType.AmqpTcp, null, false, default, default)
+            var mockScope = new Mock<AmqpConnectionScope>(endpoint, endpoint, credential.Object, ServiceBusTransportType.AmqpTcp, null, false, default)
             {
                 CallBase = true,
             };
@@ -229,8 +228,7 @@ namespace Azure.Messaging.ServiceBus.Tests
                 ItExpr.IsAny<ServiceBusTransportType>(),
                 ItExpr.IsAny<IWebProxy>(),
                 ItExpr.IsAny<string>(),
-                ItExpr.IsAny<TimeSpan>(),
-                ItExpr.IsAny<ServiceBusTransportMetrics>())
+                ItExpr.IsAny<TimeSpan>())
                 .Returns(Task.FromResult(mockConnection))
                 .Verifiable();
 
@@ -357,7 +355,7 @@ namespace Azure.Messaging.ServiceBus.Tests
                 Uri customConnectionEndpoint,
                 ServiceBusTokenCredential credential,
                 ServiceBusTransportType transport,
-                IWebProxy proxy) : base(serviceEndpoint, customConnectionEndpoint, credential, transport, proxy, false, default, default)
+                IWebProxy proxy) : base(serviceEndpoint, customConnectionEndpoint, credential, transport, proxy, false, default)
             {
                 MockConnection = new Mock<AmqpConnection>(new MockTransport(), CreateMockAmqpSettings(), new AmqpConnectionSettings());
             }
@@ -377,8 +375,7 @@ namespace Azure.Messaging.ServiceBus.Tests
                                                                                 ServiceBusTransportType transportType,
                                                                                 IWebProxy proxy,
                                                                                 string scopeIdentifier,
-                                                                                TimeSpan timeout,
-                                                                                ServiceBusTransportMetrics metrics)
+                                                                                TimeSpan timeout)
             {
                 return Task.FromResult(MockConnection.Object);
             }

@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.HybridContainerService
             writer.WriteEndObject();
         }
 
-        internal static HybridContainerServiceVirtualNetworkData DeserializeVirtualNetworkData(JsonElement element)
+        internal static HybridContainerServiceVirtualNetworkData DeserializeHybridContainerServiceVirtualNetworkData(JsonElement element)
         {
             Optional<VirtualNetworksProperties> properties = default;
             Optional<VirtualNetworksExtendedLocation> extendedLocation = default;
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.HybridContainerService
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
             }

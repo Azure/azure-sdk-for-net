@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -55,8 +54,16 @@ namespace Azure.ResourceManager.Datadog
 
         /// <summary>
         /// Configures single-sign-on for this resource.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Datadog/monitors/{monitorName}/singleSignOnConfigurations/{configurationName}
-        /// Operation Id: SingleSignOnConfigurations_CreateOrUpdate
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Datadog/monitors/{monitorName}/singleSignOnConfigurations/{configurationName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SingleSignOnConfigurations_CreateOrUpdate</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="configurationName"> Configuration name. </param>
@@ -88,8 +95,16 @@ namespace Azure.ResourceManager.Datadog
 
         /// <summary>
         /// Configures single-sign-on for this resource.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Datadog/monitors/{monitorName}/singleSignOnConfigurations/{configurationName}
-        /// Operation Id: SingleSignOnConfigurations_CreateOrUpdate
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Datadog/monitors/{monitorName}/singleSignOnConfigurations/{configurationName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SingleSignOnConfigurations_CreateOrUpdate</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="configurationName"> Configuration name. </param>
@@ -121,8 +136,16 @@ namespace Azure.ResourceManager.Datadog
 
         /// <summary>
         /// Gets the datadog single sign-on resource for the given Monitor.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Datadog/monitors/{monitorName}/singleSignOnConfigurations/{configurationName}
-        /// Operation Id: SingleSignOnConfigurations_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Datadog/monitors/{monitorName}/singleSignOnConfigurations/{configurationName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SingleSignOnConfigurations_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="configurationName"> Configuration name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -150,8 +173,16 @@ namespace Azure.ResourceManager.Datadog
 
         /// <summary>
         /// Gets the datadog single sign-on resource for the given Monitor.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Datadog/monitors/{monitorName}/singleSignOnConfigurations/{configurationName}
-        /// Operation Id: SingleSignOnConfigurations_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Datadog/monitors/{monitorName}/singleSignOnConfigurations/{configurationName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SingleSignOnConfigurations_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="configurationName"> Configuration name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -179,92 +210,60 @@ namespace Azure.ResourceManager.Datadog
 
         /// <summary>
         /// List the single sign-on configurations for a given monitor resource.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Datadog/monitors/{monitorName}/singleSignOnConfigurations
-        /// Operation Id: SingleSignOnConfigurations_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Datadog/monitors/{monitorName}/singleSignOnConfigurations</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SingleSignOnConfigurations_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="DatadogSingleSignOnResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DatadogSingleSignOnResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<DatadogSingleSignOnResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _datadogSingleSignOnResourceSingleSignOnConfigurationsClientDiagnostics.CreateScope("DatadogSingleSignOnResourceCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _datadogSingleSignOnResourceSingleSignOnConfigurationsRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new DatadogSingleSignOnResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<DatadogSingleSignOnResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _datadogSingleSignOnResourceSingleSignOnConfigurationsClientDiagnostics.CreateScope("DatadogSingleSignOnResourceCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _datadogSingleSignOnResourceSingleSignOnConfigurationsRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new DatadogSingleSignOnResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _datadogSingleSignOnResourceSingleSignOnConfigurationsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _datadogSingleSignOnResourceSingleSignOnConfigurationsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DatadogSingleSignOnResource(Client, DatadogSingleSignOnResourceData.DeserializeDatadogSingleSignOnResourceData(e)), _datadogSingleSignOnResourceSingleSignOnConfigurationsClientDiagnostics, Pipeline, "DatadogSingleSignOnResourceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// List the single sign-on configurations for a given monitor resource.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Datadog/monitors/{monitorName}/singleSignOnConfigurations
-        /// Operation Id: SingleSignOnConfigurations_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Datadog/monitors/{monitorName}/singleSignOnConfigurations</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SingleSignOnConfigurations_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="DatadogSingleSignOnResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DatadogSingleSignOnResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<DatadogSingleSignOnResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _datadogSingleSignOnResourceSingleSignOnConfigurationsClientDiagnostics.CreateScope("DatadogSingleSignOnResourceCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _datadogSingleSignOnResourceSingleSignOnConfigurationsRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new DatadogSingleSignOnResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<DatadogSingleSignOnResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _datadogSingleSignOnResourceSingleSignOnConfigurationsClientDiagnostics.CreateScope("DatadogSingleSignOnResourceCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _datadogSingleSignOnResourceSingleSignOnConfigurationsRestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new DatadogSingleSignOnResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _datadogSingleSignOnResourceSingleSignOnConfigurationsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _datadogSingleSignOnResourceSingleSignOnConfigurationsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DatadogSingleSignOnResource(Client, DatadogSingleSignOnResourceData.DeserializeDatadogSingleSignOnResourceData(e)), _datadogSingleSignOnResourceSingleSignOnConfigurationsClientDiagnostics, Pipeline, "DatadogSingleSignOnResourceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Datadog/monitors/{monitorName}/singleSignOnConfigurations/{configurationName}
-        /// Operation Id: SingleSignOnConfigurations_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Datadog/monitors/{monitorName}/singleSignOnConfigurations/{configurationName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SingleSignOnConfigurations_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="configurationName"> Configuration name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -290,8 +289,16 @@ namespace Azure.ResourceManager.Datadog
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Datadog/monitors/{monitorName}/singleSignOnConfigurations/{configurationName}
-        /// Operation Id: SingleSignOnConfigurations_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Datadog/monitors/{monitorName}/singleSignOnConfigurations/{configurationName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SingleSignOnConfigurations_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="configurationName"> Configuration name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

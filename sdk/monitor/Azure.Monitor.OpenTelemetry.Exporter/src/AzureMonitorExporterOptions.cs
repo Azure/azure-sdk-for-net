@@ -1,6 +1,8 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+#nullable disable // TODO: remove and fix errors
+
 using System.Diagnostics.CodeAnalysis;
 
 using Azure.Core;
@@ -39,6 +41,9 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
             this.Version = version;
         }
 
+        /// <summary>
+        /// The versions of Azure Monitor supported by this client library.
+        /// </summary>
         [SuppressMessage("Naming", "CA1707:Identifiers should not contain underscores", Justification = "This naming format is defined in the Azure SDK Design Guidelines.")]
         public enum ServiceVersion
         {
@@ -48,8 +53,14 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
             V2020_09_15_Preview = 1,
         }
 
+        /// <summary>
+        /// Override the default directory for offline storage.
+        /// </summary>
         public string StorageDirectory { get; set; }
 
+        /// <summary>
+        /// Disable offline storage.
+        /// </summary>
         public bool DisableOfflineStorage { get; set; }
     }
 }

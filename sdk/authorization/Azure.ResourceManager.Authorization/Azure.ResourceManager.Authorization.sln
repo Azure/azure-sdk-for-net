@@ -7,6 +7,8 @@ Project("{69D366FC-0520-49EE-8222-69CBAA6EE34F}") = "Azure.ResourceManager.Autho
 EndProject
 Project("{69D366FC-0520-49EE-8222-69CBAA6EE34F}") = "Azure.ResourceManager.Authorization.Tests", "tests\Azure.ResourceManager.Authorization.Tests.csproj", "{FAC8AF17-FF76-4D99-B0D9-A7B7D73977A3}"
 EndProject
+Project("{69D366FC-0520-49EE-8222-69CBAA6EE34F}") = "Azure.ResourceManager.Authorization.Samples", "samples\Azure.ResourceManager.Authorization.Samples.csproj", "{712FF3EC-BBBD-41AE-A669-F09F913A1348}"
+EndProject
 Global
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

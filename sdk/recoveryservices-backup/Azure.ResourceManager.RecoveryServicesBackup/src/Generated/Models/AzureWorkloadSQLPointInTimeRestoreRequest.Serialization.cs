@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             Optional<TargetRestoreInfo> targetInfo = default;
             Optional<RecoveryMode> recoveryMode = default;
             Optional<string> targetVirtualMachineId = default;
-            string objectType = default;
+            string objectType = "AzureWorkloadSQLPointInTimeRestoreRequest";
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("pointInTime"))

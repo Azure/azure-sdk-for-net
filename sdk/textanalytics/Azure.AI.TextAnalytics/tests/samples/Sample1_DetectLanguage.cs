@@ -11,23 +11,23 @@ namespace Azure.AI.TextAnalytics.Samples
         [Test]
         public void DetectLanguage()
         {
+            // Create a text analytics client.
             string endpoint = TestEnvironment.Endpoint;
             string apiKey = TestEnvironment.ApiKey;
-
-            var client = new TextAnalyticsClient(new Uri(endpoint), new AzureKeyCredential(apiKey), CreateSampleOptions());
+            TextAnalyticsClient client = new(new Uri(endpoint), new AzureKeyCredential(apiKey), CreateSampleOptions());
 
             #region Snippet:DetectLanguage
-            string document = @"Este documento está escrito en un idioma diferente al Inglés. Tiene como objetivo demostrar
-                                cómo invocar el método de Detección de idioma del servicio de Text Analytics en Microsoft Azure.
-                                También muestra cómo acceder a la información retornada por el servicio. Esta capacidad es útil
-                                para los sistemas de contenido que recopilan texto arbitrario, donde el idioma es desconocido.
-                                La característica Detección de idioma puede detectar una amplia gama de idiomas, variantes,
-                                dialectos y algunos idiomas regionales o culturales.";
+            string document =
+                "Este documento está escrito en un lenguaje diferente al inglés. Su objectivo es demostrar cómo"
+                + " invocar el método de Detección de Lenguaje del servicio de Text Analytics en Microsoft Azure."
+                + " También muestra cómo acceder a la información retornada por el servicio. Esta funcionalidad es"
+                + " útil para los sistemas de contenido que recopilan texto arbitrario, donde el lenguaje no se conoce"
+                + " de antemano. Puede usarse para detectar una amplia gama de lenguajes, variantes, dialectos y"
+                + " algunos idiomas regionales o culturales.";
 
             try
             {
                 Response<DetectedLanguage> response = client.DetectLanguage(document);
-
                 DetectedLanguage language = response.Value;
                 Console.WriteLine($"Detected language {language.Name} with confidence score {language.ConfidenceScore}.");
             }

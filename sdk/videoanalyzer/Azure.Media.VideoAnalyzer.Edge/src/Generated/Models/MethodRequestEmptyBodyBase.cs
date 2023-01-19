@@ -10,7 +10,11 @@ using Azure.Core;
 
 namespace Azure.Media.VideoAnalyzer.Edge.Models
 {
-    /// <summary> The MethodRequestEmptyBodyBase. </summary>
+    /// <summary>
+    /// The MethodRequestEmptyBodyBase.
+    /// Please note <see cref="MethodRequestEmptyBodyBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+    /// The available derived classes include <see cref="LivePipelineActivateRequest"/>, <see cref="LivePipelineDeactivateRequest"/>, <see cref="LivePipelineDeleteRequest"/>, <see cref="LivePipelineGetRequest"/>, <see cref="PipelineTopologyDeleteRequest"/>, <see cref="PipelineTopologyGetRequest"/>, <see cref="RemoteDeviceAdapterDeleteRequest"/> and <see cref="RemoteDeviceAdapterGetRequest"/>.
+    /// </summary>
     public partial class MethodRequestEmptyBodyBase : MethodRequest
     {
         /// <summary> Initializes a new instance of MethodRequestEmptyBodyBase. </summary>

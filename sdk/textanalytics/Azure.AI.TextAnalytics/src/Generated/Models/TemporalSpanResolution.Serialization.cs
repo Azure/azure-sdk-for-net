@@ -6,11 +6,12 @@
 #nullable disable
 
 using System.Text.Json;
+using Azure.AI.TextAnalytics.Models;
 using Azure.Core;
 
-namespace Azure.AI.TextAnalytics.Models
+namespace Azure.AI.TextAnalytics
 {
-    internal partial class TemporalSpanResolution : IUtf8JsonSerializable
+    public partial class TemporalSpanResolution : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -35,6 +36,11 @@ namespace Azure.AI.TextAnalytics.Models
                 writer.WritePropertyName("modifier");
                 writer.WriteStringValue(Modifier.Value.ToString());
             }
+            if (Optional.IsDefined(Timex))
+            {
+                writer.WritePropertyName("timex");
+                writer.WriteStringValue(Timex);
+            }
             writer.WritePropertyName("resolutionKind");
             writer.WriteStringValue(ResolutionKind.ToString());
             writer.WriteEndObject();
@@ -46,6 +52,7 @@ namespace Azure.AI.TextAnalytics.Models
             Optional<string> end = default;
             Optional<string> duration = default;
             Optional<TemporalModifier> modifier = default;
+            Optional<string> timex = default;
             ResolutionKind resolutionKind = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -74,13 +81,18 @@ namespace Azure.AI.TextAnalytics.Models
                     modifier = new TemporalModifier(property.Value.GetString());
                     continue;
                 }
+                if (property.NameEquals("timex"))
+                {
+                    timex = property.Value.GetString();
+                    continue;
+                }
                 if (property.NameEquals("resolutionKind"))
                 {
                     resolutionKind = new ResolutionKind(property.Value.GetString());
                     continue;
                 }
             }
-            return new TemporalSpanResolution(resolutionKind, begin.Value, end.Value, duration.Value, Optional.ToNullable(modifier));
+            return new TemporalSpanResolution(resolutionKind, begin.Value, end.Value, duration.Value, Optional.ToNullable(modifier), timex.Value);
         }
     }
 }

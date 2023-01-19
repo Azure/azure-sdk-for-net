@@ -8,10 +8,10 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.AI.TextAnalytics.Models
+namespace Azure.AI.TextAnalytics
 {
     /// <summary> The speed Unit of measurement. </summary>
-    internal readonly partial struct SpeedUnit : IEquatable<SpeedUnit>
+    public readonly partial struct SpeedUnit : IEquatable<SpeedUnit>
     {
         private readonly string _value;
 
@@ -23,48 +23,48 @@ namespace Azure.AI.TextAnalytics.Models
         }
 
         private const string UnspecifiedValue = "Unspecified";
-        private const string MetersPerSecondValue = "MetersPerSecond";
-        private const string KilometersPerHourValue = "KilometersPerHour";
-        private const string KilometersPerMinuteValue = "KilometersPerMinute";
-        private const string KilometersPerSecondValue = "KilometersPerSecond";
-        private const string MilesPerHourValue = "MilesPerHour";
+        private const string MeterPerSecondValue = "MeterPerSecond";
+        private const string KilometerPerHourValue = "KilometerPerHour";
+        private const string KilometerPerMinuteValue = "KilometerPerMinute";
+        private const string KilometerPerSecondValue = "KilometerPerSecond";
+        private const string MilePerHourValue = "MilePerHour";
         private const string KnotValue = "Knot";
         private const string FootPerSecondValue = "FootPerSecond";
         private const string FootPerMinuteValue = "FootPerMinute";
-        private const string YardsPerMinuteValue = "YardsPerMinute";
-        private const string YardsPerSecondValue = "YardsPerSecond";
-        private const string MetersPerMillisecondValue = "MetersPerMillisecond";
-        private const string CentimetersPerMillisecondValue = "CentimetersPerMillisecond";
-        private const string KilometersPerMillisecondValue = "KilometersPerMillisecond";
+        private const string YardPerMinuteValue = "YardPerMinute";
+        private const string YardPerSecondValue = "YardPerSecond";
+        private const string MeterPerMillisecondValue = "MeterPerMillisecond";
+        private const string CentimeterPerMillisecondValue = "CentimeterPerMillisecond";
+        private const string KilometerPerMillisecondValue = "KilometerPerMillisecond";
 
         /// <summary> Unspecified. </summary>
         public static SpeedUnit Unspecified { get; } = new SpeedUnit(UnspecifiedValue);
-        /// <summary> MetersPerSecond. </summary>
-        public static SpeedUnit MetersPerSecond { get; } = new SpeedUnit(MetersPerSecondValue);
-        /// <summary> KilometersPerHour. </summary>
-        public static SpeedUnit KilometersPerHour { get; } = new SpeedUnit(KilometersPerHourValue);
-        /// <summary> KilometersPerMinute. </summary>
-        public static SpeedUnit KilometersPerMinute { get; } = new SpeedUnit(KilometersPerMinuteValue);
-        /// <summary> KilometersPerSecond. </summary>
-        public static SpeedUnit KilometersPerSecond { get; } = new SpeedUnit(KilometersPerSecondValue);
-        /// <summary> MilesPerHour. </summary>
-        public static SpeedUnit MilesPerHour { get; } = new SpeedUnit(MilesPerHourValue);
+        /// <summary> MeterPerSecond. </summary>
+        public static SpeedUnit MeterPerSecond { get; } = new SpeedUnit(MeterPerSecondValue);
+        /// <summary> KilometerPerHour. </summary>
+        public static SpeedUnit KilometerPerHour { get; } = new SpeedUnit(KilometerPerHourValue);
+        /// <summary> KilometerPerMinute. </summary>
+        public static SpeedUnit KilometerPerMinute { get; } = new SpeedUnit(KilometerPerMinuteValue);
+        /// <summary> KilometerPerSecond. </summary>
+        public static SpeedUnit KilometerPerSecond { get; } = new SpeedUnit(KilometerPerSecondValue);
+        /// <summary> MilePerHour. </summary>
+        public static SpeedUnit MilePerHour { get; } = new SpeedUnit(MilePerHourValue);
         /// <summary> Knot. </summary>
         public static SpeedUnit Knot { get; } = new SpeedUnit(KnotValue);
         /// <summary> FootPerSecond. </summary>
         public static SpeedUnit FootPerSecond { get; } = new SpeedUnit(FootPerSecondValue);
         /// <summary> FootPerMinute. </summary>
         public static SpeedUnit FootPerMinute { get; } = new SpeedUnit(FootPerMinuteValue);
-        /// <summary> YardsPerMinute. </summary>
-        public static SpeedUnit YardsPerMinute { get; } = new SpeedUnit(YardsPerMinuteValue);
-        /// <summary> YardsPerSecond. </summary>
-        public static SpeedUnit YardsPerSecond { get; } = new SpeedUnit(YardsPerSecondValue);
-        /// <summary> MetersPerMillisecond. </summary>
-        public static SpeedUnit MetersPerMillisecond { get; } = new SpeedUnit(MetersPerMillisecondValue);
-        /// <summary> CentimetersPerMillisecond. </summary>
-        public static SpeedUnit CentimetersPerMillisecond { get; } = new SpeedUnit(CentimetersPerMillisecondValue);
-        /// <summary> KilometersPerMillisecond. </summary>
-        public static SpeedUnit KilometersPerMillisecond { get; } = new SpeedUnit(KilometersPerMillisecondValue);
+        /// <summary> YardPerMinute. </summary>
+        public static SpeedUnit YardPerMinute { get; } = new SpeedUnit(YardPerMinuteValue);
+        /// <summary> YardPerSecond. </summary>
+        public static SpeedUnit YardPerSecond { get; } = new SpeedUnit(YardPerSecondValue);
+        /// <summary> MeterPerMillisecond. </summary>
+        public static SpeedUnit MeterPerMillisecond { get; } = new SpeedUnit(MeterPerMillisecondValue);
+        /// <summary> CentimeterPerMillisecond. </summary>
+        public static SpeedUnit CentimeterPerMillisecond { get; } = new SpeedUnit(CentimeterPerMillisecondValue);
+        /// <summary> KilometerPerMillisecond. </summary>
+        public static SpeedUnit KilometerPerMillisecond { get; } = new SpeedUnit(KilometerPerMillisecondValue);
         /// <summary> Determines if two <see cref="SpeedUnit"/> values are the same. </summary>
         public static bool operator ==(SpeedUnit left, SpeedUnit right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SpeedUnit"/> values are not the same. </summary>

@@ -1,6 +1,6 @@
 # Release History
 
-## 2.7.0-preview.3 (Unreleased)
+## 2.7.0-preview.4 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,11 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 2.7.0-preview.3 (2022-11-25)
+
+### Other Changes
+- Change default value for returnFaceId parameter to false in detection operations. 
 
 ## 2.7.0-preview.2 (2021-11-15)
 - Add support for new detection attribute `qualityForRecognition`

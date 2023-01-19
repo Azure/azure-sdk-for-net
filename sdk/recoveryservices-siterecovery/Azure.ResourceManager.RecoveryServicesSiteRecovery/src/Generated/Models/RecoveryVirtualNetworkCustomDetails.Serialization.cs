@@ -30,16 +30,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     case "New": return NewRecoveryVirtualNetwork.DeserializeNewRecoveryVirtualNetwork(element);
                 }
             }
-            string resourceType = default;
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("resourceType"))
-                {
-                    resourceType = property.Value.GetString();
-                    continue;
-                }
-            }
-            return new UnknownRecoveryVirtualNetworkCustomDetails(resourceType);
+            return UnknownRecoveryVirtualNetworkCustomDetails.DeserializeUnknownRecoveryVirtualNetworkCustomDetails(element);
         }
     }
 }

@@ -21,7 +21,7 @@ namespace Azure.AI.TextAnalytics.Models
         /// <param name="modelVersion"> This field indicates which model is used for scoring. </param>
         /// <param name="documents"> Response by document. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="errors"/>, <paramref name="modelVersion"/> or <paramref name="documents"/> is null. </exception>
-        public EntitiesResult(IEnumerable<InputError> errors, string modelVersion, IEnumerable<EntitiesResultDocumentsItem> documents) : base(errors, modelVersion)
+        public EntitiesResult(IEnumerable<InputError> errors, string modelVersion, IEnumerable<EntitiesResultWithDetectedLanguage> documents) : base(errors, modelVersion)
         {
             Argument.AssertNotNull(errors, nameof(errors));
             Argument.AssertNotNull(modelVersion, nameof(modelVersion));
@@ -35,12 +35,12 @@ namespace Azure.AI.TextAnalytics.Models
         /// <param name="statistics"> if showStats=true was specified in the request this field will contain information about the request payload. </param>
         /// <param name="modelVersion"> This field indicates which model is used for scoring. </param>
         /// <param name="documents"> Response by document. </param>
-        internal EntitiesResult(IList<InputError> errors, TextDocumentBatchStatistics statistics, string modelVersion, IList<EntitiesResultDocumentsItem> documents) : base(errors, statistics, modelVersion)
+        internal EntitiesResult(IList<InputError> errors, TextDocumentBatchStatistics statistics, string modelVersion, IList<EntitiesResultWithDetectedLanguage> documents) : base(errors, statistics, modelVersion)
         {
             Documents = documents;
         }
 
         /// <summary> Response by document. </summary>
-        public IList<EntitiesResultDocumentsItem> Documents { get; }
+        public IList<EntitiesResultWithDetectedLanguage> Documents { get; }
     }
 }

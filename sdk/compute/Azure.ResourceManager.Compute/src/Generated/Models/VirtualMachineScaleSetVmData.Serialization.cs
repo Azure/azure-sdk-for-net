@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.Compute
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.ToString());
+                    identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("tags"))
@@ -248,7 +248,7 @@ namespace Azure.ResourceManager.Compute
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("properties"))
@@ -372,7 +372,7 @@ namespace Azure.ResourceManager.Compute
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            availabilitySet = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.ToString());
+                            availabilitySet = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"))

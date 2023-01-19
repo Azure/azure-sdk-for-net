@@ -30,8 +30,16 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
 
         /// <summary>
         /// Gets all Service Fabric cluster resources created or in the process of being created in the subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.ServiceFabric/managedClusters
-        /// Operation Id: ManagedClusters_ListBySubscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ServiceFabric/managedClusters</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ManagedClusters_ListBySubscription</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -43,8 +51,16 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
 
         /// <summary>
         /// Gets all Service Fabric cluster resources created or in the process of being created in the subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.ServiceFabric/managedClusters
-        /// Operation Id: ManagedClusters_ListBySubscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ServiceFabric/managedClusters</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ManagedClusters_ListBySubscription</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -56,8 +72,16 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
 
         /// <summary>
         /// Gets information about an available Service Fabric managed cluster code version.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.ServiceFabric/locations/{location}/managedClusterVersions/{clusterVersion}
-        /// Operation Id: ManagedClusterVersion_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ServiceFabric/locations/{location}/managedClusterVersions/{clusterVersion}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ManagedClusterVersion_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="location"> The location for the cluster code versions. This is different from cluster location. </param>
@@ -74,8 +98,16 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
 
         /// <summary>
         /// Gets information about an available Service Fabric managed cluster code version.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.ServiceFabric/locations/{location}/managedClusterVersions/{clusterVersion}
-        /// Operation Id: ManagedClusterVersion_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ServiceFabric/locations/{location}/managedClusterVersions/{clusterVersion}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ManagedClusterVersion_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="location"> The location for the cluster code versions. This is different from cluster location. </param>
@@ -92,8 +124,16 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
 
         /// <summary>
         /// Gets information about an available Service Fabric cluster code version by environment.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.ServiceFabric/locations/{location}/environments/{environment}/managedClusterVersions/{clusterVersion}
-        /// Operation Id: ManagedClusterVersion_GetByEnvironment
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ServiceFabric/locations/{location}/environments/{environment}/managedClusterVersions/{clusterVersion}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ManagedClusterVersion_GetByEnvironment</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="location"> The location for the cluster code versions. This is different from cluster location. </param>
@@ -111,8 +151,16 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
 
         /// <summary>
         /// Gets information about an available Service Fabric cluster code version by environment.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.ServiceFabric/locations/{location}/environments/{environment}/managedClusterVersions/{clusterVersion}
-        /// Operation Id: ManagedClusterVersion_GetByEnvironment
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ServiceFabric/locations/{location}/environments/{environment}/managedClusterVersions/{clusterVersion}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ManagedClusterVersion_GetByEnvironment</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="location"> The location for the cluster code versions. This is different from cluster location. </param>
@@ -130,8 +178,16 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
 
         /// <summary>
         /// Gets all available code versions for Service Fabric cluster resources by location.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.ServiceFabric/locations/{location}/managedClusterVersions
-        /// Operation Id: ManagedClusterVersion_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ServiceFabric/locations/{location}/managedClusterVersions</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ManagedClusterVersion_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="location"> The location for the cluster code versions. This is different from cluster location. </param>
@@ -144,8 +200,16 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
 
         /// <summary>
         /// Gets all available code versions for Service Fabric cluster resources by location.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.ServiceFabric/locations/{location}/managedClusterVersions
-        /// Operation Id: ManagedClusterVersion_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ServiceFabric/locations/{location}/managedClusterVersions</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ManagedClusterVersion_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="location"> The location for the cluster code versions. This is different from cluster location. </param>
@@ -158,8 +222,16 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
 
         /// <summary>
         /// Gets all available code versions for Service Fabric cluster resources by environment.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.ServiceFabric/locations/{location}/environments/{environment}/managedClusterVersions
-        /// Operation Id: ManagedClusterVersion_ListByEnvironment
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ServiceFabric/locations/{location}/environments/{environment}/managedClusterVersions</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ManagedClusterVersion_ListByEnvironment</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="location"> The location for the cluster code versions. This is different from cluster location. </param>
@@ -173,8 +245,16 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
 
         /// <summary>
         /// Gets all available code versions for Service Fabric cluster resources by environment.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.ServiceFabric/locations/{location}/environments/{environment}/managedClusterVersions
-        /// Operation Id: ManagedClusterVersion_ListByEnvironment
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ServiceFabric/locations/{location}/environments/{environment}/managedClusterVersions</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ManagedClusterVersion_ListByEnvironment</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="location"> The location for the cluster code versions. This is different from cluster location. </param>
@@ -188,8 +268,16 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
 
         /// <summary>
         /// Get the lists of unsupported vm sizes for Service Fabric Managed Clusters.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.ServiceFabric/locations/{location}/managedUnsupportedVMSizes
-        /// Operation Id: managedUnsupportedVMSizes_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ServiceFabric/locations/{location}/managedUnsupportedVMSizes</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>managedUnsupportedVMSizes_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="location"> The location for the cluster code versions. This is different from cluster location. </param>
@@ -202,8 +290,16 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
 
         /// <summary>
         /// Get the lists of unsupported vm sizes for Service Fabric Managed Clusters.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.ServiceFabric/locations/{location}/managedUnsupportedVMSizes
-        /// Operation Id: managedUnsupportedVMSizes_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ServiceFabric/locations/{location}/managedUnsupportedVMSizes</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>managedUnsupportedVMSizes_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="location"> The location for the cluster code versions. This is different from cluster location. </param>
@@ -216,8 +312,16 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
 
         /// <summary>
         /// Get unsupported vm size for Service Fabric Managed Clusters.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.ServiceFabric/locations/{location}/managedUnsupportedVMSizes/{vmSize}
-        /// Operation Id: managedUnsupportedVMSizes_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ServiceFabric/locations/{location}/managedUnsupportedVMSizes/{vmSize}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>managedUnsupportedVMSizes_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="location"> The location for the cluster code versions. This is different from cluster location. </param>
@@ -234,8 +338,16 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
 
         /// <summary>
         /// Get unsupported vm size for Service Fabric Managed Clusters.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.ServiceFabric/locations/{location}/managedUnsupportedVMSizes/{vmSize}
-        /// Operation Id: managedUnsupportedVMSizes_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ServiceFabric/locations/{location}/managedUnsupportedVMSizes/{vmSize}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>managedUnsupportedVMSizes_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="location"> The location for the cluster code versions. This is different from cluster location. </param>
@@ -269,8 +381,16 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
 
         /// <summary>
         /// Get a Service Fabric managed cluster resource created or in the process of being created in the specified resource group.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceFabric/managedClusters/{clusterName}
-        /// Operation Id: ManagedClusters_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceFabric/managedClusters/{clusterName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ManagedClusters_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="clusterName"> The name of the cluster resource. </param>
@@ -285,8 +405,16 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
 
         /// <summary>
         /// Get a Service Fabric managed cluster resource created or in the process of being created in the specified resource group.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceFabric/managedClusters/{clusterName}
-        /// Operation Id: ManagedClusters_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceFabric/managedClusters/{clusterName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ManagedClusters_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="clusterName"> The name of the cluster resource. </param>

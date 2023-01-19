@@ -18,7 +18,13 @@ directive:
   where: $.definitions.CloudEventEvent
   transform: >
     $.properties.data["x-nullable"] = true;
-````
+```
+
+### Suppress Abstract Base Class
+
+``` yaml
+suppress-abstract-base-class: MediaJobOutput
+```
 
 ### Append `EventData` suffix to Resource Manager system event data models
 
@@ -91,8 +97,8 @@ directive:
       {
         $[path]["x-namespace"] = namespace;
       }
-      if (path.endsWith("EventData") || 
-          path.includes("EventGridEvent") || 
+      if (path.endsWith("EventData") ||
+          path.includes("EventGridEvent") ||
          ($[path]["x-ms-client-name"] && $[path]["x-ms-client-name"].endsWith("EventData")))
       {
         $[path]["x-csharp-usage"] = "model,output,converter";
@@ -135,7 +141,9 @@ directive:
 directive:
 - from: swagger-document
   where: $.definitions.MediaJobOutput
-  transform: $.required.push("@odata.type")
+  transform: >
+    $.required.push("@odata.type");
+    $["x-csharp-usage"] = "model,output";
 ```
 
 ### Fix Media types

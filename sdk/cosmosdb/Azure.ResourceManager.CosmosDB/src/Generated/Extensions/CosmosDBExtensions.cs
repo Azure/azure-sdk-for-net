@@ -29,8 +29,16 @@ namespace Azure.ResourceManager.CosmosDB
 
         /// <summary>
         /// Checks that the Azure Cosmos DB account name already exists. A valid account name may contain only lowercase letters, numbers, and the &apos;-&apos; character, and must be between 3 and 50 characters.
-        /// Request Path: /providers/Microsoft.DocumentDB/databaseAccountNames/{accountName}
-        /// Operation Id: DatabaseAccounts_CheckNameExists
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.DocumentDB/databaseAccountNames/{accountName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DatabaseAccounts_CheckNameExists</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="accountName"> Cosmos DB database account name. </param>
@@ -46,8 +54,16 @@ namespace Azure.ResourceManager.CosmosDB
 
         /// <summary>
         /// Checks that the Azure Cosmos DB account name already exists. A valid account name may contain only lowercase letters, numbers, and the &apos;-&apos; character, and must be between 3 and 50 characters.
-        /// Request Path: /providers/Microsoft.DocumentDB/databaseAccountNames/{accountName}
-        /// Operation Id: DatabaseAccounts_CheckNameExists
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.DocumentDB/databaseAccountNames/{accountName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DatabaseAccounts_CheckNameExists</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="accountName"> Cosmos DB database account name. </param>
@@ -80,8 +96,16 @@ namespace Azure.ResourceManager.CosmosDB
 
         /// <summary>
         /// Get the properties of an existing Cosmos DB location
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.DocumentDB/locations/{location}
-        /// Operation Id: Locations_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DocumentDB/locations/{location}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Locations_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="location"> Cosmos DB region, with spaces between words and each word capitalized. </param>
@@ -94,8 +118,16 @@ namespace Azure.ResourceManager.CosmosDB
 
         /// <summary>
         /// Get the properties of an existing Cosmos DB location
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.DocumentDB/locations/{location}
-        /// Operation Id: Locations_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DocumentDB/locations/{location}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Locations_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="location"> Cosmos DB region, with spaces between words and each word capitalized. </param>
@@ -108,8 +140,16 @@ namespace Azure.ResourceManager.CosmosDB
 
         /// <summary>
         /// Lists all the Azure Cosmos DB database accounts available under the subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.DocumentDB/databaseAccounts
-        /// Operation Id: DatabaseAccounts_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DocumentDB/databaseAccounts</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DatabaseAccounts_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -121,8 +161,16 @@ namespace Azure.ResourceManager.CosmosDB
 
         /// <summary>
         /// Lists all the Azure Cosmos DB database accounts available under the subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.DocumentDB/databaseAccounts
-        /// Operation Id: DatabaseAccounts_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DocumentDB/databaseAccounts</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DatabaseAccounts_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -134,8 +182,16 @@ namespace Azure.ResourceManager.CosmosDB
 
         /// <summary>
         /// List all managed Cassandra clusters in this subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.DocumentDB/cassandraClusters
-        /// Operation Id: CassandraClusters_ListBySubscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DocumentDB/cassandraClusters</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>CassandraClusters_ListBySubscription</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -147,8 +203,16 @@ namespace Azure.ResourceManager.CosmosDB
 
         /// <summary>
         /// List all managed Cassandra clusters in this subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.DocumentDB/cassandraClusters
-        /// Operation Id: CassandraClusters_ListBySubscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DocumentDB/cassandraClusters</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>CassandraClusters_ListBySubscription</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -160,8 +224,16 @@ namespace Azure.ResourceManager.CosmosDB
 
         /// <summary>
         /// Lists all the restorable Azure Cosmos DB database accounts available under the subscription. This call requires &apos;Microsoft.DocumentDB/locations/restorableDatabaseAccounts/read&apos; permission.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.DocumentDB/restorableDatabaseAccounts
-        /// Operation Id: RestorableDatabaseAccounts_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DocumentDB/restorableDatabaseAccounts</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>RestorableDatabaseAccounts_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -173,8 +245,16 @@ namespace Azure.ResourceManager.CosmosDB
 
         /// <summary>
         /// Lists all the restorable Azure Cosmos DB database accounts available under the subscription. This call requires &apos;Microsoft.DocumentDB/locations/restorableDatabaseAccounts/read&apos; permission.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.DocumentDB/restorableDatabaseAccounts
-        /// Operation Id: RestorableDatabaseAccounts_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DocumentDB/restorableDatabaseAccounts</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>RestorableDatabaseAccounts_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -203,8 +283,16 @@ namespace Azure.ResourceManager.CosmosDB
 
         /// <summary>
         /// Retrieves the properties of an existing Azure Cosmos DB database account.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}
-        /// Operation Id: DatabaseAccounts_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DatabaseAccounts_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="accountName"> Cosmos DB database account name. </param>
@@ -219,8 +307,16 @@ namespace Azure.ResourceManager.CosmosDB
 
         /// <summary>
         /// Retrieves the properties of an existing Azure Cosmos DB database account.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}
-        /// Operation Id: DatabaseAccounts_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DatabaseAccounts_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="accountName"> Cosmos DB database account name. </param>
@@ -243,8 +339,16 @@ namespace Azure.ResourceManager.CosmosDB
 
         /// <summary>
         /// Get the properties of a managed Cassandra cluster.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/cassandraClusters/{clusterName}
-        /// Operation Id: CassandraClusters_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/cassandraClusters/{clusterName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>CassandraClusters_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="clusterName"> Managed Cassandra cluster name. </param>
@@ -259,8 +363,16 @@ namespace Azure.ResourceManager.CosmosDB
 
         /// <summary>
         /// Get the properties of a managed Cassandra cluster.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/cassandraClusters/{clusterName}
-        /// Operation Id: CassandraClusters_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/cassandraClusters/{clusterName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>CassandraClusters_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="clusterName"> Managed Cassandra cluster name. </param>
@@ -629,6 +741,44 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 MongoDBCollectionResource.ValidateResourceId(id);
                 return new MongoDBCollectionResource(client, id);
+            }
+            );
+        }
+        #endregion
+
+        #region MongoDBRoleDefinitionResource
+        /// <summary>
+        /// Gets an object representing a <see cref="MongoDBRoleDefinitionResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="MongoDBRoleDefinitionResource.CreateResourceIdentifier" /> to create a <see cref="MongoDBRoleDefinitionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="MongoDBRoleDefinitionResource" /> object. </returns>
+        public static MongoDBRoleDefinitionResource GetMongoDBRoleDefinitionResource(this ArmClient client, ResourceIdentifier id)
+        {
+            return client.GetResourceClient(() =>
+            {
+                MongoDBRoleDefinitionResource.ValidateResourceId(id);
+                return new MongoDBRoleDefinitionResource(client, id);
+            }
+            );
+        }
+        #endregion
+
+        #region MongoDBUserDefinitionResource
+        /// <summary>
+        /// Gets an object representing a <see cref="MongoDBUserDefinitionResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="MongoDBUserDefinitionResource.CreateResourceIdentifier" /> to create a <see cref="MongoDBUserDefinitionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="MongoDBUserDefinitionResource" /> object. </returns>
+        public static MongoDBUserDefinitionResource GetMongoDBUserDefinitionResource(this ArmClient client, ResourceIdentifier id)
+        {
+            return client.GetResourceClient(() =>
+            {
+                MongoDBUserDefinitionResource.ValidateResourceId(id);
+                return new MongoDBUserDefinitionResource(client, id);
             }
             );
         }
