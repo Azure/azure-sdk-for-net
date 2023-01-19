@@ -1696,6 +1696,8 @@ namespace Azure.ResourceManager.Compute
         public Azure.Core.ResourceIdentifier ProximityPlacementGroupId { get { throw null; } set { } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Compute.VirtualMachineExtensionData> Resources { get { throw null; } }
         public Azure.ResourceManager.Compute.Models.ScheduledEventsProfile ScheduledEventsProfile { get { throw null; } set { } }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public Azure.ResourceManager.Compute.Models.TerminateNotificationProfile ScheduledEventsTerminateNotificationProfile { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.SecurityProfile SecurityProfile { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.VirtualMachineStorageProfile StorageProfile { get { throw null; } set { } }
         public System.DateTimeOffset? TimeCreated { get { throw null; } }
@@ -2347,31 +2349,6 @@ namespace Azure.ResourceManager.Compute.Models
         public static bool operator ==(Azure.ResourceManager.Compute.Models.AggregatedReplicationState left, Azure.ResourceManager.Compute.Models.AggregatedReplicationState right) { throw null; }
         public static implicit operator Azure.ResourceManager.Compute.Models.AggregatedReplicationState (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Compute.Models.AggregatedReplicationState left, Azure.ResourceManager.Compute.Models.AggregatedReplicationState right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    public partial class AlternativeOption
-    {
-        public AlternativeOption() { }
-        public Azure.ResourceManager.Compute.Models.AlternativeType? AlternativeType { get { throw null; } set { } }
-        public string Value { get { throw null; } set { } }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct AlternativeType : System.IEquatable<Azure.ResourceManager.Compute.Models.AlternativeType>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public AlternativeType(string value) { throw null; }
-        public static Azure.ResourceManager.Compute.Models.AlternativeType None { get { throw null; } }
-        public static Azure.ResourceManager.Compute.Models.AlternativeType Offer { get { throw null; } }
-        public static Azure.ResourceManager.Compute.Models.AlternativeType Plan { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Compute.Models.AlternativeType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Compute.Models.AlternativeType left, Azure.ResourceManager.Compute.Models.AlternativeType right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Compute.Models.AlternativeType (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Compute.Models.AlternativeType left, Azure.ResourceManager.Compute.Models.AlternativeType right) { throw null; }
         public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
@@ -3828,6 +3805,31 @@ namespace Azure.ResourceManager.Compute.Models
         public static bool operator !=(Azure.ResourceManager.Compute.Models.HyperVGeneration left, Azure.ResourceManager.Compute.Models.HyperVGeneration right) { throw null; }
         public override string ToString() { throw null; }
     }
+    public partial class ImageAlternativeOption
+    {
+        public ImageAlternativeOption() { }
+        public Azure.ResourceManager.Compute.Models.ImageAlternativeType? AlternativeType { get { throw null; } set { } }
+        public string Value { get { throw null; } set { } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct ImageAlternativeType : System.IEquatable<Azure.ResourceManager.Compute.Models.ImageAlternativeType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public ImageAlternativeType(string value) { throw null; }
+        public static Azure.ResourceManager.Compute.Models.ImageAlternativeType None { get { throw null; } }
+        public static Azure.ResourceManager.Compute.Models.ImageAlternativeType Offer { get { throw null; } }
+        public static Azure.ResourceManager.Compute.Models.ImageAlternativeType Plan { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Compute.Models.ImageAlternativeType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Compute.Models.ImageAlternativeType left, Azure.ResourceManager.Compute.Models.ImageAlternativeType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Compute.Models.ImageAlternativeType (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Compute.Models.ImageAlternativeType left, Azure.ResourceManager.Compute.Models.ImageAlternativeType right) { throw null; }
+        public override string ToString() { throw null; }
+    }
     public partial class ImageDataDisk : Azure.ResourceManager.Compute.Models.ImageDisk
     {
         public ImageDataDisk(int lun) { }
@@ -3836,7 +3838,7 @@ namespace Azure.ResourceManager.Compute.Models
     public partial class ImageDeprecationStatus
     {
         public ImageDeprecationStatus() { }
-        public Azure.ResourceManager.Compute.Models.AlternativeOption AlternativeOption { get { throw null; } set { } }
+        public Azure.ResourceManager.Compute.Models.ImageAlternativeOption AlternativeOption { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.ImageState? ImageState { get { throw null; } set { } }
         public System.DateTimeOffset? ScheduledDeprecationOn { get { throw null; } set { } }
     }

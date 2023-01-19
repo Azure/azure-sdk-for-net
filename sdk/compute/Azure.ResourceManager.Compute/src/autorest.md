@@ -249,6 +249,8 @@ rename-mapping:
   VirtualMachineNetworkInterfaceConfiguration.properties.disableTcpStateTracking: IsTcpStateTrackingDisabled
   VirtualMachineScaleSetNetworkConfiguration.properties.disableTcpStateTracking: IsTcpStateTrackingDisabled
   VirtualMachineScaleSetUpdateNetworkConfiguration.properties.disableTcpStateTracking: IsTcpStateTrackingDisabled
+  AlternativeOption: ImageAlternativeOption
+  AlternativeType: ImageAlternativeType
 
 directive:
 # copy the systemData from common-types here so that it will be automatically replaced

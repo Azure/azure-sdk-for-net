@@ -8,24 +8,24 @@
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Describes the alternative option specified by the Publisher for this image when this image is deprecated. </summary>
-    public partial class AlternativeOption
+    public partial class ImageAlternativeOption
     {
-        /// <summary> Initializes a new instance of AlternativeOption. </summary>
-        public AlternativeOption()
+        /// <summary> Initializes a new instance of ImageAlternativeOption. </summary>
+        public ImageAlternativeOption()
         {
         }
 
-        /// <summary> Initializes a new instance of AlternativeOption. </summary>
+        /// <summary> Initializes a new instance of ImageAlternativeOption. </summary>
         /// <param name="alternativeType"> Describes the type of the alternative option. </param>
         /// <param name="value"> Indicates the alternative option value specified by the Publisher. This is the Offer name when the type is Offer or the Plan name when the type is Plan. </param>
-        internal AlternativeOption(AlternativeType? alternativeType, string value)
+        internal ImageAlternativeOption(ImageAlternativeType? alternativeType, string value)
         {
             AlternativeType = alternativeType;
             Value = value;
         }
 
         /// <summary> Describes the type of the alternative option. </summary>
-        public AlternativeType? AlternativeType { get; set; }
+        public ImageAlternativeType? AlternativeType { get; set; }
         /// <summary> Indicates the alternative option value specified by the Publisher. This is the Offer name when the type is Offer or the Plan name when the type is Plan. </summary>
         public string Value { get; set; }
     }

@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Compute.Models
         {
             Optional<ImageState> imageState = default;
             Optional<DateTimeOffset> scheduledDeprecationTime = default;
-            Optional<AlternativeOption> alternativeOption = default;
+            Optional<ImageAlternativeOption> alternativeOption = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("imageState"))
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Compute.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    alternativeOption = AlternativeOption.DeserializeAlternativeOption(property.Value);
+                    alternativeOption = ImageAlternativeOption.DeserializeImageAlternativeOption(property.Value);
                     continue;
                 }
             }

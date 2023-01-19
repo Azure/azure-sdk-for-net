@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="imageState"> Describes the state of the image. </param>
         /// <param name="scheduledDeprecationOn"> The time, in future, at which this image will be marked as deprecated. This scheduled time is chosen by the Publisher. </param>
         /// <param name="alternativeOption"> Describes the alternative option specified by the Publisher for this image when this image is deprecated. </param>
-        internal ImageDeprecationStatus(ImageState? imageState, DateTimeOffset? scheduledDeprecationOn, AlternativeOption alternativeOption)
+        internal ImageDeprecationStatus(ImageState? imageState, DateTimeOffset? scheduledDeprecationOn, ImageAlternativeOption alternativeOption)
         {
             ImageState = imageState;
             ScheduledDeprecationOn = scheduledDeprecationOn;
@@ -33,6 +33,6 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> The time, in future, at which this image will be marked as deprecated. This scheduled time is chosen by the Publisher. </summary>
         public DateTimeOffset? ScheduledDeprecationOn { get; set; }
         /// <summary> Describes the alternative option specified by the Publisher for this image when this image is deprecated. </summary>
-        public AlternativeOption AlternativeOption { get; set; }
+        public ImageAlternativeOption AlternativeOption { get; set; }
     }
 }
