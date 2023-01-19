@@ -43,14 +43,15 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
             HttpPipeline pipeline;
             if (credential != null)
             {
+                var scope = AadHelper.GetScope(_connectionVars.AadAudience);
                 var httpPipelinePolicy = new HttpPipelinePolicy[]
                                              {
-                                                 new BearerTokenAuthenticationPolicy(credential, "https://monitor.azure.com//.default"),
+                                                 new BearerTokenAuthenticationPolicy(credential, scope),
                                                  new IngestionRedirectPolicy()
                                              };
 
                 pipeline = HttpPipelineBuilder.Build(options, httpPipelinePolicy);
-                AzureMonitorExporterEventSource.Log.WriteInformational("SetAADCredentialsToPipeline", "HttpPipelineBuilder is built with AAD Credentials");
+                AzureMonitorExporterEventSource.Log.WriteInformational("SetAADCredentialsToPipeline", $"HttpPipelineBuilder is built with AAD Credentials. TokenCredential: {credential.GetType().Name} Scope: {scope}");
             }
             else
             {
