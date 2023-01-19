@@ -64,7 +64,7 @@ function Fetch-NamespacesFromNupkg ($package, $version) {
         }
     }
     elseif ($dllFiles.Count -gt 1) {
-        LogWarning "There are multiple dll files in target netstandard2.0. "
+        LogWarning "There are multiple dll files in target netstandard2.0 for $package."
         if (Test-Path "$tempLocation/$packageFolder/lib/netstandard2.0/$package.dll") {
             LogDebug "Use the dll file $package.dll"
             $dllFileName = "$tempLocation/$packageFolder/lib/netstandard2.0/$package.dll"
@@ -116,7 +116,7 @@ function Get-dotnet-OnboardedDocsMsPackagesForMoniker ($DocRepoLocation, $monike
     foreach ($packageInfo in $packageInfos) {
         $packageName = $packageInfo.Name
         if (!$packageName) {
-            LogError "Package name not folder. Please check csv file for the packageId: $($packageInfo.Id)"
+            LogError "Package name not found. Please check csv file for the packageId: $($packageInfo.Id)"
         }
         $jsonFile = "$DocRepoLocation/metadata/$moniker/$packageName.json"
         if (Test-Path $jsonFile) {
