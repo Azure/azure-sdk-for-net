@@ -14,8 +14,9 @@ namespace Azure.Core
     /// </summary>
     public sealed class HttpMessage : IDisposable
     {
-        private ArrayBackedPropertyBag<string, object>? _properties;
-        private readonly ArrayBackedPropertyBag<long, object> _propertyBag = new();
+        private ArrayBackedPropertyBag<string, object> _properties = new();
+        private ArrayBackedPropertyBagPoolNoDupe<long, object> _typeProperties;
+        private ArrayBackedPropertyBagPool<long, object> _propertyBag;
 
         private Response? _response;
 
@@ -121,25 +122,37 @@ namespace Azure.Core
         /// <param name="name">The property name.</param>
         /// <param name="value">The property value.</param>
         /// <returns><c>true</c> if property exists, otherwise. <c>false</c>.</returns>
-        public bool TryGetProperty(string name, out object? value)
-        {
-            if (_properties == null)
-            {
-                value = null;
-                return false;
-            }
-            return _properties.TryGetValue(name, out value);
-        }
+        public bool TryGetProperty(string name, out object? value) =>
+            _properties.TryGetValue(name, out value);
 
         /// <summary>
         /// Sets a property that modifies the pipeline behavior. Please refer to individual policies documentation on what properties it supports.
         /// </summary>
         /// <param name="name">The property name.</param>
         /// <param name="value">The property value.</param>
-        public void SetProperty(string name, object value)
-        {
-            _properties ??= new();
+        public void SetProperty(string name, object value) =>
             _properties.Add(name, value);
+
+        /// <summary>
+        /// Gets a property that is stored with this <see cref="HttpMessage"/> instance and can be used for modifying pipeline behavior.
+        /// </summary>
+        /// <param name="type">The property type.</param>
+        /// <param name="value">The property value.</param>
+        /// <returns><c>true</c> if property exists, otherwise. <c>false</c>.</returns>
+        public bool TryGetPropertyOld(Type type, out object? value)
+        {
+            return _typeProperties.TryGetValue((long)type.TypeHandle.Value, out value);
+        }
+
+        /// <summary>
+        /// Sets a property that is stored with this <see cref="HttpMessage"/> instance and can be used for modifying pipeline behavior.
+        /// Internal properties can be keyed with internal types to prevent external code from overwriting these values.
+        /// </summary>
+        /// <param name="type">The key for the value.</param>
+        /// <param name="value">The property value.</param>
+        public void SetPropertyOld(Type type, object value)
+        {
+            _typeProperties.Add((long)type.TypeHandle.Value, value);
         }
 
         /// <summary>
@@ -154,10 +167,8 @@ namespace Azure.Core
         /// comparisons are faster than string comparisons.
         /// </remarks>
         /// <returns><c>true</c> if property exists, otherwise. <c>false</c>.</returns>
-        public bool TryGetProperty(Type type, out object? value)
-        {
-            return _propertyBag.TryGetValue((long)type.TypeHandle.Value, out value);
-        }
+        public bool TryGetProperty(Type type, out object? value) =>
+            _propertyBag.TryGetValue((long)type.TypeHandle.Value, out value);
 
         /// <summary>
         /// Sets a property that is stored with this <see cref="HttpMessage"/> instance and can be used for modifying pipeline behavior.
@@ -165,10 +176,8 @@ namespace Azure.Core
         /// </summary>
         /// <param name="type">The key for the value.</param>
         /// <param name="value">The property value.</param>
-        public void SetProperty(Type type, object value)
-        {
+        public void SetProperty(Type type, object value) =>
             _propertyBag.Add((long)type.TypeHandle.Value, value);
-        }
 
         /// <summary>
         /// Returns the response content stream and releases it ownership to the caller. After calling this methods using <see cref="Azure.Response.ContentStream"/> or <see cref="Azure.Response.Content"/> would result in exception.
@@ -195,6 +204,8 @@ namespace Azure.Core
         {
             Request?.Dispose();
             _response?.Dispose();
+            _propertyBag.Dispose();
+            _typeProperties.Dispose();
         }
 
         private class ResponseShouldNotBeUsedStream : Stream

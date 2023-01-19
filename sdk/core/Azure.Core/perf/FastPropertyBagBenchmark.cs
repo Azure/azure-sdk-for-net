@@ -10,18 +10,20 @@ namespace Azure.Core.Perf
 {
     [MemoryDiagnoser]
     // [SimpleJob(RuntimeMoniker.NetCoreApp31)]
-    [SimpleJob(RuntimeMoniker.Net462)]
+    // [SimpleJob(RuntimeMoniker.Net462)]
     [SimpleJob(RuntimeMoniker.Net60, baseline: true)]
     public class FastPropertyBagBenchmark
     {
+        private int readLoops = 30;
+
         [Benchmark(Baseline = true)]
-        [Arguments(1)]
-        [Arguments(2)]
-        [Arguments(3)]
+        // [Arguments(1)]
+        // [Arguments(2)]
+        // [Arguments(3)]
         [Arguments(5)]
-        [Arguments(10)]
+        // [Arguments(10)]
         [Arguments(30)]
-        public void ArrayBackedPropertyBag(int items)
+        public void ArrayBackedPropertyBagNoDupes(int items)
         {
             object val1;
             object val2;
@@ -54,7 +56,223 @@ namespace Azure.Core.Perf
             object val29;
             object val30;
 
-            HttpMessage message = new HttpMessage(new MockRequest(), new ResponseClassifier());
+            using HttpMessage message = new HttpMessage(new MockRequest(), new ResponseClassifier());
+            switch (items)
+            {
+                case 1:
+                    message.SetPropertyOld(typeof(T1), new T1() { Value = 1234 });
+                    message.TryGetPropertyOld(typeof(T1), out val1);
+                    break;
+                case 2:
+                    message.SetPropertyOld(typeof(T1), new T1() { Value = 1234 });
+                    message.TryGetPropertyOld(typeof(T1), out val1);
+                    message.SetPropertyOld(typeof(T2), new T2() { Value = 1234 });
+                    message.TryGetPropertyOld(typeof(T2), out val2);
+                    break;
+                case 3:
+                    message.SetPropertyOld(typeof(T1), new T1() { Value = 1234 });
+                    message.TryGetPropertyOld(typeof(T1), out val1);
+                    message.SetPropertyOld(typeof(T2), new T2() { Value = 1234 });
+                    message.TryGetPropertyOld(typeof(T2), out val2);
+                    message.SetPropertyOld(typeof(T3), new T3() { Value = 1234 });
+                    message.TryGetPropertyOld(typeof(T3), out val3);
+                    break;
+                case 5:
+                    var t3 = new T3() { Value = 1234 };
+                    message.SetPropertyOld(typeof(T1), new T1() { Value = 1234 });
+                    message.TryGetPropertyOld(typeof(T1), out val1);
+                    message.SetPropertyOld(typeof(T2), new T2() { Value = 1234 });
+                    message.TryGetPropertyOld(typeof(T2), out val2);
+                    message.SetPropertyOld(typeof(T3), t3);
+                    message.TryGetPropertyOld(typeof(T3), out val3);
+                    message.SetPropertyOld(typeof(T4), new T4() { Value = 1234 });
+                    message.TryGetPropertyOld(typeof(T4), out val4);
+                    message.SetPropertyOld(typeof(T5), new T5() { Value = 1234 });
+                    message.TryGetPropertyOld(typeof(T5), out val5);
+
+                    for (int i = 0; i < readLoops; i++)
+                    {
+                        t3.Value = i;
+                        message.SetPropertyOld(typeof(T3), t3);
+                    }
+
+                    for (int i = 0; i < readLoops; i++)
+                    {
+                        message.TryGetPropertyOld(typeof(T4), out val4);
+                    }
+                    break;
+
+                case 10:
+                    message.SetPropertyOld(typeof(T1), new T1() { Value = 1234 });
+                    message.SetPropertyOld(typeof(T2), new T2() { Value = 1234 });
+                    message.SetPropertyOld(typeof(T3), new T3() { Value = 1234 });
+                    message.SetPropertyOld(typeof(T4), new T4() { Value = 1234 });
+                    message.SetPropertyOld(typeof(T5), new T5() { Value = 1234 });
+                    message.SetPropertyOld(typeof(T6), new T6() { Value = 1234 });
+                    message.SetPropertyOld(typeof(T7), new T7() { Value = 1234 });
+                    message.SetPropertyOld(typeof(T8), new T8() { Value = 1234 });
+                    message.SetPropertyOld(typeof(T9), new T9() { Value = 1234 });
+                    message.SetPropertyOld(typeof(T10), new T10() { Value = 1234 });
+                    message.TryGetPropertyOld(typeof(T1), out val1);
+                    message.TryGetPropertyOld(typeof(T2), out val2);
+                    message.TryGetPropertyOld(typeof(T3), out val3);
+                    message.TryGetPropertyOld(typeof(T4), out val4);
+                    message.TryGetPropertyOld(typeof(T5), out val5);
+                    message.TryGetPropertyOld(typeof(T6), out val6);
+                    message.TryGetPropertyOld(typeof(T7), out val7);
+                    message.TryGetPropertyOld(typeof(T8), out val8);
+                    message.TryGetPropertyOld(typeof(T9), out val9);
+                    message.TryGetPropertyOld(typeof(T10), out val10);
+                    break;
+
+                case 20:
+                    message.SetPropertyOld(typeof(T1), new T1() { Value = 1234 });
+                    message.SetPropertyOld(typeof(T2), new T2() { Value = 1234 });
+                    message.SetPropertyOld(typeof(T3), new T3() { Value = 1234 });
+                    message.SetPropertyOld(typeof(T4), new T4() { Value = 1234 });
+                    message.SetPropertyOld(typeof(T5), new T5() { Value = 1234 });
+                    message.SetPropertyOld(typeof(T6), new T6() { Value = 1234 });
+                    message.SetPropertyOld(typeof(T7), new T7() { Value = 1234 });
+                    message.SetPropertyOld(typeof(T8), new T8() { Value = 1234 });
+                    message.SetPropertyOld(typeof(T9), new T9() { Value = 1234 });
+                    message.SetPropertyOld(typeof(T10), new T10() { Value = 1234 });
+                    message.SetPropertyOld(typeof(T11), new T11() { Value = 1234 });
+                    message.SetPropertyOld(typeof(T12), new T12() { Value = 1234 });
+                    message.SetPropertyOld(typeof(T13), new T13() { Value = 1234 });
+                    message.SetPropertyOld(typeof(T14), new T14() { Value = 1234 });
+                    message.SetPropertyOld(typeof(T15), new T15() { Value = 1234 });
+                    message.SetPropertyOld(typeof(T16), new T16() { Value = 1234 });
+                    message.SetPropertyOld(typeof(T17), new T17() { Value = 1234 });
+                    message.SetPropertyOld(typeof(T18), new T18() { Value = 1234 });
+                    message.SetPropertyOld(typeof(T19), new T19() { Value = 1234 });
+                    message.SetPropertyOld(typeof(T20), new T20() { Value = 1234 });
+                    message.TryGetPropertyOld(typeof(T1), out val1);
+                    message.TryGetPropertyOld(typeof(T2), out val2);
+                    message.TryGetPropertyOld(typeof(T3), out val3);
+                    message.TryGetPropertyOld(typeof(T4), out val4);
+                    message.TryGetPropertyOld(typeof(T5), out val5);
+                    message.TryGetPropertyOld(typeof(T6), out val6);
+                    message.TryGetPropertyOld(typeof(T7), out val7);
+                    message.TryGetPropertyOld(typeof(T8), out val8);
+                    message.TryGetPropertyOld(typeof(T9), out val9);
+                    message.TryGetPropertyOld(typeof(T10), out val10);
+                    message.TryGetPropertyOld(typeof(T11), out val11);
+                    message.TryGetPropertyOld(typeof(T12), out val12);
+                    message.TryGetPropertyOld(typeof(T13), out val13);
+                    message.TryGetPropertyOld(typeof(T14), out val14);
+                    message.TryGetPropertyOld(typeof(T15), out val15);
+                    message.TryGetPropertyOld(typeof(T16), out val16);
+                    message.TryGetPropertyOld(typeof(T17), out val17);
+                    message.TryGetPropertyOld(typeof(T18), out val18);
+                    message.TryGetPropertyOld(typeof(T19), out val19);
+                    message.TryGetPropertyOld(typeof(T20), out val20);
+                    break;
+                case 30:
+                    message.SetPropertyOld(typeof(T1), new T1() { Value = 1234 });
+                    message.SetPropertyOld(typeof(T2), new T2() { Value = 1234 });
+                    message.SetPropertyOld(typeof(T3), new T3() { Value = 1234 });
+                    message.SetPropertyOld(typeof(T4), new T4() { Value = 1234 });
+                    message.SetPropertyOld(typeof(T5), new T5() { Value = 1234 });
+                    message.SetPropertyOld(typeof(T6), new T6() { Value = 1234 });
+                    message.SetPropertyOld(typeof(T7), new T7() { Value = 1234 });
+                    message.SetPropertyOld(typeof(T8), new T8() { Value = 1234 });
+                    message.SetPropertyOld(typeof(T9), new T9() { Value = 1234 });
+                    message.SetPropertyOld(typeof(T10), new T10() { Value = 1234 });
+                    message.SetPropertyOld(typeof(T11), new T11() { Value = 1234 });
+                    message.SetPropertyOld(typeof(T12), new T12() { Value = 1234 });
+                    message.SetPropertyOld(typeof(T13), new T13() { Value = 1234 });
+                    message.SetPropertyOld(typeof(T14), new T14() { Value = 1234 });
+                    message.SetPropertyOld(typeof(T15), new T15() { Value = 1234 });
+                    message.SetPropertyOld(typeof(T16), new T16() { Value = 1234 });
+                    message.SetPropertyOld(typeof(T17), new T17() { Value = 1234 });
+                    message.SetPropertyOld(typeof(T18), new T18() { Value = 1234 });
+                    message.SetPropertyOld(typeof(T19), new T19() { Value = 1234 });
+                    message.SetPropertyOld(typeof(T20), new T20() { Value = 1234 });
+                    message.SetPropertyOld(typeof(T21), new T21() { Value = 1234 });
+                    message.SetPropertyOld(typeof(T22), new T22() { Value = 1234 });
+                    message.SetPropertyOld(typeof(T23), new T23() { Value = 1234 });
+                    message.SetPropertyOld(typeof(T24), new T24() { Value = 1234 });
+                    message.SetPropertyOld(typeof(T25), new T25() { Value = 1234 });
+                    message.SetPropertyOld(typeof(T26), new T26() { Value = 1234 });
+                    message.SetPropertyOld(typeof(T27), new T27() { Value = 1234 });
+                    message.SetPropertyOld(typeof(T28), new T28() { Value = 1234 });
+                    message.SetPropertyOld(typeof(T29), new T29() { Value = 1234 });
+                    message.SetPropertyOld(typeof(T30), new T30() { Value = 1234 });
+                    message.TryGetPropertyOld(typeof(T1), out val1);
+                    message.TryGetPropertyOld(typeof(T2), out val2);
+                    message.TryGetPropertyOld(typeof(T3), out val3);
+                    message.TryGetPropertyOld(typeof(T4), out val4);
+                    message.TryGetPropertyOld(typeof(T5), out val5);
+                    message.TryGetPropertyOld(typeof(T6), out val6);
+                    message.TryGetPropertyOld(typeof(T7), out val7);
+                    message.TryGetPropertyOld(typeof(T8), out val8);
+                    message.TryGetPropertyOld(typeof(T9), out val9);
+                    message.TryGetPropertyOld(typeof(T10), out val10);
+                    message.TryGetPropertyOld(typeof(T11), out val11);
+                    message.TryGetPropertyOld(typeof(T12), out val12);
+                    message.TryGetPropertyOld(typeof(T13), out val13);
+                    message.TryGetPropertyOld(typeof(T14), out val14);
+                    message.TryGetPropertyOld(typeof(T15), out val15);
+                    message.TryGetPropertyOld(typeof(T16), out val16);
+                    message.TryGetPropertyOld(typeof(T17), out val17);
+                    message.TryGetPropertyOld(typeof(T18), out val18);
+                    message.TryGetPropertyOld(typeof(T19), out val19);
+                    message.TryGetPropertyOld(typeof(T20), out val20);
+                    message.TryGetPropertyOld(typeof(T21), out val21);
+                    message.TryGetPropertyOld(typeof(T22), out val22);
+                    message.TryGetPropertyOld(typeof(T23), out val23);
+                    message.TryGetPropertyOld(typeof(T24), out val24);
+                    message.TryGetPropertyOld(typeof(T25), out val25);
+                    message.TryGetPropertyOld(typeof(T26), out val26);
+                    message.TryGetPropertyOld(typeof(T27), out val27);
+                    message.TryGetPropertyOld(typeof(T28), out val28);
+                    message.TryGetPropertyOld(typeof(T29), out val29);
+                    message.TryGetPropertyOld(typeof(T30), out val30);
+                    break;
+            }
+        }
+
+        [Benchmark]
+        // [Arguments(1)]
+        // [Arguments(2)]
+        // [Arguments(3)]
+        [Arguments(5)]
+        // [Arguments(10)]
+        [Arguments(30)]
+        public void ArrayBackedPropertyBagPool(int items)
+        {
+            object val1;
+            object val2;
+            object val3;
+            object val4;
+            object val5;
+            object val6;
+            object val7;
+            object val8;
+            object val9;
+            object val10;
+            object val11;
+            object val12;
+            object val13;
+            object val14;
+            object val15;
+            object val16;
+            object val17;
+            object val18;
+            object val19;
+            object val20;
+            object val21;
+            object val22;
+            object val23;
+            object val24;
+            object val25;
+            object val26;
+            object val27;
+            object val28;
+            object val29;
+            object val30;
+
+            using HttpMessage message = new HttpMessage(new MockRequest(), new ResponseClassifier());
             switch (items)
             {
                 case 1:
@@ -76,6 +294,7 @@ namespace Azure.Core.Perf
                     message.TryGetProperty(typeof(T3), out val3);
                     break;
                 case 5:
+                    var t3 = new T3() { Value = 1234 };
                     message.SetProperty(typeof(T1), new T1() { Value = 1234 });
                     message.TryGetProperty(typeof(T1), out val1);
                     message.SetProperty(typeof(T2), new T2() { Value = 1234 });
@@ -86,6 +305,15 @@ namespace Azure.Core.Perf
                     message.TryGetProperty(typeof(T4), out val4);
                     message.SetProperty(typeof(T5), new T5() { Value = 1234 });
                     message.TryGetProperty(typeof(T5), out val5);
+                    for (int i = 0; i < readLoops; i++)
+                    {
+                        t3.Value = i;
+                        message.SetProperty(typeof(T3), t3);
+                    }
+                    for (int i = 0; i < readLoops; i++)
+                    {
+                        message.TryGetProperty(typeof(T4), out val4);
+                    }
                     break;
 
                 case 10:
@@ -218,7 +446,7 @@ namespace Azure.Core.Perf
             }
         }
 
-        [Benchmark]
+        // [Benchmark]
         [Arguments(1)]
         [Arguments(2)]
         [Arguments(3)]
