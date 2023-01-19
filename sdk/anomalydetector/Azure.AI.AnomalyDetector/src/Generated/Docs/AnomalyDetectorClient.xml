@@ -3,7 +3,7 @@
   <members>
     <member name="DetectUnivariateEntireSeriesAsync(RequestContent,RequestContext)">
 <example>
-This sample shows how to call DetectUnivariateEntireSeriesAsync with required request content, and how to parse the result.
+This sample shows how to call DetectUnivariateEntireSeriesAsync with required parameters and request content, and how to parse the result.
 <code><![CDATA[
 var credential = new AzureKeyCredential("<key>");
 var endpoint = new Uri("<https://my-service.azure.com>");
@@ -28,7 +28,7 @@ Console.WriteLine(result.GetProperty("isAnomaly")[0].ToString());
 Console.WriteLine(result.GetProperty("isNegativeAnomaly")[0].ToString());
 Console.WriteLine(result.GetProperty("isPositiveAnomaly")[0].ToString());
 ]]></code>
-This sample shows how to call DetectUnivariateEntireSeriesAsync with all request content, and how to parse the result.
+This sample shows how to call DetectUnivariateEntireSeriesAsync with all parameters and request content, and how to parse the result.
 <code><![CDATA[
 var credential = new AzureKeyCredential("<key>");
 var endpoint = new Uri("<https://my-service.azure.com>");
@@ -110,7 +110,7 @@ Schema for <c>UnivariateEntireDetectionResult</c>:
     </member>
     <member name="DetectUnivariateEntireSeries(RequestContent,RequestContext)">
 <example>
-This sample shows how to call DetectUnivariateEntireSeries with required request content, and how to parse the result.
+This sample shows how to call DetectUnivariateEntireSeries with required parameters and request content, and how to parse the result.
 <code><![CDATA[
 var credential = new AzureKeyCredential("<key>");
 var endpoint = new Uri("<https://my-service.azure.com>");
@@ -135,7 +135,7 @@ Console.WriteLine(result.GetProperty("isAnomaly")[0].ToString());
 Console.WriteLine(result.GetProperty("isNegativeAnomaly")[0].ToString());
 Console.WriteLine(result.GetProperty("isPositiveAnomaly")[0].ToString());
 ]]></code>
-This sample shows how to call DetectUnivariateEntireSeries with all request content, and how to parse the result.
+This sample shows how to call DetectUnivariateEntireSeries with all parameters and request content, and how to parse the result.
 <code><![CDATA[
 var credential = new AzureKeyCredential("<key>");
 var endpoint = new Uri("<https://my-service.azure.com>");
@@ -217,7 +217,7 @@ Schema for <c>UnivariateEntireDetectionResult</c>:
     </member>
     <member name="DetectUnivariateLastPointAsync(RequestContent,RequestContext)">
 <example>
-This sample shows how to call DetectUnivariateLastPointAsync with required request content, and how to parse the result.
+This sample shows how to call DetectUnivariateLastPointAsync with required parameters and request content, and how to parse the result.
 <code><![CDATA[
 var credential = new AzureKeyCredential("<key>");
 var endpoint = new Uri("<https://my-service.azure.com>");
@@ -243,7 +243,7 @@ Console.WriteLine(result.GetProperty("isAnomaly").ToString());
 Console.WriteLine(result.GetProperty("isNegativeAnomaly").ToString());
 Console.WriteLine(result.GetProperty("isPositiveAnomaly").ToString());
 ]]></code>
-This sample shows how to call DetectUnivariateLastPointAsync with all request content, and how to parse the result.
+This sample shows how to call DetectUnivariateLastPointAsync with all parameters and request content, and how to parse the result.
 <code><![CDATA[
 var credential = new AzureKeyCredential("<key>");
 var endpoint = new Uri("<https://my-service.azure.com>");
@@ -325,7 +325,7 @@ Schema for <c>UnivariateLastDetectionResult</c>:
     </member>
     <member name="DetectUnivariateLastPoint(RequestContent,RequestContext)">
 <example>
-This sample shows how to call DetectUnivariateLastPoint with required request content, and how to parse the result.
+This sample shows how to call DetectUnivariateLastPoint with required parameters and request content, and how to parse the result.
 <code><![CDATA[
 var credential = new AzureKeyCredential("<key>");
 var endpoint = new Uri("<https://my-service.azure.com>");
@@ -351,7 +351,7 @@ Console.WriteLine(result.GetProperty("isAnomaly").ToString());
 Console.WriteLine(result.GetProperty("isNegativeAnomaly").ToString());
 Console.WriteLine(result.GetProperty("isPositiveAnomaly").ToString());
 ]]></code>
-This sample shows how to call DetectUnivariateLastPoint with all request content, and how to parse the result.
+This sample shows how to call DetectUnivariateLastPoint with all parameters and request content, and how to parse the result.
 <code><![CDATA[
 var credential = new AzureKeyCredential("<key>");
 var endpoint = new Uri("<https://my-service.azure.com>");
@@ -433,7 +433,7 @@ Schema for <c>UnivariateLastDetectionResult</c>:
     </member>
     <member name="DetectUnivariateChangePointAsync(RequestContent,RequestContext)">
 <example>
-This sample shows how to call DetectUnivariateChangePointAsync with required request content, and how to parse the result.
+This sample shows how to call DetectUnivariateChangePointAsync with required parameters and request content, and how to parse the result.
 <code><![CDATA[
 var credential = new AzureKeyCredential("<key>");
 var endpoint = new Uri("<https://my-service.azure.com>");
@@ -453,7 +453,7 @@ Response response = await client.DetectUnivariateChangePointAsync(RequestContent
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.ToString());
 ]]></code>
-This sample shows how to call DetectUnivariateChangePointAsync with all request content, and how to parse the result.
+This sample shows how to call DetectUnivariateChangePointAsync with all parameters and request content, and how to parse the result.
 <code><![CDATA[
 var credential = new AzureKeyCredential("<key>");
 var endpoint = new Uri("<https://my-service.azure.com>");
@@ -518,7 +518,7 @@ Schema for <c>UnivariateChangePointDetectionResult</c>:
     </member>
     <member name="DetectUnivariateChangePoint(RequestContent,RequestContext)">
 <example>
-This sample shows how to call DetectUnivariateChangePoint with required request content, and how to parse the result.
+This sample shows how to call DetectUnivariateChangePoint with required parameters and request content, and how to parse the result.
 <code><![CDATA[
 var credential = new AzureKeyCredential("<key>");
 var endpoint = new Uri("<https://my-service.azure.com>");
@@ -538,7 +538,7 @@ Response response = client.DetectUnivariateChangePoint(RequestContent.Create(dat
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.ToString());
 ]]></code>
-This sample shows how to call DetectUnivariateChangePoint with all request content, and how to parse the result.
+This sample shows how to call DetectUnivariateChangePoint with all parameters and request content, and how to parse the result.
 <code><![CDATA[
 var credential = new AzureKeyCredential("<key>");
 var endpoint = new Uri("<https://my-service.azure.com>");
@@ -751,7 +751,7 @@ Schema for <c>MultivariateDetectionResult</c>:
     </member>
     <member name="TrainMultivariateModelAsync(RequestContent,RequestContext)">
 <example>
-This sample shows how to call TrainMultivariateModelAsync with required request content, and how to parse the result.
+This sample shows how to call TrainMultivariateModelAsync with required parameters and request content, and how to parse the result.
 <code><![CDATA[
 var credential = new AzureKeyCredential("<key>");
 var endpoint = new Uri("<https://my-service.azure.com>");
@@ -770,7 +770,7 @@ Console.WriteLine(result.GetProperty("modelId").ToString());
 Console.WriteLine(result.GetProperty("createdTime").ToString());
 Console.WriteLine(result.GetProperty("lastUpdatedTime").ToString());
 ]]></code>
-This sample shows how to call TrainMultivariateModelAsync with all request content, and how to parse the result.
+This sample shows how to call TrainMultivariateModelAsync with all parameters and request content, and how to parse the result.
 <code><![CDATA[
 var credential = new AzureKeyCredential("<key>");
 var endpoint = new Uri("<https://my-service.azure.com>");
@@ -933,7 +933,7 @@ Schema for <c>AnomalyDetectionModel</c>:
     </member>
     <member name="TrainMultivariateModel(RequestContent,RequestContext)">
 <example>
-This sample shows how to call TrainMultivariateModel with required request content, and how to parse the result.
+This sample shows how to call TrainMultivariateModel with required parameters and request content, and how to parse the result.
 <code><![CDATA[
 var credential = new AzureKeyCredential("<key>");
 var endpoint = new Uri("<https://my-service.azure.com>");
@@ -952,7 +952,7 @@ Console.WriteLine(result.GetProperty("modelId").ToString());
 Console.WriteLine(result.GetProperty("createdTime").ToString());
 Console.WriteLine(result.GetProperty("lastUpdatedTime").ToString());
 ]]></code>
-This sample shows how to call TrainMultivariateModel with all request content, and how to parse the result.
+This sample shows how to call TrainMultivariateModel with all parameters and request content, and how to parse the result.
 <code><![CDATA[
 var credential = new AzureKeyCredential("<key>");
 var endpoint = new Uri("<https://my-service.azure.com>");
@@ -1675,21 +1675,7 @@ Schema for <c>MultivariateLastDetectionResult</c>:
     </member>
     <member name="GetMultivariateModelsAsync(Int32,Int32,RequestContext)">
 <example>
-This sample shows how to call GetMultivariateModelsAsync and parse the result.
-<code><![CDATA[
-var credential = new AzureKeyCredential("<key>");
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new AnomalyDetectorClient(endpoint, credential);
-
-await foreach (var data in client.GetMultivariateModelsAsync())
-{
-    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-    Console.WriteLine(result.GetProperty("modelId").ToString());
-    Console.WriteLine(result.GetProperty("createdTime").ToString());
-    Console.WriteLine(result.GetProperty("lastUpdatedTime").ToString());
-}
-]]></code>
-This sample shows how to call GetMultivariateModelsAsync with all parameters, and how to parse the result.
+This sample shows how to call GetMultivariateModelsAsync with required parameters and parse the result.
 <code><![CDATA[
 var credential = new AzureKeyCredential("<key>");
 var endpoint = new Uri("<https://my-service.azure.com>");
@@ -1768,21 +1754,7 @@ Schema for <c>Array</c>:
     </member>
     <member name="GetMultivariateModels(Int32,Int32,RequestContext)">
 <example>
-This sample shows how to call GetMultivariateModels and parse the result.
-<code><![CDATA[
-var credential = new AzureKeyCredential("<key>");
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new AnomalyDetectorClient(endpoint, credential);
-
-foreach (var data in client.GetMultivariateModels())
-{
-    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-    Console.WriteLine(result.GetProperty("modelId").ToString());
-    Console.WriteLine(result.GetProperty("createdTime").ToString());
-    Console.WriteLine(result.GetProperty("lastUpdatedTime").ToString());
-}
-]]></code>
-This sample shows how to call GetMultivariateModels with all parameters, and how to parse the result.
+This sample shows how to call GetMultivariateModels with required parameters and parse the result.
 <code><![CDATA[
 var credential = new AzureKeyCredential("<key>");
 var endpoint = new Uri("<https://my-service.azure.com>");
