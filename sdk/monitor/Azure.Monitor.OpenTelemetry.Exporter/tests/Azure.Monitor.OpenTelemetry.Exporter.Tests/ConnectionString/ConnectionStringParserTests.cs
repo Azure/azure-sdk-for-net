@@ -185,11 +185,11 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
 
         private void RunTest(string connectionString, string expectedIngestionEndpoint, string expectedInstrumentationKey, string expectedAadAudience)
         {
-            ConnectionStringParser.GetValues(connectionString, out string ikey, out string endpoint, out string aadAudience);
+            var connectionVars = ConnectionStringParser.GetValues(connectionString);
 
-            Assert.Equal(expectedIngestionEndpoint, endpoint);
-            Assert.Equal(expectedInstrumentationKey, ikey);
-            Assert.Equal(expectedAadAudience, aadAudience);
+            Assert.Equal(expectedIngestionEndpoint, connectionVars.IngestionEndpoint);
+            Assert.Equal(expectedInstrumentationKey, connectionVars.InstrumentationKey);
+            Assert.Equal(expectedAadAudience, connectionVars.AadAudience);
         }
     }
 }
