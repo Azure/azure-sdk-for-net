@@ -4,7 +4,7 @@
     <AssemblyTitle>Microsoft Azure.OpenAI.Inference client library</AssemblyTitle>
     <Version>1.0.0-beta.1</Version>
     <PackageTags>Microsoft Azure OpenAI Inference</PackageTags>
-    <TargetFrameworks>$(RequiredTargetFrameworks);net47</TargetFrameworks>
+    <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <GenerateAPIListing>true</GenerateAPIListing>
     <NoWarn>$(NoWarn);CS1591;AZC0012;AZC0001;AZC0007</NoWarn>
     <IncludeOperationsSharedSource>true</IncludeOperationsSharedSource>
