@@ -3,7 +3,7 @@
 
 namespace Azure.Communication.CallAutomation
 {
-    /// <summary> Result with Wait for EventBase. </summary>
+    /// <summary>Result with Wait for EventBase.</summary>
     public abstract class ResultWithWaitForEventBase
     {
         private protected EventProcessor _evHandler;

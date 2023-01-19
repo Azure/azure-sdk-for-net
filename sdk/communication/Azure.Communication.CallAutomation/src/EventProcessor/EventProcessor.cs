@@ -43,7 +43,7 @@ namespace Azure.Communication.CallAutomation
         /// <summary>
         /// Process incoming events. Pass incoming events to get it processed to have other method like WaitForEvent to function.
         /// </summary>
-        /// <param name="events">Incoming CallAutomationEventBase object.</param>
+        /// <param name="events">Incoming <see cref="CallAutomationEventBase"/>.</param>
         public void ProcessEvents(IEnumerable<CallAutomationEventBase> events)
         {
             // Note: There will always be only 1 event coming from the service
@@ -66,7 +66,7 @@ namespace Azure.Communication.CallAutomation
                     handlers(this, args);
                 }
 
-                // if this call is disconnect, remove all related items in memory
+                // If this call is disconnect, remove all related items in memory
                 if (receivedEvent is CallDisconnected)
                 {
                     // remove from eventsbacklog
@@ -106,23 +106,23 @@ namespace Azure.Communication.CallAutomation
         }
 
         /// <summary>
-        /// Wait for any matching incoming event for the call. Returns the event once it arrives in ProcessEvent method.
+        /// Wait for matching incoming event. Returns the <see cref="CallAutomationEventBase"/> once it arrives in ProcessEvent method.
         /// </summary>
-        /// <param name="predicate">Predicate for waiting on event</param>
-        /// <param name="eventTimeout">Timeout for this waiting on event</param>
-        /// <returns>Returns CallAutomationEvent once matching event arrives.</returns>
-        public async Task<CallAutomationEventBase> WaitForEvent(Func<CallAutomationEventBase, bool> predicate, TimeSpan eventTimeout = default)
+        /// <param name="predicate">Predicate for waiting on event.</param>
+        /// <param name="eventTimeout">Timeout for this waiting on event.</param>
+        /// <returns>Returns <see cref="CallAutomationEventBase"/> once matching event arrives.</returns>
+        public async Task<CallAutomationEventBase> WaitForSingleEvent(Func<CallAutomationEventBase, bool> predicate, TimeSpan eventTimeout = default)
         {
-            // initialize awaiter and get event handler of it
+            // Initialize awaiter and get event handler of it
             var awaiter = new EventAwaiter(predicate, eventTimeout == default ? _exceptionTimeout : eventTimeout);
             EventHandler<EventProcessorArgs> handler = (o, arg) => awaiter.OnEventReceived(o, arg);
 
             try
             {
-                // register event handler
+                // Register eventhandler
                 _eventReceived += handler;
 
-                // see if events have arrived earlier and saved in backlog
+                // See if events have arrived earlier and saved in backlog
                 if (_eventBacklog.TryGetAndRemoveEvent(predicate, out var backlogEvent))
                 {
                     _eventReceived -= handler;
@@ -131,10 +131,10 @@ namespace Azure.Communication.CallAutomation
                 }
                 else
                 {
-                    // wait for incoming event until timeout exception is arised from awaiter.
+                    // Wait for incoming event until timeout exception is arised from awaiter
                     var matchingEvent = await awaiter.taskSource.Task.ConfigureAwait(false);
 
-                    // matching event found. Remove from EventProcessor & Backlogs.
+                    // Matching event found. Remove from EventProcessor & Backlogs
                     _eventReceived -= handler;
                     awaiter.Dispose();
                     _eventBacklog.TryRemoveEvent(matchingEvent.EventArgsId);
@@ -150,11 +150,26 @@ namespace Azure.Communication.CallAutomation
             }
         }
 
+        /// <summary>
+        /// Wait for matching incoming event. Returns the <see cref="CallAutomationEventBase"/> once it arrives in ProcessEvent method.
+        /// </summary>
+        /// <typeparam name="TEvent">Matching event type.</typeparam>
+        /// <param name="connectionId">CallConnectionId of the call.</param>
+        /// <param name="operationContext">OperationContext of the method.</param>
+        /// <param name="eventTimeout">Timeout for this waiting on event.</param>
+        /// <returns>Returns the event once matching event arrives.</returns>
+        public async Task<TEvent> WaitForSingleEvent<TEvent>(string connectionId = default, string operationContext = default, TimeSpan eventTimeout = default) where TEvent : CallAutomationEventBase
+            => (TEvent)await WaitForSingleEvent(predicate
+                => predicate.CallConnectionId == connectionId
+                && predicate.OperationContext == operationContext
+                && predicate is TEvent,
+                eventTimeout).ConfigureAwait(false);
+
         private void RemoveFromOngoingEvent(string callConnectionId, Type eventType = null)
         {
             if (eventType == null)
             {
-                // remove all matching connectionId
+                // Remove all matching connectionId
                 var keysToRemove = _ongoingEvents.Keys.Where(key => key.Item1 == callConnectionId).ToList();
                 keysToRemove.ForEach(key =>
                 {

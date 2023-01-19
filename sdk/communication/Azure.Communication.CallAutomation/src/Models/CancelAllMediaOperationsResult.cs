@@ -6,7 +6,7 @@ using System;
 
 namespace Azure.Communication.CallAutomation
 {
-    /// <summary> The result from Canceling all media operation. </summary>
+    /// <summary>The result from Canceling all media operation.</summary>
     public class CancelAllMediaOperationsResult : ResultWithWaitForEventBase
     {
         internal CancelAllMediaOperationsResult()
@@ -14,9 +14,9 @@ namespace Azure.Communication.CallAutomation
         }
 
         /// <summary>
-        /// Wait for CancelAllMediaOperationsEventResult using EventProcessor.
+        /// Wait for <see cref="CancelAllMediaOperationsEventResult"/> using <see cref="EventProcessor"/>.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>Returns <see cref="CancelAllMediaOperationsEventResult"/> which contains either <see cref="PlayCanceled"/> or <see cref="RecognizeCanceled"/> event.</returns>
         public async Task<CancelAllMediaOperationsEventResult> WaitForEvent(TimeSpan eventTimeout = default)
         {
             if (_evHandler is null)
@@ -24,7 +24,7 @@ namespace Azure.Communication.CallAutomation
                 throw new NullReferenceException(nameof(_evHandler));
             }
 
-            var returnedEvent = await _evHandler.WaitForEvent(filter
+            var returnedEvent = await _evHandler.WaitForSingleEvent(filter
                 => filter.CallConnectionId == _callConnectionId
                 && (filter.OperationContext == _operationContext || _operationContext is null)
                 && (filter.GetType() == typeof(PlayCanceled)

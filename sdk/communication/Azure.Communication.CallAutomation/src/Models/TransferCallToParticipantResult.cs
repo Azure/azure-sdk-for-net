@@ -11,9 +11,9 @@ namespace Azure.Communication.CallAutomation
     public partial class TransferCallToParticipantResult : ResultWithWaitForEventBase
     {
         /// <summary>
-        /// Wait for TransferCallToParticipantEventResult using EventProcessor.
+        /// Wait for <see cref="TransferCallToParticipantEventResult"/> using <see cref="EventProcessor"/>.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>Returns <see cref="TransferCallToParticipantEventResult"/> which contains either <see cref="CallTransferAccepted"/> event or <see cref="CallTransferFailed"/> event event.</returns>
         public async Task<TransferCallToParticipantEventResult> WaitForEvent(TimeSpan eventTimeout = default)
         {
             if (_evHandler is null)
@@ -21,7 +21,7 @@ namespace Azure.Communication.CallAutomation
                 throw new NullReferenceException(nameof(_evHandler));
             }
 
-            var returnedEvent = await _evHandler.WaitForEvent(filter
+            var returnedEvent = await _evHandler.WaitForSingleEvent(filter
                 => filter.CallConnectionId == _callConnectionId
                 && (filter.OperationContext == _operationContext || _operationContext is null)
                 && (filter.GetType() == typeof(CallTransferAccepted)

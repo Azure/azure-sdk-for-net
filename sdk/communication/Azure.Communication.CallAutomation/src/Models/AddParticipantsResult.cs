@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Azure.Communication.CallAutomation
 {
-    /// <summary> AddParticipantsResult Result </summary>
+    /// <summary>AddParticipantsResult Result.</summary>
     public class AddParticipantsResult : ResultWithWaitForEventBase
     {
         internal AddParticipantsResult(IReadOnlyList<CallParticipant> participants, string operationContext)
@@ -23,15 +23,15 @@ namespace Azure.Communication.CallAutomation
             OperationContext = internalObj.OperationContext;
         }
 
-        /// <summary> Gets the participants. </summary>
+        /// <summary>Gets the participants.</summary>
         public IReadOnlyList<CallParticipant> Participants { get; }
-        /// <summary> The operation context provided by client. </summary>
+        /// <summary>The operation context provided by client.</summary>
         public string OperationContext { get; }
 
         /// <summary>
-        /// Wait for AddParticipantsEventResult using EventProcessor.
+        /// Wait for <see cref="AddParticipantsEventResult"/> using <see cref="EventProcessor"/>.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>Returns <see cref="AddParticipantsEventResult"/> which contains either <see cref="AddParticipantsSucceeded"/> event or <see cref="AddParticipantsFailed"/> event event.</returns>
         public async Task<AddParticipantsEventResult> WaitForEvent(TimeSpan eventTimeout = default)
         {
             if (_evHandler is null)
@@ -39,7 +39,7 @@ namespace Azure.Communication.CallAutomation
                 throw new NullReferenceException(nameof(_evHandler));
             }
 
-            var returnedEvent = await _evHandler.WaitForEvent(filter
+            var returnedEvent = await _evHandler.WaitForSingleEvent(filter
                 => filter.CallConnectionId == _callConnectionId
                 && (filter.OperationContext == _operationContext || _operationContext is null)
                 && (filter.GetType() == typeof(AddParticipantsSucceeded)

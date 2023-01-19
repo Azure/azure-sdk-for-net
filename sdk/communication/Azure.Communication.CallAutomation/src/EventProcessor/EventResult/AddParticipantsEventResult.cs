@@ -3,18 +3,16 @@
 
 namespace Azure.Communication.CallAutomation
 {
-    /// <summary>
-    /// <summary> AddParticipantsEventResult is returned from WaitForEvent of AddParticipantsResult. </summary>
-    /// </summary>
+    /// <summary>AddParticipantsEventResult is returned from WaitForEvent of <see cref="AddParticipantsResult"/>.</summary>
     public class AddParticipantsEventResult : EventResultBase
     {
         /// <summary>
-        /// AddParticipantsSucceeded event will be returned when the participant joined the call successfully.
+        /// <see cref="AddParticipantsSucceeded"/> event will be returned when the participant joined the call successfully.
         /// </summary>
         public AddParticipantsSucceeded SuccessEvent { get; }
 
         /// <summary>
-        /// AddParticipantsFailed event will be returned when the participant did not join the call.
+        /// <see cref="AddParticipantsFailed"/> event will be returned when the participant did not join the call.
         /// </summary>
         public AddParticipantsFailed FailureEvent { get; }
 

@@ -27,7 +27,7 @@ namespace Azure.Communication.CallAutomation
             _predicate = predicate;
             _exceptionTimeout = defaultTimeout;
 
-            // timer is required for this eventawaiter to throw timeout exception on no events received
+            // Timer is required for this eventawaiter to throw timeout exception on no events received
             _expiringTimer = new Timer(new TimerCallback(TimerProc));
             _expiringTimer.Change((int)_exceptionTimeout.TotalMilliseconds, 0);
 
@@ -36,10 +36,10 @@ namespace Azure.Communication.CallAutomation
 
         private void OnEventsReceived(object sender, EventProcessorArgs e)
         {
-            // see if events sent matches filter set on constructor.
+            // See if events sent matches filter set on constructor.
             if (_predicate(e.CallAutomationEvent))
             {
-                // dispose expiring timer, as we don't want timer activating.
+                // Dispose expiring timer, as we don't want timer activating.
                 _expiringTimer.Dispose();
 
                 // Complete the task source with the matching event.

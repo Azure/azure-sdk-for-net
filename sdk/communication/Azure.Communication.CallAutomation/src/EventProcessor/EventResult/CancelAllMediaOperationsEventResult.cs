@@ -3,18 +3,16 @@
 
 namespace Azure.Communication.CallAutomation
 {
-    /// <summary>
-    /// <summary> CancelAllMediaOperationsEventResult is returned from WaitForEvent of CancelAllMediaOperationsResult. </summary>
-    /// </summary>
+    /// <summary><see cref="CancelAllMediaOperationsEventResult"/> is returned from WaitForEvent of <see cref="CancelAllMediaOperationsResult"/>.</summary>
     public class CancelAllMediaOperationsEventResult : EventResultBase
     {
         /// <summary>
-        /// PlayCanceled event will be returned when the play is successfully cancelled.
+        /// <see cref="PlayCanceled"/> event will be returned when the play is successfully cancelled.
         /// </summary>
         public PlayCanceled PlayCanceledSucessEvent { get; }
 
         /// <summary>
-        /// PlayCanceled event will be returned when the Recognize is successfully cancelled.
+        /// <see cref="RecognizeCanceled"/> event will be returned when the Recognize is successfully cancelled.
         /// </summary>
         public RecognizeCanceled RecognizeCanceledSucessEvent { get; }
 

@@ -6,7 +6,7 @@ using System;
 
 namespace Azure.Communication.CallAutomation
 {
-    /// <summary> The result from playing audio. </summary>
+    /// <summary>The result from playing audio.</summary>
     public class PlayResult : ResultWithWaitForEventBase
     {
         internal PlayResult()
@@ -14,9 +14,9 @@ namespace Azure.Communication.CallAutomation
         }
 
         /// <summary>
-        /// Wait for PlayEventResult using EventProcessor.
+        /// Wait for <see cref="PlayEventResult"/> using <see cref="EventProcessor"/>.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>Returns <see cref="PlayEventResult"/> which contains either <see cref="PlayCompleted"/> event or <see cref="PlayFailed"/> event event.</returns>
         public async Task<PlayEventResult> WaitForEvent(TimeSpan eventTimeout = default)
         {
             if (_evHandler is null)
@@ -24,7 +24,7 @@ namespace Azure.Communication.CallAutomation
                 throw new NullReferenceException(nameof(_evHandler));
             }
 
-            var returnedEvent = await _evHandler.WaitForEvent(filter
+            var returnedEvent = await _evHandler.WaitForSingleEvent(filter
                 => filter.CallConnectionId == _callConnectionId
                 && (filter.OperationContext == _operationContext || _operationContext is null)
                 && (filter.GetType() == typeof(PlayCompleted)

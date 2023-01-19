@@ -32,7 +32,7 @@ namespace Azure.Communication.CallAutomation
         /// </summary>
         /// <param name="backlogEventId">Internally used id for tracking the saved event.</param>
         /// <param name="eventsToBeSaved">Incoming Event to be saved.</param>
-        /// <returns></returns>
+        /// <returns>Returns True if adding event is successful. False otherwise.</returns>
         internal bool TryAddEvent(string backlogEventId, CallAutomationEventBase eventsToBeSaved)
         {
             if (_eventBacklog.Count < MAXIMUM_EVENTBACKLOGS_AT_ONCE)
@@ -53,7 +53,7 @@ namespace Azure.Communication.CallAutomation
             // Match any event that matches in the events backlog
             var matchingKvp = _eventBacklog.FirstOrDefault(kvp => predicate(kvp.Value.Item1));
 
-            // try remove the item - if successful, return it as keyValuePair
+            // Try remove the item - if successful, return it as keyValuePair
             if (matchingKvp.Key != default && _eventBacklog.TryRemove(matchingKvp.Key, out var returnedValue))
             {
                 matchingEvent = new KeyValuePair<string, CallAutomationEventBase>(matchingEvent.Key, returnedValue.Item1);
@@ -69,7 +69,7 @@ namespace Azure.Communication.CallAutomation
         /// Remove the event by Id.
         /// </summary>
         /// <param name="internalEventId">Key of the event in events backlog.</param>
-        /// <returns></returns>
+        /// <returns>Returns True if removing event is successful. False otherwise.</returns>
         internal bool TryRemoveEvent(string internalEventId) => _eventBacklog.TryRemove(internalEventId, out _);
 
         /// <summary>

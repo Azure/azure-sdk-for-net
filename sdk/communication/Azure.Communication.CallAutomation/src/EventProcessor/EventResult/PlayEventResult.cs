@@ -3,18 +3,16 @@
 
 namespace Azure.Communication.CallAutomation
 {
-    /// <summary>
-    /// <summary> PlayEventResult is returned from WaitForEvent of PlayResult. </summary>
-    /// </summary>
+    /// <summary><see cref="PlayEventResult"/> is returned from WaitForEvent of <see cref="PlayResult"/>.</summary>
     public class PlayEventResult : EventResultBase
     {
         /// <summary>
-        /// PlayCompleted event will be returned once the play is completed successfully.
+        /// <see cref="PlayCompleted"/> event will be returned once the play is completed successfully.
         /// </summary>
         public PlayCompleted SuccessEvent { get; }
 
         /// <summary>
-        /// PlayFailed event will be returned once the play failed.
+        /// <see cref="PlayFailed"/> event will be returned once the play failed.
         /// </summary>
         public PlayFailed FailureEvent { get; }
 

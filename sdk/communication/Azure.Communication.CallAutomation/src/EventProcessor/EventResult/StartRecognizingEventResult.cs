@@ -3,18 +3,16 @@
 
 namespace Azure.Communication.CallAutomation
 {
-    /// <summary>
-    /// <summary> StartRecognizingEventResult is returned from WaitForEvent of StartRecognizingResult. </summary>
-    /// </summary>
+    /// <summary><see cref="StartRecognizingEventResult"/> is returned from WaitForEvent of <see cref="StartRecognizingResult"/>.</summary>
     public class StartRecognizingEventResult : EventResultBase
     {
         /// <summary>
-        /// RecognizeCompleted event will be returned once the recognize is completed successfully.
+        /// <see cref="RecognizeCompleted"/> event will be returned once the recognize is completed successfully.
         /// </summary>
         public RecognizeCompleted SuccessEvent { get; }
 
         /// <summary>
-        /// RecognizeFailed event will be returned once the recognize is completed unsuccessfully.
+        /// <see cref="RecognizeFailed"/> event will be returned once the recognize is completed unsuccessfully.
         /// </summary>
         public RecognizeFailed FailureEvent { get; }
 

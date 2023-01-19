@@ -3,18 +3,16 @@
 
 namespace Azure.Communication.CallAutomation
 {
-    /// <summary>
-    /// <summary> TransferCallToParticipantEventResult is returned from WaitForEvent of TransferCallToParticipantResult. </summary>
-    /// </summary>
+    /// <summary><see cref="TransferCallToParticipantEventResult"/> is returned from WaitForEvent of <see cref="TransferCallToParticipantResult"/>.</summary>
     public class TransferCallToParticipantEventResult : EventResultBase
     {
         /// <summary>
-        /// CallTransferAccepted event will be returned once the call transfer is accepted successfully.
+        /// <see cref="CallTransferAccepted"/> event will be returned once the call transfer is accepted successfully.
         /// </summary>
         public CallTransferAccepted SuccessEvent { get; }
 
         /// <summary>
-        /// CallTransferFailed event will be returned once the call transfer is accepted unsuccessfully.
+        /// <see cref="CallTransferFailed"/> event will be returned once the call transfer is accepted unsuccessfully.
         /// </summary>
         public CallTransferFailed FailureEvent { get; }
 

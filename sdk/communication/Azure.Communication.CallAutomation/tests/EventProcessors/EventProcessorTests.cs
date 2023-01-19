@@ -20,7 +20,7 @@ namespace Azure.Communication.CallAutomation.Tests.EventProcessors
             EventProcessor handler = callAutomationClient.GetEventProcessor();
 
             // Wait for Event
-            Task<CallAutomationEventBase> baseEventTask = handler.WaitForEvent(ev
+            Task<CallAutomationEventBase> baseEventTask = handler.WaitForSingleEvent(ev
                 => ev.CallConnectionId == CallConnectionId
                 && ev.GetType() == typeof(CallConnected));
 
@@ -46,7 +46,7 @@ namespace Azure.Communication.CallAutomation.Tests.EventProcessors
             SendAndProcessEvent(handler, new CallConnected(CallConnectionId, ServerCallId, CorelationId, null));
 
             // Wait for Event after
-            CallAutomationEventBase returnedBaseEvent = await  handler.WaitForEvent(ev
+            CallAutomationEventBase returnedBaseEvent = await  handler.WaitForSingleEvent(ev
                 => ev.CallConnectionId == CallConnectionId
                 && ev.GetType() == typeof(CallConnected));
 
@@ -66,10 +66,10 @@ namespace Azure.Communication.CallAutomation.Tests.EventProcessors
             // Wait for Event , but mismatched callConnectionId & eventtype
             List<Task> taskList = new List<Task>
             {
-                handler.WaitForEvent(ev
+                handler.WaitForSingleEvent(ev
                 => ev.CallConnectionId == "SOMEOTHERID"
                 && ev.GetType() == typeof(CallConnected)),
-                handler.WaitForEvent(ev
+                handler.WaitForSingleEvent(ev
                 => ev.CallConnectionId == CallConnectionId
                 && ev.GetType() == typeof(CallDisconnected))
             };
@@ -101,7 +101,7 @@ namespace Azure.Communication.CallAutomation.Tests.EventProcessors
             // create and send multiple events to event processor
             for (int i = 0; i < eventsSent; i++)
             {
-                var task = handler.WaitForEvent(ev
+                var task = handler.WaitForSingleEvent(ev
                     => ev.CallConnectionId == CallConnectionId
                     && ev.GetType() == typeof(CallConnected));
                 SendAndProcessEvent(handler, new CallConnected(CallConnectionId, ServerCallId, CorelationId, null));
@@ -122,7 +122,7 @@ namespace Azure.Communication.CallAutomation.Tests.EventProcessors
             EventProcessor handler = callAutomationClient.GetEventProcessor();
             int eventsSent = 5;
 
-            Task<CallAutomationEventBase> eventAwaiter = handler.WaitForEvent(ev
+            Task<CallAutomationEventBase> eventAwaiter = handler.WaitForSingleEvent(ev
                 => ev.CallConnectionId == CallConnectionId
                 && ev.GetType() == typeof(CallConnected));
 
@@ -143,7 +143,7 @@ namespace Azure.Communication.CallAutomation.Tests.EventProcessors
 
                 if (i < eventsSent - 1)
                 {
-                    eventAwaiter = handler.WaitForEvent(ev
+                    eventAwaiter = handler.WaitForSingleEvent(ev
                         => ev.CallConnectionId == CallConnectionId
                         && ev.GetType() == typeof(CallConnected));
                 }

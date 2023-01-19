@@ -6,7 +6,7 @@ using System;
 
 namespace Azure.Communication.CallAutomation
 {
-    /// <summary> The result from start recognizing result. </summary>
+    /// <summary>The result from start recognizing result.</summary>
     public class StartRecognizingResult : ResultWithWaitForEventBase
     {
         internal StartRecognizingResult()
@@ -14,9 +14,9 @@ namespace Azure.Communication.CallAutomation
         }
 
         /// <summary>
-        /// Wait for StartRecognizingEventResult using EventProcessor.
+        /// Wait for <see cref="StartRecognizingEventResult"/> using <see cref="EventProcessor"/>.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>Returns <see cref="StartRecognizingEventResult"/> which contains either <see cref="RecognizeCompleted"/> event or <see cref="RecognizeFailed"/> event event.</returns>
         public async Task<StartRecognizingEventResult> WaitForEvent(TimeSpan eventTimeout = default)
         {
             if (_evHandler is null)
@@ -24,7 +24,7 @@ namespace Azure.Communication.CallAutomation
                 throw new NullReferenceException(nameof(_evHandler));
             }
 
-            var returnedEvent = await _evHandler.WaitForEvent(filter
+            var returnedEvent = await _evHandler.WaitForSingleEvent(filter
                 => filter.CallConnectionId == _callConnectionId
                 && (filter.OperationContext == _operationContext || _operationContext is null)
                 && (filter.GetType() == typeof(RecognizeCompleted)
