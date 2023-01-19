@@ -46,6 +46,7 @@ Documentation is available to help you learn how to use this package
 
 Code samples for using the management library for .NET can be found in the following locations
 - [.NET Management Library Code Samples](https://docs.microsoft.com/samples/browse/?branch=master&languages=csharp&term=managing%20using%20Azure%20.NET%20SDK)
+- [Automanage Specific Examples](./samples/Readme.md)
 
 ## In-depth Example
 Further AutoManage Specific Samples are available in the .\Samples folder within this folder. 
