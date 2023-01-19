@@ -32,7 +32,7 @@
       <ValidateReleaseNotesScriptPath Condition=" '$(ValidateReleaseNotesScriptPath)'=='' ">$(MSBuildThisFileDirectory)common/scripts/Verify-ChangeLog.ps1</ValidateReleaseNotesScriptPath>
       <ChangeLogPath>$([MSBuild]::NormalizeDirectory($(MSBuildProjectDirectory)/../))CHANGELOG.md</ChangeLogPath>
     </PropertyGroup>
-    <Exec ContinueOnError="true" ConsoleToMSBuild="true" StandardOutputImportance="High" Command="$(PowerShellExe) -NoProfile -NonInteractive -executionpolicy Unrestricted -File $(ValidateReleaseNotesScriptPath) -ChangeLogLocation $(ChangeLogPath) -VersionString $(_VersionInProject)">
+    <Exec ContinueOnError="true" ConsoleToMSBuild="true" StandardOutputImportance="High" Command="$(PowerShellExe) -NoProfile -NonInteractive -executionpolicy Unrestricted -Command $(ValidateReleaseNotesScriptPath) -ChangeLogLocation $(ChangeLogPath) -VersionString $(_VersionInProject)">
       <Output TaskParameter="ExitCode" PropertyName="SetReleaseNotesErrorCode" />
     </Exec>
     <Error Condition="'$(SetReleaseNotesErrorCode)' != '0'" Text="ChangeLog verification failed for [$(ChangeLogPath)]." />
