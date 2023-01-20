@@ -45,7 +45,7 @@ namespace Azure.Core.Dynamic
 
                     if (change.ReplacesJsonElement)
                     {
-                        return new JsonDataElement(this, (JsonElement)change.Value!, "");
+                        return new JsonDataElement(this, change.AsJsonElement(), "");
                     }
                 }
 

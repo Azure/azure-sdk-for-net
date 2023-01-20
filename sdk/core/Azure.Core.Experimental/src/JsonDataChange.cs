@@ -29,12 +29,27 @@ namespace Azure.Core.Dynamic
                 throw new InvalidOperationException("Unable to get Utf8JsonReader for this change.");
             }
 
-            JsonElement jsonElement = (JsonElement)Value!;
-
             // TODO: This is super inefficient, come back to and optimize
-            BinaryData data = new BinaryData(jsonElement.ToString());
+            BinaryData data = new BinaryData(AsJsonElement().ToString());
 
             return new Utf8JsonReader(data.ToMemory().Span);
+        }
+
+        internal JsonElement AsJsonElement()
+        {
+            if (Value is JsonElement)
+            {
+                return (JsonElement)Value;
+            }
+
+            // TODO: respect serializer options
+            byte[] bytes = JsonSerializer.SerializeToUtf8Bytes(Value);
+            return JsonDocument.Parse(bytes).RootElement;
+        }
+
+        public override string ToString()
+        {
+            return $"Path={Path};Value={Value};ReplacesJsonElement={ReplacesJsonElement}";
         }
     }
 }

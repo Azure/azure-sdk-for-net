@@ -64,7 +64,22 @@ namespace Azure.Core.Dynamic
                     return false;
                 }
 
-                for (int i = _changes.Count - 1; i >= 0; i--)
+                bool changed = TryGetChangeSingle(path, out change);
+
+                // TODO: Replace this
+                //// Check for changes to ancestor elements
+                //while (!changed && path.Length > 0)
+                //{
+                //    path = PopProperty(path);
+                //    changed = TryGetChangeSingle(path, out change);
+                //}
+
+                return changed;
+            }
+
+            private bool TryGetChangeSingle(string path, out JsonDataChange change)
+            {
+                for (int i = _changes!.Count - 1; i >= 0; i--)
                 {
                     var c = _changes[i];
                     if (c.Path == path)

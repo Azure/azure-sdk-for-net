@@ -52,7 +52,7 @@ namespace Azure.Core.Dynamic
 
                 if (change.ReplacesJsonElement)
                 {
-                    return new JsonDataElement(_root, (JsonElement)change.Value!, path);
+                    return new JsonDataElement(_root, change.AsJsonElement(), path);
                 }
             }
 
@@ -80,7 +80,7 @@ namespace Azure.Core.Dynamic
 
                 if (change.ReplacesJsonElement)
                 {
-                    element = (JsonElement)change.Value!;
+                    element = change.AsJsonElement();
                 }
             }
 
@@ -101,10 +101,43 @@ namespace Azure.Core.Dynamic
                 throw new InvalidOperationException($"Expected an 'Array' type but was {_element.ValueKind}.");
             }
 
-            var path = JsonData.ChangeTracker.PushProperty(_path, $"{index}");
+            var path = JsonData.ChangeTracker.PushIndex(_path, index);
+
+            if (Changes.TryGetChange(path, out JsonDataChange change))
+            {
+                if (change.Value == null)
+                {
+                    // TODO: handle this.
+                    //throw new InvalidCastException("Property has been removed");
+                }
+
+                if (change.ReplacesJsonElement)
+                {
+                    return new JsonDataElement(_root, change.AsJsonElement(), path);
+                }
+            }
 
             return new JsonDataElement(_root, _element[index], path);
         }
+
+        //private JsonDataElement GetObject()
+        //{
+        //    if (_element.ValueKind != JsonValueKind.Object)
+        //    {
+        //        throw new InvalidOperationException($"Expected an 'Object' type but was {_element.ValueKind}.");
+        //    }
+
+        //    // Check for changes to self before getting changes to child nodes
+        //    if (Changes.TryGetChange(_path, out JsonDataChange change))
+        //    {
+        //        if (change.ReplacesJsonElement)
+        //        {
+        //            return new JsonDataElement(_root, change.AsJsonElement(), _path);
+        //        }
+        //    }
+
+        //    return this;
+        //}
 
         internal double GetDouble()
         {
@@ -202,18 +235,10 @@ namespace Azure.Core.Dynamic
 
         internal void Set(double value) => Changes.AddChange(_path, value);
 
-        internal void Set(int value) => Changes.AddChange(_path, value);
+        internal void Set(int value) => Changes.AddChange(_path, value, _element.ValueKind != JsonValueKind.Number);
 
         internal void Set(string value) => Changes.AddChange(_path, value);
 
-        internal void Set(object value)
-        {
-            // TODO: respect serializer options
-
-            byte[] bytes = JsonSerializer.SerializeToUtf8Bytes(value);
-            JsonElement newElement = JsonDocument.Parse(bytes).RootElement;
-
-            Changes.AddChange(_path, newElement, true);
-        }
+        internal void Set(object value) => Changes.AddChange(_path, value, true);
     }
 }

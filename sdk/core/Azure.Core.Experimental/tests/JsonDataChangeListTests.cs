@@ -414,10 +414,9 @@ namespace Azure.Core.Experimental.Tests
             var jd = JsonData.Parse(json);
 
             var a = jd.RootElement.GetIndexElement(0);
+
             jd.RootElement.GetIndexElement(0).Set(5);
 
-            // This is wicked because 'a' keeps a reference to the root
-            // with the changelist.  Would we detach that?  How would we know to?
             a.GetProperty("Foo").Set(6);
 
             Assert.AreEqual(5, jd.RootElement.GetIndexElement(0).GetInt32());
@@ -425,8 +424,8 @@ namespace Azure.Core.Experimental.Tests
 
             jd.RootElement.GetIndexElement(0).Set(a);
 
-            Assert.AreEqual(6, jd.RootElement.GetProperty("Foo").GetIndexElement(0).GetInt32());
-            Assert.AreEqual(6, a.GetProperty("Foo").GetIndexElement(0).GetInt32());
+            Assert.AreEqual(6, jd.RootElement.GetIndexElement(0).GetProperty("Foo").GetInt32());
+            Assert.AreEqual(6, a.GetIndexElement(0).GetProperty("Foo").GetInt32());
         }
 
         [Test]
