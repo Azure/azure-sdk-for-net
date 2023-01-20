@@ -19,20 +19,20 @@ namespace Azure.Monitor.Ingestion
             V2021_11_01_Preview = 1,
         }
     }
-    public partial class UploadFailedArgs : Azure.SyncAsyncEventArgs
+    public partial class UploadFailedEventArgs : Azure.SyncAsyncEventArgs
     {
-        internal UploadFailedArgs() : base (default(bool), default(System.Threading.CancellationToken)) { }
+        public UploadFailedEventArgs(System.Collections.Generic.List<object> failedLogs, System.Exception exception, bool isRunningSynchronously, System.Threading.CancellationToken cancellationToken) : base (default(bool), default(System.Threading.CancellationToken)) { }
         public System.Exception Exception { get { throw null; } }
-        public int FailedLogs { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<object> FailedLogs { get { throw null; } }
     }
     public partial class UploadLogsOptions
     {
         public UploadLogsOptions() { }
         public int MaxConcurrency { get { throw null; } set { } }
         public Azure.Core.Serialization.ObjectSerializer Serializer { get { throw null; } set { } }
-        public event Azure.Core.SyncAsyncEventHandler<Azure.Monitor.Ingestion.UploadFailedArgs> UploadFailed { add { } remove { } }
-        protected internal static void OnException(int logsCount, Azure.Monitor.Ingestion.UploadLogsOptions options, Azure.Response response, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { }
-        protected internal static System.Threading.Tasks.Task OnExceptionAsync(int logsCount, Azure.Monitor.Ingestion.UploadLogsOptions options, Azure.Response response, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public event Azure.Core.SyncAsyncEventHandler<Azure.Monitor.Ingestion.UploadFailedEventArgs> UploadFailedEventHandler { add { } remove { } }
+        protected internal void OnException(Azure.Monitor.Ingestion.UploadFailedEventArgs eventArgs, Azure.Monitor.Ingestion.UploadLogsOptions options, Azure.Response response) { }
+        protected internal static System.Threading.Tasks.Task OnExceptionAsync(Azure.Monitor.Ingestion.UploadFailedEventArgs eventArgs, Azure.Monitor.Ingestion.UploadLogsOptions options, Azure.Response response) { throw null; }
     }
 }
 namespace Microsoft.Extensions.Azure
