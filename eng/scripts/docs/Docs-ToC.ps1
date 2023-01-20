@@ -57,7 +57,10 @@ function Fetch-NamespacesFromNupkg ($package, $version) {
     }
     if (!$dllFiles) {
         LogWarning "Can't find any dll file from $tempLocation/$packageFolder with target netstandard2.0."
-        $dllFiles = Get-ChildItem "$tempLocation/$packageFolder/lib/*" -Filter '*.dll' -Recurse
+        $dllFiles = @()
+        if (Test-Path "$tempLocation/$packageFolder/lib/") {
+            $dllFiles = Get-ChildItem "$tempLocation/$packageFolder/lib/*" -Filter '*.dll' -Recurse
+        }
         if (!$dllFiles) {
             LogError "Can't find any dll file from $tempLocation/$packageFolder."
             return @()
