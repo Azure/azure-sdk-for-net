@@ -7,11 +7,12 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.Containers.ContainerRegistry;
 using Azure.Core;
 
-namespace Azure.Containers.ContainerRegistry
+namespace Azure.Containers.ContainerRegistry.Specialized
 {
-    internal partial class Platform : IUtf8JsonSerializable
+    public partial class ManifestPlatform : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -19,12 +20,12 @@ namespace Azure.Containers.ContainerRegistry
             if (Optional.IsDefined(Architecture))
             {
                 writer.WritePropertyName("architecture");
-                writer.WriteStringValue(Architecture);
+                writer.WriteStringValue(Architecture.ToString());
             }
-            if (Optional.IsDefined(Os))
+            if (Optional.IsDefined(OperatingSystem))
             {
                 writer.WritePropertyName("os");
-                writer.WriteStringValue(Os);
+                writer.WriteStringValue(OperatingSystem.ToString());
             }
             if (Optional.IsDefined(OsVersion))
             {
@@ -59,10 +60,10 @@ namespace Azure.Containers.ContainerRegistry
             writer.WriteEndObject();
         }
 
-        internal static Platform DeserializePlatform(JsonElement element)
+        internal static ManifestPlatform DeserializeManifestPlatform(JsonElement element)
         {
-            Optional<string> architecture = default;
-            Optional<string> os = default;
+            Optional<ArtifactArchitecture> architecture = default;
+            Optional<ArtifactOperatingSystem> os = default;
             Optional<string> osVersion = default;
             Optional<IList<string>> osFeatures = default;
             Optional<string> variant = default;
@@ -71,12 +72,22 @@ namespace Azure.Containers.ContainerRegistry
             {
                 if (property.NameEquals("architecture"))
                 {
-                    architecture = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    architecture = new ArtifactArchitecture(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("os"))
                 {
-                    os = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    os = new ArtifactOperatingSystem(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("os.version"))
@@ -120,7 +131,7 @@ namespace Azure.Containers.ContainerRegistry
                     continue;
                 }
             }
-            return new Platform(architecture.Value, os.Value, osVersion.Value, Optional.ToList(osFeatures), variant.Value, Optional.ToList(features));
+            return new ManifestPlatform(architecture, os, osVersion.Value, Optional.ToList(osFeatures), variant.Value, Optional.ToList(features));
         }
     }
 }

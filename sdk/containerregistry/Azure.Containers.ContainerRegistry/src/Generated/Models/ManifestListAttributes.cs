@@ -5,10 +5,10 @@
 
 #nullable disable
 
-namespace Azure.Containers.ContainerRegistry
+namespace Azure.Containers.ContainerRegistry.Specialized
 {
     /// <summary> The ManifestListAttributes. </summary>
-    internal partial class ManifestListAttributes
+    public partial class ManifestListAttributes
     {
         /// <summary> Initializes a new instance of ManifestListAttributes. </summary>
         public ManifestListAttributes()
@@ -20,7 +20,7 @@ namespace Azure.Containers.ContainerRegistry
         /// <param name="size"> The size in bytes of the object. </param>
         /// <param name="digest"> The digest of the content, as defined by the Registry V2 HTTP API Specification. </param>
         /// <param name="platform"> The platform object describes the platform which the image in the manifest runs on. A full list of valid operating system and architecture values are listed in the Go language documentation for $GOOS and $GOARCH. </param>
-        internal ManifestListAttributes(string mediaType, long? size, string digest, Platform platform)
+        internal ManifestListAttributes(string mediaType, long? size, string digest, ManifestPlatform platform)
         {
             MediaType = mediaType;
             Size = size;
@@ -35,6 +35,6 @@ namespace Azure.Containers.ContainerRegistry
         /// <summary> The digest of the content, as defined by the Registry V2 HTTP API Specification. </summary>
         public string Digest { get; set; }
         /// <summary> The platform object describes the platform which the image in the manifest runs on. A full list of valid operating system and architecture values are listed in the Go language documentation for $GOOS and $GOARCH. </summary>
-        public Platform Platform { get; set; }
+        public ManifestPlatform Platform { get; set; }
     }
 }

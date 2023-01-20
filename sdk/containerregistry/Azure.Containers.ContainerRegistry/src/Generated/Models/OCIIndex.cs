@@ -6,25 +6,24 @@
 #nullable disable
 
 using System.Collections.Generic;
-using Azure.Containers.ContainerRegistry.Specialized;
 using Azure.Core;
 
-namespace Azure.Containers.ContainerRegistry
+namespace Azure.Containers.ContainerRegistry.Specialized
 {
     /// <summary> Returns the requested OCI index file. </summary>
-    internal partial class OCIIndex : ArtifactManifest
+    public partial class OciIndex : ArtifactManifest
     {
-        /// <summary> Initializes a new instance of OCIIndex. </summary>
-        public OCIIndex()
+        /// <summary> Initializes a new instance of OciIndex. </summary>
+        public OciIndex()
         {
             Manifests = new ChangeTrackingList<ManifestListAttributes>();
         }
 
-        /// <summary> Initializes a new instance of OCIIndex. </summary>
+        /// <summary> Initializes a new instance of OciIndex. </summary>
         /// <param name="schemaVersion"> Schema version. </param>
         /// <param name="manifests"> List of OCI image layer information. </param>
         /// <param name="annotations"> Additional information provided through arbitrary metadata. </param>
-        internal OCIIndex(int? schemaVersion, IList<ManifestListAttributes> manifests, OciAnnotations annotations) : base(schemaVersion)
+        internal OciIndex(int? schemaVersion, IList<ManifestListAttributes> manifests, OciAnnotations annotations) : base(schemaVersion)
         {
             Manifests = manifests;
             Annotations = annotations;
