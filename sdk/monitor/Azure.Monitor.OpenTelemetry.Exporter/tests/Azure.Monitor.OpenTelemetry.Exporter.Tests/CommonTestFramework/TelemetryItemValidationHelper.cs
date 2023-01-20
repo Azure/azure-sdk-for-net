@@ -124,7 +124,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.CommonTestFramework
             string expectedTraceId,
             IDictionary<string, string> expectedProperties,
             string expectedSpanId,
-            bool expectedSuccess = true)
+            bool expectedSuccess = false)
         {
             Assert.Equal("Request", telemetryItem.Name); // telemetry type
             Assert.Equal("RequestData", telemetryItem.Data.BaseType); // telemetry data type

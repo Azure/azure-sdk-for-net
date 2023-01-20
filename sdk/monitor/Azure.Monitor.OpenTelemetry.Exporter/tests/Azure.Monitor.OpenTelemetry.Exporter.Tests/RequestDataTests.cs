@@ -62,7 +62,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             Assert.Equal(httpUrl, requestData.Url);
             Assert.Equal("0", requestData.ResponseCode);
             Assert.Equal(activity.Duration.ToString("c", CultureInfo.InvariantCulture), requestData.Duration);
-            Assert.Equal(activity.GetStatus() != Status.Error, requestData.Success);
+            Assert.False(requestData.Success);
             Assert.Null(requestData.Source);
             Assert.True(requestData.Properties.Count == 0);
             Assert.True(requestData.Measurements.Count == 0);
@@ -105,6 +105,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
                 parentContext: new ActivityContext(ActivityTraceId.CreateRandom(), ActivitySpanId.CreateRandom(), ActivityTraceFlags.Recorded),
                 startTime: DateTime.UtcNow);
 
+            var httpResponseCode = httpStatusCode ?? "0";
             activity.SetTag(SemanticConventions.AttributeHttpUrl, "https://www.foo.bar/search");
             activity.SetTag(SemanticConventions.AttributeHttpStatusCode, httpStatusCode);
 
@@ -112,7 +113,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
 
             var requestData = new RequestData(2, activity, ref monitorTags);
 
-            Assert.Equal(httpStatusCode, requestData.ResponseCode);
+            Assert.Equal(httpResponseCode, requestData.ResponseCode);
             Assert.Equal(isSuccess, requestData.Success);
         }
     }
