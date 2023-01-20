@@ -54,9 +54,9 @@ namespace Azure.Communication.CallAutomation
             ResultInformation = resultInformation;
             RecognitionType = recognitionType;
             ReasonCode = new ReasonCode(resultInformation.SubCode.ToString());
-            if (recognizeResult is CollectTonesResult collecToneResult)
+            if (recognizeResult is CollectTonesResult collectTonesResult)
             {
-                CollectTonesResult = collecToneResult;
+                CollectTonesResult = collectTonesResult;
             }
             else if (recognizeResult is ChoiceResult choiceResult)
             {
