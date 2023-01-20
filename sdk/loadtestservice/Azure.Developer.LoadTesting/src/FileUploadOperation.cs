@@ -42,9 +42,6 @@ namespace Azure.Developer.LoadTesting
                 if (HasCompleted && !HasValue)
                 {
                     throw new InvalidOperationException("The operation is not complete.");
-#pragma warning disable CA1065 // Do not raise exceptions in unexpected locations
-                    throw requestFailed;
-#pragma warning restore CA1065 // Do not raise exceptions in unexpected locations
                 }
                 else
                 {
@@ -108,7 +105,6 @@ namespace Azure.Developer.LoadTesting
             {
                 return GetRawResponse();
             }
-
 
             _response = _client.GetTestFile(_testId, _fileName);
             _value = _response.Content;

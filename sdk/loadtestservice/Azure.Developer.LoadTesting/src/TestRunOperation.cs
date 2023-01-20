@@ -36,10 +36,7 @@ namespace Azure.Developer.LoadTesting
             get {
                 if (HasCompleted && !HasValue)
                 {
-                    RequestFailedException requestFailed = new RequestFailedException(_response);
-#pragma warning disable CA1065 // Do not raise exceptions in unexpected locations
-                    throw requestFailed;
-#pragma warning restore CA1065 // Do not raise exceptions in unexpected locations
+                    throw new InvalidOperationException("The operation is not complete.");
                 }
                 else
                 {
@@ -102,15 +99,8 @@ namespace Azure.Developer.LoadTesting
                 return GetRawResponse();
             }
 
-            try
-            {
-                _response = _client.GetTestRun(_testRunId);
-                _value = _response.Content;
-            }
-            catch
-            {
-                throw new RequestFailedException(_response);
-            }
+            _response = _client.GetTestRun(_testRunId);
+            _value = _response.Content;
 
             return GetCompletionResponse();
         }
