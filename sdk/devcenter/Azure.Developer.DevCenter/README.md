@@ -75,7 +75,7 @@ You can familiarize yourself with different APIs using [Samples](https://github.
 ### Build a client and get projects
 ```C# Snippet:Azure_DevCenter_GetProjects_Scenario
 var credential = new DefaultAzureCredential();
-var devCenterClient = new DevCenterClient(tenantId, devCenterName, credential);
+var devCenterClient = new DevCenterClient(endpoint, credential);
 string targetProjectName = null;
 await foreach (BinaryData data in devCenterClient.GetProjectsAsync(filter: null, maxCount: 1))
 {
@@ -86,7 +86,7 @@ await foreach (BinaryData data in devCenterClient.GetProjectsAsync(filter: null,
 
 ### List available Dev Box Pools
 ```C# Snippet:Azure_DevCenter_GetPools_Scenario
-var devBoxesClient = new DevBoxesClient(tenantId, devCenterName, targetProjectName, credential);
+var devBoxesClient = new DevBoxesClient(endpoint, targetProjectName, credential);
 string targetPoolName = null;
 await foreach (BinaryData data in devBoxesClient.GetPoolsAsync(filter: null, maxCount: 1))
 {
@@ -125,7 +125,7 @@ Console.WriteLine($"Completed dev box deletion.");
 ### Get Catalog Items
 
 ```C# Snippet:Azure_DevCenter_GetCatalogItems_Scenario
-var environmentsClient = new EnvironmentsClient(tenantId, devCenterName, projectName, credential);
+var environmentsClient = new EnvironmentsClient(endpoint, projectName, credential);
 string catalogItemName = null;
 await foreach (BinaryData data in environmentsClient.GetCatalogItemsAsync(maxCount: 1))
 {

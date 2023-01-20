@@ -7,9 +7,9 @@ Run `dotnet build /t:GenerateCode` to generate code.
 
 ``` yaml
 input-file:
-  - https://github.com/Azure/azure-rest-api-specs/blob/75a8d8dcc9f6d0ec626bdeb32f5154f20c8c61cd/specification/devcenter/data-plane/Microsoft.DevCenter/preview/2022-03-01-preview/devcenter.json
-  - https://github.com/Azure/azure-rest-api-specs/blob/75a8d8dcc9f6d0ec626bdeb32f5154f20c8c61cd/specification/devcenter/data-plane/Microsoft.DevCenter/preview/2022-03-01-preview/devbox.json
-  - https://github.com/Azure/azure-rest-api-specs/blob/75a8d8dcc9f6d0ec626bdeb32f5154f20c8c61cd/specification/devcenter/data-plane/Microsoft.DevCenter/preview/2022-03-01-preview/environments.json
+  - https://github.com/Azure/azure-rest-api-specs/blob/af3f7994582c0cbd61a48b636907ad2ac95d332c/specification/devcenter/data-plane/Microsoft.DevCenter/preview/2022-11-11-preview/devcenter.json
+  - https://github.com/Azure/azure-rest-api-specs/blob/af3f7994582c0cbd61a48b636907ad2ac95d332c/specification/devcenter/data-plane/Microsoft.DevCenter/preview/2022-11-11-preview/devbox.json
+  - https://github.com/Azure/azure-rest-api-specs/blob/af3f7994582c0cbd61a48b636907ad2ac95d332c/specification/devcenter/data-plane/Microsoft.DevCenter/preview/2022-11-11-preview/environments.json
 
 namespace: Azure.Developer.DevCenter
 security: AADToken

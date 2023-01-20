@@ -19,13 +19,11 @@ namespace Azure.Developer.DevCenter.Tests
         {
         }
 
-        private EnvironmentsClient GetEnvironmentsClient(string dnsSuffix = "devcenter.azure.com") =>
+        private EnvironmentsClient GetEnvironmentsClient() =>
             InstrumentClient(new EnvironmentsClient(
-                TestEnvironment.TenantId,
-                TestEnvironment.DevCenterName,
+                TestEnvironment.Endpoint,
                 TestEnvironment.ProjectName,
                 TestEnvironment.Credential,
-                dnsSuffix,
                 InstrumentClientOptions(new DevCenterClientOptions())));
 
         [RecordedTest]
