@@ -14,28 +14,13 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
     {
         internal static PostgreSqlFlexibleServerNameAvailabilityResult DeserializePostgreSqlFlexibleServerNameAvailabilityResult(JsonElement element)
         {
-            Optional<string> message = default;
-            Optional<bool> nameAvailable = default;
             Optional<string> name = default;
             Optional<ResourceType> type = default;
+            Optional<bool> nameAvailable = default;
             Optional<PostgreSqlFlexibleServerNameUnavailableReason> reason = default;
+            Optional<string> message = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("message"))
-                {
-                    message = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("nameAvailable"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    nameAvailable = property.Value.GetBoolean();
-                    continue;
-                }
                 if (property.NameEquals("name"))
                 {
                     name = property.Value.GetString();
@@ -51,6 +36,16 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
+                if (property.NameEquals("nameAvailable"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    nameAvailable = property.Value.GetBoolean();
+                    continue;
+                }
                 if (property.NameEquals("reason"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -61,8 +56,13 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                     reason = new PostgreSqlFlexibleServerNameUnavailableReason(property.Value.GetString());
                     continue;
                 }
+                if (property.NameEquals("message"))
+                {
+                    message = property.Value.GetString();
+                    continue;
+                }
             }
-            return new PostgreSqlFlexibleServerNameAvailabilityResult(message.Value, Optional.ToNullable(nameAvailable), name.Value, Optional.ToNullable(type), Optional.ToNullable(reason));
+            return new PostgreSqlFlexibleServerNameAvailabilityResult(Optional.ToNullable(nameAvailable), Optional.ToNullable(reason), message.Value, name.Value, Optional.ToNullable(type));
         }
     }
 }
