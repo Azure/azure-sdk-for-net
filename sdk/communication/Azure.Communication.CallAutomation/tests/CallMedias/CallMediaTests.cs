@@ -18,12 +18,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
             new CommunicationUserIdentifier("id")
         };
         private static readonly FileSource _fileSource = new FileSource(new System.Uri("file://path/to/file"));
-        private static readonly TextSource _textSource = new TextSource("PlayTTS test text.")
-        {
-            SourceLocale = "en-US",
-            VoiceGender = GenderType.Female,
-            VoiceName = "LULU"
-        };
+        private static readonly TextSource _textSource = new TextSource("PlayTTS test text.", "en-US-ElizabethNeural");
         private static readonly PlayOptions _options = new PlayOptions()
         {
             Loop = false,

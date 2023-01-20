@@ -4,11 +4,17 @@
 
 ### Features Added
 
+* Added support for parsing AADAudience from ConnectionString ([#33593](https://github.com/Azure/azure-sdk-for-net/pull/33593))
+
 ### Breaking Changes
 
 ### Bugs Fixed
 
 ### Other Changes
+
+* Update OpenTelemetry dependencies
+  ([#33471](https://github.com/Azure/azure-sdk-for-net/pull/33471))
+  - OpenTelemetry 1.4.0-rc.2
 
 ## 1.0.0-beta.6 (2023-01-10)
 

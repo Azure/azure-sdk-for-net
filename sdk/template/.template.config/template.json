@@ -1,6 +1,9 @@
 {
   "$schema": "http://json.schemastore.org/template",
-  "classifications": [ "Azure", "ClassLibrary" ],
+  "classifications": [
+    "Azure",
+    "ClassLibrary"
+  ],
   "identity": "Azure.Template",
   "name": "Azure DataPlane SDK template: client project",
   "shortName": "azsdkdpg",
@@ -67,34 +70,34 @@
   "symbols": {
     "serviceDirectory": {
       "type": "parameter",
-      "datatype":"text",
+      "datatype": "text",
       "isRequired": true,
       "description": "The Azure client serviceDirectory name. ie. purview. It equals to the name of the directory in the specification folder of the azure-rest-api-specs repo that contains the REST API definition file."
     },
     "groupName": {
       "type": "parameter",
-      "datatype":"text",
+      "datatype": "text",
       "isRequired": true,
       "description": "The Azure namespace group the service belongs to. e.g. IoT",
       "replaces": "GroupName"
     },
     "clientName": {
       "type": "parameter",
-      "datatype":"text",
+      "datatype": "text",
       "isRequired": true,
       "description": "The Azure client library name. ie. PurviewAccount. It equals to the client title",
       "replaces": "ProviderFullName"
     },
     "swagger": {
       "type": "parameter",
-      "datatype":"text",
+      "datatype": "text",
       "isRequired": false,
       "description": "The swagger file link. It can be local file e.g. ./swagger/compute.json or premlink, e.g. https://github.com/dpokluda/azure-rest-api-specs/blob/be397aa65510bd4e8f87da539af2b0025f6f44ca/specification/deviceupdate/data-plane/Microsoft.DeviceUpdate/preview/2020-09-01/deviceupdate.json",
       "replaces": "SwaggerFileLink"
     },
     "securityScopes": {
       "type": "parameter",
-      "datatype":"text",
+      "datatype": "text",
       "isRequired": false,
       "description": "The Azure security scopes. ie. https://api.adu.microsoft.com/.default",
       "defaultValue": "",
@@ -102,7 +105,7 @@
     },
     "securityHeaderName": {
       "type": "parameter",
-      "datatype":"text",
+      "datatype": "text",
       "isRequired": false,
       "description": "The Azure key header name.",
       "defaultValue": "",
@@ -110,7 +113,7 @@
     },
     "tagVersion": {
       "type": "parameter",
-      "datatype":"text",
+      "datatype": "text",
       "isRequired": false,
       "description": "The optional parameter specifies the tag in the README.MD. If empty, the default tag in the README.MD is used.",
       "defaultValue": "",
@@ -189,18 +192,18 @@
     "ClientNameWithSuffix": {
       "type": "generated",
       "generator": "join",
-      "parameters": { 
-        "symbols": [ 
-            { 
-                "type": "ref", 
-                "value": "ClientNameCapitalCase" 
-            },
-            { 
-              "type": "const", 
-              "value": "Client" 
+      "parameters": {
+        "symbols": [
+          {
+            "type": "ref",
+            "value": "ClientNameCapitalCase"
+          },
+          {
+            "type": "const",
+            "value": "Client"
           }
-        ], 
-        "separator": "" 
+        ],
+        "separator": ""
       },
       "description": "Renames files containing 'TemplateClient'",
       "fileRename": "TemplateClient",
@@ -218,23 +221,23 @@
       "valueSource": "serviceDirectory",
       "valueTransform": "firstUpperCase"
     },
-    "ServiceDirectoryPath": { 
-      "type": "generated", 
-      "generator": "join", 
-      "parameters": { 
-          "symbols": [ 
-              { 
-                  "type": "const", 
-                  "value": "sdk/" 
-              }, 
-              { 
-                  "type": "ref", 
-                  "value": "ServiceNameLowercase" 
-              } 
-          ], 
-          "separator": "" 
-      }, 
-      "replaces": "sdk/template" 
+    "ServiceDirectoryPath": {
+      "type": "generated",
+      "generator": "join",
+      "parameters": {
+        "symbols": [
+          {
+            "type": "const",
+            "value": "sdk/"
+          },
+          {
+            "type": "ref",
+            "value": "ServiceNameLowercase"
+          }
+        ],
+        "separator": ""
+      },
+      "replaces": "sdk/template"
     },
     "PackageName": {
       "type": "generated",
@@ -254,7 +257,8 @@
             "value": "ClientNameCapitalCase"
           }
         ],
-        "separator": "."
+        "separator": ".",
+        "removeEmptyValues": true
       },
       "replaces": "Azure.Template"
     },
@@ -312,7 +316,7 @@
         ],
         "separator": "_"
       },
-      "replaces": "Azure_Template" 
+      "replaces": "Azure_Template"
     },
     "projectFileName": {
       "type": "generated",
@@ -328,7 +332,8 @@
             "value": "."
           }
         ],
-        "separator": ""
+        "separator": "",
+        "removeEmptyValues": true
       },
       "fileRename": "Azure.Template."
     },
@@ -336,17 +341,17 @@
       "type": "generated",
       "generator": "join",
       "parameters": {
-          "symbols": [
-              {
-                  "type": "const",
-                  "value": "ServiceDirectory: "
-              },
-              {
-                  "type": "ref",
-                  "value": "ServiceNameLowercase"
-              }
-          ],
-          "separator": ""
+        "symbols": [
+          {
+            "type": "const",
+            "value": "ServiceDirectory: "
+          },
+          {
+            "type": "ref",
+            "value": "ServiceNameLowercase"
+          }
+        ],
+        "separator": ""
       },
       "replaces": "ServiceDirectory: template"
     },
@@ -354,17 +359,18 @@
       "type": "generated",
       "generator": "join",
       "parameters": {
-          "symbols": [
-              {
-                  "type": "const",
-                  "value": "Microsoft"
-              },
-              {
-                  "type": "ref",
-                  "value": "ServiceNameCapitalCase"
-              }
-          ],
-          "separator": "."
+        "symbols": [
+          {
+            "type": "const",
+            "value": "Microsoft"
+          },
+          {
+            "type": "ref",
+            "value": "ServiceNameCapitalCase"
+          }
+        ],
+        "separator": ".",
+        "removeEmptyValues": true
       },
       "replaces": "Microsoft.Template"
     },
