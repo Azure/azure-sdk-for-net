@@ -275,6 +275,7 @@ namespace Azure.Containers.ContainerRegistry.Specialized
         public System.BinaryData Content { get { throw null; } }
         public string Digest { get { throw null; } }
         public string MediaType { get { throw null; } set { } }
+        public Azure.Containers.ContainerRegistry.Specialized.OciIndex AsOciIndex() { throw null; }
         public Azure.Containers.ContainerRegistry.Specialized.OciManifest AsOciManifest() { throw null; }
     }
     public partial class ManifestListAttributes
