@@ -81,6 +81,32 @@ foreach (Choice choice in response.Choices)
 }
 ```
 
+### Generate Chatbot Responses
+
+The `GenerateChatbotResponses` method gives an example of generating text responses to input prompts.
+
+```C# Snippet:GenerateChatbotResponses
+List<string> examplePrompts = new(){
+    "How are you today?",
+    "What is Azure OpenAI?",
+    "Why do children love dinosaurs?",
+    "Generate a proof of Euler's identity",
+    "Describe in single words only the good things that come into your mind about your mother.",
+};
+
+foreach (var prompt in examplePrompts)
+{
+    Console.Write($"Input: {prompt}");
+    var request = new CompletionsRequest();
+    request.Prompt.Add(prompt);
+
+    Completion completion = client.Completions("myModelDeployment", request);
+    var response = completion.Choices[0].Text;
+    Console.WriteLine($"Chatbot: {response}");
+}
+```
+
+
 ## Troubleshooting
 
 Describe common errors and exceptions, how to "unpack" them if necessary, and include guidance for graceful handling and recovery.
