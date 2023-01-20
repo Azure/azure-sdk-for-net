@@ -435,6 +435,45 @@ function EnsureCustomSource($package) {
   return $package
 }
 
+function Create-dotnet-NewPackageObject() {
+  return [PSCustomObject]@{
+    Name = "";
+    Group = "";
+    Version = "";
+    DisplayName = "";
+    ServiceName = "";
+    Type = "";
+    MSDocService = "";
+    ReadmePath = "";
+    DirectoryPath = "";
+    Namespaces = @();
+    DocsCiConfigProperties = "";
+    ManuallyOverride = "";
+  }
+}
+
+function Write-dotnet-DocsMsConfig($DocsRepo, $moniker, $onboardingPackages) {
+  $monikerToConifFiles = @{
+    "latest" = Join-Path $DocsRepo 'bundlepackages/azure-dotnet.csv'
+    "preview" = Join-Path $DocsRepo 'bundlepackages/azure-dotnet-preview.csv'
+    "legacy" = Join-Path $DocsRepo 'bundlepackages/azure-dotnet-legacy.csv'
+  }
+  
+  $configPath = $monikerToConifFiles[$moniker]
+  $outputLines = @()
+  foreach ($package in $onboardingPackages) {
+    $packageConfig = [PSCustomObject]@{
+      Id = $package.Name.ToLower().Replace(".", "")
+      Name = $package.Name
+      Properties = ConvertFrom-StringData $package.DocsCiConfigProperties
+      Versions = $package.Version
+    }
+    $packageConfig = EnsureCustomSource $packageConfig
+    $outputLines += Get-DocsCiLine $packageConfig
+  }
+  Set-Content $configPath -Value $outputLines
+}
+
 function Update-dotnet-DocsMsPackages($DocsRepoLocation, $DocsMetadata) {
   UpdateDocsMsPackages `
     (Join-Path $DocsRepoLocation 'bundlepackages/azure-dotnet-preview.csv') `

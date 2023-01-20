@@ -57,3 +57,5 @@ $GetDocsMsTocChildrenForManagementPackagesFn = "Get-${Language}-DocsMsTocChildre
 $UpdateDocsMsTocFn = "Get-${Language}-UpdatedDocsMsToc"
 $GetPackageLevelReadmeFn = "Get-${Language}-PackageLevelReadme"
 $GetRepositoryLinkFn = "Get-${Language}-RepositoryLink"
+$WriteDocsMsConfigFn = "Write-${Language}-DocsMsConfig"
+$CreateNewPackageObjectFn = "Create-${Language}-NewPackageObject"

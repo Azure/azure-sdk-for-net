@@ -132,3 +132,71 @@ function GenerateDocsMsMetadata($originalMetadata, $language, $languageDisplayNa
 function ServiceLevelReadmeNameStyle($serviceName) {
   return $serviceName.ToLower().Replace(' ', '-').Replace('/', '-')
 }
+
+function compareAndGetLatest($v1, $v2) {
+  if (!$v1 -and !$v2) {
+    return ''
+  }
+  if (!$v1 -or ($v1 -lt $v2)) {
+    return $v2
+  }
+  return $v1
+}
+
+function MergeObject($toObject, $fromObject) {
+  foreach($toProperty in $toObject.PSObject.Properties) {
+    if ($toProperty.Name -eq 'Version') {
+      $toObject.Version = compareAndGetLatest $fromObject.Version $toObject.Version
+      continue
+    }
+    foreach ($fromProperty in $fromObject.PSObject.Properties) {
+      if ($toProperty.Name -eq $fromProperty.Name) {
+        $toProperty.Value = $fromProperty.Value
+      }
+    }
+  }
+}
+
+function MergeCSVToDocsMetadata($csvPackages, $docsMetadata, $moniker, $dailyDocs) {
+  $isGroupId = $csvPackages.PSObject.Properties.Name -contains 'GroupId'
+  # Define the object with all properties (hard-coded)
+  $mergedPackages = @{}
+  # forloop into docs metadata
+  foreach ($metadata in $docsMetadata) {
+    $key = $metadata.Name
+    if ($isGroupId) {
+      $key = "$key-$($metadata.Group)"
+    }
+    $newMergedObject = &$CreateNewPackageObjectFn
+    if ($metadata.PSObject.Properties.Name -contains 'SkdType') {
+      $metadata | Add-Member -MemberType NoteProperty -Name 'Type' -Value $metadata.SdkType
+    }
+    if ($metadata.PSObject.Properties.Name -contains 'IsNewSdk') {
+      $metadata | Add-Member -MemberType NoteProperty -Name 'New' -Value $metadata.IsNewSdk
+    }
+    MergeObject -toObject $newMergedObject -fromObject $metadata
+    $mergedPackages[$key] = $newMergedObject
+  }
+  # forloop into csv packages
+  foreach ($metadata in $csvPackages) {    
+    $key = $metadata.Package
+    if ($isGroupId) {
+      $key = "$key-$($metadata.GroupId)"
+    }
+    if (!$mergedPackages.ContainsKey($key)) {
+      $mergedPackages[$key] = &$CreateNewPackageObjectFn
+    }
+    $version = $metadata.VersionGA
+    if ($moniker -eq 'preview' -or !$version) {
+      $version = $metadata.VersionPreview
+    }
+    # Normalized the property name with combined one.
+    $metadata | Add-Member -MemberType NoteProperty -Name 'Name' -Value $metadata.Package
+    if ($metadata.PSObject.Properties.Name -contains 'GroupId') {
+      $metadata | Add-Member -MemberType NoteProperty -Name 'Group' -Value $metadata.GroupId
+    }
+    $metadata | Add-Member -MemberType NoteProperty -Name 'Version' -Value $version
+    MergeObject -toObject $mergedPackages[$key] -fromObject $metadata
+  }
+  return $mergedPackages.Values
+}
