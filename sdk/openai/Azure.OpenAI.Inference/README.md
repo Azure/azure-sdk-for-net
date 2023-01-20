@@ -79,8 +79,6 @@ foreach (Choice choice in response.Choices)
 {
     Console.WriteLine(choice.Text);
 }
-```Python
-things = client.list_things()
 ```
 
 ## Troubleshooting
