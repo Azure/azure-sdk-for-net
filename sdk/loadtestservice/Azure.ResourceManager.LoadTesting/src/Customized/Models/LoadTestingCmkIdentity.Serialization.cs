@@ -8,7 +8,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.LoadTesting.Models
 {
-    public partial class CustomerManagedKeyIdentity : IUtf8JsonSerializable
+    public partial class LoadTestingCmkIdentity : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -37,9 +37,9 @@ namespace Azure.ResourceManager.LoadTesting.Models
             writer.WriteEndObject();
         }
 
-        internal static CustomerManagedKeyIdentity DeserializeCustomerManagedKeyIdentity(JsonElement element)
+        internal static LoadTestingCmkIdentity DeserializeLoadTestingCmkIdentity(JsonElement element)
         {
-            Optional<CustomerManagedKeyIdentityType> type = default;
+            Optional<LoadTestingCmkIdentityType> type = default;
             Optional<ResourceIdentifier> resourceId = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.LoadTesting.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    type = new CustomerManagedKeyIdentityType(property.Value.GetString());
+                    type = new LoadTestingCmkIdentityType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("resourceId"))
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.LoadTesting.Models
                     continue;
                 }
             }
-            return new CustomerManagedKeyIdentity(Optional.ToNullable(type), resourceId.Value);
+            return new LoadTestingCmkIdentity(Optional.ToNullable(type), resourceId.Value);
         }
     }
 }
