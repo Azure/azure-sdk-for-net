@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -55,8 +54,16 @@ namespace Azure.ResourceManager.HybridData
 
         /// <summary>
         /// This method gets the public keys.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridData/dataManagers/{dataManagerName}/publicKeys/{publicKeyName}
-        /// Operation Id: PublicKeys_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridData/dataManagers/{dataManagerName}/publicKeys/{publicKeyName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PublicKeys_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="publicKeyName"> Name of the public key. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -84,8 +91,16 @@ namespace Azure.ResourceManager.HybridData
 
         /// <summary>
         /// This method gets the public keys.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridData/dataManagers/{dataManagerName}/publicKeys/{publicKeyName}
-        /// Operation Id: PublicKeys_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridData/dataManagers/{dataManagerName}/publicKeys/{publicKeyName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PublicKeys_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="publicKeyName"> Name of the public key. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -113,92 +128,60 @@ namespace Azure.ResourceManager.HybridData
 
         /// <summary>
         /// This method gets the list view of public keys, however it will only have one element.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridData/dataManagers/{dataManagerName}/publicKeys
-        /// Operation Id: PublicKeys_ListByDataManager
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridData/dataManagers/{dataManagerName}/publicKeys</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PublicKeys_ListByDataManager</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="HybridDataPublicKeyResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<HybridDataPublicKeyResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<HybridDataPublicKeyResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _hybridDataPublicKeyPublicKeysClientDiagnostics.CreateScope("HybridDataPublicKeyCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _hybridDataPublicKeyPublicKeysRestClient.ListByDataManagerAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new HybridDataPublicKeyResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<HybridDataPublicKeyResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _hybridDataPublicKeyPublicKeysClientDiagnostics.CreateScope("HybridDataPublicKeyCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _hybridDataPublicKeyPublicKeysRestClient.ListByDataManagerNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new HybridDataPublicKeyResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _hybridDataPublicKeyPublicKeysRestClient.CreateListByDataManagerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _hybridDataPublicKeyPublicKeysRestClient.CreateListByDataManagerNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new HybridDataPublicKeyResource(Client, HybridDataPublicKeyData.DeserializeHybridDataPublicKeyData(e)), _hybridDataPublicKeyPublicKeysClientDiagnostics, Pipeline, "HybridDataPublicKeyCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// This method gets the list view of public keys, however it will only have one element.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridData/dataManagers/{dataManagerName}/publicKeys
-        /// Operation Id: PublicKeys_ListByDataManager
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridData/dataManagers/{dataManagerName}/publicKeys</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PublicKeys_ListByDataManager</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="HybridDataPublicKeyResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<HybridDataPublicKeyResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<HybridDataPublicKeyResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _hybridDataPublicKeyPublicKeysClientDiagnostics.CreateScope("HybridDataPublicKeyCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _hybridDataPublicKeyPublicKeysRestClient.ListByDataManager(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new HybridDataPublicKeyResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<HybridDataPublicKeyResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _hybridDataPublicKeyPublicKeysClientDiagnostics.CreateScope("HybridDataPublicKeyCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _hybridDataPublicKeyPublicKeysRestClient.ListByDataManagerNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new HybridDataPublicKeyResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _hybridDataPublicKeyPublicKeysRestClient.CreateListByDataManagerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _hybridDataPublicKeyPublicKeysRestClient.CreateListByDataManagerNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new HybridDataPublicKeyResource(Client, HybridDataPublicKeyData.DeserializeHybridDataPublicKeyData(e)), _hybridDataPublicKeyPublicKeysClientDiagnostics, Pipeline, "HybridDataPublicKeyCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridData/dataManagers/{dataManagerName}/publicKeys/{publicKeyName}
-        /// Operation Id: PublicKeys_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridData/dataManagers/{dataManagerName}/publicKeys/{publicKeyName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PublicKeys_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="publicKeyName"> Name of the public key. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -224,8 +207,16 @@ namespace Azure.ResourceManager.HybridData
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridData/dataManagers/{dataManagerName}/publicKeys/{publicKeyName}
-        /// Operation Id: PublicKeys_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridData/dataManagers/{dataManagerName}/publicKeys/{publicKeyName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PublicKeys_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="publicKeyName"> Name of the public key. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

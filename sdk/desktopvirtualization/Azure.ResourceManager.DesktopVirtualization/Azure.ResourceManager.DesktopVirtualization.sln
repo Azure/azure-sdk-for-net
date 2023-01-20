@@ -7,6 +7,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.ResourceManager.Deskt
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.ResourceManager.DesktopVirtualization.Tests", "tests\Azure.ResourceManager.DesktopVirtualization.Tests.csproj", "{E36A8647-6C66-4C6B-81DE-C8D633DBB8B0}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.ResourceManager.DesktopVirtualization.Samples", "samples\Azure.ResourceManager.DesktopVirtualization.Samples.csproj", "{D90839DE-418D-4D8C-8B9D-60879F3C001B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

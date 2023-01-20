@@ -6,9 +6,7 @@
 #nullable disable
 
 using System;
-using System.Linq;
 using System.Threading;
-using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -52,56 +50,44 @@ namespace Azure.ResourceManager.TrafficManager
 
         /// <summary>
         /// Lists all Traffic Manager profiles within a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/trafficmanagerprofiles
-        /// Operation Id: Profiles_ListBySubscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/trafficmanagerprofiles</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Profiles_ListBySubscription</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="TrafficManagerProfileResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<TrafficManagerProfileResource> GetTrafficManagerProfilesAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<TrafficManagerProfileResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = TrafficManagerProfileProfilesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetTrafficManagerProfiles");
-                scope.Start();
-                try
-                {
-                    var response = await TrafficManagerProfileProfilesRestClient.ListBySubscriptionAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new TrafficManagerProfileResource(Client, value)), null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => TrafficManagerProfileProfilesRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new TrafficManagerProfileResource(Client, TrafficManagerProfileData.DeserializeTrafficManagerProfileData(e)), TrafficManagerProfileProfilesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetTrafficManagerProfiles", "value", null, cancellationToken);
         }
 
         /// <summary>
         /// Lists all Traffic Manager profiles within a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/trafficmanagerprofiles
-        /// Operation Id: Profiles_ListBySubscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/trafficmanagerprofiles</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Profiles_ListBySubscription</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="TrafficManagerProfileResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<TrafficManagerProfileResource> GetTrafficManagerProfiles(CancellationToken cancellationToken = default)
         {
-            Page<TrafficManagerProfileResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = TrafficManagerProfileProfilesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetTrafficManagerProfiles");
-                scope.Start();
-                try
-                {
-                    var response = TrafficManagerProfileProfilesRestClient.ListBySubscription(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new TrafficManagerProfileResource(Client, value)), null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => TrafficManagerProfileProfilesRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new TrafficManagerProfileResource(Client, TrafficManagerProfileData.DeserializeTrafficManagerProfileData(e)), TrafficManagerProfileProfilesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetTrafficManagerProfiles", "value", null, cancellationToken);
         }
     }
 }

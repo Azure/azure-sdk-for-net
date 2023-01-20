@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -55,8 +54,16 @@ namespace Azure.ResourceManager.Synapse
 
         /// <summary>
         /// Get SQL pool replication link by name.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/sqlPools/{sqlPoolName}/replicationLinks/{linkId}
-        /// Operation Id: SqlPoolReplicationLinks_GetByName
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/sqlPools/{sqlPoolName}/replicationLinks/{linkId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SqlPoolReplicationLinks_GetByName</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="linkId"> The ID of the replication link. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -84,8 +91,16 @@ namespace Azure.ResourceManager.Synapse
 
         /// <summary>
         /// Get SQL pool replication link by name.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/sqlPools/{sqlPoolName}/replicationLinks/{linkId}
-        /// Operation Id: SqlPoolReplicationLinks_GetByName
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/sqlPools/{sqlPoolName}/replicationLinks/{linkId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SqlPoolReplicationLinks_GetByName</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="linkId"> The ID of the replication link. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -113,92 +128,60 @@ namespace Azure.ResourceManager.Synapse
 
         /// <summary>
         /// Lists a Sql pool&apos;s replication links.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/sqlPools/{sqlPoolName}/replicationLinks
-        /// Operation Id: SqlPoolReplicationLinks_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/sqlPools/{sqlPoolName}/replicationLinks</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SqlPoolReplicationLinks_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="SynapseReplicationLinkResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SynapseReplicationLinkResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<SynapseReplicationLinkResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _synapseReplicationLinkSqlPoolReplicationLinksClientDiagnostics.CreateScope("SynapseReplicationLinkCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _synapseReplicationLinkSqlPoolReplicationLinksRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new SynapseReplicationLinkResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<SynapseReplicationLinkResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _synapseReplicationLinkSqlPoolReplicationLinksClientDiagnostics.CreateScope("SynapseReplicationLinkCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _synapseReplicationLinkSqlPoolReplicationLinksRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new SynapseReplicationLinkResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _synapseReplicationLinkSqlPoolReplicationLinksRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _synapseReplicationLinkSqlPoolReplicationLinksRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SynapseReplicationLinkResource(Client, SynapseReplicationLinkData.DeserializeSynapseReplicationLinkData(e)), _synapseReplicationLinkSqlPoolReplicationLinksClientDiagnostics, Pipeline, "SynapseReplicationLinkCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Lists a Sql pool&apos;s replication links.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/sqlPools/{sqlPoolName}/replicationLinks
-        /// Operation Id: SqlPoolReplicationLinks_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/sqlPools/{sqlPoolName}/replicationLinks</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SqlPoolReplicationLinks_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="SynapseReplicationLinkResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SynapseReplicationLinkResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<SynapseReplicationLinkResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _synapseReplicationLinkSqlPoolReplicationLinksClientDiagnostics.CreateScope("SynapseReplicationLinkCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _synapseReplicationLinkSqlPoolReplicationLinksRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new SynapseReplicationLinkResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<SynapseReplicationLinkResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _synapseReplicationLinkSqlPoolReplicationLinksClientDiagnostics.CreateScope("SynapseReplicationLinkCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _synapseReplicationLinkSqlPoolReplicationLinksRestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new SynapseReplicationLinkResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _synapseReplicationLinkSqlPoolReplicationLinksRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _synapseReplicationLinkSqlPoolReplicationLinksRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SynapseReplicationLinkResource(Client, SynapseReplicationLinkData.DeserializeSynapseReplicationLinkData(e)), _synapseReplicationLinkSqlPoolReplicationLinksClientDiagnostics, Pipeline, "SynapseReplicationLinkCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/sqlPools/{sqlPoolName}/replicationLinks/{linkId}
-        /// Operation Id: SqlPoolReplicationLinks_GetByName
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/sqlPools/{sqlPoolName}/replicationLinks/{linkId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SqlPoolReplicationLinks_GetByName</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="linkId"> The ID of the replication link. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -224,8 +207,16 @@ namespace Azure.ResourceManager.Synapse
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/sqlPools/{sqlPoolName}/replicationLinks/{linkId}
-        /// Operation Id: SqlPoolReplicationLinks_GetByName
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/sqlPools/{sqlPoolName}/replicationLinks/{linkId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SqlPoolReplicationLinks_GetByName</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="linkId"> The ID of the replication link. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

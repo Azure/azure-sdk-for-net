@@ -1,8 +1,8 @@
 name: Core Feature Request
-description: Create a feature request for Azure.Core
+description: Create a feature request for Azure.Core.  Please note that this template is intended to be used by Azure SDK authors to request infrastructure features; for other requests, please [open a general issue](https://github.com/Azure/azure-sdk-for-net/issues/new/choose).
 title: "[Core] "
-labels: ["Azure.Core", "feature-request"]
-assignees: ["christothes","annelo-msft","JoshLove-msft"]
+labels: ["Azure.Core", "client", "feature-request", "needs-team-triage"]
+assignees: ["christothes","annelo-msft","JoshLove-msft", "jsquire"]
 
 body:
   - type: dropdown

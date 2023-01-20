@@ -8,7 +8,6 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -45,8 +44,16 @@ namespace Azure.ResourceManager.Authorization
 
         /// <summary>
         /// Get the specified role assignment schedule for a resource scope
-        /// Request Path: /{scope}/providers/Microsoft.Authorization/roleAssignmentSchedules/{roleAssignmentScheduleName}
-        /// Operation Id: RoleAssignmentSchedules_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{scope}/providers/Microsoft.Authorization/roleAssignmentSchedules/{roleAssignmentScheduleName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>RoleAssignmentSchedules_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="roleAssignmentScheduleName"> The name (guid) of the role assignment schedule to get. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -74,8 +81,16 @@ namespace Azure.ResourceManager.Authorization
 
         /// <summary>
         /// Get the specified role assignment schedule for a resource scope
-        /// Request Path: /{scope}/providers/Microsoft.Authorization/roleAssignmentSchedules/{roleAssignmentScheduleName}
-        /// Operation Id: RoleAssignmentSchedules_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{scope}/providers/Microsoft.Authorization/roleAssignmentSchedules/{roleAssignmentScheduleName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>RoleAssignmentSchedules_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="roleAssignmentScheduleName"> The name (guid) of the role assignment schedule to get. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -103,94 +118,62 @@ namespace Azure.ResourceManager.Authorization
 
         /// <summary>
         /// Gets role assignment schedules for a resource scope.
-        /// Request Path: /{scope}/providers/Microsoft.Authorization/roleAssignmentSchedules
-        /// Operation Id: RoleAssignmentSchedules_ListForScope
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{scope}/providers/Microsoft.Authorization/roleAssignmentSchedules</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>RoleAssignmentSchedules_ListForScope</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="filter"> The filter to apply on the operation. Use $filter=atScope() to return all role assignment schedules at or above the scope. Use $filter=principalId eq {id} to return all role assignment schedules at, above or below the scope for the specified principal. Use $filter=assignedTo(&apos;{userId}&apos;) to return all role assignment schedules for the current user. Use $filter=asTarget() to return all role assignment schedules created for the current user. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="RoleAssignmentScheduleResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<RoleAssignmentScheduleResource> GetAllAsync(string filter = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<RoleAssignmentScheduleResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _roleAssignmentScheduleClientDiagnostics.CreateScope("RoleAssignmentScheduleCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _roleAssignmentScheduleRestClient.ListForScopeAsync(Id, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new RoleAssignmentScheduleResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<RoleAssignmentScheduleResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _roleAssignmentScheduleClientDiagnostics.CreateScope("RoleAssignmentScheduleCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _roleAssignmentScheduleRestClient.ListForScopeNextPageAsync(nextLink, Id, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new RoleAssignmentScheduleResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _roleAssignmentScheduleRestClient.CreateListForScopeRequest(Id, filter);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _roleAssignmentScheduleRestClient.CreateListForScopeNextPageRequest(nextLink, Id, filter);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new RoleAssignmentScheduleResource(Client, RoleAssignmentScheduleData.DeserializeRoleAssignmentScheduleData(e)), _roleAssignmentScheduleClientDiagnostics, Pipeline, "RoleAssignmentScheduleCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Gets role assignment schedules for a resource scope.
-        /// Request Path: /{scope}/providers/Microsoft.Authorization/roleAssignmentSchedules
-        /// Operation Id: RoleAssignmentSchedules_ListForScope
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{scope}/providers/Microsoft.Authorization/roleAssignmentSchedules</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>RoleAssignmentSchedules_ListForScope</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="filter"> The filter to apply on the operation. Use $filter=atScope() to return all role assignment schedules at or above the scope. Use $filter=principalId eq {id} to return all role assignment schedules at, above or below the scope for the specified principal. Use $filter=assignedTo(&apos;{userId}&apos;) to return all role assignment schedules for the current user. Use $filter=asTarget() to return all role assignment schedules created for the current user. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="RoleAssignmentScheduleResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<RoleAssignmentScheduleResource> GetAll(string filter = null, CancellationToken cancellationToken = default)
         {
-            Page<RoleAssignmentScheduleResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _roleAssignmentScheduleClientDiagnostics.CreateScope("RoleAssignmentScheduleCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _roleAssignmentScheduleRestClient.ListForScope(Id, filter, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new RoleAssignmentScheduleResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<RoleAssignmentScheduleResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _roleAssignmentScheduleClientDiagnostics.CreateScope("RoleAssignmentScheduleCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _roleAssignmentScheduleRestClient.ListForScopeNextPage(nextLink, Id, filter, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new RoleAssignmentScheduleResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _roleAssignmentScheduleRestClient.CreateListForScopeRequest(Id, filter);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _roleAssignmentScheduleRestClient.CreateListForScopeNextPageRequest(nextLink, Id, filter);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new RoleAssignmentScheduleResource(Client, RoleAssignmentScheduleData.DeserializeRoleAssignmentScheduleData(e)), _roleAssignmentScheduleClientDiagnostics, Pipeline, "RoleAssignmentScheduleCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /{scope}/providers/Microsoft.Authorization/roleAssignmentSchedules/{roleAssignmentScheduleName}
-        /// Operation Id: RoleAssignmentSchedules_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{scope}/providers/Microsoft.Authorization/roleAssignmentSchedules/{roleAssignmentScheduleName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>RoleAssignmentSchedules_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="roleAssignmentScheduleName"> The name (guid) of the role assignment schedule to get. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -216,8 +199,16 @@ namespace Azure.ResourceManager.Authorization
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /{scope}/providers/Microsoft.Authorization/roleAssignmentSchedules/{roleAssignmentScheduleName}
-        /// Operation Id: RoleAssignmentSchedules_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{scope}/providers/Microsoft.Authorization/roleAssignmentSchedules/{roleAssignmentScheduleName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>RoleAssignmentSchedules_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="roleAssignmentScheduleName"> The name (guid) of the role assignment schedule to get. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
