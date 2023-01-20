@@ -9,13 +9,13 @@ namespace Azure.Containers.ContainerRegistry.Specialized
     /// <summary>
     /// The result from downloading an OCI manifest from the registry.
     /// </summary>
-    public class DownloadManifestResult : IDisposable
+    public class DownloadManifestResult
     {
-        internal DownloadManifestResult(string digest, OciManifest manifest, Stream manifestStream)
+        internal DownloadManifestResult(string digest, OciManifest manifest, BinaryData content)
         {
             Digest = digest;
             Manifest = manifest;
-            ManifestStream = manifestStream;
+            Content = content;
         }
 
         /// <summary>
@@ -29,17 +29,8 @@ namespace Azure.Containers.ContainerRegistry.Specialized
         public ArtifactManifest Manifest { get; }
 
         /// <summary>
-        /// The manifest stream that was downloaded.
+        /// The serialized content that was downloaded.
         /// </summary>
-        public Stream ManifestStream { get; }
-
-        /// <summary>
-        /// Disposes the <see cref="DownloadManifestResult"/> by calling <c>Dispose()</c> on the underlying <see cref="ManifestStream"/> stream.
-        /// </summary>
-        public void Dispose()
-        {
-            ManifestStream?.Dispose();
-            GC.SuppressFinalize(this);
-        }
+        public BinaryData Content { get; }
     }
 }

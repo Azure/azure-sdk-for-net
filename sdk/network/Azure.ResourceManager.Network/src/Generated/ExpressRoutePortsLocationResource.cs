@@ -89,8 +89,16 @@ namespace Azure.ResourceManager.Network
 
         /// <summary>
         /// Retrieves a single ExpressRoutePort peering location, including the list of available bandwidths available at said peering location.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/ExpressRoutePortsLocations/{locationName}
-        /// Operation Id: ExpressRoutePortsLocations_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/ExpressRoutePortsLocations/{locationName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ExpressRoutePortsLocations_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<ExpressRoutePortsLocationResource>> GetAsync(CancellationToken cancellationToken = default)
@@ -113,8 +121,16 @@ namespace Azure.ResourceManager.Network
 
         /// <summary>
         /// Retrieves a single ExpressRoutePort peering location, including the list of available bandwidths available at said peering location.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/ExpressRoutePortsLocations/{locationName}
-        /// Operation Id: ExpressRoutePortsLocations_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/ExpressRoutePortsLocations/{locationName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ExpressRoutePortsLocations_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<ExpressRoutePortsLocationResource> Get(CancellationToken cancellationToken = default)

@@ -10,6 +10,8 @@
 
 ### Other Changes
 
+- Switch to API version `2022-12-01`
+
 ## 1.1.0 (2022-11-02)
 
 ### Other Changes

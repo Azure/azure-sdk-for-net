@@ -9,7 +9,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary>
     /// The number of past periods to lag from the target column.
-    /// Serialized Name: TargetLags
     /// Please note <see cref="TargetLags"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="AutoTargetLags"/> and <see cref="CustomTargetLags"/>.
     /// </summary>
@@ -21,19 +20,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Initializes a new instance of TargetLags. </summary>
-        /// <param name="mode">
-        /// [Required] Set target lags mode - Auto/Custom
-        /// Serialized Name: TargetLags.mode
-        /// </param>
+        /// <param name="mode"> [Required] Set target lags mode - Auto/Custom. </param>
         internal TargetLags(TargetLagsMode mode)
         {
             Mode = mode;
         }
 
-        /// <summary>
-        /// [Required] Set target lags mode - Auto/Custom
-        /// Serialized Name: TargetLags.mode
-        /// </summary>
+        /// <summary> [Required] Set target lags mode - Auto/Custom. </summary>
         internal TargetLagsMode Mode { get; set; }
     }
 }

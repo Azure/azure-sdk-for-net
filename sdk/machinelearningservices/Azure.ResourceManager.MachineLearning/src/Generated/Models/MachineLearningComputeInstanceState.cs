@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary>
-    /// Current state of an ComputeInstance.
-    /// Serialized Name: ComputeInstanceState
-    /// </summary>
+    /// <summary> Current state of an ComputeInstance. </summary>
     public readonly partial struct MachineLearningComputeInstanceState : IEquatable<MachineLearningComputeInstanceState>
     {
         private readonly string _value;
@@ -41,80 +38,35 @@ namespace Azure.ResourceManager.MachineLearning.Models
         private const string UnknownValue = "Unknown";
         private const string UnusableValue = "Unusable";
 
-        /// <summary>
-        /// Creating
-        /// Serialized Name: ComputeInstanceState.Creating
-        /// </summary>
+        /// <summary> Creating. </summary>
         public static MachineLearningComputeInstanceState Creating { get; } = new MachineLearningComputeInstanceState(CreatingValue);
-        /// <summary>
-        /// CreateFailed
-        /// Serialized Name: ComputeInstanceState.CreateFailed
-        /// </summary>
+        /// <summary> CreateFailed. </summary>
         public static MachineLearningComputeInstanceState CreateFailed { get; } = new MachineLearningComputeInstanceState(CreateFailedValue);
-        /// <summary>
-        /// Deleting
-        /// Serialized Name: ComputeInstanceState.Deleting
-        /// </summary>
+        /// <summary> Deleting. </summary>
         public static MachineLearningComputeInstanceState Deleting { get; } = new MachineLearningComputeInstanceState(DeletingValue);
-        /// <summary>
-        /// Running
-        /// Serialized Name: ComputeInstanceState.Running
-        /// </summary>
+        /// <summary> Running. </summary>
         public static MachineLearningComputeInstanceState Running { get; } = new MachineLearningComputeInstanceState(RunningValue);
-        /// <summary>
-        /// Restarting
-        /// Serialized Name: ComputeInstanceState.Restarting
-        /// </summary>
+        /// <summary> Restarting. </summary>
         public static MachineLearningComputeInstanceState Restarting { get; } = new MachineLearningComputeInstanceState(RestartingValue);
-        /// <summary>
-        /// JobRunning
-        /// Serialized Name: ComputeInstanceState.JobRunning
-        /// </summary>
+        /// <summary> JobRunning. </summary>
         public static MachineLearningComputeInstanceState JobRunning { get; } = new MachineLearningComputeInstanceState(JobRunningValue);
-        /// <summary>
-        /// SettingUp
-        /// Serialized Name: ComputeInstanceState.SettingUp
-        /// </summary>
+        /// <summary> SettingUp. </summary>
         public static MachineLearningComputeInstanceState SettingUp { get; } = new MachineLearningComputeInstanceState(SettingUpValue);
-        /// <summary>
-        /// SetupFailed
-        /// Serialized Name: ComputeInstanceState.SetupFailed
-        /// </summary>
+        /// <summary> SetupFailed. </summary>
         public static MachineLearningComputeInstanceState SetupFailed { get; } = new MachineLearningComputeInstanceState(SetupFailedValue);
-        /// <summary>
-        /// Starting
-        /// Serialized Name: ComputeInstanceState.Starting
-        /// </summary>
+        /// <summary> Starting. </summary>
         public static MachineLearningComputeInstanceState Starting { get; } = new MachineLearningComputeInstanceState(StartingValue);
-        /// <summary>
-        /// Stopped
-        /// Serialized Name: ComputeInstanceState.Stopped
-        /// </summary>
+        /// <summary> Stopped. </summary>
         public static MachineLearningComputeInstanceState Stopped { get; } = new MachineLearningComputeInstanceState(StoppedValue);
-        /// <summary>
-        /// Stopping
-        /// Serialized Name: ComputeInstanceState.Stopping
-        /// </summary>
+        /// <summary> Stopping. </summary>
         public static MachineLearningComputeInstanceState Stopping { get; } = new MachineLearningComputeInstanceState(StoppingValue);
-        /// <summary>
-        /// UserSettingUp
-        /// Serialized Name: ComputeInstanceState.UserSettingUp
-        /// </summary>
+        /// <summary> UserSettingUp. </summary>
         public static MachineLearningComputeInstanceState UserSettingUp { get; } = new MachineLearningComputeInstanceState(UserSettingUpValue);
-        /// <summary>
-        /// UserSetupFailed
-        /// Serialized Name: ComputeInstanceState.UserSetupFailed
-        /// </summary>
+        /// <summary> UserSetupFailed. </summary>
         public static MachineLearningComputeInstanceState UserSetupFailed { get; } = new MachineLearningComputeInstanceState(UserSetupFailedValue);
-        /// <summary>
-        /// Unknown
-        /// Serialized Name: ComputeInstanceState.Unknown
-        /// </summary>
+        /// <summary> Unknown. </summary>
         public static MachineLearningComputeInstanceState Unknown { get; } = new MachineLearningComputeInstanceState(UnknownValue);
-        /// <summary>
-        /// Unusable
-        /// Serialized Name: ComputeInstanceState.Unusable
-        /// </summary>
+        /// <summary> Unusable. </summary>
         public static MachineLearningComputeInstanceState Unusable { get; } = new MachineLearningComputeInstanceState(UnusableValue);
         /// <summary> Determines if two <see cref="MachineLearningComputeInstanceState"/> values are the same. </summary>
         public static bool operator ==(MachineLearningComputeInstanceState left, MachineLearningComputeInstanceState right) => left.Equals(right);

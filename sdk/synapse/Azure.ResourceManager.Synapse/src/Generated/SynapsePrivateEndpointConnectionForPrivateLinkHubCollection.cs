@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -55,8 +54,16 @@ namespace Azure.ResourceManager.Synapse
 
         /// <summary>
         /// Get all PrivateEndpointConnection in the PrivateLinkHub by name
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/privateLinkHubs/{privateLinkHubName}/privateEndpointConnections/{privateEndpointConnectionName}
-        /// Operation Id: PrivateEndpointConnectionsPrivateLinkHub_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/privateLinkHubs/{privateLinkHubName}/privateEndpointConnections/{privateEndpointConnectionName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PrivateEndpointConnectionsPrivateLinkHub_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="privateEndpointConnectionName"> Name of the privateEndpointConnection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -84,8 +91,16 @@ namespace Azure.ResourceManager.Synapse
 
         /// <summary>
         /// Get all PrivateEndpointConnection in the PrivateLinkHub by name
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/privateLinkHubs/{privateLinkHubName}/privateEndpointConnections/{privateEndpointConnectionName}
-        /// Operation Id: PrivateEndpointConnectionsPrivateLinkHub_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/privateLinkHubs/{privateLinkHubName}/privateEndpointConnections/{privateEndpointConnectionName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PrivateEndpointConnectionsPrivateLinkHub_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="privateEndpointConnectionName"> Name of the privateEndpointConnection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -113,92 +128,60 @@ namespace Azure.ResourceManager.Synapse
 
         /// <summary>
         /// Get all PrivateEndpointConnections in the PrivateLinkHub
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/privateLinkHubs/{privateLinkHubName}/privateEndpointConnections
-        /// Operation Id: PrivateEndpointConnectionsPrivateLinkHub_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/privateLinkHubs/{privateLinkHubName}/privateEndpointConnections</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PrivateEndpointConnectionsPrivateLinkHub_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="SynapsePrivateEndpointConnectionForPrivateLinkHubResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SynapsePrivateEndpointConnectionForPrivateLinkHubResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<SynapsePrivateEndpointConnectionForPrivateLinkHubResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _synapsePrivateEndpointConnectionForPrivateLinkHubPrivateEndpointConnectionsPrivateLinkHubClientDiagnostics.CreateScope("SynapsePrivateEndpointConnectionForPrivateLinkHubCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _synapsePrivateEndpointConnectionForPrivateLinkHubPrivateEndpointConnectionsPrivateLinkHubRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new SynapsePrivateEndpointConnectionForPrivateLinkHubResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<SynapsePrivateEndpointConnectionForPrivateLinkHubResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _synapsePrivateEndpointConnectionForPrivateLinkHubPrivateEndpointConnectionsPrivateLinkHubClientDiagnostics.CreateScope("SynapsePrivateEndpointConnectionForPrivateLinkHubCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _synapsePrivateEndpointConnectionForPrivateLinkHubPrivateEndpointConnectionsPrivateLinkHubRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new SynapsePrivateEndpointConnectionForPrivateLinkHubResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _synapsePrivateEndpointConnectionForPrivateLinkHubPrivateEndpointConnectionsPrivateLinkHubRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _synapsePrivateEndpointConnectionForPrivateLinkHubPrivateEndpointConnectionsPrivateLinkHubRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SynapsePrivateEndpointConnectionForPrivateLinkHubResource(Client, SynapsePrivateEndpointConnectionForPrivateLinkHubData.DeserializeSynapsePrivateEndpointConnectionForPrivateLinkHubData(e)), _synapsePrivateEndpointConnectionForPrivateLinkHubPrivateEndpointConnectionsPrivateLinkHubClientDiagnostics, Pipeline, "SynapsePrivateEndpointConnectionForPrivateLinkHubCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Get all PrivateEndpointConnections in the PrivateLinkHub
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/privateLinkHubs/{privateLinkHubName}/privateEndpointConnections
-        /// Operation Id: PrivateEndpointConnectionsPrivateLinkHub_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/privateLinkHubs/{privateLinkHubName}/privateEndpointConnections</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PrivateEndpointConnectionsPrivateLinkHub_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="SynapsePrivateEndpointConnectionForPrivateLinkHubResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SynapsePrivateEndpointConnectionForPrivateLinkHubResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<SynapsePrivateEndpointConnectionForPrivateLinkHubResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _synapsePrivateEndpointConnectionForPrivateLinkHubPrivateEndpointConnectionsPrivateLinkHubClientDiagnostics.CreateScope("SynapsePrivateEndpointConnectionForPrivateLinkHubCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _synapsePrivateEndpointConnectionForPrivateLinkHubPrivateEndpointConnectionsPrivateLinkHubRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new SynapsePrivateEndpointConnectionForPrivateLinkHubResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<SynapsePrivateEndpointConnectionForPrivateLinkHubResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _synapsePrivateEndpointConnectionForPrivateLinkHubPrivateEndpointConnectionsPrivateLinkHubClientDiagnostics.CreateScope("SynapsePrivateEndpointConnectionForPrivateLinkHubCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _synapsePrivateEndpointConnectionForPrivateLinkHubPrivateEndpointConnectionsPrivateLinkHubRestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new SynapsePrivateEndpointConnectionForPrivateLinkHubResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _synapsePrivateEndpointConnectionForPrivateLinkHubPrivateEndpointConnectionsPrivateLinkHubRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _synapsePrivateEndpointConnectionForPrivateLinkHubPrivateEndpointConnectionsPrivateLinkHubRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SynapsePrivateEndpointConnectionForPrivateLinkHubResource(Client, SynapsePrivateEndpointConnectionForPrivateLinkHubData.DeserializeSynapsePrivateEndpointConnectionForPrivateLinkHubData(e)), _synapsePrivateEndpointConnectionForPrivateLinkHubPrivateEndpointConnectionsPrivateLinkHubClientDiagnostics, Pipeline, "SynapsePrivateEndpointConnectionForPrivateLinkHubCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/privateLinkHubs/{privateLinkHubName}/privateEndpointConnections/{privateEndpointConnectionName}
-        /// Operation Id: PrivateEndpointConnectionsPrivateLinkHub_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/privateLinkHubs/{privateLinkHubName}/privateEndpointConnections/{privateEndpointConnectionName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PrivateEndpointConnectionsPrivateLinkHub_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="privateEndpointConnectionName"> Name of the privateEndpointConnection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -224,8 +207,16 @@ namespace Azure.ResourceManager.Synapse
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/privateLinkHubs/{privateLinkHubName}/privateEndpointConnections/{privateEndpointConnectionName}
-        /// Operation Id: PrivateEndpointConnectionsPrivateLinkHub_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/privateLinkHubs/{privateLinkHubName}/privateEndpointConnections/{privateEndpointConnectionName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PrivateEndpointConnectionsPrivateLinkHub_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="privateEndpointConnectionName"> Name of the privateEndpointConnection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

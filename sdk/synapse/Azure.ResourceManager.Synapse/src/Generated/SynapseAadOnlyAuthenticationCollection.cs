@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -56,8 +55,16 @@ namespace Azure.ResourceManager.Synapse
 
         /// <summary>
         /// Create or Update a Azure Active Directory only authentication property for the workspaces
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/azureADOnlyAuthentications/{azureADOnlyAuthenticationName}
-        /// Operation Id: AzureADOnlyAuthentications_Create
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/azureADOnlyAuthentications/{azureADOnlyAuthenticationName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AzureADOnlyAuthentications_Create</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="azureADOnlyAuthenticationName"> name of the property. </param>
@@ -87,8 +94,16 @@ namespace Azure.ResourceManager.Synapse
 
         /// <summary>
         /// Create or Update a Azure Active Directory only authentication property for the workspaces
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/azureADOnlyAuthentications/{azureADOnlyAuthenticationName}
-        /// Operation Id: AzureADOnlyAuthentications_Create
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/azureADOnlyAuthentications/{azureADOnlyAuthenticationName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AzureADOnlyAuthentications_Create</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="azureADOnlyAuthenticationName"> name of the property. </param>
@@ -118,8 +133,16 @@ namespace Azure.ResourceManager.Synapse
 
         /// <summary>
         /// Gets a Azure Active Directory only authentication property
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/azureADOnlyAuthentications/{azureADOnlyAuthenticationName}
-        /// Operation Id: AzureADOnlyAuthentications_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/azureADOnlyAuthentications/{azureADOnlyAuthenticationName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AzureADOnlyAuthentications_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="azureADOnlyAuthenticationName"> name of the property. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -143,8 +166,16 @@ namespace Azure.ResourceManager.Synapse
 
         /// <summary>
         /// Gets a Azure Active Directory only authentication property
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/azureADOnlyAuthentications/{azureADOnlyAuthenticationName}
-        /// Operation Id: AzureADOnlyAuthentications_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/azureADOnlyAuthentications/{azureADOnlyAuthenticationName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AzureADOnlyAuthentications_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="azureADOnlyAuthenticationName"> name of the property. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -168,92 +199,60 @@ namespace Azure.ResourceManager.Synapse
 
         /// <summary>
         /// Gets a list of Azure Active Directory only authentication property for a workspace
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/azureADOnlyAuthentications
-        /// Operation Id: AzureADOnlyAuthentications_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/azureADOnlyAuthentications</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AzureADOnlyAuthentications_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="SynapseAadOnlyAuthenticationResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SynapseAadOnlyAuthenticationResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<SynapseAadOnlyAuthenticationResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _synapseAadOnlyAuthenticationAzureADOnlyAuthenticationsClientDiagnostics.CreateScope("SynapseAadOnlyAuthenticationCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _synapseAadOnlyAuthenticationAzureADOnlyAuthenticationsRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new SynapseAadOnlyAuthenticationResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<SynapseAadOnlyAuthenticationResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _synapseAadOnlyAuthenticationAzureADOnlyAuthenticationsClientDiagnostics.CreateScope("SynapseAadOnlyAuthenticationCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _synapseAadOnlyAuthenticationAzureADOnlyAuthenticationsRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new SynapseAadOnlyAuthenticationResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _synapseAadOnlyAuthenticationAzureADOnlyAuthenticationsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _synapseAadOnlyAuthenticationAzureADOnlyAuthenticationsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SynapseAadOnlyAuthenticationResource(Client, SynapseAadOnlyAuthenticationData.DeserializeSynapseAadOnlyAuthenticationData(e)), _synapseAadOnlyAuthenticationAzureADOnlyAuthenticationsClientDiagnostics, Pipeline, "SynapseAadOnlyAuthenticationCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Gets a list of Azure Active Directory only authentication property for a workspace
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/azureADOnlyAuthentications
-        /// Operation Id: AzureADOnlyAuthentications_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/azureADOnlyAuthentications</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AzureADOnlyAuthentications_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="SynapseAadOnlyAuthenticationResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SynapseAadOnlyAuthenticationResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<SynapseAadOnlyAuthenticationResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _synapseAadOnlyAuthenticationAzureADOnlyAuthenticationsClientDiagnostics.CreateScope("SynapseAadOnlyAuthenticationCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _synapseAadOnlyAuthenticationAzureADOnlyAuthenticationsRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new SynapseAadOnlyAuthenticationResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<SynapseAadOnlyAuthenticationResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _synapseAadOnlyAuthenticationAzureADOnlyAuthenticationsClientDiagnostics.CreateScope("SynapseAadOnlyAuthenticationCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _synapseAadOnlyAuthenticationAzureADOnlyAuthenticationsRestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new SynapseAadOnlyAuthenticationResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _synapseAadOnlyAuthenticationAzureADOnlyAuthenticationsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _synapseAadOnlyAuthenticationAzureADOnlyAuthenticationsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SynapseAadOnlyAuthenticationResource(Client, SynapseAadOnlyAuthenticationData.DeserializeSynapseAadOnlyAuthenticationData(e)), _synapseAadOnlyAuthenticationAzureADOnlyAuthenticationsClientDiagnostics, Pipeline, "SynapseAadOnlyAuthenticationCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/azureADOnlyAuthentications/{azureADOnlyAuthenticationName}
-        /// Operation Id: AzureADOnlyAuthentications_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/azureADOnlyAuthentications/{azureADOnlyAuthenticationName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AzureADOnlyAuthentications_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="azureADOnlyAuthenticationName"> name of the property. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -275,8 +274,16 @@ namespace Azure.ResourceManager.Synapse
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/azureADOnlyAuthentications/{azureADOnlyAuthenticationName}
-        /// Operation Id: AzureADOnlyAuthentications_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/azureADOnlyAuthentications/{azureADOnlyAuthenticationName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AzureADOnlyAuthentications_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="azureADOnlyAuthenticationName"> name of the property. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

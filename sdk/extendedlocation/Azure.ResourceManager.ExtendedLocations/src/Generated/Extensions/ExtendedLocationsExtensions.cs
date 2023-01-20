@@ -29,8 +29,16 @@ namespace Azure.ResourceManager.ExtendedLocations
 
         /// <summary>
         /// Gets a list of Custom Locations in the specified subscription. The operation returns properties of each Custom Location
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.ExtendedLocation/customLocations
-        /// Operation Id: CustomLocations_ListBySubscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ExtendedLocation/customLocations</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>CustomLocations_ListBySubscription</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -42,8 +50,16 @@ namespace Azure.ResourceManager.ExtendedLocations
 
         /// <summary>
         /// Gets a list of Custom Locations in the specified subscription. The operation returns properties of each Custom Location
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.ExtendedLocation/customLocations
-        /// Operation Id: CustomLocations_ListBySubscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ExtendedLocation/customLocations</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>CustomLocations_ListBySubscription</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -72,8 +88,16 @@ namespace Azure.ResourceManager.ExtendedLocations
 
         /// <summary>
         /// Gets the details of the customLocation with a specified resource group and name.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ExtendedLocation/customLocations/{resourceName}
-        /// Operation Id: CustomLocations_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ExtendedLocation/customLocations/{resourceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>CustomLocations_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="resourceName"> Custom Locations name. </param>
@@ -88,8 +112,16 @@ namespace Azure.ResourceManager.ExtendedLocations
 
         /// <summary>
         /// Gets the details of the customLocation with a specified resource group and name.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ExtendedLocation/customLocations/{resourceName}
-        /// Operation Id: CustomLocations_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ExtendedLocation/customLocations/{resourceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>CustomLocations_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="resourceName"> Custom Locations name. </param>

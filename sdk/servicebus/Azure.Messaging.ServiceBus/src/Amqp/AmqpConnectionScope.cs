@@ -200,7 +200,6 @@ namespace Azure.Messaging.ServiceBus.Amqp
         /// <param name="proxy">The proxy, if any, to use for communication.</param>
         /// <param name="useSingleSession">If true, all links will use a single session.</param>
         /// <param name="operationTimeout">The timeout for operations associated with the connection.</param>
-        /// <param name="metrics">The metrics instance to populate transport metrics. May be null.</param>
         public AmqpConnectionScope(
             Uri serviceEndpoint,
             Uri connectionEndpoint,
@@ -208,8 +207,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
             ServiceBusTransportType transport,
             IWebProxy proxy,
             bool useSingleSession,
-            TimeSpan operationTimeout,
-            ServiceBusTransportMetrics metrics)
+            TimeSpan operationTimeout)
         {
             Argument.AssertNotNull(serviceEndpoint, nameof(serviceEndpoint));
             Argument.AssertNotNull(credential, nameof(credential));
@@ -223,7 +221,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
             TokenProvider = new CbsTokenProvider(new ServiceBusTokenCredential(credential), AuthorizationTokenExpirationBuffer, OperationCancellationSource.Token);
             _useSingleSession = useSingleSession;
 #pragma warning disable CA2214 // Do not call overridable methods in constructors. This internal method is virtual for testing purposes.
-            Task<AmqpConnection> connectionFactory(TimeSpan timeout) => CreateAndOpenConnectionAsync(AmqpVersion, ServiceEndpoint, connectionEndpoint, Transport, Proxy, Id, timeout, metrics);
+            Task<AmqpConnection> connectionFactory(TimeSpan timeout) => CreateAndOpenConnectionAsync(AmqpVersion, ServiceEndpoint, connectionEndpoint, Transport, Proxy, Id, timeout);
 #pragma warning restore CA2214 // Do not call overridable methods in constructors
 
             ActiveConnection = new FaultTolerantAmqpObject<AmqpConnection>(
@@ -453,7 +451,6 @@ namespace Azure.Messaging.ServiceBus.Amqp
         /// <param name="proxy">The proxy, if any, to use for communication.</param>
         /// <param name="scopeIdentifier">The unique identifier for the associated scope.</param>
         /// <param name="timeout">The timeout to consider when creating the connection.</param>
-        /// <param name="metrics">The metrics instance to populate transport metrics. May be null.</param>
         /// <returns>An AMQP connection that may be used for communicating with the Service Bus service.</returns>
         protected virtual async Task<AmqpConnection> CreateAndOpenConnectionAsync(
             Version amqpVersion,
@@ -462,8 +459,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
             ServiceBusTransportType transportType,
             IWebProxy proxy,
             string scopeIdentifier,
-            TimeSpan timeout,
-            ServiceBusTransportMetrics metrics)
+            TimeSpan timeout)
         {
             var serviceHostName = serviceEndpoint.Host;
             var connectionHostName = connectionEndpoint.Host;
@@ -483,10 +479,6 @@ namespace Azure.Messaging.ServiceBus.Amqp
             TransportBase transport = await initiator.ConnectTaskAsync(timeout).ConfigureAwait(false);
 
             var connection = new AmqpConnection(transport, amqpSettings, connectionSetings);
-            if (metrics != null)
-            {
-                connection.UsageMeter = new AmqpUsageMeter(metrics);
-            }
 
             await OpenAmqpObjectAsync(connection, timeout.CalculateRemaining(stopWatch.GetElapsedTime())).ConfigureAwait(false);
 

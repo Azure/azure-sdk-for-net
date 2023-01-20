@@ -18,7 +18,6 @@ namespace Azure.ResourceManager.MachineLearning
         /// <summary> Initializes a new instance of MachineLearningDatastoreData. </summary>
         /// <param name="properties">
         /// [Required] Additional attributes of the entity.
-        /// Serialized Name: DatastoreResource.properties
         /// Please note <see cref="MachineLearningDatastoreProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="MachineLearningAzureBlobDatastore"/>, <see cref="MachineLearningAzureDataLakeGen1Datastore"/>, <see cref="MachineLearningAzureDataLakeGen2Datastore"/> and <see cref="MachineLearningAzureFileDatastore"/>.
         /// </param>
@@ -37,7 +36,6 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties">
         /// [Required] Additional attributes of the entity.
-        /// Serialized Name: DatastoreResource.properties
         /// Please note <see cref="MachineLearningDatastoreProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="MachineLearningAzureBlobDatastore"/>, <see cref="MachineLearningAzureDataLakeGen1Datastore"/>, <see cref="MachineLearningAzureDataLakeGen2Datastore"/> and <see cref="MachineLearningAzureFileDatastore"/>.
         /// </param>
@@ -48,7 +46,6 @@ namespace Azure.ResourceManager.MachineLearning
 
         /// <summary>
         /// [Required] Additional attributes of the entity.
-        /// Serialized Name: DatastoreResource.properties
         /// Please note <see cref="MachineLearningDatastoreProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="MachineLearningAzureBlobDatastore"/>, <see cref="MachineLearningAzureDataLakeGen1Datastore"/>, <see cref="MachineLearningAzureDataLakeGen2Datastore"/> and <see cref="MachineLearningAzureFileDatastore"/>.
         /// </summary>

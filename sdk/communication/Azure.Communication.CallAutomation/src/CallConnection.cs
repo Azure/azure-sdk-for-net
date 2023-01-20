@@ -18,20 +18,22 @@ namespace Azure.Communication.CallAutomation
     public class CallConnection
     {
         private readonly ClientDiagnostics _clientDiagnostics;
-        internal CallConnectionsRestClient RestClient { get; }
-        internal ContentRestClient ContentRestClient { get; }
+        internal CallConnectionRestClient RestClient { get; }
+        internal CallMediaRestClient CallMediaRestClient { get; }
+        internal EventProcessor EventProcessor { get; }
 
         /// <summary>
         /// The call connection id.
         /// </summary>
         public virtual string CallConnectionId { get; internal set; }
 
-        internal CallConnection(string callConnectionId, CallConnectionsRestClient callConnectionRestClient, ContentRestClient callContentRestClient, ClientDiagnostics clientDiagnostics)
+        internal CallConnection(string callConnectionId, CallConnectionRestClient callConnectionRestClient, CallMediaRestClient callCallMediaRestClient, ClientDiagnostics clientDiagnostics, EventProcessor eventProcessor)
         {
             CallConnectionId = callConnectionId;
             RestClient = callConnectionRestClient;
-            ContentRestClient = callContentRestClient;
+            CallMediaRestClient = callCallMediaRestClient;
             _clientDiagnostics = clientDiagnostics;
+            EventProcessor = eventProcessor;
         }
 
         /// <summary>Initializes a new instance of <see cref="CallConnection"/> for mocking.</summary>
@@ -39,7 +41,7 @@ namespace Azure.Communication.CallAutomation
         {
             _clientDiagnostics = null;
             RestClient = null;
-            ContentRestClient = null;
+            CallMediaRestClient = null;
             CallConnectionId = null;
         }
 
@@ -206,13 +208,18 @@ namespace Azure.Communication.CallAutomation
                 TransferToParticipantRequestInternal request = CreateTransferToParticipantRequest(options);
                 options.RepeatabilityHeaders?.GenerateIfRepeatabilityHeadersNotProvided();
 
-                return await RestClient.TransferToParticipantAsync(
+                var response = await RestClient.TransferToParticipantAsync(
                     CallConnectionId,
                     request,
                     options.RepeatabilityHeaders?.RepeatabilityRequestId,
                     options.RepeatabilityHeaders?.GetRepeatabilityFirstSentString(),
                     cancellationToken
                     ).ConfigureAwait(false);
+
+                var result = response.Value;
+                result.SetEventProcessor(EventProcessor, CallConnectionId, result.OperationContext);
+
+                return Response.FromValue(result, response.GetRawResponse());
             }
             catch (Exception ex)
             {
@@ -240,13 +247,18 @@ namespace Azure.Communication.CallAutomation
                 TransferToParticipantRequestInternal request = CreateTransferToParticipantRequest(options);
                 options.RepeatabilityHeaders?.GenerateIfRepeatabilityHeadersNotProvided();
 
-                return RestClient.TransferToParticipant(
+                var response = RestClient.TransferToParticipant(
                     CallConnectionId,
                     request,
                     options.RepeatabilityHeaders?.RepeatabilityRequestId,
                     options.RepeatabilityHeaders?.GetRepeatabilityFirstSentString(),
                     cancellationToken
                     );
+
+                var result = response.Value;
+                result.SetEventProcessor(EventProcessor, CallConnectionId, result.OperationContext);
+
+                return Response.FromValue(result, response.GetRawResponse());
             }
             catch (Exception ex)
             {
@@ -280,7 +292,7 @@ namespace Azure.Communication.CallAutomation
             }
             else
             {
-                request.OperationContext = options.OperationContext;
+                request.OperationContext = options.OperationContext == default ? Guid.NewGuid().ToString() : options.OperationContext;
             }
 
             return request;
@@ -313,7 +325,10 @@ namespace Azure.Communication.CallAutomation
                     cancellationToken: cancellationToken
                     ).ConfigureAwait(false);
 
-                return Response.FromValue(new AddParticipantsResult(response), response.GetRawResponse());
+                var result = new AddParticipantsResult(response);
+                result.SetEventProcessor(EventProcessor, CallConnectionId, result.OperationContext);
+
+                return Response.FromValue(result, response.GetRawResponse());
             }
             catch (Exception ex)
             {
@@ -349,7 +364,10 @@ namespace Azure.Communication.CallAutomation
                     cancellationToken: cancellationToken
                     );
 
-                return Response.FromValue(new AddParticipantsResult(response), response.GetRawResponse());
+                var result = new AddParticipantsResult(response);
+                result.SetEventProcessor(EventProcessor, CallConnectionId, result.OperationContext);
+
+                return Response.FromValue(result, response.GetRawResponse());
             }
             catch (Exception ex)
             {
@@ -372,7 +390,10 @@ namespace Azure.Communication.CallAutomation
             AddParticipantsRequestInternal request = new AddParticipantsRequestInternal(options.ParticipantsToAdd.Select(t => CommunicationIdentifierSerializer.Serialize(t)).ToList());
 
             request.SourceCallerId = options.SourceCallerId == null ? null : new PhoneNumberIdentifierModel(options.SourceCallerId.PhoneNumber);
-            request.OperationContext = options.OperationContext;
+            request.SourceDisplayName = options.SourceDisplayName;
+            request.SourceIdentifier = options.SourceIdentifier != null ? CommunicationIdentifierSerializer.Serialize(options.SourceIdentifier) : null;
+            request.OperationContext = options.OperationContext == default ? Guid.NewGuid().ToString() : options.OperationContext;
+
             if (options.InvitationTimeoutInSeconds != null &&
                 (options.InvitationTimeoutInSeconds < CallAutomationConstants.InputValidation.MinInvitationTimeoutInSeconds ||
                 options.InvitationTimeoutInSeconds > CallAutomationConstants.InputValidation.MaxInvitationTimeoutInSeconds))
@@ -501,8 +522,8 @@ namespace Azure.Communication.CallAutomation
         public virtual async Task<Response<RemoveParticipantsResult>> RemoveParticipantsAsync(IEnumerable<CommunicationIdentifier> participantsToRemove, string operationContext = default, CancellationToken cancellationToken = default)
         {
             RemoveParticipantsOptions options = new RemoveParticipantsOptions(participantsToRemove);
-            if (!String.IsNullOrEmpty(operationContext))
-                options.OperationContext = operationContext;
+
+            options.OperationContext = operationContext == default ? Guid.NewGuid().ToString() : operationContext;
 
             return await RemoveParticipantsAsync(options, cancellationToken).ConfigureAwait(false);
         }
@@ -533,7 +554,7 @@ namespace Azure.Communication.CallAutomation
                 }
                 else
                 {
-                    request.OperationContext = options.OperationContext;
+                    request.OperationContext = options.OperationContext == default ? Guid.NewGuid().ToString() : options.OperationContext;
                 }
 
                 return await RestClient.RemoveParticipantsAsync(
@@ -561,8 +582,8 @@ namespace Azure.Communication.CallAutomation
         public virtual Response<RemoveParticipantsResult> RemoveParticipants(IEnumerable<CommunicationIdentifier> participantsToRemove, string operationContext = default, CancellationToken cancellationToken = default)
         {
             RemoveParticipantsOptions options = new RemoveParticipantsOptions(participantsToRemove);
-            if (!String.IsNullOrEmpty(operationContext))
-                options.OperationContext = operationContext;
+
+            options.OperationContext = operationContext == default ? Guid.NewGuid().ToString() : operationContext;
 
             return RemoveParticipants(options, cancellationToken);
         }
@@ -591,7 +612,7 @@ namespace Azure.Communication.CallAutomation
                 }
                 else
                 {
-                    request.OperationContext = options.OperationContext;
+                    options.OperationContext = options.OperationContext == default ? Guid.NewGuid().ToString() : options.OperationContext;
                 }
 
                 return RestClient.RemoveParticipants(
@@ -616,7 +637,7 @@ namespace Azure.Communication.CallAutomation
             scope.Start();
             try
             {
-                return new CallMedia(CallConnectionId, ContentRestClient, _clientDiagnostics);
+                return new CallMedia(CallConnectionId, CallMediaRestClient, _clientDiagnostics, EventProcessor);
             }
             catch (Exception ex)
             {
