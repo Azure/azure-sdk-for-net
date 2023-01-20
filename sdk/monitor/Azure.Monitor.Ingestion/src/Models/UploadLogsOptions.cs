@@ -32,24 +32,22 @@ namespace Azure.Monitor.Ingestion
         /// <summary>
         /// test
         /// </summary>
-        public event SyncAsyncEventHandler<UploadFailedArgs> UploadFailed;
+        public event SyncAsyncEventHandler<UploadFailedEventArgs> UploadFailedEventHandler;
 
-        private ClientDiagnostics _clientDiagnostics = new ClientDiagnostics(new LogsIngestionClientOptions());
+        internal ClientDiagnostics _clientDiagnostics;
 
-        internal async Task InvokeEvent(bool isRunningSynchronously, int logsCount, Response response, CancellationToken cancellationToken = default)
+        internal async Task InvokeEvent(UploadFailedEventArgs uploadFailedArgs, ClientDiagnostics clientDiagnostics)
         {
-            UploadFailedArgs uploadFailedArgs = new UploadFailedArgs(logsCount, new RequestFailedException(response), isRunningSynchronously, cancellationToken);
-            await UploadFailed.RaiseAsync(uploadFailedArgs, nameof(LogsIngestionClient), "Upload", _clientDiagnostics).ConfigureAwait(false);
+            await UploadFailedEventHandler.RaiseAsync(uploadFailedArgs, nameof(LogsIngestionClient), "Upload", clientDiagnostics).ConfigureAwait(false);
         }
 
         /// <summary>
         /// test
         /// </summary>
-        /// <param name="logsCount"></param>
+        /// <param name="eventArgs"></param>
         /// <param name="options"></param>
         /// <param name="response"></param>
-        /// <param name="cancellationToken"></param>
-        protected internal static async void OnException(int logsCount, UploadLogsOptions options, Response response, CancellationToken cancellationToken = default)
+        protected internal async void OnException(UploadFailedEventArgs eventArgs, UploadLogsOptions options, Response response)
         {
             try
             {
@@ -59,7 +57,7 @@ namespace Azure.Monitor.Ingestion
                 }
                 else
                 {
-                    await options.InvokeEvent(isRunningSynchronously: true, logsCount, response, cancellationToken).ConfigureAwait(false);
+                    await options.InvokeEvent(eventArgs, _clientDiagnostics).ConfigureAwait(false);
                 }
             }
             catch (Exception)
@@ -70,11 +68,11 @@ namespace Azure.Monitor.Ingestion
         /// <summary>
         /// test
         /// </summary>
-        /// <param name="logsCount"></param>
+        /// <param name="eventArgs"></param>
         /// <param name="options"></param>
         /// <param name="response"></param>
-        /// <param name="cancellationToken"></param>
-        protected internal static async Task OnExceptionAsync(int logsCount, UploadLogsOptions options, Response response, CancellationToken cancellationToken = default)
+        /// <returns></returns>
+        protected internal static async Task OnExceptionAsync(UploadFailedEventArgs eventArgs, UploadLogsOptions options, Response response)
         {
             try
             {
@@ -84,12 +82,25 @@ namespace Azure.Monitor.Ingestion
                 }
                 else
                 {
-                    await options.InvokeEvent(isRunningSynchronously: false, logsCount, response, cancellationToken).ConfigureAwait(false);
+                    await options.InvokeEvent(eventArgs, options._clientDiagnostics).ConfigureAwait(false);
                 }
             }
             catch (Exception)
             {
             }
+        }
+
+        /// <summary>
+        /// test
+        /// </summary>
+        /// <returns></returns>
+        internal UploadLogsOptions Clone()
+        {
+            UploadLogsOptions copy = new UploadLogsOptions();
+            copy.Serializer = Serializer;
+            copy.MaxConcurrency = MaxConcurrency;
+            copy.UploadFailedEventHandler = UploadFailedEventHandler;
+            return copy;
         }
     }
 }

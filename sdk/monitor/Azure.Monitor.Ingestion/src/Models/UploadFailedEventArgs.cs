@@ -11,24 +11,25 @@ namespace Azure.Monitor.Ingestion
     /// <summary>
     /// The options model to configure the request to upload logs to Azure Monitor.
     /// </summary>
-    public class UploadFailedArgs : SyncAsyncEventArgs
+    public class UploadFailedEventArgs : SyncAsyncEventArgs
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="UploadFailedArgs"/> class.
+        /// Initializes a new instance of the <see cref="UploadFailedEventArgs"/> class.
         /// </summary>
         /// <param name="failedLogs"></param>
         /// <param name="exception"></param>
         /// <param name="isRunningSynchronously"></param>
         /// <param name="cancellationToken"></param>
-        public UploadFailedArgs(int failedLogs, Exception exception, bool isRunningSynchronously, CancellationToken cancellationToken) : base(isRunningSynchronously, cancellationToken)
+        public UploadFailedEventArgs(List<object> failedLogs, Exception exception, bool isRunningSynchronously, CancellationToken cancellationToken) : base(isRunningSynchronously, cancellationToken)
         {
             FailedLogs = failedLogs;
             Exception = exception;
         }
+
         /// <summary>
         /// test
         /// </summary>
-        public int FailedLogs { get; }
+        public IReadOnlyList<object> FailedLogs { get; }
         /// <summary>
         /// test
         /// </summary>

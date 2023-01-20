@@ -3,6 +3,8 @@
 
 using System;
 using System.Collections.Generic;
+using System.Threading;
+using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Core.TestFramework;
@@ -51,7 +53,8 @@ namespace Azure.Monitor.Ingestion.Tests
         public void OneFailure()
         {
             LogsIngestionClient client = CreateClient();
-            LogsIngestionClient.Compression = null;
+            // set compression to gzip so SDK does not gzip data (assumes already gzipped)
+            LogsIngestionClient.Compression = "gzip";
             var entries = GenerateEntries(800, Recording.Now.DateTime);
             entries.Add(new object[] {
                     new {
@@ -77,9 +80,9 @@ namespace Azure.Monitor.Ingestion.Tests
         public void TwoFailures()
         {
             LogsIngestionClient client = CreateClient();
-            LogsIngestionClient.Compression = null;
+            // set compression to gzip so SDK does not gzip data (assumes already gzipped)
+            LogsIngestionClient.Compression = "gzip";
             var entries = GenerateEntries(800, Recording.Now.DateTime);
-
             // Add 2 entries that are going to fail in 2 batches
             entries.Add(new object[] {
                     new {
@@ -107,5 +110,36 @@ namespace Azure.Monitor.Ingestion.Tests
                 Assert.AreEqual(413, exception.Status);
             }
         }
+
+        //[Test]
+        //public async Task OneFailureWithEventHandler()
+        //{
+        //    LogsIngestionClient client = CreateClient();
+        //    LogsIngestionClient.Compression = null;
+        //    var entries = GenerateEntries(800, Recording.Now.DateTime);
+        //    entries.Add(new object[] {
+        //            new {
+        //                Time = Recording.Now.DateTime,
+        //                Computer = "Computer" + new string('*', Mb),
+        //                AdditionalContext = 1
+        //            }
+        //        });
+
+        //    // Make the request
+        //    UploadLogsOptions options = new UploadLogsOptions();
+        //    var cts = new CancellationTokenSource();
+        //    bool isTriggered = false;
+        //    options.UploadFailed += Options_UploadFailed;
+        //    await client.UploadAsync(TestEnvironment.DCRImmutableId, TestEnvironment.StreamName, entries, options, cts.Token).ConfigureAwait(false);
+        //    Task Options_UploadFailed(UploadFailedArgs e)
+        //    {
+        //        Assert.IsInstanceOf<RequestFailedException>(e.Exception);
+        //        Assert.AreEqual("ContentLengthLimitExceeded", ((RequestFailedException)(e.Exception)).ErrorCode);
+        //        Assert.IsNull(exception.InnerException);
+        //        Assert.AreEqual(413, exception.Status);
+        //        cts.Cancel();
+        //        return Task.CompletedTask;
+        //    }
+        //}
     }
 }
