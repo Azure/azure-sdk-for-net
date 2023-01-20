@@ -17,7 +17,7 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.Resources
 {
 #pragma warning disable SA1649 // File name should match first type name
-    internal class ResourcesArmOperation<T> : ArmOperation<T>
+    internal class ResourcesArmOperation<T> : ArmOperation<T> where T: IOperationSource<T>
 #pragma warning restore SA1649 // File name should match first type name
     {
         /// <summary> Initializes a new instance of ResourcesArmOperation for mocking. </summary>

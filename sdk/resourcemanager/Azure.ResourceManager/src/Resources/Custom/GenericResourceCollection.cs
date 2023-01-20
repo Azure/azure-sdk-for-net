@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Resources
             {
                 var apiVersion = GetApiVersion(new ResourceIdentifier(resourceId), cancellationToken);
                 var response = _resourcesRestClient.CreateOrUpdateById(resourceId, apiVersion, data, cancellationToken);
-                var operation = new ResourcesArmOperation<GenericResource>(new GenericResourceOperationSource(Client), _clientDiagnostics, Pipeline, _resourcesRestClient.CreateCreateOrUpdateByIdRequest(resourceId, apiVersion, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new ResourcesArmOperation<GenericResource>((IOperationSource<GenericResource>)new GenericResource(Client), _clientDiagnostics, Pipeline, _resourcesRestClient.CreateCreateOrUpdateByIdRequest(resourceId, apiVersion, data).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.Resources
             {
                 var apiVersion = await GetApiVersionAsync(new ResourceIdentifier(resourceId), cancellationToken).ConfigureAwait(false);
                 var response = await _resourcesRestClient.CreateOrUpdateByIdAsync(resourceId, apiVersion, data, cancellationToken).ConfigureAwait(false);
-                var operation = new ResourcesArmOperation<GenericResource>(new GenericResourceOperationSource(Client), _clientDiagnostics, Pipeline, _resourcesRestClient.CreateCreateOrUpdateByIdRequest(resourceId, apiVersion, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new ResourcesArmOperation<GenericResource>((IOperationSource<GenericResource>)new GenericResource(Client), _clientDiagnostics, Pipeline, _resourcesRestClient.CreateCreateOrUpdateByIdRequest(resourceId, apiVersion, data).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;

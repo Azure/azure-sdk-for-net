@@ -42,6 +42,16 @@ namespace Azure.ResourceManager
             Client = client;
             Id = id;
         }
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ArmResource"/> class.
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> this resource client should be created from. </param>
+        protected internal ArmResource(ArmClient client)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            Client = client;
+        }
 
         /// <summary>
         /// Gets the resource identifier.

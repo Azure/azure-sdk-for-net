@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -17,8 +18,14 @@ using Azure.ResourceManager.Resources.Models;
 namespace Azure.ResourceManager.Resources
 {
     /// <summary> A Class representing a ResourceGroupResource along with the instance operations that can be performed on it. </summary>
-    public partial class ResourceGroupResource : ArmResource
+    public partial class ResourceGroupResource : ArmResource, IOperationSource<ResourceGroupResource>
     {
+        /// <summary> Initializes a new instance of the <see cref = "ResourceGroupResource"/> class. </summary>
+        /// <param name="client"> The client parameters to use in these operations. </param>
+        internal ResourceGroupResource(ArmClient client) : base(client)
+        {
+        }
+
         /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/resources
         /// ContextualPath: /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}
         /// OperationId: Resources_ListByResourceGroup
@@ -105,6 +112,20 @@ namespace Azure.ResourceManager.Resources
                 }
             }
             return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+        }
+
+        ResourceGroupResource IOperationSource<ResourceGroupResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        {
+            using var document = JsonDocument.Parse(response.ContentStream);
+            var data = ResourceGroupData.DeserializeResourceGroupData(document.RootElement);
+            return new ResourceGroupResource(Client, data);
+        }
+
+        async ValueTask<ResourceGroupResource> IOperationSource<ResourceGroupResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        {
+            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            var data = ResourceGroupData.DeserializeResourceGroupData(document.RootElement);
+            return new ResourceGroupResource(Client, data);
         }
     }
 }

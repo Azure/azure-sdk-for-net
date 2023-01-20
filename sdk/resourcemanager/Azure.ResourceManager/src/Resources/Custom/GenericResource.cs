@@ -5,6 +5,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -13,10 +14,11 @@ using Azure.Core.Pipeline;
 [assembly: CodeGenSuppressType("GenericResourceFilter")]
 [assembly: CodeGenSuppressType("GenericResource")]
 [assembly: CodeGenSuppressType("GenericResourceIdentityType")]
+[assembly: CodeGenSuppressType("GenericResourceOperationSource")]
 namespace Azure.ResourceManager.Resources
 {
     /// <summary> A Class representing a GenericResource along with the instance operations that can be performed on it. </summary>
-    public partial class GenericResource : ArmResource
+    public partial class GenericResource : ArmResource, IOperationSource<GenericResource>
     {
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly ResourcesRestOperations _resourcesRestClient;
@@ -25,6 +27,10 @@ namespace Azure.ResourceManager.Resources
 
         /// <summary> Initializes a new instance of the <see cref="GenericResource"/> class for mocking. </summary>
         protected GenericResource()
+        {
+        }
+
+        internal GenericResource(ArmClient client) : base(client)
         {
         }
 
@@ -374,7 +380,7 @@ namespace Azure.ResourceManager.Resources
             {
                 var apiVersion = await GetApiVersionAsync(cancellationToken).ConfigureAwait(false);
                 var response = await _resourcesRestClient.UpdateByIdAsync(Id, apiVersion, data, cancellationToken).ConfigureAwait(false);
-                var operation = new ResourcesArmOperation<GenericResource>(new GenericResourceOperationSource(Client), _clientDiagnostics, Pipeline, _resourcesRestClient.CreateUpdateByIdRequest(Id, apiVersion, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new ResourcesArmOperation<GenericResource>((IOperationSource<GenericResource>)new GenericResource(Client), _clientDiagnostics, Pipeline, _resourcesRestClient.CreateUpdateByIdRequest(Id, apiVersion, data).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -407,7 +413,7 @@ namespace Azure.ResourceManager.Resources
             {
                 var apiVersion = GetApiVersion(cancellationToken);
                 var response = _resourcesRestClient.UpdateById(Id, apiVersion, data, cancellationToken);
-                var operation = new ResourcesArmOperation<GenericResource>(new GenericResourceOperationSource(Client), _clientDiagnostics, Pipeline, _resourcesRestClient.CreateUpdateByIdRequest(Id, apiVersion, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new ResourcesArmOperation<GenericResource>((IOperationSource<GenericResource>)new GenericResource(Client), _clientDiagnostics, Pipeline, _resourcesRestClient.CreateUpdateByIdRequest(Id, apiVersion, data).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -437,6 +443,20 @@ namespace Azure.ResourceManager.Resources
                 throw new InvalidOperationException($"An invalid resource id was given {Id}");
             }
             return version;
+        }
+
+        GenericResource IOperationSource<GenericResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        {
+            using var document = JsonDocument.Parse(response.ContentStream);
+            var data = GenericResourceData.DeserializeGenericResourceData(document.RootElement);
+            return new GenericResource(Client, data);
+        }
+
+        async ValueTask<GenericResource> IOperationSource<GenericResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        {
+            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            var data = GenericResourceData.DeserializeGenericResourceData(document.RootElement);
+            return new GenericResource(Client, data);
         }
     }
 }

@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.ManagementGroups
         /// <summary>
         /// Create or update a management group.
         /// If a management group is already created and a subsequent create request is issued with different properties, the management group properties will be updated.
-        /// 
+        ///
         /// Request Path: /providers/Microsoft.Management/managementGroups/{groupId}
         /// Operation Id: ManagementGroups_CreateOrUpdate
         /// </summary>
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.ManagementGroups
             try
             {
                 var response = await _managementGroupRestClient.CreateOrUpdateAsync(groupId, content, cacheControl, cancellationToken).ConfigureAwait(false);
-                var operation = new ManagementGroupsArmOperation<ManagementGroupResource>(new ManagementGroupOperationSource(Client), _managementGroupClientDiagnostics, Pipeline, _managementGroupRestClient.CreateCreateOrUpdateRequest(groupId, content, cacheControl).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new ManagementGroupsArmOperation<ManagementGroupResource>((IOperationSource<ManagementGroupResource>)new ManagementGroupResource(Client), _managementGroupClientDiagnostics, Pipeline, _managementGroupRestClient.CreateCreateOrUpdateRequest(groupId, content, cacheControl).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.ManagementGroups
         /// <summary>
         /// Create or update a management group.
         /// If a management group is already created and a subsequent create request is issued with different properties, the management group properties will be updated.
-        /// 
+        ///
         /// Request Path: /providers/Microsoft.Management/managementGroups/{groupId}
         /// Operation Id: ManagementGroups_CreateOrUpdate
         /// </summary>
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.ManagementGroups
             try
             {
                 var response = _managementGroupRestClient.CreateOrUpdate(groupId, content, cacheControl, cancellationToken);
-                var operation = new ManagementGroupsArmOperation<ManagementGroupResource>(new ManagementGroupOperationSource(Client), _managementGroupClientDiagnostics, Pipeline, _managementGroupRestClient.CreateCreateOrUpdateRequest(groupId, content, cacheControl).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new ManagementGroupsArmOperation<ManagementGroupResource>((IOperationSource<ManagementGroupResource>)new ManagementGroupResource(Client), _managementGroupClientDiagnostics, Pipeline, _managementGroupRestClient.CreateCreateOrUpdateRequest(groupId, content, cacheControl).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.ManagementGroups
 
         /// <summary>
         /// Get the details of the management group.
-        /// 
+        ///
         /// Request Path: /providers/Microsoft.Management/managementGroups/{groupId}
         /// Operation Id: ManagementGroups_Get
         /// </summary>
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.ManagementGroups
 
         /// <summary>
         /// Get the details of the management group.
-        /// 
+        ///
         /// Request Path: /providers/Microsoft.Management/managementGroups/{groupId}
         /// Operation Id: ManagementGroups_Get
         /// </summary>
@@ -196,15 +196,15 @@ namespace Azure.ResourceManager.ManagementGroups
 
         /// <summary>
         /// List management groups for the authenticated user.
-        /// 
+        ///
         /// Request Path: /providers/Microsoft.Management/managementGroups
         /// Operation Id: ManagementGroups_List
         /// </summary>
         /// <param name="cacheControl"> Indicates whether the request should utilize any caches. Populate the header with &apos;no-cache&apos; value to bypass existing caches. </param>
         /// <param name="skiptoken">
-        /// Page continuation token is only used if a previous operation returned a partial result. 
+        /// Page continuation token is only used if a previous operation returned a partial result.
         /// If a previous response contains a nextLink element, the value of the nextLink element will include a token parameter that specifies a starting point to use for subsequent calls.
-        /// 
+        ///
         /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ManagementGroupResource" /> that may take multiple service requests to iterate over. </returns>
@@ -217,15 +217,15 @@ namespace Azure.ResourceManager.ManagementGroups
 
         /// <summary>
         /// List management groups for the authenticated user.
-        /// 
+        ///
         /// Request Path: /providers/Microsoft.Management/managementGroups
         /// Operation Id: ManagementGroups_List
         /// </summary>
         /// <param name="cacheControl"> Indicates whether the request should utilize any caches. Populate the header with &apos;no-cache&apos; value to bypass existing caches. </param>
         /// <param name="skiptoken">
-        /// Page continuation token is only used if a previous operation returned a partial result. 
+        /// Page continuation token is only used if a previous operation returned a partial result.
         /// If a previous response contains a nextLink element, the value of the nextLink element will include a token parameter that specifies a starting point to use for subsequent calls.
-        /// 
+        ///
         /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ManagementGroupResource" /> that may take multiple service requests to iterate over. </returns>

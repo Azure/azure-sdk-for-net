@@ -5,16 +5,18 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
-using Azure.ResourceManager.Resources.Models;
 
-namespace Azure.ResourceManager.Resources
+[assembly: CodeGenSuppressType("ResourceGroupExportResultOperationSource")]
+namespace Azure.ResourceManager.Resources.Models
 {
-    internal class ResourceGroupExportResultOperationSource : IOperationSource<ResourceGroupExportResult>
+    /// <summary> Resource group export result. </summary>
+    public partial class ResourceGroupExportResult: IOperationSource<ResourceGroupExportResult>
     {
         ResourceGroupExportResult IOperationSource<ResourceGroupExportResult>.CreateResult(Response response, CancellationToken cancellationToken)
         {

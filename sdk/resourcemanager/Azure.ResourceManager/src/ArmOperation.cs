@@ -55,18 +55,6 @@ namespace Azure.ResourceManager
             return new ArmOperation(operation);
         }
 
-        /// <summary> Initializes a new instance of ArmOperation. </summary>
-        public static ArmOperation<R> Rehydrate<R>(ArmClient client, string id) where R: class
-        {
-            IOperationSource<R> source = new GenericOperationSource<R>();
-            var nextLinkOperation = NextLinkOperationImplementation.Create(source, client.Pipeline, id, out string finalResponse);
-            // TODO: Do we need more specific OptionsNamespace, ProviderNamespace and OperationTypeName and possibly from id?
-            var clientDiagnostics = new ClientDiagnostics("Azure.ResourceManager", "Microsoft.Resources", client.Diagnostics);
-            DecodedResponse response;
-            var operation = finalResponse == null ? new OperationInternal<R>(clientDiagnostics, nextLinkOperation, null, operationTypeName: null, fallbackStrategy: new ExponentialDelayStrategy()) : OperationInternal<R>.Succeeded(response = JsonSerializer.Deserialize<DecodedResponse>(finalResponse)!, source.CreateResult(response, CancellationToken.None));
-            return new ArmOperation<R>(operation);
-        }
-
         /// <inheritdoc />
         [System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
         public override string Id => _operation.GetOperationId();
