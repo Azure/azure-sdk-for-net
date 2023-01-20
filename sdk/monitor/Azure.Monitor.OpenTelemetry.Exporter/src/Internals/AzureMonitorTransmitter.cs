@@ -28,7 +28,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
     {
         private readonly ApplicationInsightsRestClient _applicationInsightsRestClient;
         internal PersistentBlobProvider _fileBlobProvider;
-        private readonly string _instrumentationKey;
+        private readonly ConnectionVars _connectionVars;
 
         public AzureMonitorTransmitter(AzureMonitorExporterOptions options, TokenCredential credential = null)
         {
@@ -38,19 +38,20 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
             }
 
             options.Retry.MaxRetries = 0;
-            ConnectionStringParser.GetValues(options.ConnectionString, out _instrumentationKey, out string ingestionEndpoint);
+            _connectionVars = ConnectionStringParser.GetValues(options.ConnectionString);
 
             HttpPipeline pipeline;
             if (credential != null)
             {
+                var scope = AadHelper.GetScope(_connectionVars.AadAudience);
                 var httpPipelinePolicy = new HttpPipelinePolicy[]
                                              {
-                                                 new BearerTokenAuthenticationPolicy(credential, "https://monitor.azure.com//.default"),
+                                                 new BearerTokenAuthenticationPolicy(credential, scope),
                                                  new IngestionRedirectPolicy()
                                              };
 
                 pipeline = HttpPipelineBuilder.Build(options, httpPipelinePolicy);
-                AzureMonitorExporterEventSource.Log.WriteInformational("SetAADCredentialsToPipeline", "HttpPipelineBuilder is built with AAD Credentials");
+                AzureMonitorExporterEventSource.Log.WriteInformational("SetAADCredentialsToPipeline", $"HttpPipelineBuilder is built with AAD Credentials. TokenCredential: {credential.GetType().Name} Scope: {scope}");
             }
             else
             {
@@ -58,7 +59,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
                 pipeline = HttpPipelineBuilder.Build(options, httpPipelinePolicy);
             }
 
-            _applicationInsightsRestClient = new ApplicationInsightsRestClient(new ClientDiagnostics(options), pipeline, host: ingestionEndpoint);
+            _applicationInsightsRestClient = new ApplicationInsightsRestClient(new ClientDiagnostics(options), pipeline, host: _connectionVars.IngestionEndpoint);
 
             if (!options.DisableOfflineStorage)
             {
@@ -82,13 +83,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
             }
         }
 
-        public string InstrumentationKey
-        {
-            get
-            {
-                return _instrumentationKey;
-            }
-        }
+        public string InstrumentationKey => _connectionVars.InstrumentationKey;
 
         public async ValueTask<ExportResult> TrackAsync(IEnumerable<TelemetryItem> telemetryItems, bool async, CancellationToken cancellationToken)
         {

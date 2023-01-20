@@ -34,21 +34,27 @@ namespace Azure.Containers.ContainerRegistry.Tests
             return anonymousAccess ? CreateAnonymousClient() : CreateAuthenticatedClient();
         }
 
-        public ContainerRegistryBlobClient CreateBlobClient(string repository)
+        public ContainerRegistryBlobClient CreateBlobClient(string repository, int? chunkSize = default)
         {
             string endpoint = TestEnvironment.Endpoint;
             Uri authorityHost = GetAuthorityHost(endpoint);
             ContainerRegistryAudience audience = GetAudience(authorityHost);
 
+            ContainerRegistryClientOptions options = InstrumentClientOptions(new ContainerRegistryClientOptions()
+            {
+                Audience = audience
+            });
+
+            if (chunkSize.HasValue)
+            {
+                options.MaxChunkSize = chunkSize.Value;
+            }
+
             return InstrumentClient(new ContainerRegistryBlobClient(
                     new Uri(endpoint),
                     TestEnvironment.Credential,
                     repository,
-                    InstrumentClientOptions(new ContainerRegistryClientOptions()
-                    {
-                        Audience = audience
-                    })
-                ));
+                    options));
         }
 
         public async Task CreateRepositoryAsync(string repository)
@@ -56,15 +62,15 @@ namespace Azure.Containers.ContainerRegistry.Tests
             await CreateImageAsync(repository, null);
         }
 
-        public async Task CreateImageAsync(string repository, string tag)
+        public async Task<string> CreateImageAsync(string repository, string tag)
         {
-            await CreateImageAsync(new Uri(TestEnvironment.Endpoint), repository, tag);
+            return await CreateImageAsync(new Uri(TestEnvironment.Endpoint), repository, tag);
         }
 
-        public async Task CreateImageAsync(Uri endpoint, string repository, string tag)
+        public async Task<string> CreateImageAsync(Uri endpoint, string repository, string tag)
         {
             var client = GetUploadClient(endpoint, repository);
-            await client.UploadTestImageAsync(tag);
+            return await client.UploadTestImageAsync(tag);
         }
 
         public async Task AddTagAsync(Uri endpoint, string repository, string reference, string tag)
