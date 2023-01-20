@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 namespace Azure.Messaging.ServiceBus.Stress;
 
 /// <summary>
-///   The test scenario responsible for running all of the roles needed for the send receive test scenario.
+///   The test scenario responsible for running all of the roles needed for the send process test scenario.
 /// <summary/>
 ///
 public class SendProcessTest : TestScenario

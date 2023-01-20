@@ -24,7 +24,7 @@ internal class TransactionSender
     private readonly Metrics _metrics;
 
     /// <summary>The <see cref="SenderConfiguration"/> used to configure the instance of this role.</summary>
-    private readonly TransactionSenderConfiguration _transactionSenderConfiguration;
+    private readonly SenderConfiguration _senderConfiguration;
 
     /// <summary>The <see cref="TestParameters"/> used to configure this test run.</summary>
     private readonly TestParameters _testParameters;
@@ -34,20 +34,20 @@ internal class TransactionSender
     /// </summary>
     ///
     /// <param name="testParameters">The <see cref="TestParameters" /> used to configure the send and receive test scenario run.</param>
-    /// <param name="transactionSenderConfiguration">The <see cref="TransactionSenderConfiguration" /> instance used to configure this instance of <see cref="Sender" />.</param>
+    /// <param name="senderConfiguration">The <see cref="SenderConfiguration" /> instance used to configure this instance of <see cref="Sender" />.</param>
     /// <param name="metrics">The <see cref="Metrics" /> instance used to send metrics to Application Insights.</param>
     ///
     public TransactionSender(TestParameters testParameters,
-                             TransactionSenderConfiguration transactionSenderConfiguration,
+                             SenderConfiguration senderConfiguration,
                              Metrics metrics)
     {
         _metrics = metrics;
         _testParameters = testParameters;
-        _transactionSenderConfiguration = transactionSenderConfiguration;
+        _senderConfiguration = senderConfiguration;
     }
 
     /// <summary>
-    ///   Starts an instance of a <see cref="Sender"/> role. This role creates a <see cref="ServiceBusSender"/>
+    ///   Starts an instance of a <see cref="TransactionSender"/> role. This role creates a <see cref="ServiceBusSender"/>
     ///   and monitors it while it sends events to this test's dedicated Service Bus queue.
     /// </summary>
     ///
@@ -64,61 +64,93 @@ internal class TransactionSender
             // Create the Service Bus client and sender
 
             await using var client = new ServiceBusClient(_testParameters.ServiceBusConnectionString);
-            var sender = client.CreateSender(_testParameters.QueueName);
+            var sender = client.CreateSender(_testParameters.QueueName, _senderConfiguration.options);
 
-            var batch = await sender.CreateMessageBatchAsync().ConfigureAwait(false);
-
-            while (!cancellationToken.IsCancellationRequested)
+            try
             {
-                var messages = MessageBuilder.CreateMessages(_senderConfiguration.MaxNumberOfMessages,
-                                                             batch.MaxSizeInBytes,
-                                                             _transactionSenderConfiguration.LargeMessageRandomFactorPercent,
-                                                             _transactionSenderConfiguration.MessageBodyMinBytes,
-                                                             _transactionSenderConfiguration.MessageBodyMaxBytes);
-                try
-                {
-                    using (var ts = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled))
-                    {
-                        await TransactionSend(messages).ConfigureAwait(false);
-                    }
+                // Start concurrent sending tasks
 
-                    if ((_transactionSenderConfiguration.SendingDelay.HasValue) && (_transactionSenderConfiguration.SendingDelay.Value > TimeSpan.Zero))
+                for (var index = 0; index < _senderConfiguration.ConcurrentSends; ++index)
+                {
+                    sendTasks.Add(Task.Run(async () =>
                     {
-                        await Task.Delay(_transactionSenderConfiguration.SendingDelay.Value, backgroundCancellationSource.Token).ConfigureAwait(false);
-                    }
+                        while (!cancellationToken.IsCancellationRequested)
+                        {
+                            await PerformSend(sender, cancellationToken).ConfigureAwait(false);
+
+                            if ((_senderConfiguration.SendingDelay.HasValue) && (_senderConfiguration.SendingDelay.Value > TimeSpan.Zero))
+                            {
+                                await Task.Delay(_senderConfiguration.SendingDelay.Value, backgroundCancellationSource.Token).ConfigureAwait(false);
+                            }
+                        }
+                    }));
                 }
-                catch (TaskCanceledException)
-                {
-                    // Test is ending.
-                }
-                catch (Exception ex) when
-                    (ex is OutOfMemoryException
-                    || ex is StackOverflowException
-                    || ex is ThreadAbortException)
-                {
-                    throw;
-                }
-                catch (Exception ex)
-                {
-                    // If this catch is hit, it means the sender has restarted, collect metrics.
-                    _metrics.Client.GetMetric(Metrics.SenderRestarted).TrackValue(1);
-                    _metrics.Client.TrackException(ex);
-                }
+
+                await Task.WhenAll(sendTasks).ConfigureAwait(false);
+            }
+            catch (TaskCanceledException)
+            {
+                // No action needed, the cancellation token has been cancelled.
+            }
+            catch (Exception ex) when
+                (ex is OutOfMemoryException
+                || ex is StackOverflowException
+                || ex is ThreadAbortException)
+            {
+                throw;
+            }
+            catch (Exception ex)
+            {
+                _metrics.Client.GetMetric(Metrics.SenderRestarted).TrackValue(1);
+                _metrics.Client.TrackException(ex);
             }
         }
     }
 
-    private async Task TransactionSend(IEnumerable<ServiceBusMessage> messages)
+    /// <summary>
+    ///   Generates messages using the <see cref= "SenderConfiguration" /> instance associated with this role instance.
+    ///   It then sends them to the Service Bus Queue. Any caught exceptions are sent to Application Insights.
+    /// </summary>
+    ///
+    /// <param name="sender">The <see cref="ServiceBusSender" /> to use to send messages to for this test scenario run.</param>
+    /// <param name="cancellationToken">The <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
+    ///
+    private async Task PerformSend(ServiceBusSender sender,
+                                      CancellationToken cancellationToken)
     {
-        var transactionGUID = new Guid.NewGuid();
-        var transactionId = $"transaction-{transactionGUID}";
-        var index = 0;
-        foreach (var message in messages)
+        var batch = await sender.CreateMessageBatchAsync().ConfigureAwait(false);
+        var messages = MessageBuilder.CreateMessages(_senderConfiguration.MaxNumberOfMessages,
+                                                     batch.MaxSizeInBytes,
+                                                     _senderConfiguration.LargeMessageRandomFactorPercent,
+                                                     _senderConfiguration.MessageBodyMinBytes,
+                                                     _senderConfiguration.MessageBodyMaxBytes);
+        try
         {
-            MessageTracking.AugmentTransactionMessage(message, _testParameters.Sha256Hash, index, transactionId);
-            index++;
+            if (_senderConfiguration.UseBatches)
+            {
+                foreach (var message in messages)
+                {
+                    batch.TryAddMessage(message);
+                }
+                await sender.SendMessagesAsync(batch);
+                _metrics.Client.GetMetric(Metrics.MessagesSent).TrackValue(batch.Count);
+            }
+            else
+            {
+                await sender.SendMessagesAsync(messages, cancellationToken).ConfigureAwait(false);
+                _metrics.Client.GetMetric(Metrics.MessagesSent).TrackValue(messages.Count());
+            }
         }
-
-        await sender.SendMessageAsync(messages, cancellationToken).ConfigureAwait(false);
+        catch (TaskCanceledException)
+        {
+            // Test is completed.
+        }
+        catch (Exception ex)
+        {
+            var exceptionProperties = new Dictionary<String, String>();
+            // Track that the exception took place during the sending of an event
+            exceptionProperties.Add("Process", "Send");
+            _metrics.Client.TrackException(ex, exceptionProperties);
+        }
     }
 }

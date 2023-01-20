@@ -93,29 +93,6 @@ public static class MessageTracking
     }
 
     /// <summary>
-    ///   Adds properties to the given <see cref="ServiceBusMessage"/> instance, allowing for the transaction receiver to determine that all events
-    ///   from the transaction were received, not duplicated, and have valid event bodies.
-    /// </summary>
-    ///
-    /// <param name="message">The <see cref="ServiceBusMessage"/> instance to augment.</param>
-    /// <param name="sha256Hash">The <see cref="SHA256"/> instance to hash the event body.</param>
-    /// <param name="indexNumber">The producer assigned index number for this event.</param>
-    /// <param name="sessionId">The session id, if any, that this message was intended to be sent to.</param>
-    ///
-    public static void AugmentTransactionMessage(ServiceBusMessage message,
-                                    SHA256 sha256Hash,
-                                    int indexNumber,
-                                    string transactionId)
-    {
-        message.ApplicationProperties.Add(TransactionIndexNumberPropertyName, indexNumber);
-        message.ApplicationProperties.Add(SendTimePropertyName, DateTimeOffset.UtcNow);
-        message.ApplicationProperties.Add(IdPropertyName, Guid.NewGuid().ToString());
-        message.ApplicationProperties.Add(TransactionIdPropertyName, transactionId);
-
-        message.ApplicationProperties.Add(MessageBodyHashPropertyName, sha256Hash.ComputeHash(message.Body.ToArray()).ToString());
-    }
-
-    /// <summary>
     ///   Processes the <see cref="ServiceBusReceivedMessage"/> in order to determine
     ///   if the event has already been seen, if the event was received out of order, or if the body is invalid.
     /// </summary>
@@ -159,41 +136,6 @@ public static class MessageTracking
                                                SHA256 sha256Hash,
                                                Metrics metrics,
                                                ConcurrentDictionary<string, byte> readMessages) => CheckMessage(args.Message, sha256Hash, args.SessionId, metrics, readMessages);
-
-    /// <summary>
-    ///   Processes the <see cref="ServiceBusReceivedMessage"/> instance held in the <see cref="ProcessSessionMessageEventArgs"/> in order to determine
-    ///   if the event has already been seen, if the event was received out of order, or if the body is invalid.
-    /// </summary>
-    ///
-    /// <param name="args">The <see cref="ProcessSessionMessageEventArgs"/> received from the processor to be used for processing.</param>
-    /// <param name="sha256Hash">The <see cref="SHA256"/> instance to hash the event body.</param>
-    /// <param name="metrics">The <see cref="Metrics"/> instance used to send information about the processed event to Application Insights.</param>
-    /// <param name="readMessages">The dictionary holding the key values of the unique Id's of all the messages that have been read so far.</param>
-    ///
-    public static void ReceiveTransactionMessage(ServiceBusReceivedMessage message,
-                                                    SHA256 sha256Hash,
-                                                    Metrics metrics,
-                                                    string currentTransaction,
-                                                    ConcurrentDictionary<string, byte> readMessages,
-                                                    ConcurrentDictionary<string, List<int>> transactions)
-    {
-        CheckMessage(message, sha256Hash, null, metrics, readMessages);
-
-        var firstEvent = transactions.TryGetValue(currentTransaction, out var seenEvents);
-        if (!firstEvent)
-        {
-            if (seenEvents.Contains(message))
-            {
-                metrics.Client.GetMetric(Metrics.DuplicateMessagesDiscarded).TrackValue(1);
-                return;
-            }
-        }
-        else
-        {
-            seenEvents = new List<int>();
-        }
-        seenEvents.Add(message.ApplicationProperties.TryGetValue(TransactionIndexNumberPropertyName));
-    }
 
     /// <summary>
     ///   Validates a messages . This instance checks if the message has an id, if the message has already been seen before by this instance, that the

@@ -35,6 +35,20 @@ public static class EnvironmentVariables
     public const string ServiceBusQueue = "SERVICEBUS_QUEUE";
 
     /// <summary>
+    ///   The name of the environment variable that holds the name of the second Service Bus queue
+    ///   for tests requiring multiple queues.
+    /// </summary>
+    ///
+    public const string ServiceBusQueueTwo = "SERVICEBUS_QUEUE_TWO";
+
+    /// <summary>
+    ///   The name of the environment variable that holds the name of the third Service Bus queue
+    ///   for scenarios requiring multiple queues.
+    /// </summary>
+    ///
+    public const string ServiceBusQueueThree = "SERVICEBUS_QUEUE_THREE";
+
+    /// <summary>
     ///   The name of the environment variable that holds the name of the Service Bus queue
     ///   for the transaction test.
     /// </summary>
