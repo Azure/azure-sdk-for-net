@@ -221,5 +221,24 @@ namespace Azure.Monitor.Ingestion.Tests
             Assert.AreEqual(204, response.Status);
             Assert.IsFalse(response.IsError);
         }
+
+        [Test]
+        public async Task ValidInputWithEventHandler()
+        {
+            LogsIngestionClient client = CreateClient();
+            var entries = GenerateEntries(800, Recording.Now.DateTime);
+
+            // Make the request
+            UploadLogsOptions options = new UploadLogsOptions();
+            bool isTriggered = false;
+            options.UploadFailedEventHandler += Options_UploadFailed;
+            await client.UploadAsync(TestEnvironment.DCRImmutableId, TestEnvironment.StreamName, entries, options).ConfigureAwait(false);
+            Assert.IsFalse(isTriggered);
+            Task Options_UploadFailed(UploadFailedEventArgs e)
+            {
+                isTriggered = true;
+                return Task.CompletedTask;
+            }
+        }
     }
 }

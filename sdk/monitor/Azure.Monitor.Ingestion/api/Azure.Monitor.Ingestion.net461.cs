@@ -31,8 +31,6 @@ namespace Azure.Monitor.Ingestion
         public int MaxConcurrency { get { throw null; } set { } }
         public Azure.Core.Serialization.ObjectSerializer Serializer { get { throw null; } set { } }
         public event Azure.Core.SyncAsyncEventHandler<Azure.Monitor.Ingestion.UploadFailedEventArgs> UploadFailedEventHandler { add { } remove { } }
-        protected internal void OnException(Azure.Monitor.Ingestion.UploadFailedEventArgs eventArgs, Azure.Monitor.Ingestion.UploadLogsOptions options, Azure.Response response) { }
-        protected internal static System.Threading.Tasks.Task OnExceptionAsync(Azure.Monitor.Ingestion.UploadFailedEventArgs eventArgs, Azure.Monitor.Ingestion.UploadLogsOptions options, Azure.Response response) { throw null; }
     }
 }
 namespace Microsoft.Extensions.Azure

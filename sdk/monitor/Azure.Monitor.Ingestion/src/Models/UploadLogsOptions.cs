@@ -36,7 +36,13 @@ namespace Azure.Monitor.Ingestion
 
         internal ClientDiagnostics _clientDiagnostics;
 
-        internal async Task InvokeEvent(UploadFailedEventArgs uploadFailedArgs, ClientDiagnostics clientDiagnostics)
+        /// <summary>
+        /// test
+        /// </summary>
+        /// <param name="uploadFailedArgs"></param>
+        /// <param name="clientDiagnostics"></param>
+        /// <returns></returns>
+        internal virtual async Task InvokeEvent(UploadFailedEventArgs uploadFailedArgs, ClientDiagnostics clientDiagnostics)
         {
             await UploadFailedEventHandler.RaiseAsync(uploadFailedArgs, nameof(LogsIngestionClient), "Upload", clientDiagnostics).ConfigureAwait(false);
         }
@@ -44,45 +50,22 @@ namespace Azure.Monitor.Ingestion
         /// <summary>
         /// test
         /// </summary>
+        /// <param name="async"></param>
         /// <param name="eventArgs"></param>
         /// <param name="options"></param>
-        /// <param name="response"></param>
-        protected internal async void OnException(UploadFailedEventArgs eventArgs, UploadLogsOptions options, Response response)
+        internal virtual async Task OnExceptionAsync(bool async, UploadFailedEventArgs eventArgs, UploadLogsOptions options)
         {
             try
             {
-                if (options == null)
+                if (!async)
                 {
-                    throw new RequestFailedException(response);
+#pragma warning disable AZC0106 // Non-public asynchronous method needs 'async' parameter.
+                    options.InvokeEvent(eventArgs, _clientDiagnostics).EnsureCompleted();
+#pragma warning restore AZC0106 // Non-public asynchronous method needs 'async' parameter.
                 }
                 else
                 {
                     await options.InvokeEvent(eventArgs, _clientDiagnostics).ConfigureAwait(false);
-                }
-            }
-            catch (Exception)
-            {
-            }
-        }
-
-        /// <summary>
-        /// test
-        /// </summary>
-        /// <param name="eventArgs"></param>
-        /// <param name="options"></param>
-        /// <param name="response"></param>
-        /// <returns></returns>
-        protected internal static async Task OnExceptionAsync(UploadFailedEventArgs eventArgs, UploadLogsOptions options, Response response)
-        {
-            try
-            {
-                if (options == null)
-                {
-                    throw new RequestFailedException(response);
-                }
-                else
-                {
-                    await options.InvokeEvent(eventArgs, options._clientDiagnostics).ConfigureAwait(false);
                 }
             }
             catch (Exception)

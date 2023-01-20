@@ -227,9 +227,17 @@ namespace Azure.Monitor.Ingestion
 
                     if (response.Status != 204)
                     {
-                        var clonedOptions = options.Clone();
-                        UploadFailedEventArgs eventArgs = new UploadFailedEventArgs(batch.Logs, new RequestFailedException(response), isRunningSynchronously: true, cancellationToken);
-                        options.OnException(eventArgs, clonedOptions, response);
+                        if (options == null)
+                        {
+                            throw new RequestFailedException(response);
+                        }
+                        else
+                        {
+                            options._clientDiagnostics = ClientDiagnostics;
+                            var clonedOptions = options.Clone();
+                            var eventArgs = new UploadFailedEventArgs(batch.Logs, new RequestFailedException(response), isRunningSynchronously: true, cancellationToken);
+                            options.OnExceptionAsync(async: false, eventArgs, clonedOptions).EnsureCompleted();
+                        }
                     }
                 }
                 catch (Exception ex)
@@ -335,8 +343,9 @@ namespace Azure.Monitor.Ingestion
                             else
                             {
                                 options._clientDiagnostics = ClientDiagnostics;
-                                //UploadFailedEventArgs eventArgs = new UploadFailedEventArgs(batch, )
-                                //await UploadLogsOptions.OnExceptionAsync(runningTasks[i].LogsCount, options, runningTasks[i].CurrentTask.Result, cancellationToken).ConfigureAwait(false);
+                                var clonedOptions = options.Clone();
+                                var eventArgs = new UploadFailedEventArgs(batch.Logs, new RequestFailedException(runningTask.Result), isRunningSynchronously: true, cancellationToken);
+                                await options.OnExceptionAsync(async: true, eventArgs, clonedOptions).ConfigureAwait(false);
                             }
                             // Remove completed task from task list
                             runningTasks.RemoveAt(i);
@@ -364,7 +373,9 @@ namespace Azure.Monitor.Ingestion
                 else
                 {
                     options._clientDiagnostics = ClientDiagnostics;
-                    //await UploadLogsOptions.OnExceptionAsync(task.LogsCount, options, task.CurrentTask.Result, cancellationToken).ConfigureAwait(false);
+                    var clonedOptions = options.Clone();
+                    var eventArgs = new UploadFailedEventArgs(task.Logs, new RequestFailedException(task.CurrentTask.Result), isRunningSynchronously: true, cancellationToken);
+                    await options.OnExceptionAsync(async: true, eventArgs, clonedOptions).ConfigureAwait(false);
                 }
             }
             if (exceptions?.Count > 0)
