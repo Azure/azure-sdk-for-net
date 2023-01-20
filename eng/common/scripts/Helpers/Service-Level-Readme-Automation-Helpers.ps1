@@ -74,6 +74,9 @@ function generate-markdown-table($readmeFolder, $readmeName, $packageInfos, $mon
 
 function generate-service-level-readme($docRepoLocation, $readmeBaseName, $pathPrefix, $packageInfos, $serviceName, $moniker, $author, $msAuthor, $msService) {
   $readmeFolder = "$docRepoLocation/$pathPrefix/$moniker/"
+  if(!(Test-Path $readmeFolder)) {
+    New-Item $readmeFolder -ItemType "directory"
+  }
   $serviceReadme = "$readmeBaseName.md"
   $indexReadme  = "$readmeBaseName-index.md"
   if ($packageInfos) {

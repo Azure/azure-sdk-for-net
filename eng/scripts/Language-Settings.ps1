@@ -460,12 +460,22 @@ function Write-dotnet-DocsMsConfig($DocsRepo, $moniker, $onboardingPackages) {
   }
   
   $configPath = $monikerToConifFiles[$moniker]
-  $outputLines = @()
+  $outputLines = @()  
+  # Add packages that exist in the metadata but are not onboarded in docs config
+  # TODO: tfm='netstandard2.0' is a temporary workaround for
+  # https://github.com/Azure/azure-sdk-for-net/issues/22494
+  $newPackageProperties = [ordered]@{ tfm = 'netstandard2.0' }
+  if ($Mode -eq 'preview') {
+    $newPackageProperties['isPrerelease'] = 'true'
+  }
   foreach ($package in $onboardingPackages) {
+    if ($package.PSObject.Properties -contains 'DocsCiConfigProperties') {
+      $newPackageProperties = $package.DocsCiConfigProperties
+    }
     $packageConfig = [PSCustomObject]@{
       Id = $package.Name.ToLower().Replace(".", "")
       Name = $package.Name
-      Properties = ConvertFrom-StringData $package.DocsCiConfigProperties
+      Properties = ConvertFrom-StringData $newPackageProperties
       Versions = $package.Version
     }
     $packageConfig = EnsureCustomSource $packageConfig
