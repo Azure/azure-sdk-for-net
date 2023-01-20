@@ -14,7 +14,7 @@ namespace Azure.Security.KeyVault.Certificates.Samples
 {
     public partial class DownloadCertificate
     {
-#if !NET461
+#if NET472_OR_GREATER || NET || SNIPPET
         [Test]
         public void DownloadCertificateSync()
         {
