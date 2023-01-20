@@ -3,6 +3,7 @@
 
 using System;
 using System.IO;
+using System.Text.Json;
 
 namespace Azure.Containers.ContainerRegistry.Specialized
 {
@@ -11,10 +12,10 @@ namespace Azure.Containers.ContainerRegistry.Specialized
     /// </summary>
     public class DownloadManifestResult
     {
-        internal DownloadManifestResult(string digest, OciManifest manifest, BinaryData content)
+        internal DownloadManifestResult(string digest, string mediaType, BinaryData content)
         {
             Digest = digest;
-            Manifest = manifest;
+            MediaType = mediaType;
             Content = content;
         }
 
@@ -24,13 +25,33 @@ namespace Azure.Containers.ContainerRegistry.Specialized
         public string Digest { get; }
 
         /// <summary>
-        /// The OCI manifest that was downloaded.
+        /// Gets the media type of the downloaded manifest, as indicated by the
+        /// Content-Type response header.
         /// </summary>
-        public ArtifactManifest Manifest { get; }
+        public string MediaType { get; set; }
 
         /// <summary>
         /// The serialized content that was downloaded.
         /// </summary>
         public BinaryData Content { get; }
+
+        /// <summary>
+        /// Gets the downloaded manifest as an OciManifest.
+        /// </summary>
+        /// <returns></returns>
+        public OciManifest AsOciManifest()
+        {
+            return OciManifest.DeserializeOciManifest(JsonDocument.Parse(Content).RootElement);
+        }
+
+        // TODO: Expose OciIndex type and add this method.
+        ///// <summary>
+        ///// Gets the downloaded manifest as an OciIndex.
+        ///// </summary>
+        ///// <returns></returns>
+        //public OCIIndex AsOciIndex()
+        //{
+        //    return OCIIndex.DeserializeOCIIndex(JsonDocument.Parse(Content).RootElement);
+        //}
     }
 }

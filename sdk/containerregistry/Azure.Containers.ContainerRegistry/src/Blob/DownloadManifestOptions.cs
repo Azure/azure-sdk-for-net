@@ -35,5 +35,12 @@ namespace Azure.Containers.ContainerRegistry.Specialized
         /// Digest identifier of the manifest.
         /// </summary>
         public string Digest { get; }
+
+        /// <summary>
+        /// Gets or sets an optional value to indicate the expected Content-Type
+        /// the requested manifest.  If not specified, this value will be set to
+        /// a default value of "application/vnd.oci.image.manifest.v1+json".
+        /// </summary>
+        public string MediaType { get; set; }
     }
 }

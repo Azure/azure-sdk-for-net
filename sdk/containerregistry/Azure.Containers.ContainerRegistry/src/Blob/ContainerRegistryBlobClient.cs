@@ -139,7 +139,7 @@ namespace Azure.Containers.ContainerRegistry.Specialized
         public virtual HttpPipeline Pipeline => _pipeline;
 
         /// <summary>
-        /// Uploads a manifest for an OCI Artifact.
+        /// Uploads an artifact manifest.
         /// </summary>
         /// <param name="manifest">The manifest to upload.</param>
         /// <param name="options">Options for configuring the upload operation.</param>
@@ -166,7 +166,7 @@ namespace Azure.Containers.ContainerRegistry.Specialized
         }
 
         /// <summary>
-        /// Uploads a manifest for an OCI Artifact.
+        /// Uploads an artifact manifest.
         /// </summary>
         /// <param name="manifestStream">The <see cref="Stream"/> manifest to upload.</param>
         /// <param name="options">Options for configuring the upload operation.</param>
@@ -193,7 +193,7 @@ namespace Azure.Containers.ContainerRegistry.Specialized
         }
 
         /// <summary>
-        /// Upload a manifest for an OCI Artifact.
+        /// Uploads an artifact manifest.
         /// </summary>
         /// <param name="manifest">The manifest to upload.</param>
         /// <param name="options">Options for configuring the upload operation.</param>
@@ -220,7 +220,7 @@ namespace Azure.Containers.ContainerRegistry.Specialized
         }
 
         /// <summary>
-        /// Uploads a manifest for an OCI artifact.
+        /// Uploads an artifact manifest.
         /// </summary>
         /// <param name="manifestStream">The <see cref="Stream"/> manifest to upload.</param>
         /// <param name="options">Options for configuring the upload operation.</param>
@@ -250,11 +250,11 @@ namespace Azure.Containers.ContainerRegistry.Specialized
         {
             string contentDigest = BlobHelper.ComputeDigest(stream);
             string tagOrDigest = options.Tag ?? contentDigest;
+            string mediaType = options.MediaType ?? ManifestMediaType.OciManifest.ToString();
 
             ResponseWithHeaders<ContainerRegistryCreateManifestHeaders> response = async ?
-                // TODO: media type should be configurable to support non-OCI types.
-                await _restClient.CreateManifestAsync(_repositoryName, tagOrDigest, stream, ManifestMediaType.OciManifest.ToString(), cancellationToken).ConfigureAwait(false) :
-                _restClient.CreateManifest(_repositoryName, tagOrDigest, stream, ManifestMediaType.OciManifest.ToString(), cancellationToken);
+                await _restClient.CreateManifestAsync(_repositoryName, tagOrDigest, stream, mediaType, cancellationToken).ConfigureAwait(false) :
+                _restClient.CreateManifest(_repositoryName, tagOrDigest, stream, mediaType, cancellationToken);
 
             ValidateDigest(contentDigest, response.Headers.DockerContentDigest);
 
@@ -493,18 +493,18 @@ namespace Azure.Containers.ContainerRegistry.Specialized
             scope.Start();
             try
             {
-                Response<ManifestWrapper> response = _restClient.GetManifest(_repositoryName, options.Tag ?? options.Digest, ManifestMediaType.OciManifest.ToString(), cancellationToken);
+                var accept = options.MediaType ?? ManifestMediaType.OciManifest.ToString();
+
+                Response<ManifestWrapper> response = _restClient.GetManifest(_repositoryName, options.Tag ?? options.Digest, accept, cancellationToken);
                 Response rawResponse = response.GetRawResponse();
 
-                rawResponse.Headers.TryGetValue("Docker-Content-Digest", out var digest);
+                rawResponse.Headers.TryGetValue("Docker-Content-Digest", out string digest);
+                rawResponse.Headers.TryGetValue("Content-Type", out string mediaType);
 
                 var contentDigest = BlobHelper.ComputeDigest(rawResponse.ContentStream);
                 ValidateDigest(contentDigest, digest);
 
-                using var document = JsonDocument.Parse(rawResponse.Content);
-                var manifest = OciManifest.DeserializeOciManifest(document.RootElement);
-
-                return Response.FromValue(new DownloadManifestResult(digest, manifest, rawResponse.Content), rawResponse);
+                return Response.FromValue(new DownloadManifestResult(digest, mediaType, rawResponse.Content), rawResponse);
             }
             catch (Exception e)
             {
@@ -527,20 +527,18 @@ namespace Azure.Containers.ContainerRegistry.Specialized
             scope.Start();
             try
             {
-                Response<ManifestWrapper> response = await _restClient.GetManifestAsync(_repositoryName, options.Tag ?? options.Digest, ManifestMediaType.OciManifest.ToString(), cancellationToken).ConfigureAwait(false);
+                var accept = options.MediaType ?? ManifestMediaType.OciManifest.ToString();
+
+                Response<ManifestWrapper> response = await _restClient.GetManifestAsync(_repositoryName, options.Tag ?? options.Digest, accept, cancellationToken).ConfigureAwait(false);
                 Response rawResponse = response.GetRawResponse();
 
                 rawResponse.Headers.TryGetValue("Docker-Content-Digest", out var digest);
+                rawResponse.Headers.TryGetValue("Content-Type", out string mediaType);
 
                 var contentDigest = BlobHelper.ComputeDigest(rawResponse.ContentStream);
                 ValidateDigest(contentDigest, digest);
 
-                using var document = JsonDocument.Parse(rawResponse.Content);
-                var manifest = OciManifest.DeserializeOciManifest(document.RootElement);
-
-                rawResponse.ContentStream.Position = 0;
-
-                return Response.FromValue(new DownloadManifestResult(digest, manifest, rawResponse.Content), rawResponse);
+                return Response.FromValue(new DownloadManifestResult(digest, mediaType, rawResponse.Content), rawResponse);
             }
             catch (Exception e)
             {

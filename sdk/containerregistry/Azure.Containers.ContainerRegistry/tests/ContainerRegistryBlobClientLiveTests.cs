@@ -77,7 +77,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
             DownloadManifestOptions downloadOptions = new DownloadManifestOptions(null, digest);
             var downloadResultValue = (await client.DownloadManifestAsync(downloadOptions)).Value;
             Assert.AreEqual(digest, downloadResultValue.Digest);
-            ValidateManifest((OciManifest)downloadResultValue.Manifest);
+            ValidateManifest(downloadResultValue.AsOciManifest());
 
             // Clean up
             await client.DeleteManifestAsync(digest);
@@ -120,7 +120,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
             DownloadManifestOptions downloadOptions = new DownloadManifestOptions(null, digest);
             var downloadResultValue = (await client.DownloadManifestAsync(downloadOptions)).Value;
             Assert.AreEqual(digest, downloadResultValue.Digest);
-            ValidateManifest((OciManifest)downloadResultValue.Manifest);
+            ValidateManifest(downloadResultValue.AsOciManifest());
 
             // Clean up
             await client.DeleteManifestAsync(digest);
@@ -163,7 +163,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
             DownloadManifestOptions downloadOptions = new DownloadManifestOptions(null, digest);
             var downloadResultValue = (await client.DownloadManifestAsync(downloadOptions)).Value;
             Assert.AreEqual(digest, downloadResultValue.Digest);
-            ValidateManifest((OciManifest)downloadResultValue.Manifest);
+            ValidateManifest(downloadResultValue.AsOciManifest());
 
             // Clean up
             await client.DeleteManifestAsync(digest);
@@ -189,7 +189,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
             DownloadManifestOptions downloadOptions = new DownloadManifestOptions(null, digest);
             var downloadResultValue = (await client.DownloadManifestAsync(downloadOptions)).Value;
             Assert.AreEqual(digest, downloadResultValue.Digest);
-            ValidateManifest((OciManifest)downloadResultValue.Manifest);
+            ValidateManifest(downloadResultValue.AsOciManifest());
 
             var artifact = registryClient.GetArtifact(repository, digest);
             var tags = artifact.GetTagPropertiesCollectionAsync();
@@ -241,7 +241,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
             DownloadManifestOptions downloadOptions = new DownloadManifestOptions(null, digest);
             var downloadResultValue = (await client.DownloadManifestAsync(downloadOptions)).Value;
             Assert.AreEqual(digest, downloadResultValue.Digest);
-            ValidateManifest((OciManifest)downloadResultValue.Manifest);
+            ValidateManifest(downloadResultValue.AsOciManifest());
 
             var artifact = registryClient.GetArtifact(repository, digest);
             var tags = artifact.GetTagPropertiesCollectionAsync();
@@ -253,7 +253,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
             downloadOptions = new DownloadManifestOptions(tag, null);
             var downloadResultValue2 = (await client.DownloadManifestAsync(downloadOptions)).Value;
             Assert.AreEqual(digest, downloadResultValue.Digest);
-            ValidateManifest((OciManifest)downloadResultValue.Manifest);
+            ValidateManifest(downloadResultValue.AsOciManifest());
 
             // Clean up
             await client.DeleteManifestAsync(digest);
@@ -752,7 +752,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
             {
                 await manifestResult.Value.Content.ToStream().CopyToAsync(fs);
             }
-            OciManifest manifest = (OciManifest)manifestResult.Value.Manifest;
+            OciManifest manifest = manifestResult.Value.AsOciManifest();
 
             // Download Config
             string configFileName = Path.Combine(path, "config.json");
