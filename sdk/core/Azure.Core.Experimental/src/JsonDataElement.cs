@@ -35,21 +35,22 @@ namespace Azure.Core.Dynamic
         /// </summary>
         internal JsonDataElement GetProperty(string name)
         {
-            if (_element.ValueKind != JsonValueKind.Object)
+            return GetProperty(name, true);
+        }
+
+        private JsonDataElement GetProperty(string name, bool checkChanges)
+        {
+            if (checkChanges)
             {
-                throw new InvalidOperationException($"Expected an 'Object' type but was {_element.ValueKind}.");
+                return GetObject().GetProperty(name, false);
             }
+
+            EnsureObject();
 
             var path = JsonData.ChangeTracker.PushProperty(_path, name);
 
             if (Changes.TryGetChange(path, out JsonDataChange change))
             {
-                if (change.Value == null)
-                {
-                    // TODO: handle this.
-                    //throw new InvalidCastException("Property has been removed");
-                }
-
                 if (change.ReplacesJsonElement)
                 {
                     return new JsonDataElement(_root, change.AsJsonElement(), path);
@@ -59,6 +60,7 @@ namespace Azure.Core.Dynamic
             return new JsonDataElement(_root, _element.GetProperty(name), path);
         }
 
+        // TODO: Reimplement GetProperty in terms of TryGetProperty().
         internal bool TryGetProperty(string name, out JsonDataElement value)
         {
             if (_element.ValueKind != JsonValueKind.Object)
@@ -96,21 +98,22 @@ namespace Azure.Core.Dynamic
 
         internal JsonDataElement GetIndexElement(int index)
         {
-            if (_element.ValueKind != JsonValueKind.Array)
+            return GetIndexElement(index, true);
+        }
+
+        private JsonDataElement GetIndexElement(int index, bool checkChanges)
+        {
+            if (checkChanges)
             {
-                throw new InvalidOperationException($"Expected an 'Array' type but was {_element.ValueKind}.");
+                return GetArray().GetIndexElement(index, false);
             }
+
+            EnsureArray();
 
             var path = JsonData.ChangeTracker.PushIndex(_path, index);
 
             if (Changes.TryGetChange(path, out JsonDataChange change))
             {
-                if (change.Value == null)
-                {
-                    // TODO: handle this.
-                    //throw new InvalidCastException("Property has been removed");
-                }
-
                 if (change.ReplacesJsonElement)
                 {
                     return new JsonDataElement(_root, change.AsJsonElement(), path);
@@ -120,35 +123,49 @@ namespace Azure.Core.Dynamic
             return new JsonDataElement(_root, _element[index], path);
         }
 
-        //private JsonDataElement GetObject()
-        //{
-        //    if (_element.ValueKind != JsonValueKind.Object)
-        //    {
-        //        throw new InvalidOperationException($"Expected an 'Object' type but was {_element.ValueKind}.");
-        //    }
+        private JsonDataElement GetObject()
+        {
+            EnsureObject();
 
-        //    // Check for changes to self before getting changes to child nodes
-        //    if (Changes.TryGetChange(_path, out JsonDataChange change))
-        //    {
-        //        if (change.ReplacesJsonElement)
-        //        {
-        //            return new JsonDataElement(_root, change.AsJsonElement(), _path);
-        //        }
-        //    }
+            if (Changes.TryGetChange(_path, out JsonDataChange change))
+            {
+                if (change.ReplacesJsonElement)
+                {
+                    return new JsonDataElement(_root, change.AsJsonElement(), _path);
+                }
+            }
 
-        //    return this;
-        //}
+            return this;
+        }
+
+        private JsonDataElement GetArray()
+        {
+            EnsureArray();
+
+            if (Changes.TryGetChange(_path, out JsonDataChange change))
+            {
+                if (change.ReplacesJsonElement)
+                {
+                    return new JsonDataElement(_root, change.AsJsonElement(), _path);
+                }
+            }
+
+            return this;
+        }
 
         internal double GetDouble()
         {
             if (Changes.TryGetChange(_path, out JsonDataChange change))
             {
-                if (change.Value == null)
+                switch (change.Value)
                 {
-                    throw new InvalidCastException("Property has been removed");
+                    case double d:
+                        return d;
+                    case JsonElement element:
+                        return element.GetDouble();
+                    default:
+                        throw new InvalidOperationException($"Element at {_path} is not a double.");
                 }
-
-                return (double)change.Value;
             }
 
             return _element.GetDouble();
@@ -158,12 +175,15 @@ namespace Azure.Core.Dynamic
         {
             if (Changes.TryGetChange(_path, out JsonDataChange change))
             {
-                if (change.Value == null)
+                switch (change.Value)
                 {
-                    throw new InvalidCastException("Property has been removed");
+                    case int i:
+                        return i;
+                    case JsonElement element:
+                        return element.GetInt32();
+                    default:
+                        throw new InvalidOperationException($"Element at {_path} is not an Int32.");
                 }
-
-                return (int)change.Value;
             }
 
             return _element.GetInt32();
@@ -173,7 +193,15 @@ namespace Azure.Core.Dynamic
         {
             if (Changes.TryGetChange(_path, out JsonDataChange change))
             {
-                return (string?)change.Value;
+                switch (change.Value)
+                {
+                    case string s:
+                        return s;
+                    case JsonElement element:
+                        return element.GetString();
+                    default:
+                        throw new InvalidOperationException($"Element at {_path} is not a string.");
+                }
             }
 
             return _element.GetString();
@@ -233,12 +261,43 @@ namespace Azure.Core.Dynamic
             Changes.AddChange(_path, newElement, true);
         }
 
-        internal void Set(double value) => Changes.AddChange(_path, value);
+        internal void Set(double value) => Changes.AddChange(_path, value, _element.ValueKind != JsonValueKind.Number);
 
         internal void Set(int value) => Changes.AddChange(_path, value, _element.ValueKind != JsonValueKind.Number);
 
-        internal void Set(string value) => Changes.AddChange(_path, value);
+        internal void Set(string value) => Changes.AddChange(_path, value, _element.ValueKind != JsonValueKind.String);
 
         internal void Set(object value) => Changes.AddChange(_path, value, true);
+
+        internal void Set(JsonDataElement value)
+        {
+            JsonElement element = value._element;
+
+            if (Changes.TryGetChange(value._path, out JsonDataChange change))
+            {
+                if (change.ReplacesJsonElement)
+                {
+                    element = change.AsJsonElement();
+                }
+            }
+
+            Changes.AddChange(_path, element, true);
+        }
+
+        private void EnsureObject()
+        {
+            if (_element.ValueKind != JsonValueKind.Object)
+            {
+                throw new InvalidOperationException($"Expected an 'Object' type but was {_element.ValueKind}.");
+            }
+        }
+
+        private void EnsureArray()
+        {
+            if (_element.ValueKind != JsonValueKind.Array)
+            {
+                throw new InvalidOperationException($"Expected an 'Array' type but was {_element.ValueKind}.");
+            }
+        }
     }
 }

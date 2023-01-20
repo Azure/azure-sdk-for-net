@@ -407,25 +407,42 @@ namespace Azure.Core.Experimental.Tests
         }
 
         [Test]
-        public void CanSwapArrayElements()
+        public void HandlesReferenceSemantics()
         {
             string json = @"[ { ""Foo"" : 4 } ]";
 
             var jd = JsonData.Parse(json);
 
+            // a's path points to "0"
             var a = jd.RootElement.GetIndexElement(0);
 
+            // resets json to equivalent of "[ 5 ]"
             jd.RootElement.GetIndexElement(0).Set(5);
 
-            a.GetProperty("Foo").Set(6);
+            Assert.AreEqual(5, jd.RootElement.GetIndexElement(0).GetInt32());
+
+            // a's path points to "0" so a.GetInt32() should return 5.
+            Assert.AreEqual(5, a.GetInt32());
+
+            // The following should throw because json[0] is now 5 and not an object.
+            Assert.Throws<InvalidOperationException>(() => a.GetProperty("Foo").Set(6));
 
             Assert.AreEqual(5, jd.RootElement.GetIndexElement(0).GetInt32());
-            Assert.AreEqual(6, a.GetProperty("Foo").GetInt32());
 
+            // Setting json[0] back to a makes it 5 again.
             jd.RootElement.GetIndexElement(0).Set(a);
 
-            Assert.AreEqual(6, jd.RootElement.GetIndexElement(0).GetProperty("Foo").GetInt32());
-            Assert.AreEqual(6, a.GetIndexElement(0).GetProperty("Foo").GetInt32());
+            Assert.AreEqual(5, jd.RootElement.GetIndexElement(0).GetInt32());
+
+            //// 3. Type round-trips correctly.
+            //using MemoryStream stream = new();
+            //jd.WriteTo(stream);
+            //stream.Position = 0;
+            //string jsonString = BinaryData.FromStream(stream).ToString();
+            //JsonDocument doc = JsonDocument.Parse(jsonString);
+
+            //Assert.AreEqual(5, doc.RootElement[0].GetInt32());
+            //Assert.AreEqual(JsonDataWriteToTests.RemoveWhiteSpace(@"[ 5 ]"), jsonString);
         }
 
         [Test]
