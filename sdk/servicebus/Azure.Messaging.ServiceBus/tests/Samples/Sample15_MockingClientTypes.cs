@@ -190,7 +190,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
             // for a complete set of properties that can be populated using the ServiceBusModelFactory.ServiceBusReceivedMessage
             // method.
 
-            for (int i=0; i<numMessagesToReturn; i++)
+            for (int i=0; i < numMessagesToReturn; i++)
             {
                 // This mocks a ServiceBusReceivedMessage instance using the model factory. Different arguments can mock different
                 // potential outputs from the broker.
