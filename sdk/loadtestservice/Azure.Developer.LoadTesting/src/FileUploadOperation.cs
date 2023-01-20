@@ -109,15 +109,9 @@ namespace Azure.Developer.LoadTesting
                 return GetRawResponse();
             }
 
-            try
-            {
-                _response = _client.GetTestFile(_testId, _fileName);
-                _value = _response.Content;
-            }
-            catch
-            {
-                throw new RequestFailedException(_response);
-            }
+
+            _response = _client.GetTestFile(_testId, _fileName);
+            _value = _response.Content;
 
             return GetCompletionResponse();
         }
