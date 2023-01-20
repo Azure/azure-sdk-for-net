@@ -124,7 +124,7 @@ namespace Azure.Core
         {
             if (_count == 0)
                 return -1;
-            if (_count > 0 &&_first.Key == key)
+            if (_count > 0 && _first.Key == key)
                 return 0;
             if (_count > 1 && _second.Key == key)
                 return 1;
