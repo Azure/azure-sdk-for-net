@@ -1,14 +1,11 @@
 # Release History
 
-## 4.13.0-beta.1 (Unreleased)
+## 4.13.0 (2023-01-19)
 
 ### Features Added
 
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
+- Added new API Management events.
+- Added new DataBox events.
 
 ## 4.12.0 (2022-11-08)
 
