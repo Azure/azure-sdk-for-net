@@ -104,7 +104,7 @@ namespace Microsoft.Azure.Management.ResourceManager
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "policyAssignmentName");
             }
-            string apiVersion = "2021-06-01";
+            string apiVersion = "2022-06-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -313,7 +313,7 @@ namespace Microsoft.Azure.Management.ResourceManager
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "parameters");
             }
-            string apiVersion = "2021-06-01";
+            string apiVersion = "2022-06-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -520,7 +520,7 @@ namespace Microsoft.Azure.Management.ResourceManager
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "policyAssignmentName");
             }
-            string apiVersion = "2021-06-01";
+            string apiVersion = "2022-06-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -729,7 +729,7 @@ namespace Microsoft.Azure.Management.ResourceManager
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "parameters");
             }
-            string apiVersion = "2021-06-01";
+            string apiVersion = "2022-06-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -978,7 +978,7 @@ namespace Microsoft.Azure.Management.ResourceManager
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
-            string apiVersion = "2021-06-01";
+            string apiVersion = "2022-06-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -1253,7 +1253,7 @@ namespace Microsoft.Azure.Management.ResourceManager
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
-            string apiVersion = "2021-06-01";
+            string apiVersion = "2022-06-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -1487,7 +1487,7 @@ namespace Microsoft.Azure.Management.ResourceManager
             {
                 throw new ValidationException(ValidationRules.InclusiveMinimum, "top", 1);
             }
-            string apiVersion = "2021-06-01";
+            string apiVersion = "2022-06-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -1694,7 +1694,7 @@ namespace Microsoft.Azure.Management.ResourceManager
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
-            string apiVersion = "2021-06-01";
+            string apiVersion = "2022-06-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -1895,7 +1895,7 @@ namespace Microsoft.Azure.Management.ResourceManager
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "policyAssignmentId");
             }
-            string apiVersion = "2021-06-01";
+            string apiVersion = "2022-06-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -2098,7 +2098,7 @@ namespace Microsoft.Azure.Management.ResourceManager
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "parameters");
             }
-            string apiVersion = "2021-06-01";
+            string apiVersion = "2022-06-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -2298,7 +2298,7 @@ namespace Microsoft.Azure.Management.ResourceManager
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "policyAssignmentId");
             }
-            string apiVersion = "2021-06-01";
+            string apiVersion = "2022-06-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -2501,7 +2501,7 @@ namespace Microsoft.Azure.Management.ResourceManager
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "parameters");
             }
-            string apiVersion = "2021-06-01";
+            string apiVersion = "2022-06-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;

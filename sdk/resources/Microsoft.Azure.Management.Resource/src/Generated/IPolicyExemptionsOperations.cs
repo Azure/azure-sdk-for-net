@@ -138,6 +138,45 @@ namespace Microsoft.Azure.Management.ResourceManager
         /// </exception>
         Task<AzureOperationResponse<PolicyExemption>> GetWithHttpMessagesAsync(string scope, string policyExemptionName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
+        /// Updates a policy exemption.
+        /// </summary>
+        /// <remarks>
+        /// This operation updates a policy exemption with the given scope and
+        /// name.
+        /// </remarks>
+        /// <param name='scope'>
+        /// The scope of the policy exemption. Valid scopes are: management
+        /// group (format:
+        /// '/providers/Microsoft.Management/managementGroups/{managementGroup}'),
+        /// subscription (format: '/subscriptions/{subscriptionId}'), resource
+        /// group (format:
+        /// '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}',
+        /// or resource (format:
+        /// '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/[{parentResourcePath}/]{resourceType}/{resourceName}'
+        /// </param>
+        /// <param name='policyExemptionName'>
+        /// The name of the policy exemption to delete.
+        /// </param>
+        /// <param name='parameters'>
+        /// Parameters for policy exemption patch request.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<PolicyExemption>> UpdateWithHttpMessagesAsync(string scope, string policyExemptionName, PolicyExemptionUpdate parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
         /// Retrieves all policy exemptions that apply to a subscription.
         /// </summary>
         /// <remarks>

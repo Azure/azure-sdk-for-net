@@ -10,9 +10,17 @@
 
 namespace Microsoft.Azure.Management.ResourceManager.Models
 {
+    using Microsoft.Rest;
+    using Microsoft.Rest.Serialization;
     using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Linq;
 
+    /// <summary>
+    /// The policy assignment for Patch request.
+    /// </summary>
+    [Rest.Serialization.JsonTransformation]
     public partial class PolicyAssignmentUpdate
     {
         /// <summary>
@@ -26,12 +34,17 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         /// <summary>
         /// Initializes a new instance of the PolicyAssignmentUpdate class.
         /// </summary>
+        /// <param name="resourceSelectors">The resource selector list to
+        /// filter policies by resource properties.</param>
+        /// <param name="overrides">The policy property value override.</param>
         /// <param name="location">The location of the policy assignment. Only
         /// required when utilizing managed identity.</param>
         /// <param name="identity">The managed identity associated with the
         /// policy assignment.</param>
-        public PolicyAssignmentUpdate(string location = default(string), Identity identity = default(Identity))
+        public PolicyAssignmentUpdate(IList<ResourceSelector> resourceSelectors = default(IList<ResourceSelector>), IList<OverrideModel> overrides = default(IList<OverrideModel>), string location = default(string), Identity identity = default(Identity))
         {
+            ResourceSelectors = resourceSelectors;
+            Overrides = overrides;
             Location = location;
             Identity = identity;
             CustomInit();
@@ -41,6 +54,19 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         /// An initialization method that performs custom operations like setting defaults
         /// </summary>
         partial void CustomInit();
+
+        /// <summary>
+        /// Gets or sets the resource selector list to filter policies by
+        /// resource properties.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.resourceSelectors")]
+        public IList<ResourceSelector> ResourceSelectors { get; set; }
+
+        /// <summary>
+        /// Gets or sets the policy property value override.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.overrides")]
+        public IList<OverrideModel> Overrides { get; set; }
 
         /// <summary>
         /// Gets or sets the location of the policy assignment. Only required

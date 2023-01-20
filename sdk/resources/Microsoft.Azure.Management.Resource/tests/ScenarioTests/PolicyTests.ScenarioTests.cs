@@ -321,6 +321,35 @@ namespace Policy.Tests
                 policyAssignment.Identity = new Identity(type: ResourceIdentityType.SystemAssigned);
                 policyAssignment.EnforcementMode = EnforcementMode.DoNotEnforce;
 
+                var selectors = new Selector[]
+                {
+                    new Selector
+                    {
+                        Kind = SelectorKind.ResourceLocation,
+                        InProperty = new string[] { "eastus", "eastus2" }
+                    },
+                    new Selector
+                    {
+                        Kind = SelectorKind.ResourceType,
+                        NotIn = new string[] { "Microsoft.Authorization/policyExemptions" }
+                    }
+                };
+
+                var resourceSelelctor = new ResourceSelector
+                {
+                    Name = "exampleResourceSelector",
+                    Selectors = selectors
+                };
+
+                var overrides = new OverrideModel
+                {
+                    Kind = OverrideKind.PolicyEffect,
+                    Value = "Audit",
+                };
+
+                policyAssignment.ResourceSelectors = new ResourceSelector[] { resourceSelelctor };
+                policyAssignment.Overrides = new OverrideModel[] { overrides };
+
                 putResult = client.PolicyAssignments.Create(assignmentScope, assignmentName, policyAssignment);
                 Assert.NotNull(putResult);
                 this.AssertValid(assignmentName, policyAssignment, putResult);
@@ -618,6 +647,27 @@ namespace Policy.Tests
                 policyExemption.ExpiresOn = DateTime.UtcNow.AddDays(1);
                 policyExemption.PolicyDefinitionReferenceIds = new[] { definitionReference.PolicyDefinitionReferenceId };
 
+                var resourceSelelctor = new ResourceSelector
+                {
+                    Name = "exampleResourceSelector",
+                    Selectors = new Selector[]
+                    {
+                        new Selector
+                        {
+                            Kind = SelectorKind.ResourceLocation,
+                            InProperty = new string[] { "eastus", "eastus2" }
+                        },
+                        new Selector
+                        {
+                            Kind = SelectorKind.ResourceType,
+                            NotIn = new string[] { "Microsoft.Authorization/policyExemptions" }
+                        }
+                    }
+                };
+
+                policyExemption.AssignmentScopeValidation = AssignmentScopeValidation.Default;
+                policyExemption.ResourceSelectors = new ResourceSelector[] { resourceSelelctor };
+
                 result = client.PolicyExemptions.CreateOrUpdate(scope: exemptionScope, policyExemptionName: exemptionName, parameters: policyExemption);
                 Assert.NotNull(result);
 
@@ -629,7 +679,6 @@ namespace Policy.Tests
                 // createBy info is in system data
                 AssertMetadataEqual(LivePolicyTests.BasicMetadata, result.Metadata, true);
 
-
                 listResult = client.PolicyExemptions.List();
                 this.AssertInList(exemptionName, policyExemption, listResult);
 
@@ -637,6 +686,125 @@ namespace Policy.Tests
                 client.PolicyAssignments.Delete(assignmentScope, assignmentName);
                 this.AssertThrowsCloudException(() => client.PolicyAssignments.Get(assignmentScope, assignmentName));
                 listResult = client.PolicyExemptions.List();
+                Assert.Empty(listResult.Where(p => p.Name.Equals(assignmentName)));
+
+                // delete policy set definition and validate
+                this.DeleteSetDefinitionAndValidate(client, policySetName);
+
+                // delete policy definition and validate
+                this.DeleteDefinitionAndValidate(client, definitionName);
+
+                // delete policy exemption and validate
+                client.PolicyExemptions.Delete(exemptionScope, exemptionName);
+                this.AssertThrowsCloudException(() => client.PolicyAssignments.Get(exemptionScope, exemptionName));
+                listResult = client.PolicyExemptions.List();
+                Assert.Empty(listResult.Where(p => p.Name.Equals(exemptionName)));
+            }
+        }
+
+        [Fact]
+        public void CanPatchPolicyExemption()
+        {
+            using (var context = MockContext.Start(this.GetType()))
+            {
+                var client = context.GetServiceClient<PolicyClient>();
+
+                // create a definition that can be assigned
+                var definitionName = TestUtilities.GenerateName();
+                var thisTestName = TestUtilities.GetCurrentMethodName();
+                var policyDefinition = this.CreatePolicyDefinition($"{thisTestName} Policy Definition ${LivePolicyTests.NameTag}");
+
+                var definitionResult = client.PolicyDefinitions.CreateOrUpdate(policyDefinitionName: definitionName, parameters: policyDefinition);
+                Assert.NotNull(definitionResult);
+
+                // create a policy set that can be assigned
+                var definitionReference = new PolicyDefinitionReference(policyDefinitionId: definitionResult.Id, policyDefinitionReferenceId: TestUtilities.GenerateName());
+                var policySetName = TestUtilities.GenerateName();
+                var policySet = new PolicySetDefinition
+                {
+                    DisplayName = $"{thisTestName} Policy Set Definition ${LivePolicyTests.NameTag}",
+                    PolicyDefinitions = new[] { definitionReference }
+                };
+
+                var policySetResult = client.PolicySetDefinitions.CreateOrUpdate(policySetName, policySet);
+                Assert.NotNull(policySetResult);
+
+                // create an assignment that can be exempted
+                var assignmentName = TestUtilities.GenerateName();
+                var assignmentScope = this.SubscriptionScope(client);
+                var policyAssignment = new PolicyAssignment
+                {
+                    DisplayName = $"{thisTestName} Policy Assignment ${LivePolicyTests.NameTag}",
+                    PolicyDefinitionId = policySetResult.Id,
+                };
+
+                var assignmentResult = client.PolicyAssignments.Create(assignmentScope, assignmentName, policyAssignment);
+                Assert.NotNull(assignmentResult);
+
+                // get the same item at scope and ensure it matches
+                var exemptionName = TestUtilities.GenerateName();
+                var exemptionScope = this.SubscriptionScope(client);
+                var policyExemption = new PolicyExemption
+                {
+                    DisplayName = $"{thisTestName} Policy Exemption ${LivePolicyTests.NameTag}",
+                    PolicyAssignmentId = assignmentResult.Id,
+                    ExemptionCategory = ExemptionCategory.Waiver
+                };
+
+                var result = client.PolicyExemptions.CreateOrUpdate(scope: exemptionScope, policyExemptionName: exemptionName, parameters: policyExemption);
+
+                // validate through GET
+                var getExemption = client.PolicyExemptions.Get(exemptionScope, exemptionName);
+                this.AssertValid(exemptionName, policyExemption, getExemption);
+                this.AssertEqual(result, getExemption);
+
+                // patch the exemption by changing the assignment scope validation property
+                var policyExemptionPatchRequest = new PolicyExemptionUpdate { AssignmentScopeValidation = AssignmentScopeValidation.DoNotValidate };
+                var patchExemption = client.PolicyExemptions.Update(exemptionScope, exemptionName, policyExemptionPatchRequest);
+                Assert.NotNull(patchExemption);
+                Assert.Equal(AssignmentScopeValidation.DoNotValidate, patchExemption.AssignmentScopeValidation);
+
+                getExemption = client.PolicyExemptions.Get(assignmentScope, exemptionName);
+                this.AssertEqual(patchExemption, getExemption);
+
+                // patch the assignment by changing the resource selectors
+                var resourceSelelctor = new ResourceSelector
+                {
+                    Name = "exampleResourceSelector",
+                    Selectors = new Selector[]
+                    {
+                        new Selector
+                        {
+                            Kind = SelectorKind.ResourceLocation,
+                            InProperty = new string[] { "eastus", "eastus2" }
+                        },
+                        new Selector
+                        {
+                            Kind = SelectorKind.ResourceType,
+                            NotIn = new string[] { "Microsoft.Authorization/policyExemptions" }
+                        }
+                    }
+                };
+
+                policyExemptionPatchRequest = new PolicyExemptionUpdate { ResourceSelectors = new ResourceSelector[] { resourceSelelctor } };
+                patchExemption = client.PolicyExemptions.Update(exemptionScope, exemptionName, policyExemptionPatchRequest);
+                Assert.NotNull(patchExemption);
+
+                getExemption = client.PolicyExemptions.Get(exemptionScope, exemptionName);
+                this.AssertEqual(patchExemption, getExemption);
+
+                // remove selector via patch
+                policyExemptionPatchRequest = new PolicyExemptionUpdate { ResourceSelectors = null };
+                patchExemption = client.PolicyExemptions.Update(exemptionScope, exemptionName, policyExemptionPatchRequest);
+                Assert.NotNull(patchExemption);
+
+                getExemption = client.PolicyExemptions.Get(exemptionScope, exemptionName);
+                this.AssertEqual(patchExemption, getExemption);
+
+                // delete policy assignment and validate (existing exemption will not block delete the associated assignment)
+                client.PolicyAssignments.Delete(assignmentScope, assignmentName);
+                this.AssertThrowsCloudException(() => client.PolicyAssignments.Get(assignmentScope, assignmentName));
+                var listResult = client.PolicyExemptions.List();
                 Assert.Empty(listResult.Where(p => p.Name.Equals(assignmentName)));
 
                 // delete policy set definition and validate
@@ -1351,8 +1519,7 @@ namespace Policy.Tests
         {
             // get an existing test management group to be parent
             var allManagementGroups = client.ManagementGroups.List().ToArray();
-            //var parentManagementGroup = allManagementGroups.First(item => item.Name.Equals(ParentManagementGroup));
-            var parentManagementGroup = allManagementGroups[1];
+            var parentManagementGroup = allManagementGroups.First(item => item.Name.Equals(LivePolicyTests.ParentManagementGroup));
 
             // make a management group using the given parameters
             var managementGroupDetails = new CreateManagementGroupDetails(parent: new CreateParentGroupInfo(id: parentManagementGroup.Id), updatedBy: displayName);
@@ -1655,6 +1822,8 @@ namespace Policy.Tests
             Assert.Equal(expected.Scope, result.Scope);
             Assert.Equal(expected.Type, result.Type);
             Assert.Equal(expected.Location, result.Location);
+            AssertResourceSelectorEqual(expected.ResourceSelectors?.ToArray(), result.ResourceSelectors?.ToArray());
+            AssertOverrideEqual(expected.Overrides?.ToArray(), result.Overrides?.ToArray());
 
             this.AssertEqual(expected.Identity, result.Identity);
             this.AssertEqual(expected.SystemData, result.SystemData);
@@ -1805,10 +1974,8 @@ namespace Policy.Tests
             Assert.Equal(expected.PolicyAssignmentId, result.PolicyAssignmentId);
             Assert.Equal(expected.ExemptionCategory, result.ExemptionCategory);
             Assert.True(expected.ExpiresOn == result.ExpiresOn);
-            Assert.Equal(expected.PolicyAssignmentId, result.PolicyAssignmentId);
-            Assert.Equal(expected.PolicyAssignmentId, result.PolicyAssignmentId);
-            Assert.Equal(expected.PolicyAssignmentId, result.PolicyAssignmentId);
-            Assert.Equal(expected.PolicyAssignmentId, result.PolicyAssignmentId);
+            Assert.Equal(expected.AssignmentScopeValidation, result.AssignmentScopeValidation);
+            AssertResourceSelectorEqual(expected.ResourceSelectors?.ToArray(), result.ResourceSelectors?.ToArray());
             AssertMetadataEqual(expected.Metadata, result.Metadata, false);
 
             if (expected.PolicyDefinitionReferenceIds == null)
@@ -1823,6 +1990,98 @@ namespace Policy.Tests
                     Assert.Single(policyReferenceId, result.PolicyDefinitionReferenceIds.Where(item => item == policyReferenceId));
                 }
             }
+        }
+
+        private void AssertResourceSelectorEqual(ResourceSelector[] expected, ResourceSelector[] actual)
+        {
+            if (expected == null && expected == actual)
+            {
+                return;
+            }
+
+            Assert.Equal(expected.Length, actual.Length);
+            Assert.False(expected.Select(resourceSelector => resourceSelector.Name).Except(actual.Select(resourceSelector => resourceSelector.Name)).Any());
+
+            foreach (var resourceSelector in expected)
+            {
+                var visited = new HashSet<int>();
+                var foundEquivalentItem = false;
+                for (var i = 0; i < actual.Length; i++)
+                {
+                    if (!visited.Contains(i) && SelectorsEquals(resourceSelector.Selectors?.ToArray(), actual[i].Selectors?.ToArray()))
+                    {
+                        visited.Add(i);
+                        foundEquivalentItem = true;
+                    }
+                }
+
+                Assert.True(foundEquivalentItem);
+            }
+        }
+
+        private void AssertOverrideEqual(OverrideModel[] expected, OverrideModel[] actual)
+        {
+            if (expected == null && expected == actual)
+            {
+                return;
+            }
+
+            Assert.Equal(expected.Length, actual.Length);
+
+            foreach (var policyPropertyOverride in expected)
+            {
+                var visited = new HashSet<int>();
+                var foundEquivalentItem = false;
+                for (var i = 0; i < actual.Length; i++)
+                {
+                    if (!visited.Contains(i)
+                        && policyPropertyOverride.Kind.Equals(actual[i].Kind)
+                        && policyPropertyOverride.Value.Equals(actual[i].Value)
+                        && SelectorsEquals(policyPropertyOverride.Selectors?.ToArray(), actual[i].Selectors?.ToArray()))
+                    {
+                        visited.Add(i);
+                        foundEquivalentItem = true;
+                    }
+                }
+
+                Assert.True(foundEquivalentItem);
+            }
+        }
+
+        private bool SelectorsEquals(Selector[] expected, Selector[] actual)
+        {
+            if (expected == null && expected == actual)
+            {
+                return true;
+            }
+
+            if (expected?.Length != expected?.Length)
+            {
+                return false;
+            }
+
+            foreach (var selector in expected)
+            {
+                var visited = new HashSet<int>();
+                var foundEquivalentItem = false;
+                for (var i = 0; i < actual.Length; i++)
+                {
+                    if (!visited.Contains(i)
+                        && !(selector.InProperty ?? EmptyArray<string>.Instance).Except(actual[i].InProperty ?? EmptyArray<string>.Instance).Any()
+                        && !(selector.NotIn ?? EmptyArray<string>.Instance).Except(actual[i].NotIn ?? EmptyArray<string>.Instance).Any())
+                    {
+                        visited.Add(i);
+                        foundEquivalentItem = true;
+                    }
+                }
+
+                if (!foundEquivalentItem)
+                {
+                    return false;
+                }
+            }
+
+            return true;
         }
 
         private void AssertSystemDataValid(SystemData systemData)
@@ -1930,5 +2189,10 @@ namespace Policy.Tests
 
         // get management group scope of the given client and management group
         private string ManagementGroupScope(ManagementGroup managementGroup) => $"{managementGroup.Id}";
+    }
+
+    internal static class EmptyArray<T>
+    {
+        internal static readonly T[] Instance = new T[0];
     }
 }
