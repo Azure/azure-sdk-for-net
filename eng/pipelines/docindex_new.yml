@@ -39,7 +39,7 @@ jobs:
       - task: Powershell@2
         inputs:
           pwsh: true
-          filePath: eng/common/scripts/Write-DocsMsConfigFiles.ps1
+          filePath: eng/common/scripts/Update-DocsMsConfigFiles.ps1
           arguments: -DocsRepo $(DocRepoLocation) 
         displayName: Update Docs Onboarding for main branch
         # condition: and(succeeded(), or(eq(variables['Build.Reason'], 'Schedule'), eq(variables['Force.MainUpdate'], 'true')))
