@@ -133,8 +133,8 @@ namespace Azure.ResourceManager.Resources
         /// <returns> An async collection of <see cref="ResourceProviderResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ResourceProviderResource> GetAllAsync(string expand = null, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _resourceProviderProvidersRestClient.CreateListRequest(Id.SubscriptionId, top, expand);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _resourceProviderProvidersRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, top, expand);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _resourceProviderProvidersRestClient.CreateListRequest(Id.SubscriptionId, expand);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _resourceProviderProvidersRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, expand);
             return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ResourceProviderResource(Client, ResourceProviderData.DeserializeResourceProviderData(e)), _resourceProviderProvidersClientDiagnostics, Pipeline, "ResourceProviderCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
@@ -156,8 +156,8 @@ namespace Azure.ResourceManager.Resources
         /// <returns> A collection of <see cref="ResourceProviderResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ResourceProviderResource> GetAll(string expand = null, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _resourceProviderProvidersRestClient.CreateListRequest(Id.SubscriptionId, top, expand);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _resourceProviderProvidersRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, top, expand);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _resourceProviderProvidersRestClient.CreateListRequest(Id.SubscriptionId, expand);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _resourceProviderProvidersRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, expand);
             return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ResourceProviderResource(Client, ResourceProviderData.DeserializeResourceProviderData(e)), _resourceProviderProvidersClientDiagnostics, Pipeline, "ResourceProviderCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
