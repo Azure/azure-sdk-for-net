@@ -738,9 +738,142 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
         }
 
         [Test]
-        public async Task MockTopicSubscriptionSendReceive()
+        public async Task MockTopicSubscriptionSend()
         {
             #region Snippet:ServiceBus_MockingTopicSubscriptionSend
+            Mock<ServiceBusClient> mockClient = new();
+            Mock<ServiceBusSender> mockSender = new();
+
+            // This sets up the mock ServiceBusClient to return the mock of the ServiceBusSender.
+
+            mockClient
+                .Setup(client => client.CreateSender(It.IsAny<string>()))
+                .Returns(mockSender.Object);
+
+            // This sets up the mock sender to successfully return a completed task when any message is passed to
+            // SendMessageAsync.
+
+            mockSender
+                .Setup(sender => sender.SendMessageAsync(
+                    It.IsAny<ServiceBusMessage>(),
+                    It.IsAny<CancellationToken>()))
+                .Returns(Task.CompletedTask);
+
+            ServiceBusClient client = mockClient.Object;
+
+            // The rest of this snippet illustrates how to send a service bus message using the mocked
+            // service bus client above, this would be where application methods sending a message would be
+            // called.
+
+            string mockTopicName = "MockTopicName";
+
+            ServiceBusSender sender = client.CreateSender(mockTopicName);
+            ServiceBusMessage message = new("Hello World!");
+
+            await sender.SendMessageAsync(message);
+
+            // This illustrates how to verify that SendMessageAsync was called the correct number of times
+            // with the expected message.
+
+            mockSender
+                .Verify(sender => sender.SendMessageAsync(
+                    It.Is<ServiceBusMessage>(m => (m.MessageId == message.MessageId)),
+                    It.IsAny<CancellationToken>()));
+            #endregion
+        }
+
+        [Test]
+        public async Task MockTopicSubscriptionReceive()
+        {
+            #region Snippet:ServiceBus_MockingTopicSubscriptionReceive
+
+            Mock<ServiceBusClient> mockClient = new();
+            Mock<ServiceBusReceiver> mockReceiver = new();
+
+            // This sets up the mock ServiceBusClient to return the mock of the ServiceBusReceiver.
+
+            mockClient
+                .Setup(client => client.CreateReceiver(
+                    It.IsAny<string>(),
+                    It.IsAny<string>()))
+                .Returns(mockReceiver.Object);
+
+            List<ServiceBusReceivedMessage> messagesToReturn = new();
+            int numMessagesToReturn = 10;
+
+            // This creates a list of messages to return from the ServiceBusReceiver mock. See the ServiceBusModelFactory
+            // for a complete set of properties that can be populated using the ServiceBusModelFactory.ServiceBusReceivedMessage
+            // method.
+
+            for (int i = 0; i < numMessagesToReturn; i++)
+            {
+                // This mocks a ServiceBusReceivedMessage instance using the model factory. Different arguments can mock different
+                // potential outputs from the broker.
+
+                ServiceBusReceivedMessage message = ServiceBusModelFactory.ServiceBusReceivedMessage(
+                    body: new BinaryData($"message-{i}"),
+                    messageId: $"id-{i}",
+                    partitionKey: "illustrative-partitionKey",
+                    correlationId: "illustrative-correlationId",
+                    contentType: "illustrative-contentType",
+                    replyTo: "illustrative-replyTo"
+                    // ...
+                    );
+                messagesToReturn.Add(message);
+            }
+
+            // This is a simple local method that returns an IAsyncEnumerable to use as the return for ReceiveMessagesAsync
+            // below, since IAsyncEnumerables cannot be created directly.
+
+            async IAsyncEnumerable<ServiceBusReceivedMessage> mockReturn()
+            {
+                // IAsyncEnumerable types can only be returned by async functions, use this no-op await statement to
+                // force the method to be async.
+
+                await Task.Yield();
+
+                foreach (ServiceBusReceivedMessage message in messagesToReturn)
+                {
+                    // Yield statements allow methods to emit multiple outputs. In async methods this can be over time.
+
+                    yield return message;
+                }
+            }
+
+            // Use the method to mock a return from the ServiceBusReceiver. We are setting up the method to method to return
+            // the list of messages defined above.
+
+            mockReceiver
+                .Setup(receiver => receiver.ReceiveMessagesAsync(
+                    It.IsAny<CancellationToken>()))
+                .Returns(mockReturn);
+
+            ServiceBusClient client = mockClient.Object;
+
+            // The rest of this snippet illustrates how to receive messages using the mocked ServiceBusClient above,
+            // this would be where application methods receiving messages would be called.
+
+            var mockTopicName = "MockTopicName";
+            var mockSubscriptionName = "MockSubscriptionName";
+            ServiceBusReceiver receiver = client.CreateReceiver(mockTopicName, mockSubscriptionName);
+
+            var cancellationTokenSource = new CancellationTokenSource();
+            cancellationTokenSource.CancelAfter(TimeSpan.FromSeconds(2));
+
+            await foreach (ServiceBusReceivedMessage message in receiver.ReceiveMessagesAsync(cancellationTokenSource.Token))
+            {
+                // application control
+            }
+
+            // This is where applications can verify that the ServiceBusReceivedMessage's output by the ServiceBusReceiver were
+            // handled as expected.
+            #endregion
+        }
+
+        [Test]
+        public async Task MockTopicSubscriptionCrud()
+        {
+            #region Snippet:ServiceBus_MockingTopicSubscriptionCrud
             Mock<ServiceBusAdministrationClient> mockAdministrationClient = new();
             Mock<Response<TopicProperties>> mockTopicResponse = new();
             Mock<Response<SubscriptionProperties>> mockSuscriptionResponse = new();
@@ -801,70 +934,8 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
 
             ServiceBusAdministrationClient adminClient = mockAdministrationClient.Object;
 
-            // This sets up the mock service bus sender and receiver to be returned from the mock ServiceBusClient.
-
-            Mock<ServiceBusClient> mockServiceBusClient = new();
-            Mock<ServiceBusSender> mockSender = new();
-            Mock<ServiceBusReceiver> mockReceiver = new();
-
-            mockServiceBusClient
-                .Setup(client => client.CreateSender(It.IsAny<string>()))
-                .Returns(mockSender.Object);
-
-            mockServiceBusClient
-                .Setup(client => client.CreateReceiver(
-                    It.IsAny<string>(),
-                    It.IsAny<string>()))
-                .Returns(mockReceiver.Object);
-
-            // This sets up the sender to dynamically create a list of messages to return from the ServiceBusReceiver mock.
-            // See the ServiceBusModelFactory for a complete set of properties that can be populated using the ServiceBusModelFactory.ServiceBusReceivedMessage
-            // method.
-
-            List<ServiceBusReceivedMessage> messagesToReturn = new();
-
-            mockSender
-                .Setup(sender => sender.SendMessageAsync(
-                    It.IsAny<ServiceBusMessage>(),
-                    It.IsAny<CancellationToken>()))
-                .Callback<ServiceBusMessage, CancellationToken>(
-                (m, ct) => messagesToReturn.Add(ServiceBusModelFactory.ServiceBusReceivedMessage(
-                    body: m.Body,
-                    messageId: m.MessageId,
-                    sessionId: m.SessionId)))
-                .Returns(Task.CompletedTask);
-
-            // This is a simple local method that returns an IAsyncEnumerable to use as the return for ReceiveMessagesAsync
-            // below, since IAsyncEnumerables cannot be created directly.
-
-            async IAsyncEnumerable<ServiceBusReceivedMessage> mockReturn()
-            {
-                // IAsyncEnumerable types can only be returned by async functions, use this no-op await statement to
-                // force the method to be async.
-
-                await Task.Yield();
-
-                foreach (ServiceBusReceivedMessage message in messagesToReturn)
-                {
-                    // Yield statements allow methods to emit multiple outputs. In async methods this can be over time.
-
-                    yield return message;
-                }
-
-                // Clear all of the messages already emitted.
-                messagesToReturn.Clear();
-            }
-
-            mockReceiver
-                .Setup(receiver => receiver.ReceiveMessagesAsync(
-                    It.IsAny<CancellationToken>()))
-                .Returns(mockReturn);
-
-            ServiceBusClient serviceBusClient = mockServiceBusClient.Object;
-
-            // The rest of this snippet illustrates how to send and receive messages using the mocked
-            // topic and subscription methods above, this would be where application methods sending and
-            // receiving to topics and subscriptions would be called.
+            // The rest of this snippet illustrates create topics and subscriptions using the mocked administration client,
+            // this would be where application methods creating topics and subscriptions would be called.
 
             // Illustrating creating a topic.
 
@@ -885,16 +956,6 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
                 UserMetadata= "some metadata"
             };
             SubscriptionProperties createdSubscription = await adminClient.CreateSubscriptionAsync(subscriptionOptions);
-
-            // Illustrating sending and receiving from the created topic and subscription.
-
-            ServiceBusSender sender = serviceBusClient.CreateSender(topicName);
-
-            await sender.SendMessageAsync(new ServiceBusMessage("body"));
-
-            ServiceBusReceiver receiver = serviceBusClient.CreateReceiver(topicName, subscriptionName);
-
-            ServiceBusReceivedMessage receivedMessage = await receiver.ReceiveMessageAsync();
             #endregion
         }
 
