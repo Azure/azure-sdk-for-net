@@ -12,7 +12,8 @@ namespace Azure.Identity
 {
     internal class MsalConfidentialClient : MsalClientBase<IConfidentialClientApplication>
     {
-        private const string s_instanceMetadata = "{\"tenant_discovery_endpoint\":\"https://login.microsoftonline.com/common/v2.0/.well-known/openid-configuration\",\"api-version\":\"1.1\",\"metadata\":[{\"preferred_network\":\"login.microsoftonline.com\",\"preferred_cache\":\"login.windows.net\",\"aliases\":[\"login.microsoftonline.com\",\"login.windows.net\",\"login.microsoft.com\",\"sts.windows.net\"]},{\"preferred_network\":\"login.partner.microsoftonline.cn\",\"preferred_cache\":\"login.partner.microsoftonline.cn\",\"aliases\":[\"login.partner.microsoftonline.cn\",\"login.chinacloudapi.cn\"]},{\"preferred_network\":\"login.microsoftonline.de\",\"preferred_cache\":\"login.microsoftonline.de\",\"aliases\":[\"login.microsoftonline.de\"]},{\"preferred_network\":\"login.microsoftonline.us\",\"preferred_cache\":\"login.microsoftonline.us\",\"aliases\":[\"login.microsoftonline.us\",\"login.usgovcloudapi.net\"]},{\"preferred_network\":\"login-us.microsoftonline.com\",\"preferred_cache\":\"login-us.microsoftonline.com\",\"aliases\":[\"login-us.microsoftonline.com\"]}]}";
+        // The instance metadata our callback returns only contains a known aka.ms link to ensure it will match the authority sent when a _appTokenProviderCallback is configured.
+        private const string s_instanceMetadata ="{\"tenant_discovery_endpoint\":\"https://aka.ms/azsdk/net/identity/managedidentitycredential/troubleshoot\",\"api-version\":\"1.1\",\"metadata\":[{\"preferred_network\":\"aka.ms\",\"preferred_cache\":\"aka.ms\",\"aliases\":[\"aka.ms\"]}]}";
         internal readonly string _clientSecret;
         internal readonly bool _includeX5CClaimHeader;
         internal readonly IX509Certificate2Provider _certificateProvider;
@@ -75,7 +76,7 @@ namespace Azure.Identity
             if (_appTokenProviderCallback != null)
             {
                 confClientBuilder.WithAppTokenProvider(_appTokenProviderCallback)
-                    .WithAuthority(_authority.AbsoluteUri, TenantId, false)
+                    .WithAuthority("https://aka.ms/azsdk/net/identity/managedidentitycredential/troubleshoot", TenantId, false)
                     .WithInstanceDiscoveryMetadata(s_instanceMetadata);
             }
             else
