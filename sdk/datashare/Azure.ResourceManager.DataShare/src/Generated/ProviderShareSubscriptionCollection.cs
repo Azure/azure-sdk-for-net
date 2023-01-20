@@ -54,8 +54,16 @@ namespace Azure.ResourceManager.DataShare
 
         /// <summary>
         /// Get share subscription in a provider share
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataShare/accounts/{accountName}/shares/{shareName}/providerShareSubscriptions/{providerShareSubscriptionId}
-        /// Operation Id: ProviderShareSubscriptions_GetByShare
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataShare/accounts/{accountName}/shares/{shareName}/providerShareSubscriptions/{providerShareSubscriptionId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ProviderShareSubscriptions_GetByShare</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="providerShareSubscriptionId"> To locate shareSubscription. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -83,8 +91,16 @@ namespace Azure.ResourceManager.DataShare
 
         /// <summary>
         /// Get share subscription in a provider share
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataShare/accounts/{accountName}/shares/{shareName}/providerShareSubscriptions/{providerShareSubscriptionId}
-        /// Operation Id: ProviderShareSubscriptions_GetByShare
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataShare/accounts/{accountName}/shares/{shareName}/providerShareSubscriptions/{providerShareSubscriptionId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ProviderShareSubscriptions_GetByShare</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="providerShareSubscriptionId"> To locate shareSubscription. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -112,8 +128,16 @@ namespace Azure.ResourceManager.DataShare
 
         /// <summary>
         /// List share subscriptions in a provider share
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataShare/accounts/{accountName}/shares/{shareName}/providerShareSubscriptions
-        /// Operation Id: ProviderShareSubscriptions_ListByShare
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataShare/accounts/{accountName}/shares/{shareName}/providerShareSubscriptions</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ProviderShareSubscriptions_ListByShare</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="skipToken"> Continuation Token. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -127,8 +151,16 @@ namespace Azure.ResourceManager.DataShare
 
         /// <summary>
         /// List share subscriptions in a provider share
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataShare/accounts/{accountName}/shares/{shareName}/providerShareSubscriptions
-        /// Operation Id: ProviderShareSubscriptions_ListByShare
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataShare/accounts/{accountName}/shares/{shareName}/providerShareSubscriptions</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ProviderShareSubscriptions_ListByShare</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="skipToken"> Continuation Token. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -142,8 +174,16 @@ namespace Azure.ResourceManager.DataShare
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataShare/accounts/{accountName}/shares/{shareName}/providerShareSubscriptions/{providerShareSubscriptionId}
-        /// Operation Id: ProviderShareSubscriptions_GetByShare
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataShare/accounts/{accountName}/shares/{shareName}/providerShareSubscriptions/{providerShareSubscriptionId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ProviderShareSubscriptions_GetByShare</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="providerShareSubscriptionId"> To locate shareSubscription. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -169,8 +209,16 @@ namespace Azure.ResourceManager.DataShare
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataShare/accounts/{accountName}/shares/{shareName}/providerShareSubscriptions/{providerShareSubscriptionId}
-        /// Operation Id: ProviderShareSubscriptions_GetByShare
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataShare/accounts/{accountName}/shares/{shareName}/providerShareSubscriptions/{providerShareSubscriptionId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ProviderShareSubscriptions_GetByShare</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="providerShareSubscriptionId"> To locate shareSubscription. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

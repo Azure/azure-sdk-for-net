@@ -55,8 +55,16 @@ namespace Azure.ResourceManager.SqlVirtualMachine
 
         /// <summary>
         /// Creates or updates a SQL virtual machine.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SqlVirtualMachine/sqlVirtualMachines/{sqlVirtualMachineName}
-        /// Operation Id: SqlVirtualMachines_CreateOrUpdate
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SqlVirtualMachine/sqlVirtualMachines/{sqlVirtualMachineName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SqlVirtualMachines_CreateOrUpdate</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="sqlVmName"> Name of the SQL virtual machine. </param>
@@ -88,8 +96,16 @@ namespace Azure.ResourceManager.SqlVirtualMachine
 
         /// <summary>
         /// Creates or updates a SQL virtual machine.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SqlVirtualMachine/sqlVirtualMachines/{sqlVirtualMachineName}
-        /// Operation Id: SqlVirtualMachines_CreateOrUpdate
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SqlVirtualMachine/sqlVirtualMachines/{sqlVirtualMachineName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SqlVirtualMachines_CreateOrUpdate</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="sqlVmName"> Name of the SQL virtual machine. </param>
@@ -121,8 +137,16 @@ namespace Azure.ResourceManager.SqlVirtualMachine
 
         /// <summary>
         /// Gets a SQL virtual machine.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SqlVirtualMachine/sqlVirtualMachines/{sqlVirtualMachineName}
-        /// Operation Id: SqlVirtualMachines_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SqlVirtualMachine/sqlVirtualMachines/{sqlVirtualMachineName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SqlVirtualMachines_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="sqlVmName"> Name of the SQL virtual machine. </param>
         /// <param name="expand"> The child resources to include in the response. </param>
@@ -151,8 +175,16 @@ namespace Azure.ResourceManager.SqlVirtualMachine
 
         /// <summary>
         /// Gets a SQL virtual machine.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SqlVirtualMachine/sqlVirtualMachines/{sqlVirtualMachineName}
-        /// Operation Id: SqlVirtualMachines_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SqlVirtualMachine/sqlVirtualMachines/{sqlVirtualMachineName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SqlVirtualMachines_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="sqlVmName"> Name of the SQL virtual machine. </param>
         /// <param name="expand"> The child resources to include in the response. </param>
@@ -181,8 +213,16 @@ namespace Azure.ResourceManager.SqlVirtualMachine
 
         /// <summary>
         /// Gets all SQL virtual machines in a resource group.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SqlVirtualMachine/sqlVirtualMachines
-        /// Operation Id: SqlVirtualMachines_ListByResourceGroup
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SqlVirtualMachine/sqlVirtualMachines</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SqlVirtualMachines_ListByResourceGroup</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="SqlVmResource" /> that may take multiple service requests to iterate over. </returns>
@@ -195,8 +235,16 @@ namespace Azure.ResourceManager.SqlVirtualMachine
 
         /// <summary>
         /// Gets all SQL virtual machines in a resource group.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SqlVirtualMachine/sqlVirtualMachines
-        /// Operation Id: SqlVirtualMachines_ListByResourceGroup
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SqlVirtualMachine/sqlVirtualMachines</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SqlVirtualMachines_ListByResourceGroup</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="SqlVmResource" /> that may take multiple service requests to iterate over. </returns>
@@ -209,8 +257,16 @@ namespace Azure.ResourceManager.SqlVirtualMachine
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SqlVirtualMachine/sqlVirtualMachines/{sqlVirtualMachineName}
-        /// Operation Id: SqlVirtualMachines_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SqlVirtualMachine/sqlVirtualMachines/{sqlVirtualMachineName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SqlVirtualMachines_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="sqlVmName"> Name of the SQL virtual machine. </param>
         /// <param name="expand"> The child resources to include in the response. </param>
@@ -237,8 +293,16 @@ namespace Azure.ResourceManager.SqlVirtualMachine
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SqlVirtualMachine/sqlVirtualMachines/{sqlVirtualMachineName}
-        /// Operation Id: SqlVirtualMachines_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SqlVirtualMachine/sqlVirtualMachines/{sqlVirtualMachineName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SqlVirtualMachines_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="sqlVmName"> Name of the SQL virtual machine. </param>
         /// <param name="expand"> The child resources to include in the response. </param>

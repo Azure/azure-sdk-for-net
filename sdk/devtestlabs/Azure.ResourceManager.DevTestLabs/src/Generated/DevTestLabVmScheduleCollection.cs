@@ -54,8 +54,16 @@ namespace Azure.ResourceManager.DevTestLabs
 
         /// <summary>
         /// Create or replace an existing schedule.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/virtualmachines/{virtualMachineName}/schedules/{name}
-        /// Operation Id: VirtualMachineSchedules_CreateOrUpdate
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/virtualmachines/{virtualMachineName}/schedules/{name}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>VirtualMachineSchedules_CreateOrUpdate</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="name"> The name of the schedule. </param>
@@ -87,8 +95,16 @@ namespace Azure.ResourceManager.DevTestLabs
 
         /// <summary>
         /// Create or replace an existing schedule.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/virtualmachines/{virtualMachineName}/schedules/{name}
-        /// Operation Id: VirtualMachineSchedules_CreateOrUpdate
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/virtualmachines/{virtualMachineName}/schedules/{name}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>VirtualMachineSchedules_CreateOrUpdate</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="name"> The name of the schedule. </param>
@@ -120,8 +136,16 @@ namespace Azure.ResourceManager.DevTestLabs
 
         /// <summary>
         /// Get schedule.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/virtualmachines/{virtualMachineName}/schedules/{name}
-        /// Operation Id: VirtualMachineSchedules_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/virtualmachines/{virtualMachineName}/schedules/{name}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>VirtualMachineSchedules_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="name"> The name of the schedule. </param>
         /// <param name="expand"> Specify the $expand query. Example: &apos;properties($select=status)&apos;. </param>
@@ -150,8 +174,16 @@ namespace Azure.ResourceManager.DevTestLabs
 
         /// <summary>
         /// Get schedule.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/virtualmachines/{virtualMachineName}/schedules/{name}
-        /// Operation Id: VirtualMachineSchedules_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/virtualmachines/{virtualMachineName}/schedules/{name}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>VirtualMachineSchedules_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="name"> The name of the schedule. </param>
         /// <param name="expand"> Specify the $expand query. Example: &apos;properties($select=status)&apos;. </param>
@@ -180,8 +212,16 @@ namespace Azure.ResourceManager.DevTestLabs
 
         /// <summary>
         /// List schedules in a given virtual machine.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/virtualmachines/{virtualMachineName}/schedules
-        /// Operation Id: VirtualMachineSchedules_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/virtualmachines/{virtualMachineName}/schedules</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>VirtualMachineSchedules_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="expand"> Specify the $expand query. Example: &apos;properties($select=status)&apos;. </param>
         /// <param name="filter"> The filter to apply to the operation. Example: &apos;$filter=contains(name,&apos;myName&apos;). </param>
@@ -198,8 +238,16 @@ namespace Azure.ResourceManager.DevTestLabs
 
         /// <summary>
         /// List schedules in a given virtual machine.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/virtualmachines/{virtualMachineName}/schedules
-        /// Operation Id: VirtualMachineSchedules_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/virtualmachines/{virtualMachineName}/schedules</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>VirtualMachineSchedules_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="expand"> Specify the $expand query. Example: &apos;properties($select=status)&apos;. </param>
         /// <param name="filter"> The filter to apply to the operation. Example: &apos;$filter=contains(name,&apos;myName&apos;). </param>
@@ -216,8 +264,16 @@ namespace Azure.ResourceManager.DevTestLabs
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/virtualmachines/{virtualMachineName}/schedules/{name}
-        /// Operation Id: VirtualMachineSchedules_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/virtualmachines/{virtualMachineName}/schedules/{name}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>VirtualMachineSchedules_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="name"> The name of the schedule. </param>
         /// <param name="expand"> Specify the $expand query. Example: &apos;properties($select=status)&apos;. </param>
@@ -244,8 +300,16 @@ namespace Azure.ResourceManager.DevTestLabs
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/virtualmachines/{virtualMachineName}/schedules/{name}
-        /// Operation Id: VirtualMachineSchedules_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/virtualmachines/{virtualMachineName}/schedules/{name}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>VirtualMachineSchedules_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="name"> The name of the schedule. </param>
         /// <param name="expand"> Specify the $expand query. Example: &apos;properties($select=status)&apos;. </param>

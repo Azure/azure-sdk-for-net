@@ -54,8 +54,16 @@ namespace Azure.ResourceManager.DevCenter
 
         /// <summary>
         /// Gets a gallery image.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevCenter/devcenters/{devCenterName}/galleries/{galleryName}/images/{imageName}
-        /// Operation Id: Images_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevCenter/devcenters/{devCenterName}/galleries/{galleryName}/images/{imageName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Images_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="imageName"> The name of the image. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -83,8 +91,16 @@ namespace Azure.ResourceManager.DevCenter
 
         /// <summary>
         /// Gets a gallery image.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevCenter/devcenters/{devCenterName}/galleries/{galleryName}/images/{imageName}
-        /// Operation Id: Images_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevCenter/devcenters/{devCenterName}/galleries/{galleryName}/images/{imageName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Images_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="imageName"> The name of the image. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -112,8 +128,16 @@ namespace Azure.ResourceManager.DevCenter
 
         /// <summary>
         /// Lists images for a gallery.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevCenter/devcenters/{devCenterName}/galleries/{galleryName}/images
-        /// Operation Id: Images_ListByGallery
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevCenter/devcenters/{devCenterName}/galleries/{galleryName}/images</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Images_ListByGallery</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="top"> The maximum number of resources to return from the operation. Example: &apos;$top=10&apos;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -127,8 +151,16 @@ namespace Azure.ResourceManager.DevCenter
 
         /// <summary>
         /// Lists images for a gallery.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevCenter/devcenters/{devCenterName}/galleries/{galleryName}/images
-        /// Operation Id: Images_ListByGallery
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevCenter/devcenters/{devCenterName}/galleries/{galleryName}/images</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Images_ListByGallery</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="top"> The maximum number of resources to return from the operation. Example: &apos;$top=10&apos;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -142,8 +174,16 @@ namespace Azure.ResourceManager.DevCenter
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevCenter/devcenters/{devCenterName}/galleries/{galleryName}/images/{imageName}
-        /// Operation Id: Images_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevCenter/devcenters/{devCenterName}/galleries/{galleryName}/images/{imageName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Images_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="imageName"> The name of the image. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -169,8 +209,16 @@ namespace Azure.ResourceManager.DevCenter
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevCenter/devcenters/{devCenterName}/galleries/{galleryName}/images/{imageName}
-        /// Operation Id: Images_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevCenter/devcenters/{devCenterName}/galleries/{galleryName}/images/{imageName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Images_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="imageName"> The name of the image. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

@@ -54,8 +54,16 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary>
         /// Description for Get Hosting Environment Detector Response
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/detectors/{detectorName}
-        /// Operation Id: Diagnostics_GetHostingEnvironmentDetectorResponse
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/detectors/{detectorName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Diagnostics_GetHostingEnvironmentDetectorResponse</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="detectorName"> Detector Resource Name. </param>
         /// <param name="startTime"> Start Time. </param>
@@ -86,8 +94,16 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary>
         /// Description for Get Hosting Environment Detector Response
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/detectors/{detectorName}
-        /// Operation Id: Diagnostics_GetHostingEnvironmentDetectorResponse
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/detectors/{detectorName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Diagnostics_GetHostingEnvironmentDetectorResponse</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="detectorName"> Detector Resource Name. </param>
         /// <param name="startTime"> Start Time. </param>
@@ -118,8 +134,16 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary>
         /// Description for List Hosting Environment Detector Responses
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/detectors
-        /// Operation Id: Diagnostics_ListHostingEnvironmentDetectorResponses
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/detectors</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Diagnostics_ListHostingEnvironmentDetectorResponses</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="HostingEnvironmentDetectorResource" /> that may take multiple service requests to iterate over. </returns>
@@ -132,8 +156,16 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary>
         /// Description for List Hosting Environment Detector Responses
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/detectors
-        /// Operation Id: Diagnostics_ListHostingEnvironmentDetectorResponses
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/detectors</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Diagnostics_ListHostingEnvironmentDetectorResponses</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="HostingEnvironmentDetectorResource" /> that may take multiple service requests to iterate over. </returns>
@@ -146,8 +178,16 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/detectors/{detectorName}
-        /// Operation Id: Diagnostics_GetHostingEnvironmentDetectorResponse
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/detectors/{detectorName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Diagnostics_GetHostingEnvironmentDetectorResponse</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="detectorName"> Detector Resource Name. </param>
         /// <param name="startTime"> Start Time. </param>
@@ -176,8 +216,16 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/detectors/{detectorName}
-        /// Operation Id: Diagnostics_GetHostingEnvironmentDetectorResponse
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/detectors/{detectorName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Diagnostics_GetHostingEnvironmentDetectorResponse</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="detectorName"> Detector Resource Name. </param>
         /// <param name="startTime"> Start Time. </param>

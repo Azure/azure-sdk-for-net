@@ -44,8 +44,16 @@ namespace Azure.ResourceManager.Authorization
 
         /// <summary>
         /// Creates a role eligibility schedule request.
-        /// Request Path: /{scope}/providers/Microsoft.Authorization/roleEligibilityScheduleRequests/{roleEligibilityScheduleRequestName}
-        /// Operation Id: RoleEligibilityScheduleRequests_Create
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{scope}/providers/Microsoft.Authorization/roleEligibilityScheduleRequests/{roleEligibilityScheduleRequestName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>RoleEligibilityScheduleRequests_Create</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="roleEligibilityScheduleRequestName"> The name of the role eligibility to create. It can be any valid GUID. </param>
@@ -77,8 +85,16 @@ namespace Azure.ResourceManager.Authorization
 
         /// <summary>
         /// Creates a role eligibility schedule request.
-        /// Request Path: /{scope}/providers/Microsoft.Authorization/roleEligibilityScheduleRequests/{roleEligibilityScheduleRequestName}
-        /// Operation Id: RoleEligibilityScheduleRequests_Create
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{scope}/providers/Microsoft.Authorization/roleEligibilityScheduleRequests/{roleEligibilityScheduleRequestName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>RoleEligibilityScheduleRequests_Create</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="roleEligibilityScheduleRequestName"> The name of the role eligibility to create. It can be any valid GUID. </param>
@@ -110,8 +126,16 @@ namespace Azure.ResourceManager.Authorization
 
         /// <summary>
         /// Get the specified role eligibility schedule request.
-        /// Request Path: /{scope}/providers/Microsoft.Authorization/roleEligibilityScheduleRequests/{roleEligibilityScheduleRequestName}
-        /// Operation Id: RoleEligibilityScheduleRequests_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{scope}/providers/Microsoft.Authorization/roleEligibilityScheduleRequests/{roleEligibilityScheduleRequestName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>RoleEligibilityScheduleRequests_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="roleEligibilityScheduleRequestName"> The name (guid) of the role eligibility schedule request to get. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -139,8 +163,16 @@ namespace Azure.ResourceManager.Authorization
 
         /// <summary>
         /// Get the specified role eligibility schedule request.
-        /// Request Path: /{scope}/providers/Microsoft.Authorization/roleEligibilityScheduleRequests/{roleEligibilityScheduleRequestName}
-        /// Operation Id: RoleEligibilityScheduleRequests_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{scope}/providers/Microsoft.Authorization/roleEligibilityScheduleRequests/{roleEligibilityScheduleRequestName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>RoleEligibilityScheduleRequests_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="roleEligibilityScheduleRequestName"> The name (guid) of the role eligibility schedule request to get. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -168,8 +200,16 @@ namespace Azure.ResourceManager.Authorization
 
         /// <summary>
         /// Gets role eligibility schedule requests for a scope.
-        /// Request Path: /{scope}/providers/Microsoft.Authorization/roleEligibilityScheduleRequests
-        /// Operation Id: RoleEligibilityScheduleRequests_ListForScope
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{scope}/providers/Microsoft.Authorization/roleEligibilityScheduleRequests</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>RoleEligibilityScheduleRequests_ListForScope</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="filter"> The filter to apply on the operation. Use $filter=atScope() to return all role eligibility schedule requests at or above the scope. Use $filter=principalId eq {id} to return all role eligibility schedule requests at, above or below the scope for the specified principal. Use $filter=asRequestor() to return all role eligibility schedule requests requested by the current user. Use $filter=asTarget() to return all role eligibility schedule requests created for the current user. Use $filter=asApprover() to return all role eligibility schedule requests where the current user is an approver. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -183,8 +223,16 @@ namespace Azure.ResourceManager.Authorization
 
         /// <summary>
         /// Gets role eligibility schedule requests for a scope.
-        /// Request Path: /{scope}/providers/Microsoft.Authorization/roleEligibilityScheduleRequests
-        /// Operation Id: RoleEligibilityScheduleRequests_ListForScope
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{scope}/providers/Microsoft.Authorization/roleEligibilityScheduleRequests</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>RoleEligibilityScheduleRequests_ListForScope</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="filter"> The filter to apply on the operation. Use $filter=atScope() to return all role eligibility schedule requests at or above the scope. Use $filter=principalId eq {id} to return all role eligibility schedule requests at, above or below the scope for the specified principal. Use $filter=asRequestor() to return all role eligibility schedule requests requested by the current user. Use $filter=asTarget() to return all role eligibility schedule requests created for the current user. Use $filter=asApprover() to return all role eligibility schedule requests where the current user is an approver. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -198,8 +246,16 @@ namespace Azure.ResourceManager.Authorization
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /{scope}/providers/Microsoft.Authorization/roleEligibilityScheduleRequests/{roleEligibilityScheduleRequestName}
-        /// Operation Id: RoleEligibilityScheduleRequests_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{scope}/providers/Microsoft.Authorization/roleEligibilityScheduleRequests/{roleEligibilityScheduleRequestName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>RoleEligibilityScheduleRequests_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="roleEligibilityScheduleRequestName"> The name (guid) of the role eligibility schedule request to get. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -225,8 +281,16 @@ namespace Azure.ResourceManager.Authorization
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /{scope}/providers/Microsoft.Authorization/roleEligibilityScheduleRequests/{roleEligibilityScheduleRequestName}
-        /// Operation Id: RoleEligibilityScheduleRequests_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{scope}/providers/Microsoft.Authorization/roleEligibilityScheduleRequests/{roleEligibilityScheduleRequestName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>RoleEligibilityScheduleRequests_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="roleEligibilityScheduleRequestName"> The name (guid) of the role eligibility schedule request to get. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

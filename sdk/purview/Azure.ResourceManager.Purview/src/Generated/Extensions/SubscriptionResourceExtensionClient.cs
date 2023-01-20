@@ -45,8 +45,16 @@ namespace Azure.ResourceManager.Purview
 
         /// <summary>
         /// List accounts in Subscription
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Purview/accounts
-        /// Operation Id: Accounts_ListBySubscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Purview/accounts</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Accounts_ListBySubscription</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="skipToken"> The skip token. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -60,8 +68,16 @@ namespace Azure.ResourceManager.Purview
 
         /// <summary>
         /// List accounts in Subscription
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Purview/accounts
-        /// Operation Id: Accounts_ListBySubscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Purview/accounts</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Accounts_ListBySubscription</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="skipToken"> The skip token. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -75,8 +91,16 @@ namespace Azure.ResourceManager.Purview
 
         /// <summary>
         /// Checks if account name is available.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Purview/checkNameAvailability
-        /// Operation Id: Accounts_CheckNameAvailability
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Purview/checkNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Accounts_CheckNameAvailability</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="content"> The check name availability request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -98,8 +122,16 @@ namespace Azure.ResourceManager.Purview
 
         /// <summary>
         /// Checks if account name is available.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Purview/checkNameAvailability
-        /// Operation Id: Accounts_CheckNameAvailability
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Purview/checkNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Accounts_CheckNameAvailability</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="content"> The check name availability request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

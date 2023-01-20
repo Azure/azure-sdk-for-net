@@ -54,8 +54,16 @@ namespace Azure.ResourceManager.NetworkFunction
 
         /// <summary>
         /// Creates or updates a Collector Policy resource
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkFunction/azureTrafficCollectors/{azureTrafficCollectorName}/collectorPolicies/{collectorPolicyName}
-        /// Operation Id: CollectorPolicies_CreateOrUpdate
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkFunction/azureTrafficCollectors/{azureTrafficCollectorName}/collectorPolicies/{collectorPolicyName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>CollectorPolicies_CreateOrUpdate</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="collectorPolicyName"> Collector Policy Name. </param>
@@ -87,8 +95,16 @@ namespace Azure.ResourceManager.NetworkFunction
 
         /// <summary>
         /// Creates or updates a Collector Policy resource
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkFunction/azureTrafficCollectors/{azureTrafficCollectorName}/collectorPolicies/{collectorPolicyName}
-        /// Operation Id: CollectorPolicies_CreateOrUpdate
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkFunction/azureTrafficCollectors/{azureTrafficCollectorName}/collectorPolicies/{collectorPolicyName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>CollectorPolicies_CreateOrUpdate</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="collectorPolicyName"> Collector Policy Name. </param>
@@ -120,8 +136,16 @@ namespace Azure.ResourceManager.NetworkFunction
 
         /// <summary>
         /// Gets the collector policy in a specified Traffic Collector
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkFunction/azureTrafficCollectors/{azureTrafficCollectorName}/collectorPolicies/{collectorPolicyName}
-        /// Operation Id: CollectorPolicies_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkFunction/azureTrafficCollectors/{azureTrafficCollectorName}/collectorPolicies/{collectorPolicyName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>CollectorPolicies_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="collectorPolicyName"> Collector Policy Name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -149,8 +173,16 @@ namespace Azure.ResourceManager.NetworkFunction
 
         /// <summary>
         /// Gets the collector policy in a specified Traffic Collector
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkFunction/azureTrafficCollectors/{azureTrafficCollectorName}/collectorPolicies/{collectorPolicyName}
-        /// Operation Id: CollectorPolicies_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkFunction/azureTrafficCollectors/{azureTrafficCollectorName}/collectorPolicies/{collectorPolicyName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>CollectorPolicies_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="collectorPolicyName"> Collector Policy Name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -178,8 +210,16 @@ namespace Azure.ResourceManager.NetworkFunction
 
         /// <summary>
         /// Return list of Collector policies in a Azure Traffic Collector
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkFunction/azureTrafficCollectors/{azureTrafficCollectorName}/collectorPolicies
-        /// Operation Id: CollectorPolicies_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkFunction/azureTrafficCollectors/{azureTrafficCollectorName}/collectorPolicies</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>CollectorPolicies_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="CollectorPolicyResource" /> that may take multiple service requests to iterate over. </returns>
@@ -192,8 +232,16 @@ namespace Azure.ResourceManager.NetworkFunction
 
         /// <summary>
         /// Return list of Collector policies in a Azure Traffic Collector
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkFunction/azureTrafficCollectors/{azureTrafficCollectorName}/collectorPolicies
-        /// Operation Id: CollectorPolicies_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkFunction/azureTrafficCollectors/{azureTrafficCollectorName}/collectorPolicies</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>CollectorPolicies_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="CollectorPolicyResource" /> that may take multiple service requests to iterate over. </returns>
@@ -206,8 +254,16 @@ namespace Azure.ResourceManager.NetworkFunction
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkFunction/azureTrafficCollectors/{azureTrafficCollectorName}/collectorPolicies/{collectorPolicyName}
-        /// Operation Id: CollectorPolicies_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkFunction/azureTrafficCollectors/{azureTrafficCollectorName}/collectorPolicies/{collectorPolicyName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>CollectorPolicies_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="collectorPolicyName"> Collector Policy Name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -233,8 +289,16 @@ namespace Azure.ResourceManager.NetworkFunction
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkFunction/azureTrafficCollectors/{azureTrafficCollectorName}/collectorPolicies/{collectorPolicyName}
-        /// Operation Id: CollectorPolicies_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkFunction/azureTrafficCollectors/{azureTrafficCollectorName}/collectorPolicies/{collectorPolicyName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>CollectorPolicies_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="collectorPolicyName"> Collector Policy Name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

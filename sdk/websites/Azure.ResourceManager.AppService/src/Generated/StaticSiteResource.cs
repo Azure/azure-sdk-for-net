@@ -97,8 +97,16 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary>
         /// Description for Gets a private endpoint connection
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}/privateEndpointConnections/{privateEndpointConnectionName}
-        /// Operation Id: StaticSites_GetPrivateEndpointConnection
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}/privateEndpointConnections/{privateEndpointConnectionName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>StaticSites_GetPrivateEndpointConnection</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="privateEndpointConnectionName"> Name of the private endpoint connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -112,8 +120,16 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary>
         /// Description for Gets a private endpoint connection
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}/privateEndpointConnections/{privateEndpointConnectionName}
-        /// Operation Id: StaticSites_GetPrivateEndpointConnection
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}/privateEndpointConnections/{privateEndpointConnectionName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>StaticSites_GetPrivateEndpointConnection</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="privateEndpointConnectionName"> Name of the private endpoint connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -134,8 +150,16 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary>
         /// Description for Gets the details of a static site build.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}/builds/{environmentName}
-        /// Operation Id: StaticSites_GetStaticSiteBuild
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}/builds/{environmentName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>StaticSites_GetStaticSiteBuild</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="environmentName"> The stage site identifier. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -149,8 +173,16 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary>
         /// Description for Gets the details of a static site build.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}/builds/{environmentName}
-        /// Operation Id: StaticSites_GetStaticSiteBuild
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}/builds/{environmentName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>StaticSites_GetStaticSiteBuild</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="environmentName"> The stage site identifier. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -171,8 +203,16 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary>
         /// Description for Gets the details of the user provided function app registered with a static site
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}/userProvidedFunctionApps/{functionAppName}
-        /// Operation Id: StaticSites_GetUserProvidedFunctionAppForStaticSite
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}/userProvidedFunctionApps/{functionAppName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>StaticSites_GetUserProvidedFunctionAppForStaticSite</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="functionAppName"> Name of the function app registered with the static site. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -186,8 +226,16 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary>
         /// Description for Gets the details of the user provided function app registered with a static site
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}/userProvidedFunctionApps/{functionAppName}
-        /// Operation Id: StaticSites_GetUserProvidedFunctionAppForStaticSite
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}/userProvidedFunctionApps/{functionAppName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>StaticSites_GetUserProvidedFunctionAppForStaticSite</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="functionAppName"> Name of the function app registered with the static site. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -208,8 +256,16 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary>
         /// Description for Gets an existing custom domain for a particular static site.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}/customDomains/{domainName}
-        /// Operation Id: StaticSites_GetStaticSiteCustomDomain
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}/customDomains/{domainName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>StaticSites_GetStaticSiteCustomDomain</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="domainName"> The custom domain name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -223,8 +279,16 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary>
         /// Description for Gets an existing custom domain for a particular static site.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}/customDomains/{domainName}
-        /// Operation Id: StaticSites_GetStaticSiteCustomDomain
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}/customDomains/{domainName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>StaticSites_GetStaticSiteCustomDomain</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="domainName"> The custom domain name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -238,8 +302,16 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary>
         /// Description for Gets the details of a static site.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}
-        /// Operation Id: StaticSites_GetStaticSite
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>StaticSites_GetStaticSite</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<StaticSiteResource>> GetAsync(CancellationToken cancellationToken = default)
@@ -262,8 +334,16 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary>
         /// Description for Gets the details of a static site.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}
-        /// Operation Id: StaticSites_GetStaticSite
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>StaticSites_GetStaticSite</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<StaticSiteResource> Get(CancellationToken cancellationToken = default)
@@ -286,8 +366,16 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary>
         /// Description for Deletes a static site.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}
-        /// Operation Id: StaticSites_DeleteStaticSite
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>StaticSites_DeleteStaticSite</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -312,8 +400,16 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary>
         /// Description for Deletes a static site.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}
-        /// Operation Id: StaticSites_DeleteStaticSite
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>StaticSites_DeleteStaticSite</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -338,8 +434,16 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary>
         /// Description for Creates a new static site in an existing resource group, or updates an existing static site.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}
-        /// Operation Id: StaticSites_UpdateStaticSite
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>StaticSites_UpdateStaticSite</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="patch"> A JSON representation of the staticsite properties. See example. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -364,8 +468,16 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary>
         /// Description for Creates a new static site in an existing resource group, or updates an existing static site.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}
-        /// Operation Id: StaticSites_UpdateStaticSite
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>StaticSites_UpdateStaticSite</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="patch"> A JSON representation of the staticsite properties. See example. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -390,8 +502,16 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary>
         /// Description for Gets the list of users of a static site.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}/authproviders/{authprovider}/listUsers
-        /// Operation Id: StaticSites_ListStaticSiteUsers
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}/authproviders/{authprovider}/listUsers</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>StaticSites_ListStaticSiteUsers</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="authprovider"> The auth provider for the users. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -409,8 +529,16 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary>
         /// Description for Gets the list of users of a static site.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}/authproviders/{authprovider}/listUsers
-        /// Operation Id: StaticSites_ListStaticSiteUsers
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}/authproviders/{authprovider}/listUsers</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>StaticSites_ListStaticSiteUsers</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="authprovider"> The auth provider for the users. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -428,8 +556,16 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary>
         /// Description for Deletes the user entry from the static site.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}/authproviders/{authprovider}/users/{userid}
-        /// Operation Id: StaticSites_DeleteStaticSiteUser
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}/authproviders/{authprovider}/users/{userid}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>StaticSites_DeleteStaticSiteUser</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="authprovider"> The auth provider for this user. </param>
         /// <param name="userid"> The user id of the user. </param>
@@ -457,8 +593,16 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary>
         /// Description for Deletes the user entry from the static site.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}/authproviders/{authprovider}/users/{userid}
-        /// Operation Id: StaticSites_DeleteStaticSiteUser
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}/authproviders/{authprovider}/users/{userid}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>StaticSites_DeleteStaticSiteUser</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="authprovider"> The auth provider for this user. </param>
         /// <param name="userid"> The user id of the user. </param>
@@ -486,8 +630,16 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary>
         /// Description for Updates a user entry with the listed roles
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}/authproviders/{authprovider}/users/{userid}
-        /// Operation Id: StaticSites_UpdateStaticSiteUser
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}/authproviders/{authprovider}/users/{userid}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>StaticSites_UpdateStaticSiteUser</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="authprovider"> The auth provider for this user. </param>
         /// <param name="userid"> The user id of the user. </param>
@@ -517,8 +669,16 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary>
         /// Description for Updates a user entry with the listed roles
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}/authproviders/{authprovider}/users/{userid}
-        /// Operation Id: StaticSites_UpdateStaticSiteUser
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}/authproviders/{authprovider}/users/{userid}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>StaticSites_UpdateStaticSiteUser</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="authprovider"> The auth provider for this user. </param>
         /// <param name="userid"> The user id of the user. </param>
@@ -548,8 +708,16 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary>
         /// Description for Creates or updates the app settings of a static site.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}/config/appsettings
-        /// Operation Id: StaticSites_CreateOrUpdateStaticSiteAppSettings
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}/config/appsettings</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>StaticSites_CreateOrUpdateStaticSiteAppSettings</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="appSettings"> The dictionary containing the static site app settings to update. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -574,8 +742,16 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary>
         /// Description for Creates or updates the app settings of a static site.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}/config/appsettings
-        /// Operation Id: StaticSites_CreateOrUpdateStaticSiteAppSettings
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}/config/appsettings</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>StaticSites_CreateOrUpdateStaticSiteAppSettings</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="appSettings"> The dictionary containing the static site app settings to update. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -600,8 +776,16 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary>
         /// Description for Creates or updates the function app settings of a static site.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}/config/functionappsettings
-        /// Operation Id: StaticSites_CreateOrUpdateStaticSiteFunctionAppSettings
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}/config/functionappsettings</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>StaticSites_CreateOrUpdateStaticSiteFunctionAppSettings</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="appSettings"> The dictionary containing the static site function app settings to update. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -626,8 +810,16 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary>
         /// Description for Creates or updates the function app settings of a static site.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}/config/functionappsettings
-        /// Operation Id: StaticSites_CreateOrUpdateStaticSiteFunctionAppSettings
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}/config/functionappsettings</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>StaticSites_CreateOrUpdateStaticSiteFunctionAppSettings</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="appSettings"> The dictionary containing the static site function app settings to update. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -652,8 +844,16 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary>
         /// Description for Creates an invitation link for a user with the role
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}/createUserInvitation
-        /// Operation Id: StaticSites_CreateUserRolesInvitationLink
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}/createUserInvitation</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>StaticSites_CreateUserRolesInvitationLink</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="content"> The StaticSiteUserInvitationContent to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -678,8 +878,16 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary>
         /// Description for Creates an invitation link for a user with the role
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}/createUserInvitation
-        /// Operation Id: StaticSites_CreateUserRolesInvitationLink
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}/createUserInvitation</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>StaticSites_CreateUserRolesInvitationLink</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="content"> The StaticSiteUserInvitationContent to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -704,8 +912,16 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary>
         /// Description for Detaches a static site.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}/detach
-        /// Operation Id: StaticSites_DetachStaticSite
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}/detach</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>StaticSites_DetachStaticSite</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -730,8 +946,16 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary>
         /// Description for Detaches a static site.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}/detach
-        /// Operation Id: StaticSites_DetachStaticSite
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}/detach</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>StaticSites_DetachStaticSite</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -756,8 +980,16 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary>
         /// Description for Gets the functions of a static site.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}/functions
-        /// Operation Id: StaticSites_ListStaticSiteFunctions
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}/functions</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>StaticSites_ListStaticSiteFunctions</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="StaticSiteFunctionOverview" /> that may take multiple service requests to iterate over. </returns>
@@ -770,8 +1002,16 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary>
         /// Description for Gets the functions of a static site.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}/functions
-        /// Operation Id: StaticSites_ListStaticSiteFunctions
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}/functions</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>StaticSites_ListStaticSiteFunctions</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="StaticSiteFunctionOverview" /> that may take multiple service requests to iterate over. </returns>
@@ -784,8 +1024,16 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary>
         /// Description for Gets the application settings of a static site.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}/listAppSettings
-        /// Operation Id: StaticSites_ListStaticSiteAppSettings
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}/listAppSettings</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>StaticSites_ListStaticSiteAppSettings</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<AppServiceConfigurationDictionary>> GetAppSettingsAsync(CancellationToken cancellationToken = default)
@@ -806,8 +1054,16 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary>
         /// Description for Gets the application settings of a static site.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}/listAppSettings
-        /// Operation Id: StaticSites_ListStaticSiteAppSettings
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}/listAppSettings</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>StaticSites_ListStaticSiteAppSettings</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<AppServiceConfigurationDictionary> GetAppSettings(CancellationToken cancellationToken = default)
@@ -828,8 +1084,16 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary>
         /// Description for Lists the roles configured for the static site.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}/listConfiguredRoles
-        /// Operation Id: StaticSites_ListStaticSiteConfiguredRoles
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}/listConfiguredRoles</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>StaticSites_ListStaticSiteConfiguredRoles</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<StaticSiteStringList>> GetConfiguredRolesAsync(CancellationToken cancellationToken = default)
@@ -850,8 +1114,16 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary>
         /// Description for Lists the roles configured for the static site.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}/listConfiguredRoles
-        /// Operation Id: StaticSites_ListStaticSiteConfiguredRoles
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}/listConfiguredRoles</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>StaticSites_ListStaticSiteConfiguredRoles</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<StaticSiteStringList> GetConfiguredRoles(CancellationToken cancellationToken = default)
@@ -872,8 +1144,16 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary>
         /// Description for Gets the application settings of a static site.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}/listFunctionAppSettings
-        /// Operation Id: StaticSites_ListStaticSiteFunctionAppSettings
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}/listFunctionAppSettings</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>StaticSites_ListStaticSiteFunctionAppSettings</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<AppServiceConfigurationDictionary>> GetFunctionAppSettingsAsync(CancellationToken cancellationToken = default)
@@ -894,8 +1174,16 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary>
         /// Description for Gets the application settings of a static site.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}/listFunctionAppSettings
-        /// Operation Id: StaticSites_ListStaticSiteFunctionAppSettings
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}/listFunctionAppSettings</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>StaticSites_ListStaticSiteFunctionAppSettings</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<AppServiceConfigurationDictionary> GetFunctionAppSettings(CancellationToken cancellationToken = default)
@@ -916,8 +1204,16 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary>
         /// Description for Lists the secrets for an existing static site.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}/listSecrets
-        /// Operation Id: StaticSites_ListStaticSiteSecrets
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}/listSecrets</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>StaticSites_ListStaticSiteSecrets</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<AppServiceConfigurationDictionary>> GetStaticSiteSecretsAsync(CancellationToken cancellationToken = default)
@@ -938,8 +1234,16 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary>
         /// Description for Lists the secrets for an existing static site.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}/listSecrets
-        /// Operation Id: StaticSites_ListStaticSiteSecrets
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}/listSecrets</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>StaticSites_ListStaticSiteSecrets</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<AppServiceConfigurationDictionary> GetStaticSiteSecrets(CancellationToken cancellationToken = default)
@@ -960,8 +1264,16 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary>
         /// Description for Gets the private link resources
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}/privateLinkResources
-        /// Operation Id: StaticSites_GetPrivateLinkResources
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}/privateLinkResources</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>StaticSites_GetPrivateLinkResources</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="AppServicePrivateLinkResourceData" /> that may take multiple service requests to iterate over. </returns>
@@ -973,8 +1285,16 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary>
         /// Description for Gets the private link resources
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}/privateLinkResources
-        /// Operation Id: StaticSites_GetPrivateLinkResources
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}/privateLinkResources</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>StaticSites_GetPrivateLinkResources</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="AppServicePrivateLinkResourceData" /> that may take multiple service requests to iterate over. </returns>
@@ -986,8 +1306,16 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary>
         /// Description for Resets the api key for an existing static site.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}/resetapikey
-        /// Operation Id: StaticSites_ResetStaticSiteApiKey
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}/resetapikey</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>StaticSites_ResetStaticSiteApiKey</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="content"> The StaticSiteResetContent to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -1012,8 +1340,16 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary>
         /// Description for Resets the api key for an existing static site.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}/resetapikey
-        /// Operation Id: StaticSites_ResetStaticSiteApiKey
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}/resetapikey</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>StaticSites_ResetStaticSiteApiKey</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="content"> The StaticSiteResetContent to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -1038,8 +1374,16 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary>
         /// Description for Deploys zipped content to a static site.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}/zipdeploy
-        /// Operation Id: StaticSites_CreateZipDeploymentForStaticSite
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}/zipdeploy</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>StaticSites_CreateZipDeploymentForStaticSite</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="staticSiteZipDeploymentEnvelope"> A JSON representation of the StaticSiteZipDeployment properties. See example. </param>
@@ -1068,8 +1412,16 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary>
         /// Description for Deploys zipped content to a static site.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}/zipdeploy
-        /// Operation Id: StaticSites_CreateZipDeploymentForStaticSite
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}/zipdeploy</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>StaticSites_CreateZipDeploymentForStaticSite</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="staticSiteZipDeploymentEnvelope"> A JSON representation of the StaticSiteZipDeployment properties. See example. </param>

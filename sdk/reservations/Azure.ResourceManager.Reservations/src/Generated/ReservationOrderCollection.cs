@@ -56,8 +56,16 @@ namespace Azure.ResourceManager.Reservations
 
         /// <summary>
         /// Purchase `ReservationOrder` and create resource under the specified URI.
-        /// Request Path: /providers/Microsoft.Capacity/reservationOrders/{reservationOrderId}
-        /// Operation Id: ReservationOrder_Purchase
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Capacity/reservationOrders/{reservationOrderId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ReservationOrder_Purchase</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="reservationOrderId"> Order Id of the reservation. </param>
@@ -87,8 +95,16 @@ namespace Azure.ResourceManager.Reservations
 
         /// <summary>
         /// Purchase `ReservationOrder` and create resource under the specified URI.
-        /// Request Path: /providers/Microsoft.Capacity/reservationOrders/{reservationOrderId}
-        /// Operation Id: ReservationOrder_Purchase
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Capacity/reservationOrders/{reservationOrderId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ReservationOrder_Purchase</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="reservationOrderId"> Order Id of the reservation. </param>
@@ -118,8 +134,16 @@ namespace Azure.ResourceManager.Reservations
 
         /// <summary>
         /// Get the details of the `ReservationOrder`.
-        /// Request Path: /providers/Microsoft.Capacity/reservationOrders/{reservationOrderId}
-        /// Operation Id: ReservationOrder_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Capacity/reservationOrders/{reservationOrderId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ReservationOrder_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="reservationOrderId"> Order Id of the reservation. </param>
         /// <param name="expand"> May be used to expand the planInformation. </param>
@@ -144,8 +168,16 @@ namespace Azure.ResourceManager.Reservations
 
         /// <summary>
         /// Get the details of the `ReservationOrder`.
-        /// Request Path: /providers/Microsoft.Capacity/reservationOrders/{reservationOrderId}
-        /// Operation Id: ReservationOrder_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Capacity/reservationOrders/{reservationOrderId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ReservationOrder_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="reservationOrderId"> Order Id of the reservation. </param>
         /// <param name="expand"> May be used to expand the planInformation. </param>
@@ -170,8 +202,16 @@ namespace Azure.ResourceManager.Reservations
 
         /// <summary>
         /// List of all the `ReservationOrder`s that the user has access to in the current tenant.
-        /// Request Path: /providers/Microsoft.Capacity/reservationOrders
-        /// Operation Id: ReservationOrder_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Capacity/reservationOrders</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ReservationOrder_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ReservationOrderResource" /> that may take multiple service requests to iterate over. </returns>
@@ -184,8 +224,16 @@ namespace Azure.ResourceManager.Reservations
 
         /// <summary>
         /// List of all the `ReservationOrder`s that the user has access to in the current tenant.
-        /// Request Path: /providers/Microsoft.Capacity/reservationOrders
-        /// Operation Id: ReservationOrder_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Capacity/reservationOrders</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ReservationOrder_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ReservationOrderResource" /> that may take multiple service requests to iterate over. </returns>
@@ -198,8 +246,16 @@ namespace Azure.ResourceManager.Reservations
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /providers/Microsoft.Capacity/reservationOrders/{reservationOrderId}
-        /// Operation Id: ReservationOrder_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Capacity/reservationOrders/{reservationOrderId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ReservationOrder_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="reservationOrderId"> Order Id of the reservation. </param>
         /// <param name="expand"> May be used to expand the planInformation. </param>
@@ -222,8 +278,16 @@ namespace Azure.ResourceManager.Reservations
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /providers/Microsoft.Capacity/reservationOrders/{reservationOrderId}
-        /// Operation Id: ReservationOrder_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Capacity/reservationOrders/{reservationOrderId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ReservationOrder_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="reservationOrderId"> Order Id of the reservation. </param>
         /// <param name="expand"> May be used to expand the planInformation. </param>

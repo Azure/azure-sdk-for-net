@@ -44,8 +44,16 @@ namespace Azure.ResourceManager.ManagedServices
 
         /// <summary>
         /// Creates or updates a registration assignment.
-        /// Request Path: /{scope}/providers/Microsoft.ManagedServices/registrationAssignments/{registrationAssignmentId}
-        /// Operation Id: RegistrationAssignments_CreateOrUpdate
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{scope}/providers/Microsoft.ManagedServices/registrationAssignments/{registrationAssignmentId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>RegistrationAssignments_CreateOrUpdate</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="registrationAssignmentId"> The GUID of the registration assignment. </param>
@@ -77,8 +85,16 @@ namespace Azure.ResourceManager.ManagedServices
 
         /// <summary>
         /// Creates or updates a registration assignment.
-        /// Request Path: /{scope}/providers/Microsoft.ManagedServices/registrationAssignments/{registrationAssignmentId}
-        /// Operation Id: RegistrationAssignments_CreateOrUpdate
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{scope}/providers/Microsoft.ManagedServices/registrationAssignments/{registrationAssignmentId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>RegistrationAssignments_CreateOrUpdate</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="registrationAssignmentId"> The GUID of the registration assignment. </param>
@@ -110,8 +126,16 @@ namespace Azure.ResourceManager.ManagedServices
 
         /// <summary>
         /// Gets the details of the specified registration assignment.
-        /// Request Path: /{scope}/providers/Microsoft.ManagedServices/registrationAssignments/{registrationAssignmentId}
-        /// Operation Id: RegistrationAssignments_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{scope}/providers/Microsoft.ManagedServices/registrationAssignments/{registrationAssignmentId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>RegistrationAssignments_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="registrationAssignmentId"> The GUID of the registration assignment. </param>
         /// <param name="expandRegistrationDefinition"> The flag indicating whether to return the registration definition details along with the registration assignment details. </param>
@@ -140,8 +164,16 @@ namespace Azure.ResourceManager.ManagedServices
 
         /// <summary>
         /// Gets the details of the specified registration assignment.
-        /// Request Path: /{scope}/providers/Microsoft.ManagedServices/registrationAssignments/{registrationAssignmentId}
-        /// Operation Id: RegistrationAssignments_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{scope}/providers/Microsoft.ManagedServices/registrationAssignments/{registrationAssignmentId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>RegistrationAssignments_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="registrationAssignmentId"> The GUID of the registration assignment. </param>
         /// <param name="expandRegistrationDefinition"> The flag indicating whether to return the registration definition details along with the registration assignment details. </param>
@@ -170,8 +202,16 @@ namespace Azure.ResourceManager.ManagedServices
 
         /// <summary>
         /// Gets a list of the registration assignments.
-        /// Request Path: /{scope}/providers/Microsoft.ManagedServices/registrationAssignments
-        /// Operation Id: RegistrationAssignments_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{scope}/providers/Microsoft.ManagedServices/registrationAssignments</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>RegistrationAssignments_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="expandRegistrationDefinition"> The flag indicating whether to return the registration definition details along with the registration assignment details. </param>
         /// <param name="filter"> The filter query parameter to filter managed services resources by. </param>
@@ -186,8 +226,16 @@ namespace Azure.ResourceManager.ManagedServices
 
         /// <summary>
         /// Gets a list of the registration assignments.
-        /// Request Path: /{scope}/providers/Microsoft.ManagedServices/registrationAssignments
-        /// Operation Id: RegistrationAssignments_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{scope}/providers/Microsoft.ManagedServices/registrationAssignments</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>RegistrationAssignments_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="expandRegistrationDefinition"> The flag indicating whether to return the registration definition details along with the registration assignment details. </param>
         /// <param name="filter"> The filter query parameter to filter managed services resources by. </param>
@@ -202,8 +250,16 @@ namespace Azure.ResourceManager.ManagedServices
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /{scope}/providers/Microsoft.ManagedServices/registrationAssignments/{registrationAssignmentId}
-        /// Operation Id: RegistrationAssignments_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{scope}/providers/Microsoft.ManagedServices/registrationAssignments/{registrationAssignmentId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>RegistrationAssignments_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="registrationAssignmentId"> The GUID of the registration assignment. </param>
         /// <param name="expandRegistrationDefinition"> The flag indicating whether to return the registration definition details along with the registration assignment details. </param>
@@ -230,8 +286,16 @@ namespace Azure.ResourceManager.ManagedServices
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /{scope}/providers/Microsoft.ManagedServices/registrationAssignments/{registrationAssignmentId}
-        /// Operation Id: RegistrationAssignments_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{scope}/providers/Microsoft.ManagedServices/registrationAssignments/{registrationAssignmentId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>RegistrationAssignments_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="registrationAssignmentId"> The GUID of the registration assignment. </param>
         /// <param name="expandRegistrationDefinition"> The flag indicating whether to return the registration definition details along with the registration assignment details. </param>

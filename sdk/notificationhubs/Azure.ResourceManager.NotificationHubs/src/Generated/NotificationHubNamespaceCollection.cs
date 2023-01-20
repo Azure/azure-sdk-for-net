@@ -56,8 +56,16 @@ namespace Azure.ResourceManager.NotificationHubs
 
         /// <summary>
         /// Creates/Updates a service namespace. Once created, this namespace&apos;s resource manifest is immutable. This operation is idempotent.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NotificationHubs/namespaces/{namespaceName}
-        /// Operation Id: Namespaces_CreateOrUpdate
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NotificationHubs/namespaces/{namespaceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Namespaces_CreateOrUpdate</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="namespaceName"> The namespace name. </param>
@@ -89,8 +97,16 @@ namespace Azure.ResourceManager.NotificationHubs
 
         /// <summary>
         /// Creates/Updates a service namespace. Once created, this namespace&apos;s resource manifest is immutable. This operation is idempotent.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NotificationHubs/namespaces/{namespaceName}
-        /// Operation Id: Namespaces_CreateOrUpdate
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NotificationHubs/namespaces/{namespaceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Namespaces_CreateOrUpdate</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="namespaceName"> The namespace name. </param>
@@ -122,8 +138,16 @@ namespace Azure.ResourceManager.NotificationHubs
 
         /// <summary>
         /// Returns the description for the specified namespace.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NotificationHubs/namespaces/{namespaceName}
-        /// Operation Id: Namespaces_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NotificationHubs/namespaces/{namespaceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Namespaces_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="namespaceName"> The namespace name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -151,8 +175,16 @@ namespace Azure.ResourceManager.NotificationHubs
 
         /// <summary>
         /// Returns the description for the specified namespace.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NotificationHubs/namespaces/{namespaceName}
-        /// Operation Id: Namespaces_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NotificationHubs/namespaces/{namespaceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Namespaces_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="namespaceName"> The namespace name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -180,8 +212,16 @@ namespace Azure.ResourceManager.NotificationHubs
 
         /// <summary>
         /// Lists the available namespaces within a resourceGroup.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NotificationHubs/namespaces
-        /// Operation Id: Namespaces_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NotificationHubs/namespaces</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Namespaces_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="NotificationHubNamespaceResource" /> that may take multiple service requests to iterate over. </returns>
@@ -194,8 +234,16 @@ namespace Azure.ResourceManager.NotificationHubs
 
         /// <summary>
         /// Lists the available namespaces within a resourceGroup.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NotificationHubs/namespaces
-        /// Operation Id: Namespaces_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NotificationHubs/namespaces</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Namespaces_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="NotificationHubNamespaceResource" /> that may take multiple service requests to iterate over. </returns>
@@ -208,8 +256,16 @@ namespace Azure.ResourceManager.NotificationHubs
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NotificationHubs/namespaces/{namespaceName}
-        /// Operation Id: Namespaces_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NotificationHubs/namespaces/{namespaceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Namespaces_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="namespaceName"> The namespace name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -235,8 +291,16 @@ namespace Azure.ResourceManager.NotificationHubs
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NotificationHubs/namespaces/{namespaceName}
-        /// Operation Id: Namespaces_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NotificationHubs/namespaces/{namespaceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Namespaces_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="namespaceName"> The namespace name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

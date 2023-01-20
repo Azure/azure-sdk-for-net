@@ -11,10 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary>
-    /// Defines an Aml Instance container.
-    /// Serialized Name: ComputeInstanceContainer
-    /// </summary>
+    /// <summary> Defines an Aml Instance container. </summary>
     public partial class MachineLearningComputeInstanceContainer
     {
         /// <summary> Initializes a new instance of MachineLearningComputeInstanceContainer. </summary>
@@ -24,30 +21,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Initializes a new instance of MachineLearningComputeInstanceContainer. </summary>
-        /// <param name="name">
-        /// Name of the ComputeInstance container.
-        /// Serialized Name: ComputeInstanceContainer.name
-        /// </param>
-        /// <param name="autosave">
-        /// Auto save settings.
-        /// Serialized Name: ComputeInstanceContainer.autosave
-        /// </param>
-        /// <param name="gpu">
-        /// Information of GPU.
-        /// Serialized Name: ComputeInstanceContainer.gpu
-        /// </param>
-        /// <param name="network">
-        /// network of this container.
-        /// Serialized Name: ComputeInstanceContainer.network
-        /// </param>
-        /// <param name="environment">
-        /// Environment information of this container.
-        /// Serialized Name: ComputeInstanceContainer.environment
-        /// </param>
-        /// <param name="services">
-        /// services of this containers.
-        /// Serialized Name: ComputeInstanceContainer.services
-        /// </param>
+        /// <param name="name"> Name of the ComputeInstance container. </param>
+        /// <param name="autosave"> Auto save settings. </param>
+        /// <param name="gpu"> Information of GPU. </param>
+        /// <param name="network"> network of this container. </param>
+        /// <param name="environment"> Environment information of this container. </param>
+        /// <param name="services"> services of this containers. </param>
         internal MachineLearningComputeInstanceContainer(string name, MachineLearningComputeInstanceAutosave? autosave, string gpu, MachineLearningNetwork? network, MachineLearningComputeInstanceEnvironmentInfo environment, IReadOnlyList<BinaryData> services)
         {
             Name = name;
@@ -58,34 +37,18 @@ namespace Azure.ResourceManager.MachineLearning.Models
             Services = services;
         }
 
-        /// <summary>
-        /// Name of the ComputeInstance container.
-        /// Serialized Name: ComputeInstanceContainer.name
-        /// </summary>
+        /// <summary> Name of the ComputeInstance container. </summary>
         public string Name { get; }
-        /// <summary>
-        /// Auto save settings.
-        /// Serialized Name: ComputeInstanceContainer.autosave
-        /// </summary>
+        /// <summary> Auto save settings. </summary>
         public MachineLearningComputeInstanceAutosave? Autosave { get; }
-        /// <summary>
-        /// Information of GPU.
-        /// Serialized Name: ComputeInstanceContainer.gpu
-        /// </summary>
+        /// <summary> Information of GPU. </summary>
         public string Gpu { get; }
-        /// <summary>
-        /// network of this container.
-        /// Serialized Name: ComputeInstanceContainer.network
-        /// </summary>
+        /// <summary> network of this container. </summary>
         public MachineLearningNetwork? Network { get; }
-        /// <summary>
-        /// Environment information of this container.
-        /// Serialized Name: ComputeInstanceContainer.environment
-        /// </summary>
+        /// <summary> Environment information of this container. </summary>
         public MachineLearningComputeInstanceEnvironmentInfo Environment { get; }
         /// <summary>
         /// services of this containers.
-        /// Serialized Name: ComputeInstanceContainer.services
         /// <para>
         /// To assign an object to the element of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>

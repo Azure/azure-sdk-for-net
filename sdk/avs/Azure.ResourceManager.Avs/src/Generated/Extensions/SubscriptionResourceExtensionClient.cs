@@ -49,8 +49,16 @@ namespace Azure.ResourceManager.Avs
 
         /// <summary>
         /// Return trial status for subscription by region
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.AVS/locations/{location}/checkTrialAvailability
-        /// Operation Id: Locations_CheckTrialAvailability
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.AVS/locations/{location}/checkTrialAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Locations_CheckTrialAvailability</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="location"> Azure region. </param>
         /// <param name="sku"> The sku to check for trial availability. </param>
@@ -73,8 +81,16 @@ namespace Azure.ResourceManager.Avs
 
         /// <summary>
         /// Return trial status for subscription by region
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.AVS/locations/{location}/checkTrialAvailability
-        /// Operation Id: Locations_CheckTrialAvailability
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.AVS/locations/{location}/checkTrialAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Locations_CheckTrialAvailability</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="location"> Azure region. </param>
         /// <param name="sku"> The sku to check for trial availability. </param>
@@ -97,8 +113,16 @@ namespace Azure.ResourceManager.Avs
 
         /// <summary>
         /// Return quota for subscription by region
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.AVS/locations/{location}/checkQuotaAvailability
-        /// Operation Id: Locations_CheckQuotaAvailability
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.AVS/locations/{location}/checkQuotaAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Locations_CheckQuotaAvailability</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="location"> Azure region. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -120,8 +144,16 @@ namespace Azure.ResourceManager.Avs
 
         /// <summary>
         /// Return quota for subscription by region
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.AVS/locations/{location}/checkQuotaAvailability
-        /// Operation Id: Locations_CheckQuotaAvailability
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.AVS/locations/{location}/checkQuotaAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Locations_CheckQuotaAvailability</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="location"> Azure region. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -143,8 +175,16 @@ namespace Azure.ResourceManager.Avs
 
         /// <summary>
         /// List private clouds in a subscription
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.AVS/privateClouds
-        /// Operation Id: PrivateClouds_ListInSubscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.AVS/privateClouds</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PrivateClouds_ListInSubscription</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="AvsPrivateCloudResource" /> that may take multiple service requests to iterate over. </returns>
@@ -157,8 +197,16 @@ namespace Azure.ResourceManager.Avs
 
         /// <summary>
         /// List private clouds in a subscription
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.AVS/privateClouds
-        /// Operation Id: PrivateClouds_ListInSubscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.AVS/privateClouds</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PrivateClouds_ListInSubscription</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="AvsPrivateCloudResource" /> that may take multiple service requests to iterate over. </returns>

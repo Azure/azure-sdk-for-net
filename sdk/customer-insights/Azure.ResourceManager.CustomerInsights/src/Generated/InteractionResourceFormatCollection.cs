@@ -54,8 +54,16 @@ namespace Azure.ResourceManager.CustomerInsights
 
         /// <summary>
         /// Creates an interaction or updates an existing interaction within a hub.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CustomerInsights/hubs/{hubName}/interactions/{interactionName}
-        /// Operation Id: Interactions_CreateOrUpdate
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CustomerInsights/hubs/{hubName}/interactions/{interactionName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Interactions_CreateOrUpdate</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="interactionName"> The name of the interaction. </param>
@@ -87,8 +95,16 @@ namespace Azure.ResourceManager.CustomerInsights
 
         /// <summary>
         /// Creates an interaction or updates an existing interaction within a hub.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CustomerInsights/hubs/{hubName}/interactions/{interactionName}
-        /// Operation Id: Interactions_CreateOrUpdate
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CustomerInsights/hubs/{hubName}/interactions/{interactionName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Interactions_CreateOrUpdate</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="interactionName"> The name of the interaction. </param>
@@ -120,8 +136,16 @@ namespace Azure.ResourceManager.CustomerInsights
 
         /// <summary>
         /// Gets information about the specified interaction.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CustomerInsights/hubs/{hubName}/interactions/{interactionName}
-        /// Operation Id: Interactions_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CustomerInsights/hubs/{hubName}/interactions/{interactionName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Interactions_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="interactionName"> The name of the interaction. </param>
         /// <param name="localeCode"> Locale of interaction to retrieve, default is en-us. </param>
@@ -150,8 +174,16 @@ namespace Azure.ResourceManager.CustomerInsights
 
         /// <summary>
         /// Gets information about the specified interaction.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CustomerInsights/hubs/{hubName}/interactions/{interactionName}
-        /// Operation Id: Interactions_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CustomerInsights/hubs/{hubName}/interactions/{interactionName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Interactions_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="interactionName"> The name of the interaction. </param>
         /// <param name="localeCode"> Locale of interaction to retrieve, default is en-us. </param>
@@ -180,8 +212,16 @@ namespace Azure.ResourceManager.CustomerInsights
 
         /// <summary>
         /// Gets all interactions in the hub.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CustomerInsights/hubs/{hubName}/interactions
-        /// Operation Id: Interactions_ListByHub
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CustomerInsights/hubs/{hubName}/interactions</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Interactions_ListByHub</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="localeCode"> Locale of interaction to retrieve, default is en-us. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -195,8 +235,16 @@ namespace Azure.ResourceManager.CustomerInsights
 
         /// <summary>
         /// Gets all interactions in the hub.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CustomerInsights/hubs/{hubName}/interactions
-        /// Operation Id: Interactions_ListByHub
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CustomerInsights/hubs/{hubName}/interactions</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Interactions_ListByHub</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="localeCode"> Locale of interaction to retrieve, default is en-us. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -210,8 +258,16 @@ namespace Azure.ResourceManager.CustomerInsights
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CustomerInsights/hubs/{hubName}/interactions/{interactionName}
-        /// Operation Id: Interactions_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CustomerInsights/hubs/{hubName}/interactions/{interactionName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Interactions_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="interactionName"> The name of the interaction. </param>
         /// <param name="localeCode"> Locale of interaction to retrieve, default is en-us. </param>
@@ -238,8 +294,16 @@ namespace Azure.ResourceManager.CustomerInsights
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CustomerInsights/hubs/{hubName}/interactions/{interactionName}
-        /// Operation Id: Interactions_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CustomerInsights/hubs/{hubName}/interactions/{interactionName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Interactions_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="interactionName"> The name of the interaction. </param>
         /// <param name="localeCode"> Locale of interaction to retrieve, default is en-us. </param>

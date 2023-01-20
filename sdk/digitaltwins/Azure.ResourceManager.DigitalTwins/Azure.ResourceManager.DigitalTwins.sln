@@ -7,6 +7,8 @@ Project("{4F3CE10C-3900-4501-9C5C-E19187D36B9F}") = "Azure.ResourceManager.Digit
 EndProject
 Project("{4F3CE10C-3900-4501-9C5C-E19187D36B9F}") = "Azure.ResourceManager.DigitalTwins.Tests", "tests\Azure.ResourceManager.DigitalTwins.Tests.csproj", "{812C9F5B-2F44-45A6-8B59-B9B6528886EF}"
 EndProject
+Project("{4F3CE10C-3900-4501-9C5C-E19187D36B9F}") = "Azure.ResourceManager.DigitalTwins.Samples", "samples\Azure.ResourceManager.DigitalTwins.Samples.csproj", "{0D714EBB-E344-4B44-8F80-623D183953BE}"
+EndProject
 Global
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -49,8 +49,16 @@ namespace Azure.ResourceManager.AgFoodPlatform
 
         /// <summary>
         /// Lists the FarmBeats instances for a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.AgFoodPlatform/farmBeats
-        /// Operation Id: FarmBeatsModels_ListBySubscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.AgFoodPlatform/farmBeats</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>FarmBeatsModels_ListBySubscription</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="maxPageSize">
         /// Maximum number of items needed (inclusive).
@@ -68,8 +76,16 @@ namespace Azure.ResourceManager.AgFoodPlatform
 
         /// <summary>
         /// Lists the FarmBeats instances for a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.AgFoodPlatform/farmBeats
-        /// Operation Id: FarmBeatsModels_ListBySubscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.AgFoodPlatform/farmBeats</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>FarmBeatsModels_ListBySubscription</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="maxPageSize">
         /// Maximum number of items needed (inclusive).
@@ -87,8 +103,16 @@ namespace Azure.ResourceManager.AgFoodPlatform
 
         /// <summary>
         /// Checks the name availability of the resource with requested resource name.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.AgFoodPlatform/checkNameAvailability
-        /// Operation Id: Locations_CheckNameAvailability
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.AgFoodPlatform/checkNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Locations_CheckNameAvailability</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="content"> NameAvailabilityRequest object. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -110,8 +134,16 @@ namespace Azure.ResourceManager.AgFoodPlatform
 
         /// <summary>
         /// Checks the name availability of the resource with requested resource name.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.AgFoodPlatform/checkNameAvailability
-        /// Operation Id: Locations_CheckNameAvailability
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.AgFoodPlatform/checkNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Locations_CheckNameAvailability</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="content"> NameAvailabilityRequest object. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

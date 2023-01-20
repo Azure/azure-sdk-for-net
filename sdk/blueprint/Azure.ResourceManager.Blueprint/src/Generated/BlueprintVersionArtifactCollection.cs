@@ -54,8 +54,16 @@ namespace Azure.ResourceManager.Blueprint
 
         /// <summary>
         /// Get an artifact for a published blueprint definition.
-        /// Request Path: /{resourceScope}/providers/Microsoft.Blueprint/blueprints/{blueprintName}/versions/{versionId}/artifacts/{artifactName}
-        /// Operation Id: PublishedArtifacts_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{resourceScope}/providers/Microsoft.Blueprint/blueprints/{blueprintName}/versions/{versionId}/artifacts/{artifactName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PublishedArtifacts_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="artifactName"> Name of the blueprint artifact. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -83,8 +91,16 @@ namespace Azure.ResourceManager.Blueprint
 
         /// <summary>
         /// Get an artifact for a published blueprint definition.
-        /// Request Path: /{resourceScope}/providers/Microsoft.Blueprint/blueprints/{blueprintName}/versions/{versionId}/artifacts/{artifactName}
-        /// Operation Id: PublishedArtifacts_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{resourceScope}/providers/Microsoft.Blueprint/blueprints/{blueprintName}/versions/{versionId}/artifacts/{artifactName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PublishedArtifacts_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="artifactName"> Name of the blueprint artifact. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -112,8 +128,16 @@ namespace Azure.ResourceManager.Blueprint
 
         /// <summary>
         /// List artifacts for a version of a published blueprint definition.
-        /// Request Path: /{resourceScope}/providers/Microsoft.Blueprint/blueprints/{blueprintName}/versions/{versionId}/artifacts
-        /// Operation Id: PublishedArtifacts_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{resourceScope}/providers/Microsoft.Blueprint/blueprints/{blueprintName}/versions/{versionId}/artifacts</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PublishedArtifacts_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="BlueprintVersionArtifactResource" /> that may take multiple service requests to iterate over. </returns>
@@ -126,8 +150,16 @@ namespace Azure.ResourceManager.Blueprint
 
         /// <summary>
         /// List artifacts for a version of a published blueprint definition.
-        /// Request Path: /{resourceScope}/providers/Microsoft.Blueprint/blueprints/{blueprintName}/versions/{versionId}/artifacts
-        /// Operation Id: PublishedArtifacts_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{resourceScope}/providers/Microsoft.Blueprint/blueprints/{blueprintName}/versions/{versionId}/artifacts</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PublishedArtifacts_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="BlueprintVersionArtifactResource" /> that may take multiple service requests to iterate over. </returns>
@@ -140,8 +172,16 @@ namespace Azure.ResourceManager.Blueprint
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /{resourceScope}/providers/Microsoft.Blueprint/blueprints/{blueprintName}/versions/{versionId}/artifacts/{artifactName}
-        /// Operation Id: PublishedArtifacts_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{resourceScope}/providers/Microsoft.Blueprint/blueprints/{blueprintName}/versions/{versionId}/artifacts/{artifactName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PublishedArtifacts_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="artifactName"> Name of the blueprint artifact. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -167,8 +207,16 @@ namespace Azure.ResourceManager.Blueprint
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /{resourceScope}/providers/Microsoft.Blueprint/blueprints/{blueprintName}/versions/{versionId}/artifacts/{artifactName}
-        /// Operation Id: PublishedArtifacts_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{resourceScope}/providers/Microsoft.Blueprint/blueprints/{blueprintName}/versions/{versionId}/artifacts/{artifactName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PublishedArtifacts_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="artifactName"> Name of the blueprint artifact. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

@@ -39,6 +39,8 @@ namespace Azure.ResourceManager.Synapse
         private readonly KustoPoolChildResourceRestOperations _kustoPoolChildResourceRestClient;
         private readonly ClientDiagnostics _synapseClusterPrincipalAssignmentKustoPoolPrincipalAssignmentsClientDiagnostics;
         private readonly KustoPoolPrincipalAssignmentsRestOperations _synapseClusterPrincipalAssignmentKustoPoolPrincipalAssignmentsRestClient;
+        private readonly ClientDiagnostics _kustoPoolPrivateLinkResourcesClientDiagnostics;
+        private readonly KustoPoolPrivateLinkResourcesRestOperations _kustoPoolPrivateLinkResourcesRestClient;
         private readonly SynapseKustoPoolData _data;
 
         /// <summary> Initializes a new instance of the <see cref="SynapseKustoPoolResource"/> class for mocking. </summary>
@@ -68,6 +70,8 @@ namespace Azure.ResourceManager.Synapse
             _synapseClusterPrincipalAssignmentKustoPoolPrincipalAssignmentsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Synapse", SynapseClusterPrincipalAssignmentResource.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(SynapseClusterPrincipalAssignmentResource.ResourceType, out string synapseClusterPrincipalAssignmentKustoPoolPrincipalAssignmentsApiVersion);
             _synapseClusterPrincipalAssignmentKustoPoolPrincipalAssignmentsRestClient = new KustoPoolPrincipalAssignmentsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, synapseClusterPrincipalAssignmentKustoPoolPrincipalAssignmentsApiVersion);
+            _kustoPoolPrivateLinkResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Synapse", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+            _kustoPoolPrivateLinkResourcesRestClient = new KustoPoolPrivateLinkResourcesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -106,8 +110,16 @@ namespace Azure.ResourceManager.Synapse
 
         /// <summary>
         /// Returns an attached database configuration.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/kustoPools/{kustoPoolName}/attachedDatabaseConfigurations/{attachedDatabaseConfigurationName}
-        /// Operation Id: KustoPoolAttachedDatabaseConfigurations_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/kustoPools/{kustoPoolName}/attachedDatabaseConfigurations/{attachedDatabaseConfigurationName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>KustoPoolAttachedDatabaseConfigurations_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="attachedDatabaseConfigurationName"> The name of the attached database configuration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -121,8 +133,16 @@ namespace Azure.ResourceManager.Synapse
 
         /// <summary>
         /// Returns an attached database configuration.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/kustoPools/{kustoPoolName}/attachedDatabaseConfigurations/{attachedDatabaseConfigurationName}
-        /// Operation Id: KustoPoolAttachedDatabaseConfigurations_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/kustoPools/{kustoPoolName}/attachedDatabaseConfigurations/{attachedDatabaseConfigurationName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>KustoPoolAttachedDatabaseConfigurations_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="attachedDatabaseConfigurationName"> The name of the attached database configuration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -143,8 +163,16 @@ namespace Azure.ResourceManager.Synapse
 
         /// <summary>
         /// Returns a database.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/kustoPools/{kustoPoolName}/databases/{databaseName}
-        /// Operation Id: KustoPoolDatabases_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/kustoPools/{kustoPoolName}/databases/{databaseName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>KustoPoolDatabases_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="databaseName"> The name of the database in the Kusto pool. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -158,8 +186,16 @@ namespace Azure.ResourceManager.Synapse
 
         /// <summary>
         /// Returns a database.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/kustoPools/{kustoPoolName}/databases/{databaseName}
-        /// Operation Id: KustoPoolDatabases_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/kustoPools/{kustoPoolName}/databases/{databaseName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>KustoPoolDatabases_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="databaseName"> The name of the database in the Kusto pool. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -180,8 +216,16 @@ namespace Azure.ResourceManager.Synapse
 
         /// <summary>
         /// Gets a Kusto pool principalAssignment.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/kustoPools/{kustoPoolName}/principalAssignments/{principalAssignmentName}
-        /// Operation Id: KustoPoolPrincipalAssignments_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/kustoPools/{kustoPoolName}/principalAssignments/{principalAssignmentName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>KustoPoolPrincipalAssignments_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="principalAssignmentName"> The name of the Kusto principalAssignment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -195,8 +239,16 @@ namespace Azure.ResourceManager.Synapse
 
         /// <summary>
         /// Gets a Kusto pool principalAssignment.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/kustoPools/{kustoPoolName}/principalAssignments/{principalAssignmentName}
-        /// Operation Id: KustoPoolPrincipalAssignments_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/kustoPools/{kustoPoolName}/principalAssignments/{principalAssignmentName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>KustoPoolPrincipalAssignments_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="principalAssignmentName"> The name of the Kusto principalAssignment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -210,8 +262,16 @@ namespace Azure.ResourceManager.Synapse
 
         /// <summary>
         /// Gets a Kusto pool.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/kustoPools/{kustoPoolName}
-        /// Operation Id: KustoPools_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/kustoPools/{kustoPoolName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>KustoPools_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<SynapseKustoPoolResource>> GetAsync(CancellationToken cancellationToken = default)
@@ -234,8 +294,16 @@ namespace Azure.ResourceManager.Synapse
 
         /// <summary>
         /// Gets a Kusto pool.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/kustoPools/{kustoPoolName}
-        /// Operation Id: KustoPools_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/kustoPools/{kustoPoolName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>KustoPools_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<SynapseKustoPoolResource> Get(CancellationToken cancellationToken = default)
@@ -258,8 +326,16 @@ namespace Azure.ResourceManager.Synapse
 
         /// <summary>
         /// Deletes a Kusto pool.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/kustoPools/{kustoPoolName}
-        /// Operation Id: KustoPools_Delete
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/kustoPools/{kustoPoolName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>KustoPools_Delete</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -284,8 +360,16 @@ namespace Azure.ResourceManager.Synapse
 
         /// <summary>
         /// Deletes a Kusto pool.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/kustoPools/{kustoPoolName}
-        /// Operation Id: KustoPools_Delete
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/kustoPools/{kustoPoolName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>KustoPools_Delete</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -310,8 +394,16 @@ namespace Azure.ResourceManager.Synapse
 
         /// <summary>
         /// Update a Kusto Kusto Pool.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/kustoPools/{kustoPoolName}
-        /// Operation Id: KustoPools_Update
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/kustoPools/{kustoPoolName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>KustoPools_Update</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="patch"> The Kusto pool parameters supplied to the Update operation. </param>
@@ -341,8 +433,16 @@ namespace Azure.ResourceManager.Synapse
 
         /// <summary>
         /// Update a Kusto Kusto Pool.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/kustoPools/{kustoPoolName}
-        /// Operation Id: KustoPools_Update
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/kustoPools/{kustoPoolName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>KustoPools_Update</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="patch"> The Kusto pool parameters supplied to the Update operation. </param>
@@ -372,8 +472,16 @@ namespace Azure.ResourceManager.Synapse
 
         /// <summary>
         /// Stops a Kusto pool.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/kustoPools/{kustoPoolName}/stop
-        /// Operation Id: KustoPools_Stop
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/kustoPools/{kustoPoolName}/stop</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>KustoPools_Stop</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -398,8 +506,16 @@ namespace Azure.ResourceManager.Synapse
 
         /// <summary>
         /// Stops a Kusto pool.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/kustoPools/{kustoPoolName}/stop
-        /// Operation Id: KustoPools_Stop
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/kustoPools/{kustoPoolName}/stop</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>KustoPools_Stop</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -424,8 +540,16 @@ namespace Azure.ResourceManager.Synapse
 
         /// <summary>
         /// Starts a Kusto pool.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/kustoPools/{kustoPoolName}/start
-        /// Operation Id: KustoPools_Start
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/kustoPools/{kustoPoolName}/start</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>KustoPools_Start</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -450,8 +574,16 @@ namespace Azure.ResourceManager.Synapse
 
         /// <summary>
         /// Starts a Kusto pool.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/kustoPools/{kustoPoolName}/start
-        /// Operation Id: KustoPools_Start
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/kustoPools/{kustoPoolName}/start</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>KustoPools_Start</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -476,8 +608,16 @@ namespace Azure.ResourceManager.Synapse
 
         /// <summary>
         /// Returns the SKUs available for the provided resource.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/kustoPools/{kustoPoolName}/skus
-        /// Operation Id: KustoPools_ListSkusByResource
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/kustoPools/{kustoPoolName}/skus</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>KustoPools_ListSkusByResource</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="SynapseDataSourceResourceSku" /> that may take multiple service requests to iterate over. </returns>
@@ -489,8 +629,16 @@ namespace Azure.ResourceManager.Synapse
 
         /// <summary>
         /// Returns the SKUs available for the provided resource.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/kustoPools/{kustoPoolName}/skus
-        /// Operation Id: KustoPools_ListSkusByResource
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/kustoPools/{kustoPoolName}/skus</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>KustoPools_ListSkusByResource</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="SynapseDataSourceResourceSku" /> that may take multiple service requests to iterate over. </returns>
@@ -502,8 +650,16 @@ namespace Azure.ResourceManager.Synapse
 
         /// <summary>
         /// Returns a list of language extensions that can run within KQL queries.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/kustoPools/{kustoPoolName}/listLanguageExtensions
-        /// Operation Id: KustoPools_ListLanguageExtensions
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/kustoPools/{kustoPoolName}/listLanguageExtensions</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>KustoPools_ListLanguageExtensions</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="SynapseLanguageExtension" /> that may take multiple service requests to iterate over. </returns>
@@ -515,8 +671,16 @@ namespace Azure.ResourceManager.Synapse
 
         /// <summary>
         /// Returns a list of language extensions that can run within KQL queries.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/kustoPools/{kustoPoolName}/listLanguageExtensions
-        /// Operation Id: KustoPools_ListLanguageExtensions
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/kustoPools/{kustoPoolName}/listLanguageExtensions</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>KustoPools_ListLanguageExtensions</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="SynapseLanguageExtension" /> that may take multiple service requests to iterate over. </returns>
@@ -528,8 +692,16 @@ namespace Azure.ResourceManager.Synapse
 
         /// <summary>
         /// Add a list of language extensions that can run within KQL queries.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/kustoPools/{kustoPoolName}/addLanguageExtensions
-        /// Operation Id: KustoPools_AddLanguageExtensions
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/kustoPools/{kustoPoolName}/addLanguageExtensions</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>KustoPools_AddLanguageExtensions</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="languageExtensionsToAdd"> The language extensions to add. </param>
@@ -558,8 +730,16 @@ namespace Azure.ResourceManager.Synapse
 
         /// <summary>
         /// Add a list of language extensions that can run within KQL queries.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/kustoPools/{kustoPoolName}/addLanguageExtensions
-        /// Operation Id: KustoPools_AddLanguageExtensions
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/kustoPools/{kustoPoolName}/addLanguageExtensions</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>KustoPools_AddLanguageExtensions</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="languageExtensionsToAdd"> The language extensions to add. </param>
@@ -588,8 +768,16 @@ namespace Azure.ResourceManager.Synapse
 
         /// <summary>
         /// Remove a list of language extensions that can run within KQL queries.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/kustoPools/{kustoPoolName}/removeLanguageExtensions
-        /// Operation Id: KustoPools_RemoveLanguageExtensions
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/kustoPools/{kustoPoolName}/removeLanguageExtensions</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>KustoPools_RemoveLanguageExtensions</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="languageExtensionsToRemove"> The language extensions to remove. </param>
@@ -618,8 +806,16 @@ namespace Azure.ResourceManager.Synapse
 
         /// <summary>
         /// Remove a list of language extensions that can run within KQL queries.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/kustoPools/{kustoPoolName}/removeLanguageExtensions
-        /// Operation Id: KustoPools_RemoveLanguageExtensions
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/kustoPools/{kustoPoolName}/removeLanguageExtensions</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>KustoPools_RemoveLanguageExtensions</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="languageExtensionsToRemove"> The language extensions to remove. </param>
@@ -648,8 +844,16 @@ namespace Azure.ResourceManager.Synapse
 
         /// <summary>
         /// Returns a list of databases that are owned by this Kusto Pool and were followed by another Kusto Pool.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/kustoPools/{kustoPoolName}/listFollowerDatabases
-        /// Operation Id: KustoPools_ListFollowerDatabases
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/kustoPools/{kustoPoolName}/listFollowerDatabases</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>KustoPools_ListFollowerDatabases</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="SynapseFollowerDatabaseDefinition" /> that may take multiple service requests to iterate over. </returns>
@@ -661,8 +865,16 @@ namespace Azure.ResourceManager.Synapse
 
         /// <summary>
         /// Returns a list of databases that are owned by this Kusto Pool and were followed by another Kusto Pool.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/kustoPools/{kustoPoolName}/listFollowerDatabases
-        /// Operation Id: KustoPools_ListFollowerDatabases
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/kustoPools/{kustoPoolName}/listFollowerDatabases</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>KustoPools_ListFollowerDatabases</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="SynapseFollowerDatabaseDefinition" /> that may take multiple service requests to iterate over. </returns>
@@ -674,8 +886,16 @@ namespace Azure.ResourceManager.Synapse
 
         /// <summary>
         /// Detaches all followers of a database owned by this Kusto Pool.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/kustoPools/{kustoPoolName}/detachFollowerDatabases
-        /// Operation Id: KustoPools_DetachFollowerDatabases
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/kustoPools/{kustoPoolName}/detachFollowerDatabases</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>KustoPools_DetachFollowerDatabases</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="followerDatabaseToRemove"> The follower databases properties to remove. </param>
@@ -704,8 +924,16 @@ namespace Azure.ResourceManager.Synapse
 
         /// <summary>
         /// Detaches all followers of a database owned by this Kusto Pool.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/kustoPools/{kustoPoolName}/detachFollowerDatabases
-        /// Operation Id: KustoPools_DetachFollowerDatabases
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/kustoPools/{kustoPoolName}/detachFollowerDatabases</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>KustoPools_DetachFollowerDatabases</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="followerDatabaseToRemove"> The follower databases properties to remove. </param>
@@ -734,8 +962,16 @@ namespace Azure.ResourceManager.Synapse
 
         /// <summary>
         /// Checks that the Kusto Pool child resource name is valid and is not already in use.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/kustoPools/{kustoPoolName}/checkNameAvailability
-        /// Operation Id: KustoPoolChildResource_CheckNameAvailability
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/kustoPools/{kustoPoolName}/checkNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>KustoPoolChildResource_CheckNameAvailability</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="content"> The name of the Kusto Pool child resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -760,8 +996,16 @@ namespace Azure.ResourceManager.Synapse
 
         /// <summary>
         /// Checks that the Kusto Pool child resource name is valid and is not already in use.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/kustoPools/{kustoPoolName}/checkNameAvailability
-        /// Operation Id: KustoPoolChildResource_CheckNameAvailability
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/kustoPools/{kustoPoolName}/checkNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>KustoPoolChildResource_CheckNameAvailability</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="content"> The name of the Kusto Pool child resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -786,8 +1030,16 @@ namespace Azure.ResourceManager.Synapse
 
         /// <summary>
         /// Checks that the principal assignment name is valid and is not already in use.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/kustoPools/{kustoPoolName}/checkPrincipalAssignmentNameAvailability
-        /// Operation Id: KustoPoolPrincipalAssignments_CheckNameAvailability
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/kustoPools/{kustoPoolName}/checkPrincipalAssignmentNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>KustoPoolPrincipalAssignments_CheckNameAvailability</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="content"> The name of the principal assignment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -812,8 +1064,16 @@ namespace Azure.ResourceManager.Synapse
 
         /// <summary>
         /// Checks that the principal assignment name is valid and is not already in use.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/kustoPools/{kustoPoolName}/checkPrincipalAssignmentNameAvailability
-        /// Operation Id: KustoPoolPrincipalAssignments_CheckNameAvailability
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/kustoPools/{kustoPoolName}/checkPrincipalAssignmentNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>KustoPoolPrincipalAssignments_CheckNameAvailability</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="content"> The name of the principal assignment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -837,9 +1097,59 @@ namespace Azure.ResourceManager.Synapse
         }
 
         /// <summary>
+        /// Lists all Kusto pool PrivateLinkResources.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/kustoPools/{kustoPoolName}/privateLinkResources</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>KustoPoolPrivateLinkResources_List</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="SynapseKustoPoolPrivateLinkData" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<SynapseKustoPoolPrivateLinkData> GetAllKustoPoolPrivateLinkDataAsync(CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _kustoPoolPrivateLinkResourcesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, SynapseKustoPoolPrivateLinkData.DeserializeSynapseKustoPoolPrivateLinkData, _kustoPoolPrivateLinkResourcesClientDiagnostics, Pipeline, "SynapseKustoPoolResource.GetAllKustoPoolPrivateLinkData", "value", null, cancellationToken);
+        }
+
+        /// <summary>
+        /// Lists all Kusto pool PrivateLinkResources.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/kustoPools/{kustoPoolName}/privateLinkResources</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>KustoPoolPrivateLinkResources_List</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="SynapseKustoPoolPrivateLinkData" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<SynapseKustoPoolPrivateLinkData> GetAllKustoPoolPrivateLinkData(CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _kustoPoolPrivateLinkResourcesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, SynapseKustoPoolPrivateLinkData.DeserializeSynapseKustoPoolPrivateLinkData, _kustoPoolPrivateLinkResourcesClientDiagnostics, Pipeline, "SynapseKustoPoolResource.GetAllKustoPoolPrivateLinkData", "value", null, cancellationToken);
+        }
+
+        /// <summary>
         /// Add a tag to the current resource.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/kustoPools/{kustoPoolName}
-        /// Operation Id: KustoPools_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/kustoPools/{kustoPoolName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>KustoPools_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="value"> The value for the tag. </param>
@@ -884,8 +1194,16 @@ namespace Azure.ResourceManager.Synapse
 
         /// <summary>
         /// Add a tag to the current resource.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/kustoPools/{kustoPoolName}
-        /// Operation Id: KustoPools_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/kustoPools/{kustoPoolName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>KustoPools_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="value"> The value for the tag. </param>
@@ -930,8 +1248,16 @@ namespace Azure.ResourceManager.Synapse
 
         /// <summary>
         /// Replace the tags on the resource with the given set.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/kustoPools/{kustoPoolName}
-        /// Operation Id: KustoPools_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/kustoPools/{kustoPoolName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>KustoPools_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="tags"> The set of tags to use as replacement. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -971,8 +1297,16 @@ namespace Azure.ResourceManager.Synapse
 
         /// <summary>
         /// Replace the tags on the resource with the given set.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/kustoPools/{kustoPoolName}
-        /// Operation Id: KustoPools_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/kustoPools/{kustoPoolName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>KustoPools_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="tags"> The set of tags to use as replacement. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -1012,8 +1346,16 @@ namespace Azure.ResourceManager.Synapse
 
         /// <summary>
         /// Removes a tag by key from the resource.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/kustoPools/{kustoPoolName}
-        /// Operation Id: KustoPools_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/kustoPools/{kustoPoolName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>KustoPools_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -1056,8 +1398,16 @@ namespace Azure.ResourceManager.Synapse
 
         /// <summary>
         /// Removes a tag by key from the resource.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/kustoPools/{kustoPoolName}
-        /// Operation Id: KustoPools_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/kustoPools/{kustoPoolName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>KustoPools_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

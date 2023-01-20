@@ -55,8 +55,16 @@ namespace Azure.ResourceManager.Resources
 
         /// <summary>
         /// Creates or updates a Template Spec.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Resources/templateSpecs/{templateSpecName}
-        /// Operation Id: TemplateSpecs_CreateOrUpdate
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Resources/templateSpecs/{templateSpecName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>TemplateSpecs_CreateOrUpdate</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="templateSpecName"> Name of the Template Spec. </param>
@@ -88,8 +96,16 @@ namespace Azure.ResourceManager.Resources
 
         /// <summary>
         /// Creates or updates a Template Spec.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Resources/templateSpecs/{templateSpecName}
-        /// Operation Id: TemplateSpecs_CreateOrUpdate
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Resources/templateSpecs/{templateSpecName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>TemplateSpecs_CreateOrUpdate</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="templateSpecName"> Name of the Template Spec. </param>
@@ -121,8 +137,16 @@ namespace Azure.ResourceManager.Resources
 
         /// <summary>
         /// Gets a Template Spec with a given name.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Resources/templateSpecs/{templateSpecName}
-        /// Operation Id: TemplateSpecs_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Resources/templateSpecs/{templateSpecName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>TemplateSpecs_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="templateSpecName"> Name of the Template Spec. </param>
         /// <param name="expand"> Allows for expansion of additional Template Spec details in the response. Optional. </param>
@@ -151,8 +175,16 @@ namespace Azure.ResourceManager.Resources
 
         /// <summary>
         /// Gets a Template Spec with a given name.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Resources/templateSpecs/{templateSpecName}
-        /// Operation Id: TemplateSpecs_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Resources/templateSpecs/{templateSpecName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>TemplateSpecs_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="templateSpecName"> Name of the Template Spec. </param>
         /// <param name="expand"> Allows for expansion of additional Template Spec details in the response. Optional. </param>
@@ -181,8 +213,16 @@ namespace Azure.ResourceManager.Resources
 
         /// <summary>
         /// Lists all the Template Specs within the specified resource group.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Resources/templateSpecs
-        /// Operation Id: TemplateSpecs_ListByResourceGroup
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Resources/templateSpecs</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>TemplateSpecs_ListByResourceGroup</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="expand"> Allows for expansion of additional Template Spec details in the response. Optional. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -196,8 +236,16 @@ namespace Azure.ResourceManager.Resources
 
         /// <summary>
         /// Lists all the Template Specs within the specified resource group.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Resources/templateSpecs
-        /// Operation Id: TemplateSpecs_ListByResourceGroup
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Resources/templateSpecs</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>TemplateSpecs_ListByResourceGroup</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="expand"> Allows for expansion of additional Template Spec details in the response. Optional. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -211,8 +259,16 @@ namespace Azure.ResourceManager.Resources
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Resources/templateSpecs/{templateSpecName}
-        /// Operation Id: TemplateSpecs_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Resources/templateSpecs/{templateSpecName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>TemplateSpecs_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="templateSpecName"> Name of the Template Spec. </param>
         /// <param name="expand"> Allows for expansion of additional Template Spec details in the response. Optional. </param>
@@ -239,8 +295,16 @@ namespace Azure.ResourceManager.Resources
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Resources/templateSpecs/{templateSpecName}
-        /// Operation Id: TemplateSpecs_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Resources/templateSpecs/{templateSpecName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>TemplateSpecs_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="templateSpecName"> Name of the Template Spec. </param>
         /// <param name="expand"> Allows for expansion of additional Template Spec details in the response. Optional. </param>

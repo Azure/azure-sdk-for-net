@@ -828,6 +828,8 @@ namespace Azure.ResourceManager.Synapse
         public virtual Azure.ResourceManager.ArmOperation DetachFollowerDatabases(Azure.WaitUntil waitUntil, Azure.ResourceManager.Synapse.Models.SynapseFollowerDatabaseDefinition followerDatabaseToRemove, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DetachFollowerDatabasesAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Synapse.Models.SynapseFollowerDatabaseDefinition followerDatabaseToRemove, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Synapse.SynapseKustoPoolResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.Synapse.Models.SynapseKustoPoolPrivateLinkData> GetAllKustoPoolPrivateLinkData(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Synapse.Models.SynapseKustoPoolPrivateLinkData> GetAllKustoPoolPrivateLinkDataAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Synapse.SynapseKustoPoolResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.Synapse.Models.SynapseFollowerDatabaseDefinition> GetFollowerDatabases(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.Synapse.Models.SynapseFollowerDatabaseDefinition> GetFollowerDatabasesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -1623,8 +1625,14 @@ namespace Azure.ResourceManager.Synapse
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<System.BinaryData>> ResumeAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Synapse.SynapseSqlPoolResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Synapse.SynapseSqlPoolResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        [System.ObsoleteAttribute("This method is obsolete and will be removed in a future release, please use Update(WaitUntil waitUntil, SynapseSqlPoolPatch patch, CancellationToken cancellationToken = default).", false)]
         public virtual Azure.Response<Azure.ResourceManager.Synapse.SynapseSqlPoolResource> Update(Azure.ResourceManager.Synapse.Models.SynapseSqlPoolPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Synapse.SynapseSqlPoolResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Synapse.Models.SynapseSqlPoolPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        [System.ObsoleteAttribute("This method is obsolete and will be removed in a future release, please use UpdateAsync(WaitUntil waitUntil, SynapseSqlPoolPatch patch, CancellationToken cancellationToken = default).", false)]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Synapse.SynapseSqlPoolResource>> UpdateAsync(Azure.ResourceManager.Synapse.Models.SynapseSqlPoolPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Synapse.SynapseSqlPoolResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Synapse.Models.SynapseSqlPoolPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response UpdateSqlPoolRecommendedSensitivityLabel(Azure.ResourceManager.Synapse.Models.SynapseRecommendedSensitivityLabelUpdateOperationListResult synapseRecommendedSensitivityLabelUpdateOperationListResult, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> UpdateSqlPoolRecommendedSensitivityLabelAsync(Azure.ResourceManager.Synapse.Models.SynapseRecommendedSensitivityLabelUpdateOperationListResult synapseRecommendedSensitivityLabelUpdateOperationListResult, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response UpdateSqlPoolSensitivityLabel(Azure.ResourceManager.Synapse.Models.SynapseSensitivityLabelUpdateListResult synapseSensitivityLabelUpdateListResult, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -3516,6 +3524,14 @@ namespace Azure.ResourceManager.Synapse.Models
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
         public System.Uri Uri { get { throw null; } }
         public System.Guid? WorkspaceUid { get { throw null; } set { } }
+    }
+    public partial class SynapseKustoPoolPrivateLinkData : Azure.ResourceManager.Models.ResourceData
+    {
+        public SynapseKustoPoolPrivateLinkData() { }
+        public string GroupId { get { throw null; } }
+        public Azure.ResourceManager.Synapse.Models.ResourceProvisioningState? ProvisioningState { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<string> RequiredMembers { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<string> RequiredZoneNames { get { throw null; } }
     }
     public partial class SynapseLanguageExtension
     {

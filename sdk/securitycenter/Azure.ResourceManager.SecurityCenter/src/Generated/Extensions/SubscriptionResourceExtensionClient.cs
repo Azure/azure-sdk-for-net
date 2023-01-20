@@ -215,8 +215,16 @@ namespace Azure.ResourceManager.SecurityCenter
 
         /// <summary>
         /// The configuration or data needed to onboard the machine to MDE
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Security/mdeOnboardings
-        /// Operation Id: MdeOnboardings_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/mdeOnboardings</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>MdeOnboardings_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="MdeOnboarding" /> that may take multiple service requests to iterate over. </returns>
@@ -228,8 +236,16 @@ namespace Azure.ResourceManager.SecurityCenter
 
         /// <summary>
         /// The configuration or data needed to onboard the machine to MDE
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Security/mdeOnboardings
-        /// Operation Id: MdeOnboardings_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/mdeOnboardings</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>MdeOnboardings_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="MdeOnboarding" /> that may take multiple service requests to iterate over. </returns>
@@ -241,8 +257,16 @@ namespace Azure.ResourceManager.SecurityCenter
 
         /// <summary>
         /// The default configuration or data needed to onboard the machine to MDE
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Security/mdeOnboardings/default
-        /// Operation Id: MdeOnboardings_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/mdeOnboardings/default</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>MdeOnboardings_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<MdeOnboarding>> GetMdeOnboardingAsync(CancellationToken cancellationToken = default)
@@ -263,8 +287,16 @@ namespace Azure.ResourceManager.SecurityCenter
 
         /// <summary>
         /// The default configuration or data needed to onboard the machine to MDE
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Security/mdeOnboardings/default
-        /// Operation Id: MdeOnboardings_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/mdeOnboardings/default</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>MdeOnboardings_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<MdeOnboarding> GetMdeOnboarding(CancellationToken cancellationToken = default)
@@ -285,8 +317,16 @@ namespace Azure.ResourceManager.SecurityCenter
 
         /// <summary>
         /// List custom assessment automations by provided subscription
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Security/customAssessmentAutomations
-        /// Operation Id: CustomAssessmentAutomations_ListBySubscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/customAssessmentAutomations</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>CustomAssessmentAutomations_ListBySubscription</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="CustomAssessmentAutomationResource" /> that may take multiple service requests to iterate over. </returns>
@@ -299,8 +339,16 @@ namespace Azure.ResourceManager.SecurityCenter
 
         /// <summary>
         /// List custom assessment automations by provided subscription
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Security/customAssessmentAutomations
-        /// Operation Id: CustomAssessmentAutomations_ListBySubscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/customAssessmentAutomations</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>CustomAssessmentAutomations_ListBySubscription</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="CustomAssessmentAutomationResource" /> that may take multiple service requests to iterate over. </returns>
@@ -313,8 +361,16 @@ namespace Azure.ResourceManager.SecurityCenter
 
         /// <summary>
         /// List custom entity store assignments by provided subscription
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Security/customEntityStoreAssignments
-        /// Operation Id: CustomEntityStoreAssignments_ListBySubscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/customEntityStoreAssignments</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>CustomEntityStoreAssignments_ListBySubscription</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="CustomEntityStoreAssignmentResource" /> that may take multiple service requests to iterate over. </returns>
@@ -327,8 +383,16 @@ namespace Azure.ResourceManager.SecurityCenter
 
         /// <summary>
         /// List custom entity store assignments by provided subscription
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Security/customEntityStoreAssignments
-        /// Operation Id: CustomEntityStoreAssignments_ListBySubscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/customEntityStoreAssignments</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>CustomEntityStoreAssignments_ListBySubscription</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="CustomEntityStoreAssignmentResource" /> that may take multiple service requests to iterate over. </returns>
@@ -341,8 +405,16 @@ namespace Azure.ResourceManager.SecurityCenter
 
         /// <summary>
         /// Use this method to get the list of IoT Security solutions by subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Security/iotSecuritySolutions
-        /// Operation Id: IotSecuritySolution_ListBySubscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/iotSecuritySolutions</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>IotSecuritySolution_ListBySubscription</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="filter"> Filter the IoT Security solution with OData syntax. Supports filtering by iotHubs. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -356,8 +428,16 @@ namespace Azure.ResourceManager.SecurityCenter
 
         /// <summary>
         /// Use this method to get the list of IoT Security solutions by subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Security/iotSecuritySolutions
-        /// Operation Id: IotSecuritySolution_ListBySubscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/iotSecuritySolutions</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>IotSecuritySolution_ListBySubscription</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="filter"> Filter the IoT Security solution with OData syntax. Supports filtering by iotHubs. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -371,8 +451,16 @@ namespace Azure.ResourceManager.SecurityCenter
 
         /// <summary>
         /// Recommended tasks that will help improve the security of the subscription proactively
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Security/tasks
-        /// Operation Id: Tasks_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/tasks</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Tasks_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="filter"> OData filter. Optional. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -386,8 +474,16 @@ namespace Azure.ResourceManager.SecurityCenter
 
         /// <summary>
         /// Recommended tasks that will help improve the security of the subscription proactively
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Security/tasks
-        /// Operation Id: Tasks_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/tasks</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Tasks_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="filter"> OData filter. Optional. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -401,8 +497,16 @@ namespace Azure.ResourceManager.SecurityCenter
 
         /// <summary>
         /// Lists all the security automations in the specified subscription. Use the &apos;nextLink&apos; property in the response to get the next page of security automations for the specified subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Security/automations
-        /// Operation Id: Automations_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/automations</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Automations_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="SecurityAutomationResource" /> that may take multiple service requests to iterate over. </returns>
@@ -415,8 +519,16 @@ namespace Azure.ResourceManager.SecurityCenter
 
         /// <summary>
         /// Lists all the security automations in the specified subscription. Use the &apos;nextLink&apos; property in the response to get the next page of security automations for the specified subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Security/automations
-        /// Operation Id: Automations_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/automations</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Automations_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="SecurityAutomationResource" /> that may take multiple service requests to iterate over. </returns>
@@ -429,8 +541,16 @@ namespace Azure.ResourceManager.SecurityCenter
 
         /// <summary>
         /// Gets a list of application control machine groups for the subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Security/applicationWhitelistings
-        /// Operation Id: AdaptiveApplicationControls_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/applicationWhitelistings</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AdaptiveApplicationControls_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="includePathRecommendations"> Include the policy rules. </param>
         /// <param name="summary"> Return output in a summarized form. </param>
@@ -444,8 +564,16 @@ namespace Azure.ResourceManager.SecurityCenter
 
         /// <summary>
         /// Gets a list of application control machine groups for the subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Security/applicationWhitelistings
-        /// Operation Id: AdaptiveApplicationControls_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/applicationWhitelistings</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AdaptiveApplicationControls_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="includePathRecommendations"> Include the policy rules. </param>
         /// <param name="summary"> Return output in a summarized form. </param>
@@ -459,8 +587,16 @@ namespace Azure.ResourceManager.SecurityCenter
 
         /// <summary>
         /// Gets the list of all possible traffic between resources for the subscription
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Security/allowedConnections
-        /// Operation Id: AllowedConnections_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/allowedConnections</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AllowedConnections_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="SecurityCenterAllowedConnection" /> that may take multiple service requests to iterate over. </returns>
@@ -473,8 +609,16 @@ namespace Azure.ResourceManager.SecurityCenter
 
         /// <summary>
         /// Gets the list of all possible traffic between resources for the subscription
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Security/allowedConnections
-        /// Operation Id: AllowedConnections_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/allowedConnections</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AllowedConnections_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="SecurityCenterAllowedConnection" /> that may take multiple service requests to iterate over. </returns>
@@ -487,8 +631,16 @@ namespace Azure.ResourceManager.SecurityCenter
 
         /// <summary>
         /// Gets a list that allows to build a topology view of a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Security/topologies
-        /// Operation Id: Topology_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/topologies</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Topology_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="SecurityTopologyResource" /> that may take multiple service requests to iterate over. </returns>
@@ -501,8 +653,16 @@ namespace Azure.ResourceManager.SecurityCenter
 
         /// <summary>
         /// Gets a list that allows to build a topology view of a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Security/topologies
-        /// Operation Id: Topology_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/topologies</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Topology_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="SecurityTopologyResource" /> that may take multiple service requests to iterate over. </returns>
@@ -515,8 +675,16 @@ namespace Azure.ResourceManager.SecurityCenter
 
         /// <summary>
         /// Policies for protecting resources using Just-in-Time access control.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Security/jitNetworkAccessPolicies
-        /// Operation Id: JitNetworkAccessPolicies_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/jitNetworkAccessPolicies</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>JitNetworkAccessPolicies_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="JitNetworkAccessPolicyResource" /> that may take multiple service requests to iterate over. </returns>
@@ -529,8 +697,16 @@ namespace Azure.ResourceManager.SecurityCenter
 
         /// <summary>
         /// Policies for protecting resources using Just-in-Time access control.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Security/jitNetworkAccessPolicies
-        /// Operation Id: JitNetworkAccessPolicies_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/jitNetworkAccessPolicies</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>JitNetworkAccessPolicies_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="JitNetworkAccessPolicyResource" /> that may take multiple service requests to iterate over. </returns>
@@ -543,8 +719,16 @@ namespace Azure.ResourceManager.SecurityCenter
 
         /// <summary>
         /// Gets a list of discovered Security Solutions for the subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Security/discoveredSecuritySolutions
-        /// Operation Id: DiscoveredSecuritySolutions_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/discoveredSecuritySolutions</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DiscoveredSecuritySolutions_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="DiscoveredSecuritySolution" /> that may take multiple service requests to iterate over. </returns>
@@ -557,8 +741,16 @@ namespace Azure.ResourceManager.SecurityCenter
 
         /// <summary>
         /// Gets a list of discovered Security Solutions for the subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Security/discoveredSecuritySolutions
-        /// Operation Id: DiscoveredSecuritySolutions_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/discoveredSecuritySolutions</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DiscoveredSecuritySolutions_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="DiscoveredSecuritySolution" /> that may take multiple service requests to iterate over. </returns>
@@ -571,8 +763,16 @@ namespace Azure.ResourceManager.SecurityCenter
 
         /// <summary>
         /// Gets a list of all supported Security Solutions for the subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Security/securitySolutionsReferenceData
-        /// Operation Id: securitySolutionsReferenceData_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/securitySolutionsReferenceData</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>securitySolutionsReferenceData_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="SecuritySolutionsReferenceData" /> that may take multiple service requests to iterate over. </returns>
@@ -584,8 +784,16 @@ namespace Azure.ResourceManager.SecurityCenter
 
         /// <summary>
         /// Gets a list of all supported Security Solutions for the subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Security/securitySolutionsReferenceData
-        /// Operation Id: securitySolutionsReferenceData_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/securitySolutionsReferenceData</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>securitySolutionsReferenceData_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="SecuritySolutionsReferenceData" /> that may take multiple service requests to iterate over. </returns>
@@ -597,8 +805,16 @@ namespace Azure.ResourceManager.SecurityCenter
 
         /// <summary>
         /// Gets a list of external security solutions for the subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Security/externalSecuritySolutions
-        /// Operation Id: ExternalSecuritySolutions_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/externalSecuritySolutions</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ExternalSecuritySolutions_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ExternalSecuritySolution" /> that may take multiple service requests to iterate over. </returns>
@@ -611,8 +827,16 @@ namespace Azure.ResourceManager.SecurityCenter
 
         /// <summary>
         /// Gets a list of external security solutions for the subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Security/externalSecuritySolutions
-        /// Operation Id: ExternalSecuritySolutions_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/externalSecuritySolutions</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ExternalSecuritySolutions_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ExternalSecuritySolution" /> that may take multiple service requests to iterate over. </returns>
@@ -625,8 +849,16 @@ namespace Azure.ResourceManager.SecurityCenter
 
         /// <summary>
         /// Get all security controls within a scope
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Security/secureScoreControls
-        /// Operation Id: SecureScoreControls_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/secureScoreControls</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SecureScoreControls_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="expand"> OData expand. Optional. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -640,8 +872,16 @@ namespace Azure.ResourceManager.SecurityCenter
 
         /// <summary>
         /// Get all security controls within a scope
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Security/secureScoreControls
-        /// Operation Id: SecureScoreControls_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/secureScoreControls</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SecureScoreControls_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="expand"> OData expand. Optional. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -655,8 +895,16 @@ namespace Azure.ResourceManager.SecurityCenter
 
         /// <summary>
         /// For a specified subscription, list the available security controls, their assessments, and the max score
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Security/secureScoreControlDefinitions
-        /// Operation Id: SecureScoreControlDefinitions_ListBySubscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/secureScoreControlDefinitions</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SecureScoreControlDefinitions_ListBySubscription</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="SecureScoreControlDefinitionItem" /> that may take multiple service requests to iterate over. </returns>
@@ -669,8 +917,16 @@ namespace Azure.ResourceManager.SecurityCenter
 
         /// <summary>
         /// For a specified subscription, list the available security controls, their assessments, and the max score
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Security/secureScoreControlDefinitions
-        /// Operation Id: SecureScoreControlDefinitions_ListBySubscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/secureScoreControlDefinitions</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SecureScoreControlDefinitions_ListBySubscription</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="SecureScoreControlDefinitionItem" /> that may take multiple service requests to iterate over. </returns>
@@ -683,8 +939,16 @@ namespace Azure.ResourceManager.SecurityCenter
 
         /// <summary>
         /// Gets a list of Security Solutions for the subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Security/securitySolutions
-        /// Operation Id: SecuritySolutions_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/securitySolutions</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SecuritySolutions_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="SecuritySolution" /> that may take multiple service requests to iterate over. </returns>
@@ -697,8 +961,16 @@ namespace Azure.ResourceManager.SecurityCenter
 
         /// <summary>
         /// Gets a list of Security Solutions for the subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Security/securitySolutions
-        /// Operation Id: SecuritySolutions_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/securitySolutions</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SecuritySolutions_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="SecuritySolution" /> that may take multiple service requests to iterate over. </returns>
@@ -711,8 +983,16 @@ namespace Azure.ResourceManager.SecurityCenter
 
         /// <summary>
         /// List all the alerts that are associated with the subscription
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Security/alerts
-        /// Operation Id: Alerts_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/alerts</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Alerts_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="SecurityAlertData" /> that may take multiple service requests to iterate over. </returns>
@@ -725,8 +1005,16 @@ namespace Azure.ResourceManager.SecurityCenter
 
         /// <summary>
         /// List all the alerts that are associated with the subscription
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Security/alerts
-        /// Operation Id: Alerts_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/alerts</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Alerts_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="SecurityAlertData" /> that may take multiple service requests to iterate over. </returns>
@@ -739,8 +1027,16 @@ namespace Azure.ResourceManager.SecurityCenter
 
         /// <summary>
         /// Gets the software inventory of all virtual machines in the subscriptions.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Security/softwareInventories
-        /// Operation Id: SoftwareInventories_ListBySubscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/softwareInventories</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SoftwareInventories_ListBySubscription</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="SoftwareInventoryResource" /> that may take multiple service requests to iterate over. </returns>
@@ -753,8 +1049,16 @@ namespace Azure.ResourceManager.SecurityCenter
 
         /// <summary>
         /// Gets the software inventory of all virtual machines in the subscriptions.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Security/softwareInventories
-        /// Operation Id: SoftwareInventories_ListBySubscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/softwareInventories</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SoftwareInventories_ListBySubscription</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="SoftwareInventoryResource" /> that may take multiple service requests to iterate over. </returns>
@@ -767,8 +1071,16 @@ namespace Azure.ResourceManager.SecurityCenter
 
         /// <summary>
         /// Lists all the security connectors in the specified subscription. Use the &apos;nextLink&apos; property in the response to get the next page of security connectors for the specified subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Security/securityConnectors
-        /// Operation Id: SecurityConnectors_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/securityConnectors</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SecurityConnectors_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="SecurityConnectorResource" /> that may take multiple service requests to iterate over. </returns>
@@ -781,8 +1093,16 @@ namespace Azure.ResourceManager.SecurityCenter
 
         /// <summary>
         /// Lists all the security connectors in the specified subscription. Use the &apos;nextLink&apos; property in the response to get the next page of security connectors for the specified subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Security/securityConnectors
-        /// Operation Id: SecurityConnectors_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/securityConnectors</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SecurityConnectors_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="SecurityConnectorResource" /> that may take multiple service requests to iterate over. </returns>

@@ -102,8 +102,16 @@ namespace Azure.ResourceManager.ResourceMover
 
         /// <summary>
         /// Gets the Move Resource.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Migrate/moveCollections/{moveCollectionName}/moveResources/{moveResourceName}
-        /// Operation Id: MoveResources_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Migrate/moveCollections/{moveCollectionName}/moveResources/{moveResourceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>MoveResources_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="moverResourceName"> The Move Resource Name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -117,8 +125,16 @@ namespace Azure.ResourceManager.ResourceMover
 
         /// <summary>
         /// Gets the Move Resource.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Migrate/moveCollections/{moveCollectionName}/moveResources/{moveResourceName}
-        /// Operation Id: MoveResources_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Migrate/moveCollections/{moveCollectionName}/moveResources/{moveResourceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>MoveResources_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="moverResourceName"> The Move Resource Name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -132,8 +148,16 @@ namespace Azure.ResourceManager.ResourceMover
 
         /// <summary>
         /// Gets the move collection.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Migrate/moveCollections/{moveCollectionName}
-        /// Operation Id: MoveCollections_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Migrate/moveCollections/{moveCollectionName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>MoveCollections_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<MoverResourceSetResource>> GetAsync(CancellationToken cancellationToken = default)
@@ -156,8 +180,16 @@ namespace Azure.ResourceManager.ResourceMover
 
         /// <summary>
         /// Gets the move collection.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Migrate/moveCollections/{moveCollectionName}
-        /// Operation Id: MoveCollections_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Migrate/moveCollections/{moveCollectionName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>MoveCollections_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<MoverResourceSetResource> Get(CancellationToken cancellationToken = default)
@@ -180,8 +212,16 @@ namespace Azure.ResourceManager.ResourceMover
 
         /// <summary>
         /// Updates a move collection.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Migrate/moveCollections/{moveCollectionName}
-        /// Operation Id: MoveCollections_Update
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Migrate/moveCollections/{moveCollectionName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>MoveCollections_Update</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="patch"> The MoverResourceSetPatch to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -206,8 +246,16 @@ namespace Azure.ResourceManager.ResourceMover
 
         /// <summary>
         /// Updates a move collection.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Migrate/moveCollections/{moveCollectionName}
-        /// Operation Id: MoveCollections_Update
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Migrate/moveCollections/{moveCollectionName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>MoveCollections_Update</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="patch"> The MoverResourceSetPatch to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -232,8 +280,16 @@ namespace Azure.ResourceManager.ResourceMover
 
         /// <summary>
         /// Initiates prepare for the set of resources included in the request body. The prepare operation is on the moveResources that are in the moveState &apos;PreparePending&apos; or &apos;PrepareFailed&apos;, on a successful completion the moveResource moveState do a transition to MovePending. To aid the user to prerequisite the operation the client can call operation with validateOnly property set to true.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Migrate/moveCollections/{moveCollectionName}/prepare
-        /// Operation Id: MoveCollections_Prepare
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Migrate/moveCollections/{moveCollectionName}/prepare</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>MoveCollections_Prepare</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="content"> The MoverPrepareContent to use. </param>
@@ -259,8 +315,16 @@ namespace Azure.ResourceManager.ResourceMover
 
         /// <summary>
         /// Initiates prepare for the set of resources included in the request body. The prepare operation is on the moveResources that are in the moveState &apos;PreparePending&apos; or &apos;PrepareFailed&apos;, on a successful completion the moveResource moveState do a transition to MovePending. To aid the user to prerequisite the operation the client can call operation with validateOnly property set to true.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Migrate/moveCollections/{moveCollectionName}/prepare
-        /// Operation Id: MoveCollections_Prepare
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Migrate/moveCollections/{moveCollectionName}/prepare</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>MoveCollections_Prepare</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="content"> The MoverPrepareContent to use. </param>
@@ -286,8 +350,16 @@ namespace Azure.ResourceManager.ResourceMover
 
         /// <summary>
         /// Moves the set of resources included in the request body. The move operation is triggered after the moveResources are in the moveState &apos;MovePending&apos; or &apos;MoveFailed&apos;, on a successful completion the moveResource moveState do a transition to CommitPending. To aid the user to prerequisite the operation the client can call operation with validateOnly property set to true.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Migrate/moveCollections/{moveCollectionName}/initiateMove
-        /// Operation Id: MoveCollections_InitiateMove
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Migrate/moveCollections/{moveCollectionName}/initiateMove</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>MoveCollections_InitiateMove</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="content"> The MoverResourceMoveContent to use. </param>
@@ -313,8 +385,16 @@ namespace Azure.ResourceManager.ResourceMover
 
         /// <summary>
         /// Moves the set of resources included in the request body. The move operation is triggered after the moveResources are in the moveState &apos;MovePending&apos; or &apos;MoveFailed&apos;, on a successful completion the moveResource moveState do a transition to CommitPending. To aid the user to prerequisite the operation the client can call operation with validateOnly property set to true.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Migrate/moveCollections/{moveCollectionName}/initiateMove
-        /// Operation Id: MoveCollections_InitiateMove
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Migrate/moveCollections/{moveCollectionName}/initiateMove</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>MoveCollections_InitiateMove</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="content"> The MoverResourceMoveContent to use. </param>
@@ -340,8 +420,16 @@ namespace Azure.ResourceManager.ResourceMover
 
         /// <summary>
         /// Commits the set of resources included in the request body. The commit operation is triggered on the moveResources in the moveState &apos;CommitPending&apos; or &apos;CommitFailed&apos;, on a successful completion the moveResource moveState do a transition to Committed. To aid the user to prerequisite the operation the client can call operation with validateOnly property set to true.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Migrate/moveCollections/{moveCollectionName}/commit
-        /// Operation Id: MoveCollections_Commit
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Migrate/moveCollections/{moveCollectionName}/commit</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>MoveCollections_Commit</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="content"> The MoverCommitContent to use. </param>
@@ -367,8 +455,16 @@ namespace Azure.ResourceManager.ResourceMover
 
         /// <summary>
         /// Commits the set of resources included in the request body. The commit operation is triggered on the moveResources in the moveState &apos;CommitPending&apos; or &apos;CommitFailed&apos;, on a successful completion the moveResource moveState do a transition to Committed. To aid the user to prerequisite the operation the client can call operation with validateOnly property set to true.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Migrate/moveCollections/{moveCollectionName}/commit
-        /// Operation Id: MoveCollections_Commit
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Migrate/moveCollections/{moveCollectionName}/commit</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>MoveCollections_Commit</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="content"> The MoverCommitContent to use. </param>
@@ -394,8 +490,16 @@ namespace Azure.ResourceManager.ResourceMover
 
         /// <summary>
         /// Discards the set of resources included in the request body. The discard operation is triggered on the moveResources in the moveState &apos;CommitPending&apos; or &apos;DiscardFailed&apos;, on a successful completion the moveResource moveState do a transition to MovePending. To aid the user to prerequisite the operation the client can call operation with validateOnly property set to true.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Migrate/moveCollections/{moveCollectionName}/discard
-        /// Operation Id: MoveCollections_Discard
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Migrate/moveCollections/{moveCollectionName}/discard</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>MoveCollections_Discard</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="content"> The MoverDiscardContent to use. </param>
@@ -421,8 +525,16 @@ namespace Azure.ResourceManager.ResourceMover
 
         /// <summary>
         /// Discards the set of resources included in the request body. The discard operation is triggered on the moveResources in the moveState &apos;CommitPending&apos; or &apos;DiscardFailed&apos;, on a successful completion the moveResource moveState do a transition to MovePending. To aid the user to prerequisite the operation the client can call operation with validateOnly property set to true.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Migrate/moveCollections/{moveCollectionName}/discard
-        /// Operation Id: MoveCollections_Discard
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Migrate/moveCollections/{moveCollectionName}/discard</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>MoveCollections_Discard</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="content"> The MoverDiscardContent to use. </param>
@@ -448,8 +560,16 @@ namespace Azure.ResourceManager.ResourceMover
 
         /// <summary>
         /// Computes, resolves and validate the dependencies of the moveResources in the move collection.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Migrate/moveCollections/{moveCollectionName}/resolveDependencies
-        /// Operation Id: MoveCollections_ResolveDependencies
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Migrate/moveCollections/{moveCollectionName}/resolveDependencies</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>MoveCollections_ResolveDependencies</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -474,8 +594,16 @@ namespace Azure.ResourceManager.ResourceMover
 
         /// <summary>
         /// Computes, resolves and validate the dependencies of the moveResources in the move collection.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Migrate/moveCollections/{moveCollectionName}/resolveDependencies
-        /// Operation Id: MoveCollections_ResolveDependencies
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Migrate/moveCollections/{moveCollectionName}/resolveDependencies</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>MoveCollections_ResolveDependencies</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -500,8 +628,16 @@ namespace Azure.ResourceManager.ResourceMover
 
         /// <summary>
         /// Removes the set of move resources included in the request body from move collection. The orchestration is done by service. To aid the user to prerequisite the operation the client can call operation with validateOnly property set to true.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Migrate/moveCollections/{moveCollectionName}/bulkRemove
-        /// Operation Id: MoveCollections_BulkRemove
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Migrate/moveCollections/{moveCollectionName}/bulkRemove</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>MoveCollections_BulkRemove</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="content"> The MoverBulkRemoveContent to use. </param>
@@ -527,8 +663,16 @@ namespace Azure.ResourceManager.ResourceMover
 
         /// <summary>
         /// Removes the set of move resources included in the request body from move collection. The orchestration is done by service. To aid the user to prerequisite the operation the client can call operation with validateOnly property set to true.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Migrate/moveCollections/{moveCollectionName}/bulkRemove
-        /// Operation Id: MoveCollections_BulkRemove
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Migrate/moveCollections/{moveCollectionName}/bulkRemove</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>MoveCollections_BulkRemove</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="content"> The MoverBulkRemoveContent to use. </param>
@@ -554,8 +698,16 @@ namespace Azure.ResourceManager.ResourceMover
 
         /// <summary>
         /// List of the move resources for which an arm resource is required for.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Migrate/moveCollections/{moveCollectionName}/requiredFor
-        /// Operation Id: MoveCollections_ListRequiredFor
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Migrate/moveCollections/{moveCollectionName}/requiredFor</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>MoveCollections_ListRequiredFor</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="sourceId"> The sourceId for which the api is invoked. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -580,8 +732,16 @@ namespace Azure.ResourceManager.ResourceMover
 
         /// <summary>
         /// List of the move resources for which an arm resource is required for.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Migrate/moveCollections/{moveCollectionName}/requiredFor
-        /// Operation Id: MoveCollections_ListRequiredFor
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Migrate/moveCollections/{moveCollectionName}/requiredFor</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>MoveCollections_ListRequiredFor</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="sourceId"> The sourceId for which the api is invoked. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -606,8 +766,16 @@ namespace Azure.ResourceManager.ResourceMover
 
         /// <summary>
         /// Gets a list of unresolved dependencies.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Migrate/moveCollections/{moveCollectionName}/unresolvedDependencies
-        /// Operation Id: UnresolvedDependencies_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Migrate/moveCollections/{moveCollectionName}/unresolvedDependencies</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>UnresolvedDependencies_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="dependencyLevel"> Defines the dependency level. </param>
         /// <param name="orderby"> OData order by query option. For example, you can use $orderby=Count desc. </param>
@@ -623,8 +791,16 @@ namespace Azure.ResourceManager.ResourceMover
 
         /// <summary>
         /// Gets a list of unresolved dependencies.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Migrate/moveCollections/{moveCollectionName}/unresolvedDependencies
-        /// Operation Id: UnresolvedDependencies_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Migrate/moveCollections/{moveCollectionName}/unresolvedDependencies</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>UnresolvedDependencies_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="dependencyLevel"> Defines the dependency level. </param>
         /// <param name="orderby"> OData order by query option. For example, you can use $orderby=Count desc. </param>

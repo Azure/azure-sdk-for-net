@@ -69,8 +69,16 @@ namespace Azure.ResourceManager.BillingBenefits
 
         /// <summary>
         /// List savings plans.
-        /// Request Path: /providers/Microsoft.BillingBenefits/savingsPlans
-        /// Operation Id: SavingsPlan_ListAll
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.BillingBenefits/savingsPlans</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SavingsPlan_ListAll</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="filter"> May be used to filter by reservation properties. The filter supports &apos;eq&apos;, &apos;or&apos;, and &apos;and&apos;. It does not currently support &apos;ne&apos;, &apos;gt&apos;, &apos;le&apos;, &apos;ge&apos;, or &apos;not&apos;. Reservation properties include sku/name, properties/{appliedScopeType, archived, displayName, displayProvisioningState, effectiveDateTime, expiryDate, provisioningState, quantity, renew, reservedResourceType, term, userFriendlyAppliedScopeType, userFriendlyRenewState}. </param>
         /// <param name="orderBy"> May be used to sort order by reservation properties. </param>
@@ -89,8 +97,16 @@ namespace Azure.ResourceManager.BillingBenefits
 
         /// <summary>
         /// List savings plans.
-        /// Request Path: /providers/Microsoft.BillingBenefits/savingsPlans
-        /// Operation Id: SavingsPlan_ListAll
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.BillingBenefits/savingsPlans</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SavingsPlan_ListAll</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="filter"> May be used to filter by reservation properties. The filter supports &apos;eq&apos;, &apos;or&apos;, and &apos;and&apos;. It does not currently support &apos;ne&apos;, &apos;gt&apos;, &apos;le&apos;, &apos;ge&apos;, or &apos;not&apos;. Reservation properties include sku/name, properties/{appliedScopeType, archived, displayName, displayProvisioningState, effectiveDateTime, expiryDate, provisioningState, quantity, renew, reservedResourceType, term, userFriendlyAppliedScopeType, userFriendlyRenewState}. </param>
         /// <param name="orderBy"> May be used to sort order by reservation properties. </param>
@@ -109,8 +125,16 @@ namespace Azure.ResourceManager.BillingBenefits
 
         /// <summary>
         /// Validate savings plan purchase.
-        /// Request Path: /providers/Microsoft.BillingBenefits/validate
-        /// Operation Id: ValidatePurchase
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.BillingBenefits/validate</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ValidatePurchase</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="content"> Request body for validating the purchase of a savings plan. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -124,8 +148,16 @@ namespace Azure.ResourceManager.BillingBenefits
 
         /// <summary>
         /// Validate savings plan purchase.
-        /// Request Path: /providers/Microsoft.BillingBenefits/validate
-        /// Operation Id: ValidatePurchase
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.BillingBenefits/validate</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ValidatePurchase</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="content"> Request body for validating the purchase of a savings plan. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

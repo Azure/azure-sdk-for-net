@@ -45,8 +45,16 @@ namespace Azure.ResourceManager.ServiceBus
 
         /// <summary>
         /// Gets all the available namespaces within the subscription, irrespective of the resource groups.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.ServiceBus/namespaces
-        /// Operation Id: Namespaces_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ServiceBus/namespaces</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Namespaces_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ServiceBusNamespaceResource" /> that may take multiple service requests to iterate over. </returns>
@@ -59,8 +67,16 @@ namespace Azure.ResourceManager.ServiceBus
 
         /// <summary>
         /// Gets all the available namespaces within the subscription, irrespective of the resource groups.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.ServiceBus/namespaces
-        /// Operation Id: Namespaces_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ServiceBus/namespaces</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Namespaces_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ServiceBusNamespaceResource" /> that may take multiple service requests to iterate over. </returns>
@@ -73,8 +89,16 @@ namespace Azure.ResourceManager.ServiceBus
 
         /// <summary>
         /// Check the give namespace name availability.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.ServiceBus/CheckNameAvailability
-        /// Operation Id: Namespaces_CheckNameAvailability
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ServiceBus/CheckNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Namespaces_CheckNameAvailability</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="content"> Parameters to check availability of the given namespace name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -96,8 +120,16 @@ namespace Azure.ResourceManager.ServiceBus
 
         /// <summary>
         /// Check the give namespace name availability.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.ServiceBus/CheckNameAvailability
-        /// Operation Id: Namespaces_CheckNameAvailability
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ServiceBus/CheckNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Namespaces_CheckNameAvailability</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="content"> Parameters to check availability of the given namespace name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

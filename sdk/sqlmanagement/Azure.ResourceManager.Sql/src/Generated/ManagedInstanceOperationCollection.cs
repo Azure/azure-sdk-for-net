@@ -54,8 +54,16 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary>
         /// Gets a management operation on a managed instance.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/operations/{operationId}
-        /// Operation Id: ManagedInstanceOperations_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/operations/{operationId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ManagedInstanceOperations_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="operationId"> The Uuid to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -79,8 +87,16 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary>
         /// Gets a management operation on a managed instance.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/operations/{operationId}
-        /// Operation Id: ManagedInstanceOperations_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/operations/{operationId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ManagedInstanceOperations_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="operationId"> The Uuid to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -104,8 +120,16 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary>
         /// Gets a list of operations performed on the managed instance.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/operations
-        /// Operation Id: ManagedInstanceOperations_ListByManagedInstance
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/operations</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ManagedInstanceOperations_ListByManagedInstance</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ManagedInstanceOperationResource" /> that may take multiple service requests to iterate over. </returns>
@@ -118,8 +142,16 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary>
         /// Gets a list of operations performed on the managed instance.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/operations
-        /// Operation Id: ManagedInstanceOperations_ListByManagedInstance
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/operations</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ManagedInstanceOperations_ListByManagedInstance</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ManagedInstanceOperationResource" /> that may take multiple service requests to iterate over. </returns>
@@ -132,8 +164,16 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/operations/{operationId}
-        /// Operation Id: ManagedInstanceOperations_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/operations/{operationId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ManagedInstanceOperations_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="operationId"> The Uuid to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -155,8 +195,16 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/operations/{operationId}
-        /// Operation Id: ManagedInstanceOperations_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/operations/{operationId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ManagedInstanceOperations_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="operationId"> The Uuid to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

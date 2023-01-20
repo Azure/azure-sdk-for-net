@@ -55,8 +55,16 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary>
         /// Updates a managed database&apos;s short term retention policy.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}/backupShortTermRetentionPolicies/{policyName}
-        /// Operation Id: ManagedBackupShortTermRetentionPolicies_CreateOrUpdate
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}/backupShortTermRetentionPolicies/{policyName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ManagedBackupShortTermRetentionPolicies_CreateOrUpdate</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="policyName"> The policy name. Should always be &quot;default&quot;. </param>
@@ -86,8 +94,16 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary>
         /// Updates a managed database&apos;s short term retention policy.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}/backupShortTermRetentionPolicies/{policyName}
-        /// Operation Id: ManagedBackupShortTermRetentionPolicies_CreateOrUpdate
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}/backupShortTermRetentionPolicies/{policyName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ManagedBackupShortTermRetentionPolicies_CreateOrUpdate</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="policyName"> The policy name. Should always be &quot;default&quot;. </param>
@@ -117,8 +133,16 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary>
         /// Gets a managed database&apos;s short term retention policy.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}/backupShortTermRetentionPolicies/{policyName}
-        /// Operation Id: ManagedBackupShortTermRetentionPolicies_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}/backupShortTermRetentionPolicies/{policyName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ManagedBackupShortTermRetentionPolicies_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="policyName"> The policy name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -142,8 +166,16 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary>
         /// Gets a managed database&apos;s short term retention policy.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}/backupShortTermRetentionPolicies/{policyName}
-        /// Operation Id: ManagedBackupShortTermRetentionPolicies_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}/backupShortTermRetentionPolicies/{policyName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ManagedBackupShortTermRetentionPolicies_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="policyName"> The policy name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -167,8 +199,16 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary>
         /// Gets a managed database&apos;s short term retention policy list.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}/backupShortTermRetentionPolicies
-        /// Operation Id: ManagedBackupShortTermRetentionPolicies_ListByDatabase
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}/backupShortTermRetentionPolicies</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ManagedBackupShortTermRetentionPolicies_ListByDatabase</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ManagedBackupShortTermRetentionPolicyResource" /> that may take multiple service requests to iterate over. </returns>
@@ -181,8 +221,16 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary>
         /// Gets a managed database&apos;s short term retention policy list.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}/backupShortTermRetentionPolicies
-        /// Operation Id: ManagedBackupShortTermRetentionPolicies_ListByDatabase
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}/backupShortTermRetentionPolicies</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ManagedBackupShortTermRetentionPolicies_ListByDatabase</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ManagedBackupShortTermRetentionPolicyResource" /> that may take multiple service requests to iterate over. </returns>
@@ -195,8 +243,16 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}/backupShortTermRetentionPolicies/{policyName}
-        /// Operation Id: ManagedBackupShortTermRetentionPolicies_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}/backupShortTermRetentionPolicies/{policyName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ManagedBackupShortTermRetentionPolicies_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="policyName"> The policy name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -218,8 +274,16 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}/backupShortTermRetentionPolicies/{policyName}
-        /// Operation Id: ManagedBackupShortTermRetentionPolicies_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}/backupShortTermRetentionPolicies/{policyName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ManagedBackupShortTermRetentionPolicies_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="policyName"> The policy name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

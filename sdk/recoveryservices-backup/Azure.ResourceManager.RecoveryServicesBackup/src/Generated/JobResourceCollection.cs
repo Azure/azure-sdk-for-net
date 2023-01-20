@@ -65,8 +65,16 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
 
         /// <summary>
         /// Gets extended information associated with the job.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupJobs/{jobName}
-        /// Operation Id: JobDetails_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupJobs/{jobName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>JobDetails_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="jobName"> Name of the job whose details are to be fetched. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -94,8 +102,16 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
 
         /// <summary>
         /// Gets extended information associated with the job.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupJobs/{jobName}
-        /// Operation Id: JobDetails_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupJobs/{jobName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>JobDetails_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="jobName"> Name of the job whose details are to be fetched. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -123,8 +139,16 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
 
         /// <summary>
         /// Provides a pageable list of jobs.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupJobs
-        /// Operation Id: BackupJobs_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupJobs</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>BackupJobs_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="filter"> OData filter options. </param>
         /// <param name="skipToken"> skipToken Filter. </param>
@@ -139,8 +163,16 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
 
         /// <summary>
         /// Provides a pageable list of jobs.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupJobs
-        /// Operation Id: BackupJobs_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupJobs</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>BackupJobs_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="filter"> OData filter options. </param>
         /// <param name="skipToken"> skipToken Filter. </param>
@@ -155,8 +187,16 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupJobs/{jobName}
-        /// Operation Id: JobDetails_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupJobs/{jobName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>JobDetails_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="jobName"> Name of the job whose details are to be fetched. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -182,8 +222,16 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupJobs/{jobName}
-        /// Operation Id: JobDetails_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupJobs/{jobName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>JobDetails_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="jobName"> Name of the job whose details are to be fetched. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

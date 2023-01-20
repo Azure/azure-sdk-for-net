@@ -49,8 +49,16 @@ namespace Azure.ResourceManager.Confluent
 
         /// <summary>
         /// List Confluent marketplace agreements in the subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Confluent/agreements
-        /// Operation Id: MarketplaceAgreements_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Confluent/agreements</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>MarketplaceAgreements_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ConfluentAgreement" /> that may take multiple service requests to iterate over. </returns>
@@ -63,8 +71,16 @@ namespace Azure.ResourceManager.Confluent
 
         /// <summary>
         /// List Confluent marketplace agreements in the subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Confluent/agreements
-        /// Operation Id: MarketplaceAgreements_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Confluent/agreements</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>MarketplaceAgreements_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ConfluentAgreement" /> that may take multiple service requests to iterate over. </returns>
@@ -77,8 +93,16 @@ namespace Azure.ResourceManager.Confluent
 
         /// <summary>
         /// Create Confluent Marketplace agreement in the subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Confluent/agreements/default
-        /// Operation Id: MarketplaceAgreements_Create
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Confluent/agreements/default</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>MarketplaceAgreements_Create</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="body"> Confluent Marketplace Agreement resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -100,8 +124,16 @@ namespace Azure.ResourceManager.Confluent
 
         /// <summary>
         /// Create Confluent Marketplace agreement in the subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Confluent/agreements/default
-        /// Operation Id: MarketplaceAgreements_Create
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Confluent/agreements/default</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>MarketplaceAgreements_Create</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="body"> Confluent Marketplace Agreement resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -123,8 +155,16 @@ namespace Azure.ResourceManager.Confluent
 
         /// <summary>
         /// List all organizations under the specified subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Confluent/organizations
-        /// Operation Id: Organization_ListBySubscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Confluent/organizations</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Organization_ListBySubscription</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ConfluentOrganizationResource" /> that may take multiple service requests to iterate over. </returns>
@@ -137,8 +177,16 @@ namespace Azure.ResourceManager.Confluent
 
         /// <summary>
         /// List all organizations under the specified subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Confluent/organizations
-        /// Operation Id: Organization_ListBySubscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Confluent/organizations</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Organization_ListBySubscription</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ConfluentOrganizationResource" /> that may take multiple service requests to iterate over. </returns>

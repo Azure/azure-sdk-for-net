@@ -90,8 +90,16 @@ namespace Azure.ResourceManager.SecurityCenter
 
         /// <summary>
         /// Settings for ingesting security data and logs to correlate with resources associated with the subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Security/ingestionSettings/{ingestionSettingName}
-        /// Operation Id: IngestionSettings_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/ingestionSettings/{ingestionSettingName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>IngestionSettings_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<IngestionSettingResource>> GetAsync(CancellationToken cancellationToken = default)
@@ -114,8 +122,16 @@ namespace Azure.ResourceManager.SecurityCenter
 
         /// <summary>
         /// Settings for ingesting security data and logs to correlate with resources associated with the subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Security/ingestionSettings/{ingestionSettingName}
-        /// Operation Id: IngestionSettings_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/ingestionSettings/{ingestionSettingName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>IngestionSettings_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<IngestionSettingResource> Get(CancellationToken cancellationToken = default)
@@ -138,8 +154,16 @@ namespace Azure.ResourceManager.SecurityCenter
 
         /// <summary>
         /// Deletes the ingestion settings for this subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Security/ingestionSettings/{ingestionSettingName}
-        /// Operation Id: IngestionSettings_Delete
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/ingestionSettings/{ingestionSettingName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>IngestionSettings_Delete</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -164,8 +188,16 @@ namespace Azure.ResourceManager.SecurityCenter
 
         /// <summary>
         /// Deletes the ingestion settings for this subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Security/ingestionSettings/{ingestionSettingName}
-        /// Operation Id: IngestionSettings_Delete
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/ingestionSettings/{ingestionSettingName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>IngestionSettings_Delete</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -190,8 +222,16 @@ namespace Azure.ResourceManager.SecurityCenter
 
         /// <summary>
         /// Create setting for ingesting security data and logs to correlate with resources associated with the subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Security/ingestionSettings/{ingestionSettingName}
-        /// Operation Id: IngestionSettings_Create
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/ingestionSettings/{ingestionSettingName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>IngestionSettings_Create</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="data"> Ingestion setting object. </param>
@@ -220,8 +260,16 @@ namespace Azure.ResourceManager.SecurityCenter
 
         /// <summary>
         /// Create setting for ingesting security data and logs to correlate with resources associated with the subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Security/ingestionSettings/{ingestionSettingName}
-        /// Operation Id: IngestionSettings_Create
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/ingestionSettings/{ingestionSettingName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>IngestionSettings_Create</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="data"> Ingestion setting object. </param>
@@ -250,8 +298,16 @@ namespace Azure.ResourceManager.SecurityCenter
 
         /// <summary>
         /// Returns the token that is used for correlating ingested telemetry with the resources in the subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Security/ingestionSettings/{ingestionSettingName}/listTokens
-        /// Operation Id: IngestionSettings_ListTokens
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/ingestionSettings/{ingestionSettingName}/listTokens</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>IngestionSettings_ListTokens</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<IngestionSettingToken>> GetTokensAsync(CancellationToken cancellationToken = default)
@@ -272,8 +328,16 @@ namespace Azure.ResourceManager.SecurityCenter
 
         /// <summary>
         /// Returns the token that is used for correlating ingested telemetry with the resources in the subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Security/ingestionSettings/{ingestionSettingName}/listTokens
-        /// Operation Id: IngestionSettings_ListTokens
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/ingestionSettings/{ingestionSettingName}/listTokens</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>IngestionSettings_ListTokens</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<IngestionSettingToken> GetTokens(CancellationToken cancellationToken = default)
@@ -294,8 +358,16 @@ namespace Azure.ResourceManager.SecurityCenter
 
         /// <summary>
         /// Connection strings for ingesting security scan logs and data.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Security/ingestionSettings/{ingestionSettingName}/listConnectionStrings
-        /// Operation Id: IngestionSettings_ListConnectionStrings
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/ingestionSettings/{ingestionSettingName}/listConnectionStrings</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>IngestionSettings_ListConnectionStrings</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="IngestionConnectionString" /> that may take multiple service requests to iterate over. </returns>
@@ -307,8 +379,16 @@ namespace Azure.ResourceManager.SecurityCenter
 
         /// <summary>
         /// Connection strings for ingesting security scan logs and data.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Security/ingestionSettings/{ingestionSettingName}/listConnectionStrings
-        /// Operation Id: IngestionSettings_ListConnectionStrings
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/ingestionSettings/{ingestionSettingName}/listConnectionStrings</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>IngestionSettings_ListConnectionStrings</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="IngestionConnectionString" /> that may take multiple service requests to iterate over. </returns>

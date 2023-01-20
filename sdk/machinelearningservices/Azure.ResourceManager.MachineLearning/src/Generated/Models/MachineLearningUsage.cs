@@ -7,10 +7,7 @@
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary>
-    /// Describes AML Resource Usage.
-    /// Serialized Name: Usage
-    /// </summary>
+    /// <summary> Describes AML Resource Usage. </summary>
     public partial class MachineLearningUsage
     {
         /// <summary> Initializes a new instance of MachineLearningUsage. </summary>
@@ -19,34 +16,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Initializes a new instance of MachineLearningUsage. </summary>
-        /// <param name="id">
-        /// Specifies the resource ID.
-        /// Serialized Name: Usage.id
-        /// </param>
-        /// <param name="amlWorkspaceLocation">
-        /// Region of the AML workspace in the id.
-        /// Serialized Name: Usage.amlWorkspaceLocation
-        /// </param>
-        /// <param name="usageType">
-        /// Specifies the resource type.
-        /// Serialized Name: Usage.type
-        /// </param>
-        /// <param name="unit">
-        /// An enum describing the unit of usage measurement.
-        /// Serialized Name: Usage.unit
-        /// </param>
-        /// <param name="currentValue">
-        /// The current usage of the resource.
-        /// Serialized Name: Usage.currentValue
-        /// </param>
-        /// <param name="limit">
-        /// The maximum permitted usage of the resource.
-        /// Serialized Name: Usage.limit
-        /// </param>
-        /// <param name="name">
-        /// The name of the type of usage.
-        /// Serialized Name: Usage.name
-        /// </param>
+        /// <param name="id"> Specifies the resource ID. </param>
+        /// <param name="amlWorkspaceLocation"> Region of the AML workspace in the id. </param>
+        /// <param name="usageType"> Specifies the resource type. </param>
+        /// <param name="unit"> An enum describing the unit of usage measurement. </param>
+        /// <param name="currentValue"> The current usage of the resource. </param>
+        /// <param name="limit"> The maximum permitted usage of the resource. </param>
+        /// <param name="name"> The name of the type of usage. </param>
         internal MachineLearningUsage(string id, string amlWorkspaceLocation, string usageType, MachineLearningUsageUnit? unit, long? currentValue, long? limit, MachineLearningUsageName name)
         {
             Id = id;
@@ -58,40 +34,19 @@ namespace Azure.ResourceManager.MachineLearning.Models
             Name = name;
         }
 
-        /// <summary>
-        /// Specifies the resource ID.
-        /// Serialized Name: Usage.id
-        /// </summary>
+        /// <summary> Specifies the resource ID. </summary>
         public string Id { get; }
-        /// <summary>
-        /// Region of the AML workspace in the id.
-        /// Serialized Name: Usage.amlWorkspaceLocation
-        /// </summary>
+        /// <summary> Region of the AML workspace in the id. </summary>
         public string AmlWorkspaceLocation { get; }
-        /// <summary>
-        /// Specifies the resource type.
-        /// Serialized Name: Usage.type
-        /// </summary>
+        /// <summary> Specifies the resource type. </summary>
         public string UsageType { get; }
-        /// <summary>
-        /// An enum describing the unit of usage measurement.
-        /// Serialized Name: Usage.unit
-        /// </summary>
+        /// <summary> An enum describing the unit of usage measurement. </summary>
         public MachineLearningUsageUnit? Unit { get; }
-        /// <summary>
-        /// The current usage of the resource.
-        /// Serialized Name: Usage.currentValue
-        /// </summary>
+        /// <summary> The current usage of the resource. </summary>
         public long? CurrentValue { get; }
-        /// <summary>
-        /// The maximum permitted usage of the resource.
-        /// Serialized Name: Usage.limit
-        /// </summary>
+        /// <summary> The maximum permitted usage of the resource. </summary>
         public long? Limit { get; }
-        /// <summary>
-        /// The name of the type of usage.
-        /// Serialized Name: Usage.name
-        /// </summary>
+        /// <summary> The name of the type of usage. </summary>
         public MachineLearningUsageName Name { get; }
     }
 }

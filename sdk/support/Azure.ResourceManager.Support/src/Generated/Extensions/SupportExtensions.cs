@@ -38,8 +38,16 @@ namespace Azure.ResourceManager.Support
 
         /// <summary>
         /// Gets a specific Azure service for support ticket creation.
-        /// Request Path: /providers/Microsoft.Support/services/{serviceName}
-        /// Operation Id: Services_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Support/services/{serviceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Services_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="serviceName"> Name of the Azure service. </param>
@@ -54,8 +62,16 @@ namespace Azure.ResourceManager.Support
 
         /// <summary>
         /// Gets a specific Azure service for support ticket creation.
-        /// Request Path: /providers/Microsoft.Support/services/{serviceName}
-        /// Operation Id: Services_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Support/services/{serviceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Services_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="serviceName"> Name of the Azure service. </param>
@@ -87,8 +103,16 @@ namespace Azure.ResourceManager.Support
 
         /// <summary>
         /// Get ticket details for an Azure subscription. Support ticket data is available for 18 months after ticket creation. If a ticket was created more than 18 months ago, a request for data might cause an error.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Support/supportTickets/{supportTicketName}
-        /// Operation Id: SupportTickets_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Support/supportTickets/{supportTicketName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SupportTickets_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="supportTicketName"> Support ticket name. </param>
@@ -103,8 +127,16 @@ namespace Azure.ResourceManager.Support
 
         /// <summary>
         /// Get ticket details for an Azure subscription. Support ticket data is available for 18 months after ticket creation. If a ticket was created more than 18 months ago, a request for data might cause an error.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Support/supportTickets/{supportTicketName}
-        /// Operation Id: SupportTickets_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Support/supportTickets/{supportTicketName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SupportTickets_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="supportTicketName"> Support ticket name. </param>
@@ -119,8 +151,16 @@ namespace Azure.ResourceManager.Support
 
         /// <summary>
         /// Check the availability of a resource name. This API should be used to check the uniqueness of the name for support ticket creation for the selected subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Support/checkNameAvailability
-        /// Operation Id: SupportTickets_CheckNameAvailability
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Support/checkNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SupportTickets_CheckNameAvailability</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="content"> Input to check. </param>
@@ -135,8 +175,16 @@ namespace Azure.ResourceManager.Support
 
         /// <summary>
         /// Check the availability of a resource name. This API should be used to check the uniqueness of the name for support ticket creation for the selected subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Support/checkNameAvailability
-        /// Operation Id: SupportTickets_CheckNameAvailability
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Support/checkNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SupportTickets_CheckNameAvailability</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="content"> Input to check. </param>

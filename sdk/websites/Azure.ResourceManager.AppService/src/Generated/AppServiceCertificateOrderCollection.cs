@@ -55,8 +55,16 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary>
         /// Description for Create or update a certificate purchase order.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CertificateRegistration/certificateOrders/{certificateOrderName}
-        /// Operation Id: AppServiceCertificateOrders_CreateOrUpdate
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CertificateRegistration/certificateOrders/{certificateOrderName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AppServiceCertificateOrders_CreateOrUpdate</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="certificateOrderName"> Name of the certificate order. </param>
@@ -88,8 +96,16 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary>
         /// Description for Create or update a certificate purchase order.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CertificateRegistration/certificateOrders/{certificateOrderName}
-        /// Operation Id: AppServiceCertificateOrders_CreateOrUpdate
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CertificateRegistration/certificateOrders/{certificateOrderName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AppServiceCertificateOrders_CreateOrUpdate</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="certificateOrderName"> Name of the certificate order. </param>
@@ -121,8 +137,16 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary>
         /// Description for Get a certificate order.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CertificateRegistration/certificateOrders/{certificateOrderName}
-        /// Operation Id: AppServiceCertificateOrders_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CertificateRegistration/certificateOrders/{certificateOrderName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AppServiceCertificateOrders_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="certificateOrderName"> Name of the certificate order.. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -150,8 +174,16 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary>
         /// Description for Get a certificate order.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CertificateRegistration/certificateOrders/{certificateOrderName}
-        /// Operation Id: AppServiceCertificateOrders_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CertificateRegistration/certificateOrders/{certificateOrderName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AppServiceCertificateOrders_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="certificateOrderName"> Name of the certificate order.. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -179,8 +211,16 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary>
         /// Description for Get certificate orders in a resource group.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CertificateRegistration/certificateOrders
-        /// Operation Id: AppServiceCertificateOrders_ListByResourceGroup
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CertificateRegistration/certificateOrders</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AppServiceCertificateOrders_ListByResourceGroup</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="AppServiceCertificateOrderResource" /> that may take multiple service requests to iterate over. </returns>
@@ -193,8 +233,16 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary>
         /// Description for Get certificate orders in a resource group.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CertificateRegistration/certificateOrders
-        /// Operation Id: AppServiceCertificateOrders_ListByResourceGroup
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CertificateRegistration/certificateOrders</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AppServiceCertificateOrders_ListByResourceGroup</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="AppServiceCertificateOrderResource" /> that may take multiple service requests to iterate over. </returns>
@@ -207,8 +255,16 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CertificateRegistration/certificateOrders/{certificateOrderName}
-        /// Operation Id: AppServiceCertificateOrders_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CertificateRegistration/certificateOrders/{certificateOrderName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AppServiceCertificateOrders_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="certificateOrderName"> Name of the certificate order.. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -234,8 +290,16 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CertificateRegistration/certificateOrders/{certificateOrderName}
-        /// Operation Id: AppServiceCertificateOrders_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CertificateRegistration/certificateOrders/{certificateOrderName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AppServiceCertificateOrders_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="certificateOrderName"> Name of the certificate order.. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

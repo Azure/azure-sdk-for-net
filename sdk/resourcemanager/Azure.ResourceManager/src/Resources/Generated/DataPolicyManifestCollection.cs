@@ -54,8 +54,16 @@ namespace Azure.ResourceManager.Resources
 
         /// <summary>
         /// This operation retrieves the data policy manifest with the given policy mode.
-        /// Request Path: /providers/Microsoft.Authorization/dataPolicyManifests/{policyMode}
-        /// Operation Id: DataPolicyManifests_GetByPolicyMode
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Authorization/dataPolicyManifests/{policyMode}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DataPolicyManifests_GetByPolicyMode</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="policyMode"> The policy mode of the data policy manifest to get. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -83,8 +91,16 @@ namespace Azure.ResourceManager.Resources
 
         /// <summary>
         /// This operation retrieves the data policy manifest with the given policy mode.
-        /// Request Path: /providers/Microsoft.Authorization/dataPolicyManifests/{policyMode}
-        /// Operation Id: DataPolicyManifests_GetByPolicyMode
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Authorization/dataPolicyManifests/{policyMode}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DataPolicyManifests_GetByPolicyMode</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="policyMode"> The policy mode of the data policy manifest to get. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -112,8 +128,16 @@ namespace Azure.ResourceManager.Resources
 
         /// <summary>
         /// This operation retrieves a list of all the data policy manifests that match the optional given $filter. Valid values for $filter are: &quot;$filter=namespace eq &apos;{0}&apos;&quot;. If $filter is not provided, the unfiltered list includes all data policy manifests for data resource types. If $filter=namespace is provided, the returned list only includes all data policy manifests that have a namespace matching the provided value.
-        /// Request Path: /providers/Microsoft.Authorization/dataPolicyManifests
-        /// Operation Id: DataPolicyManifests_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Authorization/dataPolicyManifests</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DataPolicyManifests_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="filter"> The filter to apply on the operation. Valid values for $filter are: &quot;namespace eq &apos;{value}&apos;&quot;. If $filter is not provided, no filtering is performed. If $filter=namespace eq &apos;{value}&apos; is provided, the returned list only includes all data policy manifests that have a namespace matching the provided value. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -127,8 +151,16 @@ namespace Azure.ResourceManager.Resources
 
         /// <summary>
         /// This operation retrieves a list of all the data policy manifests that match the optional given $filter. Valid values for $filter are: &quot;$filter=namespace eq &apos;{0}&apos;&quot;. If $filter is not provided, the unfiltered list includes all data policy manifests for data resource types. If $filter=namespace is provided, the returned list only includes all data policy manifests that have a namespace matching the provided value.
-        /// Request Path: /providers/Microsoft.Authorization/dataPolicyManifests
-        /// Operation Id: DataPolicyManifests_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Authorization/dataPolicyManifests</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DataPolicyManifests_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="filter"> The filter to apply on the operation. Valid values for $filter are: &quot;namespace eq &apos;{value}&apos;&quot;. If $filter is not provided, no filtering is performed. If $filter=namespace eq &apos;{value}&apos; is provided, the returned list only includes all data policy manifests that have a namespace matching the provided value. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -142,8 +174,16 @@ namespace Azure.ResourceManager.Resources
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /providers/Microsoft.Authorization/dataPolicyManifests/{policyMode}
-        /// Operation Id: DataPolicyManifests_GetByPolicyMode
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Authorization/dataPolicyManifests/{policyMode}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DataPolicyManifests_GetByPolicyMode</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="policyMode"> The policy mode of the data policy manifest to get. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -169,8 +209,16 @@ namespace Azure.ResourceManager.Resources
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /providers/Microsoft.Authorization/dataPolicyManifests/{policyMode}
-        /// Operation Id: DataPolicyManifests_GetByPolicyMode
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Authorization/dataPolicyManifests/{policyMode}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DataPolicyManifests_GetByPolicyMode</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="policyMode"> The policy mode of the data policy manifest to get. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
