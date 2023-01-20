@@ -236,7 +236,7 @@ namespace Azure.Monitor.Ingestion
                             options._clientDiagnostics = ClientDiagnostics;
                             var clonedOptions = options.Clone();
                             var eventArgs = new UploadFailedEventArgs(batch.Logs, new RequestFailedException(response), isRunningSynchronously: true, cancellationToken);
-                            options.OnExceptionAsync(async: false, eventArgs, clonedOptions).EnsureCompleted();
+                            options.OnUploadFailedAsync(async: false, eventArgs, clonedOptions).EnsureCompleted();
                         }
                     }
                 }
@@ -345,7 +345,7 @@ namespace Azure.Monitor.Ingestion
                                 options._clientDiagnostics = ClientDiagnostics;
                                 var clonedOptions = options.Clone();
                                 var eventArgs = new UploadFailedEventArgs(batch.Logs, new RequestFailedException(runningTask.Result), isRunningSynchronously: true, cancellationToken);
-                                await options.OnExceptionAsync(async: true, eventArgs, clonedOptions).ConfigureAwait(false);
+                                await options.OnUploadFailedAsync(async: true, eventArgs, clonedOptions).ConfigureAwait(false);
                             }
                             // Remove completed task from task list
                             runningTasks.RemoveAt(i);
@@ -375,7 +375,7 @@ namespace Azure.Monitor.Ingestion
                     options._clientDiagnostics = ClientDiagnostics;
                     var clonedOptions = options.Clone();
                     var eventArgs = new UploadFailedEventArgs(task.Logs, new RequestFailedException(task.CurrentTask.Result), isRunningSynchronously: true, cancellationToken);
-                    await options.OnExceptionAsync(async: true, eventArgs, clonedOptions).ConfigureAwait(false);
+                    await options.OnUploadFailedAsync(async: true, eventArgs, clonedOptions).ConfigureAwait(false);
                 }
             }
             if (exceptions?.Count > 0)

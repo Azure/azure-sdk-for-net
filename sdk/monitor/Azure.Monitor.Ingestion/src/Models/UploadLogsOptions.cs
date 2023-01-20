@@ -53,7 +53,7 @@ namespace Azure.Monitor.Ingestion
         /// <param name="async"></param>
         /// <param name="eventArgs"></param>
         /// <param name="options"></param>
-        internal virtual async Task OnExceptionAsync(bool async, UploadFailedEventArgs eventArgs, UploadLogsOptions options)
+        internal virtual async Task OnUploadFailedAsync(bool async, UploadFailedEventArgs eventArgs, UploadLogsOptions options)
         {
             try
             {

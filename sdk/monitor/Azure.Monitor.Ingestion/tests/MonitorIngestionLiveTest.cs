@@ -37,8 +37,7 @@ namespace Azure.Monitor.Ingestion.Tests
         public void NullInput()
         {
             LogsIngestionClient client = CreateClient();
-            var options = new UploadLogsOptions();
-            Assert.ThrowsAsync<ArgumentNullException>(async () => await client.UploadAsync(TestEnvironment.DCRImmutableId, TestEnvironment.StreamName, null, options).ConfigureAwait(false));
+            Assert.ThrowsAsync<ArgumentNullException>(async () => await client.UploadAsync(TestEnvironment.DCRImmutableId, TestEnvironment.StreamName, null).ConfigureAwait(false));
         }
 
         [Test]
