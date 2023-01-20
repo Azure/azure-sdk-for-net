@@ -4,11 +4,14 @@
 using System;
 using System.Collections.Generic;
 using Azure.OpenAI.Inference.Models;
+using NUnit.Framework;
 
 namespace Azure.OpenAI.Inference.Tests.Samples
 {
     public partial class Chatbot
     {
+        [Test]
+        [Ignore("Only verifying that the sample builds")]
         public void GetChatbotResponses()
         {
             // Replace with your Azure subscription key

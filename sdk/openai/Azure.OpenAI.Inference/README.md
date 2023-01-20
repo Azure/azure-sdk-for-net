@@ -1,6 +1,6 @@
 # Azure OpenAI client library for .NET
 
-Azure OpenAI is a managed service that helps developers get secret simply and securely.
+Azure OpenAI is a managed service that allows developers to deploy, tune, and generate content from OpenAI models on Azure resouces.
 
 Use the client library for to:
 
