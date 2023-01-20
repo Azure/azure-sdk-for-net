@@ -8,7 +8,7 @@
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.Communication.CallAutomation.Models
+namespace Azure.Communication.CallAutomation
 {
     internal partial class MuteAllParticipantsRequestInternal : IUtf8JsonSerializable
     {

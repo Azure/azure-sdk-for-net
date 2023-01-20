@@ -7,7 +7,7 @@
 
 using Azure.Communication;
 
-namespace Azure.Communication.CallAutomation.Models
+namespace Azure.Communication.CallAutomation
 {
     /// <summary> The request payload for muting participants from the call. </summary>
     internal partial class MuteAllParticipantsRequestInternal

@@ -5,7 +5,7 @@
 
 #nullable disable
 
-namespace Azure.Communication.CallAutomation.Models
+namespace Azure.Communication.CallAutomation
 {
     /// <summary> The request payload for unmuting all participants from the call. </summary>
     internal partial class UnmuteAllParticipantsRequestInternal

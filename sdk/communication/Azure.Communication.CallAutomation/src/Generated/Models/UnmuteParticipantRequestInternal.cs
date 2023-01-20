@@ -9,7 +9,7 @@ using System;
 using Azure.Communication;
 using Azure.Core;
 
-namespace Azure.Communication.CallAutomation.Models
+namespace Azure.Communication.CallAutomation
 {
     /// <summary> The request payload for unmuting participant from the call. </summary>
     internal partial class UnmuteParticipantRequestInternal
