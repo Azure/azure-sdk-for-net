@@ -41,7 +41,7 @@ namespace Azure.Developer.LoadTesting
             {
                 if (HasCompleted && !HasValue)
                 {
-                    RequestFailedException requestFailed = new RequestFailedException(_response);
+                    throw new InvalidOperationException("The operation is not complete.");
 #pragma warning disable CA1065 // Do not raise exceptions in unexpected locations
                     throw requestFailed;
 #pragma warning restore CA1065 // Do not raise exceptions in unexpected locations
