@@ -198,7 +198,7 @@ namespace Azure.Monitor.Ingestion
         /// ]]></code>
         /// </example>
         /// <remarks> See error response code and error response message for more detail. </remarks>
-        public virtual Response Upload(string ruleId, string streamName, IEnumerable<object> logs, UploadLogsOptions options = null, CancellationToken cancellationToken = default)
+        public virtual Response Upload<T>(string ruleId, string streamName, IEnumerable<T> logs, UploadLogsOptions options = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(ruleId, nameof(ruleId));
             Argument.AssertNotNullOrEmpty(streamName, nameof(streamName));
@@ -213,7 +213,7 @@ namespace Azure.Monitor.Ingestion
             int logsFailed = 0;
 
             // Partition the stream into individual blocks
-            foreach (BatchedLogs batch in Batch(logs, options))
+            foreach (BatchedLogs batch in Batch((List<object>)logs, options))
             {
                 try
                 {
@@ -286,7 +286,7 @@ namespace Azure.Monitor.Ingestion
         /// ]]></code>
         /// </example>
         /// <remarks> See error response code and error response message for more detail. </remarks>
-        public virtual async Task<Response> UploadAsync(string ruleId, string streamName, IEnumerable<object> logs, UploadLogsOptions options = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> UploadAsync<T>(string ruleId, string streamName, IEnumerable<T> logs, UploadLogsOptions options = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(ruleId, nameof(ruleId));
             Argument.AssertNotNullOrEmpty(streamName, nameof(streamName));
@@ -307,7 +307,7 @@ namespace Azure.Monitor.Ingestion
             int logsFailed = 0;
 
             // Partition the stream into individual blocks
-            foreach (BatchedLogs batch in Batch(logs, options))
+            foreach (BatchedLogs batch in Batch((List<object>) logs, options))
             {
                 try
                 {
