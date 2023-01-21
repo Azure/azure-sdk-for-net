@@ -8,7 +8,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.Communication.CallAutomation.Models;
 
 namespace Azure.Communication.CallAutomation
 {
