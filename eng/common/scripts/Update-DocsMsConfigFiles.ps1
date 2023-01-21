@@ -14,31 +14,30 @@ Set-StrictMode -Version 3
 function GetOnboardingPackages($moniker) {
     # Get all metadata jsons
     $metadataFiles = Get-ChildItem "$DocsRepo/metadata/$moniker/*" -File -Include *.json
-    $csvPackages = Get-CSVMetadata $MetadataUri
     $metadataObjects = $metadataFiles.foreach({Get-Content $_.FullName -Raw | ConvertFrom-Json})
+    $csvPackages = Get-CSVMetadata $MetadataUri
 
-    # Filter logic
+    $onboardingPackages = (MergeCSVAndDocsMetadata -csvPackages $csvPackages -docsMetadata $metadataObjects -moniker $moniker -dailyDocs $DailyDocs)
+    # Filter out the unwanted packages by monikers
     if ($moniker -eq 'legacy') {
-        $csvPackages = $csvPackages.Where(
-            {$_.Support -eq 'deprecated' -and `
-            ($_.Hide -ne 'true' -or $_.MSDocService -ne '')}
-        )
+    $onboardingPackages = $onboardingPackages.Where(
+        {$_.Support -eq 'deprecated' -and `
+        ($_.Hide -ne 'true' -or $_.MSDocService -ne '')}
+    )
     }
     elseif($moniker -eq 'latest') {
-        $csvPackages = $csvPackages.Where({
+        $onboardingPackages = $onboardingPackages.Where({
             $_.Support -ne 'deprecated' -and `
-            ($_.Hide -ne 'true' -and $_.New -eq 'true' -or $_.MSDocService -ne '') -and `
-            $_.VersionGA -ne ''
+            ($_.Hide -ne 'true' -and $_.New -eq 'true' -or $_.MSDocService -ne '')
         })
     }
     else {
-        $csvPackages = $csvPackages.Where({
+        $onboardingPackages = $onboardingPackages.Where({
             $_.Support -ne 'deprecated' -and `
-            ($_.Hide -ne 'true' -and $_.New -eq 'true' -or $_.MSDocService -ne '') -and `
-            $_.VersionPreview -ne ''
+            ($_.Hide -ne 'true' -and $_.New -eq 'true' -or $_.MSDocService -ne '')
         })
     }
-    $onboardingPackages = MergeCSVToDocsMetadata -csvPackages $csvPackages -docsMetadata $metadataObjects -moniker $moniker -dailyDocs $DailyDocs
+    # Filter out the ones we manually rule out.
     $onboardingPackages = $onboardingPackages.Where({$_.ManuallyOverride -ne 'off'})
     return $onboardingPackages
 }

@@ -150,14 +150,14 @@ function MergeObject($toObject, $fromObject) {
       continue
     }
     foreach ($fromProperty in $fromObject.PSObject.Properties) {
-      if ($toProperty.Name -eq $fromProperty.Name) {
+      if ($toProperty.Name -eq $fromProperty.Name -and $fromProperty.Value) {
         $toProperty.Value = $fromProperty.Value
       }
     }
   }
 }
 
-function MergeCSVToDocsMetadata($csvPackages, $docsMetadata, $moniker, $dailyDocs) {
+function MergeCSVAndDocsMetadata($csvPackages, $docsMetadata, $moniker, $dailyDocs) {
   $isGroupId = $csvPackages.PSObject.Properties.Name -contains 'GroupId'
   # Define the object with all properties (hard-coded)
   $mergedPackages = @{}
@@ -178,6 +178,15 @@ function MergeCSVToDocsMetadata($csvPackages, $docsMetadata, $moniker, $dailyDoc
     $mergedPackages[$key] = $newMergedObject
   }
   # forloop into csv packages
+  if ('latest' -eq $moniker) {
+    $csvPackages = $csvPackages.Where({$_.VersionGA -ne '' -and $_.Support -ne 'deprecated'})
+  }
+  elseif ('preview' -eq $moniker) {
+    $csvPackages = $csvPackages.Where({$_.VersionPreview -ne '' -and $_.Support -ne 'deprecated'})
+  }
+  else {
+    $csvPackages = $csvPackages.Where({$_.Support -eq 'deprecated'})
+  }
   foreach ($metadata in $csvPackages) {    
     $key = $metadata.Package
     if ($isGroupId) {
