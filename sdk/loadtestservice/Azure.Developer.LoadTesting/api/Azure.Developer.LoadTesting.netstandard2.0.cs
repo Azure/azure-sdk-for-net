@@ -41,9 +41,7 @@ namespace Azure.Developer.LoadTesting
         public virtual Azure.Pageable<System.BinaryData> GetTests(string orderby = null, string search = null, System.DateTimeOffset? lastModifiedStartTime = default(System.DateTimeOffset?), System.DateTimeOffset? lastModifiedEndTime = default(System.DateTimeOffset?), int? maxpagesize = default(int?), Azure.RequestContext context = null) { throw null; }
         public virtual Azure.AsyncPageable<System.BinaryData> GetTestsAsync(string orderby = null, string search = null, System.DateTimeOffset? lastModifiedStartTime = default(System.DateTimeOffset?), System.DateTimeOffset? lastModifiedEndTime = default(System.DateTimeOffset?), int? maxpagesize = default(int?), Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Developer.LoadTesting.FileUploadOperation UploadTestFile(Azure.WaitUntil waitUntil, string testId, string fileName, Azure.Core.RequestContent content, System.TimeSpan? timeSpan = default(System.TimeSpan?), string fileType = null, Azure.RequestContext context = null) { throw null; }
-        public virtual Azure.Response UploadTestFile(string testId, string fileName, Azure.Core.RequestContent content, string fileType = null, Azure.RequestContext context = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Developer.LoadTesting.FileUploadOperation> UploadTestFileAsync(Azure.WaitUntil waitUntil, string testId, string fileName, Azure.Core.RequestContent content, System.TimeSpan? timeSpan = default(System.TimeSpan?), string fileType = null, Azure.RequestContext context = null) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> UploadTestFileAsync(string testId, string fileName, Azure.Core.RequestContent content, string fileType = null, Azure.RequestContext context = null) { throw null; }
     }
     public partial class LoadTestingClientOptions : Azure.Core.ClientOptions
     {
@@ -65,8 +63,6 @@ namespace Azure.Developer.LoadTesting
         public virtual System.Threading.Tasks.Task<Azure.Response> CreateOrUpdateAppComponentsAsync(string testRunId, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Response CreateOrUpdateServerMetricsConfig(string testRunId, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> CreateOrUpdateServerMetricsConfigAsync(string testRunId, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
-        public virtual Azure.Response CreateOrUpdateTestRun(string testRunId, Azure.Core.RequestContent content, string oldTestRunId = null, Azure.RequestContext context = null) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> CreateOrUpdateTestRunAsync(string testRunId, Azure.Core.RequestContent content, string oldTestRunId = null, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Response DeleteTestRun(string testRunId, Azure.RequestContext context = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> DeleteTestRunAsync(string testRunId, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Response GetAppComponents(string testRunId, Azure.RequestContext context = null) { throw null; }
