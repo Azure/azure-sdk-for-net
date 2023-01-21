@@ -434,15 +434,15 @@ namespace Azure.Core.Experimental.Tests
             Assert.AreEqual(5, jd.RootElement.GetIndexElement(0).GetInt32());
 
             // TODO: Support the following in WriteTo()
-            //// 3. Type round-trips correctly.
-            //using MemoryStream stream = new();
-            //jd.WriteTo(stream);
-            //stream.Position = 0;
-            //string jsonString = BinaryData.FromStream(stream).ToString();
-            //JsonDocument doc = JsonDocument.Parse(jsonString);
+            // 3. Type round-trips correctly.
+            using MemoryStream stream = new();
+            jd.WriteTo(stream);
+            stream.Position = 0;
+            string jsonString = BinaryData.FromStream(stream).ToString();
+            JsonDocument doc = JsonDocument.Parse(jsonString);
 
-            //Assert.AreEqual(5, doc.RootElement[0].GetInt32());
-            //Assert.AreEqual(JsonDataWriteToTests.RemoveWhiteSpace(@"[ 5 ]"), jsonString);
+            Assert.AreEqual(5, doc.RootElement[0].GetInt32());
+            Assert.AreEqual(JsonDataWriteToTests.RemoveWhiteSpace(@"[ 5 ]"), jsonString);
         }
 
         [Test]

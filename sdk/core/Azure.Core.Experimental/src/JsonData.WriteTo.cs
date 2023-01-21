@@ -30,6 +30,13 @@ namespace Azure.Core.Dynamic
                 reader = new Utf8JsonReader(_original.Span);
             }
 
+            WriteElement(path, ref reader, writer);
+
+            writer.Flush();
+        }
+
+        private void WriteElement(string path, ref Utf8JsonReader reader, Utf8JsonWriter writer)
+        {
             while (reader.Read())
             {
                 switch (reader.TokenType)
@@ -57,8 +64,6 @@ namespace Azure.Core.Dynamic
                         break;
                 }
             }
-
-            writer.Flush();
         }
 
         private void WriteArrayValues(string path, ref Utf8JsonReader reader, Utf8JsonWriter writer)
@@ -157,13 +162,7 @@ namespace Azure.Core.Dynamic
             if (changed)
             {
                 Utf8JsonReader changedElementReader = change.GetReader();
-
-                // TODO: Note case where new element isn't an object?
-                changedElementReader.Read(); // Read StartObject element
-                Debug.Assert(changedElementReader.TokenType == JsonTokenType.StartObject);
-
-                writer.WriteStartObject();
-                WriteObjectProperties(path, ref changedElementReader, writer);
+                WriteElement(path, ref changedElementReader, writer);
 
                 // Skip this element in the original data.
                 reader.Skip();
@@ -207,6 +206,18 @@ namespace Azure.Core.Dynamic
                     case float f:
                         writer.WriteNumberValue(f);
                         return;
+                    case JsonElement element:
+                        if (element.TryGetInt64(out long el))
+                        {
+                            writer.WriteNumberValue(el);
+                            return;
+                        }
+                        if (element.TryGetDouble(out double ed))
+                        {
+                            writer.WriteNumberValue(ed);
+                            return;
+                        }
+                        throw new InvalidOperationException("Change doesn't store a number value.");
                     default:
                         throw new InvalidOperationException("Change doesn't store a number value.");
                 }
