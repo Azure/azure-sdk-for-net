@@ -2,16 +2,8 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Buffers;
 using System.Collections.Generic;
-using System.Dynamic;
-using System.IO;
-using System.Linq;
-using System.Linq.Expressions;
-using System.Reflection;
 using System.Text;
-using System.Text.Json;
-using System.Text.Json.Serialization;
 
 namespace Azure.Core.Dynamic
 {
@@ -22,6 +14,25 @@ namespace Azure.Core.Dynamic
             private List<JsonDataChange>? _changes;
 
             internal bool HasChanges => _changes != null && _changes.Count > 0;
+
+            internal bool AncestorChanged(string path)
+            {
+                if (_changes == null)
+                {
+                    return false;
+                }
+
+                bool changed = false;
+
+                // Check for changes to ancestor elements
+                while (!changed && path.Length > 0)
+                {
+                    path = PopProperty(path);
+                    changed = TryGetChangeSingle(path, out JsonDataChange change);
+                }
+
+                return changed;
+            }
 
             internal bool TryGetChange(ReadOnlySpan<byte> path, out JsonDataChange change)
             {

@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Text.Json;
 using Azure.Core.Dynamic;
@@ -433,6 +432,46 @@ namespace Azure.Core.Experimental.Tests
             jd.RootElement.GetIndexElement(0).Set(a);
 
             Assert.AreEqual(5, jd.RootElement.GetIndexElement(0).GetInt32());
+
+            // TODO: Support the following in WriteTo()
+            //// 3. Type round-trips correctly.
+            //using MemoryStream stream = new();
+            //jd.WriteTo(stream);
+            //stream.Position = 0;
+            //string jsonString = BinaryData.FromStream(stream).ToString();
+            //JsonDocument doc = JsonDocument.Parse(jsonString);
+
+            //Assert.AreEqual(5, doc.RootElement[0].GetInt32());
+            //Assert.AreEqual(JsonDataWriteToTests.RemoveWhiteSpace(@"[ 5 ]"), jsonString);
+        }
+
+        [Test]
+        public void CanInvalidateElement()
+        {
+            string json = @"[
+                {
+                  ""Foo"" : {
+                    ""A"": 6
+                    }
+                } ]";
+
+            var jd = JsonData.Parse(json);
+
+            // a's path points to "0.Foo.A"
+            var a = jd.RootElement.GetIndexElement(0).GetProperty("Foo").GetProperty("A");
+
+            // resets json to equivalent of "[ 5 ]"
+            jd.RootElement.GetIndexElement(0).Set(5);
+
+            Assert.AreEqual(5, jd.RootElement.GetIndexElement(0).GetInt32());
+
+            // a's path points to "0.Foo.A" so a.GetInt32() should throw since this
+            // in an invalid path.
+            Assert.Throws<InvalidOperationException>(() => a.GetInt32());
+
+            // Setting json[0] to a should throw as well, as the element doesn't point
+            // to a valid path in the mutated JSON tree.
+            Assert.Throws<InvalidOperationException>(() => jd.RootElement.GetIndexElement(0).Set(a));
 
             //// 3. Type round-trips correctly.
             //using MemoryStream stream = new();

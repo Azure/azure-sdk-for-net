@@ -173,6 +173,8 @@ namespace Azure.Core.Dynamic
 
         internal int GetInt32()
         {
+            EnsureValid();
+
             if (Changes.TryGetChange(_path, out JsonDataChange change))
             {
                 switch (change.Value)
@@ -271,6 +273,8 @@ namespace Azure.Core.Dynamic
 
         internal void Set(JsonDataElement value)
         {
+            value.EnsureValid();
+
             JsonElement element = value._element;
 
             if (Changes.TryGetChange(value._path, out JsonDataChange change))
@@ -297,6 +301,15 @@ namespace Azure.Core.Dynamic
             if (_element.ValueKind != JsonValueKind.Array)
             {
                 throw new InvalidOperationException($"Expected an 'Array' type but was {_element.ValueKind}.");
+            }
+        }
+
+        // TODO: Decide whether to keep this implementation.
+        private void EnsureValid()
+        {
+            if (Changes.AncestorChanged(_path))
+            {
+                throw new InvalidOperationException("Ancestor changed");
             }
         }
     }
