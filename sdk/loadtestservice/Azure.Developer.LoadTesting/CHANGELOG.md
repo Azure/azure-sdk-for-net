@@ -1,5 +1,11 @@
 # Release History
 
+## 1.0.0 (2023-01-26)
+
+### Breaking Changes
+- Made `Azure.Developer.LoadTesting.LoadTestAdministrationClient.UploadTestFileAsync` internal
+- Made `Azure.Developer.LoadTesting.LoadTestRunClient.CreateOrUpdateTestRunAsync` internal
+
 ## 1.0.0-beta.2 (2023-01-23)
 
 ### Features Added
