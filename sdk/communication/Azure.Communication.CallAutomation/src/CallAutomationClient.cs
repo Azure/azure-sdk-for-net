@@ -459,7 +459,7 @@ namespace Azure.Communication.CallAutomation
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="targetPhoneNumber"></param>
         /// <param name="callerIdNumber"></param>
@@ -494,7 +494,6 @@ namespace Azure.Communication.CallAutomation
 
                 return Response.FromValue(new CreateCallResult(GetCallConnection(createCallResponse.Value.CallConnectionId), new CallConnectionProperties(createCallResponse.Value)),
                     createCallResponse.GetRawResponse());
-
             }
             catch (Exception ex)
             {
@@ -504,7 +503,7 @@ namespace Azure.Communication.CallAutomation
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="targetIdentity"></param>
         /// <param name="callbackUri"></param>
@@ -537,7 +536,6 @@ namespace Azure.Communication.CallAutomation
 
                 return Response.FromValue(new CreateCallResult(GetCallConnection(createCallResponse.Value.CallConnectionId), new CallConnectionProperties(createCallResponse.Value)),
                     createCallResponse.GetRawResponse());
-
             }
             catch (Exception ex)
             {
@@ -547,7 +545,7 @@ namespace Azure.Communication.CallAutomation
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="options"></param>
         /// <param name="cancellationToken"></param>
@@ -578,7 +576,6 @@ namespace Azure.Communication.CallAutomation
 
                 return Response.FromValue(new CreateCallResult(GetCallConnection(createCallResponse.Value.CallConnectionId), new CallConnectionProperties(createCallResponse.Value)),
                     createCallResponse.GetRawResponse());
-
             }
             catch (Exception ex)
             {
@@ -588,7 +585,7 @@ namespace Azure.Communication.CallAutomation
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="targetPhoneNumber"></param>
         /// <param name="callerIdNumber"></param>
@@ -623,7 +620,6 @@ namespace Azure.Communication.CallAutomation
 
                 return Response.FromValue(new CreateCallResult(GetCallConnection(createCallResponse.Value.CallConnectionId), new CallConnectionProperties(createCallResponse.Value)),
                     createCallResponse.GetRawResponse());
-
             }
             catch (Exception ex)
             {
@@ -633,7 +629,7 @@ namespace Azure.Communication.CallAutomation
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="targetIdentity"></param>
         /// <param name="callbackUri"></param>
@@ -666,7 +662,6 @@ namespace Azure.Communication.CallAutomation
 
                 return Response.FromValue(new CreateCallResult(GetCallConnection(createCallResponse.Value.CallConnectionId), new CallConnectionProperties(createCallResponse.Value)),
                     createCallResponse.GetRawResponse());
-
             }
             catch (Exception ex)
             {
@@ -715,7 +710,7 @@ namespace Azure.Communication.CallAutomation
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="options"></param>
         /// <param name="cancellationToken"></param>
@@ -746,7 +741,6 @@ namespace Azure.Communication.CallAutomation
 
                 return Response.FromValue(new CreateCallResult(GetCallConnection(createCallResponse.Value.CallConnectionId), new CallConnectionProperties(createCallResponse.Value)),
                     createCallResponse.GetRawResponse());
-
             }
             catch (Exception ex)
             {
