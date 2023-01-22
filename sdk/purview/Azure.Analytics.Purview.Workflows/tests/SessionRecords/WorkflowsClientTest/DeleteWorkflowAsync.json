@@ -1,0 +1,33 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://workflow-sdk.purview.azure-test.com/workflow/workflows/5ec07661-0111-4264-aed8-2a335773a831?api-version=2022-05-01-preview",
+      "RequestMethod": "DELETE",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Connection": "keep-alive",
+        "Content-Length": "0",
+        "traceparent": "00-ac67d5af271bf345b0a721b8ca142014-0c246fc5a4379f46-00",
+        "User-Agent": "azsdk-net-Analytics.Purview.Workflows/1.0.0-alpha.20230113.1 (.NET Framework 4.8.9105.0; Microsoft Windows 10.0.22621 )",
+        "x-ms-client-request-id": "8bbc7ece5861b679425d6b4a53a4f6e7",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 204,
+      "ResponseHeaders": {
+        "Date": "Thu, 19 Jan 2023 13:16:07 GMT",
+        "Server": "MicrosoftPurview",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "x-ms-client-request-id": "8bbc7ece5861b679425d6b4a53a4f6e7",
+        "x-ms-correlation-request-id": "72c31a35-663a-4893-9843-aec93de57a9a",
+        "x-ms-request-id": "4d236d7e-55d2-4276-b259-ea30d716acf1"
+      },
+      "ResponseBody": null
+    }
+  ],
+  "Variables": {
+    "RandomSeed": "187402631",
+    "Workflow_ENDPOINT": "https://workflow-sdk.purview.azure-test.com"
+  }
+}

@@ -1,0 +1,76 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://workflow-sdk.purview.azure-test.com/workflow/userrequests?api-version=2022-05-01-preview",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Connection": "keep-alive",
+        "Content-Length": "204",
+        "Content-Type": "application/json",
+        "traceparent": "00-a6b37ae6428ed14eaf96c5834a0b5a25-1366efdaaca27740-00",
+        "User-Agent": "azsdk-net-Analytics.Purview.Workflows/1.0.0-alpha.20230113.1 (.NET Framework 4.8.9105.0; Microsoft Windows 10.0.22621 )",
+        "x-ms-client-request-id": "9e36b0d3edc89e49741613a4c500818a",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "operations": [
+          {
+            "type": "CreateTerm",
+            "payload": {
+              "glossaryTerm": {
+                "name": "term",
+                "anchor": {
+                  "glossaryGuid": "20031e20-b4df-4a66-a61d-1b0716f3fa48"
+                },
+                "status": "Approved",
+                "nickName": "term"
+              }
+            }
+          }
+        ],
+        "comment": "Thanks!"
+      },
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Content-Length": "386",
+        "Content-Type": "application/json",
+        "Date": "Thu, 19 Jan 2023 13:20:53 GMT",
+        "Server": "MicrosoftPurview",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "x-ms-client-request-id": "9e36b0d3edc89e49741613a4c500818a",
+        "x-ms-correlation-request-id": "50dd69b9-594c-41b4-91bd-580b46f371f7",
+        "x-ms-request-id": "8a8d301f-50d1-43be-9ad5-4232d9ecaece"
+      },
+      "ResponseBody": {
+        "requestId": "c7d23494-9737-4524-adaf-4de89d34cf01",
+        "requestor": "eece94d9-0619-4669-bb8a-d6ecec5220bc",
+        "operations": [
+          {
+            "type": "CreateTerm",
+            "payload": {
+              "glossaryTerm": {
+                "name": "term",
+                "anchor": {
+                  "glossaryGuid": "20031e20-b4df-4a66-a61d-1b0716f3fa48"
+                },
+                "status": "Approved",
+                "nickName": "term"
+              }
+            },
+            "workflowRunIds": [
+              "c7d23494-9737-4524-adaf-4de89d34cf01"
+            ]
+          }
+        ],
+        "comment": "Thanks!",
+        "status": "InProgress"
+      }
+    }
+  ],
+  "Variables": {
+    "RandomSeed": "573257075",
+    "Workflow_ENDPOINT": "https://workflow-sdk.purview.azure-test.com"
+  }
+}

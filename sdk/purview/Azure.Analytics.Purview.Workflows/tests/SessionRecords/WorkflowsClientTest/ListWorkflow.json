@@ -1,0 +1,69 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://workflow-sdk.purview.azure-test.com/workflow/workflows?api-version=2022-05-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Connection": "keep-alive",
+        "traceparent": "00-e29522956d41e941a9c765c08ffdb828-60e6ea72c2be8b43-00",
+        "User-Agent": "azsdk-net-Analytics.Purview.Workflows/1.0.0-alpha.20230113.1 (.NET Framework 4.8.9105.0; Microsoft Windows 10.0.22621 )",
+        "x-ms-client-request-id": "49f9238bf701a1eeb665ef399a0e7fba",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Content-Length": "893",
+        "Content-Type": "application/json",
+        "Date": "Fri, 13 Jan 2023 06:34:38 GMT",
+        "Server": "MicrosoftPurview",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "x-ms-client-request-id": "49f9238bf701a1eeb665ef399a0e7fba",
+        "x-ms-correlation-request-id": "4d443603-b610-462f-bf0d-f61e8724fbb8",
+        "x-ms-request-id": "6939878d-ed4a-4fdd-8aae-256e303ccbec"
+      },
+      "ResponseBody": {
+        "value": [
+          {
+            "id": "8af1ecae-16ee-4b2d-8972-00d611dd2f99",
+            "triggers": [
+              {
+                "type": "when_term_deletion_is_requested",
+                "underGlossaryHierarchy": "/glossaries/20031e20-b4df-4a66-a61d-1b0716f3fa48"
+              }
+            ],
+            "createdTime": "2023-01-11T10:15:43.610476536Z",
+            "createdBy": "eece94d9-0619-4669-bb8a-d6ecec5220bc",
+            "lastUpdateTime": "2023-01-11T10:22:07.776206840Z",
+            "updatedBy": "eece94d9-0619-4669-bb8a-d6ecec5220bc",
+            "name": "Delete glossary term",
+            "isEnabled": true,
+            "description": ""
+          },
+          {
+            "id": "3fb9ba13-bf35-4f29-ab63-70b5234923c2",
+            "triggers": [
+              {
+                "type": "when_term_creation_is_requested",
+                "underGlossaryHierarchy": "/glossaries/20031e20-b4df-4a66-a61d-1b0716f3fa48"
+              }
+            ],
+            "createdTime": "2023-01-11T10:25:13.154145440Z",
+            "createdBy": "eece94d9-0619-4669-bb8a-d6ecec5220bc",
+            "lastUpdateTime": "2023-01-12T09:35:40.067271356Z",
+            "updatedBy": "eece94d9-0619-4669-bb8a-d6ecec5220bc",
+            "name": "Create glossary term",
+            "isEnabled": true,
+            "description": ""
+          }
+        ]
+      }
+    }
+  ],
+  "Variables": {
+    "RandomSeed": "703282886",
+    "Workflow_ENDPOINT": "https://workflow-sdk.purview.azure-test.com"
+  }
+}

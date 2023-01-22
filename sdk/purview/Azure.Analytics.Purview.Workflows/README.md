@@ -1,37 +1,36 @@
-# Azure Workflows client library for .NET
+# Azure Purview Workflow client library for .NET
 
-This section should give out brief introduction of the client library.
+Workflows are automated, repeatable business processes that users can create within Microsoft Purview to validate and orchestrate CUD (create, update, delete) operations on their data entities. Enabling these processes allow organizations to track changes, enforce policy compliance, and ensure quality data across their data landscape.
 
-* First sentence: **Describe the service** briefly. You can usually use the first line of the service's docs landing page for this (Example: [Cosmos DB docs landing page](https://docs.microsoft.com/azure/cosmos-db/)).
-* Next, add a **bulleted list** of the **most common tasks** supported by the package or library, prefaced with "Use the client library for [Product Name] to:". Then, provide code snippets for these tasks in the [Examples](#examples) section later in the document. Keep the task list short but include those tasks most developers need to perform with your package.
+Use the client library for Purview Workflow to:
+- CRUD of workflow.
+- Submit user request and monitor workflow run.
+- View and respond to workflow tasks.
 
-  [Source code](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/purview/Azure.Analytics.Purview.Workflows/src) | [Package (NuGet)](https://www.nuget.org/packages/Azure.Analytics.Purview.Workflows) | [API reference documentation](https://azure.github.io/azure-sdk-for-net) | [Product documentation](https://docs.microsoft.com/azure)
+
+**Please rely heavily on the [service's documentation][product_documentation]**
 
 ## Getting started
 
 This section should include everything a developer needs to do to install and create their first client connection *very quickly*.
 
-### Install the package
-
-First, provide instruction for obtaining and installing the package or library. This section might include only a single line of code, like `dotnet add package package-name`, but should enable a developer to successfully install the package from NuGet, npm, or even cloning a GitHub repository.
-
-Install the client library for .NET with [NuGet](https://www.nuget.org/ ):
-
-```dotnetcli
-dotnet add package Azure.Analytics.Purview.Workflows --prerelease
-```
 
 ### Prerequisites
 
-Include a section after the install command that details any requirements that must be satisfied before a developer can [authenticate](#authenticate-the-client) and test all of the snippets in the [Examples](#examples) section. For example, for Cosmos DB:
-
-> You must have an [Azure subscription](https://azure.microsoft.com/free/dotnet/) and [Cosmos DB account](https://docs.microsoft.com/azure/cosmos-db/account-overview) (SQL API). In order to take advantage of the C# 8.0 syntax, it is recommended that you compile using the [.NET Core SDK](https://dotnet.microsoft.com/download) 3.0 or higher with a [language version](https://docs.microsoft.com/dotnet/csharp/language-reference/configure-language-version#override-a-default) of `latest`.  It is also possible to compile with the .NET Core SDK 2.1.x using a language version of `preview`.
+You must have an [Azure subscription][azure_subscription] and a [Purview resource][purview_resource] to use this package.
 
 ### Authenticate the client
 
-If your library requires authentication for use, such as for Azure services, include instructions and example code needed for initializing and authenticating.
 
-For example, include details on obtaining an account key and endpoint URI, setting environment variables for each, and initializing the client object.
+Since Workflow service use Azure Active Directory bearer token for authentication and username(usually it is an email address) should be encoded into the token so that user could received email notification when using workflow. A recommended solution is using the [Azure Identity][azure_identity] library to provide the [UsernamePasswordCredential][username_password_credentail]. Before get started using the [Azure Identity][azure_identity] library, [an application][app_registration] should be registered and then provide the client id into the [UsernamePasswordCredential][username_password_credentail].
+
+```C#
+    //<client-id>, <tenant-id> are the client ID and tenant ID of the AAD application.
+    //<user-name>,<password> are the value of user name and password of an AAD user.
+    TokenCredential usernamePasswordCredential = new UsernamePasswordCredential(<client-id>, <tenant-id>, <user-name>,<password>, null);
+    var client = new PurviewWorkflowServiceClient(new Uri("https://<purview-account-name>.purview.azure.com"), usernamePasswordCredential)
+```
+
 
 ## Key concepts
 
@@ -62,7 +61,13 @@ You can familiarize yourself with different APIs using [Samples](https://github.
 
 You can create a client and call the client's `<operation>` method.
 
-```C# Snippet:Azure_Analytics_Purview_Workflows_Scenario
+```C# Snippet:Azure_Analytics_Purview_Workflows_CrudWorkflow
+Uri endpoint = new("https://<purview-account-name>.purview.azure.com");
+var credential = new DefaultAzureCredential();
+var client = new PurviewWorkflowServiceClient(endpoint, credential);
+
+Guid workflowId = new Guid("ba25ed0e-3364-4e8e-8385-c60e12f3e342");
+Response result = client.GetWorkflow(workflowId);
 ```
 
 ## Troubleshooting
@@ -84,6 +89,14 @@ If the package or a related package supports it, include tips for logging or ena
 This is a template, but your SDK readme should include details on how to contribute code to the repo/package.
 
 <!-- LINKS -->
+[product_documentation]: https://learn.microsoft.com/en-us/azure/purview/concept-workflow
+[client_nuget_package]: https://www.nuget.org/packages?q=Azure.Analytics.Purview.Workflows
+[protocol_client_quickstart]: https://learn.microsoft.com/en-us/azure/purview/concept-workflow
+[azure_subscription]: https://azure.microsoft.com/free/dotnet/
+[purview_resource]: https://docs.microsoft.com/azure/purview/create-catalog-portal
+[azure_identity]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/identity/Azure.Identity
+[app_registration]: https://learn.microsoft.com/en-us/azure/active-directory/develop/quickstart-register-app
+[username_password_credentail]: https://learn.microsoft.com/en-us/dotnet/api/azure.identity.usernamepasswordcredential?view=azure-dotnet
 [style-guide-msft]: https://docs.microsoft.com/style-guide/capitalization
 [style-guide-cloud]: https://aka.ms/azsdk/cloud-style-guide
 

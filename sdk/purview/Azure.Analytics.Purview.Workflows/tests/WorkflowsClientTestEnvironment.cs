@@ -1,14 +1,47 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
+using Azure.Core;
 using Azure.Core.TestFramework;
+using Azure.Identity;
 
 namespace Azure.Analytics.Purview.Workflows.Tests
 {
     public class WorkflowsClientTestEnvironment : TestEnvironment
     {
-        public string Endpoint => GetRecordedVariable("Workflows_ENDPOINT");
+        private TokenCredential _usernamePasswordcredential;
 
-        // Add other client paramters here as above.
+        public WorkflowsClientTestEnvironment()
+        {
+        }
+        public Uri Endpoint => new(GetRecordedVariable("Workflow_ENDPOINT"));
+
+        public TokenCredential UsernamePasswordCredential
+        {
+            get
+            {
+                if (_usernamePasswordcredential != null)
+                {
+                    return _usernamePasswordcredential;
+                }
+
+                if (Mode == RecordedTestMode.Playback)
+                {
+                    _usernamePasswordcredential = new MockCredential();
+                }
+                else
+                {
+                    _usernamePasswordcredential = new UsernamePasswordCredential(
+                        GetVariable("Username"),
+                        GetVariable("Password"),
+                        GetVariable("TenantId"),
+                        GetVariable("ClientId")
+                    );
+                }
+
+                return _usernamePasswordcredential;
+            }
+        }
     }
 }

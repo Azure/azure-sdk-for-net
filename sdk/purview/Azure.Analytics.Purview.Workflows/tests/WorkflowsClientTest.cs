@@ -3,29 +3,110 @@
 
 using System;
 using System.IO;
-using System.Net.Http;
 using System.Text.Json;
 using System.Threading.Tasks;
-using Azure.Core.Pipeline;
+using Azure.Analytics.Purview.Workflow.Tests;
+using Azure.Core;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
 
 namespace Azure.Analytics.Purview.Workflows.Tests
 {
-    public class WorkflowsClientTest: RecordedTestBase<WorkflowsClientTestEnvironment>
+    public class WorkflowsClientTest: WorkflowsClientTestBase
     {
         public WorkflowsClientTest(bool isAsync) : base(isAsync)
         {
         }
 
-        /* please refer to https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/template/Azure.Template/tests/TemplateClientLiveTests.cs to write tests. */
-
         [RecordedTest]
-        public void TestOperation()
+        public async Task CreateWorkflow()
         {
-            Assert.IsTrue(true);
+            var client = GetWorkflowClient();
+
+            Guid workflowId = Guid.NewGuid();
+
+            string workflow = "{\"name\":\"Create glossary term workflow\",\"description\":\"\",\"triggers\":[{\"type\":\"when_term_creation_is_requested\",\"underGlossaryHierarchy\":\"/glossaries/20031e20-b4df-4a66-a61d-1b0716f3fa48\"}],\"isEnabled\":true,\"actionDag\":{\"actions\":{\"Startandwaitforanapproval\":{\"type\":\"Approval\",\"inputs\":{\"parameters\":{\"approvalType\":\"PendingOnAll\",\"title\":\"ApprovalRequestforCreateGlossaryTerm\",\"assignedTo\":[\"eece94d9-0619-4669-bb8a-d6ecec5220bc\"]}},\"runAfter\":{}},\"Condition\":{\"type\":\"If\",\"expression\":{\"and\":[{\"equals\":[\"@outputs('Startandwaitforanapproval')['body/outcome']\",\"Approved\"]}]},\"actions\":{\"Createglossaryterm\":{\"type\":\"CreateTerm\",\"runAfter\":{}},\"Sendemailnotification\":{\"type\":\"EmailNotification\",\"inputs\":{\"parameters\":{\"emailSubject\":\"GlossaryTermCreate-APPROVED\",\"emailMessage\":\"YourrequestforGlossaryTerm@{triggerBody()['request']['term']['name']}isapproved.\",\"emailRecipients\":[\"@{triggerBody()['request']['requestor']}\"]}},\"runAfter\":{\"Createglossaryterm\":[\"Succeeded\"]}}},\"else\":{\"actions\":{\"Sendrejectemailnotification\":{\"type\":\"EmailNotification\",\"inputs\":{\"parameters\":{\"emailSubject\":\"GlossaryTermCreate-REJECTED\",\"emailMessage\":\"YourrequestforGlossaryTerm@{triggerBody()['request']['term']['name']}isrejected.\",\"emailRecipients\":[\"@{triggerBody()['request']['requestor']}\"]}},\"runAfter\":{}}}},\"runAfter\":{\"Startandwaitforanapproval\":[\"Succeeded\"]}}}}}";
+
+            Response createResult = await client.CreateOrReplaceWorkflowAsync(workflowId, RequestContent.Create(workflow));
+
+            using var createJsonDocument = JsonDocument.Parse(GetContentFromResponse(createResult));
+            JsonElement createBodyJson = createJsonDocument.RootElement;
+
+            Assert.AreEqual(workflowId.ToString(), createBodyJson.GetProperty("id").ToString());
         }
 
+        [RecordedTest]
+        public async Task ListWorkflow()
+        {
+            var client = GetWorkflowClient();
+            var workflowsList = client.GetWorkflowsAsync(new()).GetAsyncEnumerator();
+            await workflowsList.MoveNextAsync();
+            using var workflowsListJsonDocument = JsonDocument.Parse(workflowsList.Current);
+            JsonElement listBodyJson = workflowsListJsonDocument.RootElement;
+            await workflowsList.DisposeAsync();
+            Assert.AreEqual("Delete glossary term", listBodyJson.GetProperty("name").ToString());
+        }
+
+        [RecordedTest]
+        public async Task GetWorkflow()
+        {
+            var client = GetWorkflowClient();
+            Guid workflowId = new Guid("8af1ecae-16ee-4b2d-8972-00d611dd2f99");
+            Response getResult = await client.GetWorkflowAsync(workflowId);
+            using var jsonDocument = JsonDocument.Parse(GetContentFromResponse(getResult));
+            JsonElement getBodyJson = jsonDocument.RootElement;
+            Assert.AreEqual(workflowId.ToString(), getBodyJson.GetProperty("id").GetString());
+        }
+
+        [RecordedTest]
+        public async Task DeleteWorkflow()
+        {
+            var client = GetWorkflowClient();
+
+            Guid workflowId = new Guid("5ec07661-0111-4264-aed8-2a335773a831");
+
+            Response deleteResult = await client.DeleteWorkflowAsync(workflowId);
+            Assert.AreEqual(204, deleteResult.Status);
+        }
+
+        [RecordedTest]
+        public async Task SubmitUserRequest()
+        {
+            var client = GetWorkflowClient();
+
+            string request = "{\"operations\":[{\"type\":\"CreateTerm\",\"payload\":{\"glossaryTerm\":{\"name\":\"term\",\"anchor\":{\"glossaryGuid\":\"20031e20-b4df-4a66-a61d-1b0716f3fa48\"},\"status\":\"Approved\",\"nickName\":\"term\"}}}],\"comment\":\"Thanks!\"}";
+
+            Response submitResult = await client.SubmitUserRequestsAsync(RequestContent.Create(request));
+            Assert.AreEqual(200, submitResult.Status);
+        }
+
+        [RecordedTest]
+        public async Task CancelWorkflowRuns()
+        {
+            var client = GetWorkflowClient();
+
+            Guid workflowRunId = new Guid("4f8d70c3-c09b-4e56-bfd1-8b86c79bd4d9");
+
+            string request = "{\"comment\":\"Thanks!\"}";
+
+            Response cancelResult = await client.CancelWorkflowRunAsync(workflowRunId, RequestContent.Create(request));
+
+            Assert.AreEqual(200, cancelResult.Status);
+        }
+
+        [RecordedTest]
+        public async Task ApproveWorkflowTask()
+        {
+            var client = GetWorkflowClient();
+
+            Guid taskId = new Guid("b129fe16-72d3-4994-9135-b997b9be46e0");
+
+            string request = "{\"comment\":\"Thanks!\"}";
+
+            Response approveResult = await client.ApproveApprovalTaskAsync(taskId, RequestContent.Create(request));
+
+            Assert.AreEqual(200, approveResult.Status);
+        }
         #region Helpers
 
         private static BinaryData GetContentFromResponse(Response r)
