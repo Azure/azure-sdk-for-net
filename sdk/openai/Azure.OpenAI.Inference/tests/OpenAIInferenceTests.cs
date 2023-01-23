@@ -11,7 +11,7 @@ namespace Azure.OpenAI.Inference.Tests
     public class OpenAIInferenceTests : OpenAITestBase
     {
         public OpenAIInferenceTests(bool isAsync)
-            : base(isAsync, RecordedTestMode.Live)
+            : base(isAsync) //, RecordedTestMode.Live)
         {
         }
 
