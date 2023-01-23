@@ -32,57 +32,39 @@ namespace Azure.Core.Dynamic
         /// </summary>
         internal JsonDataElement GetProperty(string name)
         {
+            if (!TryGetProperty(name, out JsonDataElement value))
+            {
+                throw new InvalidOperationException($"{_path} does not containe property called {name}");
+            }
+
+            return value;
+        }
+
+        internal bool TryGetProperty(string name, out JsonDataElement value)
+        {
             EnsureValid();
 
             EnsureObject();
 
-            var path = JsonData.ChangeTracker.PushProperty(_path, name);
+            bool hasProperty = _element.TryGetProperty(name, out JsonElement element);
+            if (!hasProperty)
+            {
+                value = default;
+                return false;
+            }
 
+            var path = JsonData.ChangeTracker.PushProperty(_path, name);
             if (Changes.TryGetChange(path, _highWaterMark, out JsonDataChange change))
             {
                 if (change.ReplacesJsonElement)
                 {
-                    return new JsonDataElement(_root, change.AsJsonElement(), path, change.Index);
+                    value = new JsonDataElement(_root, change.AsJsonElement(), path, change.Index);
+                    return true;
                 }
             }
 
-            return new JsonDataElement(_root, _element.GetProperty(name), path, _highWaterMark);
-        }
-
-        // TODO: Reimplement GetProperty in terms of TryGetProperty().
-        internal bool TryGetProperty(string name, out JsonDataElement value)
-        {
-            if (_element.ValueKind != JsonValueKind.Object)
-            {
-                throw new InvalidOperationException($"Expected an 'Object' type but was {_element.ValueKind}.");
-            }
-
-            JsonElement element = _element;
-
-            var path = JsonData.ChangeTracker.PushProperty(_path, name);
-
-            if (Changes.TryGetChange(path, _highWaterMark, out JsonDataChange change))
-            {
-                if (change.Value == null)
-                {
-                    // TODO: handle this.
-                    //throw new InvalidCastException("Property has been removed");
-                }
-
-                if (change.ReplacesJsonElement)
-                {
-                    element = change.AsJsonElement();
-                }
-            }
-
-            if (element.TryGetProperty(name, out _))
-            {
-                value = new JsonDataElement(_root, element, path);
-                return true;
-            }
-
-            value = default;
-            return false;
+            value = new JsonDataElement(_root, element, path, _highWaterMark);
+            return true;
         }
 
         internal JsonDataElement GetIndexElement(int index)
