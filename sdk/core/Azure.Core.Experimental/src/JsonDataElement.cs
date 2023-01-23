@@ -42,6 +42,8 @@ namespace Azure.Core.Dynamic
 
         private JsonDataElement GetProperty(string name, bool checkChanges)
         {
+            EnsureValid();
+
             if (checkChanges)
             {
                 return GetObject().GetProperty(name, false);
@@ -105,6 +107,8 @@ namespace Azure.Core.Dynamic
 
         private JsonDataElement GetIndexElement(int index, bool checkChanges)
         {
+            EnsureValid();
+
             if (checkChanges)
             {
                 return GetArray().GetIndexElement(index, false);
@@ -127,6 +131,8 @@ namespace Azure.Core.Dynamic
 
         private JsonDataElement GetObject()
         {
+            EnsureValid();
+
             EnsureObject();
 
             if (Changes.TryGetChange(_path, out JsonDataChange change))
@@ -142,6 +148,8 @@ namespace Azure.Core.Dynamic
 
         private JsonDataElement GetArray()
         {
+            EnsureValid();
+
             EnsureArray();
 
             if (Changes.TryGetChange(_path, out JsonDataChange change))
@@ -157,6 +165,8 @@ namespace Azure.Core.Dynamic
 
         internal double GetDouble()
         {
+            EnsureValid();
+
             if (Changes.TryGetChange(_path, out JsonDataChange change))
             {
                 switch (change.Value)
@@ -195,6 +205,8 @@ namespace Azure.Core.Dynamic
 
         internal string? GetString()
         {
+            EnsureValid();
+
             if (Changes.TryGetChange(_path, out JsonDataChange change))
             {
                 switch (change.Value)
@@ -213,10 +225,9 @@ namespace Azure.Core.Dynamic
 
         internal void SetProperty(string name, object value)
         {
-            if (_element.ValueKind != JsonValueKind.Object)
-            {
-                throw new InvalidOperationException($"Expected an 'Object' type but was {_element.ValueKind}.");
-            }
+            EnsureValid();
+
+            EnsureObject();
 
             // TODO: check for changes first?
 
@@ -245,10 +256,9 @@ namespace Azure.Core.Dynamic
 
         internal void RemoveProperty(string name)
         {
-            if (_element.ValueKind != JsonValueKind.Object)
-            {
-                throw new InvalidOperationException($"Expected an 'Object' type but was {_element.ValueKind}.");
-            }
+            EnsureValid();
+
+            EnsureObject();
 
             // TODO: Removal per JSON Merge Patch https://www.rfc-editor.org/rfc/rfc7386?
 
@@ -266,13 +276,33 @@ namespace Azure.Core.Dynamic
             Changes.AddChange(_path, newElement, true);
         }
 
-        internal void Set(double value) => Changes.AddChange(_path, value, _element.ValueKind != JsonValueKind.Number);
+        internal void Set(double value)
+        {
+            EnsureValid();
 
-        internal void Set(int value) => Changes.AddChange(_path, value, _element.ValueKind != JsonValueKind.Number);
+            Changes.AddChange(_path, value, _element.ValueKind != JsonValueKind.Number);
+        }
 
-        internal void Set(string value) => Changes.AddChange(_path, value, _element.ValueKind != JsonValueKind.String);
+        internal void Set(int value)
+        {
+            EnsureValid();
 
-        internal void Set(object value) => Changes.AddChange(_path, value, true);
+            Changes.AddChange(_path, value, _element.ValueKind != JsonValueKind.Number);
+        }
+
+        internal void Set(string value)
+        {
+            EnsureValid();
+
+            Changes.AddChange(_path, value, _element.ValueKind != JsonValueKind.String);
+        }
+
+        internal void Set(object value)
+        {
+            EnsureValid();
+
+            Changes.AddChange(_path, value, true);
+        }
 
         internal void Set(JsonDataElement value)
         {

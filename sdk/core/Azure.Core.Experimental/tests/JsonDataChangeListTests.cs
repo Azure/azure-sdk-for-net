@@ -517,14 +517,14 @@ namespace Azure.Core.Experimental.Tests
             {
                 Foo = new
                 {
-                    B = 7
+                    A = 7
                 }
             });
 
-            // We should be able to get the value of B without being tripped up
+            // We should be able to get the value of A without being tripped up
             // by earlier changes.
-            int bValue = jd.RootElement.GetIndexElement(0).GetProperty("Foo").GetProperty("B").GetInt32();
-            Assert.AreEqual(7, bValue);
+            int aValue = jd.RootElement.GetIndexElement(0).GetProperty("Foo").GetProperty("A").GetInt32();
+            Assert.AreEqual(7, aValue);
 
             // 3. Type round-trips correctly.
             using MemoryStream stream = new();
@@ -536,9 +536,111 @@ namespace Azure.Core.Experimental.Tests
             Assert.AreEqual(JsonDataWriteToTests.RemoveWhiteSpace(@"[
                 {
                   ""Foo"" : {
-                    ""B"": 7
+                    ""A"": 7
                     }
                 } ]"), jsonString);
+        }
+
+        [Test]
+        public void CanAccessPropertyInUnchangedBranchOfChangedStructure()
+        {
+            string json = @"{ ""ArrayProperty"": [
+                {
+                  ""Foo"" : {
+                    ""A"": 6
+                    }
+                } ],
+                  ""Bar"" : ""hi"" }";
+
+            var jd = JsonData.Parse(json);
+
+            // resets json to equivalent of "[ 5 ]"
+            jd.RootElement.GetProperty("ArrayProperty").GetIndexElement(0).Set(5);
+
+            Assert.AreEqual(5, jd.RootElement.GetProperty("ArrayProperty").GetIndexElement(0).GetInt32());
+
+            // Reset json[0] to an object
+            jd.RootElement.GetProperty("ArrayProperty").GetIndexElement(0).Set(new
+            {
+                Foo = new
+                {
+                    A = 7
+                }
+            });
+
+            // We should be able to get the value of A without being tripped up
+            // by earlier changes.
+            int aValue = jd.RootElement.GetProperty("ArrayProperty").GetIndexElement(0).GetProperty("Foo").GetProperty("A").GetInt32();
+            Assert.AreEqual(7, aValue);
+
+            // 3. Type round-trips correctly.
+            using MemoryStream stream = new();
+            jd.WriteTo(stream);
+            stream.Position = 0;
+            string jsonString = BinaryData.FromStream(stream).ToString();
+            JsonDocument doc = JsonDocument.Parse(jsonString);
+
+            Assert.AreEqual(JsonDataWriteToTests.RemoveWhiteSpace(@"{
+                ""ArrayProperty"": [
+                    {
+                      ""Foo"" : {
+                        ""A"": 7
+                        }
+                    } ],
+                ""Bar"" : ""hi"" }"), jsonString);
+        }
+
+        [Test]
+        public void PriorChangeToReplacedPropertyIsIgnored()
+        {
+            string json = @"{ ""ArrayProperty"": [
+                {
+                  ""Foo"" : {
+                    ""A"": 6
+                    }
+                } ],
+                  ""Bar"" : ""hi"" }";
+
+            var jd = JsonData.Parse(json);
+
+            jd.RootElement.GetProperty("ArrayProperty").GetIndexElement(0).GetProperty("Foo").GetProperty("A").Set(8);
+
+            Assert.AreEqual(8, jd.RootElement.GetProperty("ArrayProperty").GetIndexElement(0).GetProperty("Foo").GetProperty("A").GetInt32());
+
+            // resets json to equivalent of "[ 5 ]"
+            jd.RootElement.GetProperty("ArrayProperty").GetIndexElement(0).Set(5);
+
+            Assert.AreEqual(5, jd.RootElement.GetProperty("ArrayProperty").GetIndexElement(0).GetInt32());
+
+            // Reset json[0] to an object
+            jd.RootElement.GetProperty("ArrayProperty").GetIndexElement(0).Set(new
+            {
+                Foo = new
+                {
+                    A = 7
+                }
+            });
+
+            // We should be able to get the value of A without being tripped up
+            // by earlier changes.
+            int aValue = jd.RootElement.GetProperty("ArrayProperty").GetIndexElement(0).GetProperty("Foo").GetProperty("A").GetInt32();
+            Assert.AreEqual(7, aValue);
+
+            // 3. Type round-trips correctly.
+            using MemoryStream stream = new();
+            jd.WriteTo(stream);
+            stream.Position = 0;
+            string jsonString = BinaryData.FromStream(stream).ToString();
+            JsonDocument doc = JsonDocument.Parse(jsonString);
+
+            Assert.AreEqual(JsonDataWriteToTests.RemoveWhiteSpace(@"{
+                ""ArrayProperty"": [
+                    {
+                      ""Foo"" : {
+                        ""A"": 7
+                        }
+                    } ],
+                ""Bar"" : ""hi"" }"), jsonString);
         }
 
         [Test]
