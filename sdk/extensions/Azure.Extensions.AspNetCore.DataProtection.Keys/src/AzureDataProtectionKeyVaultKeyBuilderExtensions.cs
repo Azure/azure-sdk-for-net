@@ -83,7 +83,7 @@ namespace Microsoft.AspNetCore.DataProtection
         }
 
         /// <summary>
-        /// Configures the data protection system to protect keys with specified key in Azure KeyVault.
+        /// Configures the data protection system to protect keys with specified key in Azure Key Vault.
         /// </summary>
         /// <param name="builder">The builder instance to modify.</param>
         /// <param name="tokenCredentialFactory">The factory delegate to create the <see cref="TokenCredential"/> to use for authenticating Key Vault access.</param>
