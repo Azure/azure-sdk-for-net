@@ -3,14 +3,10 @@
 
 #nullable disable // TODO: remove and fix errors
 
-using System;
 using System.Diagnostics;
 using System.Globalization;
-using System.Numerics;
 using Azure.Core;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals;
-
-using OpenTelemetry.Trace;
 
 namespace Azure.Monitor.OpenTelemetry.Exporter.Models
 {
