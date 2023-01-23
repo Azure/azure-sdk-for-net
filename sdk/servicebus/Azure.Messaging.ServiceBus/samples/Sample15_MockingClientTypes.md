@@ -389,6 +389,8 @@ Assert.AreEqual(setState, state);
 
 ## Sending using topics and subscriptions
 
+This scenario is similar to the snippet above, [receiving messages from a queue](#receiving-messages-from-a-queue), except this one demonstrates how to send a set of messages using a topic and subscription.
+
 ```C# Snippet:ServiceBus_MockingTopicSubscriptionSend
 Mock<ServiceBusClient> mockClient = new();
 Mock<ServiceBusSender> mockSender = new();
@@ -431,6 +433,8 @@ mockSender
 ```
 
 ## Receiving using topics and subscriptions
+
+This snippet demonstrates how to receive messages using a topic and subscription with a `ServiceBusReceiver`. It demonstrates how to set up `ReceiveMessagesAsync` to return an `IAsyncEnumerable` with `ServiceBusReceivedMessage`s using the `ServiceBusModelFactory`.
 
 ```C# Snippet:ServiceBus_MockingTopicSubscriptionReceive
 Mock<ServiceBusClient> mockClient = new();
