@@ -6,6 +6,7 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.Net.Http.Headers;
 using System.Runtime.CompilerServices;
 using System.Threading;
@@ -4675,27 +4676,29 @@ namespace Azure.Storage.Blobs.Specialized
 
                 string operationName = $"{nameof(BlobBaseClient)}.{nameof(Exists)}";
 
+                // 404 isn't an error for checking if the resource exists, it's false
+                RequestContext context = new RequestContext() { CancellationToken = cancellationToken };
+                context.AddClassifier(new BlobBaseClientExistsClassifier());
+
                 try
                 {
                     Response<BlobProperties> response = await GetPropertiesInternal(
                         conditions: default,
                         async: async,
-                        context: new RequestContext() { CancellationToken = cancellationToken },
+                        context: context,
                         operationName)
                         .ConfigureAwait(false);
 
+                    if (BlobBaseClientExistsClassifier.IsResourceNotFoundResponse(response.GetRawResponse()))
+                    {
+                        return Response.FromValue(false, default);
+                    }
+                    if (BlobBaseClientExistsClassifier.IsUsesCustomerSpecifiedEncryptionResponse(response.GetRawResponse()))
+                    {
+                        return Response.FromValue(true, default);
+                    }
+
                     return Response.FromValue(true, response.GetRawResponse());
-                }
-                catch (RequestFailedException storageRequestFailedException)
-                when (storageRequestFailedException.ErrorCode == BlobErrorCode.BlobNotFound
-                    || storageRequestFailedException.ErrorCode == BlobErrorCode.ContainerNotFound)
-                {
-                    return Response.FromValue(false, default);
-                }
-                catch (RequestFailedException storageRequestFailedException)
-                when (storageRequestFailedException.ErrorCode == BlobErrorCode.BlobUsesCustomerSpecifiedEncryption)
-                {
-                    return Response.FromValue(true, default);
                 }
                 catch (Exception ex)
                 {
