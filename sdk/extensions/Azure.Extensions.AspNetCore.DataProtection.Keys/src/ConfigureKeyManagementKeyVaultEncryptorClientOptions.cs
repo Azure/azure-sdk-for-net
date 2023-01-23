@@ -5,9 +5,7 @@ using Microsoft.AspNetCore.DataProtection.KeyManagement;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 
-#pragma warning disable AZC0001 //
 namespace Azure.Extensions.AspNetCore.DataProtection.Keys
-#pragma warning restore
 {
     internal sealed class ConfigureKeyManagementKeyVaultEncryptorClientOptions : IConfigureOptions<KeyManagementOptions>
     {
