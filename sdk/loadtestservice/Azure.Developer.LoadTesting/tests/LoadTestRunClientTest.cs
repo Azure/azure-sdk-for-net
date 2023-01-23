@@ -91,7 +91,6 @@ namespace Azure.Developer.LoadTesting.Tests
         {
             Response response = await _loadTestRunClient.GetTestRunAsync(_testRunId);
 
-            Console.WriteLine(response.Content.ToString());
             JsonDocument jsonDocument = JsonDocument.Parse(response.Content.ToString());
             Assert.AreEqual(_testRunId, jsonDocument.RootElement.GetProperty("testRunId").ToString());
             Assert.AreEqual(_testId, jsonDocument.RootElement.GetProperty("testId").ToString());
@@ -101,8 +100,6 @@ namespace Azure.Developer.LoadTesting.Tests
         public async Task GetTestRunFile()
         {
             Response response = await _loadTestRunClient.GetTestRunFileAsync(_testRunId, _fileName);
-
-            Console.WriteLine(response.Content.ToString());
             JsonDocument jsonDocument = JsonDocument.Parse(response.Content.ToString());
             Assert.AreEqual(_fileName, jsonDocument.RootElement.GetProperty("fileName").ToString());
             Assert.AreEqual("VALIDATION_SUCCESS", jsonDocument.RootElement.GetProperty("validationStatus").ToString());
@@ -111,16 +108,35 @@ namespace Azure.Developer.LoadTesting.Tests
         [Test]
         public async Task ListTestRuns()
         {
+            int pageSizeHint = 2;
             AsyncPageable<BinaryData> responsePageable = _loadTestRunClient.GetTestRunsAsync();
 
-            await foreach (var page in responsePageable.AsPages())
+            int count = 0;
+
+            await foreach (var page in responsePageable.AsPages(pageSizeHint: pageSizeHint))
             {
+                count++;
+
                 foreach (var testRun in page.Values)
                 {
-                    Console.WriteLine(testRun.ToString());
-
                     JsonDocument jsonDocument = JsonDocument.Parse(testRun.ToString());
-                    Assert.AreEqual(_testId, jsonDocument.RootElement.GetProperty("testId").ToString());
+                    Assert.NotNull(jsonDocument.RootElement.GetProperty("testId").ToString());
+                    Assert.NotNull(jsonDocument.RootElement.GetProperty("testRunId").ToString());
+                }
+            }
+
+            int i = 0;
+            await foreach (var page in responsePageable.AsPages(pageSizeHint: pageSizeHint))
+            {
+                i++;
+
+                if (i < count)
+                {
+                    Assert.AreEqual(pageSizeHint, page.Values.Count);
+                }
+                else
+                {
+                    Assert.LessOrEqual(page.Values.Count, pageSizeHint);
                 }
             }
         }
