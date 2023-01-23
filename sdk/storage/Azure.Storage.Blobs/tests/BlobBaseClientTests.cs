@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.Tracing;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -11,6 +12,7 @@ using System.Security.Cryptography;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
+using Azure.Core.Diagnostics;
 using Azure.Core.TestFramework;
 using Azure.Identity;
 using Azure.Storage.Blobs.Models;
@@ -3846,6 +3848,27 @@ namespace Azure.Storage.Blobs.Test
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 unauthorizedBlobClient.ExistsAsync(),
                 e => { });
+        }
+
+        [RecordedTest]
+        public async Task ExistsAsync_NoLogWarning()
+        {
+            // Arrange
+            BlobClient nonExistentBlob = BlobsClientBuilder.GetServiceClient_SharedKey()
+                .GetBlobContainerClient(BlobsClientBuilder.GetNewContainerName())
+                .GetBlobClient(BlobsClientBuilder.GetNewBlobName());
+
+            var events = new List<(EventWrittenEventArgs EventData, string EventMessage)>();
+            using AzureEventSourceListener listener = new AzureEventSourceListener(
+                (data, message) => events.Add((data, message)),
+                EventLevel.Informational);
+
+            // Act
+            bool exists = await nonExistentBlob.ExistsAsync();
+
+            // Assert
+            Assert.IsFalse(exists);
+            CollectionAssert.IsEmpty(events.Where(e => e.EventData.Level < EventLevel.Informational));
         }
 
         [RecordedTest]
