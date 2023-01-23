@@ -873,8 +873,146 @@ mockReceiver
 string mockQueueName = "MockQueue";
 ServiceBusReceiver receiver = client.CreateReceiver(mockQueueName);
 
-ServiceBusReceivedMessage message = await receiver.ReceiveMessageAsync();
+ServiceBusReceivedMessage message = await receiver.ReceiveMessageAsync(TimeSpan.FromSeconds(2), CancellationToken.None);
 await receiver.AbandonMessageAsync(message);
+```
+
+### Dead lettering a message
+
+This snippet demonstrates how to mock `DeadLetterMessageAsync` using a receiver, and then how to mock receiving from a dead letter queue receiver. In this example, a set of messages is defined in the test to return from `ReceiveMessageAsync` to provide a set of messages. In this snippet, when `DeadLetterMessageAsync` is called on any message, that message is held in a list of dead-lettered messages. These messages are then returned upon calls to `ReceiveMessageAsync` using the dead letter queue receiver.
+
+```C# Snippet:ServiceBus_MockingDeadLetter
+// This sets up the ServiceBusClient mock to return the ServiceBusReceiver mock.
+
+Mock<ServiceBusClient> mockClient = new();
+Mock<ServiceBusReceiver> mockReceiver = new();
+Mock<ServiceBusReceiver> mockDlqReceiver = new();
+
+mockClient
+    .Setup(client => client.CreateReceiver(
+        It.IsAny<string>()))
+    .Returns(mockReceiver.Object);
+
+// This sets up the ServiceBusClient mock to return the dead letter queue receiver if the options specify it.
+
+mockClient
+    .Setup(client => client.CreateReceiver(
+        It.IsAny<string>(),
+        It.Is<ServiceBusReceiverOptions>(opts => opts.SubQueue == SubQueue.DeadLetter)))
+    .Returns(mockDlqReceiver.Object);
+
+ServiceBusClient client = mockClient.Object;
+
+// This creates a list of messages to return from the ServiceBusReceiver mock. See the ServiceBusModelFactory
+// for a complete set of properties that can be populated using the ServiceBusModelFactory.ServiceBusReceivedMessage method.
+
+List<ServiceBusReceivedMessage> messagesToReturn = new();
+int numMessages = 3;
+
+for (int i = 0; i < numMessages; i++)
+{
+    string body = $"message-{i}";
+
+    // This mocks a ServiceBusReceivedMessage instance using the model factory. Different arguments can mock different
+    // potential outputs from the broker.
+
+    ServiceBusReceivedMessage messageToReturn = ServiceBusModelFactory.ServiceBusReceivedMessage(
+        body: new BinaryData(body),
+        messageId: $"id-{i}",
+        sequenceNumber: i,
+        partitionKey: "illustrative-partitionKey",
+        correlationId: "illustrative-correlationId",
+        contentType: "illustrative-contentType",
+        replyTo: "illustrative-replyTo"
+        // ...
+        );
+    messagesToReturn.Add(messageToReturn);
+}
+
+// Set up receive to return the next message in the list of messages after each call.
+
+mockReceiver
+    .Setup(receiver => receiver.ReceiveMessageAsync(
+        It.IsAny<TimeSpan>(),
+        It.IsAny<CancellationToken>()))
+    .ReturnsAsync(() =>
+    {
+        ServiceBusReceivedMessage m = messagesToReturn.FirstOrDefault();
+        if (m != null)
+        {
+            messagesToReturn.RemoveAt(0);
+        }
+        return m;
+    });
+
+// Set up dead letter to put the received message into the mock dead letter queue.
+
+List<ServiceBusReceivedMessage> deadLetteredMessages = new();
+
+mockReceiver
+    .Setup(receiver => receiver.DeadLetterMessageAsync(
+        It.IsAny<ServiceBusReceivedMessage>(),
+        It.IsAny<string>(),
+        It.IsAny<string>(),
+        It.IsAny<CancellationToken>()))
+    .Callback<ServiceBusReceivedMessage, string, string, CancellationToken>((m, r, d, ct) => deadLetteredMessages.Add(m))
+    .Returns(Task.CompletedTask);
+
+// When calling ReceiveMessageAsync on the dead letter queue receiver, pass one of the messages from the dead
+// letter queue list or just return null, mirroring the behavior of a dead letter queue receiver.
+
+mockDlqReceiver
+    .Setup(receiver => receiver.ReceiveMessageAsync(
+        It.IsAny<TimeSpan>(),
+        It.IsAny<CancellationToken>()))
+    .ReturnsAsync(() =>
+    {
+        ServiceBusReceivedMessage m = deadLetteredMessages.FirstOrDefault();
+        if (m != null)
+        {
+            deadLetteredMessages.RemoveAt(0);
+        }
+        return m;
+    });
+
+// The rest of this snippet illustrates how to dead letter a service bus message using the mocked
+// service bus receiver above, this would be where application methods dead lettering a message would be
+// called.
+
+string mockQueueName = "MockQueue";
+ServiceBusReceiver receiver = client.CreateReceiver(mockQueueName);
+
+ServiceBusReceivedMessage message = await receiver.ReceiveMessageAsync(TimeSpan.FromSeconds(2), CancellationToken.None);
+await receiver.DeadLetterMessageAsync(message, "test reason", "test description", CancellationToken.None);
+
+// Assert that the application method called Deadletter on the test message.
+
+Assert.That(deadLetteredMessages.Contains(message));
+
+mockReceiver
+    .Verify(receiver => receiver.DeadLetterMessageAsync(
+        It.IsAny<ServiceBusReceivedMessage>(),
+        It.IsAny<string>(),
+        It.IsAny<string>(),
+        It.IsAny<CancellationToken>()), Times.Once);
+
+// For illustrative purposes, receive a dead-lettered message from the dead letter queue.
+
+string deadLetterQueueName = "DeadLetterQueue";
+ServiceBusReceiverOptions options = new()
+{
+    SubQueue = SubQueue.DeadLetter
+};
+ServiceBusReceiver deadLetterQueueReceiver = client.CreateReceiver(deadLetterQueueName, options);
+
+ServiceBusReceivedMessage dlMessage = await deadLetterQueueReceiver.ReceiveMessageAsync(TimeSpan.FromSeconds(2), CancellationToken.None);
+
+// Assert that ReceiveMessageAsync was called on the mock receiver.
+
+mockDlqReceiver
+    .Verify(receiver => receiver.ReceiveMessageAsync(
+        It.IsAny<TimeSpan>(),
+        It.IsAny<CancellationToken>()), Times.Once);
 ```
 
 ## Testing processor message handlers
