@@ -39,10 +39,14 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
                 ?.ToString().Truncate(SchemaConstants.RequestData_ResponseCode_MaxLength)
                 ?? "0";
 
-            if (int.TryParse(ResponseCode, out int statusCode))
+            if (monitorTags.activityType ==  OperationType.Http && int.TryParse(ResponseCode, out int statusCode))
             {
                 bool isSuccessStatusCode = statusCode != 0 && statusCode < 400;
                 Success = activity.Status != ActivityStatusCode.Error && isSuccessStatusCode;
+            }
+            else
+            {
+                Success = activity.Status != ActivityStatusCode.Error;
             }
 
             Url = url.Truncate(SchemaConstants.RequestData_Url_MaxLength);
