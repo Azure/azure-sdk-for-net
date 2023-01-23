@@ -28,7 +28,7 @@ namespace Azure.Core.Dynamic
                 while (!changed && path.Length > 0)
                 {
                     path = PopProperty(path);
-                    changed = TryGetChangeSingle(path, highWaterMark, out JsonDataChange change);
+                    changed = TryGetChange(path, highWaterMark, out JsonDataChange change);
                 }
 
                 return changed;
@@ -68,29 +68,6 @@ namespace Azure.Core.Dynamic
             }
 
             internal bool TryGetChange(string path, in int lastAppliedChange, out JsonDataChange change)
-            {
-                // TODO: we'll want to pass in the high water mark here too, I think.
-                bool changed = TryGetChangeSingle(path, lastAppliedChange, out change);
-
-                // TODO: Replace this
-                //// Check for changes to ancestor elements
-                //while (!changed && path.Length > 0)
-                //{
-                //    path = PopProperty(path);
-                //    changed = TryGetChangeSingle(path, out change);
-                //}
-
-                return changed;
-            }
-
-            // returns the index of the change, or -1 if no changes were found
-            /// <summary>
-            /// </summary>
-            /// <param name="path"></param>
-            /// <param name="lastAppliedChange">The index of the last structural change that was applied.</param>
-            /// <param name="change"></param>
-            /// <returns></returns>
-            private bool TryGetChangeSingle(string path, in int lastAppliedChange, out JsonDataChange change)
             {
                 if (_changes == null)
                 {

@@ -170,8 +170,6 @@ namespace Azure.Core.Dynamic
 
             EnsureObject();
 
-            // TODO: check for changes first?
-
             var path = JsonData.ChangeTracker.PushProperty(_path, name);
 
             // Per copying Dictionary semantics, if the property already exists, just replace the value.
@@ -179,13 +177,11 @@ namespace Azure.Core.Dynamic
 
             if (_element.TryGetProperty(name, out _))
             {
-                // TODO: should this be a structural change?  Confirm.
                 Changes.AddChange(path, value, true);
+                return;
             }
 
-            // If it's not already there, we'll add a different kind of change.
-            // We are adding a property to this object.  The change reflects an update
-            // to the object's JsonElement.  Get the new JsonElement.
+            // If it's not already there, we'll add change to the JsonElement instead.
             Dictionary<string, object> dict = JsonSerializer.Deserialize<Dictionary<string, object>>(_element.ToString());
             dict[name] = value;
 
@@ -280,7 +276,6 @@ namespace Azure.Core.Dynamic
             }
         }
 
-        // TODO: Decide whether to keep this implementation.
         private void EnsureValid()
         {
             if (Changes.AncestorChanged(_path, _highWaterMark))
