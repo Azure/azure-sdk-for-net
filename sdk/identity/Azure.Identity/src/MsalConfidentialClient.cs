@@ -103,6 +103,7 @@ namespace Azure.Identity
                 confClientBuilder.WithCertificate(clientCertificate);
             }
 
+            // When the appTokenProviderCallback is set, meaning this is for managed identity, the regional authority is not relevant.
             if (_appTokenProviderCallback == null && !string.IsNullOrEmpty(RegionalAuthority))
             {
                 confClientBuilder.WithAzureRegion(RegionalAuthority);
