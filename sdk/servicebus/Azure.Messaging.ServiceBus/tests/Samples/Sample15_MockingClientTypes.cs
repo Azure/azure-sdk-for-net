@@ -144,7 +144,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
             // Since there are already batchCountThreshold number of messages in the batch,
             // this message will be rejected from the batch.
 
-            Assert.IsFalse(batch.TryAddMessage(new ServiceBusMessage("Too Many Events.")));
+            Assert.IsFalse(batch.TryAddMessage(new ServiceBusMessage("Too Many Messages.")));
 
             // For illustrative purposes we are calling SendMessagesAsync. Application-defined methods
             // would be called here instead.
@@ -246,7 +246,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
 
             await foreach (ServiceBusReceivedMessage message in receiver.ReceiveMessagesAsync(cancellationTokenSource.Token))
             {
-                // application control
+                // Application would process received messages here...
             }
 
             // This is where applications can verify that the ServiceBusReceivedMessage's output by the ServiceBusReceiver were
@@ -325,11 +325,17 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
 
             // ReceiveMessageAsync can be called multiple times.
 
-            ServiceBusReceivedMessage receivedMessage1 = await receiver.ReceiveMessageAsync(TimeSpan.FromSeconds(1), CancellationToken.None);
-            await receiver.CompleteMessageAsync(receivedMessage1);
+            List<ServiceBusReceivedMessage> receivedMessages = new();
 
-            ServiceBusReceivedMessage receivedMessage2 = await receiver.ReceiveMessageAsync(TimeSpan.FromSeconds(1), CancellationToken.None);
-            await receiver.CompleteMessageAsync(receivedMessage2);
+            for (int i = 0; i < numMessages; i++)
+            {
+                ServiceBusReceivedMessage receivedMessage = await receiver.ReceiveMessageAsync(TimeSpan.FromSeconds(1), CancellationToken.None);
+                receivedMessages.Add(receivedMessage);
+
+                // Application would process received messages here...
+
+                await receiver.CompleteMessageAsync(receivedMessage);
+            }
 
             // For illustrative purposes, verify that the number of times a message was received is the same number of times
             // a message was completed.
@@ -529,13 +535,21 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
             string mockQueueName = "MockQueue";
             ServiceBusReceiver receiver = client.CreateReceiver(mockQueueName);
 
-            ServiceBusReceivedMessage peekedMessage = await receiver.PeekMessageAsync(0, CancellationToken.None);
+            List<ServiceBusReceivedMessage> peekedMessages = new();
+
+            for (int i = 0; i < numMessages; i++)
+            {
+                ServiceBusReceivedMessage peekedMessage = await receiver.PeekMessageAsync(0, CancellationToken.None);
+
+                // Application would process the peaked message here ...
+
+                peekedMessages.Add(peekedMessage);
+            }
 
             mockReceiver
                 .Verify(receiver => receiver.PeekMessageAsync(
                     It.IsAny<long>(),
-                    It.IsAny<CancellationToken>()), Times.Once());
-
+                    It.IsAny<CancellationToken>()), Times.Exactly(numMessages));
             #endregion
         }
 
@@ -613,8 +627,32 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
             string mockQueueName = "MockQueue";
             ServiceBusReceiver receiver = client.CreateReceiver(mockQueueName);
 
-            ServiceBusReceivedMessage message = await receiver.ReceiveMessageAsync(TimeSpan.FromSeconds(2), CancellationToken.None);
-            await receiver.AbandonMessageAsync(message);
+            List<ServiceBusReceivedMessage> receivedMessages = new();
+
+            // The following code receives the pre-defined set of ServiceBusReceivedMessage's and then abandons each of them. This would
+            // be where application code would receive and abandon messages.
+
+            for (int i = 0; i < numMessages; i++)
+            {
+                ServiceBusReceivedMessage message = await receiver.ReceiveMessageAsync(TimeSpan.FromSeconds(2), CancellationToken.None);
+
+                receivedMessages.Add(message);
+            }
+
+            foreach (ServiceBusReceivedMessage message in receivedMessages)
+            {
+                await receiver.AbandonMessageAsync(message);
+            }
+
+            // For illustrative purposes, verify that abandon was called on each message that was received.
+
+            foreach (ServiceBusReceivedMessage message in receivedMessages)
+            {
+                mockReceiver.Verify(receiver => receiver.AbandonMessageAsync(
+                    It.Is<ServiceBusReceivedMessage>(m => m.Equals(message)),
+                    It.IsAny<Dictionary<string, object>>(),
+                    It.IsAny<CancellationToken>()), Times.Once);
+            }
 
             #endregion
         }
@@ -723,19 +761,29 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
             string mockQueueName = "MockQueue";
             ServiceBusReceiver receiver = client.CreateReceiver(mockQueueName);
 
-            ServiceBusReceivedMessage message = await receiver.ReceiveMessageAsync(TimeSpan.FromSeconds(2), CancellationToken.None);
-            await receiver.DeadLetterMessageAsync(message, "test reason", "test description", CancellationToken.None);
+            List<ServiceBusReceivedMessage> receivedMessages = new();
+
+            for (int i = 0; i < numMessages; i++)
+            {
+                ServiceBusReceivedMessage message = await receiver.ReceiveMessageAsync(TimeSpan.FromSeconds(2), CancellationToken.None);
+                receivedMessages.Add(message);
+
+                await receiver.DeadLetterMessageAsync(message, "test reason", "test description", CancellationToken.None);
+            }
 
             // Assert that the application method called Deadletter on the test message.
 
-            Assert.That(deadLetteredMessages.Contains(message));
+            foreach (ServiceBusReceivedMessage message in receivedMessages)
+            {
+                Assert.That(deadLetteredMessages.Contains(message));
+            }
 
             mockReceiver
                 .Verify(receiver => receiver.DeadLetterMessageAsync(
                     It.IsAny<ServiceBusReceivedMessage>(),
                     It.IsAny<string>(),
                     It.IsAny<string>(),
-                    It.IsAny<CancellationToken>()), Times.Once);
+                    It.IsAny<CancellationToken>()), Times.Exactly(numMessages));
 
             // For illustrative purposes, receive a dead-lettered message from the dead letter queue.
 
@@ -746,14 +794,19 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
             };
             ServiceBusReceiver deadLetterQueueReceiver = client.CreateReceiver(deadLetterQueueName, options);
 
-            ServiceBusReceivedMessage dlMessage = await deadLetterQueueReceiver.ReceiveMessageAsync(TimeSpan.FromSeconds(2), CancellationToken.None);
+            for (int i = 0; i < numMessages; i++)
+            {
+                ServiceBusReceivedMessage dlMessage = await deadLetterQueueReceiver.ReceiveMessageAsync(TimeSpan.FromSeconds(2), CancellationToken.None);
+
+                // Application processing of dead lettered messages would be done here...
+            }
 
             // Assert that ReceiveMessageAsync was called on the mock receiver.
 
             mockDlqReceiver
                 .Verify(receiver => receiver.ReceiveMessageAsync(
                     It.IsAny<TimeSpan>(),
-                    It.IsAny<CancellationToken>()), Times.Once);
+                    It.IsAny<CancellationToken>()), Times.Exactly(numMessages));
             #endregion
         }
 
