@@ -29,8 +29,6 @@ namespace Azure.Core.Dynamic
 
         internal ChangeTracker Changes { get; } = new();
 
-        // TODO: need to check the root element for changes, e.g. if it is an object,
-        // it could have had properties added, or an array could have had elements added.
         internal JsonDataElement RootElement
         {
             get
@@ -39,11 +37,11 @@ namespace Azure.Core.Dynamic
                 {
                     if (change.ReplacesJsonElement)
                     {
-                        return new JsonDataElement(this, change.AsJsonElement(), string.Empty);
+                        return new JsonDataElement(this, change.AsJsonElement(), string.Empty, change.Index);
                     }
                 }
 
-                return new JsonDataElement(this, _element, "");
+                return new JsonDataElement(this, _element, string.Empty, -1);
             }
         }
 

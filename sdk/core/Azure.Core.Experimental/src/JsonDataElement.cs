@@ -19,11 +19,6 @@ namespace Azure.Core.Dynamic
 
         private readonly JsonData.ChangeTracker Changes => _root.Changes;
 
-        // TODO: we will need to look up whether a parent has changed.
-#pragma warning disable CA1822 // Mark members as static
-        private bool IsValid => true;
-#pragma warning restore CA1822 // Mark members as static
-
         internal JsonDataElement(JsonData root, JsonElement element, string path, int highWaterMark = -1)
         {
             _element = element;
@@ -37,17 +32,7 @@ namespace Azure.Core.Dynamic
         /// </summary>
         internal JsonDataElement GetProperty(string name)
         {
-            return GetProperty(name, true);
-        }
-
-        private JsonDataElement GetProperty(string name, bool checkChanges)
-        {
             EnsureValid();
-
-            if (checkChanges)
-            {
-                return GetObject().GetProperty(name, false);
-            }
 
             EnsureObject();
 
@@ -102,17 +87,7 @@ namespace Azure.Core.Dynamic
 
         internal JsonDataElement GetIndexElement(int index)
         {
-            return GetIndexElement(index, true);
-        }
-
-        private JsonDataElement GetIndexElement(int index, bool checkChanges)
-        {
             EnsureValid();
-
-            if (checkChanges)
-            {
-                return GetArray().GetIndexElement(index, false);
-            }
 
             EnsureArray();
 
@@ -127,40 +102,6 @@ namespace Azure.Core.Dynamic
             }
 
             return new JsonDataElement(_root, _element[index], path, _highWaterMark);
-        }
-
-        private JsonDataElement GetObject()
-        {
-            EnsureValid();
-
-            EnsureObject();
-
-            if (Changes.TryGetChange(_path, _highWaterMark, out JsonDataChange change))
-            {
-                if (change.ReplacesJsonElement)
-                {
-                    return new JsonDataElement(_root, change.AsJsonElement(), _path, change.Index);
-                }
-            }
-
-            return this;
-        }
-
-        private JsonDataElement GetArray()
-        {
-            EnsureValid();
-
-            EnsureArray();
-
-            if (Changes.TryGetChange(_path, _highWaterMark, out JsonDataChange change))
-            {
-                if (change.ReplacesJsonElement)
-                {
-                    return new JsonDataElement(_root, change.AsJsonElement(), _path, change.Index);
-                }
-            }
-
-            return this;
         }
 
         internal double GetDouble()
