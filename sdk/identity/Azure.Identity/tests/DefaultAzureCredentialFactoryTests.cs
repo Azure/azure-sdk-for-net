@@ -324,12 +324,12 @@ namespace Azure.Identity.Tests
         }
 
         [Test]
-        public void ValidateExcludeOptionsHonored([Values(true, false)] bool excludeEnvironmentCredential,
+        public void ValidateExcludeOptionsHonored([Values(true, false)] bool excludeDeveloperCliCredential,
+                                                   [Values(true, false)] bool excludeEnvironmentCredential,
                                                    [Values(true, false)] bool excludeManagedIdentityCredential,
                                                    [Values(true, false)] bool excludeSharedTokenCacheCredential,
                                                    [Values(true, false)] bool excludeVisualStudioCredential,
                                                    [Values(true, false)] bool excludeVisualStudioCodeCredential,
-                                                   [Values(true, false)] bool excludeDeveloperCliCredential,
                                                    [Values(true, false)] bool excludeCliCredential,
                                                    [Values(true, false)] bool excludeAzurePowerShellCredential,
                                                    [Values(true, false)] bool excludeInteractiveBrowserCredential)
@@ -343,22 +343,22 @@ namespace Azure.Identity.Tests
             }))
             {
                 var expCredentialTypes = new List<Type>();
+                expCredentialTypes.ConditionalAdd(!excludeDeveloperCliCredential, typeof(AzureDeveloperCliCredential));
                 expCredentialTypes.ConditionalAdd(!excludeEnvironmentCredential, typeof(EnvironmentCredential));
                 expCredentialTypes.ConditionalAdd(!excludeManagedIdentityCredential, typeof(ManagedIdentityCredential));
                 expCredentialTypes.ConditionalAdd(!excludeSharedTokenCacheCredential, typeof(SharedTokenCacheCredential));
                 expCredentialTypes.ConditionalAdd(!excludeVisualStudioCredential, typeof(VisualStudioCredential));
                 expCredentialTypes.ConditionalAdd(!excludeVisualStudioCodeCredential, typeof(VisualStudioCodeCredential));
-                expCredentialTypes.ConditionalAdd(!excludeDeveloperCliCredential, typeof(AzureDeveloperCliCredential));
                 expCredentialTypes.ConditionalAdd(!excludeCliCredential, typeof(AzureCliCredential));
                 expCredentialTypes.ConditionalAdd(!excludeAzurePowerShellCredential, typeof(AzurePowerShellCredential));
                 expCredentialTypes.ConditionalAdd(!excludeInteractiveBrowserCredential, typeof(InteractiveBrowserCredential));
 
                 var options = new DefaultAzureCredentialOptions
                 {
+                    ExcludeAzureDeveloperCliCredential = excludeDeveloperCliCredential,
                     ExcludeEnvironmentCredential = excludeEnvironmentCredential,
                     ExcludeManagedIdentityCredential = excludeManagedIdentityCredential,
                     ExcludeSharedTokenCacheCredential = excludeSharedTokenCacheCredential,
-                    ExcludeAzureDeveloperCliCredential = excludeDeveloperCliCredential,
                     ExcludeAzureCliCredential = excludeCliCredential,
                     ExcludeInteractiveBrowserCredential = excludeInteractiveBrowserCredential,
                     ExcludeVisualStudioCredential = excludeVisualStudioCredential,

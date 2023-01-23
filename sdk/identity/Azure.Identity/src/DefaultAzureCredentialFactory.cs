@@ -40,6 +40,11 @@ namespace Azure.Identity
             int i = 0;
             TokenCredential[] chain = new TokenCredential[9];
 
+            if (!Options.ExcludeAzureDeveloperCliCredential)
+            {
+                chain[i++] = CreateAzureDeveloperCliCredential();
+            }
+
             if (!Options.ExcludeEnvironmentCredential)
             {
                 chain[i++] = CreateEnvironmentCredential();
@@ -63,11 +68,6 @@ namespace Azure.Identity
             if (!Options.ExcludeVisualStudioCodeCredential)
             {
                 chain[i++] = CreateVisualStudioCodeCredential();
-            }
-
-            if (!Options.ExcludeAzureDeveloperCliCredential)
-            {
-                chain[i++] = CreateAzureDeveloperCliCredential();
             }
 
             if (!Options.ExcludeAzureCliCredential)
