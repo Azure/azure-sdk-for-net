@@ -2,8 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Text.Json;
 
 namespace Azure.Core.Dynamic
@@ -12,10 +10,9 @@ namespace Azure.Core.Dynamic
     {
         public string Path { get; set; }
 
-        public object? Value { get; set; }
+        public int Index { get; set; }
 
-        // TODO: is this the right place to store this?
-        public int Index {  get; set; }
+        public object? Value { get; set; }
 
         /// <summary>
         /// The change invalidates the existing node's JsonElement
@@ -52,7 +49,7 @@ namespace Azure.Core.Dynamic
 
         public override string ToString()
         {
-            return $"Path={Path};Value={Value};ReplacesJsonElement={ReplacesJsonElement}";
+            return $"Path={Path}; Value={Value}; ReplacesJsonElement={ReplacesJsonElement}";
         }
     }
 }

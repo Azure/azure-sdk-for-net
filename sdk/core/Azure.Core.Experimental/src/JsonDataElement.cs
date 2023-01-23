@@ -53,7 +53,7 @@ namespace Azure.Core.Dynamic
 
             var path = JsonData.ChangeTracker.PushProperty(_path, name);
 
-            if (Changes.TryGetChange(path, out JsonDataChange change))
+            if (Changes.TryGetChange(path, _highWaterMark, out JsonDataChange change))
             {
                 if (change.ReplacesJsonElement)
                 {
@@ -76,7 +76,7 @@ namespace Azure.Core.Dynamic
 
             var path = JsonData.ChangeTracker.PushProperty(_path, name);
 
-            if (Changes.TryGetChange(path, out JsonDataChange change))
+            if (Changes.TryGetChange(path, _highWaterMark, out JsonDataChange change))
             {
                 if (change.Value == null)
                 {
@@ -118,7 +118,7 @@ namespace Azure.Core.Dynamic
 
             var path = JsonData.ChangeTracker.PushIndex(_path, index);
 
-            if (Changes.TryGetChange(path, out JsonDataChange change))
+            if (Changes.TryGetChange(path, _highWaterMark, out JsonDataChange change))
             {
                 if (change.ReplacesJsonElement)
                 {
@@ -135,7 +135,7 @@ namespace Azure.Core.Dynamic
 
             EnsureObject();
 
-            if (Changes.TryGetChange(_path, out JsonDataChange change))
+            if (Changes.TryGetChange(_path, _highWaterMark, out JsonDataChange change))
             {
                 if (change.ReplacesJsonElement)
                 {
@@ -152,7 +152,7 @@ namespace Azure.Core.Dynamic
 
             EnsureArray();
 
-            if (Changes.TryGetChange(_path, out JsonDataChange change))
+            if (Changes.TryGetChange(_path, _highWaterMark, out JsonDataChange change))
             {
                 if (change.ReplacesJsonElement)
                 {
@@ -167,7 +167,7 @@ namespace Azure.Core.Dynamic
         {
             EnsureValid();
 
-            if (Changes.TryGetChange(_path, out JsonDataChange change))
+            if (Changes.TryGetChange(_path, _highWaterMark, out JsonDataChange change))
             {
                 switch (change.Value)
                 {
@@ -187,7 +187,7 @@ namespace Azure.Core.Dynamic
         {
             EnsureValid();
 
-            if (Changes.TryGetChange(_path, out JsonDataChange change))
+            if (Changes.TryGetChange(_path, _highWaterMark, out JsonDataChange change))
             {
                 switch (change.Value)
                 {
@@ -207,7 +207,7 @@ namespace Azure.Core.Dynamic
         {
             EnsureValid();
 
-            if (Changes.TryGetChange(_path, out JsonDataChange change))
+            if (Changes.TryGetChange(_path, _highWaterMark, out JsonDataChange change))
             {
                 switch (change.Value)
                 {
@@ -306,11 +306,13 @@ namespace Azure.Core.Dynamic
 
         internal void Set(JsonDataElement value)
         {
+            EnsureValid();
+
             value.EnsureValid();
 
             JsonElement element = value._element;
 
-            if (Changes.TryGetChange(value._path, out JsonDataChange change))
+            if (Changes.TryGetChange(value._path, value._highWaterMark, out JsonDataChange change))
             {
                 if (change.ReplacesJsonElement)
                 {

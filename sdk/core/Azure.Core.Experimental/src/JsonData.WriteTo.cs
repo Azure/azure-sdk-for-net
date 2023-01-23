@@ -20,7 +20,7 @@ namespace Azure.Core.Dynamic
             Utf8JsonReader reader;
 
             // Check for changes at the root.
-            bool changed = Changes.TryGetChange(path, out JsonDataChange change);
+            bool changed = Changes.TryGetChange(path, -1, out JsonDataChange change);
             if (changed)
             {
                 reader = change.GetReader();
@@ -30,12 +30,12 @@ namespace Azure.Core.Dynamic
                 reader = new Utf8JsonReader(_original.Span);
             }
 
-            WriteElement(path, ref reader, writer);
+            WriteElement(path, -1, ref reader, writer);
 
             writer.Flush();
         }
 
-        private void WriteElement(string path, ref Utf8JsonReader reader, Utf8JsonWriter writer)
+        private void WriteElement(string path, int highWaterMark, ref Utf8JsonReader reader, Utf8JsonWriter writer)
         {
             while (reader.Read())
             {
@@ -43,21 +43,21 @@ namespace Azure.Core.Dynamic
                 {
                     case JsonTokenType.StartObject:
                         writer.WriteStartObject();
-                        WriteObjectProperties(path, ref reader, writer);
+                        WriteObjectProperties(path, highWaterMark, ref reader, writer);
                         break;
                     case JsonTokenType.StartArray:
                         writer.WriteStartArray();
-                        WriteArrayValues(path, ref reader, writer);
+                        WriteArrayValues(path, highWaterMark, ref reader, writer);
                         break;
                     case JsonTokenType.String:
-                        WriteString(path, ref reader, writer);
+                        WriteString(path, highWaterMark, ref reader, writer);
                         break;
                     case JsonTokenType.Number:
-                        WriteNumber(path, ref reader, writer);
+                        WriteNumber(path, highWaterMark, ref reader, writer);
                         break;
                     case JsonTokenType.True:
                     case JsonTokenType.False:
-                        WriteBoolean(path, reader.TokenType, writer);
+                        WriteBoolean(path, highWaterMark, reader.TokenType, writer);
                         break;
                     case JsonTokenType.Null:
                         writer.WriteNullValue();
@@ -66,7 +66,7 @@ namespace Azure.Core.Dynamic
             }
         }
 
-        private void WriteArrayValues(string path, ref Utf8JsonReader reader, Utf8JsonWriter writer)
+        private void WriteArrayValues(string path, int highWaterMark, ref Utf8JsonReader reader, Utf8JsonWriter writer)
         {
             int index = 0;
 
@@ -76,25 +76,25 @@ namespace Azure.Core.Dynamic
                 {
                     case JsonTokenType.StartObject:
                         path = ChangeTracker.PushIndex(path, index);
-                        WriteObject(path, ref reader, writer);
+                        WriteObject(path, highWaterMark, ref reader, writer);
                         break;
                     case JsonTokenType.StartArray:
                         path = ChangeTracker.PushIndex(path, index);
                         writer.WriteStartArray();
-                        WriteArrayValues(path, ref reader, writer);
+                        WriteArrayValues(path, highWaterMark, ref reader, writer);
                         break;
                     case JsonTokenType.String:
                         path = ChangeTracker.PushIndex(path, index);
-                        WriteString(path, ref reader, writer);
+                        WriteString(path, highWaterMark, ref reader, writer);
                         break;
                     case JsonTokenType.Number:
                         path = ChangeTracker.PushIndex(path, index);
-                        WriteNumber(path, ref reader, writer);
+                        WriteNumber(path, highWaterMark, ref reader, writer);
                         break;
                     case JsonTokenType.True:
                     case JsonTokenType.False:
                         path = ChangeTracker.PushIndex(path, index);
-                        WriteBoolean(path, reader.TokenType, writer);
+                        WriteBoolean(path, highWaterMark, reader.TokenType, writer);
                         break;
                     case JsonTokenType.Null:
                         path = ChangeTracker.PushIndex(path, index);
@@ -110,19 +110,19 @@ namespace Azure.Core.Dynamic
             }
         }
 
-        private void WriteObjectProperties(string path, ref Utf8JsonReader reader, Utf8JsonWriter writer)
+        private void WriteObjectProperties(string path, int highWaterMark, ref Utf8JsonReader reader, Utf8JsonWriter writer)
         {
             while (reader.Read())
             {
                 switch (reader.TokenType)
                 {
                     case JsonTokenType.StartObject:
-                        WriteObject(path, ref reader, writer);
+                        WriteObject(path, highWaterMark, ref reader, writer);
                         path = ChangeTracker.PopProperty(path);
                         continue;
                     case JsonTokenType.StartArray:
                         writer.WriteStartArray();
-                        WriteArrayValues(path, ref reader, writer);
+                        WriteArrayValues(path, highWaterMark, ref reader, writer);
                         path = ChangeTracker.PopProperty(path);
                         continue;
                     case JsonTokenType.PropertyName:
@@ -132,16 +132,16 @@ namespace Azure.Core.Dynamic
                         Debug.WriteLine($"Path: {path}, TokenStartIndex: {reader.TokenStartIndex}");
                         continue;
                     case JsonTokenType.String:
-                        WriteString(path, ref reader, writer);
+                        WriteString(path, highWaterMark, ref reader, writer);
                         path = ChangeTracker.PopProperty(path);
                         continue;
                     case JsonTokenType.Number:
-                        WriteNumber(path, ref reader, writer);
+                        WriteNumber(path, highWaterMark, ref reader, writer);
                         path = ChangeTracker.PopProperty(path);
                         continue;
                     case JsonTokenType.True:
                     case JsonTokenType.False:
-                        WriteBoolean(path, reader.TokenType, writer);
+                        WriteBoolean(path, highWaterMark, reader.TokenType, writer);
                         path = ChangeTracker.PopProperty(path);
                         return;
                     case JsonTokenType.Null:
@@ -156,13 +156,13 @@ namespace Azure.Core.Dynamic
             }
         }
 
-        private void WriteObject(string path, ref Utf8JsonReader reader, Utf8JsonWriter writer)
+        private void WriteObject(string path, int highWaterMark, ref Utf8JsonReader reader, Utf8JsonWriter writer)
         {
-            bool changed = Changes.TryGetChange(path, out JsonDataChange change);
+            bool changed = Changes.TryGetChange(path, highWaterMark, out JsonDataChange change);
             if (changed)
             {
                 Utf8JsonReader changedElementReader = change.GetReader();
-                WriteElement(path, ref changedElementReader, writer);
+                WriteElement(path, change.Index, ref changedElementReader, writer);
 
                 // Skip this element in the original data.
                 reader.Skip();
@@ -170,13 +170,13 @@ namespace Azure.Core.Dynamic
             else
             {
                 writer.WriteStartObject();
-                WriteObjectProperties(path, ref reader, writer);
+                WriteObjectProperties(path, highWaterMark, ref reader, writer);
             }
         }
 
-        private void WriteString(string path, ref Utf8JsonReader reader, Utf8JsonWriter writer)
+        private void WriteString(string path, int highWaterMark, ref Utf8JsonReader reader, Utf8JsonWriter writer)
         {
-            bool changed = Changes.TryGetChange(path, out JsonDataChange change);
+            bool changed = Changes.TryGetChange(path, highWaterMark, out JsonDataChange change);
 
             if (changed)
             {
@@ -188,9 +188,9 @@ namespace Azure.Core.Dynamic
             return;
         }
 
-        private void WriteNumber(string path, ref Utf8JsonReader reader, Utf8JsonWriter writer)
+        private void WriteNumber(string path, int highWaterMark, ref Utf8JsonReader reader, Utf8JsonWriter writer)
         {
-            if (Changes.TryGetChange(path, out JsonDataChange change))
+            if (Changes.TryGetChange(path, highWaterMark, out JsonDataChange change))
             {
                 switch (change.Value)
                 {
@@ -238,9 +238,9 @@ namespace Azure.Core.Dynamic
             // TODO: Handle error case.
         }
 
-        private void WriteBoolean(string path, JsonTokenType token, Utf8JsonWriter writer)
+        private void WriteBoolean(string path, int highWaterMark, JsonTokenType token, Utf8JsonWriter writer)
         {
-            bool changed = Changes.TryGetChange(path, out JsonDataChange change);
+            bool changed = Changes.TryGetChange(path, highWaterMark, out JsonDataChange change);
 
             if (changed)
             {

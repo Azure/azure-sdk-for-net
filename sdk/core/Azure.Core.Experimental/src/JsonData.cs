@@ -35,17 +35,11 @@ namespace Azure.Core.Dynamic
         {
             get
             {
-                if (Changes.TryGetChange(string.Empty, out JsonDataChange change))
+                if (Changes.TryGetChange(string.Empty, -1, out JsonDataChange change))
                 {
-                    if (change.Value == null)
-                    {
-                        // TODO: handle this.
-                        //throw new InvalidCastException("Property has been removed");
-                    }
-
                     if (change.ReplacesJsonElement)
                     {
-                        return new JsonDataElement(this, change.AsJsonElement(), "");
+                        return new JsonDataElement(this, change.AsJsonElement(), string.Empty);
                     }
                 }
 

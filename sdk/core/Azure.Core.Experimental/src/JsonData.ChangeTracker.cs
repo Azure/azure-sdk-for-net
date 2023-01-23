@@ -67,10 +67,10 @@ namespace Azure.Core.Dynamic
                 return false;
             }
 
-            internal bool TryGetChange(string path, out JsonDataChange change)
+            internal bool TryGetChange(string path, in int lastAppliedChange, out JsonDataChange change)
             {
                 // TODO: we'll want to pass in the high water mark here too, I think.
-                bool changed = TryGetChangeSingle(path, -1, out change);
+                bool changed = TryGetChangeSingle(path, lastAppliedChange, out change);
 
                 // TODO: Replace this
                 //// Check for changes to ancestor elements

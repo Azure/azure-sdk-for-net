@@ -544,23 +544,27 @@ namespace Azure.Core.Experimental.Tests
         [Test]
         public void CanAccessPropertyInUnchangedBranchOfChangedStructure()
         {
-            string json = @"{ ""ArrayProperty"": [
+            string json = @"[
                 {
                   ""Foo"" : {
                     ""A"": 6
                     }
-                } ],
-                  ""Bar"" : ""hi"" }";
+                },
+                {
+                    ""Bar"" : ""hi""
+                }]";
 
             var jd = JsonData.Parse(json);
 
-            // resets json to equivalent of "[ 5 ]"
-            jd.RootElement.GetProperty("ArrayProperty").GetIndexElement(0).Set(5);
+            // resets json to equivalent of "[ 5, ... ]"
+            jd.RootElement.GetIndexElement(0).Set(5);
+            jd.RootElement.GetIndexElement(1).GetProperty("Bar").Set("new");
 
-            Assert.AreEqual(5, jd.RootElement.GetProperty("ArrayProperty").GetIndexElement(0).GetInt32());
+            Assert.AreEqual(5, jd.RootElement.GetIndexElement(0).GetInt32());
+            Assert.AreEqual("new", jd.RootElement.GetIndexElement(1).GetProperty("Bar").GetString());
 
-            // Reset json[0] to an object
-            jd.RootElement.GetProperty("ArrayProperty").GetIndexElement(0).Set(new
+            // Make a structural change to json[0] but not json[1]
+            jd.RootElement.GetIndexElement(0).Set(new
             {
                 Foo = new
                 {
@@ -568,10 +572,11 @@ namespace Azure.Core.Experimental.Tests
                 }
             });
 
-            // We should be able to get the value of A without being tripped up
-            // by earlier changes.
-            int aValue = jd.RootElement.GetProperty("ArrayProperty").GetIndexElement(0).GetProperty("Foo").GetProperty("A").GetInt32();
+            // We should be able to get the value of A without being tripped up by earlier changes.
+			// We should also be able to get the value of json[1] without it having been invalidated.
+            int aValue = jd.RootElement.GetIndexElement(0).GetProperty("Foo").GetProperty("A").GetInt32();
             Assert.AreEqual(7, aValue);
+            Assert.AreEqual("new", jd.RootElement.GetIndexElement(1).GetProperty("Bar").GetString());
 
             // 3. Type round-trips correctly.
             using MemoryStream stream = new();
@@ -580,14 +585,15 @@ namespace Azure.Core.Experimental.Tests
             string jsonString = BinaryData.FromStream(stream).ToString();
             JsonDocument doc = JsonDocument.Parse(jsonString);
 
-            Assert.AreEqual(JsonDataWriteToTests.RemoveWhiteSpace(@"{
-                ""ArrayProperty"": [
-                    {
-                      ""Foo"" : {
-                        ""A"": 7
-                        }
-                    } ],
-                ""Bar"" : ""hi"" }"), jsonString);
+            Assert.AreEqual(JsonDataWriteToTests.RemoveWhiteSpace(@"[
+                {
+                  ""Foo"" : {
+                    ""A"": 7
+                    }
+                },
+                {
+                    ""Bar"" : ""new""
+                }]"), jsonString);
         }
 
         [Test]
