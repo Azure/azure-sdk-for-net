@@ -5,6 +5,7 @@ using System;
 using System.Linq;
 using Azure.Core;
 using Azure.Core.TestFramework;
+using Azure.OpenAI.Inference.Models;
 using Azure.ResourceManager;
 using Azure.ResourceManager.CognitiveServices;
 using Azure.ResourceManager.CognitiveServices.Models;
@@ -16,6 +17,7 @@ namespace Azure.OpenAI.Inference.Tests
     public abstract class OpenAITestBase : RecordedTestBase<OpenAITestEnvironment>
     {
         private const string DeploymentIdVariable = "OPENAI_DEPLOYMENT_ID";
+        private const string EmbeddingsDeploymentIdVariable = "OPENAI_EMBEDDINGS_DEPLOYMENT_ID";
         private const string EndpointVariable = "OPENAI_ENDPOINT";
         private const string ResourceGroupName = "openai-test-rg";
         private const string CognitiveServicesAccountName = "openai-test-account";
@@ -37,14 +39,15 @@ namespace Azure.OpenAI.Inference.Tests
             if (Mode == RecordedTestMode.Playback)
             {
                 DeploymentId = Recording.GetVariable(DeploymentIdVariable, null);
+                EmbeddingsDeploymentId = Recording.GetVariable(EmbeddingsDeploymentIdVariable, null);
                 _endpoint = Recording.GetVariable(EndpointVariable, null);
             }
 
-            if ((Mode == RecordedTestMode.Live || Mode == RecordedTestMode.Record) && DeploymentId == null)
+            if ((Mode == RecordedTestMode.Live || Mode == RecordedTestMode.Record) && (DeploymentId == null || EmbeddingsDeploymentId == null))
             {
                 lock (_deploymentIdLock)
                 {
-                    if (DeploymentId == null)
+                    if (DeploymentId == null || EmbeddingsDeploymentId == null)
                     {
                         ArmClient armClient = new ArmClient(TestEnvironment.Credential);
                         var subscription = armClient.GetSubscriptionResource(SubscriptionResource.CreateResourceIdentifier(TestEnvironment.SubscriptionId));
@@ -56,10 +59,13 @@ namespace Azure.OpenAI.Inference.Tests
                         _endpoint = _cognitiveServiceAccount.Data.Properties.Endpoint;
                         Recording.SetVariable(EndpointVariable, _endpoint);
 
-                        CognitiveServicesAccountDeploymentResource modelDeployment = CreateModelDeploymentIfNotExists();
+                        CognitiveServicesAccountDeploymentResource modelDeployment = CreateModelDeploymentIfNotExists("text-davinci-002");
+                        CognitiveServicesAccountDeploymentResource embeddingsModelDeployment = CreateModelDeploymentIfNotExists("text-similarity-davinci-001");
 
                         DeploymentId = modelDeployment.Id.Name;
                         Recording.SetVariable(DeploymentIdVariable, DeploymentId);
+                        EmbeddingsDeploymentId = embeddingsModelDeployment.Id.Name;
+                        Recording.SetVariable(EmbeddingsDeploymentIdVariable, EmbeddingsDeploymentId);
 
                         var keys = _cognitiveServiceAccount.GetKeys();
                         _key = keys.Value.Key1;
@@ -68,10 +74,10 @@ namespace Azure.OpenAI.Inference.Tests
             }
         }
 
-        private CognitiveServicesAccountDeploymentResource CreateModelDeploymentIfNotExists()
+        private CognitiveServicesAccountDeploymentResource CreateModelDeploymentIfNotExists(string modelName)
         {
             var models = _cognitiveServiceAccount.GetModels();
-            var model = models.FirstOrDefault(m => m.Name == "text-davinci-002");
+            var model = models.FirstOrDefault(m => m.Name == modelName);
             if (model == null)
                 throw new Exception($"No models available for {_cognitiveServiceAccount.Id}");
 
@@ -123,6 +129,7 @@ namespace Azure.OpenAI.Inference.Tests
         }
 
         public string DeploymentId { get; private set; }
+        public string EmbeddingsDeploymentId { get; private set; }
 
         protected OpenAIClient GetClient() => InstrumentClient(
             new OpenAIClient(

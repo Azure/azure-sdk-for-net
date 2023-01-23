@@ -19,7 +19,7 @@ namespace Azure.OpenAI.Inference.Models
         /// <param name="object"></param>
         /// <param name="data"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="object"/> or <paramref name="data"/> is null. </exception>
-        internal Embeddings(string @object, IEnumerable<Embedding> data)
+        internal Embeddings(string @object, IEnumerable<EmbeddingItem> data)
         {
             Argument.AssertNotNull(@object, nameof(@object));
             Argument.AssertNotNull(data, nameof(data));
@@ -31,15 +31,14 @@ namespace Azure.OpenAI.Inference.Models
         /// <summary> Initializes a new instance of Embeddings. </summary>
         /// <param name="object"></param>
         /// <param name="data"></param>
-        internal Embeddings(string @object, IReadOnlyList<Embedding> data)
+        internal Embeddings(string @object, IReadOnlyList<EmbeddingItem> data)
         {
             Object = @object;
             Data = data.ToList();
-        }
-
+        } 
         /// <summary> Gets the object. </summary>
         public string Object { get; }
         /// <summary> Gets the data. </summary>
-        public IReadOnlyList<Embedding> Data { get; }
+        public IReadOnlyList<EmbeddingItem> Data { get; }
     }
 }

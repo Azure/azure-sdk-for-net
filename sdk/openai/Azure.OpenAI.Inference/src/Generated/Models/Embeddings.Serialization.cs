@@ -17,7 +17,7 @@ namespace Azure.OpenAI.Inference.Models
         internal static Embeddings DeserializeEmbeddings(JsonElement element)
         {
             string @object = default;
-            IReadOnlyList<Embedding> data = default;
+            IReadOnlyList<EmbeddingItem> data = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("object"))
@@ -27,10 +27,10 @@ namespace Azure.OpenAI.Inference.Models
                 }
                 if (property.NameEquals("data"))
                 {
-                    List<Embedding> array = new List<Embedding>();
+                    List<EmbeddingItem> array = new List<EmbeddingItem>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Embedding.DeserializeEmbedding(item));
+                        array.Add(EmbeddingItem.DeserializeEmbeddingItem(item));
                     }
                     data = array;
                     continue;

@@ -11,7 +11,7 @@ namespace Azure.OpenAI.Inference.Tests
     public class OpenAIInferenceTests : OpenAITestBase
     {
         public OpenAIInferenceTests(bool isAsync)
-            : base(isAsync)//, RecordedTestMode.Record)
+            : base(isAsync, RecordedTestMode.Live)
         {
         }
 
@@ -38,6 +38,19 @@ namespace Azure.OpenAI.Inference.Tests
             Assert.That(completionsRequest, Is.InstanceOf<CompletionsRequest>());
             var response = await client.CompletionsAsync(DeploymentId, completionsRequest);
             Assert.That(response, Is.InstanceOf<Response<Completion>>());
+        }
+
+        /// <summary>
+        /// Test Embeddings.
+        /// </summary>
+        [RecordedTest]
+        public async Task EmbeddingTest()
+        {
+            var client = GetClient();
+            EmbeddingsRequest embeddingsRequest = new EmbeddingsRequest("Your text string goes here");
+            Assert.That(embeddingsRequest, Is.InstanceOf<EmbeddingsRequest>());
+            var response = await client.EmbeddingsAsync(EmbeddingsDeploymentId, embeddingsRequest);
+            Assert.That(response, Is.InstanceOf<Response<Embeddings>>());
         }
     }
 }

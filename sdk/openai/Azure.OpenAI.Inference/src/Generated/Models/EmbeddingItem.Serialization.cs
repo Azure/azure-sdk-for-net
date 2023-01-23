@@ -12,12 +12,12 @@ using Azure.Core;
 
 namespace Azure.OpenAI.Inference.Models
 {
-    public partial class Embedding
+    public partial class EmbeddingItem
     {
-        internal static Embedding DeserializeEmbedding(JsonElement element)
+        internal static EmbeddingItem DeserializeEmbeddingItem(JsonElement element)
         {
             string @object = default;
-            IReadOnlyList<float> embeddingFloat = default;
+            IReadOnlyList<float> embedding = default;
             int index = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -26,14 +26,14 @@ namespace Azure.OpenAI.Inference.Models
                     @object = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("embeddingFloat"))
+                if (property.NameEquals("embedding"))
                 {
                     List<float> array = new List<float>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
                         array.Add(item.GetSingle());
                     }
-                    embeddingFloat = array;
+                    embedding = array;
                     continue;
                 }
                 if (property.NameEquals("index"))
@@ -42,15 +42,15 @@ namespace Azure.OpenAI.Inference.Models
                     continue;
                 }
             }
-            return new Embedding(@object, embeddingFloat, index);
+            return new EmbeddingItem(@object, embedding, index);
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static Embedding FromResponse(Response response)
+        internal static EmbeddingItem FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content);
-            return DeserializeEmbedding(document.RootElement);
+            return DeserializeEmbeddingItem(document.RootElement);
         }
     }
 }
