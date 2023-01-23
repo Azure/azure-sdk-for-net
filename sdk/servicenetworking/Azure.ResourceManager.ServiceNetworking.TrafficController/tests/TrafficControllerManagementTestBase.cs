@@ -29,7 +29,9 @@ namespace Azure.ResourceManager.ServiceNetworking.TrafficController.Tests
         {
             get
             {
-                return Client.GetDefaultSubscription();
+                var defaultSub = Client.GetDefaultSubscriptionAsync();
+                defaultSub.Wait();
+                return defaultSub.Result;
             }
         }
 
@@ -41,9 +43,14 @@ namespace Azure.ResourceManager.ServiceNetworking.TrafficController.Tests
             }
         }
 
+        public string DefaultLocation()
+        {
+            return "North Europe";
+        }
+
         public Resources.ResourceGroupResource GetResourceGroup(string name)
         {
-            return Subscription.GetResourceGroups().Get(name).Value;
+            return Subscription.GetResourceGroups().GetAsync(name).Result.Value;
         }
 
         protected TrafficControllerCollection GetTrafficControllers(string resourceGroupName)
