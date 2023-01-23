@@ -7,7 +7,6 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Communication;
 using Azure.Core;
 
 namespace Azure.Communication.CallAutomation
@@ -19,7 +18,7 @@ namespace Azure.Communication.CallAutomation
             Optional<string> callConnectionId = default;
             Optional<string> serverCallId = default;
             Optional<string> correlationId = default;
-            Optional<IReadOnlyList<CommunicationIdentifierModel>> participants = default;
+            Optional<IReadOnlyList<AcsCallParticipantInternal>> participants = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("callConnectionId"))
@@ -44,10 +43,10 @@ namespace Azure.Communication.CallAutomation
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<CommunicationIdentifierModel> array = new List<CommunicationIdentifierModel>();
+                    List<AcsCallParticipantInternal> array = new List<AcsCallParticipantInternal>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CommunicationIdentifierModel.DeserializeCommunicationIdentifierModel(item));
+                        array.Add(AcsCallParticipantInternal.DeserializeAcsCallParticipantInternal(item));
                     }
                     participants = array;
                     continue;
