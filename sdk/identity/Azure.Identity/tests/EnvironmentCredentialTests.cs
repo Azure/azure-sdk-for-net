@@ -1,20 +1,21 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Azure.Core;
 using System;
+using System.Collections.Generic;
+using System.IO;
 using System.Reflection;
-using NUnit.Framework;
+using System.Threading.Tasks;
+using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.Identity.Tests.Mock;
-using System.Threading.Tasks;
-using System.Collections.Generic;
+using NUnit.Framework;
 
 namespace Azure.Identity.Tests
 {
-    public class EnvironmentCredentialProviderTests : ClientTestBase
+    public class EnvironmentCredentialTests : ClientTestBase
     {
-        public EnvironmentCredentialProviderTests(bool isAsync) : base(isAsync)
+        public EnvironmentCredentialTests(bool isAsync) : base(isAsync)
         {
         }
 
@@ -56,7 +57,7 @@ namespace Azure.Identity.Tests
 
         [NonParallelizable]
         [Test]
-        public void CredentialConstructionClientCertificate([Values(null, "mockcertificatepassword")]string expPassword, [Values(null, "true", "false")]string includeX5C)
+        public void CredentialConstructionClientCertificate([Values(null, "mockcertificatepassword")] string expPassword, [Values(null, "true", "false")] string includeX5C)
         {
             using (new TestEnvVar(new()
             {
@@ -161,6 +162,52 @@ namespace Azure.Identity.Tests
                 var credential = InstrumentClient(new EnvironmentCredential());
 
                 Assert.ThrowsAsync<CredentialUnavailableException>(async () => await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default)), string.Join(", ", environmentVars.Keys));
+            }
+        }
+
+        public static IEnumerable<object[]> EnvCredConfigs()
+        {
+            yield return new object[] {
+                new Dictionary<string, string> {
+                    { "AZURE_CLIENT_ID", "mockclientid" },
+                    { "AZURE_CLIENT_SECRET", "mockclientsecret" },
+                    { "AZURE_TENANT_ID", "mocktenantid" },
+                    {"AZURE_USERNAME", "mockusername" },
+                    { "AZURE_PASSWORD", "mockpassword" },
+                    { "AZURE_CLIENT_CERTIFICATE_PATH", Path.Combine(TestContext.CurrentContext.TestDirectory, "Data", "cert.pem") } },
+                typeof(ClientSecretCredential)};
+
+            yield return new object[] {
+                new Dictionary<string, string> {
+                    { "AZURE_CLIENT_ID", "mockclientid" },
+                    { "AZURE_CLIENT_SECRET", null},
+                    { "AZURE_TENANT_ID", "mocktenantid" },
+                    {"AZURE_USERNAME", "mockusername" },
+                    { "AZURE_PASSWORD", "mockpassword" },
+                    { "AZURE_CLIENT_CERTIFICATE_PATH", null } },
+                typeof(UsernamePasswordCredential)};
+
+                // If username/password is available AND AZURE_CLIENT_CERTIFICATE_PATH, ClientCertificateCredential will be selected.
+                yield return new object[] {
+                new Dictionary<string, string> {
+                    { "AZURE_CLIENT_ID", "mockclientid" },
+                    { "AZURE_CLIENT_SECRET", null },
+                    { "AZURE_TENANT_ID", "mocktenantid" },
+                    {"AZURE_USERNAME", "mockusername" },
+                    { "AZURE_PASSWORD", "mockpassword" },
+                    { "AZURE_CLIENT_CERTIFICATE_PATH", Path.Combine(TestContext.CurrentContext.TestDirectory, "Data", "cert.pem") } },
+                typeof(ClientCertificateCredential)};
+        }
+
+        [NonParallelizable]
+        [Test]
+        [TestCaseSource(nameof(EnvCredConfigs))]
+        public void EachSubCredentialTypeCanBeConfigured(Dictionary<string, string> environmentVars, Type expectedCredentialType)
+        {
+            using (new TestEnvVar(environmentVars))
+            {
+                var cred = new EnvironmentCredential();
+                Assert.AreEqual(expectedCredentialType, cred.Credential.GetType());
             }
         }
     }
