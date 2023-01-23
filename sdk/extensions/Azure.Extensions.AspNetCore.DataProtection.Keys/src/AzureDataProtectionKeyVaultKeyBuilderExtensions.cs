@@ -37,8 +37,8 @@ namespace Microsoft.AspNetCore.DataProtection
         /// Configures the data protection system to protect keys with specified key in Azure KeyVault.
         /// </summary>
         /// <param name="builder">The builder instance to modify.</param>
-        /// <param name="keyResolver">The <see cref="IKeyEncryptionKeyResolver"/> to use for Key Vault access.</param>
         /// <param name="keyIdentifier">The Azure Key Vault key identifier used for key encryption.</param>
+        /// <param name="keyResolver">The <see cref="IKeyEncryptionKeyResolver"/> to use for Key Vault access.</param>
         /// <returns>The value <paramref name="builder"/>.</returns>
         public static IDataProtectionBuilder ProtectKeysWithAzureKeyVault(this IDataProtectionBuilder builder, string keyIdentifier, IKeyEncryptionKeyResolver keyResolver)
         {
@@ -60,8 +60,8 @@ namespace Microsoft.AspNetCore.DataProtection
         /// Configures the data protection system to protect keys with specified key in Azure Key Vault.
         /// </summary>
         /// <param name="builder">The builder instance to modify.</param>
-        /// <param name="keyResolverFactory">The factory delegate to create the <see cref="IKeyEncryptionKeyResolver"/> to use for Key Vault access.</param>
         /// <param name="keyIdentifier">The Azure Key Vault key identifier used for key encryption.</param>
+        /// <param name="keyResolverFactory">The factory delegate to create the <see cref="IKeyEncryptionKeyResolver"/> to use for Key Vault access.</param>
         /// <returns>The value <paramref name="builder"/>.</returns>
         public static IDataProtectionBuilder ProtectKeysWithAzureKeyVault(this IDataProtectionBuilder builder, string keyIdentifier, Func<IServiceProvider, IKeyEncryptionKeyResolver> keyResolverFactory)
         {
@@ -86,8 +86,8 @@ namespace Microsoft.AspNetCore.DataProtection
         /// Configures the data protection system to protect keys with specified key in Azure Key Vault.
         /// </summary>
         /// <param name="builder">The builder instance to modify.</param>
-        /// <param name="tokenCredentialFactory">The factory delegate to create the <see cref="TokenCredential"/> to use for authenticating Key Vault access.</param>
         /// <param name="keyIdentifier">The Azure Key Vault key identifier used for key encryption.</param>
+        /// <param name="tokenCredentialFactory">The factory delegate to create the <see cref="TokenCredential"/> to use for authenticating Key Vault access.</param>
         /// <returns>The value <paramref name="builder"/>.</returns>
         public static IDataProtectionBuilder ProtectKeysWithAzureKeyVault(this IDataProtectionBuilder builder, string keyIdentifier, Func<IServiceProvider, TokenCredential> tokenCredentialFactory)
         {
