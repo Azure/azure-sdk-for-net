@@ -9,9 +9,6 @@ namespace Azure.Core.Dynamic
 {
     public partial class JsonData
     {
-        // Note: internal implementation reading original data and writing to a buffer while
-        // iterating over tokens.  Currently implemented without change-tracking in order to
-        // prove correctness.
         internal void WriteElementTo(Utf8JsonWriter writer)
         {
             // TODO: Optimize path manipulations with Span<byte>
@@ -57,7 +54,7 @@ namespace Azure.Core.Dynamic
                         break;
                     case JsonTokenType.True:
                     case JsonTokenType.False:
-                        WriteBoolean(path, highWaterMark, reader.TokenType, writer);
+                        WriteBoolean(path, highWaterMark, reader.TokenType, ref reader, writer);
                         break;
                     case JsonTokenType.Null:
                         writer.WriteNullValue();
@@ -94,7 +91,7 @@ namespace Azure.Core.Dynamic
                     case JsonTokenType.True:
                     case JsonTokenType.False:
                         path = ChangeTracker.PushIndex(path, index);
-                        WriteBoolean(path, highWaterMark, reader.TokenType, writer);
+                        WriteBoolean(path, highWaterMark, reader.TokenType, ref reader, writer);
                         break;
                     case JsonTokenType.Null:
                         path = ChangeTracker.PushIndex(path, index);
@@ -141,11 +138,10 @@ namespace Azure.Core.Dynamic
                         continue;
                     case JsonTokenType.True:
                     case JsonTokenType.False:
-                        WriteBoolean(path, highWaterMark, reader.TokenType, writer);
+                        WriteBoolean(path, highWaterMark, reader.TokenType, ref reader, writer);
                         path = ChangeTracker.PopProperty(path);
                         return;
                     case JsonTokenType.Null:
-                        // TODO: Do we want to write the value here if null?
                         writer.WriteNullValue();
                         path = ChangeTracker.PopProperty(path);
                         return;
@@ -158,28 +154,35 @@ namespace Azure.Core.Dynamic
 
         private void WriteObject(string path, int highWaterMark, ref Utf8JsonReader reader, Utf8JsonWriter writer)
         {
-            bool changed = Changes.TryGetChange(path, highWaterMark, out JsonDataChange change);
-            if (changed)
+            if (Changes.TryGetChange(path, highWaterMark, out JsonDataChange change))
             {
-                Utf8JsonReader changedElementReader = change.GetReader();
-                WriteElement(path, change.Index, ref changedElementReader, writer);
+                WriteStructuralChange(path, change, ref reader, writer);
+                return;
+            }
 
-                // Skip this element in the original data.
-                reader.Skip();
-            }
-            else
-            {
-                writer.WriteStartObject();
-                WriteObjectProperties(path, highWaterMark, ref reader, writer);
-            }
+            writer.WriteStartObject();
+            WriteObjectProperties(path, highWaterMark, ref reader, writer);
+        }
+
+        private void WriteStructuralChange(string path, JsonDataChange change, ref Utf8JsonReader reader, Utf8JsonWriter writer)
+        {
+            Utf8JsonReader changedElementReader = change.GetReader();
+            WriteElement(path, change.Index, ref changedElementReader, writer);
+
+            // Skip this element in the original json buffer.
+            reader.Skip();
         }
 
         private void WriteString(string path, int highWaterMark, ref Utf8JsonReader reader, Utf8JsonWriter writer)
         {
-            bool changed = Changes.TryGetChange(path, highWaterMark, out JsonDataChange change);
-
-            if (changed)
+            if (Changes.TryGetChange(path, highWaterMark, out JsonDataChange change))
             {
+                if (change.ReplacesJsonElement)
+                {
+                    WriteStructuralChange(path, change, ref reader, writer);
+                    return;
+                }
+
                 writer.WriteStringValue((string)change.Value!);
                 return;
             }
@@ -192,6 +195,12 @@ namespace Azure.Core.Dynamic
         {
             if (Changes.TryGetChange(path, highWaterMark, out JsonDataChange change))
             {
+                if (change.ReplacesJsonElement)
+                {
+                    WriteStructuralChange(path, change, ref reader, writer);
+                    return;
+                }
+
                 switch (change.Value)
                 {
                     case long l:
@@ -235,15 +244,19 @@ namespace Azure.Core.Dynamic
                 return;
             }
 
-            // TODO: Handle error case.
+            throw new InvalidOperationException("Change doesn't store a number value.");
         }
 
-        private void WriteBoolean(string path, int highWaterMark, JsonTokenType token, Utf8JsonWriter writer)
+        private void WriteBoolean(string path, int highWaterMark, JsonTokenType token, ref Utf8JsonReader reader, Utf8JsonWriter writer)
         {
-            bool changed = Changes.TryGetChange(path, highWaterMark, out JsonDataChange change);
-
-            if (changed)
+            if (Changes.TryGetChange(path, highWaterMark, out JsonDataChange change))
             {
+                if (change.ReplacesJsonElement)
+                {
+                    WriteStructuralChange(path, change, ref reader, writer);
+                    return;
+                }
+
                 writer.WriteBooleanValue((bool)change.Value!);
                 return;
             }

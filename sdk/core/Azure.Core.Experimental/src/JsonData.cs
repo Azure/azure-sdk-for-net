@@ -4,7 +4,6 @@
 using System;
 using System.Buffers;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Dynamic;
 using System.IO;
 using System.Linq;
@@ -41,7 +40,7 @@ namespace Azure.Core.Dynamic
                     }
                 }
 
-                return new JsonDataElement(this, _element, string.Empty, -1);
+                return new JsonDataElement(this, _element, string.Empty);
             }
         }
 
