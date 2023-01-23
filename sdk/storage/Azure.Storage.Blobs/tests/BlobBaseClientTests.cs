@@ -3851,7 +3851,7 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [RecordedTest]
-        public async Task ExistsAsync_NoLogWarning()
+        public async Task ExistsAsync_NotExists_NoLogWarning()
         {
             // Arrange
             BlobClient nonExistentBlob = BlobsClientBuilder.GetServiceClient_SharedKey()
@@ -3859,15 +3859,48 @@ namespace Azure.Storage.Blobs.Test
                 .GetBlobClient(BlobsClientBuilder.GetNewBlobName());
 
             var events = new List<(EventWrittenEventArgs EventData, string EventMessage)>();
-            using AzureEventSourceListener listener = new AzureEventSourceListener(
-                (data, message) => events.Add((data, message)),
-                EventLevel.Informational);
 
             // Act
-            bool exists = await nonExistentBlob.ExistsAsync();
+            bool exists;
+            using (AzureEventSourceListener listener = new AzureEventSourceListener(
+                (data, message) => events.Add((data, message)),
+                EventLevel.Informational))
+            {
+                exists = await nonExistentBlob.ExistsAsync();
+            }
 
             // Assert
             Assert.IsFalse(exists);
+            CollectionAssert.IsEmpty(events.Where(e => e.EventData.Level < EventLevel.Informational));
+        }
+
+        [RecordedTest]
+        public async Task ExistsAsync_Exists_CPK_NoKey_NoLogWarning()
+        {
+            await using DisposingContainer test = await GetTestContainerAsync();
+
+            // Arrange
+            string blobName = GetNewBlobName();
+            AppendBlobClient blob = InstrumentClient(test.Container.GetAppendBlobClient(blobName));
+            CustomerProvidedKey customerProvidedKey = GetCustomerProvidedKey();
+            blob = InstrumentClient(blob.WithCustomerProvidedKey(customerProvidedKey));
+            await blob.CreateIfNotExistsAsync();
+
+            AppendBlobClient blobClientNoKey = InstrumentClient(test.Container.GetAppendBlobClient(blobName));
+
+            var events = new List<(EventWrittenEventArgs EventData, string EventMessage)>();
+
+            // Act
+            bool exists;
+            using (AzureEventSourceListener listener = new AzureEventSourceListener(
+                (data, message) => events.Add((data, message)),
+                EventLevel.Informational))
+            {
+                exists = await blobClientNoKey.ExistsAsync();
+            }
+
+            // Assert
+            Assert.IsTrue(exists);
             CollectionAssert.IsEmpty(events.Where(e => e.EventData.Level < EventLevel.Informational));
         }
 
