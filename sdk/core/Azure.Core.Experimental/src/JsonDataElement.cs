@@ -15,6 +15,7 @@ namespace Azure.Core.Dynamic
         private readonly JsonData _root;
         private readonly JsonElement _element;
         private readonly string _path;
+        private readonly int _highWaterMark;
 
         private readonly JsonData.ChangeTracker Changes => _root.Changes;
 
@@ -23,11 +24,12 @@ namespace Azure.Core.Dynamic
         private bool IsValid => true;
 #pragma warning restore CA1822 // Mark members as static
 
-        internal JsonDataElement(JsonData root, JsonElement element, string path)
+        internal JsonDataElement(JsonData root, JsonElement element, string path, int highWaterMark = -1)
         {
             _element = element;
             _root = root;
             _path = path;
+            _highWaterMark = highWaterMark;
         }
 
         /// <summary>
@@ -53,11 +55,11 @@ namespace Azure.Core.Dynamic
             {
                 if (change.ReplacesJsonElement)
                 {
-                    return new JsonDataElement(_root, change.AsJsonElement(), path);
+                    return new JsonDataElement(_root, change.AsJsonElement(), path, change.Index);
                 }
             }
 
-            return new JsonDataElement(_root, _element.GetProperty(name), path);
+            return new JsonDataElement(_root, _element.GetProperty(name), path, _highWaterMark);
         }
 
         // TODO: Reimplement GetProperty in terms of TryGetProperty().
@@ -116,11 +118,11 @@ namespace Azure.Core.Dynamic
             {
                 if (change.ReplacesJsonElement)
                 {
-                    return new JsonDataElement(_root, change.AsJsonElement(), path);
+                    return new JsonDataElement(_root, change.AsJsonElement(), path, change.Index);
                 }
             }
 
-            return new JsonDataElement(_root, _element[index], path);
+            return new JsonDataElement(_root, _element[index], path, _highWaterMark);
         }
 
         private JsonDataElement GetObject()
@@ -131,7 +133,7 @@ namespace Azure.Core.Dynamic
             {
                 if (change.ReplacesJsonElement)
                 {
-                    return new JsonDataElement(_root, change.AsJsonElement(), _path);
+                    return new JsonDataElement(_root, change.AsJsonElement(), _path, change.Index);
                 }
             }
 
@@ -146,7 +148,7 @@ namespace Azure.Core.Dynamic
             {
                 if (change.ReplacesJsonElement)
                 {
-                    return new JsonDataElement(_root, change.AsJsonElement(), _path);
+                    return new JsonDataElement(_root, change.AsJsonElement(), _path, change.Index);
                 }
             }
 
@@ -225,7 +227,8 @@ namespace Azure.Core.Dynamic
 
             if (_element.TryGetProperty(name, out _))
             {
-                Changes.AddChange(path, value);
+                // TODO: should this be a structural change?  Confirm.
+                Changes.AddChange(path, value, true);
             }
 
             // If it's not already there, we'll add a different kind of change.
@@ -307,9 +310,9 @@ namespace Azure.Core.Dynamic
         // TODO: Decide whether to keep this implementation.
         private void EnsureValid()
         {
-            if (Changes.AncestorChanged(_path))
+            if (Changes.AncestorChanged(_path, _highWaterMark))
             {
-                throw new InvalidOperationException("Ancestor changed");
+                throw new InvalidOperationException("An ancestor node of this element has unapplied changes.  Please re-request this property from the RootElement.");
             }
         }
     }

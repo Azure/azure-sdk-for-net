@@ -473,15 +473,72 @@ namespace Azure.Core.Experimental.Tests
             // to a valid path in the mutated JSON tree.
             Assert.Throws<InvalidOperationException>(() => jd.RootElement.GetIndexElement(0).Set(a));
 
-            //// 3. Type round-trips correctly.
-            //using MemoryStream stream = new();
-            //jd.WriteTo(stream);
-            //stream.Position = 0;
-            //string jsonString = BinaryData.FromStream(stream).ToString();
-            //JsonDocument doc = JsonDocument.Parse(jsonString);
+            // 3. Type round-trips correctly.
+            using MemoryStream stream = new();
+            jd.WriteTo(stream);
+            stream.Position = 0;
+            string jsonString = BinaryData.FromStream(stream).ToString();
+            JsonDocument doc = JsonDocument.Parse(jsonString);
 
-            //Assert.AreEqual(5, doc.RootElement[0].GetInt32());
-            //Assert.AreEqual(JsonDataWriteToTests.RemoveWhiteSpace(@"[ 5 ]"), jsonString);
+            Assert.AreEqual(5, doc.RootElement[0].GetInt32());
+            Assert.AreEqual(JsonDataWriteToTests.RemoveWhiteSpace(@"[ 5 ]"), jsonString);
+        }
+
+        [Test]
+        public void CanAccessPropertyInChangedStructure()
+        {
+            string json = @"[
+                {
+                  ""Foo"" : {
+                    ""A"": 6
+                    }
+                } ]";
+
+            var jd = JsonData.Parse(json);
+
+            // a's path points to "0.Foo.A"
+            var a = jd.RootElement.GetIndexElement(0).GetProperty("Foo").GetProperty("A");
+
+            // resets json to equivalent of "[ 5 ]"
+            jd.RootElement.GetIndexElement(0).Set(5);
+
+            Assert.AreEqual(5, jd.RootElement.GetIndexElement(0).GetInt32());
+
+            // a's path points to "0.Foo.A" so a.GetInt32() should throw since this
+            // in an invalid path.
+            Assert.Throws<InvalidOperationException>(() => a.GetInt32());
+
+            // Setting json[0] to `a` should throw as well, as the element doesn't point
+            // to a valid path in the mutated JSON tree.
+            Assert.Throws<InvalidOperationException>(() => jd.RootElement.GetIndexElement(0).Set(a));
+
+            // Reset json[0] to an object
+            jd.RootElement.GetIndexElement(0).Set(new
+            {
+                Foo = new
+                {
+                    B = 7
+                }
+            });
+
+            // We should be able to get the value of B without being tripped up
+            // by earlier changes.
+            int bValue = jd.RootElement.GetIndexElement(0).GetProperty("Foo").GetProperty("B").GetInt32();
+            Assert.AreEqual(7, bValue);
+
+            // 3. Type round-trips correctly.
+            using MemoryStream stream = new();
+            jd.WriteTo(stream);
+            stream.Position = 0;
+            string jsonString = BinaryData.FromStream(stream).ToString();
+            JsonDocument doc = JsonDocument.Parse(jsonString);
+
+            Assert.AreEqual(JsonDataWriteToTests.RemoveWhiteSpace(@"[
+                {
+                  ""Foo"" : {
+                    ""B"": 7
+                    }
+                } ]"), jsonString);
         }
 
         [Test]

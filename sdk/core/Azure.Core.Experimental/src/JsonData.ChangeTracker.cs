@@ -15,7 +15,7 @@ namespace Azure.Core.Dynamic
 
             internal bool HasChanges => _changes != null && _changes.Count > 0;
 
-            internal bool AncestorChanged(string path)
+            internal bool AncestorChanged(string path, int highWaterMark)
             {
                 if (_changes == null)
                 {
@@ -28,7 +28,7 @@ namespace Azure.Core.Dynamic
                 while (!changed && path.Length > 0)
                 {
                     path = PopProperty(path);
-                    changed = TryGetChangeSingle(path, out JsonDataChange change);
+                    changed = TryGetChangeSingle(path, highWaterMark, out JsonDataChange change);
                 }
 
                 return changed;
@@ -69,13 +69,8 @@ namespace Azure.Core.Dynamic
 
             internal bool TryGetChange(string path, out JsonDataChange change)
             {
-                if (_changes == null)
-                {
-                    change = default;
-                    return false;
-                }
-
-                bool changed = TryGetChangeSingle(path, out change);
+                // TODO: we'll want to pass in the high water mark here too, I think.
+                bool changed = TryGetChangeSingle(path, -1, out change);
 
                 // TODO: Replace this
                 //// Check for changes to ancestor elements
@@ -88,9 +83,22 @@ namespace Azure.Core.Dynamic
                 return changed;
             }
 
-            private bool TryGetChangeSingle(string path, out JsonDataChange change)
+            // returns the index of the change, or -1 if no changes were found
+            /// <summary>
+            /// </summary>
+            /// <param name="path"></param>
+            /// <param name="lastAppliedChange">The index of the last structural change that was applied.</param>
+            /// <param name="change"></param>
+            /// <returns></returns>
+            private bool TryGetChangeSingle(string path, in int lastAppliedChange, out JsonDataChange change)
             {
-                for (int i = _changes!.Count - 1; i >= 0; i--)
+                if (_changes == null)
+                {
+                    change = default;
+                    return false;
+                }
+
+                for (int i = _changes!.Count - 1; i > lastAppliedChange; i--)
                 {
                     var c = _changes[i];
                     if (c.Path == path)
@@ -111,7 +119,13 @@ namespace Azure.Core.Dynamic
                     _changes = new List<JsonDataChange>();
                 }
 
-                _changes.Add(new JsonDataChange() { Path = path, Value = value, ReplacesJsonElement = replaceJsonElement });
+                _changes.Add(new JsonDataChange()
+                {
+                    Path = path,
+                    Value = value,
+                    Index = _changes.Count,
+                    ReplacesJsonElement = replaceJsonElement
+                });
             }
 
             internal static string PushIndex(string path, int index)

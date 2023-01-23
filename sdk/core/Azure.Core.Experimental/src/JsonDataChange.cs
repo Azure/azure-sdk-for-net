@@ -14,6 +14,9 @@ namespace Azure.Core.Dynamic
 
         public object? Value { get; set; }
 
+        // TODO: is this the right place to store this?
+        public int Index {  get; set; }
+
         /// <summary>
         /// The change invalidates the existing node's JsonElement
         /// due to changes in JsonValueKind or path structure.
