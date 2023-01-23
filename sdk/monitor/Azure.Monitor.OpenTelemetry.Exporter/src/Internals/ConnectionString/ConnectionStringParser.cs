@@ -40,7 +40,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.ConnectionString
 
                 return new ConnectionVars(
                     instrumentationKey: connString.GetInstrumentationKey(),
-                    ingestionEndpoint: connString.GetIngestionEndpoint());
+                    ingestionEndpoint: connString.GetIngestionEndpoint(),
+                    aadAudience: connString.GetAADAudience());
             }
             catch (Exception ex)
             {
@@ -48,6 +49,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.ConnectionString
                 throw new InvalidOperationException("Connection String Error: " + ex.Message, ex);
             }
         }
+
+        internal static string GetAADAudience(this AzureCoreConnectionString connectionString) => connectionString.GetNonRequired(Constants.AADAudienceKey);
 
         internal static string GetInstrumentationKey(this AzureCoreConnectionString connectionString) => connectionString.GetRequired(Constants.InstrumentationKeyKey);
 

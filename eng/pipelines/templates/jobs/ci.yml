@@ -172,9 +172,8 @@ jobs:
 
       - task: NodeTool@0
         inputs:
-          # https://github.com/nodejs/node/issues/40468
-          versionSpec: '16.6.2'
-        displayName: 'Install NodeJS'
+          versionSpec: 18.x
+        displayName: 'Use Node 18.x'
 
       - template: /eng/pipelines/templates/steps/install-dotnet.yml
 

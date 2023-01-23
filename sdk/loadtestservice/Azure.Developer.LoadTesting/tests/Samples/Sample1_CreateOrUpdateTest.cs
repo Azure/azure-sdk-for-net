@@ -1,14 +1,9 @@
-// Copyright (c) Microsoft Corporation. All rights reserved.
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
-using Newtonsoft.Json.Linq;
 using NUnit.Framework;
 
 namespace Azure.Developer.LoadTesting.Tests.Samples
@@ -19,23 +14,26 @@ namespace Azure.Developer.LoadTesting.Tests.Samples
         [SyncOnly]
         public void CreateOrUpdateTest()
         {
-            #region Snippet:Azure_Developer_LoadTesting_CreatingClient
+            #region Snippet:Azure_Developer_LoadTesting_CreateAdminClient
 
+#if SNIPPET
+            // The data-plane endpoint is obtained from Control Plane APIs with "https://"
+            // To obtain endpoint please follow: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/loadtestservice/Azure.Developer.LoadTesting#data-plane-endpoint
+            Uri endpointUrl = new Uri("https://" + <your resource URI obtained from steps above>);
+            TokenCredential credential = new DefaultAzureCredential();
+#else
             string endpoint = TestEnvironment.Endpoint;
+            Uri endpointUrl = new Uri("https://" + endpoint);
             TokenCredential credential = TestEnvironment.Credential;
+#endif
 
-            // creating LoadTesting Client
-            LoadTestingClient loadTestingClient = new LoadTestingClient(endpoint, credential);
+            // creating LoadTesting Administration Client
+            LoadTestAdministrationClient loadTestAdministrationClient = new LoadTestAdministrationClient(endpointUrl, credential);
+#endregion
 
-            // getting appropriate Subclient
-            LoadTestAdministrationClient loadTestAdministrationClient = loadTestingClient.getLoadTestAdministration();
-
-            #endregion
-
-            #region Snippet:Azure_Developer_LoadTesting_CreatOrUpdateTest
-
-            // provide unique identifier for your test
+#region Snippet:Azure_Developer_LoadTesting_CreateOrUpdateTest
             string testId = "my-test-id";
+            Uri keyVaultSecretUrl = new Uri("https://sdk-testing-keyvault.vault.azure.net/secrets/sdk-secret");
 
             // all data needs to be passed while creating a loadtest
             var data = new
@@ -47,20 +45,24 @@ namespace Azure.Developer.LoadTesting.Tests.Samples
                     engineInstances = 1,
                     splitAllCSVs = false,
                 },
-                secrets = new {
+                secrets = new
+                {
                     secret1 = new
                     {
-                        value = "https://sdk-testing-keyvault.vault.azure.net/secrets/sdk-secret",
+                        value = keyVaultSecretUrl.ToString(),
                         type = "AKV_SECRET_URI"
                     }
                 },
-                enviornmentVariables = new {
+                enviornmentVariables = new
+                {
                     myVariable = "my-value"
                 },
                 passFailCriteria = new
                 {
-                    passFailMetrics = new {
-                        condition1 = new {
+                    passFailMetrics = new
+                    {
+                        condition1 = new
+                        {
                             clientmetric = "response_time_ms",
                             aggregate = "avg",
                             condition = ">",
@@ -88,15 +90,13 @@ namespace Azure.Developer.LoadTesting.Tests.Samples
             try
             {
                 Response response = loadTestAdministrationClient.CreateOrUpdateTest(testId, RequestContent.Create(data));
-
-                // if the test is created successfully, printing response
-                Console.WriteLine(response.Content);
+                Console.WriteLine(response.Content.ToString());
             }
-            catch (Exception e)
+            catch (Exception ex)
             {
-                Console.WriteLine(String.Format("Error : ", e.Message));
+                Console.WriteLine(ex.Message);
             }
-            #endregion
+#endregion
         }
     }
 }
