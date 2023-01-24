@@ -5,7 +5,8 @@
 ### Features Added
 
 * Added support for parsing AADAudience from ConnectionString ([#33593](https://github.com/Azure/azure-sdk-for-net/pull/33593))
-* All activity events excluding exception event will be exported as Trace telemetry ([#32980](https://github.com/Azure/azure-sdk-for-net/pull/32980))
+* Activity Events (SpanEvents), except those representing Exception, will be exported to TraceTelemetry table([#32980](https://github.com/Azure/azure-sdk-for-net/pull/32980))
+Exceptions reported via ActivityEvents will continue to be exported to ExceptionTelemetry table
 
 ### Breaking Changes
 
