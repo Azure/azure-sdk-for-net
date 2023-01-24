@@ -32,11 +32,12 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             var customer_ConnectionString = $"InstrumentationKey=1aa11111-bbbb-1ccc-8ddd-eeeeffff3333;IngestionEndpoint=https://{euEndpoint}.in.applicationinsights.azure.com/";
             var parsedConectionString = ConnectionStringParser.GetValues(customer_ConnectionString);
 
-            // Set ConnectionString to null as it is static and may be impacted by other tests.
-            Statsbeat.s_statsBeat_ConnectionString = null;
             Statsbeat.SetStatsbeatConnectionString(parsedConectionString.IngestionEndpoint);
 
             Assert.Equal(Statsbeat.StatsBeat_ConnectionString_EU, Statsbeat.s_statsBeat_ConnectionString);
+
+            // Reset Statsbeat Connection String
+            Statsbeat.s_statsBeat_ConnectionString = null;
         }
 
         [Theory]
@@ -78,11 +79,12 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             var customer_ConnectionString = $"InstrumentationKey=1aa11111-bbbb-1ccc-8ddd-eeeeffff3333;IngestionEndpoint=https://{nonEUEndpoint}.in.applicationinsights.azure.com/";
             var parsedConectionString = ConnectionStringParser.GetValues(customer_ConnectionString);
 
-            // Set ConnectionString to null as it is static and may be impacted by other tests.
-            Statsbeat.s_statsBeat_ConnectionString = null;
             Statsbeat.SetStatsbeatConnectionString(parsedConectionString.IngestionEndpoint);
 
             Assert.Equal(Statsbeat.StatsBeat_ConnectionString_NonEU, Statsbeat.s_statsBeat_ConnectionString);
+
+            // Reset Statsbeat Connection String
+            Statsbeat.s_statsBeat_ConnectionString = null;
         }
 
         [Fact]
@@ -91,11 +93,12 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             var customer_ConnectionString = "InstrumentationKey=1aa11111-bbbb-1ccc-8ddd-eeeeffff3333;IngestionEndpoint=https://foo.in.applicationinsights.azure.com/";
             var parsedConectionString = ConnectionStringParser.GetValues(customer_ConnectionString);
 
-            // Set ConnectionString to null as it is static and may be impacted by other tests.
-            Statsbeat.s_statsBeat_ConnectionString = null;
             Statsbeat.SetStatsbeatConnectionString(parsedConectionString.IngestionEndpoint);
 
             Assert.Null(Statsbeat.s_statsBeat_ConnectionString);
+
+            // Reset Statsbeat Connection String
+            Statsbeat.s_statsBeat_ConnectionString = null;
         }
     }
 }

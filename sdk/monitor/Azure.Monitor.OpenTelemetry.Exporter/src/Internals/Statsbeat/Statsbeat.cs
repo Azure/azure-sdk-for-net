@@ -50,7 +50,19 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
         internal static Regex s_endpoint_pattern = new("^https?://(?:www\\.)?([^/.-]+)");
 
         internal static readonly HashSet<string> EU_Endpoints = new()
-        { "francecentral", "francesouth", "northeurope", "norwayeast", "norwaywest", "swedencentral", "switzerlandnorth", "switzerlandwest", "uksouth", "ukwest", "westeurope", };
+        {
+            "francecentral",
+            "francesouth",
+            "northeurope",
+            "norwayeast",
+            "norwaywest",
+            "swedencentral",
+            "switzerlandnorth",
+            "switzerlandwest",
+            "uksouth",
+            "ukwest",
+            "westeurope",
+        };
 
         internal static readonly HashSet<string> Non_EU_Endpoints = new()
         {
