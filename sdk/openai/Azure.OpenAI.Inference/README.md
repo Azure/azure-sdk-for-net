@@ -192,11 +192,9 @@ Console.WriteLine($"Summarization: {response}");
 ```
 ## Troubleshooting
 
-Describe common errors and exceptions, how to "unpack" them if necessary, and include guidance for graceful handling and recovery.
+When you interact with Azure OpenAI using the .NET SDK, errors returned by the service correspond to the same HTTP status codes returned for [REST API][openai_rest] requests.
 
-Provide information to help developers avoid throttling or other service-enforced errors they might encounter. For example, provide guidance and examples for using retry or connection policies in the API.
-
-If the package or a related package supports it, include tips for logging or enabling instrumentation to help them debug their code.
+For example, if you try to create a client using an endpoint that doesn't match your Azure OpenAI Resource endpoint, a `404` error is returned, indicating `Resource Not Found`.
 
 ## Next steps
 
@@ -206,7 +204,7 @@ If the package or a related package supports it, include tips for logging or ena
 
 ## Contributing
 
-This is a template, but your SDK readme should include details on how to contribute code to the repo/package.
+TBD (in preview)
 
 <!-- LINKS -->
 [msdocs_openai_completion]: https://learn.microsoft.com/azure/cognitive-services/openai/how-to/completions
@@ -214,5 +212,6 @@ This is a template, but your SDK readme should include details on how to contrib
 [style-guide-msft]: https://docs.microsoft.com/style-guide/capitalization
 [style-guide-cloud]: https://aka.ms/azsdk/cloud-style-guide
 [openai_client_class]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/openai/Azure.OpenAI.Inference/src/Generated/OpenAIClient.cs
+[openai_rest]: https://learn.microsoft.com/en-us/azure/cognitive-services/openai/reference
 
 ![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-net/sdk/openai/Azure.OpenAI.Inference/README.png)
