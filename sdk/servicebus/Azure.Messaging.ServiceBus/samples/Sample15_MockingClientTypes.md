@@ -19,6 +19,7 @@ The following examples focus on scenarios likely to occur in applications, and d
   - [Completing a message](#completing-a-message)
   - [Deferring a message and receiving deferred messages](#deferring-a-message-and-receiving-deferred-messages)
   - [Abandoning a messages](#abandoning-a-message)
+  - [Dead lettering a message](#dead-lettering-a-message)
 - **Testing the processor**
   - [Testing the `ServiceBusProcessor` handlers](#for-the-servicebusprocessor)
   - [Testing the `ServiceBusSessionProcessor` handlers](#for-the-servicebussessionprocessor)
