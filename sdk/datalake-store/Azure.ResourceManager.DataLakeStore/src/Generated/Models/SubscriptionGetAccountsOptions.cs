@@ -7,11 +7,11 @@
 
 namespace Azure.ResourceManager.DataLakeStore.Models
 {
-    /// <summary> The DataLakeStoreExtensionsGetAccountsOptions. </summary>
-    public partial class DataLakeStoreExtensionsGetAccountsOptions
+    /// <summary> The SubscriptionGetAccountsOptions. </summary>
+    public partial class SubscriptionGetAccountsOptions
     {
-        /// <summary> Initializes a new instance of DataLakeStoreExtensionsGetAccountsOptions. </summary>
-        public DataLakeStoreExtensionsGetAccountsOptions()
+        /// <summary> Initializes a new instance of SubscriptionGetAccountsOptions. </summary>
+        public SubscriptionGetAccountsOptions()
         {
         }
 

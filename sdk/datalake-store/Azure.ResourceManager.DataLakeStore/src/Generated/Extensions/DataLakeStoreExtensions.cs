@@ -45,9 +45,9 @@ namespace Azure.ResourceManager.DataLakeStore
         /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="DataLakeStoreAccountBasicData" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<DataLakeStoreAccountBasicData> GetAccountsAsync(this SubscriptionResource subscriptionResource, DataLakeStoreExtensionsGetAccountsOptions options, CancellationToken cancellationToken = default)
+        public static AsyncPageable<DataLakeStoreAccountBasicData> GetAccountsAsync(this SubscriptionResource subscriptionResource, SubscriptionGetAccountsOptions options, CancellationToken cancellationToken = default)
         {
-            options ??= new DataLakeStoreExtensionsGetAccountsOptions();
+            options ??= new SubscriptionGetAccountsOptions();
 
             return GetExtensionClient(subscriptionResource).GetAccountsAsync(options, cancellationToken);
         }
@@ -69,9 +69,9 @@ namespace Azure.ResourceManager.DataLakeStore
         /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="DataLakeStoreAccountBasicData" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<DataLakeStoreAccountBasicData> GetAccounts(this SubscriptionResource subscriptionResource, DataLakeStoreExtensionsGetAccountsOptions options, CancellationToken cancellationToken = default)
+        public static Pageable<DataLakeStoreAccountBasicData> GetAccounts(this SubscriptionResource subscriptionResource, SubscriptionGetAccountsOptions options, CancellationToken cancellationToken = default)
         {
-            options ??= new DataLakeStoreExtensionsGetAccountsOptions();
+            options ??= new SubscriptionGetAccountsOptions();
 
             return GetExtensionClient(subscriptionResource).GetAccounts(options, cancellationToken);
         }
