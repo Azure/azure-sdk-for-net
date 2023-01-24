@@ -307,33 +307,42 @@ namespace Azure.Developer.LoadTesting.Tests
         [Test]
         public async Task GetMetrics()
         {
-            LoadTestRunClient loadTestRunClient = CreateRunClient();
-            _loadTestAdministrationClient = CreateAdministrationClient();
+            await _testRunOperation.WaitForCompletionAsync();
 
-            await _testHelper.SetupTestRunWithLoadTestAsync(_loadTestAdministrationClient, _testId, _fileName, loadTestRunClient, _testRunId, waitUntil: WaitUntil.Completed);
-
-            Response getTestRunResponse = await loadTestRunClient.GetTestRunAsync(_testRunId);
+            Response getTestRunResponse = await _loadTestRunClient.GetTestRunAsync(_testRunId);
             Assert.NotNull(getTestRunResponse);
+            Console.WriteLine(getTestRunResponse.Content.ToString());
             JsonDocument testRunJson = JsonDocument.Parse(getTestRunResponse.Content.ToString());
 
-            Response getMetricNamespaces = await loadTestRunClient.GetMetricNamespacesAsync(_testRunId);
+            Response getMetricNamespaces = await _loadTestRunClient.GetMetricNamespacesAsync(_testRunId);
             Assert.NotNull(getMetricNamespaces);
+            Console.WriteLine(getMetricNamespaces.Content.ToString());
             JsonDocument metricNamespacesJson = JsonDocument.Parse(getMetricNamespaces.Content.ToString());
 
-            Response getMetricDefinitions = await loadTestRunClient.GetMetricDefinitionsAsync(
+            Response getMetricDefinitions = await _loadTestRunClient.GetMetricDefinitionsAsync(
                 _testRunId, metricNamespacesJson.RootElement.GetProperty("value")[0].GetProperty("name").ToString()
                 );
             Assert.NotNull(getMetricDefinitions);
+            Console.WriteLine(getMetricDefinitions.Content.ToString());
             JsonDocument metricDefinitionsJson = JsonDocument.Parse(getMetricDefinitions.Content.ToString());
 
-            AsyncPageable<BinaryData> metrics = loadTestRunClient.GetMetricsAsync(
+            Console.WriteLine(metricNamespacesJson.RootElement.GetProperty("value")[0].GetProperty("name").GetString());
+            Console.WriteLine(metricDefinitionsJson.RootElement.GetProperty("value")[0].GetProperty("name").GetString());
+
+            AsyncPageable<BinaryData> metricsReponsePageable = _loadTestRunClient.GetMetricsAsync(
                     _testRunId,
-                    metricNamespacesJson.RootElement.GetProperty("value")[0].GetProperty("name").GetString(),
                     metricDefinitionsJson.RootElement.GetProperty("value")[0].GetProperty("name").GetString(),
-                    testRunJson.RootElement.GetProperty("startDateTime").GetString()+"/"+testRunJson.RootElement.GetProperty("endDateTime"),
-                    null
+                    metricNamespacesJson.RootElement.GetProperty("value")[0].GetProperty("name").GetString(),
+                    testRunJson.RootElement.GetProperty("startDateTime").GetString()+"/"+testRunJson.RootElement.GetProperty("endDateTime")
                 );
-            Assert.NotNull(metrics);
+
+            await foreach (var page in metricsReponsePageable.AsPages())
+            {
+                foreach (var item in page.Values)
+                {
+                    Console.WriteLine(item.ToString());
+                }
+            }
         }
     }
 }
