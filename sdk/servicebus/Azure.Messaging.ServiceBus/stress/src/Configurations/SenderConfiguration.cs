@@ -31,7 +31,7 @@ internal class SenderConfiguration
     ///   The minimum body size in bytes of events to generate when sending to the queue.
     /// </summary>
     ///
-    public int MessageBodyMinBytes = 50;
+    public int MessageBodyMinBytes = 15;
 
     /// <summary>
     ///   The maximum number of messages to send in each iteration of the test.

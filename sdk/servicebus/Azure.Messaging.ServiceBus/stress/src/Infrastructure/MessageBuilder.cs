@@ -44,34 +44,36 @@ internal static class MessageBuilder
                                                         long maximumBatchSize,
                                                         int largeMessageRandomFactor = 5,
                                                         int minimumBodySize = 15,
-                                                        int maximumBodySize = 3886)
+                                                        int maximumBodySize = 83886)
+    {
+        var messagesBytesTotal = 0;
+        for (var index = 0; ((index < maxNumberOfMessages) && (messagesBytesTotal <= maximumBatchSize)); ++index)
         {
-            var messagesBytesTotal = 0;
-            decimal bodySizeBase = (maximumBatchSize) / maxNumberOfMessages;
-            for (var index = 0; ((index < maxNumberOfMessages) && (messagesBytesTotal <= maximumBatchSize)); ++index)
+            int currentMessageLowerLimit;
+            int currentMessageUpperLimit;
+
+            if (RandomNumberGenerator.Value.Next(1, 100) < largeMessageRandomFactor)
             {
-                int currentMessageLowerLimit;
-                int currentMessageUpperLimit;
-
-                if (RandomNumberGenerator.Value.Next(1, 100) < largeMessageRandomFactor)
-                {
-                    // Generate a "large" event
-                    currentMessageLowerLimit = (int)Math.Floor(bodySizeBase);
-                    currentMessageUpperLimit = maximumBodySize;
-                }
-                else
-                {
-                    // Generate a "small" event
-                    currentMessageUpperLimit = (int)Math.Floor(bodySizeBase);
-                    currentMessageLowerLimit = minimumBodySize;
-                }
-                var buffer = new byte[RandomNumberGenerator.Value.Next(currentMessageLowerLimit, currentMessageUpperLimit)];
-                RandomNumberGenerator.Value.NextBytes(buffer);
-                messagesBytesTotal += buffer.Length;
-
-                yield return CreateMessageFromBody(buffer);
+                // Generate a "large" event
+                currentMessageLowerLimit = (int)Math.Ceiling(maximumBodySize * 0.65);
+                currentMessageUpperLimit = maximumBodySize;
             }
+            else
+            {
+                // Generate a "small" event
+                currentMessageUpperLimit = (int)Math.Floor((maximumBatchSize * 1.0f) / maxNumberOfMessages);
+                currentMessageLowerLimit = minimumBodySize;
+            }
+
+            var buffer = new byte[RandomNumberGenerator.Value.Next(currentMessageLowerLimit, currentMessageUpperLimit)];
+            RandomNumberGenerator.Value.NextBytes(buffer);
+
+            var temptotal = messagesBytesTotal + buffer.Length;
+            messagesBytesTotal += buffer.Length;
+
+            yield return CreateMessageFromBody(buffer);
         }
+    }
 
     /// <summary>
     ///   Creates a random set of small messages with random data and random body size within the specified constraints.

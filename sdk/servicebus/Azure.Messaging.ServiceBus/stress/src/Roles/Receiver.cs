@@ -62,12 +62,13 @@ internal class Receiver
     public async Task RunAsync(CancellationToken cancellationToken)
     {
         await using var client = new ServiceBusClient(_testParameters.ServiceBusConnectionString);
-        var receiver = client.CreateReceiver(_testParameters.QueueName, _receiverConfiguration.options);
 
         while (!cancellationToken.IsCancellationRequested)
         {
             try
             {
+                var receiver = client.CreateReceiver(_testParameters.QueueName, _receiverConfiguration.options);
+                
                 await foreach (var message in receiver.ReceiveMessagesAsync(cancellationToken))
                 {
                     _metrics.Client.GetMetric(Metrics.MessagesReceived).TrackValue(1);
