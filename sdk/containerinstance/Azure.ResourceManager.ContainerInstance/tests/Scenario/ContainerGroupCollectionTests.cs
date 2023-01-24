@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ContainerInstance.Tests
             SubscriptionResource subscription = await Client.GetDefaultSubscriptionAsync();
             ResourceGroupResource rg = await CreateResourceGroupAsync(subscription, "testRg", AzureLocation.WestUS);
             string containerGroupName = Recording.GenerateAssetName("containergrp");
-            var containerGroupData = CreateContainerGroupData(containerGroupName, priority: "Regular", isConfidentialSku: true, ccepolicy: null);
+            var containerGroupData = CreateContainerGroupData(containerGroupName, isConfidentialSku: true, ccepolicy: null);
             var containerGroups = rg.GetContainerGroups();
             ContainerGroupResource containerGroup = CreateContainerGroupAsync(containerGroupName, containerGroupData, rg).Result;
             Assert.AreEqual(containerGroupName, containerGroup.Data.Name);
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.ContainerInstance.Tests
             SubscriptionResource subscription = await Client.GetDefaultSubscriptionAsync();
             ResourceGroupResource rg = await CreateResourceGroupAsync(subscription, "testRg", AzureLocation.WestUS);
             string containerGroupName = Recording.GenerateAssetName("containergrp");
-            var containerGroupData = CreateContainerGroupData(containerGroupName, priority: "Regular", isConfidentialSku: true, ccepolicy: null);
+            var containerGroupData = CreateContainerGroupData(containerGroupName, isConfidentialSku: true, ccepolicy: null);
             var containerGroups = rg.GetContainerGroups();
             ContainerGroupResource containerGroup = (await containerGroups.CreateOrUpdateAsync(WaitUntil.Completed, containerGroupName, containerGroupData)).Value;
 
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.ContainerInstance.Tests
             ContainerGroupResource containerGroup2 = (await containerGroups.CreateOrUpdateAsync(WaitUntil.Completed, containerGroupName2, containerGroupData2)).Value;
 
             string containerGroupName3 = Recording.GenerateAssetName("containergrp");
-            var containerGroupData3 = CreateContainerGroupData(containerGroupName3, "Regular", isConfidentialSku: true, ccepolicy: null);
+            var containerGroupData3 = CreateContainerGroupData(containerGroupName3, isConfidentialSku: true, ccepolicy: null);
             ContainerGroupResource containerGroup3 = (await containerGroups.CreateOrUpdateAsync(WaitUntil.Completed, containerGroupName3, containerGroupData3)).Value;
 
             AsyncPageable<ContainerGroupResource> result = containerGroups.GetAllAsync();

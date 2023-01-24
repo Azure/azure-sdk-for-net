@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.ContainerInstance.Tests
             SubscriptionResource subscription = await Client.GetDefaultSubscriptionAsync();
             ResourceGroupResource rg = await CreateResourceGroupAsync(subscription, "testRg", AzureLocation.WestUS);
             string containerGroupName = Recording.GenerateAssetName("containergrp");
-            var containerGroupData = CreateContainerGroupData(containerGroupName, "Regular", isConfidentialSku: true, ccepolicy: null);
+            var containerGroupData = CreateContainerGroupData(containerGroupName, "Regular");
             var containerGroups = rg.GetContainerGroups();
             ContainerGroupResource containerGroup = (await containerGroups.CreateOrUpdateAsync(WaitUntil.Completed, containerGroupName, containerGroupData)).Value;
 
