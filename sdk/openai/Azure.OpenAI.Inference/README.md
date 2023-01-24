@@ -59,12 +59,29 @@ string endpoint = "<endpoint>";
 var client = new OpenAIClient(new Uri(endpoint), new DefaultAzureCredential());
 ```
 
-
 ## Key concepts
 
-The *Key concepts* section should describe the functionality of the main classes. Point out the most important and useful classes in the package (with links to their reference pages) and explain how those classes work together. Feel free to use bulleted lists, tables, code blocks, or even diagrams for clarity.
+The main concept to understand is [Completions][azure_openai_completions_docs]. Briefly explained, completions provides its functionality in the form of a text prompt, which by using a specific [model](https://learn.microsoft.com/en-us/azure/cognitive-services/openai/concepts/models), will then attempt to match the context and patterns, providing an output text. The following code snippet provides a rough overview (more details can be found in the `GenerateChatbotResponsesWithToken` sample code):
 
-Include the *Thread safety* and *Additional concepts* sections below at the end of your *Key concepts* section. You may remove or add links depending on what your library makes use of:
+```C#
+OpenAIClient client = new OpenAIClient(new Uri(endpoint), new DefaultAzureCredential());
+
+List<string> examplePrompts = new(){
+    //...
+    "What is Azure OpenAI?",
+    //...    
+};
+
+foreach (var prompt in examplePrompts)
+{
+    var request = new CompletionsRequest();
+    request.Prompt.Add(prompt);
+
+    Completion completion = client.Completions("myModelDeployment", request);
+    var response = completion.Choices[0].Text;
+    Console.WriteLine($"Chatbot: {response}");
+}
+```
 
 ### Thread safety
 
@@ -213,5 +230,7 @@ TBD (in preview)
 [style-guide-cloud]: https://aka.ms/azsdk/cloud-style-guide
 [openai_client_class]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/openai/Azure.OpenAI.Inference/src/Generated/OpenAIClient.cs
 [openai_rest]: https://learn.microsoft.com/azure/cognitive-services/openai/reference
+[azure_openai_completions_docs]: https://learn.microsoft.com/en-us/azure/cognitive-services/openai/how-to/completions
+[azure_openai_embeddgings_docs]: https://learn.microsoft.com/en-us/azure/cognitive-services/openai/concepts/understand-embeddings
 
 ![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-net/sdk/openai/Azure.OpenAI.Inference/README.png)
