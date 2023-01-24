@@ -7,6 +7,8 @@ Project("{1F073C8A-8FB4-441F-852A-AE108391D279}") = "Azure.ResourceManager.Nginx
 EndProject
 Project("{1F073C8A-8FB4-441F-852A-AE108391D279}") = "Azure.ResourceManager.Nginx.Tests", "tests\Azure.ResourceManager.Nginx.Tests.csproj", "{DDA57F70-239C-4235-A16D-154B858E34CB}"
 EndProject
+Project("{1F073C8A-8FB4-441F-852A-AE108391D279}") = "Azure.ResourceManager.Nginx.Samples", "samples\Azure.ResourceManager.Nginx.Samples.csproj", "{7F72AEC2-56A9-4109-B66E-E3804155B95D}"
+EndProject
 Global
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

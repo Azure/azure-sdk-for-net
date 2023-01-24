@@ -10,10 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary>
-    /// Result of AmlCompute Nodes
-    /// Serialized Name: AmlComputeNodesInformation
-    /// </summary>
+    /// <summary> Result of AmlCompute Nodes. </summary>
     internal partial class AmlComputeNodesInformation
     {
         /// <summary> Initializes a new instance of AmlComputeNodesInformation. </summary>
@@ -23,29 +20,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Initializes a new instance of AmlComputeNodesInformation. </summary>
-        /// <param name="nodes">
-        /// The collection of returned AmlCompute nodes details.
-        /// Serialized Name: AmlComputeNodesInformation.nodes
-        /// </param>
-        /// <param name="nextLink">
-        /// The continuation token.
-        /// Serialized Name: AmlComputeNodesInformation.nextLink
-        /// </param>
+        /// <param name="nodes"> The collection of returned AmlCompute nodes details. </param>
+        /// <param name="nextLink"> The continuation token. </param>
         internal AmlComputeNodesInformation(IReadOnlyList<AmlComputeNodeInformation> nodes, string nextLink)
         {
             Nodes = nodes;
             NextLink = nextLink;
         }
 
-        /// <summary>
-        /// The collection of returned AmlCompute nodes details.
-        /// Serialized Name: AmlComputeNodesInformation.nodes
-        /// </summary>
+        /// <summary> The collection of returned AmlCompute nodes details. </summary>
         public IReadOnlyList<AmlComputeNodeInformation> Nodes { get; }
-        /// <summary>
-        /// The continuation token.
-        /// Serialized Name: AmlComputeNodesInformation.nextLink
-        /// </summary>
+        /// <summary> The continuation token. </summary>
         public string NextLink { get; }
     }
 }

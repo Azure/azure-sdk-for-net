@@ -139,7 +139,7 @@ function Retry([scriptblock] $Action, [int] $Attempts = 5)
                 Write-Warning "Attempt $attempt failed: $_. Trying again in $sleep seconds..."
                 Start-Sleep -Seconds $sleep
             } else {
-                Write-Error -ErrorRecord $_
+                throw
             }
         }
     }
@@ -158,9 +158,26 @@ function NewServicePrincipalWrapper([string]$subscription, [string]$resourceGrou
         Write-Warning "Update-Module Az.Resources -RequiredVersion 5.3.1"
         exit 1
     }
-    $servicePrincipal = Retry {
-        New-AzADServicePrincipal -Role "Owner" -Scope "/subscriptions/$SubscriptionId/resourceGroups/$ResourceGroupName" -DisplayName $displayName
+
+    try {
+        $servicePrincipal = Retry {
+            New-AzADServicePrincipal -Role "Owner" -Scope "/subscriptions/$SubscriptionId/resourceGroups/$ResourceGroupName" -DisplayName $displayName
+        }
+    } catch {
+        # The underlying error "The directory object quota limit for the Principal has been exceeded" gets overwritten by the module trying
+        # to call New-AzADApplication with a null object instead of stopping execution, which makes this case hard to diagnose because it prints the following:
+        #      "Cannot bind argument to parameter 'ObjectId' because it is an empty string."
+        # Provide a more helpful diagnostic prompt to the user if appropriate:
+        $totalApps = (Get-AzADApplication -OwnedApplication).Length
+        $msg = "App Registrations owned by you total $totalApps and may exceed the max quota (likely around 135)." + `
+               "`nTry removing some at https://ms.portal.azure.com/#view/Microsoft_AAD_IAM/ActiveDirectoryMenuBlade/~/RegisteredApps" + `
+               " or by running the following command to remove apps created by this script:" + `
+               "`n    Get-AzADApplication -DisplayNameStartsWith '$baseName' | Remove-AzADApplication" + `
+               "`nNOTE: You may need to wait for the quota number to be updated after removing unused applications."
+        Write-Warning $msg
+        throw
     }
+
     $spPassword = ""
     $appId = ""
     if (Get-Member -Name "Secret" -InputObject $servicePrincipal -MemberType property) {
