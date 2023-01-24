@@ -1417,7 +1417,7 @@ The key interactions with the `ServiceBusClient` when using topics and subscript
 ```C# Snippet:ServiceBus_MockingTopicSubscriptionCrud
 Mock<ServiceBusAdministrationClient> mockAdministrationClient = new();
 Mock<Response<TopicProperties>> mockTopicResponse = new();
-Mock<Response<SubscriptionProperties>> mockSuscriptionResponse = new();
+Mock<Response<SubscriptionProperties>> mockSubscriptionResponse= new();
 
 // This sets up the mock administration client to return a mocked topic properties using the
 // service bus model factory. It populates each of the arguments using the CreateTopicOptions instance
@@ -1469,9 +1469,9 @@ mockAdministrationClient
             forwardDeadLetteredMessagesTo: opts.ForwardDeadLetteredMessagesTo,
             userMetadata: opts.UserMetadata);
 
-        mockSuscriptionResponse.Setup(r => r.Value).Returns(mockSubscriptionProperties);
+        mockSubscriptionResponse.Setup(r => r.Value).Returns(mockSubscriptionProperties);
     })
-    .ReturnsAsync(mockSuscriptionResponse.Object);
+    .ReturnsAsync(mockSubscriptionResponse.Object);
 
 ServiceBusAdministrationClient adminClient = mockAdministrationClient.Object;
 
