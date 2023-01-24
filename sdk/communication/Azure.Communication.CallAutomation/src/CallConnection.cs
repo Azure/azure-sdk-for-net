@@ -653,14 +653,14 @@ namespace Azure.Communication.CallAutomation
         /// <param name="operationContext">The Operation Context.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>A Response containing MuteParticipantsResponse.</returns>
-        public virtual Response<MuteParticipantsResponse> MuteParticipant(IEnumerable<CommunicationIdentifier> targetParticipants, string operationContext = default, CancellationToken cancellationToken = default)
+        public virtual Response<MuteParticipantsResponse> MuteParticipants(IEnumerable<CommunicationIdentifier> targetParticipants, string operationContext = default, CancellationToken cancellationToken = default)
         {
             var options = new MuteParticipantOptions(targetParticipants)
             {
                 OperationContext = operationContext
             };
 
-            return MuteParticipant(options, cancellationToken);
+            return MuteParticipants(options, cancellationToken);
         }
 
         /// <summary>
@@ -669,9 +669,9 @@ namespace Azure.Communication.CallAutomation
         /// <param name="options">Options for the MuteParticipant operation.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>A Response containing MuteParticipantsResponse. </returns>
-        public virtual Response<MuteParticipantsResponse> MuteParticipant(MuteParticipantOptions options, CancellationToken cancellationToken = default)
+        public virtual Response<MuteParticipantsResponse> MuteParticipants(MuteParticipantOptions options, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallConnection)}.{nameof(MuteParticipant)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallConnection)}.{nameof(MuteParticipants)}");
             scope.Start();
             try
             {
@@ -709,17 +709,17 @@ namespace Azure.Communication.CallAutomation
         /// Unmute participants from the call.
         /// Note: Only a single participant is currently supported.
         /// </summary>
-        /// <param name="targetParticipant">Participants to unmute.</param>
+        /// <param name="targetParticipants">Participants to unmute.</param>
         /// <param name="operationContext">The Operation Context.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns></returns>
-        public virtual Response<UnmuteParticipantsResponse> UnmuteParticipant(IEnumerable<CommunicationIdentifier> targetParticipant, string operationContext = default, CancellationToken cancellationToken = default)
+        public virtual Response<UnmuteParticipantsResponse> UnmuteParticipants(IEnumerable<CommunicationIdentifier> targetParticipants, string operationContext = default, CancellationToken cancellationToken = default)
         {
-            var options = new UnmuteParticipantOptions(targetParticipant)
+            var options = new UnmuteParticipantOptions(targetParticipants)
             {
                 OperationContext = operationContext,
             };
-            return UnmuteParticipant(options, cancellationToken);
+            return UnmuteParticipants(options, cancellationToken);
         }
 
         /// <summary>
@@ -728,9 +728,9 @@ namespace Azure.Communication.CallAutomation
         /// <param name="options">Options for the UnmuteParticipant operation.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns></returns>
-        public virtual Response<UnmuteParticipantsResponse> UnmuteParticipant(UnmuteParticipantOptions options, CancellationToken cancellationToken = default)
+        public virtual Response<UnmuteParticipantsResponse> UnmuteParticipants(UnmuteParticipantOptions options, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallConnection)}.{nameof(UnmuteParticipant)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallConnection)}.{nameof(UnmuteParticipants)}");
             scope.Start();
             try
             {
@@ -898,7 +898,7 @@ namespace Azure.Communication.CallAutomation
         /// <returns></returns>
         public async virtual Task<Response<MuteParticipantsResponse>> MuteParticipantAsync(MuteParticipantOptions options, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallConnection)}.{nameof(MuteParticipant)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallConnection)}.{nameof(MuteParticipants)}");
             scope.Start();
             try
             {
@@ -936,13 +936,13 @@ namespace Azure.Communication.CallAutomation
         /// Unmute participants on the call.
         /// Note: Only one participant is currently supported.
         /// </summary>
-        /// <param name="participant">Participants to unmute.</param>
+        /// <param name="participants">Participants to unmute.</param>
         /// <param name="operationContext">The Operation Context.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns></returns>
-        public async virtual Task<Response<UnmuteParticipantsResponse>> UnmuteParticipantsAsync(IEnumerable<CommunicationIdentifier> participant, string operationContext = default, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<UnmuteParticipantsResponse>> UnmuteParticipantsAsync(IEnumerable<CommunicationIdentifier> participants, string operationContext = default, CancellationToken cancellationToken = default)
         {
-            var options = new UnmuteParticipantOptions(participant)
+            var options = new UnmuteParticipantOptions(participants)
             {
                 OperationContext = operationContext
             };
@@ -958,7 +958,7 @@ namespace Azure.Communication.CallAutomation
         /// <returns></returns>
         public async virtual Task<Response<UnmuteParticipantsResponse>> UnmuteParticipantsAsync(UnmuteParticipantOptions options, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallConnection)}.{nameof(UnmuteParticipant)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallConnection)}.{nameof(UnmuteParticipants)}");
             scope.Start();
             try
             {

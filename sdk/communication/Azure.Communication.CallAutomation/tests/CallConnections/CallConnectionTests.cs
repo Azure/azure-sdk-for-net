@@ -444,7 +444,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallConnections
         {
             var callConnection = CreateMockCallConnection(202, OperationContextPayload);
 
-            var response = callConnection.MuteParticipant(participant, OperationContext);
+            var response = callConnection.MuteParticipants(participant, OperationContext);
             Assert.AreEqual((int)HttpStatusCode.Accepted, response.GetRawResponse().Status);
             Assert.AreEqual(OperationContext, response.Value.OperationContext);
         }
@@ -474,7 +474,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallConnections
         {
             var callConnection = CreateMockCallConnection(202, OperationContextPayload);
 
-            var response = callConnection.UnmuteParticipant(participant, OperationContext);
+            var response = callConnection.UnmuteParticipants(participant, OperationContext);
             Assert.AreEqual((int)HttpStatusCode.Accepted, response.GetRawResponse().Status);
             Assert.AreEqual(OperationContext, response.Value.OperationContext);
         }
@@ -497,7 +497,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallConnections
             {
                 OperationContext = OperationContext
             };
-            var response = callConnection.MuteParticipant(options);
+            var response = callConnection.MuteParticipants(options);
             Assert.AreEqual((int)HttpStatusCode.Accepted, response.GetRawResponse().Status);
             Assert.AreEqual(OperationContext, response.Value.OperationContext);
         }
@@ -539,7 +539,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallConnections
                 OperationContext = OperationContext
             };
 
-            var response = callConnection.UnmuteParticipant(options);
+            var response = callConnection.UnmuteParticipants(options);
             Assert.AreEqual((int)HttpStatusCode.Accepted, response.GetRawResponse().Status);
             Assert.AreEqual(OperationContext, response.Value.OperationContext);
         }
