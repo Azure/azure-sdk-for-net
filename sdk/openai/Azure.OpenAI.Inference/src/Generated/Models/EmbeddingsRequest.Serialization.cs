@@ -20,10 +20,10 @@ namespace Azure.OpenAI.Inference.Models
                 writer.WritePropertyName("user");
                 writer.WriteStringValue(User);
             }
-            if (Optional.IsDefined(Input_type))
+            if (Optional.IsDefined(InputType))
             {
                 writer.WritePropertyName("input_type");
-                writer.WriteStringValue(Input_type);
+                writer.WriteStringValue(InputType);
             }
             if (Optional.IsDefined(Model))
             {

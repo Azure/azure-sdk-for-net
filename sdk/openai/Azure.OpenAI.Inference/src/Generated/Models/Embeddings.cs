@@ -35,7 +35,8 @@ namespace Azure.OpenAI.Inference.Models
         {
             Object = @object;
             Data = data.ToList();
-        } 
+        }
+
         /// <summary> Gets the object. </summary>
         public string Object { get; }
         /// <summary> Gets the data. </summary>

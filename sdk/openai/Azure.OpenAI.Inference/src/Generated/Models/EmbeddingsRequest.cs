@@ -26,7 +26,7 @@ namespace Azure.OpenAI.Inference.Models
         /// <summary> Gets or sets the user. </summary>
         public string User { get; set; }
         /// <summary> Gets or sets the input type. </summary>
-        public string Input_type { get; set; }
+        public string InputType { get; set; }
         /// <summary> Gets or sets the model. </summary>
         public string Model { get; set; }
         /// <summary> Gets the input. </summary>

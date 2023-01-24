@@ -140,7 +140,7 @@ namespace Azure.OpenAI.Inference.Tests
         protected OpenAIClient GetClientWithToken() => InstrumentClient(
             new OpenAIClient(
                 new Uri(_endpoint),
-                new DefaultAzureCredential(),
+                TestEnvironment.Credential,
                 InstrumentClientOptions(new OpenAIClientOptions(OpenAIClientOptions.ServiceVersion.V2022_06_01_Preview))));
     }
 }

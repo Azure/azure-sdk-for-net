@@ -170,9 +170,7 @@ var client = new OpenAIClient(endpoint, credential);
 
 var data = new {
     prompt = new[] {
-        new[] {
-            "<String>"
-        }
+        "<String>"
     },
     max_tokens = 1234,
     temperature = 123.45f,
@@ -219,7 +217,7 @@ Request Body:
 
 Schema for <c>CompletionsRequest</c>:
 <code>{
-  prompt: [string[]], # Optional.
+  prompt: [string], # Optional.
   max_tokens: number, # Optional.
   temperature: number, # Optional.
   top_p: number, # Optional.
@@ -288,9 +286,7 @@ var client = new OpenAIClient(endpoint, credential);
 
 var data = new {
     prompt = new[] {
-        new[] {
-            "<String>"
-        }
+        "<String>"
     },
     max_tokens = 1234,
     temperature = 123.45f,
@@ -337,7 +333,7 @@ Request Body:
 
 Schema for <c>CompletionsRequest</c>:
 <code>{
-  prompt: [string[]], # Optional.
+  prompt: [string], # Optional.
   max_tokens: number, # Optional.
   temperature: number, # Optional.
   top_p: number, # Optional.

@@ -10,27 +10,27 @@ using Azure.Core;
 
 namespace Azure.OpenAI.Inference.Models
 {
-    /// <summary> The CompletionsRequest. </summary>
+    /// <summary> Post body schema to create a prompt completion from a deployment. </summary>
     public partial class CompletionsRequest
     {
         /// <summary> Initializes a new instance of CompletionsRequest. </summary>
         public CompletionsRequest()
         {
-            Prompt = new List<string>();
-            Logit_bias = new ChangeTrackingDictionary<string, int>();
+            Prompt = new ChangeTrackingList<string>();
+            LogitBias = new ChangeTrackingDictionary<string, int>();
             Stop = new ChangeTrackingList<string>();
         }
 
         /// <summary> Gets the prompt. </summary>
         public IList<string> Prompt { get; }
         /// <summary> Gets or sets the max tokens. </summary>
-        public int? Max_tokens { get; set; }
+        public int? MaxTokens { get; set; }
         /// <summary> Gets or sets the temperature. </summary>
         public float? Temperature { get; set; }
         /// <summary> Gets or sets the top p. </summary>
-        public float? Top_p { get; set; }
+        public float? TopP { get; set; }
         /// <summary> Gets the logit bias. </summary>
-        public IDictionary<string, int> Logit_bias { get; }
+        public IDictionary<string, int> LogitBias { get; }
         /// <summary> Gets or sets the user. </summary>
         public string User { get; set; }
         /// <summary> Gets or sets the n. </summary>
@@ -46,14 +46,14 @@ namespace Azure.OpenAI.Inference.Models
         /// <summary> Gets the stop. </summary>
         public IList<string> Stop { get; }
         /// <summary> Gets or sets the completion config. </summary>
-        public string Completion_config { get; set; }
+        public string CompletionConfig { get; set; }
         /// <summary> Gets or sets the cache level. </summary>
-        public int? Cache_level { get; set; }
+        public int? CacheLevel { get; set; }
         /// <summary> Gets or sets the presence penalty. </summary>
-        public float? Presence_penalty { get; set; }
+        public float? PresencePenalty { get; set; }
         /// <summary> Gets or sets the frequency penalty. </summary>
-        public float? Frequency_penalty { get; set; }
+        public float? FrequencyPenalty { get; set; }
         /// <summary> Gets or sets the best of. </summary>
-        public int? Best_of { get; set; }
+        public int? BestOf { get; set; }
     }
 }

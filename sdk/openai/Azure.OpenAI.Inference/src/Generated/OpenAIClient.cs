@@ -21,7 +21,7 @@ namespace Azure.OpenAI.Inference
     {
         private const string AuthorizationHeader = "api-key";
         private readonly AzureKeyCredential _keyCredential;
-        private static readonly string[] AuthorizationScopes = new string[] { };
+        private static readonly string[] AuthorizationScopes = new string[] { "https://cognitiveservices.azure.com/.default" };
         private readonly TokenCredential _tokenCredential;
         private readonly HttpPipeline _pipeline;
         private readonly Uri _endpoint;
@@ -192,7 +192,7 @@ namespace Azure.OpenAI.Inference
 
         /// <summary> Return the completions for a given prompt. </summary>
         /// <param name="deploymentId"> deployment id of the deployed model. </param>
-        /// <param name="completionsRequest"> The CompletionsRequest to use. </param>
+        /// <param name="completionsRequest"> Post body schema to create a prompt completion from a deployment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="deploymentId"/> or <paramref name="completionsRequest"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="deploymentId"/> is an empty string, and was expected to be non-empty. </exception>
@@ -208,7 +208,7 @@ namespace Azure.OpenAI.Inference
 
         /// <summary> Return the completions for a given prompt. </summary>
         /// <param name="deploymentId"> deployment id of the deployed model. </param>
-        /// <param name="completionsRequest"> The CompletionsRequest to use. </param>
+        /// <param name="completionsRequest"> Post body schema to create a prompt completion from a deployment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="deploymentId"/> or <paramref name="completionsRequest"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="deploymentId"/> is an empty string, and was expected to be non-empty. </exception>

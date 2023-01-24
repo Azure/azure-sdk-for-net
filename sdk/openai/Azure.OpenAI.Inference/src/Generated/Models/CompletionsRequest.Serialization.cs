@@ -25,12 +25,12 @@ namespace Azure.OpenAI.Inference.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(Max_tokens))
+            if (Optional.IsDefined(MaxTokens))
             {
-                if (Max_tokens != null)
+                if (MaxTokens != null)
                 {
                     writer.WritePropertyName("max_tokens");
-                    writer.WriteNumberValue(Max_tokens.Value);
+                    writer.WriteNumberValue(MaxTokens.Value);
                 }
                 else
                 {
@@ -49,31 +49,28 @@ namespace Azure.OpenAI.Inference.Models
                     writer.WriteNull("temperature");
                 }
             }
-            if (Optional.IsDefined(Top_p))
+            if (Optional.IsDefined(TopP))
             {
-                if (Top_p != null)
+                if (TopP != null)
                 {
                     writer.WritePropertyName("top_p");
-                    writer.WriteNumberValue(Top_p.Value);
+                    writer.WriteNumberValue(TopP.Value);
                 }
                 else
                 {
                     writer.WriteNull("top_p");
                 }
             }
-            if (Optional.IsCollectionDefined(Logit_bias))
+            if (Optional.IsCollectionDefined(LogitBias))
             {
-                if (Logit_bias != null)
+                writer.WritePropertyName("logit_bias");
+                writer.WriteStartObject();
+                foreach (var item in LogitBias)
                 {
-                    writer.WritePropertyName("logit_bias");
-                    writer.WriteStartObject();
-                    foreach (var item in Logit_bias)
-                    {
-                        writer.WritePropertyName(item.Key);
-                        writer.WriteNumberValue(item.Value);
-                    }
-                    writer.WriteEndObject();
+                    writer.WritePropertyName(item.Key);
+                    writer.WriteNumberValue(item.Value);
                 }
+                writer.WriteEndObject();
             }
             if (Optional.IsDefined(User))
             {
@@ -135,64 +132,61 @@ namespace Azure.OpenAI.Inference.Models
             }
             if (Optional.IsCollectionDefined(Stop))
             {
-                if (Stop != null)
+                writer.WritePropertyName("stop");
+                writer.WriteStartArray();
+                foreach (var item in Stop)
                 {
-                    writer.WritePropertyName("stop");
-                    writer.WriteStartArray();
-                    foreach (var item in Stop)
-                    {
-                        writer.WriteStringValue(item);
-                    }
-                    writer.WriteEndArray();
+                    writer.WriteStringValue(item);
                 }
+                writer.WriteEndArray();
             }
-            if (Optional.IsDefined(Completion_config))
+            if (Optional.IsDefined(CompletionConfig))
             {
                 writer.WritePropertyName("completion_config");
-                writer.WriteStringValue(Completion_config);
+                writer.WriteStringValue(CompletionConfig);
             }
-            if (Optional.IsDefined(Cache_level))
+            if (Optional.IsDefined(CacheLevel))
             {
-                if (Cache_level != null)
+                if (CacheLevel != null)
                 {
                     writer.WritePropertyName("cache_level");
-                    writer.WriteNumberValue(Cache_level.Value);
+                    writer.WriteNumberValue(CacheLevel.Value);
                 }
                 else
                 {
                     writer.WriteNull("cache_level");
                 }
             }
-            if (Optional.IsDefined(Presence_penalty))
+            if (Optional.IsDefined(PresencePenalty))
             {
-                if (Presence_penalty != null)
+                if (PresencePenalty != null)
                 {
                     writer.WritePropertyName("presence_penalty");
-                    writer.WriteNumberValue(Presence_penalty.Value);
+                    writer.WriteNumberValue(PresencePenalty.Value);
                 }
                 else
                 {
                     writer.WriteNull("presence_penalty");
                 }
             }
-            if (Optional.IsDefined(Frequency_penalty))
+            if (Optional.IsDefined(FrequencyPenalty))
             {
-                if (Frequency_penalty != null)
+                if (FrequencyPenalty != null)
                 {
                     writer.WritePropertyName("frequency_penalty");
-                    writer.WriteNumberValue(Frequency_penalty.Value);
+                    writer.WriteNumberValue(FrequencyPenalty.Value);
                 }
                 else
                 {
                     writer.WriteNull("frequency_penalty");
                 }
             }
-            if (Optional.IsDefined(Best_of))
+            if (Optional.IsDefined(BestOf))
             {
-                if (Best_of != null)
+                if (BestOf != null)
                 {
                     writer.WritePropertyName("best_of");
-                    writer.WriteNumberValue(Best_of.Value);
+                    writer.WriteNumberValue(BestOf.Value);
                 }
                 else
                 {
