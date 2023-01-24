@@ -65,6 +65,8 @@ rename-mapping:
   ServiceBusNamespace.properties.zoneRedundant: IsZoneRedundant
   ServiceBusNetworkRuleSet.properties.trustedServiceAccessEnabled: IsTrustedServiceAccessEnabled
   ServiceBusNameAvailabilityResult.nameAvailable: IsNameAvailable
+  PublicNetworkAccess: ServiceBusPublicNetworkAccess
+  TlsVersion: ServiceBusMinimumTlsVersion
 
 directive:
     - from: swagger-document

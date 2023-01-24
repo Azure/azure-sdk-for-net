@@ -133,9 +133,9 @@ var data = new {
     startYear = 1234,
 };
 
-var operation = await client.CreateDataIngestionJobAsync(WaitUntil.Started, "<jobId>", RequestContent.Create(data));
+var operation = await client.CreateDataIngestionJobAsync(WaitUntil.Completed, "<jobId>", RequestContent.Create(data));
 
-BinaryData data = await operation.WaitForCompletionAsync();
+BinaryData data = operation.Value;
 JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
 Console.WriteLine(result.GetProperty("farmerId").ToString());
 Console.WriteLine(result.GetProperty("authProviderId").ToString());
@@ -161,9 +161,9 @@ var data = new {
     },
 };
 
-var operation = await client.CreateDataIngestionJobAsync(WaitUntil.Started, "<jobId>", RequestContent.Create(data));
+var operation = await client.CreateDataIngestionJobAsync(WaitUntil.Completed, "<jobId>", RequestContent.Create(data));
 
-BinaryData data = await operation.WaitForCompletionAsync();
+BinaryData data = operation.Value;
 JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
 Console.WriteLine(result.GetProperty("farmerId").ToString());
 Console.WriteLine(result.GetProperty("authProviderId").ToString());
@@ -253,9 +253,9 @@ var data = new {
     startYear = 1234,
 };
 
-var operation = client.CreateDataIngestionJob(WaitUntil.Started, "<jobId>", RequestContent.Create(data));
+var operation = client.CreateDataIngestionJob(WaitUntil.Completed, "<jobId>", RequestContent.Create(data));
 
-BinaryData data = operation.WaitForCompletion();
+BinaryData data = operation.Value;
 JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
 Console.WriteLine(result.GetProperty("farmerId").ToString());
 Console.WriteLine(result.GetProperty("authProviderId").ToString());
@@ -281,9 +281,9 @@ var data = new {
     },
 };
 
-var operation = client.CreateDataIngestionJob(WaitUntil.Started, "<jobId>", RequestContent.Create(data));
+var operation = client.CreateDataIngestionJob(WaitUntil.Completed, "<jobId>", RequestContent.Create(data));
 
-BinaryData data = operation.WaitForCompletion();
+BinaryData data = operation.Value;
 JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
 Console.WriteLine(result.GetProperty("farmerId").ToString());
 Console.WriteLine(result.GetProperty("authProviderId").ToString());

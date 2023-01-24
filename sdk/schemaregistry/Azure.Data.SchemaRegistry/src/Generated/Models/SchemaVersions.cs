@@ -10,23 +10,27 @@ using Azure.Core;
 
 namespace Azure.Data.SchemaRegistry.Models
 {
-    /// <summary> Array received from the registry containing the list of versions for specific schema. </summary>
+    /// <summary> Object received from the registry containing the list of schema versions and link to next batch page. </summary>
     internal partial class SchemaVersions
     {
         /// <summary> Initializes a new instance of SchemaVersions. </summary>
         internal SchemaVersions()
         {
-            SchemaVersionsValue = new ChangeTrackingList<int>();
+            Versions = new ChangeTrackingList<int>();
         }
 
         /// <summary> Initializes a new instance of SchemaVersions. </summary>
-        /// <param name="schemaVersionsValue"> Array of schema groups. </param>
-        internal SchemaVersions(IReadOnlyList<int> schemaVersionsValue)
+        /// <param name="versions"> Array of schema version integers. </param>
+        /// <param name="nextLink"> URl to next batch of schema versions. </param>
+        internal SchemaVersions(IReadOnlyList<int> versions, string nextLink)
         {
-            SchemaVersionsValue = schemaVersionsValue;
+            Versions = versions;
+            NextLink = nextLink;
         }
 
-        /// <summary> Array of schema groups. </summary>
-        public IReadOnlyList<int> SchemaVersionsValue { get; }
+        /// <summary> Array of schema version integers. </summary>
+        public IReadOnlyList<int> Versions { get; }
+        /// <summary> URl to next batch of schema versions. </summary>
+        public string NextLink { get; }
     }
 }

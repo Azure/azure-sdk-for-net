@@ -102,8 +102,8 @@ Below is a simple example that illustrates how the token can be fetched and appl
 
 ```C# Snippet:TablesSample4QueryPagination
 string continuationToken = null;
-bool hadResults = true;
-while (hadResults)
+bool moreResultsAvailable = true;
+while (moreResultsAvailable)
 {
     Page<TableEntity> page = tableClient
         .Query<TableEntity>()
@@ -118,7 +118,7 @@ while (hadResults)
     continuationToken = page.ContinuationToken;
 
     IReadOnlyList<TableEntity> pageResults = page.Values;
-    hadResults = pageResults.Any();
+    moreResultsAvailable = pageResults.Any() && continuationToken != null;
 
     // Print out the results for this page.
     foreach (TableEntity result in pageResults)

@@ -753,6 +753,25 @@ namespace Azure.ResourceManager.ServiceBus.Models
         Deleting = 7,
         Renaming = 8,
     }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct ServiceBusMinimumTlsVersion : System.IEquatable<Azure.ResourceManager.ServiceBus.Models.ServiceBusMinimumTlsVersion>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public ServiceBusMinimumTlsVersion(string value) { throw null; }
+        public static Azure.ResourceManager.ServiceBus.Models.ServiceBusMinimumTlsVersion Tls1_0 { get { throw null; } }
+        public static Azure.ResourceManager.ServiceBus.Models.ServiceBusMinimumTlsVersion Tls1_1 { get { throw null; } }
+        public static Azure.ResourceManager.ServiceBus.Models.ServiceBusMinimumTlsVersion Tls1_2 { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.ServiceBus.Models.ServiceBusMinimumTlsVersion other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.ServiceBus.Models.ServiceBusMinimumTlsVersion left, Azure.ResourceManager.ServiceBus.Models.ServiceBusMinimumTlsVersion right) { throw null; }
+        public static implicit operator Azure.ResourceManager.ServiceBus.Models.ServiceBusMinimumTlsVersion (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.ServiceBus.Models.ServiceBusMinimumTlsVersion left, Azure.ResourceManager.ServiceBus.Models.ServiceBusMinimumTlsVersion right) { throw null; }
+        public override string ToString() { throw null; }
+    }
     public partial class ServiceBusNameAvailabilityContent
     {
         public ServiceBusNameAvailabilityContent(string name) { }
@@ -891,6 +910,25 @@ namespace Azure.ResourceManager.ServiceBus.Models
         public ServiceBusPrivateLinkServiceConnectionState() { }
         public string Description { get { throw null; } set { } }
         public Azure.ResourceManager.ServiceBus.Models.ServiceBusPrivateLinkConnectionStatus? Status { get { throw null; } set { } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct ServiceBusPublicNetworkAccess : System.IEquatable<Azure.ResourceManager.ServiceBus.Models.ServiceBusPublicNetworkAccess>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public ServiceBusPublicNetworkAccess(string value) { throw null; }
+        public static Azure.ResourceManager.ServiceBus.Models.ServiceBusPublicNetworkAccess Disabled { get { throw null; } }
+        public static Azure.ResourceManager.ServiceBus.Models.ServiceBusPublicNetworkAccess Enabled { get { throw null; } }
+        public static Azure.ResourceManager.ServiceBus.Models.ServiceBusPublicNetworkAccess SecuredByPerimeter { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.ServiceBus.Models.ServiceBusPublicNetworkAccess other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.ServiceBus.Models.ServiceBusPublicNetworkAccess left, Azure.ResourceManager.ServiceBus.Models.ServiceBusPublicNetworkAccess right) { throw null; }
+        public static implicit operator Azure.ResourceManager.ServiceBus.Models.ServiceBusPublicNetworkAccess (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.ServiceBus.Models.ServiceBusPublicNetworkAccess left, Azure.ResourceManager.ServiceBus.Models.ServiceBusPublicNetworkAccess right) { throw null; }
+        public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ServiceBusPublicNetworkAccessFlag : System.IEquatable<Azure.ResourceManager.ServiceBus.Models.ServiceBusPublicNetworkAccessFlag>

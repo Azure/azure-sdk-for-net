@@ -10,10 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary>
-    /// The MachineLearningContainerRegistryCredentials.
-    /// Serialized Name: RegistryListCredentialsResult
-    /// </summary>
+    /// <summary> The MachineLearningContainerRegistryCredentials. </summary>
     public partial class MachineLearningContainerRegistryCredentials
     {
         /// <summary> Initializes a new instance of MachineLearningContainerRegistryCredentials. </summary>
@@ -23,9 +20,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Initializes a new instance of MachineLearningContainerRegistryCredentials. </summary>
-        /// <param name="location"> Serialized Name: RegistryListCredentialsResult.location. </param>
-        /// <param name="username"> Serialized Name: RegistryListCredentialsResult.username. </param>
-        /// <param name="passwords"> Serialized Name: RegistryListCredentialsResult.passwords. </param>
+        /// <param name="location"></param>
+        /// <param name="username"></param>
+        /// <param name="passwords"></param>
         internal MachineLearningContainerRegistryCredentials(AzureLocation? location, string username, IReadOnlyList<MachineLearningPasswordDetail> passwords)
         {
             Location = location;
@@ -33,11 +30,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
             Passwords = passwords;
         }
 
-        /// <summary> Serialized Name: RegistryListCredentialsResult.location. </summary>
+        /// <summary> Gets the location. </summary>
         public AzureLocation? Location { get; }
-        /// <summary> Serialized Name: RegistryListCredentialsResult.username. </summary>
+        /// <summary> Gets the username. </summary>
         public string Username { get; }
-        /// <summary> Serialized Name: RegistryListCredentialsResult.passwords. </summary>
+        /// <summary> Gets the passwords. </summary>
         public IReadOnlyList<MachineLearningPasswordDetail> Passwords { get; }
     }
 }

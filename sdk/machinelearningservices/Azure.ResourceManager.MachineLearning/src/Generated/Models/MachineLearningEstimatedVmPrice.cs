@@ -7,25 +7,13 @@
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary>
-    /// The estimated price info for using a VM of a particular OS type, tier, etc.
-    /// Serialized Name: EstimatedVMPrice
-    /// </summary>
+    /// <summary> The estimated price info for using a VM of a particular OS type, tier, etc. </summary>
     public partial class MachineLearningEstimatedVmPrice
     {
         /// <summary> Initializes a new instance of MachineLearningEstimatedVmPrice. </summary>
-        /// <param name="retailPrice">
-        /// The price charged for using the VM.
-        /// Serialized Name: EstimatedVMPrice.retailPrice
-        /// </param>
-        /// <param name="osType">
-        /// Operating system type used by the VM.
-        /// Serialized Name: EstimatedVMPrice.osType
-        /// </param>
-        /// <param name="vmTier">
-        /// The type of the VM.
-        /// Serialized Name: EstimatedVMPrice.vmTier
-        /// </param>
+        /// <param name="retailPrice"> The price charged for using the VM. </param>
+        /// <param name="osType"> Operating system type used by the VM. </param>
+        /// <param name="vmTier"> The type of the VM. </param>
         internal MachineLearningEstimatedVmPrice(double retailPrice, MachineLearningVmPriceOSType osType, MachineLearningVmTier vmTier)
         {
             RetailPrice = retailPrice;
@@ -33,20 +21,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
             VmTier = vmTier;
         }
 
-        /// <summary>
-        /// The price charged for using the VM.
-        /// Serialized Name: EstimatedVMPrice.retailPrice
-        /// </summary>
+        /// <summary> The price charged for using the VM. </summary>
         public double RetailPrice { get; }
-        /// <summary>
-        /// Operating system type used by the VM.
-        /// Serialized Name: EstimatedVMPrice.osType
-        /// </summary>
+        /// <summary> Operating system type used by the VM. </summary>
         public MachineLearningVmPriceOSType OSType { get; }
-        /// <summary>
-        /// The type of the VM.
-        /// Serialized Name: EstimatedVMPrice.vmTier
-        /// </summary>
+        /// <summary> The type of the VM. </summary>
         public MachineLearningVmTier VmTier { get; }
     }
 }

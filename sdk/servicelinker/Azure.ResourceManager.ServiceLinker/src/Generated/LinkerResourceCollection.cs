@@ -8,7 +8,6 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -45,8 +44,16 @@ namespace Azure.ResourceManager.ServiceLinker
 
         /// <summary>
         /// Create or update linker resource.
-        /// Request Path: /{resourceUri}/providers/Microsoft.ServiceLinker/linkers/{linkerName}
-        /// Operation Id: Linker_CreateOrUpdate
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{resourceUri}/providers/Microsoft.ServiceLinker/linkers/{linkerName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Linker_CreateOrUpdate</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="linkerName"> The name Linker resource. </param>
@@ -78,8 +85,16 @@ namespace Azure.ResourceManager.ServiceLinker
 
         /// <summary>
         /// Create or update linker resource.
-        /// Request Path: /{resourceUri}/providers/Microsoft.ServiceLinker/linkers/{linkerName}
-        /// Operation Id: Linker_CreateOrUpdate
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{resourceUri}/providers/Microsoft.ServiceLinker/linkers/{linkerName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Linker_CreateOrUpdate</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="linkerName"> The name Linker resource. </param>
@@ -111,8 +126,16 @@ namespace Azure.ResourceManager.ServiceLinker
 
         /// <summary>
         /// Returns Linker resource for a given name.
-        /// Request Path: /{resourceUri}/providers/Microsoft.ServiceLinker/linkers/{linkerName}
-        /// Operation Id: Linker_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{resourceUri}/providers/Microsoft.ServiceLinker/linkers/{linkerName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Linker_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="linkerName"> The name Linker resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -140,8 +163,16 @@ namespace Azure.ResourceManager.ServiceLinker
 
         /// <summary>
         /// Returns Linker resource for a given name.
-        /// Request Path: /{resourceUri}/providers/Microsoft.ServiceLinker/linkers/{linkerName}
-        /// Operation Id: Linker_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{resourceUri}/providers/Microsoft.ServiceLinker/linkers/{linkerName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Linker_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="linkerName"> The name Linker resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -169,92 +200,60 @@ namespace Azure.ResourceManager.ServiceLinker
 
         /// <summary>
         /// Returns list of Linkers which connects to the resource.
-        /// Request Path: /{resourceUri}/providers/Microsoft.ServiceLinker/linkers
-        /// Operation Id: Linker_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{resourceUri}/providers/Microsoft.ServiceLinker/linkers</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Linker_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="LinkerResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<LinkerResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<LinkerResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _linkerResourceLinkerClientDiagnostics.CreateScope("LinkerResourceCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _linkerResourceLinkerRestClient.ListAsync(Id, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new LinkerResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<LinkerResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _linkerResourceLinkerClientDiagnostics.CreateScope("LinkerResourceCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _linkerResourceLinkerRestClient.ListNextPageAsync(nextLink, Id, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new LinkerResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _linkerResourceLinkerRestClient.CreateListRequest(Id);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _linkerResourceLinkerRestClient.CreateListNextPageRequest(nextLink, Id);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new LinkerResource(Client, LinkerResourceData.DeserializeLinkerResourceData(e)), _linkerResourceLinkerClientDiagnostics, Pipeline, "LinkerResourceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Returns list of Linkers which connects to the resource.
-        /// Request Path: /{resourceUri}/providers/Microsoft.ServiceLinker/linkers
-        /// Operation Id: Linker_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{resourceUri}/providers/Microsoft.ServiceLinker/linkers</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Linker_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="LinkerResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<LinkerResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<LinkerResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _linkerResourceLinkerClientDiagnostics.CreateScope("LinkerResourceCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _linkerResourceLinkerRestClient.List(Id, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new LinkerResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<LinkerResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _linkerResourceLinkerClientDiagnostics.CreateScope("LinkerResourceCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _linkerResourceLinkerRestClient.ListNextPage(nextLink, Id, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new LinkerResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _linkerResourceLinkerRestClient.CreateListRequest(Id);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _linkerResourceLinkerRestClient.CreateListNextPageRequest(nextLink, Id);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new LinkerResource(Client, LinkerResourceData.DeserializeLinkerResourceData(e)), _linkerResourceLinkerClientDiagnostics, Pipeline, "LinkerResourceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /{resourceUri}/providers/Microsoft.ServiceLinker/linkers/{linkerName}
-        /// Operation Id: Linker_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{resourceUri}/providers/Microsoft.ServiceLinker/linkers/{linkerName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Linker_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="linkerName"> The name Linker resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -280,8 +279,16 @@ namespace Azure.ResourceManager.ServiceLinker
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /{resourceUri}/providers/Microsoft.ServiceLinker/linkers/{linkerName}
-        /// Operation Id: Linker_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{resourceUri}/providers/Microsoft.ServiceLinker/linkers/{linkerName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Linker_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="linkerName"> The name Linker resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
