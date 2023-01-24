@@ -10,10 +10,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Maintenance.Models
 {
-    /// <summary> The MaintenanceExtensionsDeleteConfigurationAssignmentByParentOptions. </summary>
-    public partial class MaintenanceExtensionsDeleteConfigurationAssignmentByParentOptions
+    /// <summary> The ResourceGroupResourceDeleteConfigurationAssignmentByParentOptions. </summary>
+    public partial class ResourceGroupResourceDeleteConfigurationAssignmentByParentOptions
     {
-        /// <summary> Initializes a new instance of MaintenanceExtensionsDeleteConfigurationAssignmentByParentOptions. </summary>
+        /// <summary> Initializes a new instance of ResourceGroupResourceDeleteConfigurationAssignmentByParentOptions. </summary>
         /// <param name="providerName"> Resource provider name. </param>
         /// <param name="resourceParentType"> Resource parent type. </param>
         /// <param name="resourceParentName"> Resource parent identifier. </param>
@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Maintenance.Models
         /// <param name="resourceName"> Resource identifier. </param>
         /// <param name="configurationAssignmentName"> Unique configuration assignment name. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="providerName"/>, <paramref name="resourceParentType"/>, <paramref name="resourceParentName"/>, <paramref name="resourceType"/>, <paramref name="resourceName"/> or <paramref name="configurationAssignmentName"/> is null. </exception>
-        public MaintenanceExtensionsDeleteConfigurationAssignmentByParentOptions(string providerName, string resourceParentType, string resourceParentName, string resourceType, string resourceName, string configurationAssignmentName)
+        public ResourceGroupResourceDeleteConfigurationAssignmentByParentOptions(string providerName, string resourceParentType, string resourceParentName, string resourceType, string resourceName, string configurationAssignmentName)
         {
             Argument.AssertNotNull(providerName, nameof(providerName));
             Argument.AssertNotNull(resourceParentType, nameof(resourceParentType));

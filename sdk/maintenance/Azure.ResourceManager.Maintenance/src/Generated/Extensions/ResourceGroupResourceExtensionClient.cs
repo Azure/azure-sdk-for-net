@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.Maintenance
         /// </summary>
         /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<MaintenanceApplyUpdateResource>> GetApplyUpdatesByParentAsync(MaintenanceExtensionsGetApplyUpdatesByParentOptions options, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<MaintenanceApplyUpdateResource>> GetApplyUpdatesByParentAsync(ResourceGroupResourceGetApplyUpdatesByParentOptions options, CancellationToken cancellationToken = default)
         {
             using var scope = MaintenanceApplyUpdateApplyUpdatesClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetApplyUpdatesByParent");
             scope.Start();
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.Maintenance
         /// </summary>
         /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<MaintenanceApplyUpdateResource> GetApplyUpdatesByParent(MaintenanceExtensionsGetApplyUpdatesByParentOptions options, CancellationToken cancellationToken = default)
+        public virtual Response<MaintenanceApplyUpdateResource> GetApplyUpdatesByParent(ResourceGroupResourceGetApplyUpdatesByParentOptions options, CancellationToken cancellationToken = default)
         {
             using var scope = MaintenanceApplyUpdateApplyUpdatesClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetApplyUpdatesByParent");
             scope.Start();
@@ -282,7 +282,7 @@ namespace Azure.ResourceManager.Maintenance
         /// </summary>
         /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<MaintenanceConfigurationAssignmentData>> CreateOrUpdateConfigurationAssignmentByParentAsync(MaintenanceExtensionsCreateOrUpdateConfigurationAssignmentByParentOptions options, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<MaintenanceConfigurationAssignmentData>> CreateOrUpdateConfigurationAssignmentByParentAsync(ResourceGroupResourceCreateOrUpdateConfigurationAssignmentByParentOptions options, CancellationToken cancellationToken = default)
         {
             using var scope = ConfigurationAssignmentsClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.CreateOrUpdateConfigurationAssignmentByParent");
             scope.Start();
@@ -313,7 +313,7 @@ namespace Azure.ResourceManager.Maintenance
         /// </summary>
         /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<MaintenanceConfigurationAssignmentData> CreateOrUpdateConfigurationAssignmentByParent(MaintenanceExtensionsCreateOrUpdateConfigurationAssignmentByParentOptions options, CancellationToken cancellationToken = default)
+        public virtual Response<MaintenanceConfigurationAssignmentData> CreateOrUpdateConfigurationAssignmentByParent(ResourceGroupResourceCreateOrUpdateConfigurationAssignmentByParentOptions options, CancellationToken cancellationToken = default)
         {
             using var scope = ConfigurationAssignmentsClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.CreateOrUpdateConfigurationAssignmentByParent");
             scope.Start();
@@ -344,7 +344,7 @@ namespace Azure.ResourceManager.Maintenance
         /// </summary>
         /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<MaintenanceConfigurationAssignmentData>> DeleteConfigurationAssignmentByParentAsync(MaintenanceExtensionsDeleteConfigurationAssignmentByParentOptions options, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<MaintenanceConfigurationAssignmentData>> DeleteConfigurationAssignmentByParentAsync(ResourceGroupResourceDeleteConfigurationAssignmentByParentOptions options, CancellationToken cancellationToken = default)
         {
             using var scope = ConfigurationAssignmentsClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.DeleteConfigurationAssignmentByParent");
             scope.Start();
@@ -375,7 +375,7 @@ namespace Azure.ResourceManager.Maintenance
         /// </summary>
         /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<MaintenanceConfigurationAssignmentData> DeleteConfigurationAssignmentByParent(MaintenanceExtensionsDeleteConfigurationAssignmentByParentOptions options, CancellationToken cancellationToken = default)
+        public virtual Response<MaintenanceConfigurationAssignmentData> DeleteConfigurationAssignmentByParent(ResourceGroupResourceDeleteConfigurationAssignmentByParentOptions options, CancellationToken cancellationToken = default)
         {
             using var scope = ConfigurationAssignmentsClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.DeleteConfigurationAssignmentByParent");
             scope.Start();

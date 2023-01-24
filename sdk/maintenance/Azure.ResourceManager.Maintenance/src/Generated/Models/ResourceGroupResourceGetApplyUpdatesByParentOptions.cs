@@ -10,35 +10,32 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Maintenance.Models
 {
-    /// <summary> The MaintenanceExtensionsCreateOrUpdateConfigurationAssignmentByParentOptions. </summary>
-    public partial class MaintenanceExtensionsCreateOrUpdateConfigurationAssignmentByParentOptions
+    /// <summary> The ResourceGroupResourceGetApplyUpdatesByParentOptions. </summary>
+    public partial class ResourceGroupResourceGetApplyUpdatesByParentOptions
     {
-        /// <summary> Initializes a new instance of MaintenanceExtensionsCreateOrUpdateConfigurationAssignmentByParentOptions. </summary>
+        /// <summary> Initializes a new instance of ResourceGroupResourceGetApplyUpdatesByParentOptions. </summary>
         /// <param name="providerName"> Resource provider name. </param>
         /// <param name="resourceParentType"> Resource parent type. </param>
         /// <param name="resourceParentName"> Resource parent identifier. </param>
         /// <param name="resourceType"> Resource type. </param>
         /// <param name="resourceName"> Resource identifier. </param>
-        /// <param name="configurationAssignmentName"> Configuration assignment name. </param>
-        /// <param name="data"> The configurationAssignment. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="providerName"/>, <paramref name="resourceParentType"/>, <paramref name="resourceParentName"/>, <paramref name="resourceType"/>, <paramref name="resourceName"/>, <paramref name="configurationAssignmentName"/> or <paramref name="data"/> is null. </exception>
-        public MaintenanceExtensionsCreateOrUpdateConfigurationAssignmentByParentOptions(string providerName, string resourceParentType, string resourceParentName, string resourceType, string resourceName, string configurationAssignmentName, MaintenanceConfigurationAssignmentData data)
+        /// <param name="applyUpdateName"> applyUpdate Id. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="providerName"/>, <paramref name="resourceParentType"/>, <paramref name="resourceParentName"/>, <paramref name="resourceType"/>, <paramref name="resourceName"/> or <paramref name="applyUpdateName"/> is null. </exception>
+        public ResourceGroupResourceGetApplyUpdatesByParentOptions(string providerName, string resourceParentType, string resourceParentName, string resourceType, string resourceName, string applyUpdateName)
         {
             Argument.AssertNotNull(providerName, nameof(providerName));
             Argument.AssertNotNull(resourceParentType, nameof(resourceParentType));
             Argument.AssertNotNull(resourceParentName, nameof(resourceParentName));
             Argument.AssertNotNull(resourceType, nameof(resourceType));
             Argument.AssertNotNull(resourceName, nameof(resourceName));
-            Argument.AssertNotNull(configurationAssignmentName, nameof(configurationAssignmentName));
-            Argument.AssertNotNull(data, nameof(data));
+            Argument.AssertNotNull(applyUpdateName, nameof(applyUpdateName));
 
             ProviderName = providerName;
             ResourceParentType = resourceParentType;
             ResourceParentName = resourceParentName;
             ResourceType = resourceType;
             ResourceName = resourceName;
-            ConfigurationAssignmentName = configurationAssignmentName;
-            Data = data;
+            ApplyUpdateName = applyUpdateName;
         }
 
         /// <summary> Resource provider name. </summary>
@@ -51,9 +48,7 @@ namespace Azure.ResourceManager.Maintenance.Models
         public string ResourceType { get; }
         /// <summary> Resource identifier. </summary>
         public string ResourceName { get; }
-        /// <summary> Configuration assignment name. </summary>
-        public string ConfigurationAssignmentName { get; }
-        /// <summary> The configurationAssignment. </summary>
-        public MaintenanceConfigurationAssignmentData Data { get; }
+        /// <summary> applyUpdate Id. </summary>
+        public string ApplyUpdateName { get; }
     }
 }
