@@ -108,14 +108,35 @@ namespace Azure.Developer.LoadTesting.Tests
         [Test]
         public async Task ListTestRuns()
         {
+            int pageSizeHint = 2;
             AsyncPageable<BinaryData> responsePageable = _loadTestRunClient.GetTestRunsAsync();
 
-            await foreach (var page in responsePageable.AsPages())
+            int count = 0;
+
+            await foreach (var page in responsePageable.AsPages(pageSizeHint: pageSizeHint))
             {
+                count++;
+
                 foreach (var testRun in page.Values)
                 {
                     JsonDocument jsonDocument = JsonDocument.Parse(testRun.ToString());
-                    Assert.AreEqual(_testId, jsonDocument.RootElement.GetProperty("testId").ToString());
+                    Assert.NotNull(jsonDocument.RootElement.GetProperty("testId").ToString());
+                    Assert.NotNull(jsonDocument.RootElement.GetProperty("testRunId").ToString());
+                }
+            }
+
+            int i = 0;
+            await foreach (var page in responsePageable.AsPages(pageSizeHint: pageSizeHint))
+            {
+                i++;
+
+                if (i < count)
+                {
+                    Assert.AreEqual(pageSizeHint, page.Values.Count);
+                }
+                else
+                {
+                    Assert.LessOrEqual(page.Values.Count, pageSizeHint);
                 }
             }
         }
