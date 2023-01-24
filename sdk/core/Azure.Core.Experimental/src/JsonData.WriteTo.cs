@@ -140,11 +140,11 @@ namespace Azure.Core.Dynamic
                     case JsonTokenType.False:
                         WriteBoolean(path, highWaterMark, reader.TokenType, ref reader, writer);
                         path = ChangeTracker.PopProperty(path);
-                        return;
+                        continue;
                     case JsonTokenType.Null:
                         writer.WriteNullValue();
                         path = ChangeTracker.PopProperty(path);
-                        return;
+                        continue;
                     case JsonTokenType.EndObject:
                         writer.WriteEndObject();
                         return;

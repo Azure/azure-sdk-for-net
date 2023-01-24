@@ -15,18 +15,17 @@ namespace Azure.Core.Experimental.Tests
         [Test]
         public void CanWriteBoolean()
         {
-            string json = @"true";
+            string jsonTrue = @"true";
+            string jsonFalse = @"false";
 
-            JsonData jd = JsonData.Parse(json);
+            JsonData jdTrue = JsonData.Parse(jsonTrue);
+            JsonData jdFalse = JsonData.Parse(jsonFalse);
 
-            using MemoryStream stream = new MemoryStream();
-            Utf8JsonWriter writer = new Utf8JsonWriter(stream);
-            jd.WriteElementTo(writer);
-            writer.Flush();
+            WriteToAndParse(jdTrue, out string jsonTrueString);
+            WriteToAndParse(jdFalse, out string jsonFalseString);
 
-            stream.Position = 0;
-            string value = BinaryData.FromStream(stream).ToString();
-            Assert.AreEqual(json, value);
+            Assert.AreEqual(RemoveWhiteSpace(jsonTrue), RemoveWhiteSpace(jsonTrueString));
+            Assert.AreEqual(RemoveWhiteSpace(jsonFalse), RemoveWhiteSpace(jsonFalseString));
         }
 
         [Test]
@@ -36,16 +35,69 @@ namespace Azure.Core.Experimental.Tests
 
             JsonData jd = JsonData.Parse(json);
 
-            using MemoryStream stream = new MemoryStream();
-            Utf8JsonWriter writer = new Utf8JsonWriter(stream);
+            WriteToAndParse(jd, out string jsonString);
 
-            jd.WriteElementTo(writer);
+            Assert.AreEqual(RemoveWhiteSpace(json), RemoveWhiteSpace(jsonString));
+        }
 
-            writer.Flush();
-            stream.Position = 0;
+        [Test]
+        public void CanWriteBooleanObjectProperty()
+        {
+            string json = @"
+                {
+                  ""Foo"" :  true,
+                  ""Bar"" :  false
+                }";
 
-            string value = BinaryData.FromStream(stream).ToString();
-            Assert.AreEqual(json, value);
+            JsonData jd = JsonData.Parse(json);
+
+            WriteToAndParse(jd, out string jsonString);
+
+            Assert.AreEqual(RemoveWhiteSpace(json), RemoveWhiteSpace(jsonString));
+        }
+
+        [Test]
+        public void CanWriteBooleanObjectPropertyWithChangesToOtherBranches()
+        {
+            string json = @"
+                {
+                  ""Foo"" : true,
+                  ""Bar"" : 1.2
+                }";
+
+            JsonData jd = JsonData.Parse(json);
+
+            jd.RootElement.GetProperty("Bar").Set(2.2);
+
+            WriteToAndParse(jd, out string jsonString);
+
+            Assert.AreEqual(RemoveWhiteSpace(@"
+                {
+                  ""Foo"" : true,
+                  ""Bar"" : 2.2
+                }"),
+                RemoveWhiteSpace(jsonString));
+        }
+
+        [Test]
+        public void CanWriteBooleanObjectPropertyWithChangesToBool()
+        {
+            string json = @"
+                {
+                  ""Foo"" :  true
+                }";
+
+            JsonData jd = JsonData.Parse(json);
+
+            jd.RootElement.GetProperty("Foo").Set(false);
+
+            WriteToAndParse(jd, out string jsonString);
+
+            Assert.AreEqual(RemoveWhiteSpace(@"
+                {
+                  ""Foo"" :  false
+                }"),
+                RemoveWhiteSpace(jsonString));
         }
 
         [Test]
@@ -82,15 +134,7 @@ namespace Azure.Core.Experimental.Tests
 
             JsonData jd = JsonData.Parse(json);
 
-            using MemoryStream stream = new MemoryStream();
-            Utf8JsonWriter writer = new Utf8JsonWriter(stream);
-
-            jd.WriteElementTo(writer);
-
-            writer.Flush();
-            stream.Position = 0;
-
-            string jsonString = BinaryData.FromStream(stream).ToString();
+            WriteToAndParse(jd, out string jsonString);
 
             TestClass testClass = JsonSerializer.Deserialize<TestClass>(jsonString);
             Assert.AreEqual(jd.RootElement.GetProperty("StringProperty").GetString(), testClass.StringProperty);
@@ -100,7 +144,7 @@ namespace Azure.Core.Experimental.Tests
             Assert.AreEqual(jd.RootElement.GetProperty("ObjectProperty").GetProperty("IntProperty").GetInt32(), testClass.ObjectProperty.IntProperty);
             Assert.AreEqual(jd.RootElement.GetProperty("ObjectProperty").GetProperty("DoubleProperty").GetDouble(), testClass.ObjectProperty.DoubleProperty);
 
-            Assert.AreEqual(RemoveWhiteSpace(json), jsonString);
+            Assert.AreEqual(RemoveWhiteSpace(json), RemoveWhiteSpace(jsonString));
         }
 
         [Test]
@@ -110,17 +154,9 @@ namespace Azure.Core.Experimental.Tests
 
             JsonData jd = JsonData.Parse(json);
 
-            using MemoryStream stream = new MemoryStream();
-            Utf8JsonWriter writer = new Utf8JsonWriter(stream);
+            WriteToAndParse(jd, out string jsonString);
 
-            jd.WriteElementTo(writer);
-
-            writer.Flush();
-            stream.Position = 0;
-
-            string jsonString = BinaryData.FromStream(stream).ToString();
-
-            Assert.AreEqual(json, jsonString);
+            Assert.AreEqual(RemoveWhiteSpace(json), RemoveWhiteSpace(jsonString));
         }
 
         [Test]
@@ -130,17 +166,9 @@ namespace Azure.Core.Experimental.Tests
 
             JsonData jd = JsonData.Parse(json);
 
-            using MemoryStream stream = new MemoryStream();
-            Utf8JsonWriter writer = new Utf8JsonWriter(stream);
+            WriteToAndParse(jd, out string jsonString);
 
-            jd.WriteElementTo(writer);
-
-            writer.Flush();
-            stream.Position = 0;
-
-            string jsonString = BinaryData.FromStream(stream).ToString();
-
-            Assert.AreEqual(json, jsonString);
+            Assert.AreEqual(RemoveWhiteSpace(json), RemoveWhiteSpace(jsonString));
         }
 
         [Test]
@@ -150,17 +178,9 @@ namespace Azure.Core.Experimental.Tests
 
             JsonData jd = JsonData.Parse(json);
 
-            using MemoryStream stream = new MemoryStream();
-            Utf8JsonWriter writer = new Utf8JsonWriter(stream);
+            WriteToAndParse(jd, out string jsonString);
 
-            jd.WriteElementTo(writer);
-
-            writer.Flush();
-            stream.Position = 0;
-
-            string jsonString = BinaryData.FromStream(stream).ToString();
-
-            Assert.AreEqual(RemoveWhiteSpace(json), jsonString);
+            Assert.AreEqual(RemoveWhiteSpace(json), RemoveWhiteSpace(jsonString));
         }
 
         [Test]
@@ -170,17 +190,9 @@ namespace Azure.Core.Experimental.Tests
 
             JsonData jd = JsonData.Parse(json);
 
-            using MemoryStream stream = new MemoryStream();
-            Utf8JsonWriter writer = new Utf8JsonWriter(stream);
+            WriteToAndParse(jd, out string jsonString);
 
-            jd.WriteElementTo(writer);
-
-            writer.Flush();
-            stream.Position = 0;
-
-            string jsonString = BinaryData.FromStream(stream).ToString();
-
-            Assert.AreEqual(RemoveWhiteSpace(json), jsonString);
+            Assert.AreEqual(RemoveWhiteSpace(json), RemoveWhiteSpace(jsonString));
         }
 
         #region Helpers
@@ -197,6 +209,16 @@ namespace Azure.Core.Experimental.Tests
         {
             return value.Replace(" ", "").Replace("\r", "").Replace("\n", "");
         }
+
+        internal static JsonDocument WriteToAndParse(JsonData data, out string json)
+        {
+            using MemoryStream stream = new();
+            data.WriteTo(stream);
+            stream.Position = 0;
+            json = BinaryData.FromStream(stream).ToString();
+            return JsonDocument.Parse(json);
+        }
+
         #endregion
     }
 }

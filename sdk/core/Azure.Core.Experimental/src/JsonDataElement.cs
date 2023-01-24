@@ -241,8 +241,8 @@ namespace Azure.Core.Dynamic
             EnsureValid();
 
             Changes.AddChange(_path, value,
-                _element.ValueKind != JsonValueKind.True ||
-                _element.ValueKind != JsonValueKind.False);
+                !(_element.ValueKind == JsonValueKind.True ||
+                  _element.ValueKind == JsonValueKind.False));
         }
 
         internal void Set(object value)
