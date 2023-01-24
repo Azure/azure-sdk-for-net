@@ -197,8 +197,7 @@ namespace Azure.Core
 
         private static ResourceType ChooseResourceType(ReadOnlySpan<char> resourceTypeName, ResourceIdentifier parent, out SpecialType specialType)
         {
-            //resourceGroups type is Microsoft.Resources/resourceGroups only when its parent is Subscription
-            if (resourceTypeName.Equals(ResourceGroupKey.AsSpan(), StringComparison.OrdinalIgnoreCase) && parent.ResourceType == ResourceType.Subscription)
+            if (resourceTypeName.Equals(ResourceGroupKey.AsSpan(), StringComparison.OrdinalIgnoreCase))
             {
                 //resourceGroups type is Microsoft.Resources/resourceGroups only when its parent is Subscription
                 specialType = SpecialType.ResourceGroup;
