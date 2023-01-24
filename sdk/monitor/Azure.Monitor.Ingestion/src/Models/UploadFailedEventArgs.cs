@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Threading;
+using Azure.Core.Pipeline;
 using Azure.Core.Serialization;
 
 namespace Azure.Monitor.Ingestion
@@ -34,5 +35,7 @@ namespace Azure.Monitor.Ingestion
         /// test
         /// </summary>
         public Exception Exception { get; }
+
+        internal ClientDiagnostics _clientDiagnostics;
     }
 }

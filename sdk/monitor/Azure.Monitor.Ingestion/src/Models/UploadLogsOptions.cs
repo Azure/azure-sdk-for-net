@@ -27,49 +27,48 @@ namespace Azure.Monitor.Ingestion
         /// The max concurrent requests to send to the Azure Monitor service when uploading logs.
         /// <remarks> In the Upload method, this parameter is not used as the batches are uploaded in sequence. For parallel uploads, if this value is not set the default concurrency will be 5. </remarks>
         /// </summary>
-        public int MaxConcurrency { get; set; }
+        public int MaxConcurrency { get; set; } = 5;
 
         /// <summary>
         /// test
         /// </summary>
         public event SyncAsyncEventHandler<UploadFailedEventArgs> UploadFailedEventHandler;
 
-        internal ClientDiagnostics _clientDiagnostics;
-
         /// <summary>
         /// test
         /// </summary>
         /// <param name="uploadFailedArgs"></param>
-        /// <param name="clientDiagnostics"></param>
         /// <returns></returns>
-        internal virtual async Task InvokeEvent(UploadFailedEventArgs uploadFailedArgs, ClientDiagnostics clientDiagnostics)
+        internal virtual async Task InvokeEvent(UploadFailedEventArgs uploadFailedArgs)
         {
-            await UploadFailedEventHandler.RaiseAsync(uploadFailedArgs, nameof(LogsIngestionClient), "Upload", clientDiagnostics).ConfigureAwait(false);
+            await UploadFailedEventHandler.RaiseAsync(uploadFailedArgs, nameof(LogsIngestionClient), "Upload", uploadFailedArgs._clientDiagnostics).ConfigureAwait(false);
         }
 
         /// <summary>
         /// test
         /// </summary>
-        /// <param name="async"></param>
         /// <param name="eventArgs"></param>
-        /// <param name="options"></param>
-        internal virtual async Task OnUploadFailedAsync(bool async, UploadFailedEventArgs eventArgs, UploadLogsOptions options)
+        internal virtual async Task<Exception> OnUploadFailedAsync(UploadFailedEventArgs eventArgs)
         {
             try
             {
-                if (!async)
+                if (eventArgs.IsRunningSynchronously)
                 {
-#pragma warning disable AZC0106 // Non-public asynchronous method needs 'async' parameter.
-                    options.InvokeEvent(eventArgs, _clientDiagnostics).EnsureCompleted();
-#pragma warning restore AZC0106 // Non-public asynchronous method needs 'async' parameter.
+#pragma warning disable AZC0103 // Do not wait synchronously in asynchronous scope.
+                    // for customer code so async not ran over sync
+                    InvokeEvent(eventArgs).GetAwaiter().GetResult();
+#pragma warning restore AZC0103 // Do not wait synchronously in asynchronous scope.
                 }
                 else
                 {
-                    await options.InvokeEvent(eventArgs, _clientDiagnostics).ConfigureAwait(false);
+                    await InvokeEvent(eventArgs).ConfigureAwait(false);
                 }
+                return null;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                // return exception to caller and caller should check exception to abort processing and rethrow this exception
+                return ex;
             }
         }
 
@@ -79,11 +78,20 @@ namespace Azure.Monitor.Ingestion
         /// <returns></returns>
         internal UploadLogsOptions Clone()
         {
+            AssertNotNegative(MaxConcurrency, nameof(MaxConcurrency));
             UploadLogsOptions copy = new UploadLogsOptions();
             copy.Serializer = Serializer;
             copy.MaxConcurrency = MaxConcurrency;
             copy.UploadFailedEventHandler = UploadFailedEventHandler;
             return copy;
+        }
+
+        internal static void AssertNotNegative(int argumentValue, string argumentName)
+        {
+            if (argumentValue <= 0)
+            {
+                throw new ArgumentOutOfRangeException(argumentName, $"Argument {argumentName} must be a non-negative timespan value. The provided value was {argumentValue}.");
+            }
         }
     }
 }

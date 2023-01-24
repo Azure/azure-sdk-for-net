@@ -31,7 +31,7 @@ namespace Azure.Monitor.Ingestion
         internal static string Compression;
 
         // If no concurrency count is provided for a parallel upload, default to 5 workers.
-        private const int DefaultParallelWorkerCount = 5;
+        //private const int DefaultParallelWorkerCount = 5;
 
         internal readonly struct BatchedLogs
         {
@@ -207,14 +207,18 @@ namespace Azure.Monitor.Ingestion
             using var scope = ClientDiagnostics.CreateScope("LogsIngestionClient.Upload");
             Response response = null;
             List<Exception> exceptions = null;
-
+            var clonedOptions = options?.Clone() ?? new UploadLogsOptions();
             scope.Start();
+
             // Keep track of the number of failed logs across batches
             int logsFailed = 0;
-
+            var shouldAbort = false;
             // Partition the stream into individual blocks
             foreach (BatchedLogs batch in Batch((List<object>)logs, options))
             {
+                //stop queuing new work on abort
+                if (shouldAbort)
+                    break;
                 try
                 {
                     // Because we are uploading in sequence, wait for each batch to upload before starting the next batch
@@ -233,20 +237,39 @@ namespace Azure.Monitor.Ingestion
                         }
                         else
                         {
-                            options._clientDiagnostics = ClientDiagnostics;
-                            var clonedOptions = options.Clone();
                             var eventArgs = new UploadFailedEventArgs(batch.Logs, new RequestFailedException(response), isRunningSynchronously: true, cancellationToken);
-                            options.OnUploadFailedAsync(async: false, eventArgs, clonedOptions).EnsureCompleted();
+                            eventArgs._clientDiagnostics = ClientDiagnostics;
+#pragma warning disable AZC0106 // Non-public asynchronous method needs 'async' parameter.
+                            // sync/async parameter in eventArgs
+                            var ex = clonedOptions.OnUploadFailedAsync(eventArgs).EnsureCompleted();
+#pragma warning restore AZC0106 // Non-public asynchronous method needs 'async' parameter.
+                            shouldAbort = ex != null;
+                            if (shouldAbort)
+                                AddException(ref exceptions, ex);
                         }
                     }
                 }
                 catch (Exception ex)
                 {
-                    logsFailed += batch.Logs.Count;
-                    // If we have an error, add Exception from response into exceptions list without throwing
-                    AddException(
-                        ref exceptions,
-                        ex);
+                    if (options == null)
+                    {
+                        logsFailed += batch.Logs.Count;
+                        // If we have an error, add Exception from response into exceptions list without throwing
+                        AddException(
+                            ref exceptions,
+                            ex);
+                    }
+                    else
+                    {
+                        var eventArgs = new UploadFailedEventArgs(batch.Logs, ex, isRunningSynchronously: true, cancellationToken);
+                        eventArgs._clientDiagnostics = ClientDiagnostics;
+#pragma warning disable AZC0106 // Non-public asynchronous method needs 'async' parameter.
+                        var exceptionOnUpload = clonedOptions.OnUploadFailedAsync(eventArgs).EnsureCompleted();
+#pragma warning restore AZC0106 // Non-public asynchronous method needs 'async' parameter.
+                        shouldAbort = exceptionOnUpload != null;
+                        if (shouldAbort)
+                            AddException(ref exceptions, exceptionOnUpload);
+                    }
                 }
             }
             if (exceptions?.Count > 0)
@@ -293,11 +316,12 @@ namespace Azure.Monitor.Ingestion
             Argument.AssertNotNullOrEmpty(logs, nameof(logs));
 
             // Calculate the number of threads to use.
-            // If there are 0 workers or an UploadLogsOptions object was not provided, method will run with 5 workers. Otherwise will run in parallel with number of workers given.
-            int _maxWorkerCount = (options == null || options.MaxConcurrency <= 0) ? DefaultParallelWorkerCount : options.MaxConcurrency;
+            var clonedOptions = options?.Clone() ?? new UploadLogsOptions();
+            int _maxWorkerCount = clonedOptions.MaxConcurrency;
             using var scope = ClientDiagnostics.CreateScope("LogsIngestionClient.Upload");
 
             List<Exception> exceptions = null;
+            var shouldAbort = false;
             scope.Start();
 
             // A list of tasks that are currently executing which will
@@ -309,6 +333,8 @@ namespace Azure.Monitor.Ingestion
             // Partition the stream into individual blocks
             foreach (BatchedLogs batch in Batch((List<object>) logs, options))
             {
+                if (shouldAbort)
+                    break;
                 try
                 {
                     // Start staging the next batch (but don't await the Task!)
@@ -342,10 +368,25 @@ namespace Azure.Monitor.Ingestion
                             }
                             else
                             {
-                                options._clientDiagnostics = ClientDiagnostics;
-                                var clonedOptions = options.Clone();
-                                var eventArgs = new UploadFailedEventArgs(batch.Logs, new RequestFailedException(runningTask.Result), isRunningSynchronously: true, cancellationToken);
-                                await options.OnUploadFailedAsync(async: true, eventArgs, clonedOptions).ConfigureAwait(false);
+                                UploadFailedEventArgs eventArgs;
+                                if (runningTask.Exception != null)
+                                {
+                                    eventArgs = new UploadFailedEventArgs(batch.Logs, runningTask.Exception, isRunningSynchronously: false, cancellationToken);
+                                    eventArgs._clientDiagnostics = ClientDiagnostics;
+                                    var exceptionOnUpload = await clonedOptions.OnUploadFailedAsync(eventArgs).ConfigureAwait(false);
+                                    shouldAbort = exceptionOnUpload != null;
+                                    if (shouldAbort)
+                                        AddException(ref exceptions, exceptionOnUpload);
+                                }
+                                else if (runningTask.Result.Status != 204)
+                                {
+                                    eventArgs = new UploadFailedEventArgs(batch.Logs, new RequestFailedException(runningTask.Result), isRunningSynchronously: false, cancellationToken);
+                                    eventArgs._clientDiagnostics = ClientDiagnostics;
+                                    var exceptionOnUpload = await clonedOptions.OnUploadFailedAsync(eventArgs).ConfigureAwait(false);
+                                    shouldAbort = exceptionOnUpload != null;
+                                    if (shouldAbort)
+                                        AddException(ref exceptions, exceptionOnUpload);
+                                }
                             }
                             // Remove completed task from task list
                             runningTasks.RemoveAt(i);
@@ -372,10 +413,25 @@ namespace Azure.Monitor.Ingestion
                 }
                 else
                 {
-                    options._clientDiagnostics = ClientDiagnostics;
-                    var clonedOptions = options.Clone();
-                    var eventArgs = new UploadFailedEventArgs(task.Logs, new RequestFailedException(task.CurrentTask.Result), isRunningSynchronously: true, cancellationToken);
-                    await options.OnUploadFailedAsync(async: true, eventArgs, clonedOptions).ConfigureAwait(false);
+                    UploadFailedEventArgs eventArgs;
+                    if (task.CurrentTask.Exception != null)
+                    {
+                        eventArgs = new UploadFailedEventArgs(task.Logs, task.CurrentTask.Exception, isRunningSynchronously: false, cancellationToken);
+                        eventArgs._clientDiagnostics = ClientDiagnostics;
+                        var exceptionOnUpload = await clonedOptions.OnUploadFailedAsync(eventArgs).ConfigureAwait(false);
+                        shouldAbort = exceptionOnUpload != null;
+                        if (shouldAbort)
+                            AddException(ref exceptions, exceptionOnUpload);
+                    }
+                    else if (task.CurrentTask.Result.Status != 204)
+                    {
+                        eventArgs = new UploadFailedEventArgs(task.Logs, new RequestFailedException(task.CurrentTask.Result), isRunningSynchronously: false, cancellationToken);
+                        eventArgs._clientDiagnostics = ClientDiagnostics;
+                        var exceptionOnUpload = await clonedOptions.OnUploadFailedAsync(eventArgs).ConfigureAwait(false);
+                        shouldAbort = exceptionOnUpload != null;
+                        if (shouldAbort)
+                            AddException(ref exceptions, exceptionOnUpload);
+                    }
                 }
             }
             if (exceptions?.Count > 0)
