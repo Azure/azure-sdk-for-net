@@ -152,10 +152,10 @@ namespace Azure.Core.Dynamic
 
             EnsureObject();
 
-            var path = JsonData.ChangeTracker.PushProperty(_path, name);
-
             // Per copying Dictionary semantics, if the property already exists, just replace the value.
             // If the property already exists, just set it.
+
+            var path = JsonData.ChangeTracker.PushProperty(_path, name);
 
             if (_element.TryGetProperty(name, out _))
             {
@@ -163,7 +163,7 @@ namespace Azure.Core.Dynamic
                 return;
             }
 
-            // If it's not already there, we'll add change to the JsonElement instead.
+            // If it's not already there, we'll add a change to the JsonElement instead.
             Dictionary<string, object> dict = JsonSerializer.Deserialize<Dictionary<string, object>>(_element.ToString());
             dict[name] = value;
 

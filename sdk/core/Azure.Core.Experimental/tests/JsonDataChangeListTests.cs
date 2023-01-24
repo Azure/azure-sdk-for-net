@@ -433,7 +433,6 @@ namespace Azure.Core.Experimental.Tests
 
             Assert.AreEqual(5, jd.RootElement.GetIndexElement(0).GetInt32());
 
-            // TODO: Support the following in WriteTo()
             // 3. Type round-trips correctly.
             using MemoryStream stream = new();
             jd.WriteTo(stream);
@@ -542,7 +541,7 @@ namespace Azure.Core.Experimental.Tests
         }
 
         [Test]
-        public void CanAccessPropertyInUnchangedBranchOfChangedStructure()
+        public void CanAccessChangesInDifferentBranches()
         {
             string json = @"[
                 {
@@ -558,10 +557,9 @@ namespace Azure.Core.Experimental.Tests
 
             // resets json to equivalent of "[ 5, ... ]"
             jd.RootElement.GetIndexElement(0).Set(5);
-            jd.RootElement.GetIndexElement(1).GetProperty("Bar").Set("new");
 
             Assert.AreEqual(5, jd.RootElement.GetIndexElement(0).GetInt32());
-            Assert.AreEqual("new", jd.RootElement.GetIndexElement(1).GetProperty("Bar").GetString());
+            Assert.AreEqual("hi", jd.RootElement.GetIndexElement(1).GetProperty("Bar").GetString());
 
             // Make a structural change to json[0] but not json[1]
             jd.RootElement.GetIndexElement(0).Set(new
@@ -574,8 +572,11 @@ namespace Azure.Core.Experimental.Tests
 
             // We should be able to get the value of A without being tripped up by earlier changes.
 			// We should also be able to get the value of json[1] without it having been invalidated.
-            int aValue = jd.RootElement.GetIndexElement(0).GetProperty("Foo").GetProperty("A").GetInt32();
-            Assert.AreEqual(7, aValue);
+            Assert.AreEqual(7, jd.RootElement.GetIndexElement(0).GetProperty("Foo").GetProperty("A").GetInt32());
+            Assert.AreEqual("hi", jd.RootElement.GetIndexElement(1).GetProperty("Bar").GetString());
+
+            // Now change json[1]
+            jd.RootElement.GetIndexElement(1).GetProperty("Bar").Set("new");
             Assert.AreEqual("new", jd.RootElement.GetIndexElement(1).GetProperty("Bar").GetString());
 
             // 3. Type round-trips correctly.
@@ -650,12 +651,27 @@ namespace Azure.Core.Experimental.Tests
         }
 
         [Test]
-        [Ignore("TODO: Implement")]
         public void CanSetProperty_StringToNumber()
         {
-            // TODO: This will change how serialization works
+            string json = @"[ { ""Foo"" : ""hi"" } ]";
 
-            throw new NotImplementedException();
+            var jd = JsonData.Parse(json);
+
+            Assert.AreEqual("hi", jd.RootElement.GetIndexElement(0).GetProperty("Foo").GetString());
+
+            jd.RootElement.GetIndexElement(0).GetProperty("Foo").Set(1.2);
+
+            Assert.AreEqual(1.2, jd.RootElement.GetIndexElement(0).GetProperty("Foo").GetDouble());
+
+            // 3. Type round-trips correctly.
+            using MemoryStream stream = new();
+            jd.WriteTo(stream);
+            stream.Position = 0;
+            string jsonString = BinaryData.FromStream(stream).ToString();
+            JsonDocument doc = JsonDocument.Parse(jsonString);
+
+            Assert.AreEqual(1.2, doc.RootElement[0].GetProperty("Foo").GetDouble());
+            Assert.AreEqual(JsonDataWriteToTests.RemoveWhiteSpace(@"[ { ""Foo"" : 1.2 } ]"), jsonString);
         }
 
         [Test]
@@ -675,12 +691,32 @@ namespace Azure.Core.Experimental.Tests
         }
 
         [Test]
-        [Ignore("TODO: Implement")]
         public void CanSetProperty_StringToArray()
         {
-            // This modifies the JSON structure
+            string json = @"[ { ""Foo"" : ""hi"" } ]";
 
-            throw new NotImplementedException();
+            var jd = JsonData.Parse(json);
+
+            Assert.AreEqual("hi", jd.RootElement.GetIndexElement(0).GetProperty("Foo").GetString());
+
+            jd.RootElement.GetIndexElement(0).GetProperty("Foo").Set(new int[] { 1, 2, 3 });
+
+            Assert.AreEqual(1, jd.RootElement.GetIndexElement(0).GetProperty("Foo").GetIndexElement(0).GetInt32());
+            Assert.AreEqual(2, jd.RootElement.GetIndexElement(0).GetProperty("Foo").GetIndexElement(1).GetInt32());
+            Assert.AreEqual(3, jd.RootElement.GetIndexElement(0).GetProperty("Foo").GetIndexElement(2).GetInt32());
+
+            // 3. Type round-trips correctly.
+            using MemoryStream stream = new();
+            jd.WriteTo(stream);
+            stream.Position = 0;
+            string jsonString = BinaryData.FromStream(stream).ToString();
+            JsonDocument doc = JsonDocument.Parse(jsonString);
+
+            Assert.AreEqual(1, doc.RootElement[0].GetProperty("Foo")[0].GetInt32());
+            Assert.AreEqual(2, doc.RootElement[0].GetProperty("Foo")[1].GetInt32());
+            Assert.AreEqual(3, doc.RootElement[0].GetProperty("Foo")[2].GetInt32());
+
+            Assert.AreEqual(JsonDataWriteToTests.RemoveWhiteSpace(@"[ { ""Foo"" : [1, 2, 3] }]"), jsonString);
         }
     }
 }
