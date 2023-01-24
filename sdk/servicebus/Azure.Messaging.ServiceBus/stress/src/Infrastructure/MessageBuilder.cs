@@ -42,9 +42,9 @@ internal static class MessageBuilder
     ///
     internal static IEnumerable<ServiceBusMessage> CreateMessages(int maxNumberOfMessages,
                                                         long maximumBatchSize,
-                                                        int largeMessageRandomFactor = 10,
+                                                        int largeMessageRandomFactor = 5,
                                                         int minimumBodySize = 15,
-                                                        int maximumBodySize = 83886)
+                                                        int maximumBodySize = 3886)
         {
             var messagesBytesTotal = 0;
             decimal bodySizeBase = (maximumBatchSize) / maxNumberOfMessages;
