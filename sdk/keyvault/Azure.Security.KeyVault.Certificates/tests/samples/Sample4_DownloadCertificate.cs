@@ -14,7 +14,9 @@ namespace Azure.Security.KeyVault.Certificates.Samples
 {
     public partial class DownloadCertificate
     {
-#if NET472_OR_GREATER || NET || SNIPPET
+// Need to exclude actual TFMs since SNIPPET is always passed during CIs, such that the following will fail:
+// NET472_OR_GREATER || NETSTANDARD2_1_OR_GREATER || SNIPPET
+#if !NET461 && !NET47
         [Test]
         public void DownloadCertificateSync()
         {
