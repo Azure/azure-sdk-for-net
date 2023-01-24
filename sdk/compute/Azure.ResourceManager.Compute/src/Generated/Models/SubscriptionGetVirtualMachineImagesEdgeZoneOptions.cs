@@ -10,10 +10,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    /// <summary> The ComputeExtensionsGetVirtualMachineImagesEdgeZoneOptions. </summary>
-    public partial class ComputeExtensionsGetVirtualMachineImagesEdgeZoneOptions
+    /// <summary> The SubscriptionGetVirtualMachineImagesEdgeZoneOptions. </summary>
+    public partial class SubscriptionGetVirtualMachineImagesEdgeZoneOptions
     {
-        /// <summary> Initializes a new instance of ComputeExtensionsGetVirtualMachineImagesEdgeZoneOptions. </summary>
+        /// <summary> Initializes a new instance of SubscriptionGetVirtualMachineImagesEdgeZoneOptions. </summary>
         /// <param name="location"> The name of a supported Azure region. </param>
         /// <param name="edgeZone"> The name of the edge zone. </param>
         /// <param name="publisherName"> A valid image publisher. </param>
@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="skus"> A valid image SKU. </param>
         /// <param name="version"> A valid image SKU version. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="edgeZone"/>, <paramref name="publisherName"/>, <paramref name="offer"/>, <paramref name="skus"/> or <paramref name="version"/> is null. </exception>
-        public ComputeExtensionsGetVirtualMachineImagesEdgeZoneOptions(AzureLocation location, string edgeZone, string publisherName, string offer, string skus, string version)
+        public SubscriptionGetVirtualMachineImagesEdgeZoneOptions(AzureLocation location, string edgeZone, string publisherName, string offer, string skus, string version)
         {
             Argument.AssertNotNull(edgeZone, nameof(edgeZone));
             Argument.AssertNotNull(publisherName, nameof(publisherName));
