@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.LoadTesting.Models
 {
-    public partial class CustomerManagedKeyEncryptionProperties : IUtf8JsonSerializable
+    public partial class LoadTestingCmkEncryptionProperties : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -29,9 +29,9 @@ namespace Azure.ResourceManager.LoadTesting.Models
             writer.WriteEndObject();
         }
 
-        internal static CustomerManagedKeyEncryptionProperties DeserializeCustomerManagedKeyEncryptionProperties(JsonElement element)
+        internal static LoadTestingCmkEncryptionProperties DeserializeLoadTestingCmkEncryptionProperties(JsonElement element)
         {
-            Optional<CustomerManagedKeyIdentity> identity = default;
+            Optional<LoadTestingCmkIdentity> identity = default;
             Optional<Uri> keyUrl = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.LoadTesting.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    identity = CustomerManagedKeyIdentity.DeserializeCustomerManagedKeyIdentity(property.Value);
+                    identity = LoadTestingCmkIdentity.DeserializeLoadTestingCmkIdentity(property.Value);
                     continue;
                 }
                 if (property.NameEquals("keyUrl"))
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.LoadTesting.Models
                     continue;
                 }
             }
-            return new CustomerManagedKeyEncryptionProperties(identity.Value, keyUrl.Value);
+            return new LoadTestingCmkEncryptionProperties(identity.Value, keyUrl.Value);
         }
     }
 }

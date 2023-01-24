@@ -11,9 +11,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.LoadTesting.Models
 {
-    public partial class OutboundEnvironmentEndpoint
+    public partial class LoadTestingOutboundEnvironmentEndpoint
     {
-        internal static OutboundEnvironmentEndpoint DeserializeOutboundEnvironmentEndpoint(JsonElement element)
+        internal static LoadTestingOutboundEnvironmentEndpoint DeserializeLoadTestingOutboundEnvironmentEndpoint(JsonElement element)
         {
             Optional<string> category = default;
             Optional<IReadOnlyList<LoadTestingEndpointDependency>> endpoints = default;
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.LoadTesting.Models
                     continue;
                 }
             }
-            return new OutboundEnvironmentEndpoint(category.Value, Optional.ToList(endpoints));
+            return new LoadTestingOutboundEnvironmentEndpoint(category.Value, Optional.ToList(endpoints));
         }
     }
 }

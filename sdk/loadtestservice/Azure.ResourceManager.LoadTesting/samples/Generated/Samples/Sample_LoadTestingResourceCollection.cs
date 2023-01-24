@@ -155,11 +155,11 @@ namespace Azure.ResourceManager.LoadTesting.Samples
 },
                 },
                 Description = "This is new load test resource",
-                Encryption = new CustomerManagedKeyEncryptionProperties()
+                Encryption = new LoadTestingCmkEncryptionProperties()
                 {
-                    Identity = new CustomerManagedKeyIdentity()
+                    Identity = new LoadTestingCmkIdentity()
                     {
-                        IdentityType = CustomerManagedKeyIdentityType.UserAssigned,
+                        IdentityType = LoadTestingCmkIdentityType.UserAssigned,
                         ResourceId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/dummyrg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/id1"),
                     },
                     KeyUri = new Uri("https://dummy.vault.azure.net/keys/dummykey1"),
