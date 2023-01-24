@@ -3,13 +3,15 @@
 
 #nullable disable
 
+using System.Collections.Generic;
 using System.ComponentModel;
-using Azure.ResourceManager.Compute.Models;
+using Azure.Core;
+using Azure.ResourceManager.Resources.Models;
 
-namespace Azure.ResourceManager.Compute
+namespace Azure.ResourceManager.Compute.Models
 {
-    /// <summary> A class representing the VirtualMachine data model. </summary>
-    public partial class VirtualMachineData
+    /// <summary> Describes a virtual machine scale set virtual machine profile. </summary>
+    public partial class VirtualMachineScaleSetVmProfile
     {
         /// <summary> Specifies Terminate Scheduled Event related configurations. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]

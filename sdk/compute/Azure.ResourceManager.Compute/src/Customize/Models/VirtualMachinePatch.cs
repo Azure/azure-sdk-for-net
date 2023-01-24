@@ -4,12 +4,11 @@
 #nullable disable
 
 using System.ComponentModel;
-using Azure.ResourceManager.Compute.Models;
 
-namespace Azure.ResourceManager.Compute
+namespace Azure.ResourceManager.Compute.Models
 {
-    /// <summary> A class representing the VirtualMachine data model. </summary>
-    public partial class VirtualMachineData
+    /// <summary> Describes a Virtual Machine Update. </summary>
+    public partial class VirtualMachinePatch
     {
         /// <summary> Specifies Terminate Scheduled Event related configurations. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
