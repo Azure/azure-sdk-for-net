@@ -212,17 +212,14 @@ namespace Azure.ResourceManager.BillingBenefits
         /// </list>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <param name="filter"> May be used to filter by reservation properties. The filter supports &apos;eq&apos;, &apos;or&apos;, and &apos;and&apos;. It does not currently support &apos;ne&apos;, &apos;gt&apos;, &apos;le&apos;, &apos;ge&apos;, or &apos;not&apos;. Reservation properties include sku/name, properties/{appliedScopeType, archived, displayName, displayProvisioningState, effectiveDateTime, expiryDate, provisioningState, quantity, renew, reservedResourceType, term, userFriendlyAppliedScopeType, userFriendlyRenewState}. </param>
-        /// <param name="orderBy"> May be used to sort order by reservation properties. </param>
-        /// <param name="refreshSummary"> To indicate whether to refresh the roll up counts of the savings plans group by provisioning states. </param>
-        /// <param name="skipToken"> The number of savings plans to skip from the list before returning results. </param>
-        /// <param name="selectedState"> The selected provisioning state. </param>
-        /// <param name="take"> To number of savings plans to return. </param>
+        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="BillingBenefitsSavingsPlanResource" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<BillingBenefitsSavingsPlanResource> GetBillingBenefitsSavingsPlansAsync(this TenantResource tenantResource, string filter = null, string orderBy = null, string refreshSummary = null, float? skipToken = null, string selectedState = null, float? take = null, CancellationToken cancellationToken = default)
+        public static AsyncPageable<BillingBenefitsSavingsPlanResource> GetBillingBenefitsSavingsPlansAsync(this TenantResource tenantResource, TenantGetBillingBenefitsSavingsPlansOptions options, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(tenantResource).GetBillingBenefitsSavingsPlansAsync(filter, orderBy, refreshSummary, skipToken, selectedState, take, cancellationToken);
+            options ??= new TenantGetBillingBenefitsSavingsPlansOptions();
+
+            return GetExtensionClient(tenantResource).GetBillingBenefitsSavingsPlansAsync(options, cancellationToken);
         }
 
         /// <summary>
@@ -239,17 +236,14 @@ namespace Azure.ResourceManager.BillingBenefits
         /// </list>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <param name="filter"> May be used to filter by reservation properties. The filter supports &apos;eq&apos;, &apos;or&apos;, and &apos;and&apos;. It does not currently support &apos;ne&apos;, &apos;gt&apos;, &apos;le&apos;, &apos;ge&apos;, or &apos;not&apos;. Reservation properties include sku/name, properties/{appliedScopeType, archived, displayName, displayProvisioningState, effectiveDateTime, expiryDate, provisioningState, quantity, renew, reservedResourceType, term, userFriendlyAppliedScopeType, userFriendlyRenewState}. </param>
-        /// <param name="orderBy"> May be used to sort order by reservation properties. </param>
-        /// <param name="refreshSummary"> To indicate whether to refresh the roll up counts of the savings plans group by provisioning states. </param>
-        /// <param name="skipToken"> The number of savings plans to skip from the list before returning results. </param>
-        /// <param name="selectedState"> The selected provisioning state. </param>
-        /// <param name="take"> To number of savings plans to return. </param>
+        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="BillingBenefitsSavingsPlanResource" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<BillingBenefitsSavingsPlanResource> GetBillingBenefitsSavingsPlans(this TenantResource tenantResource, string filter = null, string orderBy = null, string refreshSummary = null, float? skipToken = null, string selectedState = null, float? take = null, CancellationToken cancellationToken = default)
+        public static Pageable<BillingBenefitsSavingsPlanResource> GetBillingBenefitsSavingsPlans(this TenantResource tenantResource, TenantGetBillingBenefitsSavingsPlansOptions options, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(tenantResource).GetBillingBenefitsSavingsPlans(filter, orderBy, refreshSummary, skipToken, selectedState, take, cancellationToken);
+            options ??= new TenantGetBillingBenefitsSavingsPlansOptions();
+
+            return GetExtensionClient(tenantResource).GetBillingBenefitsSavingsPlans(options, cancellationToken);
         }
 
         /// <summary>

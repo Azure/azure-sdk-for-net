@@ -168,11 +168,8 @@ namespace Azure.ResourceManager.FrontDoor.Samples
             FrontDoorExperimentResource frontDoorExperiment = client.GetFrontDoorExperimentResource(frontDoorExperimentResourceId);
 
             // invoke the operation
-            DateTimeOffset startOn = DateTimeOffset.Parse("2019-07-21T17:32:28Z");
-            DateTimeOffset endOn = DateTimeOffset.Parse("2019-09-21T17:32:28Z");
-            FrontDoorTimeSeriesAggregationInterval aggregationInterval = FrontDoorTimeSeriesAggregationInterval.Hourly;
-            FrontDoorTimeSeriesType timeSeriesType = FrontDoorTimeSeriesType.MeasurementCounts;
-            FrontDoorTimeSeriesInfo result = await frontDoorExperiment.GetTimeSeriesReportAsync(startOn, endOn, aggregationInterval, timeSeriesType);
+            FrontDoorExperimentResourceGetTimeSeriesReportOptions options = new FrontDoorExperimentResourceGetTimeSeriesReportOptions(startOn: DateTimeOffset.Parse("2019-07-21T17:32:28Z"), endOn: DateTimeOffset.Parse("2019-09-21T17:32:28Z"), aggregationInterval: FrontDoorTimeSeriesAggregationInterval.Hourly, timeSeriesType: FrontDoorTimeSeriesType.MeasurementCounts) { };
+            FrontDoorTimeSeriesInfo result = await frontDoorExperiment.GetTimeSeriesReportAsync(options);
 
             Console.WriteLine($"Succeeded: {result}");
         }

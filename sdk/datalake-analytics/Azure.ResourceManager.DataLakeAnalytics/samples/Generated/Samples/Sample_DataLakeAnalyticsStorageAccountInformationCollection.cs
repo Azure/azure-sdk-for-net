@@ -43,13 +43,8 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Samples
             DataLakeAnalyticsStorageAccountInformationCollection collection = dataLakeAnalyticsAccount.GetAllDataLakeAnalyticsStorageAccountInformation();
 
             // invoke the operation and iterate over the result
-            string filter = "test_filter";
-            int? top = 1;
-            int? skip = 1;
-            string select = "test_select";
-            string orderby = "test_orderby";
-            bool? count = false;
-            await foreach (DataLakeAnalyticsStorageAccountInformationResource item in collection.GetAllAsync(filter: filter, top: top, skip: skip, select: select, orderby: orderby, count: count))
+            DataLakeAnalyticsStorageAccountInformationCollectionGetAllOptions options = new DataLakeAnalyticsStorageAccountInformationCollectionGetAllOptions() { Filter = "test_filter", Top = 1, Skip = 1, Select = "test_select", Orderby = "test_orderby", Count = false };
+            await foreach (DataLakeAnalyticsStorageAccountInformationResource item in collection.GetAllAsync(options))
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance

@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
@@ -44,16 +43,19 @@ namespace Azure.ResourceManager.MachineLearning.Samples
             MachineLearningDatastoreCollection collection = machineLearningWorkspace.GetMachineLearningDatastores();
 
             // invoke the operation and iterate over the result
-            int? count = 1;
-            bool? isDefault = false;
-            IEnumerable<string> names = new string[]
+            MachineLearningDatastoreCollectionGetAllOptions options = new MachineLearningDatastoreCollectionGetAllOptions()
+            {
+                Count = 1,
+                IsDefault = false,
+                Names = new string[]
             {
 "string"
+            },
+                SearchText = "string",
+                OrderBy = "string",
+                OrderByAsc = false
             };
-            string searchText = "string";
-            string orderBy = "string";
-            bool? orderByAsc = false;
-            await foreach (MachineLearningDatastoreResource item in collection.GetAllAsync(count: count, isDefault: isDefault, names: names, searchText: searchText, orderBy: orderBy, orderByAsc: orderByAsc))
+            await foreach (MachineLearningDatastoreResource item in collection.GetAllAsync(options))
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
