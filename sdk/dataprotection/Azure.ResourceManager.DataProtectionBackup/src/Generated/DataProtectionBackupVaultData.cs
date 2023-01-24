@@ -36,20 +36,20 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
         /// <param name="properties"> BackupVaultResource properties. </param>
-        /// <param name="eTag"> Optional ETag. </param>
         /// <param name="identity"> Input Managed Identity Details. </param>
-        internal DataProtectionBackupVaultData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, DataProtectionBackupVaultProperties properties, ETag? eTag, ManagedServiceIdentity identity) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="eTag"> Optional ETag. </param>
+        internal DataProtectionBackupVaultData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, DataProtectionBackupVaultProperties properties, ManagedServiceIdentity identity, ETag? eTag) : base(id, name, resourceType, systemData, tags, location)
         {
             Properties = properties;
-            ETag = eTag;
             Identity = identity;
+            ETag = eTag;
         }
 
         /// <summary> BackupVaultResource properties. </summary>
         public DataProtectionBackupVaultProperties Properties { get; set; }
-        /// <summary> Optional ETag. </summary>
-        public ETag? ETag { get; set; }
         /// <summary> Input Managed Identity Details. </summary>
         public ManagedServiceIdentity Identity { get; set; }
+        /// <summary> Optional ETag. </summary>
+        public ETag? ETag { get; set; }
     }
 }

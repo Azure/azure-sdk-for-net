@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
-    internal partial class PatchBackupVaultInput : IUtf8JsonSerializable
+    public partial class PatchBackupVaultInput : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -19,6 +19,16 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             {
                 writer.WritePropertyName("monitoringSettings");
                 writer.WriteObjectValue(MonitoringSettings);
+            }
+            if (Optional.IsDefined(SecuritySettings))
+            {
+                writer.WritePropertyName("securitySettings");
+                writer.WriteObjectValue(SecuritySettings);
+            }
+            if (Optional.IsDefined(FeatureSettings))
+            {
+                writer.WritePropertyName("featureSettings");
+                writer.WriteObjectValue(FeatureSettings);
             }
             writer.WriteEndObject();
         }

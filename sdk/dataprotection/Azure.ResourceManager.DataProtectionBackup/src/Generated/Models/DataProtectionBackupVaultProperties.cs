@@ -30,16 +30,20 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <param name="provisioningState"> Provisioning state of the BackupVault resource. </param>
         /// <param name="resourceMoveState"> Resource move state for backup vault. </param>
         /// <param name="resourceMoveDetails"> Resource move details for backup vault. </param>
+        /// <param name="securitySettings"> Security Settings. </param>
         /// <param name="storageSettings"> Storage Settings. </param>
         /// <param name="isVaultProtectedByResourceGuard"> Is vault protected by resource guard. </param>
-        internal DataProtectionBackupVaultProperties(MonitoringSettings monitoringSettings, DataProtectionBackupProvisioningState? provisioningState, BackupVaultResourceMoveState? resourceMoveState, BackupVaultResourceMoveDetails resourceMoveDetails, IList<DataProtectionBackupStorageSetting> storageSettings, bool? isVaultProtectedByResourceGuard)
+        /// <param name="featureSettings"> Feature Settings. </param>
+        internal DataProtectionBackupVaultProperties(MonitoringSettings monitoringSettings, DataProtectionBackupProvisioningState? provisioningState, BackupVaultResourceMoveState? resourceMoveState, BackupVaultResourceMoveDetails resourceMoveDetails, SecuritySettings securitySettings, IList<DataProtectionBackupStorageSetting> storageSettings, bool? isVaultProtectedByResourceGuard, FeatureSettings featureSettings)
         {
             MonitoringSettings = monitoringSettings;
             ProvisioningState = provisioningState;
             ResourceMoveState = resourceMoveState;
             ResourceMoveDetails = resourceMoveDetails;
+            SecuritySettings = securitySettings;
             StorageSettings = storageSettings;
             IsVaultProtectedByResourceGuard = isVaultProtectedByResourceGuard;
+            FeatureSettings = featureSettings;
         }
 
         /// <summary> Monitoring Settings. </summary>
@@ -62,9 +66,22 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         public BackupVaultResourceMoveState? ResourceMoveState { get; }
         /// <summary> Resource move details for backup vault. </summary>
         public BackupVaultResourceMoveDetails ResourceMoveDetails { get; }
+        /// <summary> Security Settings. </summary>
+        public SecuritySettings SecuritySettings { get; set; }
         /// <summary> Storage Settings. </summary>
         public IList<DataProtectionBackupStorageSetting> StorageSettings { get; }
-        /// <summary> Is vault protected by resource guard. </summary>
-        public bool? IsVaultProtectedByResourceGuard { get; set; }
+        /// <summary> Feature Settings. </summary>
+        internal FeatureSettings FeatureSettings { get; set; }
+        /// <summary> CrossSubscriptionRestore state. </summary>
+        public CrossSubscriptionRestoreState? CrossSubscriptionRestoreState
+        {
+            get => FeatureSettings is null ? default : FeatureSettings.CrossSubscriptionRestoreState;
+            set
+            {
+                if (FeatureSettings is null)
+                    FeatureSettings = new FeatureSettings();
+                FeatureSettings.CrossSubscriptionRestoreState = value;
+            }
+        }
     }
 }

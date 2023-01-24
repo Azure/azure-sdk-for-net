@@ -29,11 +29,6 @@ namespace Azure.ResourceManager.DataProtectionBackup
                 writer.WritePropertyName("eTag");
                 writer.WriteStringValue(ETag.Value.ToString());
             }
-            if (Optional.IsDefined(Identity))
-            {
-                writer.WritePropertyName("identity");
-                JsonSerializer.Serialize(writer, Identity);
-            }
             if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags");
@@ -54,7 +49,6 @@ namespace Azure.ResourceManager.DataProtectionBackup
         {
             Optional<ResourceGuardProperties> properties = default;
             Optional<ETag> eTag = default;
-            Optional<ManagedServiceIdentity> identity = default;
             Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
@@ -81,16 +75,6 @@ namespace Azure.ResourceManager.DataProtectionBackup
                         continue;
                     }
                     eTag = new ETag(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("identity"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("tags"))
@@ -139,7 +123,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
                     continue;
                 }
             }
-            return new ResourceGuardData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, properties.Value, Optional.ToNullable(eTag), identity);
+            return new ResourceGuardData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, properties.Value, Optional.ToNullable(eTag));
         }
     }
 }

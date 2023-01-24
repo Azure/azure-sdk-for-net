@@ -8,8 +8,7 @@ azure-arm: true
 csharp: true
 library-name: DataProtectionBackup
 namespace: Azure.ResourceManager.DataProtectionBackup
-require: https://github.com/Azure/azure-rest-api-specs/blob/33d5054122e52490eef9925d6cbe801f28b88e18/specification/dataprotection/resource-manager/readme.md
-tag: package-2022-05
+require: https://github.com/Azure/azure-rest-api-specs/blob/42e62bef21fca828da9a9a81d845d00aae466877/specification/dataprotection/resource-manager/readme.md
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 skip-csproj: true
@@ -117,7 +116,6 @@ rename-mapping:
   ValidateRestoreRequestObject: BackupValidateRestoreContent
   BackupVaultResource: DataProtectionBackupVault
   BackupVault: DataProtectionBackupVaultProperties
-  PatchResourceRequestInput: DataProtectionBackupPatch
   ValidateForBackupRequest: AdhocBackupValidateContent
   BaseBackupPolicyResource: DataProtectionBackupPolicy
   BaseBackupPolicy: DataProtectionBackupPolicyPropertiesBase
@@ -328,4 +326,9 @@ directive:
     where: $.paths
     transform: >
       $['/subscriptions/{subscriptionId}/providers/Microsoft.DataProtection/locations/{location}/checkFeatureSupport'].post.parameters[3]['x-ms-client-name'] = 'content';
+# revert the format change of SubscriptionIdParameter in common type V4 to avoid breaking changes
+  - from: types.json
+    where: $.parameters
+    transform: >
+      delete $.SubscriptionIdParameter.format;
 ```

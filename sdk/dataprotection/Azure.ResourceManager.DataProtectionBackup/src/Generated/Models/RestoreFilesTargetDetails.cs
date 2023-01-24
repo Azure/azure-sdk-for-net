@@ -46,5 +46,11 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         public RestoreTargetLocationType RestoreTargetLocationType { get; }
         /// <summary> Url denoting the restore destination. It can point to container / file share etc. </summary>
         public Uri Uri { get; }
+        /// <summary>
+        /// Full ARM Id denoting the restore destination. It is the ARM Id pointing to container / file share
+        /// This is optional if the target subscription can be identified with the URL field. If not
+        /// then this is needed if CrossSubscriptionRestore field of BackupVault is in any of the disabled states
+        /// </summary>
+        public string TargetResourceArmId { get; set; }
     }
 }

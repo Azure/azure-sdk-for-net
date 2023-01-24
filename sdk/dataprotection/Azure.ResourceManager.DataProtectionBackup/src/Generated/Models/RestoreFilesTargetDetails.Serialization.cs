@@ -21,6 +21,11 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             writer.WriteStringValue(RestoreTargetLocationType.ToString());
             writer.WritePropertyName("url");
             writer.WriteStringValue(Uri.AbsoluteUri);
+            if (Optional.IsDefined(TargetResourceArmId))
+            {
+                writer.WritePropertyName("targetResourceArmId");
+                writer.WriteStringValue(TargetResourceArmId);
+            }
             writer.WriteEndObject();
         }
     }

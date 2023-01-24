@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
     /// <summary> Backup Vault Contract for Patch Backup Vault API. </summary>
-    internal partial class PatchBackupVaultInput
+    public partial class PatchBackupVaultInput
     {
         /// <summary> Initializes a new instance of PatchBackupVaultInput. </summary>
         public PatchBackupVaultInput()
@@ -26,6 +26,22 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 if (MonitoringSettings is null)
                     MonitoringSettings = new MonitoringSettings();
                 MonitoringSettings.AlertSettingsForAllJobFailures = value;
+            }
+        }
+
+        /// <summary> Security Settings. </summary>
+        public SecuritySettings SecuritySettings { get; set; }
+        /// <summary> Feature Settings. </summary>
+        internal FeatureSettings FeatureSettings { get; set; }
+        /// <summary> CrossSubscriptionRestore state. </summary>
+        public CrossSubscriptionRestoreState? CrossSubscriptionRestoreState
+        {
+            get => FeatureSettings is null ? default : FeatureSettings.CrossSubscriptionRestoreState;
+            set
+            {
+                if (FeatureSettings is null)
+                    FeatureSettings = new FeatureSettings();
+                FeatureSettings.CrossSubscriptionRestoreState = value;
             }
         }
     }
