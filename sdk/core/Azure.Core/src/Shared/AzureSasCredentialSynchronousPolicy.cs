@@ -29,13 +29,26 @@ namespace Azure.Core
             {
                 signature = signature.Substring(1);
             }
+
             if (!query.Contains(signature))
             {
-                query = string.IsNullOrEmpty(query) ? '?' + signature : query + '&' + signature;
-                message.Request.Uri.Query = query;
-            }
+                // Get the signature history so we know which string to replace in the query if it was previously set.
+                if (message.TryGetProperty(typeof(AzureSasSignatureHistory), out object? previousSignature) && previousSignature != null & query.Contains((string)previousSignature!))
+                {
+                    query = query.Replace((string)previousSignature!, signature);
+                }
+                else
+                {
+                    // This is the first time we're setting the signature, so we need to add it to the query.
+                    query = string.IsNullOrEmpty(query) ? '?' + signature : query + '&' + signature;
 
-            base.OnSendingRequest(message);
+                    // Store the signature in the message property bag so we can replace it if it changes.
+                    message.SetProperty(typeof(AzureSasSignatureHistory), signature);
+                }
+                message.Request.Uri.Query = query;
+
+                base.OnSendingRequest(message);
+            }
         }
     }
 }
