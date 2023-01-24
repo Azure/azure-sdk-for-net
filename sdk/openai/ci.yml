@@ -8,6 +8,7 @@ trigger:
     - release/*
   paths:
     include:
+    - sdk/openai
     - sdk/openai/ci.yml
     - sdk/openai/Azure.OpenAI.Inference
 
@@ -20,6 +21,7 @@ pr:
     - release/*
   paths:
     include:
+    - sdk/openai
     - sdk/openai/ci.yml
     - sdk/openai/Azure.OpenAI.Inference
 
