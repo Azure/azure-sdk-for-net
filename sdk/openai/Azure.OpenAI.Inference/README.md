@@ -59,7 +59,7 @@ We guarantee that all client instance methods are thread-safe and independent of
 
 ## Examples
 
-You can familiarize yourself with different APIs using [Samples](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/openai/Azure.OpenAI.Inference/samples).
+You can familiarize yourself with different APIs using [Samples](https://github.com/Azure/azure-sdk-for-net/tree/baf2e063ff2cdca45b4e7ca8e1b57c9ec72146f0/sdk/openai/Azure.OpenAI.Inference/samples).
 
 ### Get secret
 
