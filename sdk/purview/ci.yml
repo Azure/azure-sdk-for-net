@@ -33,8 +33,6 @@ extends:
     Artifacts:
     - name: Azure.Analytics.Purview.Workflows
       safeName: AzureAnalyticsPurviewWorkflows
-    - name: Azure.Analytics.Purview.Workflow
-      safeName: AzureAnalyticsPurviewWorkflow
     - name: Azure.Analytics.Purview.Share
       safeName: AzureAnalyticsPurviewShare
     - name: Azure.Analytics.Purview.Account
