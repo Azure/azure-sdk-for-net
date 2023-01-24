@@ -110,7 +110,7 @@
       TODO: This package needs to be released as GA and arch-board approved before taking a dependency in any stable SDK library.
       Currently, it is referencd by Azure.Identity.BrokeredAuthentication which is still in beta
     -->
-    <PackageReference Update="Microsoft.Identity.Client.Broker" Version="4.46.0-preview" />
+    <PackageReference Update="Microsoft.Identity.Client.Broker" Version="4.49.1-preview" />
 
     <!-- TODO: Make sure this package is arch-board approved -->
     <PackageReference Update="System.IdentityModel.Tokens.Jwt" Version="6.5.0" />
