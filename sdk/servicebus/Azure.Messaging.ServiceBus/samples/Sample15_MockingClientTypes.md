@@ -163,7 +163,7 @@ await foreach (ServiceBusReceivedMessage message in receiver.ReceiveMessagesAsyn
 
 ## Sending a batch of messages
 
-When using batches to send messages to a Service Bus queue, the key interactions with the `ServiceBusSender` are calling `CreateMessageBatchAsync` to create the batch, and `SendMessagesAsync` to send it. Mocked batches accept a `List<ServiceBusMessage>` that is used as a backing store and can be inspected to verify that the application is adding events to the batch as expected. The custom `TryAddMessage` callback can be ysed to control the decision for whether a message is accepted into the batch or rejected. 
+When using batches to send messages to a Service Bus queue, the key interactions with the `ServiceBusSender` are calling `CreateMessageBatchAsync` to create the batch, and `SendMessagesAsync` to send it. Mocked batches accept a `List<ServiceBusMessage>` that is used as a backing store and can be inspected to verify that the application is adding events to the batch as expected. The custom `TryAddMessage` callback can be used to control the decision for whether a message is accepted into the batch or rejected. 
 
 This snippet demonstrates mocking the `ServiceBusReceiver` and creating a `ServiceBusMessageBatch` using the `ServiceBusModelFactory`.
 
