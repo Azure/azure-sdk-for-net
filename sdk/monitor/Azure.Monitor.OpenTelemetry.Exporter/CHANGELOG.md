@@ -5,10 +5,13 @@
 ### Features Added
 
 * Added support for parsing AADAudience from ConnectionString ([#33593](https://github.com/Azure/azure-sdk-for-net/pull/33593))
+* Activity events will be exported as Trace telemetry ([#32980](https://github.com/Azure/azure-sdk-for-net/pull/32980))
 
 ### Breaking Changes
 
 ### Bugs Fixed
+
+* 4xx errors on Request telemetry will now be reported as failures ([#33617](https://github.com/Azure/azure-sdk-for-net/pull/33617))
 
 ### Other Changes
 
