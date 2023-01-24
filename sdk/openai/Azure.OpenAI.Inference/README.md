@@ -212,6 +212,6 @@ TBD (in preview)
 [style-guide-msft]: https://docs.microsoft.com/style-guide/capitalization
 [style-guide-cloud]: https://aka.ms/azsdk/cloud-style-guide
 [openai_client_class]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/openai/Azure.OpenAI.Inference/src/Generated/OpenAIClient.cs
-[openai_rest]: https://learn.microsoft.com/en-us/azure/cognitive-services/openai/reference
+[openai_rest]: https://learn.microsoft.com/azure/cognitive-services/openai/reference
 
 ![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-net/sdk/openai/Azure.OpenAI.Inference/README.png)
