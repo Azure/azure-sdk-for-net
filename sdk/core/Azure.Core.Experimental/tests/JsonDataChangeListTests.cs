@@ -31,7 +31,7 @@ namespace Azure.Core.Experimental.Tests
             Assert.AreEqual(3.0, jd.RootElement.GetProperty("Baz").GetProperty("A").GetDouble());
             Assert.AreEqual(false, jd.RootElement.GetProperty("Qux").GetBoolean());
 
-            JsonDocument doc = JsonDataWriteToTests.WriteToAndParse(jd, out string jsonString);
+            JsonDataWriteToTests.WriteToAndParse(jd, out string jsonString);
 
             Assert.AreEqual(
                 JsonDataWriteToTests.RemoveWhiteSpace(json),

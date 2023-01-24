@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Text;
 using System.Text.Json;
 
 namespace Azure.Core.Dynamic
@@ -30,9 +31,10 @@ namespace Azure.Core.Dynamic
             }
 
             // TODO: This is super inefficient, come back to and optimize
-            BinaryData data = new BinaryData(AsJsonElement().ToString());
+            // Must have lowercase for reader to work with boolean value.
+            string json = AsJsonElement().ToString().ToLowerInvariant();
 
-            return new Utf8JsonReader(data.ToMemory().Span);
+            return new Utf8JsonReader(Encoding.UTF8.GetBytes(json));
         }
 
         internal JsonElement AsJsonElement()
