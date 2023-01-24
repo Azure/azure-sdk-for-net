@@ -146,6 +146,26 @@ namespace Azure.Core.Dynamic
             return _element.GetString();
         }
 
+        internal bool GetBoolean()
+        {
+            EnsureValid();
+
+            if (Changes.TryGetChange(_path, _highWaterMark, out JsonDataChange change))
+            {
+                switch (change.Value)
+                {
+                    case bool b:
+                        return b;
+                    case JsonElement element:
+                        return element.GetBoolean();
+                    default:
+                        throw new InvalidOperationException($"Element at {_path} is not a bool.");
+                }
+            }
+
+            return _element.GetBoolean();
+        }
+
         internal void SetProperty(string name, object value)
         {
             EnsureValid();
@@ -214,6 +234,15 @@ namespace Azure.Core.Dynamic
             EnsureValid();
 
             Changes.AddChange(_path, value, _element.ValueKind != JsonValueKind.String);
+        }
+
+        internal void Set(bool value)
+        {
+            EnsureValid();
+
+            Changes.AddChange(_path, value,
+                _element.ValueKind != JsonValueKind.True ||
+                _element.ValueKind != JsonValueKind.False);
         }
 
         internal void Set(object value)
