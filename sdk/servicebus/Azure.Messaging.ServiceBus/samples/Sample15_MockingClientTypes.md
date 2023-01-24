@@ -78,7 +78,7 @@ mockSender
 
 ## Receiving messages from a queue
 
-When testing code that is dependent on the `ServiceBusReceiver`, it may be useful to create a known set of expected messages to verify that their application receives them correctly. Tests can mock `ServiceBusReceivedMessage` instances coming from the broker using the `ServiceBusModelFactory`. These can be used within the receiver mock to mock returns from `ReceiveMessageAsync` or `ReceiveMessagesAsync`. It may also be helpful for your application to mock the `CreateReceiver` call on the `ServiceBusClient`. This is demonstrated in the snippet below as well.
+When testing code that is dependent on the `ServiceBusReceiver`, it may be useful to create a known set of expected messages to verify their application receives them correctly. Tests can mock `ServiceBusReceivedMessage` instances coming from the broker using the `ServiceBusModelFactory`. These can be used within the receiver mock to mock returns from `ReceiveMessageAsync` or `ReceiveMessagesAsync`. It may also be helpful for your application to mock the `CreateReceiver` call on the `ServiceBusClient`. This is demonstrated in the snippet below as well.
 
 ```C# Snippet:ServiceBus_MockingReceiveFromQueue
 Mock<ServiceBusClient> mockClient = new();
