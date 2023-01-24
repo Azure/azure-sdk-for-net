@@ -32,8 +32,13 @@ namespace Azure.Core.Dynamic
 
             // TODO: This is super inefficient, come back to and optimize
             // Must have lowercase for reader to work with boolean value.
-            string json = AsJsonElement().ToString().ToLowerInvariant();
-
+            JsonElement element = AsJsonElement();
+            string json = element.ValueKind switch
+            {
+                JsonValueKind.True => "true",
+                JsonValueKind.False => "false",
+                _ => element.ToString(),
+            };
             return new Utf8JsonReader(Encoding.UTF8.GetBytes(json));
         }
 

@@ -708,5 +708,25 @@ namespace Azure.Core.Experimental.Tests
 
             Assert.AreEqual(JsonDataWriteToTests.RemoveWhiteSpace(@"[ { ""Foo"" : [1, 2, 3] }]"), jsonString);
         }
+
+        [Test]
+        public void CanSetProperty_StringToNull()
+        {
+            string json = @"[ { ""Foo"" : ""hi"" } ]";
+
+            var jd = JsonData.Parse(json);
+
+            Assert.AreEqual("hi", jd.RootElement.GetIndexElement(0).GetProperty("Foo").GetString());
+
+            jd.RootElement.GetIndexElement(0).GetProperty("Foo").Set(null);
+
+            Assert.IsNull(jd.RootElement.GetIndexElement(0).GetProperty("Foo").GetString());
+
+            // 3. Type round-trips correctly.
+            JsonDocument doc = JsonDataWriteToTests.WriteToAndParse(jd, out string jsonString);
+
+            Assert.AreEqual(JsonValueKind.Null, doc.RootElement[0].GetProperty("Foo").ValueKind);
+            Assert.AreEqual(JsonDataWriteToTests.RemoveWhiteSpace(@"[ { ""Foo"" : null } ]"), jsonString);
+        }
     }
 }

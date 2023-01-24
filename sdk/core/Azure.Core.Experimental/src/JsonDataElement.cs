@@ -139,6 +139,10 @@ namespace Azure.Core.Dynamic
                     case JsonElement element:
                         return element.GetString();
                     default:
+                        if (change.Value == null)
+                        {
+                            return null;
+                        }
                         throw new InvalidOperationException($"Element at {_path} is not a string.");
                 }
             }

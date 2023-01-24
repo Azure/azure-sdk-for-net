@@ -57,7 +57,7 @@ namespace Azure.Core.Dynamic
                         WriteBoolean(path, highWaterMark, reader.TokenType, ref reader, writer);
                         break;
                     case JsonTokenType.Null:
-                        writer.WriteNullValue();
+                        WriteNull(path, highWaterMark, ref reader, writer);
                         break;
                 }
             }
@@ -95,7 +95,7 @@ namespace Azure.Core.Dynamic
                         break;
                     case JsonTokenType.Null:
                         path = ChangeTracker.PushIndex(path, index);
-                        writer.WriteNullValue();
+                        WriteNull(path, highWaterMark, ref reader, writer);
                         break;
                     case JsonTokenType.EndArray:
                         writer.WriteEndArray();
@@ -142,7 +142,7 @@ namespace Azure.Core.Dynamic
                         path = ChangeTracker.PopProperty(path);
                         continue;
                     case JsonTokenType.Null:
-                        writer.WriteNullValue();
+                        WriteNull(path, highWaterMark, ref reader, writer);
                         path = ChangeTracker.PopProperty(path);
                         continue;
                     case JsonTokenType.EndObject:
@@ -262,6 +262,17 @@ namespace Azure.Core.Dynamic
             }
 
             writer.WriteBooleanValue(value: token == JsonTokenType.True);
+        }
+
+        private void WriteNull(string path, int highWaterMark, ref Utf8JsonReader reader, Utf8JsonWriter writer)
+        {
+            if (Changes.TryGetChange(path, highWaterMark, out JsonDataChange change) && change.ReplacesJsonElement)
+            {
+                WriteStructuralChange(path, change, ref reader, writer);
+                return;
+            }
+
+            writer.WriteNullValue();
         }
 
         private void WriteTheHardWay(Utf8JsonWriter writer)
