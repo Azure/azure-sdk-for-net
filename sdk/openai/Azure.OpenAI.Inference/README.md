@@ -134,6 +134,38 @@ foreach (var prompt in examplePrompts)
 }
 ```
 
+### Summarize Text with Completion
+
+The `SummarizeText` method generates a summarization of the given input prompt.
+
+```C# Snippet:SummarizeText
+string endpoint = "http://myaccount.openai.azure.com/";
+string textToSummarize = @"
+    Two independent experiments reported their results this morning at CERN, Europe's high-energy physics laboratory near Geneva in Switzerland. Both show convincing evidence of a new boson particle weighing around 125 gigaelectronvolts, which so far fits predictions of the Higgs previously made by theoretical physicists.
+
+    ""As a layman I would say: 'I think we have it'. Would you agree?"" Rolf-Dieter Heuer, CERN's director-general, asked the packed auditorium. The physicists assembled there burst into applause.
+:";
+OpenAIClient client = new OpenAIClient(new Uri(endpoint), new DefaultAzureCredential());
+
+string summarizationPrompt = @$"
+    Summarize the following text.
+
+    Text:
+    """"""
+    {textToSummarize}
+    """"""
+
+    Summary:
+";
+
+Console.Write($"Input: {summarizationPrompt}");
+var request = new CompletionsRequest();
+request.Prompt.Add(summarizationPrompt);
+
+Completion completion = client.Completions("myModelDeployment", request);
+var response = completion.Choices[0].Text;
+Console.WriteLine($"Summarization: {response}");
+```
 ## Troubleshooting
 
 Describe common errors and exceptions, how to "unpack" them if necessary, and include guidance for graceful handling and recovery.
