@@ -30,6 +30,22 @@ namespace Azure.Communication.CallAutomation
             return new RemoveParticipantsResult(operationContext);
         }
 
+        /// <summary> Initializes a new instance of MuteParticipantsResponse. </summary>
+        /// <param name="operationContext"> The operation context provided by client. </param>
+        /// <returns> A new <see cref="CallAutomation.MuteParticipantsResponse"/> instance for mocking. </returns>
+        public static MuteParticipantsResponse MuteParticipantsResponse(string operationContext = null)
+        {
+            return new MuteParticipantsResponse(operationContext);
+        }
+
+        /// <summary> Initializes a new instance of UnmuteParticipantsResponse. </summary>
+        /// <param name="operationContext"> The operation context provided by client. </param>
+        /// <returns> A new <see cref="CallAutomation.UnmuteParticipantsResponse"/> instance for mocking. </returns>
+        public static UnmuteParticipantsResponse UnmuteParticipantsResponse(string operationContext = null)
+        {
+            return new UnmuteParticipantsResponse(operationContext);
+        }
+
         /// <summary> Initializes a new instance of RecordingStateResult. </summary>
         /// <param name="recordingId"></param>
         /// <param name="recordingState"></param>

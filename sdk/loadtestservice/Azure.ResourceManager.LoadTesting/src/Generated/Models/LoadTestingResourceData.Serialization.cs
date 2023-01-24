@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.LoadTesting
             Optional<string> description = default;
             Optional<LoadTestingProvisioningState> provisioningState = default;
             Optional<string> dataPlaneUri = default;
-            Optional<CustomerManagedKeyEncryptionProperties> encryption = default;
+            Optional<LoadTestingCmkEncryptionProperties> encryption = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("identity"))
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.LoadTesting
                                 encryption = null;
                                 continue;
                             }
-                            encryption = CustomerManagedKeyEncryptionProperties.DeserializeCustomerManagedKeyEncryptionProperties(property0.Value);
+                            encryption = LoadTestingCmkEncryptionProperties.DeserializeLoadTestingCmkEncryptionProperties(property0.Value);
                             continue;
                         }
                     }
