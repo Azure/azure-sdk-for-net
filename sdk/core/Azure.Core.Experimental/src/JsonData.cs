@@ -9,6 +9,7 @@ using System.IO;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
+using System.Runtime.InteropServices.ComTypes;
 using System.Text;
 using System.Text.Json;
 using System.Text.Json.Serialization;
@@ -90,7 +91,7 @@ namespace Azure.Core.Dynamic
         internal static JsonData Parse(BinaryData utf8Json)
         {
             var doc = JsonDocument.Parse(utf8Json);
-            return new JsonData(doc, utf8Json);
+            return new JsonData(doc, utf8Json.ToArray().AsMemory());
         }
 
         /// <summary>
@@ -100,19 +101,14 @@ namespace Azure.Core.Dynamic
         /// <returns>A <see cref="JsonData"/> representation of the value.</returns>
         internal static JsonData Parse(string json)
         {
-            var doc = JsonDocument.Parse(json);
-            return new JsonData(doc, new BinaryData(json));
+            byte[] utf8 = Encoding.UTF8.GetBytes(json);
+            Memory<byte> jsonMemory = utf8.AsMemory();
+            return new JsonData(JsonDocument.Parse(jsonMemory), jsonMemory);
         }
 
-        /// <summary>
-        ///  Creates a new JsonData object which represents the value of the given JsonDocument.
-        /// </summary>
-        /// <param name="jsonDocument">The JsonDocument to convert.</param>
-        /// <param name="utf8Json">A UTF-8 encoded string representing a JSON value</param>
-        /// <remarks>A JsonDocument can be constructed from a JSON string using <see cref="JsonDocument.Parse(string, JsonDocumentOptions)"/>.</remarks>
-        internal JsonData(JsonDocument jsonDocument, BinaryData utf8Json) : this(jsonDocument.RootElement)
+        internal JsonData(JsonDocument jsonDocument, Memory<byte> utf8Json) : this(jsonDocument.RootElement)
         {
-            _original = utf8Json.ToArray();
+            _original = utf8Json;
             _element = jsonDocument.RootElement;
         }
 
