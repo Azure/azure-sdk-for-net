@@ -519,8 +519,6 @@ await foreach (ServiceBusReceivedMessage message in receiver.ReceiveMessagesAsyn
 // This is where applications can verify that the ServiceBusReceivedMessage's output by the ServiceBusReceiver were
 // handled as expected.
 ```
-
-
 ## Peeking a message
 
 The snippet below demonstrates how to mock a `ServiceBusReceiver` to return a pre-defined message for each call to `PeekMessageAsync`. It uses the `ServiceBusModelFactory` to mock the `ServiceBusReceivedMessage` to return.
