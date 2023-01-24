@@ -7,12 +7,13 @@ Run `dotnet build /t:GenerateCode` to generate code.
 azure-arm: true
 library-name: Monitor
 namespace: Azure.ResourceManager.Monitor
-require: https://github.com/Azure/azure-rest-api-specs/blob/ec4eca7eb6e4c1ce2bda56a6831d03d47490202f/specification/monitor/resource-manager/readme.md
+require: https://github.com/jasondavis-MS/azure-rest-api-specs-UPDATE_SWAGGER_TEST/blob/8633d54dc73173e87a0a964c0f8b187f02a83f16/specification/monitor/resource-manager/readme.md
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
+  lenient-model-deduplication: true
 
 format-by-name-rules:
   'tenantId': 'uuid'
