@@ -37,7 +37,7 @@ namespace Azure.OpenAI.Inference.Models
                     tokens = array;
                     continue;
                 }
-                if (property.NameEquals("tokenLogprobs"))
+                if (property.NameEquals("token_logprobs"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -52,7 +52,7 @@ namespace Azure.OpenAI.Inference.Models
                     tokenLogprobs = array;
                     continue;
                 }
-                if (property.NameEquals("topLogprobs"))
+                if (property.NameEquals("top_logprobs"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -72,7 +72,7 @@ namespace Azure.OpenAI.Inference.Models
                     topLogprobs = array;
                     continue;
                 }
-                if (property.NameEquals("textOffset"))
+                if (property.NameEquals("text_offset"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
