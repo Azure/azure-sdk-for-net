@@ -24,7 +24,6 @@ extends:
   template: /eng/pipelines/templates/jobs/perf.yml
   parameters:
     ServiceDirectory: storage/Azure.Storage.Blobs
-    Services: "^storage-blob$"
     PackageVersions: ${{ parameters.PackageVersions }}
     Tests: ${{ parameters.Tests }}
     Arguments: ${{ parameters.Arguments }}
