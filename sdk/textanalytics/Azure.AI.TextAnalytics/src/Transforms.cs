@@ -367,12 +367,16 @@ namespace Azure.AI.TextAnalytics
             // Read entities.
             foreach (var document in results.Documents)
             {
+                BinaryData fhirBundle = document.FhirBundle.ValueKind is System.Text.Json.JsonValueKind.Object
+                    ? new BinaryData(document.FhirBundle)
+                    : null;
+
                 healthcareEntitiesResults.Add(new AnalyzeHealthcareEntitiesResult(
                     document.Id,
                     document.Statistics ?? default,
                     ConvertToHealthcareEntityCollection(document.Entities),
                     ConvertToHealthcareEntityRelationsCollection(document.Entities, document.Relations),
-                    document.FhirBundle,
+                    fhirBundle,
                     document.DetectedLanguage,
                     ConvertToWarnings(document.Warnings)));
             }

@@ -23,18 +23,15 @@ namespace Azure.AI.TextAnalytics
             TextDocumentStatistics statistics,
             IList<HealthcareEntity> healthcareEntities,
             IList<HealthcareEntityRelation> entityRelations,
-            IDictionary<string, object> fhirBundle,
+            BinaryData fhirBundle,
             string detectedLanguage,
             IList<TextAnalyticsWarning> warnings)
             : base(id, statistics)
         {
             _entities = new ReadOnlyCollection<HealthcareEntity>(healthcareEntities);
             EntityRelations = new ReadOnlyCollection<HealthcareEntityRelation>(entityRelations);
+            FhirBundle = fhirBundle;
             DetectedLanguage = detectedLanguage;
-
-            FhirBundle = (fhirBundle is not null)
-                ? new ReadOnlyDictionary<string, object>(fhirBundle)
-                : new Dictionary<string, object>();
 
             Warnings = (warnings is not null)
                 ? new ReadOnlyCollection<TextAnalyticsWarning>(warnings)
@@ -51,7 +48,7 @@ namespace Azure.AI.TextAnalytics
         /// <summary>
         /// Warnings encountered while processing document.
         /// </summary>
-        public IReadOnlyCollection<TextAnalyticsWarning> Warnings { get; } = new List<TextAnalyticsWarning>();
+        public IReadOnlyCollection<TextAnalyticsWarning> Warnings { get; }
 
         /// <summary>
         /// The language of the input document as detected by the service when requested to perform automatic language
@@ -85,6 +82,6 @@ namespace Azure.AI.TextAnalytics
         /// Gets the FHIR bundle that was produced for this result according to the specified <see cref="AnalyzeHealthcareEntitiesOptions.FhirVersion"/>.
         /// For additional information, see <see href="https://www.hl7.org/fhir/overview.html"/>.
         /// </summary>
-        public IReadOnlyDictionary<string, object> FhirBundle { get; }
+        public BinaryData FhirBundle { get; }
     }
 }

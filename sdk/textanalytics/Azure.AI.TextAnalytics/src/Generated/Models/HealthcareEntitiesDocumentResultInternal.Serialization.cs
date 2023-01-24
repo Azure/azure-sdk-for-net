@@ -12,7 +12,7 @@ using Azure.Core;
 
 namespace Azure.AI.TextAnalytics.Models
 {
-    internal partial class HealthcareEntitiesDocumentResult : IUtf8JsonSerializable
+    internal partial class HealthcareEntitiesDocumentResultInternal : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -31,16 +31,10 @@ namespace Azure.AI.TextAnalytics.Models
                 writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
-            if (Optional.IsCollectionDefined(FhirBundle))
+            if (Optional.IsDefined(FhirBundle))
             {
                 writer.WritePropertyName("fhirBundle");
-                writer.WriteStartObject();
-                foreach (var item in FhirBundle)
-                {
-                    writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value);
-                }
-                writer.WriteEndObject();
+                FhirBundle.WriteTo(writer);
             }
             writer.WritePropertyName("id");
             writer.WriteStringValue(Id);
@@ -59,11 +53,11 @@ namespace Azure.AI.TextAnalytics.Models
             writer.WriteEndObject();
         }
 
-        internal static HealthcareEntitiesDocumentResult DeserializeHealthcareEntitiesDocumentResult(JsonElement element)
+        internal static HealthcareEntitiesDocumentResultInternal DeserializeHealthcareEntitiesDocumentResultInternal(JsonElement element)
         {
             IList<HealthcareEntityInternal> entities = default;
             IList<HealthcareRelationInternal> relations = default;
-            Optional<IDictionary<string, object>> fhirBundle = default;
+            Optional<JsonElement> fhirBundle = default;
             string id = default;
             IList<DocumentWarning> warnings = default;
             Optional<TextDocumentStatistics> statistics = default;
@@ -91,17 +85,7 @@ namespace Azure.AI.TextAnalytics.Models
                 }
                 if (property.NameEquals("fhirBundle"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    Dictionary<string, object> dictionary = new Dictionary<string, object>();
-                    foreach (var property0 in property.Value.EnumerateObject())
-                    {
-                        dictionary.Add(property0.Name, property0.Value.GetObject());
-                    }
-                    fhirBundle = dictionary;
+                    fhirBundle = property.Value.Clone();
                     continue;
                 }
                 if (property.NameEquals("id"))
@@ -130,7 +114,7 @@ namespace Azure.AI.TextAnalytics.Models
                     continue;
                 }
             }
-            return new HealthcareEntitiesDocumentResult(id, warnings, Optional.ToNullable(statistics), entities, relations, Optional.ToDictionary(fhirBundle));
+            return new HealthcareEntitiesDocumentResultInternal(id, warnings, Optional.ToNullable(statistics), entities, relations, fhirBundle);
         }
     }
 }
