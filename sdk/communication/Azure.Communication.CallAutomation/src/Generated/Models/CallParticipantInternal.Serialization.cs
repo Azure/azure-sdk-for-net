@@ -11,9 +11,9 @@ using Azure.Core;
 
 namespace Azure.Communication.CallAutomation
 {
-    internal partial class AcsCallParticipantInternal
+    internal partial class CallParticipantInternal
     {
-        internal static AcsCallParticipantInternal DeserializeAcsCallParticipantInternal(JsonElement element)
+        internal static CallParticipantInternal DeserializeCallParticipantInternal(JsonElement element)
         {
             Optional<CommunicationIdentifierModel> identifier = default;
             Optional<bool> isMuted = default;
@@ -40,7 +40,7 @@ namespace Azure.Communication.CallAutomation
                     continue;
                 }
             }
-            return new AcsCallParticipantInternal(identifier.Value, Optional.ToNullable(isMuted));
+            return new CallParticipantInternal(identifier.Value, Optional.ToNullable(isMuted));
         }
     }
 }

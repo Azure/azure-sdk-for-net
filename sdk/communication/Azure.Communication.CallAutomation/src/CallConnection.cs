@@ -646,15 +646,16 @@ namespace Azure.Communication.CallAutomation
         }
 
         /// <summary>
-        /// Mute a single participant from the call.
+        /// Mute participants from the call.
+        /// Note: Only one participant is currently supported.
         /// </summary>
-        /// <param name="targetParticipant">Participant to mute.</param>
+        /// <param name="targetParticipants">Participants to mute.</param>
         /// <param name="operationContext">The Operation Context.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>A Response containing MuteParticipantsResponse.</returns>
-        public virtual Response<MuteParticipantsResponse> MuteParticipant(CommunicationIdentifier targetParticipant, string operationContext = default, CancellationToken cancellationToken = default)
+        public virtual Response<MuteParticipantsResponse> MuteParticipant(IEnumerable<CommunicationIdentifier> targetParticipants, string operationContext = default, CancellationToken cancellationToken = default)
         {
-            var options = new MuteParticipantOptions(targetParticipant)
+            var options = new MuteParticipantOptions(targetParticipants)
             {
                 OperationContext = operationContext
             };
@@ -663,7 +664,7 @@ namespace Azure.Communication.CallAutomation
         }
 
         /// <summary>
-        /// Mute a single participant from the call.
+        /// Mute participants from the call.
         /// </summary>
         /// <param name="options">Options for the MuteParticipant operation.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
@@ -677,7 +678,8 @@ namespace Azure.Communication.CallAutomation
                 if (options == null)
                     throw new ArgumentNullException(nameof(options));
 
-                MuteParticipantRequestInternal request = new MuteParticipantRequestInternal(CommunicationIdentifierSerializer.Serialize(options.TargetParticipant));
+                MuteParticipantsRequestInternal request = new MuteParticipantsRequestInternal(
+                    options.TargetParticipants.Select(participant => CommunicationIdentifierSerializer.Serialize(participant)));
                 options.RepeatabilityHeaders?.GenerateIfRepeatabilityHeadersNotProvided();
 
                 if (options.OperationContext != null && options.OperationContext.Length > CallAutomationConstants.InputValidation.StringMaxLength)
@@ -704,13 +706,14 @@ namespace Azure.Communication.CallAutomation
         }
 
         /// <summary>
-        /// Unmute a single participant from the call.
+        /// Unmute participants from the call.
+        /// Note: Only a single participant is currently supported.
         /// </summary>
-        /// <param name="targetParticipant">Participant to unmute.</param>
+        /// <param name="targetParticipant">Participants to unmute.</param>
         /// <param name="operationContext">The Operation Context.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns></returns>
-        public virtual Response<UnmuteParticipantsResponse> UnmuteParticipant(CommunicationIdentifier targetParticipant, string operationContext = default, CancellationToken cancellationToken = default)
+        public virtual Response<UnmuteParticipantsResponse> UnmuteParticipant(IEnumerable<CommunicationIdentifier> targetParticipant, string operationContext = default, CancellationToken cancellationToken = default)
         {
             var options = new UnmuteParticipantOptions(targetParticipant)
             {
@@ -720,7 +723,7 @@ namespace Azure.Communication.CallAutomation
         }
 
         /// <summary>
-        /// Unmute a single participant from the call.
+        /// Unmute participants from the call.
         /// </summary>
         /// <param name="options">Options for the UnmuteParticipant operation.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
@@ -731,7 +734,8 @@ namespace Azure.Communication.CallAutomation
             scope.Start();
             try
             {
-                UnmuteParticipantRequestInternal request = new UnmuteParticipantRequestInternal(CommunicationIdentifierSerializer.Serialize(options.TargetParticipant));
+                UnmuteParticipantsRequestInternal request = new UnmuteParticipantsRequestInternal(
+                    options.TargetParticipants.Select(participant => CommunicationIdentifierSerializer.Serialize(participant)).ToList());
                 options.RepeatabilityHeaders?.GenerateIfRepeatabilityHeadersNotProvided();
                 if (options.OperationContext != null && options.OperationContext.Length > CallAutomationConstants.InputValidation.StringMaxLength)
                 {
@@ -870,15 +874,16 @@ namespace Azure.Communication.CallAutomation
         }
 
         /// <summary>
-        /// Mute a single participant on the call.
+        /// Mute participants on the call.
+        /// Note: Only one participant is currently supported.
         /// </summary>
-        /// <param name="participant">Participant to mute.</param>
+        /// <param name="participants">Participants to mute.</param>
         /// <param name="operationContext">The Operation Context.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns></returns>
-        public async virtual Task<Response<MuteParticipantsResponse>> MuteParticipantAsync(CommunicationIdentifier participant, string operationContext = default, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<MuteParticipantsResponse>> MuteParticipantsAsync(IEnumerable<CommunicationIdentifier> participants, string operationContext = default, CancellationToken cancellationToken = default)
         {
-            var options = new MuteParticipantOptions(participant)
+            var options = new MuteParticipantOptions(participants)
             {
                 OperationContext = operationContext
             };
@@ -886,7 +891,7 @@ namespace Azure.Communication.CallAutomation
         }
 
         /// <summary>
-        /// Mute a single participant on the call.
+        /// Mute participants on the call.
         /// </summary>
         /// <param name="options">Options for the MuteParticipant operation.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
@@ -900,7 +905,8 @@ namespace Azure.Communication.CallAutomation
                 if (options == null)
                     throw new ArgumentNullException(nameof(options));
 
-                MuteParticipantRequestInternal request = new MuteParticipantRequestInternal(CommunicationIdentifierSerializer.Serialize(options.TargetParticipant));
+                MuteParticipantsRequestInternal request = new MuteParticipantsRequestInternal(
+                    options.TargetParticipants.Select(participant => CommunicationIdentifierSerializer.Serialize(participant)));
                 options.RepeatabilityHeaders?.GenerateIfRepeatabilityHeadersNotProvided();
 
                 if (options.OperationContext != null && options.OperationContext.Length > CallAutomationConstants.InputValidation.StringMaxLength)
@@ -927,35 +933,37 @@ namespace Azure.Communication.CallAutomation
         }
 
         /// <summary>
-        /// Unmute a single participant on the call.
+        /// Unmute participants on the call.
+        /// Note: Only one participant is currently supported.
         /// </summary>
-        /// <param name="participant">Participant to unmute.</param>
+        /// <param name="participant">Participants to unmute.</param>
         /// <param name="operationContext">The Operation Context.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns></returns>
-        public async virtual Task<Response<UnmuteParticipantsResponse>> UnmuteParticipantAsync(CommunicationIdentifier participant, string operationContext = default, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<UnmuteParticipantsResponse>> UnmuteParticipantsAsync(IEnumerable<CommunicationIdentifier> participant, string operationContext = default, CancellationToken cancellationToken = default)
         {
             var options = new UnmuteParticipantOptions(participant)
             {
                 OperationContext = operationContext
             };
 
-            return await UnmuteParticipantAsync(options, cancellationToken).ConfigureAwait(false);
+            return await UnmuteParticipantsAsync(options, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
-        /// Unmute a single participant from the call.
+        /// Unmute participants from the call.
         /// </summary>
         /// <param name="options">Options for the UnmuteParticipant operation.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns></returns>
-        public async virtual Task<Response<UnmuteParticipantsResponse>> UnmuteParticipantAsync(UnmuteParticipantOptions options, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<UnmuteParticipantsResponse>> UnmuteParticipantsAsync(UnmuteParticipantOptions options, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallConnection)}.{nameof(UnmuteParticipant)}");
             scope.Start();
             try
             {
-                UnmuteParticipantRequestInternal request = new UnmuteParticipantRequestInternal(CommunicationIdentifierSerializer.Serialize(options.TargetParticipant));
+                UnmuteParticipantsRequestInternal request = new UnmuteParticipantsRequestInternal(
+                    options.TargetParticipants.Select(participant => CommunicationIdentifierSerializer.Serialize(participant)).ToList());
                 options.RepeatabilityHeaders?.GenerateIfRepeatabilityHeadersNotProvided();
                 if (options.OperationContext != null && options.OperationContext.Length > CallAutomationConstants.InputValidation.StringMaxLength)
                 {

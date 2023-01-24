@@ -10,17 +10,17 @@ using Azure.Communication;
 namespace Azure.Communication.CallAutomation
 {
     /// <summary> Contract model of an ACS call participant. </summary>
-    internal partial class AcsCallParticipantInternal
+    internal partial class CallParticipantInternal
     {
-        /// <summary> Initializes a new instance of AcsCallParticipantInternal. </summary>
-        internal AcsCallParticipantInternal()
+        /// <summary> Initializes a new instance of CallParticipantInternal. </summary>
+        internal CallParticipantInternal()
         {
         }
 
-        /// <summary> Initializes a new instance of AcsCallParticipantInternal. </summary>
+        /// <summary> Initializes a new instance of CallParticipantInternal. </summary>
         /// <param name="identifier"> Communication identifier of the participant. </param>
         /// <param name="isMuted"> Is participant muted. </param>
-        internal AcsCallParticipantInternal(CommunicationIdentifierModel identifier, bool? isMuted)
+        internal CallParticipantInternal(CommunicationIdentifierModel identifier, bool? isMuted)
         {
             Identifier = identifier;
             IsMuted = isMuted;

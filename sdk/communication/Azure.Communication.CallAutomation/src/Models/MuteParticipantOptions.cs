@@ -1,6 +1,8 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Collections.Generic;
+
 namespace Azure.Communication.CallAutomation
 {
     /// <summary>
@@ -11,16 +13,17 @@ namespace Azure.Communication.CallAutomation
         /// <summary>
         /// Creates a new MuteParticipantOptions object.
         /// </summary>
-        public MuteParticipantOptions(CommunicationIdentifier targetParticipant)
+        public MuteParticipantOptions(IEnumerable<CommunicationIdentifier> targetParticipants)
         {
-            TargetParticipant = targetParticipant;
+            TargetParticipants = targetParticipants;
             RepeatabilityHeaders = new RepeatabilityHeaders();
         }
 
         /// <summary>
         /// The identity of participants to be muted from the call.
+        /// Only one participant is currently supported.
         /// </summary>
-        public CommunicationIdentifier TargetParticipant { get; }
+        public IEnumerable<CommunicationIdentifier> TargetParticipants { get; }
 
         /// <summary>
         /// The operation context.
