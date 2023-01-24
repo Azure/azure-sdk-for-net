@@ -106,6 +106,33 @@ foreach (var prompt in examplePrompts)
 }
 ```
 
+### Generate Chatbot Responses With Token
+
+The `GenerateChatbotResponsesWithToken` method authenticates using a DefaultAzureCredential, then generates text responses to input prompts.
+
+```C# Snippet:GenerateChatbotResponsesWithToken
+string endpoint = "http://myaccount.openai.azure.com/";
+OpenAIClient client = new OpenAIClient(new Uri(endpoint), new DefaultAzureCredential());
+
+List<string> examplePrompts = new(){
+    "How are you today?",
+    "What is Azure OpenAI?",
+    "Why do children love dinosaurs?",
+    "Generate a proof of Euler's identity",
+    "Describe in single words only the good things that come into your mind about your mother.",
+};
+
+foreach (var prompt in examplePrompts)
+{
+    Console.Write($"Input: {prompt}");
+    var request = new CompletionsRequest();
+    request.Prompt.Add(prompt);
+
+    Completion completion = client.Completions("myModelDeployment", request);
+    var response = completion.Choices[0].Text;
+    Console.WriteLine($"Chatbot: {response}");
+}
+```
 
 ## Troubleshooting
 

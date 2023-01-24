@@ -23,6 +23,8 @@ namespace Azure.OpenAI.Inference.Tests
         {
             var client = GetClient();
             Assert.That(client, Is.InstanceOf<OpenAIClient>());
+            var tokenClient = GetClientWithToken();
+            Assert.That(tokenClient, Is.InstanceOf<OpenAIClient>());
         }
 
         /// <summary>

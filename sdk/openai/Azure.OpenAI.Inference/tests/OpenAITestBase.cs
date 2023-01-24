@@ -5,7 +5,7 @@ using System;
 using System.Linq;
 using Azure.Core;
 using Azure.Core.TestFramework;
-using Azure.OpenAI.Inference.Models;
+using Azure.Identity;
 using Azure.ResourceManager;
 using Azure.ResourceManager.CognitiveServices;
 using Azure.ResourceManager.CognitiveServices.Models;
@@ -135,6 +135,12 @@ namespace Azure.OpenAI.Inference.Tests
             new OpenAIClient(
                 new Uri(_endpoint),
                 new AzureKeyCredential(_key),
+                InstrumentClientOptions(new OpenAIClientOptions(OpenAIClientOptions.ServiceVersion.V2022_06_01_Preview))));
+
+        protected OpenAIClient GetClientWithToken() => InstrumentClient(
+            new OpenAIClient(
+                new Uri(_endpoint),
+                new DefaultAzureCredential(),
                 InstrumentClientOptions(new OpenAIClientOptions(OpenAIClientOptions.ServiceVersion.V2022_06_01_Preview))));
     }
 }
