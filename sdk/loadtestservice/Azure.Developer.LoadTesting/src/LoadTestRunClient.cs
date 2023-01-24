@@ -156,7 +156,7 @@ namespace Azure.Developer.LoadTesting
             return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "LoadTestRunClient.GetMetrics", "value", "nextLink", context);
         }
 
-        /// <summary> List the metric values for a load test run. </summary>
+        /// <summary> List the metric values for a load     test run. </summary>
         /// <param name="testRunId"> Unique name for the load test run, must contain only lower-case alphabetic, numeric, underscore or hyphen characters. </param>
         /// <param name="metricname"> Metric name. </param>
         /// <param name="metricNamespace"> Metric namespace to query metric definitions for. </param>

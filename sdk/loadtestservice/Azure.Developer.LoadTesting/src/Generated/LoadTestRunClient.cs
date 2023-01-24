@@ -654,44 +654,6 @@ namespace Azure.Developer.LoadTesting
             }
         }
 
-        /// <summary> Get all test runs with given filters. </summary>
-        /// <param name="orderby"> Sort on the supported fields in (field asc/desc) format. eg: executedDateTime asc. Supported fields - executedDateTime. </param>
-        /// <param name="search"> Prefix based, case sensitive search on searchable fields - description, executedUser. For example, to search for a test run, with description 500 VUs, the search parameter can be 500. </param>
-        /// <param name="testId"> Unique name of an existing load test. </param>
-        /// <param name="executionFrom"> Start DateTime(ISO 8601 literal format) of test-run execution time filter range. </param>
-        /// <param name="executionTo"> End DateTime(ISO 8601 literal format) of test-run execution time filter range. </param>
-        /// <param name="status"> Comma separated list of test run status. </param>
-        /// <param name="maxpagesize"> Number of results in response. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <include file="Docs/LoadTestRunClient.xml" path="doc/members/member[@name='GetTestRunsAsync(String,String,String,DateTimeOffset,DateTimeOffset,String,Int32,RequestContext)']/*" />
-        public virtual AsyncPageable<BinaryData> GetTestRunsAsync(string orderby = null, string search = null, string testId = null, DateTimeOffset? executionFrom = null, DateTimeOffset? executionTo = null, string status = null, int? maxpagesize = null, RequestContext context = null)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetTestRunsRequest(orderby, search, testId, executionFrom, executionTo, status, maxpagesize, context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetTestRunsNextPageRequest(nextLink, orderby, search, testId, executionFrom, executionTo, status, maxpagesize, context);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "LoadTestRunClient.GetTestRuns", "value", "nextLink", context);
-        }
-
-        /// <summary> Get all test runs with given filters. </summary>
-        /// <param name="orderby"> Sort on the supported fields in (field asc/desc) format. eg: executedDateTime asc. Supported fields - executedDateTime. </param>
-        /// <param name="search"> Prefix based, case sensitive search on searchable fields - description, executedUser. For example, to search for a test run, with description 500 VUs, the search parameter can be 500. </param>
-        /// <param name="testId"> Unique name of an existing load test. </param>
-        /// <param name="executionFrom"> Start DateTime(ISO 8601 literal format) of test-run execution time filter range. </param>
-        /// <param name="executionTo"> End DateTime(ISO 8601 literal format) of test-run execution time filter range. </param>
-        /// <param name="status"> Comma separated list of test run status. </param>
-        /// <param name="maxpagesize"> Number of results in response. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <include file="Docs/LoadTestRunClient.xml" path="doc/members/member[@name='GetTestRuns(String,String,String,DateTimeOffset,DateTimeOffset,String,Int32,RequestContext)']/*" />
-        public virtual Pageable<BinaryData> GetTestRuns(string orderby = null, string search = null, string testId = null, DateTimeOffset? executionFrom = null, DateTimeOffset? executionTo = null, string status = null, int? maxpagesize = null, RequestContext context = null)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetTestRunsRequest(orderby, search, testId, executionFrom, executionTo, status, maxpagesize, context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetTestRunsNextPageRequest(nextLink, orderby, search, testId, executionFrom, executionTo, status, maxpagesize, context);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "LoadTestRunClient.GetTestRuns", "value", "nextLink", context);
-        }
-
         /// <summary> List the dimension values for the given metric dimension name. </summary>
         /// <param name="testRunId"> Unique name for the load test run, must contain only lower-case alphabetic, numeric, underscore or hyphen characters. </param>
         /// <param name="name"> Dimension name. </param>
