@@ -106,10 +106,6 @@ namespace Azure.ResourceManager.ContainerInstance.Tests
                 {
                     RestartPolicy = ContainerGroupRestartPolicy.Never,
                     Identity = new ManagedServiceIdentity(ManagedServiceIdentityType.SystemAssigned),
-                    Diagnostics = new ContainerGroupDiagnostics(
-                            logAnalytics: new ContainerGroupLogAnalytics(
-                                workspaceId: "workspaceid",
-                                workspaceKey: "workspacekey")),
                     InitContainers = {
                         new InitContainerDefinitionContent($"{containerGroupName}init")
                         {
@@ -192,7 +188,7 @@ namespace Azure.ResourceManager.ContainerInstance.Tests
             Assert.AreEqual(expected.RestartPolicy, actual.RestartPolicy);
             Assert.AreEqual(expected.Identity?.ManagedServiceIdentityType, actual.Identity?.ManagedServiceIdentityType);
             Assert.AreEqual(expected.Sku, actual.Sku);
-            Assert.AreEqual(expected.Diagnostics.LogAnalytics.WorkspaceId, actual.Diagnostics.LogAnalytics.WorkspaceId);
+            Assert.AreEqual(expected.Diagnostics?.LogAnalytics.WorkspaceId, actual.Diagnostics?.LogAnalytics.WorkspaceId);
             Assert.NotNull(actual.Containers);
             Assert.AreEqual(1, actual.Containers.Count);
 	    if (expected.Priority != ContainerGroupPriority.Spot)
