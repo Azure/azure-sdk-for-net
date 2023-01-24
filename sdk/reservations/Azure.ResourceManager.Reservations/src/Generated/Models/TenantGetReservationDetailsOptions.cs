@@ -7,11 +7,11 @@
 
 namespace Azure.ResourceManager.Reservations.Models
 {
-    /// <summary> The ReservationsExtensionsGetReservationDetailsOptions. </summary>
-    public partial class ReservationsExtensionsGetReservationDetailsOptions
+    /// <summary> The TenantGetReservationDetailsOptions. </summary>
+    public partial class TenantGetReservationDetailsOptions
     {
-        /// <summary> Initializes a new instance of ReservationsExtensionsGetReservationDetailsOptions. </summary>
-        public ReservationsExtensionsGetReservationDetailsOptions()
+        /// <summary> Initializes a new instance of TenantGetReservationDetailsOptions. </summary>
+        public TenantGetReservationDetailsOptions()
         {
         }
 
