@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.ServiceNetworking.TrafficController.Tests.Tests
     [TestFixture(Author = "shmalpani")]
     public class TrafficControllerTests : TrafficControllerManagementTestBase
     {
-        //private SubscriptionResource _subscription;
+        private Dictionary<string, string> _resourceNames;
 
         [SetUp]
         public void ClearChallengeCacheforRecord()
@@ -34,19 +34,21 @@ namespace Azure.ResourceManager.ServiceNetworking.TrafficController.Tests.Tests
             {
                 CreateCommonClient();
             }
-            //_subscription = Subscription;
         }
 
         public TrafficControllerTests() : base(false)
         {
+            _resourceNames= new Dictionary<string, string>();
         }
 
         public TrafficControllerTests(bool isAsync) : base(isAsync)
         {
+            _resourceNames = new Dictionary<string, string>();
         }
 
         public TrafficControllerTests(bool isAsync, RecordedTestMode mode) : base(isAsync, mode)
         {
+            _resourceNames = new Dictionary<string, string>();
         }
 
         private async Task<ArmOperation<TrafficControllerResource>> CreateTrafficControllerAsync(string location, string resourceGroup, string tcName)
@@ -65,6 +67,11 @@ namespace Azure.ResourceManager.ServiceNetworking.TrafficController.Tests.Tests
             return  await trafficControllerCollection.GetAsync(tcName);
         }
 
+        private async void DeleteTrafficControllerAsync(TrafficControllerResource tc)
+        {
+            await tc.DeleteAsync(WaitUntil.Started);
+        }
+
         private async Task<ArmOperation<FrontendResource>> CreateFrontendAsync(ResourceGroupResource rgResource, string frontendName, TrafficControllerResource tc, string location)
         {
             //Obtaining the Collection object of the Frontend to perform the Create/PUT operation.
@@ -73,6 +80,7 @@ namespace Azure.ResourceManager.ServiceNetworking.TrafficController.Tests.Tests
             //Creating a public IP (PIP) Address Resource. The resource ID of the resouce is passed on to the Frontend.
             PublicIPAddressCollection publicIPAddresses = rgResource.GetPublicIPAddresses();
             string pipName = Recording.GenerateAssetName("tc-pip");
+            _resourceNames["tc-pip"] = pipName;
             var pipData = new PublicIPAddressData()
             {
                 Location = "East US 2",
@@ -105,6 +113,24 @@ namespace Azure.ResourceManager.ServiceNetworking.TrafficController.Tests.Tests
             return await frontends.GetAsync(frontendName);
         }
 
+        private async Task DeleteFrontendResource(ResourceGroupResource rgResource, TrafficControllerResource tc)
+        {
+            string pipName;
+            try
+            {
+                pipName = _resourceNames["tc-pip"];
+            }
+            catch (KeyNotFoundException)
+            {
+                Console.WriteLine("Resource Names not found. Unable to perform DELETE for Frontend Resources");
+                return;
+            }
+            FrontendCollection frontends = GetFrontends(tc);
+            PublicIPAddressCollection publicIPAddresses = rgResource.GetPublicIPAddresses();
+            PublicIPAddressResource pip = publicIPAddresses.GetAsync(pipName).Result;
+            await pip.DeleteAsync(WaitUntil.Started);
+        }
+
         private async Task<ArmOperation<AssociationResource>> CreateAssociationAsync(string resourceGroup, string associationName, TrafficControllerResource tc, string location) {
             //Obtaining the Collection object of the Frontend to perform the Create/PUT operation.
             AssociationCollection associations = GetAssociations(tc);
@@ -113,23 +139,31 @@ namespace Azure.ResourceManager.ServiceNetworking.TrafficController.Tests.Tests
             VirtualNetworkCollection vnets = GetVirtualNetworks(resourceGroup);
             VirtualNetworkData vnetData = new VirtualNetworkData()
             {
-                Location=location,
+                Location = location,
                 AddressPrefixes = { "10.225.0.0/16" },
             };
             string vnetName = Recording.GenerateAssetName("tc-vnet");
+            _resourceNames["tc-vnet"] = vnetName;
             VirtualNetworkResource vnet = vnets.CreateOrUpdateAsync(WaitUntil.Completed, vnetName, vnetData).Result.Value;
             SubnetCollection subnets = vnet.GetSubnets();
             SubnetData subnetData = new SubnetData()
             {
-                //Delegations = new List<string>(){ "Microsoft.ServiceNetworking/trafficControllers" },
+                AddressPrefix = "10.225.0.0/24",
             };
+            var trafficControllerServiceDelegation = new ServiceDelegation()
+            {
+                ServiceName = "Microsoft.ServiceNetworking/trafficControllers",
+                Name = "Microsoft.ServiceNetworking/trafficControllers",
+            };
+            subnetData.Delegations.Add(trafficControllerServiceDelegation);
             string subnetName = Recording.GenerateAssetName("tc-subnet");
+            _resourceNames["tc-subnet"] = subnetName;
             SubnetResource subnet = subnets.CreateOrUpdateAsync(WaitUntil.Completed, subnetName, subnetData).Result.Value;
 
             //Association Data object that is used to create the new frontend object.
             AssociationData associationData = new AssociationData(location)
             {
-                AssociationType = AssociationType.Subnets,
+                AssociationType = null,
                 SubnetId = subnet.Id,
                 Location= location,
             };
@@ -137,13 +171,45 @@ namespace Azure.ResourceManager.ServiceNetworking.TrafficController.Tests.Tests
             return await associations.CreateOrUpdateAsync(WaitUntil.Completed, associationName, associationData);
         }
 
-        private AssociationResource GetAssociation(string associationName, TrafficControllerResource tc)
+        private async void DeleteAssociationResourcesAsync(string associationName, TrafficControllerResource tc, string resourceGroup)
+        {
+            string vnetName;
+            string subnetName;
+            try
+            {
+                vnetName = _resourceNames["tc-vnet"];
+                subnetName = _resourceNames["tc-subnet"];
+            }
+            catch (KeyNotFoundException){
+                Console.WriteLine("Resource Names not found. Unable to perform DELETE for Association Resources");
+                return;
+            }
+            AssociationCollection associations = GetAssociations(tc);
+
+            VirtualNetworkCollection vnets = GetVirtualNetworks(resourceGroup);
+            VirtualNetworkResource vnet = vnets.GetAsync(vnetName).Result;
+
+            SubnetResource subnet = vnet.GetSubnetAsync(subnetName).Result;
+            await subnet.DeleteAsync(WaitUntil.Started);
+            await vnet.DeleteAsync(WaitUntil.Started);
+        }
+
+        private async Task DeleteAssociation(AssociationResource association)
+        {
+            await association.DeleteAsync(WaitUntil.Completed);
+        }
+
+        private async Task<AssociationResource> GetAssociationAsync(string associationName, TrafficControllerResource tc)
         {
             //Obtaining the Collection object of Association to perform the GET operation.
             AssociationCollection associations = GetAssociations(tc);
             //Performing the GET operation and returning the result.
-            AssociationResource association = associations.Get(associationName).Value;
-            return association;
+            return await associations.GetAsync(associationName);
+        }
+
+        private async void DeleteResourceGroupAsync(ResourceGroupResource rgResource)
+        {
+            await rgResource.DeleteAsync(WaitUntil.Started);
         }
 
         [Test]
@@ -173,6 +239,7 @@ namespace Azure.ResourceManager.ServiceNetworking.TrafficController.Tests.Tests
             var tcDelete = await tcGet.DeleteAsync(WaitUntil.Completed);
             var deleteResponse = tcDelete.WaitForCompletionResponse();
             Assert.AreEqual(deleteResponse.IsError, false);
+            DeleteResourceGroupAsync(rgResource);
         }
 
         [Test]
@@ -207,6 +274,10 @@ namespace Azure.ResourceManager.ServiceNetworking.TrafficController.Tests.Tests
             var frontendDelete = await frontendGet.DeleteAsync(WaitUntil.Completed);
             var deleteResponse = frontendDelete.WaitForCompletionResponse();
             Assert.AreEqual(deleteResponse.IsError, false);
+            //Deleting Traffic Controller
+            await DeleteFrontendResource(rgResource, tc);
+            DeleteTrafficControllerAsync(tc);
+            DeleteResourceGroupAsync(rgResource);
         }
 
         [Test]
@@ -231,15 +302,17 @@ namespace Azure.ResourceManager.ServiceNetworking.TrafficController.Tests.Tests
             Assert.AreEqual(associationCreate.Data.ProvisioningState.ToString(), "Succeeded");
 
             //Testing the GET Operation
-            AssociationResource associationGet = GetAssociation(associationName, tc);
+            AssociationResource associationGet = GetAssociationAsync(associationName, tc).Result;
             Assert.IsNotNull(associationGet);
             Assert.AreEqual(associationGet.Data.Name, associationName);
             Assert.AreEqual(associationGet.Data.ProvisioningState.ToString(), "Succeeded");
 
             //Testing DELETE Operation
-            var associationDelete = await associationGet.DeleteAsync(WaitUntil.Completed);
-            var deleteResponse = associationDelete.WaitForCompletionResponse();
-            Assert.AreEqual(deleteResponse.IsError, false);
+            await DeleteAssociation(associationGet);
+            //Deleting Traffic Controller
+            DeleteAssociationResourcesAsync(associationName, tc, resourceGroupName);
+            DeleteTrafficControllerAsync(tc);
+            DeleteResourceGroupAsync(rgResource);
         }
     }
 }
