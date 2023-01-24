@@ -130,11 +130,11 @@ namespace Azure.ResourceManager.ContainerInstance.Tests
                 return priorityContainerGroup;
 	    }
 
-	    var confidentialComputeProperties = null;
+	    var confidentialComputeProperties = new ConfidentialComputeProperties();
 	    var sku = ContainerGroupSku.Standard;
 	    if (isConfidentialSku)
 	    {
-                confidentialComputeProperties = ccepolicy == null ? null : new ConfidentialComputeProperties(ccepolicy);
+                confidentialComputeProperties = ccepolicy == null ? confidentialComputeProperties: new ConfidentialComputeProperties(ccepolicy);
 		sku = ContainerGroupSku.Confidential;
 	    }
 
