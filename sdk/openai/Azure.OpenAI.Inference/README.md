@@ -57,10 +57,6 @@ We guarantee that all client instance methods are thread-safe and independent of
 [Client lifetime](https://devblogs.microsoft.com/azure-sdk/lifetime-management-and-thread-safety-guarantees-of-azure-sdk-net-clients/)
 <!-- CLIENT COMMON BAR -->
 
-## Examples
-
-You can familiarize yourself with different APIs using [Samples](https://github.com/Azure/azure-sdk-for-net/tree/baf2e063ff2cdca45b4e7ca8e1b57c9ec72146f0/sdk/openai/Azure.OpenAI.Inference/samples).
-
 ### Get secret
 
 The `GetSecret` method retrieves a secret from the service.
