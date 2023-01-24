@@ -1,4 +1,4 @@
-FROM mcr.microsoft.com/dotnet/sdk:6.0-cbl-mariner1.0 AS build-env 
+FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build-env 
 
 # Copy in engineering system needed to build
 COPY ./eng/ /app/eng/
@@ -21,9 +21,9 @@ RUN dotnet build './sdk/eventhub/Azure.Messaging.ServiceBus/stress/src/' --confi
 # Copy in the dll files to be ready to run
 FROM build-env as publish
 WORKDIR /app
-COPY --from=build-env /app/artifacts/bin/Azure.Messaging.ServiceBus.Stress/Release/net6.0/ /app/artifacts/bin/Azure.Messaging.ServiceBus.Stress/Release/net6.0/
+COPY --from=build-env /app/artifacts/bin/Azure.Messaging.ServiceBus.Stress/Release/net7.0/ /app/artifacts/bin/Azure.Messaging.ServiceBus.Stress/Release/net7.0/
 
-WORKDIR /app/artifacts/bin/Azure.Messaging.ServiceBus.Stress/Release/net6.0
+WORKDIR /app/artifacts/bin/Azure.Messaging.ServiceBus.Stress/Release/net7.0
 
 # The default is running just the "SendReceiveTest"
 ENTRYPOINT ["dotnet Azure.Messaging.ServiceBus.Stress.dll", "--test"]

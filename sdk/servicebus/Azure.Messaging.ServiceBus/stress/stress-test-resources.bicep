@@ -9,8 +9,6 @@ var defaultSASKeyName = 'RootManageSharedAccessKey'
 var serviceBusAuthRuleResourceId = resourceId('Microsoft.ServiceBus/namespaces/authorizationRules', servicebusNamespaceName, defaultSASKeyName)
 
 var queueName = 'stresstestsb'
-var queueName2 = 'stresstestsb2'
-var queueName3 = 'stresstestsb3'
 
 // Event Hubs Namespace Creation
 resource serviceBusNamespace 'Microsoft.ServiceBus/namespaces@2022-01-01-preview' = {
@@ -27,16 +25,6 @@ resource serviceBusQueue 'Microsoft.ServiceBus/namespaces/queues@2022-01-01-prev
   name: queueName
 }
 
-resource serviceBusQueueSecondRep 'Microsoft.ServiceBus/namespaces/queues@2022-01-01-preview' = {
-  parent: serviceBusNamespace
-  name: queueName2
-}
-
-resource serviceBusQueueThirdRep 'Microsoft.ServiceBus/namespaces/queues@2022-01-01-preview' = {
-  parent: serviceBusNamespace
-  name: queueName3
-}
-
 // Shared Resource output
 output AZURE_CLIENT_OID string = testApplicationOid
 output RESOURCE_GROUP string = resourceGroup().name
@@ -44,5 +32,3 @@ output SERVICEBUS_NAMESPACE_CONNECTION_STRING string = listkeys(serviceBusAuthRu
 
 // Individual test outputs
 output SERVICEBUS_QUEUE string = serviceBusQueue.name
-output SERVICEBUS_QUEUE_TWO string = serviceBusQueueSecondRep.name
-output SERVICEBUS_QUEUE_THREE string = serviceBusQueueThirdRep.name

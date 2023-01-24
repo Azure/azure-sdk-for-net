@@ -27,18 +27,6 @@ public class TestParameters : IDisposable
     ///
     public string QueueName = string.Empty;
 
-    /// <summary>
-    ///   The name of the second Service Bus Queue to use for a test run.
-    /// </summary>
-    ///
-    public string QueueNameTwo = string.Empty;
-
-    /// <summary>
-    ///   The name of the third Service Bus Queue to use for a test run.
-    /// </summary>
-    ///
-    public string QueueNameThree = string.Empty;
-
     // Test Run Configurations
 
     /// <summary>

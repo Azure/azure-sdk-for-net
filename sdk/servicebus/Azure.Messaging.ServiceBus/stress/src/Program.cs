@@ -71,14 +71,6 @@ public class Program
             environment.TryGetValue(EnvironmentVariables.ServiceBusQueue, out queueName);
             testParameters.QueueName = queueName;
 
-            var queueName2 = string.Empty;
-            environment.TryGetValue(EnvironmentVariables.ServiceBusQueueTwo, out queueName2);
-            testParameters.QueueNameTwo = queueName2;
-
-            var queueName3 = string.Empty;
-            environment.TryGetValue(EnvironmentVariables.ServiceBusQueueThree, out queueName3);
-            testParameters.QueueNameThree = queueName3;
-
             metrics.Client.TrackEvent("Starting a test run.");
 
             TestScenario testScenarioInstance = null;
