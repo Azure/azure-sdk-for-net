@@ -5,12 +5,11 @@
 
 #nullable disable
 
+using System.Net;
+
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary>
-    /// Compute node information related to a AmlCompute.
-    /// Serialized Name: AmlComputeNodeInformation
-    /// </summary>
+    /// <summary> Compute node information related to a AmlCompute. </summary>
     public partial class AmlComputeNodeInformation
     {
         /// <summary> Initializes a new instance of AmlComputeNodeInformation. </summary>
@@ -19,31 +18,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Initializes a new instance of AmlComputeNodeInformation. </summary>
-        /// <param name="nodeId">
-        /// ID of the compute node.
-        /// Serialized Name: AmlComputeNodeInformation.nodeId
-        /// </param>
-        /// <param name="privateIPAddress">
-        /// Private IP address of the compute node.
-        /// Serialized Name: AmlComputeNodeInformation.privateIpAddress
-        /// </param>
-        /// <param name="publicIPAddress">
-        /// Public IP address of the compute node.
-        /// Serialized Name: AmlComputeNodeInformation.publicIpAddress
-        /// </param>
-        /// <param name="port">
-        /// SSH port number of the node.
-        /// Serialized Name: AmlComputeNodeInformation.port
-        /// </param>
-        /// <param name="nodeState">
-        /// State of the compute node. Values are idle, running, preparing, unusable, leaving and preempted.
-        /// Serialized Name: AmlComputeNodeInformation.nodeState
-        /// </param>
-        /// <param name="runId">
-        /// ID of the Experiment running on the node, if any else null.
-        /// Serialized Name: AmlComputeNodeInformation.runId
-        /// </param>
-        internal AmlComputeNodeInformation(string nodeId, string privateIPAddress, string publicIPAddress, int? port, MachineLearningNodeState? nodeState, string runId)
+        /// <param name="nodeId"> ID of the compute node. </param>
+        /// <param name="privateIPAddress"> Private IP address of the compute node. </param>
+        /// <param name="publicIPAddress"> Public IP address of the compute node. </param>
+        /// <param name="port"> SSH port number of the node. </param>
+        /// <param name="nodeState"> State of the compute node. Values are idle, running, preparing, unusable, leaving and preempted. </param>
+        /// <param name="runId"> ID of the Experiment running on the node, if any else null. </param>
+        internal AmlComputeNodeInformation(string nodeId, IPAddress privateIPAddress, IPAddress publicIPAddress, int? port, MachineLearningNodeState? nodeState, string runId)
         {
             NodeId = nodeId;
             PrivateIPAddress = privateIPAddress;
@@ -53,35 +34,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
             RunId = runId;
         }
 
-        /// <summary>
-        /// ID of the compute node.
-        /// Serialized Name: AmlComputeNodeInformation.nodeId
-        /// </summary>
+        /// <summary> ID of the compute node. </summary>
         public string NodeId { get; }
-        /// <summary>
-        /// Private IP address of the compute node.
-        /// Serialized Name: AmlComputeNodeInformation.privateIpAddress
-        /// </summary>
-        public string PrivateIPAddress { get; }
-        /// <summary>
-        /// Public IP address of the compute node.
-        /// Serialized Name: AmlComputeNodeInformation.publicIpAddress
-        /// </summary>
-        public string PublicIPAddress { get; }
-        /// <summary>
-        /// SSH port number of the node.
-        /// Serialized Name: AmlComputeNodeInformation.port
-        /// </summary>
+        /// <summary> Private IP address of the compute node. </summary>
+        public IPAddress PrivateIPAddress { get; }
+        /// <summary> Public IP address of the compute node. </summary>
+        public IPAddress PublicIPAddress { get; }
+        /// <summary> SSH port number of the node. </summary>
         public int? Port { get; }
-        /// <summary>
-        /// State of the compute node. Values are idle, running, preparing, unusable, leaving and preempted.
-        /// Serialized Name: AmlComputeNodeInformation.nodeState
-        /// </summary>
+        /// <summary> State of the compute node. Values are idle, running, preparing, unusable, leaving and preempted. </summary>
         public MachineLearningNodeState? NodeState { get; }
-        /// <summary>
-        /// ID of the Experiment running on the node, if any else null.
-        /// Serialized Name: AmlComputeNodeInformation.runId
-        /// </summary>
+        /// <summary> ID of the Experiment running on the node, if any else null. </summary>
         public string RunId { get; }
     }
 }

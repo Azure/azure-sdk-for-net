@@ -270,13 +270,13 @@ namespace Azure.Search.Documents.Tests
         /// <returns>The shared TestResources context.</returns>
         public static async Task<SearchResources> GetSharedHotelsIndexAsync(SearchTestBase fixture, bool isSample = false)
         {
-            await SharedSearchResources.EnsureInitialized(async () => await CreateWithHotelsIndexAsync(fixture, isSample));
+            await SharedSearchResources.EnsureInitialized(async () => await CreateWithHotelsIndexAsync(fixture, isSample), isSample);
 
             // Clone it for the current fixture (note that setting these values
             // will create the recording ServiceName/IndexName/etc. variables)
             return new SearchResources(fixture)
             {
-                IndexName = SharedSearchResources.Search.IndexName,
+                IndexName = isSample ? SharedSearchResources.SearchResourcesForSamples.IndexName : SharedSearchResources.SearchResourcesForTests.IndexName,
             };
         }
         #endregion Create Test Resources
@@ -455,37 +455,54 @@ namespace Azure.Search.Documents.Tests
 
                 if (populate)
                 {
-                    object[] hotels = isSample ? SearchResourcesSample.TestDocumentsForSample : TestDocuments;
-                    List<Task> tasks = new List<Task>(hotels.Length);
-
-                    foreach (object obj in hotels)
+                    List<Task> tasks;
+                    if (isSample)
                     {
-                        Task task = Task.Run(async () =>
+                        Samples.Hotel[] hotels = SearchResourcesSample.TestDocumentsForSample;
+                        tasks = new List<Task>(hotels.Length);
+
+                        foreach (Samples.Hotel hotel in hotels)
                         {
-                            using MemoryStream stream = new MemoryStream();
-                            await JsonSerializer
-                                .SerializeAsync(stream, obj, JsonSerialization.SerializerOptions, cts.Token)
-                                .ConfigureAwait(false);
-
-                            stream.Seek(0, SeekOrigin.Begin);
-
-                            if (isSample)
+                            Task task = Task.Run(async () =>
                             {
-                                Samples.Hotel hotel = (Samples.Hotel)obj;
+                                using MemoryStream stream = new MemoryStream();
+                                await JsonSerializer
+                                    .SerializeAsync(stream, hotel, JsonSerialization.SerializerOptions, cts.Token)
+                                    .ConfigureAwait(false);
+
+                                stream.Seek(0, SeekOrigin.Begin);
+
                                 await client
                                     .UploadBlobAsync(hotel.HotelId, stream, cts.Token)
                                     .ConfigureAwait(false);
-                            }
-                            else
+                            });
+
+                            tasks.Add(task);
+                        }
+                    }
+                    else
+                    {
+                        Hotel[] hotels = TestDocuments;
+                        tasks = new List<Task>(hotels.Length);
+
+                        foreach (Hotel hotel in hotels)
+                        {
+                            Task task = Task.Run(async () =>
                             {
-                                Hotel hotel = (Hotel)obj;
+                                using MemoryStream stream = new MemoryStream();
+                                await JsonSerializer
+                                    .SerializeAsync(stream, hotel, JsonSerialization.SerializerOptions, cts.Token)
+                                    .ConfigureAwait(false);
+
+                                stream.Seek(0, SeekOrigin.Begin);
+
                                 await client
                                     .UploadBlobAsync(hotel.HotelId, stream, cts.Token)
                                     .ConfigureAwait(false);
-                            }
-                        });
+                            });
 
-                        tasks.Add(task);
+                            tasks.Add(task);
+                        }
                     }
 
                     await Task.WhenAll(tasks);

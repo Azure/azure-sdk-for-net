@@ -29,8 +29,16 @@ namespace Azure.ResourceManager.ManagedNetwork
 
         /// <summary>
         /// The ListBySubscription  ManagedNetwork operation retrieves all the Managed Network Resources in the current subscription in a paginated format.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.ManagedNetwork/managedNetworks
-        /// Operation Id: ManagedNetworks_ListBySubscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ManagedNetwork/managedNetworks</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ManagedNetworks_ListBySubscription</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="top"> May be used to limit the number of results in a page for list queries. </param>
@@ -44,8 +52,16 @@ namespace Azure.ResourceManager.ManagedNetwork
 
         /// <summary>
         /// The ListBySubscription  ManagedNetwork operation retrieves all the Managed Network Resources in the current subscription in a paginated format.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.ManagedNetwork/managedNetworks
-        /// Operation Id: ManagedNetworks_ListBySubscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ManagedNetwork/managedNetworks</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ManagedNetworks_ListBySubscription</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="top"> May be used to limit the number of results in a page for list queries. </param>
@@ -76,8 +92,16 @@ namespace Azure.ResourceManager.ManagedNetwork
 
         /// <summary>
         /// The Get ManagedNetworks operation gets a Managed Network Resource, specified by the resource group and Managed Network name
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetwork/managedNetworks/{managedNetworkName}
-        /// Operation Id: ManagedNetworks_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetwork/managedNetworks/{managedNetworkName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ManagedNetworks_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="managedNetworkName"> The name of the Managed Network. </param>
@@ -92,8 +116,16 @@ namespace Azure.ResourceManager.ManagedNetwork
 
         /// <summary>
         /// The Get ManagedNetworks operation gets a Managed Network Resource, specified by the resource group and Managed Network name
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetwork/managedNetworks/{managedNetworkName}
-        /// Operation Id: ManagedNetworks_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetwork/managedNetworks/{managedNetworkName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ManagedNetworks_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="managedNetworkName"> The name of the Managed Network. </param>
@@ -135,8 +167,16 @@ namespace Azure.ResourceManager.ManagedNetwork
 
         /// <summary>
         /// Get the specified scope assignment.
-        /// Request Path: /{scope}/providers/Microsoft.ManagedNetwork/scopeAssignments/{scopeAssignmentName}
-        /// Operation Id: ScopeAssignments_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{scope}/providers/Microsoft.ManagedNetwork/scopeAssignments/{scopeAssignmentName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ScopeAssignments_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="scope"> The scope that the resource will apply against. </param>
@@ -152,8 +192,16 @@ namespace Azure.ResourceManager.ManagedNetwork
 
         /// <summary>
         /// Get the specified scope assignment.
-        /// Request Path: /{scope}/providers/Microsoft.ManagedNetwork/scopeAssignments/{scopeAssignmentName}
-        /// Operation Id: ScopeAssignments_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{scope}/providers/Microsoft.ManagedNetwork/scopeAssignments/{scopeAssignmentName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ScopeAssignments_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="scope"> The scope that the resource will apply against. </param>

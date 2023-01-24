@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary>
-    /// Enum to determine endpoint authentication mode.
-    /// Serialized Name: EndpointAuthMode
-    /// </summary>
+    /// <summary> Enum to determine endpoint authentication mode. </summary>
     public readonly partial struct MachineLearningEndpointAuthMode : IEquatable<MachineLearningEndpointAuthMode>
     {
         private readonly string _value;
@@ -25,25 +22,16 @@ namespace Azure.ResourceManager.MachineLearning.Models
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        private const string AMLTokenValue = "AMLToken";
+        private const string AmlTokenValue = "AMLToken";
         private const string KeyValue = "Key";
-        private const string AADTokenValue = "AADToken";
+        private const string AadTokenValue = "AADToken";
 
-        /// <summary>
-        /// AMLToken
-        /// Serialized Name: EndpointAuthMode.AMLToken
-        /// </summary>
-        public static MachineLearningEndpointAuthMode AMLToken { get; } = new MachineLearningEndpointAuthMode(AMLTokenValue);
-        /// <summary>
-        /// Key
-        /// Serialized Name: EndpointAuthMode.Key
-        /// </summary>
+        /// <summary> AMLToken. </summary>
+        public static MachineLearningEndpointAuthMode AmlToken { get; } = new MachineLearningEndpointAuthMode(AmlTokenValue);
+        /// <summary> Key. </summary>
         public static MachineLearningEndpointAuthMode Key { get; } = new MachineLearningEndpointAuthMode(KeyValue);
-        /// <summary>
-        /// AADToken
-        /// Serialized Name: EndpointAuthMode.AADToken
-        /// </summary>
-        public static MachineLearningEndpointAuthMode AADToken { get; } = new MachineLearningEndpointAuthMode(AADTokenValue);
+        /// <summary> AADToken. </summary>
+        public static MachineLearningEndpointAuthMode AadToken { get; } = new MachineLearningEndpointAuthMode(AadTokenValue);
         /// <summary> Determines if two <see cref="MachineLearningEndpointAuthMode"/> values are the same. </summary>
         public static bool operator ==(MachineLearningEndpointAuthMode left, MachineLearningEndpointAuthMode right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MachineLearningEndpointAuthMode"/> values are not the same. </summary>

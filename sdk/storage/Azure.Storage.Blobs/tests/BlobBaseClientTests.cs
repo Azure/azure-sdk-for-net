@@ -1553,14 +1553,14 @@ namespace Azure.Storage.Blobs.Test
                 uploadResponse = await blob.UploadAsync(stream);
             }
 
-            CheckModifiedSinceAndWait(uploadResponse);
+            DateTimeOffset modifiedSince = CheckModifiedSinceAndWait(uploadResponse);
 
             // Add conditions to cause a failure and ensure we don't explode
             Response result = await blob.DownloadToAsync(
                 Stream.Null,
                 new BlobRequestConditions
                 {
-                    IfModifiedSince = Recording.UtcNow
+                    IfModifiedSince = modifiedSince
                 });
             Assert.AreEqual(304, result.Status);
         }
@@ -1580,14 +1580,14 @@ namespace Azure.Storage.Blobs.Test
                 uploadResponse = await blob.UploadAsync(stream);
             }
 
-            CheckModifiedSinceAndWait(uploadResponse);
+            DateTimeOffset modifiedSince = CheckModifiedSinceAndWait(uploadResponse);
 
             // Add conditions to cause a failure and ensure we don't explode
             Response<BlobDownloadResult> result = await blob.DownloadContentAsync(new BlobDownloadOptions
             {
                 Conditions = new BlobRequestConditions
                 {
-                    IfModifiedSince = Recording.UtcNow
+                    IfModifiedSince = modifiedSince
                 }
             });
             Assert.AreEqual(304, result.GetRawResponse().Status);
@@ -1608,14 +1608,14 @@ namespace Azure.Storage.Blobs.Test
                 uploadResponse = await blob.UploadAsync(stream);
             }
 
-            CheckModifiedSinceAndWait(uploadResponse);
+            DateTimeOffset modifiedSince = CheckModifiedSinceAndWait(uploadResponse);
 
             // Add conditions to cause a failure and ensure we don't explode
             Response<BlobDownloadStreamingResult> result = await blob.DownloadStreamingAsync(new BlobDownloadOptions
             {
                 Conditions = new BlobRequestConditions
                 {
-                    IfModifiedSince = Recording.UtcNow
+                    IfModifiedSince = modifiedSince
                 }
             });
             Assert.AreEqual(304, result.GetRawResponse().Status);
@@ -1636,13 +1636,13 @@ namespace Azure.Storage.Blobs.Test
                 uploadResponse = await blob.UploadAsync(stream);
             }
 
-            CheckModifiedSinceAndWait(uploadResponse);
+            DateTimeOffset modifiedSince = CheckModifiedSinceAndWait(uploadResponse);
 
             // Add conditions to cause a failure and ensure we don't explode
             Response<BlobDownloadInfo> result = await blob.DownloadAsync(
                 conditions: new BlobRequestConditions
                 {
-                    IfModifiedSince = Recording.UtcNow
+                    IfModifiedSince = modifiedSince
                 });
             Assert.AreEqual(304, result.GetRawResponse().Status);
         }

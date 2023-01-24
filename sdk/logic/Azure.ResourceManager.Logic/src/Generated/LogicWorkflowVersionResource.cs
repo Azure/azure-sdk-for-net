@@ -93,8 +93,16 @@ namespace Azure.ResourceManager.Logic
 
         /// <summary>
         /// Gets a workflow version.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Logic/workflows/{workflowName}/versions/{versionId}
-        /// Operation Id: WorkflowVersions_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Logic/workflows/{workflowName}/versions/{versionId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>WorkflowVersions_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<LogicWorkflowVersionResource>> GetAsync(CancellationToken cancellationToken = default)
@@ -117,8 +125,16 @@ namespace Azure.ResourceManager.Logic
 
         /// <summary>
         /// Gets a workflow version.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Logic/workflows/{workflowName}/versions/{versionId}
-        /// Operation Id: WorkflowVersions_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Logic/workflows/{workflowName}/versions/{versionId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>WorkflowVersions_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<LogicWorkflowVersionResource> Get(CancellationToken cancellationToken = default)
@@ -141,8 +157,16 @@ namespace Azure.ResourceManager.Logic
 
         /// <summary>
         /// Get the callback url for a trigger of a workflow version.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Logic/workflows/{workflowName}/versions/{versionId}/triggers/{triggerName}/listCallbackUrl
-        /// Operation Id: WorkflowVersionTriggers_ListCallbackUrl
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Logic/workflows/{workflowName}/versions/{versionId}/triggers/{triggerName}/listCallbackUrl</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>WorkflowVersionTriggers_ListCallbackUrl</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="triggerName"> The workflow trigger name. </param>
         /// <param name="info"> The callback URL parameters. </param>
@@ -169,8 +193,16 @@ namespace Azure.ResourceManager.Logic
 
         /// <summary>
         /// Get the callback url for a trigger of a workflow version.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Logic/workflows/{workflowName}/versions/{versionId}/triggers/{triggerName}/listCallbackUrl
-        /// Operation Id: WorkflowVersionTriggers_ListCallbackUrl
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Logic/workflows/{workflowName}/versions/{versionId}/triggers/{triggerName}/listCallbackUrl</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>WorkflowVersionTriggers_ListCallbackUrl</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="triggerName"> The workflow trigger name. </param>
         /// <param name="info"> The callback URL parameters. </param>

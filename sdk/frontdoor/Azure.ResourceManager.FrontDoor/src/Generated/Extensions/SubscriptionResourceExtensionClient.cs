@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -58,92 +57,60 @@ namespace Azure.ResourceManager.FrontDoor
 
         /// <summary>
         /// Lists all available managed rule sets.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/FrontDoorWebApplicationFirewallManagedRuleSets
-        /// Operation Id: ManagedRuleSets_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/FrontDoorWebApplicationFirewallManagedRuleSets</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ManagedRuleSets_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ManagedRuleSetDefinition" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ManagedRuleSetDefinition> GetManagedRuleSetsAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<ManagedRuleSetDefinition>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = ManagedRuleSetsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetManagedRuleSets");
-                scope.Start();
-                try
-                {
-                    var response = await ManagedRuleSetsRestClient.ListAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<ManagedRuleSetDefinition>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = ManagedRuleSetsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetManagedRuleSets");
-                scope.Start();
-                try
-                {
-                    var response = await ManagedRuleSetsRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => ManagedRuleSetsRestClient.CreateListRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ManagedRuleSetsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, ManagedRuleSetDefinition.DeserializeManagedRuleSetDefinition, ManagedRuleSetsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetManagedRuleSets", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Lists all available managed rule sets.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/FrontDoorWebApplicationFirewallManagedRuleSets
-        /// Operation Id: ManagedRuleSets_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/FrontDoorWebApplicationFirewallManagedRuleSets</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ManagedRuleSets_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ManagedRuleSetDefinition" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ManagedRuleSetDefinition> GetManagedRuleSets(CancellationToken cancellationToken = default)
         {
-            Page<ManagedRuleSetDefinition> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = ManagedRuleSetsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetManagedRuleSets");
-                scope.Start();
-                try
-                {
-                    var response = ManagedRuleSetsRestClient.List(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<ManagedRuleSetDefinition> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = ManagedRuleSetsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetManagedRuleSets");
-                scope.Start();
-                try
-                {
-                    var response = ManagedRuleSetsRestClient.ListNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => ManagedRuleSetsRestClient.CreateListRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ManagedRuleSetsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, ManagedRuleSetDefinition.DeserializeManagedRuleSetDefinition, ManagedRuleSetsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetManagedRuleSets", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Check the availability of a Front Door subdomain.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/checkFrontDoorNameAvailability
-        /// Operation Id: FrontDoorNameAvailabilityWithSubscription_Check
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/checkFrontDoorNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>FrontDoorNameAvailabilityWithSubscription_Check</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="content"> Input to check. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -165,8 +132,16 @@ namespace Azure.ResourceManager.FrontDoor
 
         /// <summary>
         /// Check the availability of a Front Door subdomain.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/checkFrontDoorNameAvailability
-        /// Operation Id: FrontDoorNameAvailabilityWithSubscription_Check
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/checkFrontDoorNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>FrontDoorNameAvailabilityWithSubscription_Check</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="content"> Input to check. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -188,170 +163,90 @@ namespace Azure.ResourceManager.FrontDoor
 
         /// <summary>
         /// Lists all of the Front Doors within an Azure subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/frontDoors
-        /// Operation Id: FrontDoors_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/frontDoors</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>FrontDoors_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="FrontDoorResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<FrontDoorResource> GetFrontDoorsAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<FrontDoorResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = FrontDoorClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetFrontDoors");
-                scope.Start();
-                try
-                {
-                    var response = await FrontDoorRestClient.ListAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new FrontDoorResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<FrontDoorResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = FrontDoorClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetFrontDoors");
-                scope.Start();
-                try
-                {
-                    var response = await FrontDoorRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new FrontDoorResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => FrontDoorRestClient.CreateListRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => FrontDoorRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new FrontDoorResource(Client, FrontDoorData.DeserializeFrontDoorData(e)), FrontDoorClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetFrontDoors", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Lists all of the Front Doors within an Azure subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/frontDoors
-        /// Operation Id: FrontDoors_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/frontDoors</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>FrontDoors_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="FrontDoorResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<FrontDoorResource> GetFrontDoors(CancellationToken cancellationToken = default)
         {
-            Page<FrontDoorResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = FrontDoorClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetFrontDoors");
-                scope.Start();
-                try
-                {
-                    var response = FrontDoorRestClient.List(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new FrontDoorResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<FrontDoorResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = FrontDoorClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetFrontDoors");
-                scope.Start();
-                try
-                {
-                    var response = FrontDoorRestClient.ListNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new FrontDoorResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => FrontDoorRestClient.CreateListRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => FrontDoorRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new FrontDoorResource(Client, FrontDoorData.DeserializeFrontDoorData(e)), FrontDoorClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetFrontDoors", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Gets a list of Network Experiment Profiles under a subscription
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/NetworkExperimentProfiles
-        /// Operation Id: NetworkExperimentProfiles_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/NetworkExperimentProfiles</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NetworkExperimentProfiles_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="FrontDoorNetworkExperimentProfileResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<FrontDoorNetworkExperimentProfileResource> GetFrontDoorNetworkExperimentProfilesAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<FrontDoorNetworkExperimentProfileResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = FrontDoorNetworkExperimentProfileNetworkExperimentProfilesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetFrontDoorNetworkExperimentProfiles");
-                scope.Start();
-                try
-                {
-                    var response = await FrontDoorNetworkExperimentProfileNetworkExperimentProfilesRestClient.ListAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new FrontDoorNetworkExperimentProfileResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<FrontDoorNetworkExperimentProfileResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = FrontDoorNetworkExperimentProfileNetworkExperimentProfilesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetFrontDoorNetworkExperimentProfiles");
-                scope.Start();
-                try
-                {
-                    var response = await FrontDoorNetworkExperimentProfileNetworkExperimentProfilesRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new FrontDoorNetworkExperimentProfileResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => FrontDoorNetworkExperimentProfileNetworkExperimentProfilesRestClient.CreateListRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => FrontDoorNetworkExperimentProfileNetworkExperimentProfilesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new FrontDoorNetworkExperimentProfileResource(Client, FrontDoorNetworkExperimentProfileData.DeserializeFrontDoorNetworkExperimentProfileData(e)), FrontDoorNetworkExperimentProfileNetworkExperimentProfilesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetFrontDoorNetworkExperimentProfiles", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Gets a list of Network Experiment Profiles under a subscription
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/NetworkExperimentProfiles
-        /// Operation Id: NetworkExperimentProfiles_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/NetworkExperimentProfiles</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NetworkExperimentProfiles_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="FrontDoorNetworkExperimentProfileResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<FrontDoorNetworkExperimentProfileResource> GetFrontDoorNetworkExperimentProfiles(CancellationToken cancellationToken = default)
         {
-            Page<FrontDoorNetworkExperimentProfileResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = FrontDoorNetworkExperimentProfileNetworkExperimentProfilesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetFrontDoorNetworkExperimentProfiles");
-                scope.Start();
-                try
-                {
-                    var response = FrontDoorNetworkExperimentProfileNetworkExperimentProfilesRestClient.List(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new FrontDoorNetworkExperimentProfileResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<FrontDoorNetworkExperimentProfileResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = FrontDoorNetworkExperimentProfileNetworkExperimentProfilesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetFrontDoorNetworkExperimentProfiles");
-                scope.Start();
-                try
-                {
-                    var response = FrontDoorNetworkExperimentProfileNetworkExperimentProfilesRestClient.ListNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new FrontDoorNetworkExperimentProfileResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => FrontDoorNetworkExperimentProfileNetworkExperimentProfilesRestClient.CreateListRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => FrontDoorNetworkExperimentProfileNetworkExperimentProfilesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new FrontDoorNetworkExperimentProfileResource(Client, FrontDoorNetworkExperimentProfileData.DeserializeFrontDoorNetworkExperimentProfileData(e)), FrontDoorNetworkExperimentProfileNetworkExperimentProfilesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetFrontDoorNetworkExperimentProfiles", "value", "nextLink", cancellationToken);
         }
     }
 }

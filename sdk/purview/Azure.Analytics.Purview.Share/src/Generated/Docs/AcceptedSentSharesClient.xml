@@ -203,9 +203,9 @@ var data = new {
     shareKind = "InPlace",
 };
 
-var operation = await client.ReinstateAsync(WaitUntil.Started, "<sentShareName>", "<acceptedSentShareName>", RequestContent.Create(data));
+var operation = await client.ReinstateAsync(WaitUntil.Completed, "<sentShareName>", "<acceptedSentShareName>", RequestContent.Create(data));
 
-BinaryData data = await operation.WaitForCompletionAsync();
+BinaryData data = operation.Value;
 JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
 Console.WriteLine(result.GetProperty("shareKind").ToString());
 Console.WriteLine(result.ToString());
@@ -222,9 +222,9 @@ var data = new {
     shareKind = "InPlace",
 };
 
-var operation = await client.ReinstateAsync(WaitUntil.Started, "<sentShareName>", "<acceptedSentShareName>", RequestContent.Create(data), "<repeatabilityRequestId>");
+var operation = await client.ReinstateAsync(WaitUntil.Completed, "<sentShareName>", "<acceptedSentShareName>", RequestContent.Create(data), "<repeatabilityRequestId>");
 
-BinaryData data = await operation.WaitForCompletionAsync();
+BinaryData data = operation.Value;
 JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
 Console.WriteLine(result.GetProperty("shareKind").ToString());
 Console.WriteLine(result.GetProperty("id").ToString());
@@ -301,9 +301,9 @@ var data = new {
     shareKind = "InPlace",
 };
 
-var operation = client.Reinstate(WaitUntil.Started, "<sentShareName>", "<acceptedSentShareName>", RequestContent.Create(data));
+var operation = client.Reinstate(WaitUntil.Completed, "<sentShareName>", "<acceptedSentShareName>", RequestContent.Create(data));
 
-BinaryData data = operation.WaitForCompletion();
+BinaryData data = operation.Value;
 JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
 Console.WriteLine(result.GetProperty("shareKind").ToString());
 Console.WriteLine(result.ToString());
@@ -320,9 +320,9 @@ var data = new {
     shareKind = "InPlace",
 };
 
-var operation = client.Reinstate(WaitUntil.Started, "<sentShareName>", "<acceptedSentShareName>", RequestContent.Create(data), "<repeatabilityRequestId>");
+var operation = client.Reinstate(WaitUntil.Completed, "<sentShareName>", "<acceptedSentShareName>", RequestContent.Create(data), "<repeatabilityRequestId>");
 
-BinaryData data = operation.WaitForCompletion();
+BinaryData data = operation.Value;
 JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
 Console.WriteLine(result.GetProperty("shareKind").ToString());
 Console.WriteLine(result.GetProperty("id").ToString());
@@ -394,9 +394,9 @@ This sample shows how to call RevokeAsync with required parameters and parse the
 var credential = new DefaultAzureCredential();
 var client = new AcceptedSentSharesClient("<https://my-service.azure.com>", credential);
 
-var operation = await client.RevokeAsync(WaitUntil.Started, "<sentShareName>", "<acceptedSentShareName>");
+var operation = await client.RevokeAsync(WaitUntil.Completed, "<sentShareName>", "<acceptedSentShareName>");
 
-BinaryData data = await operation.WaitForCompletionAsync();
+BinaryData data = operation.Value;
 JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
 Console.WriteLine(result.GetProperty("shareKind").ToString());
 Console.WriteLine(result.ToString());
@@ -406,9 +406,9 @@ This sample shows how to call RevokeAsync with all parameters, and how to parse 
 var credential = new DefaultAzureCredential();
 var client = new AcceptedSentSharesClient("<https://my-service.azure.com>", credential);
 
-var operation = await client.RevokeAsync(WaitUntil.Started, "<sentShareName>", "<acceptedSentShareName>", "<repeatabilityRequestId>");
+var operation = await client.RevokeAsync(WaitUntil.Completed, "<sentShareName>", "<acceptedSentShareName>", "<repeatabilityRequestId>");
 
-BinaryData data = await operation.WaitForCompletionAsync();
+BinaryData data = operation.Value;
 JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
 Console.WriteLine(result.GetProperty("shareKind").ToString());
 Console.WriteLine(result.GetProperty("id").ToString());
@@ -455,9 +455,9 @@ This sample shows how to call Revoke with required parameters and parse the resu
 var credential = new DefaultAzureCredential();
 var client = new AcceptedSentSharesClient("<https://my-service.azure.com>", credential);
 
-var operation = client.Revoke(WaitUntil.Started, "<sentShareName>", "<acceptedSentShareName>");
+var operation = client.Revoke(WaitUntil.Completed, "<sentShareName>", "<acceptedSentShareName>");
 
-BinaryData data = operation.WaitForCompletion();
+BinaryData data = operation.Value;
 JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
 Console.WriteLine(result.GetProperty("shareKind").ToString());
 Console.WriteLine(result.ToString());
@@ -467,9 +467,9 @@ This sample shows how to call Revoke with all parameters, and how to parse the r
 var credential = new DefaultAzureCredential();
 var client = new AcceptedSentSharesClient("<https://my-service.azure.com>", credential);
 
-var operation = client.Revoke(WaitUntil.Started, "<sentShareName>", "<acceptedSentShareName>", "<repeatabilityRequestId>");
+var operation = client.Revoke(WaitUntil.Completed, "<sentShareName>", "<acceptedSentShareName>", "<repeatabilityRequestId>");
 
-BinaryData data = operation.WaitForCompletion();
+BinaryData data = operation.Value;
 JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
 Console.WriteLine(result.GetProperty("shareKind").ToString());
 Console.WriteLine(result.GetProperty("id").ToString());
@@ -521,9 +521,9 @@ var data = new {
     shareKind = "InPlace",
 };
 
-var operation = await client.UpdateExpirationAsync(WaitUntil.Started, "<sentShareName>", "<acceptedSentShareName>", RequestContent.Create(data));
+var operation = await client.UpdateExpirationAsync(WaitUntil.Completed, "<sentShareName>", "<acceptedSentShareName>", RequestContent.Create(data));
 
-BinaryData data = await operation.WaitForCompletionAsync();
+BinaryData data = operation.Value;
 JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
 Console.WriteLine(result.GetProperty("shareKind").ToString());
 Console.WriteLine(result.ToString());
@@ -540,9 +540,9 @@ var data = new {
     shareKind = "InPlace",
 };
 
-var operation = await client.UpdateExpirationAsync(WaitUntil.Started, "<sentShareName>", "<acceptedSentShareName>", RequestContent.Create(data), "<repeatabilityRequestId>");
+var operation = await client.UpdateExpirationAsync(WaitUntil.Completed, "<sentShareName>", "<acceptedSentShareName>", RequestContent.Create(data), "<repeatabilityRequestId>");
 
-BinaryData data = await operation.WaitForCompletionAsync();
+BinaryData data = operation.Value;
 JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
 Console.WriteLine(result.GetProperty("shareKind").ToString());
 Console.WriteLine(result.GetProperty("id").ToString());
@@ -619,9 +619,9 @@ var data = new {
     shareKind = "InPlace",
 };
 
-var operation = client.UpdateExpiration(WaitUntil.Started, "<sentShareName>", "<acceptedSentShareName>", RequestContent.Create(data));
+var operation = client.UpdateExpiration(WaitUntil.Completed, "<sentShareName>", "<acceptedSentShareName>", RequestContent.Create(data));
 
-BinaryData data = operation.WaitForCompletion();
+BinaryData data = operation.Value;
 JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
 Console.WriteLine(result.GetProperty("shareKind").ToString());
 Console.WriteLine(result.ToString());
@@ -638,9 +638,9 @@ var data = new {
     shareKind = "InPlace",
 };
 
-var operation = client.UpdateExpiration(WaitUntil.Started, "<sentShareName>", "<acceptedSentShareName>", RequestContent.Create(data), "<repeatabilityRequestId>");
+var operation = client.UpdateExpiration(WaitUntil.Completed, "<sentShareName>", "<acceptedSentShareName>", RequestContent.Create(data), "<repeatabilityRequestId>");
 
-BinaryData data = operation.WaitForCompletion();
+BinaryData data = operation.Value;
 JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
 Console.WriteLine(result.GetProperty("shareKind").ToString());
 Console.WriteLine(result.GetProperty("id").ToString());

@@ -89,8 +89,16 @@ namespace Azure.ResourceManager.PolicyInsights
 
         /// <summary>
         /// Gets an existing remediation at resource scope.
-        /// Request Path: /{resourceId}/providers/Microsoft.PolicyInsights/remediations/{remediationName}
-        /// Operation Id: Remediations_GetAtResource
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{resourceId}/providers/Microsoft.PolicyInsights/remediations/{remediationName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Remediations_GetAtResource</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<PolicyRemediationResource>> GetAsync(CancellationToken cancellationToken = default)
@@ -113,8 +121,16 @@ namespace Azure.ResourceManager.PolicyInsights
 
         /// <summary>
         /// Gets an existing remediation at resource scope.
-        /// Request Path: /{resourceId}/providers/Microsoft.PolicyInsights/remediations/{remediationName}
-        /// Operation Id: Remediations_GetAtResource
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{resourceId}/providers/Microsoft.PolicyInsights/remediations/{remediationName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Remediations_GetAtResource</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<PolicyRemediationResource> Get(CancellationToken cancellationToken = default)
@@ -137,8 +153,16 @@ namespace Azure.ResourceManager.PolicyInsights
 
         /// <summary>
         /// Deletes an existing remediation at individual resource scope.
-        /// Request Path: /{resourceId}/providers/Microsoft.PolicyInsights/remediations/{remediationName}
-        /// Operation Id: Remediations_DeleteAtResource
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{resourceId}/providers/Microsoft.PolicyInsights/remediations/{remediationName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Remediations_DeleteAtResource</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -163,8 +187,16 @@ namespace Azure.ResourceManager.PolicyInsights
 
         /// <summary>
         /// Deletes an existing remediation at individual resource scope.
-        /// Request Path: /{resourceId}/providers/Microsoft.PolicyInsights/remediations/{remediationName}
-        /// Operation Id: Remediations_DeleteAtResource
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{resourceId}/providers/Microsoft.PolicyInsights/remediations/{remediationName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Remediations_DeleteAtResource</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -189,8 +221,16 @@ namespace Azure.ResourceManager.PolicyInsights
 
         /// <summary>
         /// Creates or updates a remediation at resource scope.
-        /// Request Path: /{resourceId}/providers/Microsoft.PolicyInsights/remediations/{remediationName}
-        /// Operation Id: Remediations_CreateOrUpdateAtResource
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{resourceId}/providers/Microsoft.PolicyInsights/remediations/{remediationName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Remediations_CreateOrUpdateAtResource</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="data"> The remediation parameters. </param>
@@ -219,8 +259,16 @@ namespace Azure.ResourceManager.PolicyInsights
 
         /// <summary>
         /// Creates or updates a remediation at resource scope.
-        /// Request Path: /{resourceId}/providers/Microsoft.PolicyInsights/remediations/{remediationName}
-        /// Operation Id: Remediations_CreateOrUpdateAtResource
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{resourceId}/providers/Microsoft.PolicyInsights/remediations/{remediationName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Remediations_CreateOrUpdateAtResource</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="data"> The remediation parameters. </param>
@@ -249,94 +297,62 @@ namespace Azure.ResourceManager.PolicyInsights
 
         /// <summary>
         /// Gets all deployments for a remediation at resource scope.
-        /// Request Path: /{resourceId}/providers/Microsoft.PolicyInsights/remediations/{remediationName}/listDeployments
-        /// Operation Id: Remediations_ListDeploymentsAtResource
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{resourceId}/providers/Microsoft.PolicyInsights/remediations/{remediationName}/listDeployments</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Remediations_ListDeploymentsAtResource</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="policyQuerySettings"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="RemediationDeployment" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<RemediationDeployment> GetDeploymentsAsync(PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<RemediationDeployment>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _policyRemediationRemediationsClientDiagnostics.CreateScope("PolicyRemediationResource.GetDeployments");
-                scope.Start();
-                try
-                {
-                    var response = await _policyRemediationRemediationsRestClient.ListDeploymentsAtResourceAsync(Id.Parent, Id.Name, policyQuerySettings, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<RemediationDeployment>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _policyRemediationRemediationsClientDiagnostics.CreateScope("PolicyRemediationResource.GetDeployments");
-                scope.Start();
-                try
-                {
-                    var response = await _policyRemediationRemediationsRestClient.ListDeploymentsAtResourceNextPageAsync(nextLink, Id.Parent, Id.Name, policyQuerySettings, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _policyRemediationRemediationsRestClient.CreateListDeploymentsAtResourceRequest(Id.Parent, Id.Name, policyQuerySettings);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _policyRemediationRemediationsRestClient.CreateListDeploymentsAtResourceNextPageRequest(nextLink, Id.Parent, Id.Name, policyQuerySettings);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, RemediationDeployment.DeserializeRemediationDeployment, _policyRemediationRemediationsClientDiagnostics, Pipeline, "PolicyRemediationResource.GetDeployments", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Gets all deployments for a remediation at resource scope.
-        /// Request Path: /{resourceId}/providers/Microsoft.PolicyInsights/remediations/{remediationName}/listDeployments
-        /// Operation Id: Remediations_ListDeploymentsAtResource
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{resourceId}/providers/Microsoft.PolicyInsights/remediations/{remediationName}/listDeployments</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Remediations_ListDeploymentsAtResource</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="policyQuerySettings"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="RemediationDeployment" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<RemediationDeployment> GetDeployments(PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
         {
-            Page<RemediationDeployment> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _policyRemediationRemediationsClientDiagnostics.CreateScope("PolicyRemediationResource.GetDeployments");
-                scope.Start();
-                try
-                {
-                    var response = _policyRemediationRemediationsRestClient.ListDeploymentsAtResource(Id.Parent, Id.Name, policyQuerySettings, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<RemediationDeployment> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _policyRemediationRemediationsClientDiagnostics.CreateScope("PolicyRemediationResource.GetDeployments");
-                scope.Start();
-                try
-                {
-                    var response = _policyRemediationRemediationsRestClient.ListDeploymentsAtResourceNextPage(nextLink, Id.Parent, Id.Name, policyQuerySettings, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _policyRemediationRemediationsRestClient.CreateListDeploymentsAtResourceRequest(Id.Parent, Id.Name, policyQuerySettings);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _policyRemediationRemediationsRestClient.CreateListDeploymentsAtResourceNextPageRequest(nextLink, Id.Parent, Id.Name, policyQuerySettings);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, RemediationDeployment.DeserializeRemediationDeployment, _policyRemediationRemediationsClientDiagnostics, Pipeline, "PolicyRemediationResource.GetDeployments", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Cancel a remediation at resource scope.
-        /// Request Path: /{resourceId}/providers/Microsoft.PolicyInsights/remediations/{remediationName}/cancel
-        /// Operation Id: Remediations_CancelAtResource
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{resourceId}/providers/Microsoft.PolicyInsights/remediations/{remediationName}/cancel</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Remediations_CancelAtResource</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<PolicyRemediationResource>> CancelAsync(CancellationToken cancellationToken = default)
@@ -357,8 +373,16 @@ namespace Azure.ResourceManager.PolicyInsights
 
         /// <summary>
         /// Cancel a remediation at resource scope.
-        /// Request Path: /{resourceId}/providers/Microsoft.PolicyInsights/remediations/{remediationName}/cancel
-        /// Operation Id: Remediations_CancelAtResource
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{resourceId}/providers/Microsoft.PolicyInsights/remediations/{remediationName}/cancel</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Remediations_CancelAtResource</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<PolicyRemediationResource> Cancel(CancellationToken cancellationToken = default)

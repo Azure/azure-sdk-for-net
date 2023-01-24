@@ -10,17 +10,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary>
-    /// Account key datastore credentials configuration.
-    /// Serialized Name: AccountKeyDatastoreCredentials
-    /// </summary>
+    /// <summary> Account key datastore credentials configuration. </summary>
     public partial class MachineLearningAccountKeyDatastoreCredentials : MachineLearningDatastoreCredentials
     {
         /// <summary> Initializes a new instance of MachineLearningAccountKeyDatastoreCredentials. </summary>
-        /// <param name="secrets">
-        /// [Required] Storage account secrets.
-        /// Serialized Name: AccountKeyDatastoreCredentials.secrets
-        /// </param>
+        /// <param name="secrets"> [Required] Storage account secrets. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="secrets"/> is null. </exception>
         public MachineLearningAccountKeyDatastoreCredentials(MachineLearningAccountKeyDatastoreSecrets secrets)
         {
@@ -31,24 +25,15 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Initializes a new instance of MachineLearningAccountKeyDatastoreCredentials. </summary>
-        /// <param name="credentialsType">
-        /// [Required] Credential type used to authentication with storage.
-        /// Serialized Name: DatastoreCredentials.credentialsType
-        /// </param>
-        /// <param name="secrets">
-        /// [Required] Storage account secrets.
-        /// Serialized Name: AccountKeyDatastoreCredentials.secrets
-        /// </param>
+        /// <param name="credentialsType"> [Required] Credential type used to authentication with storage. </param>
+        /// <param name="secrets"> [Required] Storage account secrets. </param>
         internal MachineLearningAccountKeyDatastoreCredentials(CredentialsType credentialsType, MachineLearningAccountKeyDatastoreSecrets secrets) : base(credentialsType)
         {
             Secrets = secrets;
             CredentialsType = credentialsType;
         }
 
-        /// <summary>
-        /// [Required] Storage account secrets.
-        /// Serialized Name: AccountKeyDatastoreCredentials.secrets
-        /// </summary>
+        /// <summary> [Required] Storage account secrets. </summary>
         public MachineLearningAccountKeyDatastoreSecrets Secrets { get; set; }
     }
 }

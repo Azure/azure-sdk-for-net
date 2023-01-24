@@ -54,8 +54,16 @@ namespace Azure.ResourceManager.TrafficManager
 
         /// <summary>
         /// Gets latest heatmap for Traffic Manager profile.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/trafficmanagerprofiles/{profileName}/heatMaps/{heatMapType}
-        /// Operation Id: HeatMap_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/trafficmanagerprofiles/{profileName}/heatMaps/{heatMapType}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>HeatMap_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="heatMapType"> The type of HeatMap for the Traffic Manager profile. </param>
         /// <param name="topLeft"> The top left latitude,longitude pair of the rectangular viewport to query for. </param>
@@ -81,8 +89,16 @@ namespace Azure.ResourceManager.TrafficManager
 
         /// <summary>
         /// Gets latest heatmap for Traffic Manager profile.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/trafficmanagerprofiles/{profileName}/heatMaps/{heatMapType}
-        /// Operation Id: HeatMap_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/trafficmanagerprofiles/{profileName}/heatMaps/{heatMapType}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>HeatMap_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="heatMapType"> The type of HeatMap for the Traffic Manager profile. </param>
         /// <param name="topLeft"> The top left latitude,longitude pair of the rectangular viewport to query for. </param>
@@ -108,8 +124,16 @@ namespace Azure.ResourceManager.TrafficManager
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/trafficmanagerprofiles/{profileName}/heatMaps/{heatMapType}
-        /// Operation Id: HeatMap_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/trafficmanagerprofiles/{profileName}/heatMaps/{heatMapType}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>HeatMap_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="heatMapType"> The type of HeatMap for the Traffic Manager profile. </param>
         /// <param name="topLeft"> The top left latitude,longitude pair of the rectangular viewport to query for. </param>
@@ -133,8 +157,16 @@ namespace Azure.ResourceManager.TrafficManager
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/trafficmanagerprofiles/{profileName}/heatMaps/{heatMapType}
-        /// Operation Id: HeatMap_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/trafficmanagerprofiles/{profileName}/heatMaps/{heatMapType}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>HeatMap_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="heatMapType"> The type of HeatMap for the Traffic Manager profile. </param>
         /// <param name="topLeft"> The top left latitude,longitude pair of the rectangular viewport to query for. </param>

@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -55,8 +54,16 @@ namespace Azure.ResourceManager.DnsResolver
 
         /// <summary>
         /// Creates or updates an outbound endpoint for a DNS resolver.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsResolvers/{dnsResolverName}/outboundEndpoints/{outboundEndpointName}
-        /// Operation Id: OutboundEndpoints_CreateOrUpdate
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsResolvers/{dnsResolverName}/outboundEndpoints/{outboundEndpointName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>OutboundEndpoints_CreateOrUpdate</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="outboundEndpointName"> The name of the outbound endpoint for the DNS resolver. </param>
@@ -90,8 +97,16 @@ namespace Azure.ResourceManager.DnsResolver
 
         /// <summary>
         /// Creates or updates an outbound endpoint for a DNS resolver.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsResolvers/{dnsResolverName}/outboundEndpoints/{outboundEndpointName}
-        /// Operation Id: OutboundEndpoints_CreateOrUpdate
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsResolvers/{dnsResolverName}/outboundEndpoints/{outboundEndpointName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>OutboundEndpoints_CreateOrUpdate</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="outboundEndpointName"> The name of the outbound endpoint for the DNS resolver. </param>
@@ -125,8 +140,16 @@ namespace Azure.ResourceManager.DnsResolver
 
         /// <summary>
         /// Gets properties of an outbound endpoint for a DNS resolver.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsResolvers/{dnsResolverName}/outboundEndpoints/{outboundEndpointName}
-        /// Operation Id: OutboundEndpoints_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsResolvers/{dnsResolverName}/outboundEndpoints/{outboundEndpointName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>OutboundEndpoints_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="outboundEndpointName"> The name of the outbound endpoint for the DNS resolver. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -154,8 +177,16 @@ namespace Azure.ResourceManager.DnsResolver
 
         /// <summary>
         /// Gets properties of an outbound endpoint for a DNS resolver.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsResolvers/{dnsResolverName}/outboundEndpoints/{outboundEndpointName}
-        /// Operation Id: OutboundEndpoints_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsResolvers/{dnsResolverName}/outboundEndpoints/{outboundEndpointName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>OutboundEndpoints_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="outboundEndpointName"> The name of the outbound endpoint for the DNS resolver. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -183,94 +214,62 @@ namespace Azure.ResourceManager.DnsResolver
 
         /// <summary>
         /// Lists outbound endpoints for a DNS resolver.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsResolvers/{dnsResolverName}/outboundEndpoints
-        /// Operation Id: OutboundEndpoints_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsResolvers/{dnsResolverName}/outboundEndpoints</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>OutboundEndpoints_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="top"> The maximum number of results to return. If not specified, returns up to 100 results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="DnsResolverOutboundEndpointResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DnsResolverOutboundEndpointResource> GetAllAsync(int? top = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<DnsResolverOutboundEndpointResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _dnsResolverOutboundEndpointOutboundEndpointsClientDiagnostics.CreateScope("DnsResolverOutboundEndpointCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _dnsResolverOutboundEndpointOutboundEndpointsRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new DnsResolverOutboundEndpointResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<DnsResolverOutboundEndpointResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _dnsResolverOutboundEndpointOutboundEndpointsClientDiagnostics.CreateScope("DnsResolverOutboundEndpointCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _dnsResolverOutboundEndpointOutboundEndpointsRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new DnsResolverOutboundEndpointResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _dnsResolverOutboundEndpointOutboundEndpointsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _dnsResolverOutboundEndpointOutboundEndpointsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DnsResolverOutboundEndpointResource(Client, DnsResolverOutboundEndpointData.DeserializeDnsResolverOutboundEndpointData(e)), _dnsResolverOutboundEndpointOutboundEndpointsClientDiagnostics, Pipeline, "DnsResolverOutboundEndpointCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Lists outbound endpoints for a DNS resolver.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsResolvers/{dnsResolverName}/outboundEndpoints
-        /// Operation Id: OutboundEndpoints_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsResolvers/{dnsResolverName}/outboundEndpoints</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>OutboundEndpoints_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="top"> The maximum number of results to return. If not specified, returns up to 100 results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="DnsResolverOutboundEndpointResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DnsResolverOutboundEndpointResource> GetAll(int? top = null, CancellationToken cancellationToken = default)
         {
-            Page<DnsResolverOutboundEndpointResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _dnsResolverOutboundEndpointOutboundEndpointsClientDiagnostics.CreateScope("DnsResolverOutboundEndpointCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _dnsResolverOutboundEndpointOutboundEndpointsRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new DnsResolverOutboundEndpointResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<DnsResolverOutboundEndpointResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _dnsResolverOutboundEndpointOutboundEndpointsClientDiagnostics.CreateScope("DnsResolverOutboundEndpointCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _dnsResolverOutboundEndpointOutboundEndpointsRestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new DnsResolverOutboundEndpointResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _dnsResolverOutboundEndpointOutboundEndpointsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _dnsResolverOutboundEndpointOutboundEndpointsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DnsResolverOutboundEndpointResource(Client, DnsResolverOutboundEndpointData.DeserializeDnsResolverOutboundEndpointData(e)), _dnsResolverOutboundEndpointOutboundEndpointsClientDiagnostics, Pipeline, "DnsResolverOutboundEndpointCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsResolvers/{dnsResolverName}/outboundEndpoints/{outboundEndpointName}
-        /// Operation Id: OutboundEndpoints_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsResolvers/{dnsResolverName}/outboundEndpoints/{outboundEndpointName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>OutboundEndpoints_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="outboundEndpointName"> The name of the outbound endpoint for the DNS resolver. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -296,8 +295,16 @@ namespace Azure.ResourceManager.DnsResolver
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsResolvers/{dnsResolverName}/outboundEndpoints/{outboundEndpointName}
-        /// Operation Id: OutboundEndpoints_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsResolvers/{dnsResolverName}/outboundEndpoints/{outboundEndpointName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>OutboundEndpoints_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="outboundEndpointName"> The name of the outbound endpoint for the DNS resolver. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

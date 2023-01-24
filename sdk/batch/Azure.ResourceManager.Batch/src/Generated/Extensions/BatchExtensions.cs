@@ -30,8 +30,16 @@ namespace Azure.ResourceManager.Batch
 
         /// <summary>
         /// Gets information about the Batch accounts associated with the subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Batch/batchAccounts
-        /// Operation Id: BatchAccount_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Batch/batchAccounts</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>BatchAccount_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -43,8 +51,16 @@ namespace Azure.ResourceManager.Batch
 
         /// <summary>
         /// Gets information about the Batch accounts associated with the subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Batch/batchAccounts
-        /// Operation Id: BatchAccount_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Batch/batchAccounts</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>BatchAccount_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -56,8 +72,16 @@ namespace Azure.ResourceManager.Batch
 
         /// <summary>
         /// Gets the Batch service quotas for the specified subscription at the given location.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Batch/locations/{locationName}/quotas
-        /// Operation Id: Location_GetQuotas
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Batch/locations/{locationName}/quotas</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Location_GetQuotas</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="locationName"> The region for which to retrieve Batch service quotas. </param>
@@ -69,8 +93,16 @@ namespace Azure.ResourceManager.Batch
 
         /// <summary>
         /// Gets the Batch service quotas for the specified subscription at the given location.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Batch/locations/{locationName}/quotas
-        /// Operation Id: Location_GetQuotas
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Batch/locations/{locationName}/quotas</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Location_GetQuotas</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="locationName"> The region for which to retrieve Batch service quotas. </param>
@@ -82,8 +114,16 @@ namespace Azure.ResourceManager.Batch
 
         /// <summary>
         /// Gets the list of Batch supported Virtual Machine VM sizes available at the given location.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Batch/locations/{locationName}/virtualMachineSkus
-        /// Operation Id: Location_ListSupportedVirtualMachineSkus
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Batch/locations/{locationName}/virtualMachineSkus</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Location_ListSupportedVirtualMachineSkus</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="locationName"> The region for which to retrieve Batch service supported SKUs. </param>
@@ -98,8 +138,16 @@ namespace Azure.ResourceManager.Batch
 
         /// <summary>
         /// Gets the list of Batch supported Virtual Machine VM sizes available at the given location.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Batch/locations/{locationName}/virtualMachineSkus
-        /// Operation Id: Location_ListSupportedVirtualMachineSkus
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Batch/locations/{locationName}/virtualMachineSkus</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Location_ListSupportedVirtualMachineSkus</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="locationName"> The region for which to retrieve Batch service supported SKUs. </param>
@@ -114,8 +162,16 @@ namespace Azure.ResourceManager.Batch
 
         /// <summary>
         /// Gets the list of Batch supported Cloud Service VM sizes available at the given location.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Batch/locations/{locationName}/cloudServiceSkus
-        /// Operation Id: Location_ListSupportedCloudServiceSkus
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Batch/locations/{locationName}/cloudServiceSkus</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Location_ListSupportedCloudServiceSkus</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="locationName"> The region for which to retrieve Batch service supported SKUs. </param>
@@ -130,8 +186,16 @@ namespace Azure.ResourceManager.Batch
 
         /// <summary>
         /// Gets the list of Batch supported Cloud Service VM sizes available at the given location.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Batch/locations/{locationName}/cloudServiceSkus
-        /// Operation Id: Location_ListSupportedCloudServiceSkus
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Batch/locations/{locationName}/cloudServiceSkus</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Location_ListSupportedCloudServiceSkus</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="locationName"> The region for which to retrieve Batch service supported SKUs. </param>
@@ -146,8 +210,16 @@ namespace Azure.ResourceManager.Batch
 
         /// <summary>
         /// Checks whether the Batch account name is available in the specified region.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Batch/locations/{locationName}/checkNameAvailability
-        /// Operation Id: Location_CheckNameAvailability
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Batch/locations/{locationName}/checkNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Location_CheckNameAvailability</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="locationName"> The desired region for the name check. </param>
@@ -163,8 +235,16 @@ namespace Azure.ResourceManager.Batch
 
         /// <summary>
         /// Checks whether the Batch account name is available in the specified region.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Batch/locations/{locationName}/checkNameAvailability
-        /// Operation Id: Location_CheckNameAvailability
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Batch/locations/{locationName}/checkNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Location_CheckNameAvailability</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="locationName"> The desired region for the name check. </param>
@@ -197,8 +277,16 @@ namespace Azure.ResourceManager.Batch
 
         /// <summary>
         /// Gets information about the specified Batch account.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Batch/batchAccounts/{accountName}
-        /// Operation Id: BatchAccount_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Batch/batchAccounts/{accountName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>BatchAccount_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="accountName"> The name of the Batch account. </param>
@@ -213,8 +301,16 @@ namespace Azure.ResourceManager.Batch
 
         /// <summary>
         /// Gets information about the specified Batch account.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Batch/batchAccounts/{accountName}
-        /// Operation Id: BatchAccount_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Batch/batchAccounts/{accountName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>BatchAccount_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="accountName"> The name of the Batch account. </param>
