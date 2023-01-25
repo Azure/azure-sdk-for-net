@@ -200,7 +200,6 @@ namespace Azure.Identity
         /// </summary>
         public TimeSpan? DeveloperCredentialTimeout { get; set; } = TimeSpan.FromSeconds(30);
 
-
         /// <summary>
         /// Specifies whether the <see cref="EnvironmentCredential"/> will be excluded from the authentication flow. Setting to true disables reading
         /// authentication details from the process' environment variables.

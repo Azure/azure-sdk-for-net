@@ -87,7 +87,7 @@ namespace Azure.Identity
         /// </summary>
         /// <param name="requestContext"></param>
         /// <param name="cancellationToken"></param>
-        /// <returns>ValueTask<AccessToken></returns>
+        /// <returns></returns>
         public override async ValueTask<AccessToken> GetTokenAsync(TokenRequestContext requestContext, CancellationToken cancellationToken = default)
         {
             return await GetTokenImplAsync(true, requestContext, cancellationToken).ConfigureAwait(false);
