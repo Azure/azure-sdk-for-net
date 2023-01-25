@@ -13,8 +13,6 @@ namespace Azure.Core.Dynamic
     /// </summary>
     public partial struct JsonDataElement
     {
-        internal static readonly MethodInfo GetPropertyMethod = typeof(JsonDataElement).GetMethod(nameof(GetProperty), BindingFlags.NonPublic | BindingFlags.Instance);
-
         private readonly JsonData _root;
         private readonly JsonElement _element;
         private readonly string _path;
@@ -258,9 +256,30 @@ namespace Azure.Core.Dynamic
 
         internal void Set(object value)
         {
-            EnsureValid();
+            switch (value)
+            {
+                case int i:
+                    Set(i);
+                    return;
+                case double d:
+                    Set(d);
+                    return;
+                case string s:
+                    Set(s);
+                    return;
+                case bool b:
+                    Set(b);
+                    return;
+                case JsonDataElement e:
+                    Set(e);
+                    return;
+                default:
+                    EnsureValid();
+                    Changes.AddChange(_path, value, true);
+                    return;
 
-            Changes.AddChange(_path, value, true);
+                // TODO: add support for other supported types
+            }
         }
 
         internal void Set(JsonDataElement value)

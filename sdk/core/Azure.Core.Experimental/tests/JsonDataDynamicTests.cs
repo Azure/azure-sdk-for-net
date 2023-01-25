@@ -39,7 +39,6 @@ namespace Azure.Core.Experimental.Tests
         }
 
         [Test]
-        [Ignore("SetMemberBinding must be implemented on JsonData")]
         public void CanSetIntProperty()
         {
             dynamic jsonData = JsonData.Parse(@"

@@ -2,15 +2,24 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
 using System.Dynamic;
 using System.Linq.Expressions;
-using System.Text;
+using System.Reflection;
 
 namespace Azure.Core.Dynamic
 {
     public partial struct JsonDataElement : IDynamicMetaObjectProvider
     {
+        internal static readonly MethodInfo GetPropertyMethod = typeof(JsonDataElement).GetMethod(nameof(GetProperty), BindingFlags.NonPublic | BindingFlags.Instance);
+        internal static readonly MethodInfo SetDynamicMethod = typeof(JsonDataElement).GetMethod(nameof(SetDynamic), BindingFlags.NonPublic | BindingFlags.Instance, null, new Type[] { typeof(object) }, null);
+
+        // Binding machinery expects the call site signature to return an object
+        internal object? SetDynamic(object value)
+        {
+            Set(value);
+            return null;
+        }
+
         /// <inheritdoc />
         DynamicMetaObject IDynamicMetaObjectProvider.GetMetaObject(Expression parameter) => new MetaObject(parameter, this);
 

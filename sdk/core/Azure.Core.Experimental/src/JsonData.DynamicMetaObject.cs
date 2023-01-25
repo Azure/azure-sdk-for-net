@@ -39,14 +39,13 @@ namespace Azure.Core.Dynamic
                 UnaryExpression this_ = Expression.Convert(Expression, LimitType);
                 MemberExpression rootElement = Expression.Property(this_, "RootElement");
 
-                Expression[] propertyNameArg = new Expression[] { Expression.Constant(binder.Name) };
-                MethodCallExpression getPropertyCall = Expression.Call(rootElement, JsonDataElement.GetPropertyMethod, propertyNameArg);
+                Expression[] arguments = new Expression[] { Expression.Constant(binder.Name) };
+                MethodCallExpression getPropertyCall = Expression.Call(rootElement, JsonDataElement.GetPropertyMethod, arguments);
 
                 // Binding machinery expects the call site signature to return an object.
                 UnaryExpression toObject = Expression.Convert(getPropertyCall, typeof(object));
 
                 BindingRestrictions restrictions = BindingRestrictions.GetTypeRestriction(Expression, LimitType);
-
                 return new DynamicMetaObject(toObject, restrictions);
             }
 
@@ -83,16 +82,20 @@ namespace Azure.Core.Dynamic
             //    return new DynamicMetaObject(convertCall, restrictions);
             //}
 
-            //public override DynamicMetaObject BindSetMember(SetMemberBinder binder, DynamicMetaObject value)
-            //{
-            //    Expression targetObject = Expression.Convert(Expression, LimitType);
-            //    var arguments = new Expression[2] { Expression.Constant(binder.Name), Expression.Convert(value.Expression, typeof(object)) };
+            public override DynamicMetaObject BindSetMember(SetMemberBinder binder, DynamicMetaObject value)
+            {
+                Expression this_ = Expression.Convert(Expression, LimitType);
+                MemberExpression rootElement = Expression.Property(this_, "RootElement");
 
-            //    Expression setPropertyCall = Expression.Call(targetObject, SetValueMethod, arguments);
-            //    BindingRestrictions restrictions = BindingRestrictions.GetTypeRestriction(Expression, LimitType);
-            //    DynamicMetaObject setProperty = new DynamicMetaObject(setPropertyCall, restrictions);
-            //    return setProperty;
-            //}
+                Expression[] getPropertyArgs = new Expression[] { Expression.Constant(binder.Name) };
+                MethodCallExpression getPropertyCall = Expression.Call(rootElement, JsonDataElement.GetPropertyMethod, getPropertyArgs);
+
+                Expression[] setDynamicArgs = new Expression[] { Expression.Convert(value.Expression, typeof(object)) };
+                MethodCallExpression setCall = Expression.Call(getPropertyCall, JsonDataElement.SetDynamicMethod, setDynamicArgs);
+
+                BindingRestrictions restrictions = BindingRestrictions.GetTypeRestriction(Expression, LimitType);
+                return new DynamicMetaObject(setCall, restrictions);
+            }
 
             //public override DynamicMetaObject BindSetIndex(SetIndexBinder binder, DynamicMetaObject[] indexes, DynamicMetaObject value)
             //{
