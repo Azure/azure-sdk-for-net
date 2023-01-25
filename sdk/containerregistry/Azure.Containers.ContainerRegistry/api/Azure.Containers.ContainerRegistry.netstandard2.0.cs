@@ -269,7 +269,7 @@ namespace Azure.Containers.ContainerRegistry.Specialized
         internal DownloadManifestResult() { }
         public System.BinaryData Content { get { throw null; } }
         public string Digest { get { throw null; } }
-        public string MediaType { get { throw null; } set { } }
+        public Azure.Containers.ContainerRegistry.Specialized.ManifestMediaType MediaType { get { throw null; } }
         public Azure.Containers.ContainerRegistry.Specialized.OciManifest AsOciManifest() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]

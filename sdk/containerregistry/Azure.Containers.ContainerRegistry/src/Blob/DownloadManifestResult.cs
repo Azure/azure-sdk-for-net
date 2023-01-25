@@ -12,7 +12,7 @@ namespace Azure.Containers.ContainerRegistry.Specialized
     /// </summary>
     public class DownloadManifestResult
     {
-        internal DownloadManifestResult(string digest, string mediaType, BinaryData content)
+        internal DownloadManifestResult(string digest, ManifestMediaType mediaType, BinaryData content)
         {
             Digest = digest;
             MediaType = mediaType;
@@ -28,7 +28,7 @@ namespace Azure.Containers.ContainerRegistry.Specialized
         /// Gets the media type of the downloaded manifest, as indicated by the
         /// Content-Type response header.
         /// </summary>
-        public string MediaType { get; set; }
+        public ManifestMediaType MediaType { get; }
 
         /// <summary>
         /// The serialized content that was downloaded.
