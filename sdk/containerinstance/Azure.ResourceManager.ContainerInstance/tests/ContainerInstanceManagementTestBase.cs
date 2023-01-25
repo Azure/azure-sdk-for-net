@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.ContainerInstance.Tests
 
 	    if (priority == "Spot") {
                 var priorityContainerGroup = new ContainerGroupData(
-                    location: "eastus2euap",
+                    location: "westus",
                     containers: containers,
                     osType: ContainerInstanceOperatingSystemType.Linux)
                 {
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.ContainerInstance.Tests
 	    }
 
             var containerGroup = new ContainerGroupData(
-                location: "eastus2euap",
+                location: "westus",
                 containers: containers,
                 osType: ContainerInstanceOperatingSystemType.Linux)
             {
