@@ -30,6 +30,9 @@ namespace Azure.Monitor.Ingestion
         // If Compression wants to be turned off (hard to generate 1 Mb data gzipped) set Compression to gzip
         internal static string Compression;
 
+        // If no concurrency count is provided for a parallel upload, default to 5 workers.
+        private const int DefaultParallelWorkerCount = 5;
+
         internal readonly struct BatchedLogs
         {
             public BatchedLogs(List<object> logs, BinaryData logsData)
@@ -227,14 +230,14 @@ namespace Azure.Monitor.Ingestion
 
                     if (response.Status != 204)
                     {
-                        if (!UploadLogsOptions.AssertHandlerEnabled(options))
+                        // if there is no Handler on options, throw exception otherwise raise Handler
+                        if (options == null || !options.HasHandler)
                         {
                             throw new RequestFailedException(response);
                         }
                         else
                         {
-                            var eventArgs = new UploadFailedEventArgs(batch.Logs, new RequestFailedException(response), isRunningSynchronously: true, cancellationToken);
-                            eventArgs._clientDiagnostics = ClientDiagnostics;
+                            var eventArgs = new UploadFailedEventArgs(batch.Logs, new RequestFailedException(response), isRunningSynchronously: true, ClientDiagnostics, cancellationToken);
 #pragma warning disable AZC0106 // Non-public asynchronous method needs 'async' parameter.
                             // sync/async parameter in eventArgs
                             var ex = options.OnUploadFailedAsync(eventArgs).EnsureCompleted();
@@ -247,7 +250,7 @@ namespace Azure.Monitor.Ingestion
                 }
                 catch (Exception ex)
                 {
-                    if (!UploadLogsOptions.AssertHandlerEnabled(options))
+                    if (options == null || !options.HasHandler)
                     {
                         logsFailed += batch.Logs.Count;
                         // If we have an error, add Exception from response into exceptions list without throwing
@@ -257,8 +260,7 @@ namespace Azure.Monitor.Ingestion
                     }
                     else
                     {
-                        var eventArgs = new UploadFailedEventArgs(batch.Logs, ex, isRunningSynchronously: true, cancellationToken);
-                        eventArgs._clientDiagnostics = ClientDiagnostics;
+                        var eventArgs = new UploadFailedEventArgs(batch.Logs, new RequestFailedException(response), isRunningSynchronously: true, ClientDiagnostics, cancellationToken);
 #pragma warning disable AZC0106 // Non-public asynchronous method needs 'async' parameter.
                         var exceptionOnUpload = options.OnUploadFailedAsync(eventArgs).EnsureCompleted();
 #pragma warning restore AZC0106 // Non-public asynchronous method needs 'async' parameter.
@@ -312,7 +314,7 @@ namespace Azure.Monitor.Ingestion
             Argument.AssertNotNullOrEmpty(logs, nameof(logs));
 
             // Calculate the number of threads to use.
-            int _maxWorkerCount = options.MaxConcurrency;
+            int _maxWorkerCount = (options == null) ? DefaultParallelWorkerCount : UploadLogsOptions.AssertNotNegative(options.MaxConcurrency, "MaxConcurrency");
             using var scope = ClientDiagnostics.CreateScope("LogsIngestionClient.Upload");
 
             List<Exception> exceptions = null;
@@ -357,7 +359,7 @@ namespace Azure.Monitor.Ingestion
                                 continue;
                             }
                             // Check completed task for Exception/RequestFailedException and increase logsFailed count
-                            if (!UploadLogsOptions.AssertHandlerEnabled(options))
+                            if (options == null || !options.HasHandler)
                             {
                                 ProcessCompletedTask(runningTasks[i], ref exceptions, ref logsFailed);
                             }
@@ -366,8 +368,7 @@ namespace Azure.Monitor.Ingestion
                                 UploadFailedEventArgs eventArgs;
                                 if (runningTask.Exception != null)
                                 {
-                                    eventArgs = new UploadFailedEventArgs(batch.Logs, runningTask.Exception, isRunningSynchronously: false, cancellationToken);
-                                    eventArgs._clientDiagnostics = ClientDiagnostics;
+                                    eventArgs = new UploadFailedEventArgs(batch.Logs, runningTask.Exception, isRunningSynchronously: false, ClientDiagnostics, cancellationToken);
                                     var exceptionOnUpload = await options.OnUploadFailedAsync(eventArgs).ConfigureAwait(false);
                                     shouldAbort = exceptionOnUpload != null;
                                     if (shouldAbort)
@@ -375,8 +376,7 @@ namespace Azure.Monitor.Ingestion
                                 }
                                 else if (runningTask.Result.Status != 204)
                                 {
-                                    eventArgs = new UploadFailedEventArgs(batch.Logs, new RequestFailedException(runningTask.Result), isRunningSynchronously: false, cancellationToken);
-                                    eventArgs._clientDiagnostics = ClientDiagnostics;
+                                    eventArgs = new UploadFailedEventArgs(batch.Logs, new RequestFailedException(runningTask.Result), isRunningSynchronously: false, ClientDiagnostics, cancellationToken);
                                     var exceptionOnUpload = await options.OnUploadFailedAsync(eventArgs).ConfigureAwait(false);
                                     shouldAbort = exceptionOnUpload != null;
                                     if (shouldAbort)
@@ -402,7 +402,7 @@ namespace Azure.Monitor.Ingestion
             foreach (var task in runningTasks)
             {
                 // Check completed task for Exception/RequestFailedException and increase logsFailed count
-                if (!UploadLogsOptions.AssertHandlerEnabled(options))
+                if (options == null || !options.HasHandler)
                 {
                     ProcessCompletedTask(task, ref exceptions, ref logsFailed);
                 }
@@ -411,8 +411,7 @@ namespace Azure.Monitor.Ingestion
                     UploadFailedEventArgs eventArgs;
                     if (task.CurrentTask.Exception != null)
                     {
-                        eventArgs = new UploadFailedEventArgs(task.Logs, task.CurrentTask.Exception, isRunningSynchronously: false, cancellationToken);
-                        eventArgs._clientDiagnostics = ClientDiagnostics;
+                        eventArgs = new UploadFailedEventArgs(task.Logs, task.CurrentTask.Exception, isRunningSynchronously: false, ClientDiagnostics, cancellationToken);
                         var exceptionOnUpload = await options.OnUploadFailedAsync(eventArgs).ConfigureAwait(false);
                         shouldAbort = exceptionOnUpload != null;
                         if (shouldAbort)
@@ -420,7 +419,7 @@ namespace Azure.Monitor.Ingestion
                     }
                     else if (task.CurrentTask.Result.Status != 204)
                     {
-                        eventArgs = new UploadFailedEventArgs(task.Logs, new RequestFailedException(task.CurrentTask.Result), isRunningSynchronously: false, cancellationToken);
+                        eventArgs = new UploadFailedEventArgs(task.Logs, new RequestFailedException(task.CurrentTask.Result), isRunningSynchronously: false, ClientDiagnostics, cancellationToken);
                         eventArgs._clientDiagnostics = ClientDiagnostics;
                         var exceptionOnUpload = await options.OnUploadFailedAsync(eventArgs).ConfigureAwait(false);
                         shouldAbort = exceptionOnUpload != null;

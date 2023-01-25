@@ -72,21 +72,16 @@ namespace Azure.Monitor.Ingestion
             }
         }
 
-        internal static void AssertNotNegative(int argumentValue, string argumentName)
+        internal static int AssertNotNegative(int argumentValue, string argumentName)
         {
             if (argumentValue <= 0)
             {
                 throw new ArgumentOutOfRangeException(argumentName, $"Argument {argumentName} must be a non-negative timespan value. The provided value was {argumentValue}.");
             }
+            else
+                return argumentValue;
         }
 
-        internal static bool AssertHandlerEnabled(UploadLogsOptions options)
-        {
-            if (options.UploadFailedEventHandler == null)
-            {
-                return false;
-            }
-            return true;
-        }
+        internal bool HasHandler => UploadFailedEventHandler != null;
     }
 }

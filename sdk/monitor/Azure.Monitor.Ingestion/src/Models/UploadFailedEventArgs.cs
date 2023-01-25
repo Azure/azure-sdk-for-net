@@ -14,6 +14,20 @@ namespace Azure.Monitor.Ingestion
     /// </summary>
     public class UploadFailedEventArgs : SyncAsyncEventArgs
     {
+        //Add internal one with ClientDiagnostics
+        /// <summary>
+        /// Initializes a new instance of the <see cref="UploadFailedEventArgs"/> class.
+        /// </summary>
+        /// <param name="failedLogs"></param>
+        /// <param name="exception"></param>
+        /// <param name="isRunningSynchronously"></param>
+        /// <param name="clientDiagnostics"></param>
+        /// <param name="cancellationToken"></param>
+        internal UploadFailedEventArgs(List<object> failedLogs, Exception exception, bool isRunningSynchronously, ClientDiagnostics clientDiagnostics, CancellationToken cancellationToken) : this (failedLogs, exception, isRunningSynchronously, cancellationToken)
+        {
+            _clientDiagnostics = clientDiagnostics;
+        }
+
         /// <summary>
         /// Initializes a new instance of the <see cref="UploadFailedEventArgs"/> class.
         /// </summary>

@@ -16,6 +16,8 @@ namespace Azure.Monitor.Ingestion.Tests
     public class MonitorIngestionLiveTest : RecordedTestBase<MonitorIngestionTestEnvironment>
     {
         private const int Mb = 1024 * 1024;
+        private const int Kb = 1024;
+
         public MonitorIngestionLiveTest(bool isAsync) : base(isAsync)
         {
         }
@@ -25,8 +27,9 @@ namespace Azure.Monitor.Ingestion.Tests
         [OneTimeSetUp]
         public void SetUp()
         {
+            // make batch size smaller for Uploads for test recording size
             if (Mode == RecordedTestMode.Record || Mode == RecordedTestMode.Playback)
-                LogsIngestionClient.SingleUploadThreshold = 250;
+                LogsIngestionClient.SingleUploadThreshold = Kb;
             else
                 LogsIngestionClient.SingleUploadThreshold = Mb;
         }
@@ -134,7 +137,6 @@ namespace Azure.Monitor.Ingestion.Tests
         public async Task ValidInputFromArrayAsJsonWithMultiBatchWithGzip()
         {
             LogsIngestionClient client = CreateClient();
-            LogsIngestionClient.SingleUploadThreshold = 500; // make batch size smaller for Uploads for test recording size
 
             // Make the request
             var response = await client.UploadAsync(TestEnvironment.DCRImmutableId, TestEnvironment.StreamName, GenerateEntries(1000, Recording.Now.DateTime)).ConfigureAwait(false);
@@ -151,8 +153,6 @@ namespace Azure.Monitor.Ingestion.Tests
         {
             var policy = new ConcurrencyCounterPolicy(10);
             LogsIngestionClient client = CreateClient(policy);
-            // make batch size smaller for Uploads for test recording size
-            LogsIngestionClient.SingleUploadThreshold = 100;
 
             // Make the request
             UploadLogsOptions options = new UploadLogsOptions();
