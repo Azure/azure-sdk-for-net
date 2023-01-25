@@ -11,14 +11,14 @@ namespace Azure.Core.Experimental.Tests
     public class JsonDataDynamicTests
     {
         [Test]
-        public void CanAccessIntProperty()
+        public void CanGetIntProperty()
         {
             dynamic jsonData = JsonData.Parse(@"
                 {
                   ""Foo"" : 1
                 }");
 
-            JsonDataElement value = jsonData.Foo;
+            int value = jsonData.Foo;
 
             Assert.AreEqual(1, value);
         }

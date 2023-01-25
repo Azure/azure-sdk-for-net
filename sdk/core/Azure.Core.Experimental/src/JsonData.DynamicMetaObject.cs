@@ -36,12 +36,15 @@ namespace Azure.Core.Dynamic
                 UnaryExpression this_ = Expression.Convert(Expression, LimitType);
                 MemberExpression rootElement = Expression.Property(this_, "RootElement");
 
-                Expression[] arguments = new Expression[] { Expression.Constant(binder.Name) };
-                MethodCallExpression getPropertyCall = Expression.Call(rootElement, JsonDataElement.GetPropertyMethod, arguments);
-                UnaryExpression final = Expression.Convert(getPropertyCall, typeof(object));
+                Expression[] propertyNameArg = new Expression[] { Expression.Constant(binder.Name) };
+                MethodCallExpression getPropertyCall = Expression.Call(rootElement, JsonDataElement.GetPropertyMethod, propertyNameArg);
+
+                // Binding machinery expects the call site signature to return an object.
+                UnaryExpression toObject = Expression.Convert(getPropertyCall, typeof(object));
 
                 BindingRestrictions restrictions = BindingRestrictions.GetTypeRestriction(Expression, LimitType);
-                return new DynamicMetaObject(final, restrictions);
+
+                return new DynamicMetaObject(toObject, restrictions);
             }
 
             //public override DynamicMetaObject BindGetIndex(GetIndexBinder binder, DynamicMetaObject[] indexes)

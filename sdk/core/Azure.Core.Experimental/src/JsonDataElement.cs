@@ -11,7 +11,7 @@ namespace Azure.Core.Dynamic
     /// <summary>
     /// A mutable representation of a JSON element.
     /// </summary>
-    public struct JsonDataElement
+    public partial struct JsonDataElement
     {
         internal static readonly MethodInfo GetPropertyMethod = typeof(JsonDataElement).GetMethod(nameof(GetProperty), BindingFlags.NonPublic | BindingFlags.Instance);
 
