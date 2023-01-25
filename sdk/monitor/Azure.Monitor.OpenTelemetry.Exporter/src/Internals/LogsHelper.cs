@@ -26,14 +26,14 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
         private static readonly ConcurrentDictionary<int, string> DepthCache = new ConcurrentDictionary<int, string>();
         private static readonly Func<int, string> ConvertDepthToStringRef = ConvertDepthToString;
 
-        internal static List<TelemetryItem> OtelToAzureMonitorLogs(Batch<LogRecord> batchLogRecord, string roleName, string roleInstance, string instrumentationKey)
+        internal static List<TelemetryItem> OtelToAzureMonitorLogs(Batch<LogRecord> batchLogRecord, AzureMonitorResource resource, string instrumentationKey)
         {
             List<TelemetryItem> telemetryItems = new List<TelemetryItem>();
             TelemetryItem telemetryItem;
 
             foreach (var logRecord in batchLogRecord)
             {
-                telemetryItem = new TelemetryItem(logRecord, roleName, roleInstance, instrumentationKey);
+                telemetryItem = new TelemetryItem(logRecord, resource, instrumentationKey);
                 if (logRecord.Exception != null)
                 {
                     telemetryItem.Data = new MonitorBase

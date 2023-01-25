@@ -5,87 +5,81 @@
 
 using System.Collections.Generic;
 using System.Net;
+using Azure.Monitor.OpenTelemetry.Exporter.Internals;
 using OpenTelemetry.Resources;
 using Xunit;
 
 namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
 {
-    public class ResourceParserTests
+    public class ResourceExtensionsTests
     {
         [Fact]
         public void NullResource()
         {
-            var resourceParser = new ResourceParser();
-            resourceParser.UpdateRoleNameAndInstance(null);
+            Resource resource = null;
+            var azMonResource = resource.UpdateRoleNameAndInstance();
 
-            Assert.Null(resourceParser.RoleName);
-            Assert.Null(resourceParser.RoleInstance);
+            Assert.Null(azMonResource);
         }
 
         [Fact]
         public void DefaultResource()
         {
             var resource = CreateTestResource();
-            var resourceParser = new ResourceParser();
-            resourceParser.UpdateRoleNameAndInstance(resource);
+            var azMonResource = resource.UpdateRoleNameAndInstance();
 
-            Assert.StartsWith("unknown_service", resourceParser.RoleName);
-            Assert.Equal(Dns.GetHostName(), resourceParser.RoleInstance);
+            Assert.StartsWith("unknown_service", azMonResource.RoleName);
+            Assert.Equal(Dns.GetHostName(), azMonResource.RoleInstance);
         }
 
         [Fact]
         public void ServiceNameFromResource()
         {
             var resource = CreateTestResource(serviceName: "my-service");
-            var resourceParser = new ResourceParser();
-            resourceParser.UpdateRoleNameAndInstance(resource);
+            var azMonResource = resource.UpdateRoleNameAndInstance();
 
-            Assert.Equal("my-service", resourceParser.RoleName);
-            Assert.Equal(Dns.GetHostName(), resourceParser.RoleInstance);
+            Assert.Equal("my-service", azMonResource.RoleName);
+            Assert.Equal(Dns.GetHostName(), azMonResource.RoleInstance);
         }
 
         [Fact]
         public void ServiceInstanceFromResource()
         {
             var resource = CreateTestResource(serviceInstance: "my-instance");
-            var resourceParser = new ResourceParser();
-            resourceParser.UpdateRoleNameAndInstance(resource);
+            var azMonResource = resource.UpdateRoleNameAndInstance();
 
-            Assert.StartsWith("unknown_service", resourceParser.RoleName);
-            Assert.Equal("my-instance", resourceParser.RoleInstance);
+            Assert.StartsWith("unknown_service", azMonResource.RoleName);
+            Assert.Equal("my-instance", azMonResource.RoleInstance);
         }
 
         [Fact]
         public void ServiceNamespaceFromResource()
         {
             var resource = CreateTestResource(serviceNamespace: "my-namespace");
-            var resourceParser = new ResourceParser();
-            resourceParser.UpdateRoleNameAndInstance(resource);
+            var azMonResource = resource.UpdateRoleNameAndInstance();
 
-            Assert.StartsWith("[my-namespace]/unknown_service", resourceParser.RoleName);
-            Assert.Equal(Dns.GetHostName(), resourceParser.RoleInstance);
+            Assert.StartsWith("[my-namespace]/unknown_service", azMonResource.RoleName);
+            Assert.Equal(Dns.GetHostName(), azMonResource.RoleInstance);
         }
 
         [Fact]
         public void ServiceNameAndInstanceFromResource()
         {
             var resource = CreateTestResource(serviceName: "my-service", serviceInstance: "my-instance");
-            var resourceParser = new ResourceParser();
-            resourceParser.UpdateRoleNameAndInstance(resource);
+            var azMonResource = resource.UpdateRoleNameAndInstance();
 
-            Assert.Equal("my-service", resourceParser.RoleName);
-            Assert.Equal("my-instance", resourceParser.RoleInstance);
+            Assert.Equal("my-service", azMonResource.RoleName);
+            Assert.Equal("my-instance", azMonResource.RoleInstance);
         }
 
         [Fact]
         public void ServiceNameAndInstanceAndNamespaceFromResource()
         {
             var resource = CreateTestResource(serviceName: "my-service", serviceNamespace: "my-namespace", serviceInstance: "my-instance");
-            var resourceParser = new ResourceParser();
-            resourceParser.UpdateRoleNameAndInstance(resource);
+            var azMonResource = resource.UpdateRoleNameAndInstance();
 
-            Assert.Equal("[my-namespace]/my-service", resourceParser.RoleName);
-            Assert.Equal("my-instance", resourceParser.RoleInstance);
+            Assert.Equal("[my-namespace]/my-service", azMonResource.RoleName);
+            Assert.Equal("my-instance", azMonResource.RoleInstance);
         }
 
         /// <summary>
