@@ -248,14 +248,6 @@ namespace Azure.Core.Dynamic
         private long GetInt64() => RootElement.GetInt64();
 
         private float GetFloat() => RootElement.GetFloat();
-        //{
-        //    var value = _element.GetDouble();
-        //    if (value > float.MaxValue || value < float.MinValue)
-        //    {
-        //        throw new OverflowException();
-        //    }
-        //    return (float)value;
-        //}
 
         private double GetDouble() => RootElement.GetDouble();
 
