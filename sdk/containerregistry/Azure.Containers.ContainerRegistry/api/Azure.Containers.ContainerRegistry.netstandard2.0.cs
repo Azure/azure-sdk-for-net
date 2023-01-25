@@ -261,7 +261,7 @@ namespace Azure.Containers.ContainerRegistry.Specialized
     {
         public DownloadManifestOptions(string tag = null, string digest = null) { }
         public string Digest { get { throw null; } }
-        public string MediaType { get { throw null; } set { } }
+        public Azure.Containers.ContainerRegistry.Specialized.ManifestMediaType? MediaType { get { throw null; } set { } }
         public string Tag { get { throw null; } }
     }
     public partial class DownloadManifestResult
@@ -271,6 +271,26 @@ namespace Azure.Containers.ContainerRegistry.Specialized
         public string Digest { get { throw null; } }
         public string MediaType { get { throw null; } set { } }
         public Azure.Containers.ContainerRegistry.Specialized.OciManifest AsOciManifest() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct ManifestMediaType : System.IEquatable<Azure.Containers.ContainerRegistry.Specialized.ManifestMediaType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public static readonly Azure.Containers.ContainerRegistry.Specialized.ManifestMediaType DockerManifestList;
+        public static readonly Azure.Containers.ContainerRegistry.Specialized.ManifestMediaType DockerManifestV2;
+        public static readonly Azure.Containers.ContainerRegistry.Specialized.ManifestMediaType OciIndex;
+        public static readonly Azure.Containers.ContainerRegistry.Specialized.ManifestMediaType OciManifest;
+        public bool Equals(Azure.Containers.ContainerRegistry.Specialized.ManifestMediaType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.Containers.ContainerRegistry.Specialized.ManifestMediaType left, Azure.Containers.ContainerRegistry.Specialized.ManifestMediaType right) { throw null; }
+        public static explicit operator string (Azure.Containers.ContainerRegistry.Specialized.ManifestMediaType mediaType) { throw null; }
+        public static implicit operator Azure.Containers.ContainerRegistry.Specialized.ManifestMediaType (string mediaType) { throw null; }
+        public static bool operator !=(Azure.Containers.ContainerRegistry.Specialized.ManifestMediaType left, Azure.Containers.ContainerRegistry.Specialized.ManifestMediaType right) { throw null; }
+        public override string ToString() { throw null; }
     }
     public partial class OciAnnotations
     {
@@ -319,7 +339,7 @@ namespace Azure.Containers.ContainerRegistry.Specialized
     public partial class UploadManifestOptions
     {
         public UploadManifestOptions(string tag = null) { }
-        public string MediaType { get { throw null; } set { } }
+        public Azure.Containers.ContainerRegistry.Specialized.ManifestMediaType? MediaType { get { throw null; } set { } }
         public string Tag { get { throw null; } }
     }
     public partial class UploadManifestResult

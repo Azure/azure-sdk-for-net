@@ -41,6 +41,6 @@ namespace Azure.Containers.ContainerRegistry.Specialized
         /// the requested manifest.  If not specified, this value will be set to
         /// a default value of "application/vnd.oci.image.manifest.v1+json".
         /// </summary>
-        public string MediaType { get; set; }
+        public ManifestMediaType? MediaType { get; set; }
     }
 }

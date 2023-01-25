@@ -250,7 +250,7 @@ namespace Azure.Containers.ContainerRegistry.Specialized
         {
             string contentDigest = BlobHelper.ComputeDigest(stream);
             string tagOrDigest = options.Tag ?? contentDigest;
-            string mediaType = options.MediaType ?? ManifestMediaType.OciManifest.ToString();
+            string mediaType = options.MediaType.HasValue ? options.MediaType.ToString() : ManifestMediaType.OciManifest.ToString();
 
             ResponseWithHeaders<ContainerRegistryCreateManifestHeaders> response = async ?
                 await _restClient.CreateManifestAsync(_repositoryName, tagOrDigest, stream, mediaType, cancellationToken).ConfigureAwait(false) :
@@ -493,7 +493,7 @@ namespace Azure.Containers.ContainerRegistry.Specialized
             scope.Start();
             try
             {
-                var accept = options.MediaType ?? ManifestMediaType.OciManifest.ToString();
+                string accept = options.MediaType.HasValue ? options.MediaType.ToString() : ManifestMediaType.OciManifest.ToString();
 
                 Response<ManifestWrapper> response = _restClient.GetManifest(_repositoryName, options.Tag ?? options.Digest, accept, cancellationToken);
                 Response rawResponse = response.GetRawResponse();
@@ -527,7 +527,7 @@ namespace Azure.Containers.ContainerRegistry.Specialized
             scope.Start();
             try
             {
-                var accept = options.MediaType ?? ManifestMediaType.OciManifest.ToString();
+                string accept = options.MediaType.HasValue ? options.MediaType.ToString() : ManifestMediaType.OciManifest.ToString();
 
                 Response<ManifestWrapper> response = await _restClient.GetManifestAsync(_repositoryName, options.Tag ?? options.Digest, accept, cancellationToken).ConfigureAwait(false);
                 Response rawResponse = response.GetRawResponse();
