@@ -61,26 +61,6 @@ We guarantee that all client instance methods are thread-safe and independent of
 
 You can familiarize yourself with different APIs using [Samples](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/openai/Azure.OpenAI.Inference/samples).
 
-### Get secret
-
-The `GetSecret` method retrieves a secret from the service.
-
-```C# Snippet:Azure_OpenAI_GetSecret
-string endpoint = "http://myaccount.openai.azure.com/";
-string key = "myKey";
-
-OpenAIClient client = new OpenAIClient(new Uri(endpoint), new AzureKeyCredential(key));
-CompletionsRequest completionsRequest = new CompletionsRequest();
-completionsRequest.Prompt.Add("Hello world");
-completionsRequest.Prompt.Add("running over the same old ground");
-Completion response = client.Completions("myModelDeployment", completionsRequest);
-
-foreach (Choice choice in response.Choices)
-{
-    Console.WriteLine(choice.Text);
-}
-```
-
 ### Generate Chatbot Responses
 
 The `GenerateChatbotResponses` method gives an example of generating text responses to input prompts.
