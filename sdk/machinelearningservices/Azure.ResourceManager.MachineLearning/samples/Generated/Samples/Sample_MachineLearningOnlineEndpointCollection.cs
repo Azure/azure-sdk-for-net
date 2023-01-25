@@ -44,13 +44,8 @@ namespace Azure.ResourceManager.MachineLearning.Samples
             MachineLearningOnlineEndpointCollection collection = machineLearningWorkspace.GetMachineLearningOnlineEndpoints();
 
             // invoke the operation and iterate over the result
-            string name = "string";
-            int? count = 1;
-            MachineLearningEndpointComputeType? computeType = MachineLearningEndpointComputeType.Managed;
-            string tags = "string";
-            string properties = "string";
-            MachineLearningOrderString? orderBy = MachineLearningOrderString.CreatedAtDesc;
-            await foreach (MachineLearningOnlineEndpointResource item in collection.GetAllAsync(name: name, count: count, computeType: computeType, tags: tags, properties: properties, orderBy: orderBy))
+            MachineLearningOnlineEndpointCollectionGetAllOptions options = new MachineLearningOnlineEndpointCollectionGetAllOptions() { Name = "string", Count = 1, ComputeType = MachineLearningEndpointComputeType.Managed, Tags = "string", Properties = "string", OrderBy = MachineLearningOrderString.CreatedAtDesc };
+            await foreach (MachineLearningOnlineEndpointResource item in collection.GetAllAsync(options))
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance

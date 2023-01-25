@@ -13,7 +13,24 @@
 #########
 
 # Catch all
-/sdk/                                           @pallavit @jsquire
+/sdk/                          @pallavit @jsquire
+
+# Rules for directories that fell under catch-all as of 1/19/2023
+/sdk/agrifood/                 @pallavit @jsquire
+# Note there are some sub-rules for this directory, defined below
+/sdk/applicationinsights/      @pallavit @jsquire
+# Note there are some sub-rules for this directory, defined below
+/sdk/cognitiveservices/        @pallavit @jsquire
+/sdk/entra/                    @pallavit @jsquire
+/sdk/graphrbac/                @pallavit @jsquire
+/sdk/machinelearningservices/  @pallavit @jsquire
+/sdk/maps/                     @pallavit @jsquire
+# Note there are some sub-rules for this directory, defined below
+/sdk/operationalinsights/      @pallavit @jsquire
+/sdk/purview/                  @pallavit @jsquire
+# Note there are some sub-rules for this directory, defined below
+/sdk/quantum/                  @pallavit @jsquire
+/sdk/remoterendering/          @pallavit @jsquire
 
 # ######## Core Libraries ########
 
