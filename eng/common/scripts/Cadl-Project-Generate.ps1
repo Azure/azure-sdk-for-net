@@ -7,6 +7,7 @@ param (
 
 $ErrorActionPreference = "Stop"
 . $PSScriptRoot/Helpers/PSModule-Helpers.ps1
+. $PSScriptRoot/common.ps1
 Install-ModuleIfNotInstalled "powershell-yaml" "0.4.1" | Import-Module
 
 function NpmInstallForProject([string]$workingDirectory) {
@@ -30,8 +31,6 @@ function NpmInstallForProject([string]$workingDirectory) {
         Pop-Location
     }
 }
-
-Write-Host($GetEmitterNameFn)
 
 $emitterName = &$GetEmitterNameFn
 $cadlConfigurationFile = Resolve-Path "$ProjectDirectory/cadl-location.yaml"
