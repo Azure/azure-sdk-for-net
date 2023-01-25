@@ -92,6 +92,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
         {
             EventHubOptions options = CreateOptionsFromConfigBackCompat();
 
+            Assert.AreEqual(300, options.TargetUnprocessedEventThreshold);
             Assert.AreEqual(123, options.MaxEventBatchSize);
             Assert.AreEqual(true, options.EventProcessorOptions.TrackLastEnqueuedEventProperties);
             Assert.AreEqual(123, options.EventProcessorOptions.PrefetchCount);
@@ -116,6 +117,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
                 b => { b.AddEventHubs(); },
                 jsonStream: new BinaryData(jObject.ToString()).ToStream());
 
+            Assert.AreEqual(300, result.TargetUnprocessedEventThreshold);
             Assert.AreEqual(123, result.MaxEventBatchSize);
             Assert.AreEqual(5, result.BatchCheckpointFrequency);
             Assert.True(result.TrackLastEnqueuedEventProperties);
@@ -249,6 +251,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
             string extensionPath = "AzureWebJobs:Extensions:EventHubs";
             var values = new Dictionary<string, string>
             {
+                { $"{extensionPath}:TargetUnprocessedEventThreshold", "300" },
                 { $"{extensionPath}:EventProcessorOptions:MaxBatchSize", "123" },
                 { $"{extensionPath}:EventProcessorOptions:ReceiveTimeout", "00:00:33" },
                 { $"{extensionPath}:EventProcessorOptions:EnableReceiverRuntimeMetric", "true" },
