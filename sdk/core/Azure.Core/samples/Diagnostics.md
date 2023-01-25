@@ -39,7 +39,7 @@ using AzureEventSourceListener traceListener = AzureEventSourceListener.CreateTr
 
 ### Enabling content logging
 
-By default only URI and headers are logged. To enable content logging, set the `Diagnostics.IsLoggingContentEnabled` client option:
+By default only URI and headers are logged. To enable content logging, set the `Diagnostics.IsLoggingContentEnabled` client option and specify a minimum log level of `Verbose`.
 
 ```C# Snippet:LoggingContent
 // Content is logged as Verbose event level
