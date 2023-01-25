@@ -84,7 +84,8 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="capacity"> The object that represents all properties related to capacity enforcement on an account. </param>
         /// <param name="keysMetadata"> The object that represents the metadata for the Account Keys of the Cosmos DB account. </param>
         /// <param name="enablePartitionMerge"> Flag to indicate enabling/disabling of Partition Merge feature on the account. </param>
-        internal CosmosDBAccountData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, CosmosDBAccountKind? kind, ManagedServiceIdentity identity, string provisioningState, string documentEndpoint, CosmosDBAccountOfferType? databaseAccountOfferType, IList<CosmosDBIPAddressOrRange> ipRules, bool? isVirtualNetworkFilterEnabled, bool? enableAutomaticFailover, ConsistencyPolicy consistencyPolicy, IList<CosmosDBAccountCapability> capabilities, IReadOnlyList<CosmosDBAccountLocation> writeLocations, IReadOnlyList<CosmosDBAccountLocation> readLocations, IReadOnlyList<CosmosDBAccountLocation> locations, IReadOnlyList<CosmosDBFailoverPolicy> failoverPolicies, IList<CosmosDBVirtualNetworkRule> virtualNetworkRules, IReadOnlyList<CosmosDBPrivateEndpointConnectionData> privateEndpointConnections, bool? enableMultipleWriteLocations, bool? enableCassandraConnector, ConnectorOffer? connectorOffer, bool? disableKeyBasedMetadataWriteAccess, Uri keyVaultKeyUri, string defaultIdentity, CosmosDBPublicNetworkAccess? publicNetworkAccess, bool? isFreeTierEnabled, ApiProperties apiProperties, bool? isAnalyticalStorageEnabled, AnalyticalStorageConfiguration analyticalStorageConfiguration, Guid? instanceId, CosmosDBAccountCreateMode? createMode, CosmosDBAccountRestoreParameters restoreParameters, CosmosDBAccountBackupPolicy backupPolicy, IList<CosmosDBAccountCorsPolicy> cors, NetworkAclBypass? networkAclBypass, IList<ResourceIdentifier> networkAclBypassResourceIds, bool? disableLocalAuth, CosmosDBAccountCapacity capacity, DatabaseAccountKeysMetadata keysMetadata, bool? enablePartitionMerge) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="minimalTlsVersion"> Indicates the minimum allowed Tls version. The default is Tls 1.0, except for Cassandra and Mongo API&apos;s, which only work with Tls 1.2. </param>
+        internal CosmosDBAccountData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, CosmosDBAccountKind? kind, ManagedServiceIdentity identity, string provisioningState, string documentEndpoint, CosmosDBAccountOfferType? databaseAccountOfferType, IList<CosmosDBIPAddressOrRange> ipRules, bool? isVirtualNetworkFilterEnabled, bool? enableAutomaticFailover, ConsistencyPolicy consistencyPolicy, IList<CosmosDBAccountCapability> capabilities, IReadOnlyList<CosmosDBAccountLocation> writeLocations, IReadOnlyList<CosmosDBAccountLocation> readLocations, IReadOnlyList<CosmosDBAccountLocation> locations, IReadOnlyList<CosmosDBFailoverPolicy> failoverPolicies, IList<CosmosDBVirtualNetworkRule> virtualNetworkRules, IReadOnlyList<CosmosDBPrivateEndpointConnectionData> privateEndpointConnections, bool? enableMultipleWriteLocations, bool? enableCassandraConnector, ConnectorOffer? connectorOffer, bool? disableKeyBasedMetadataWriteAccess, Uri keyVaultKeyUri, string defaultIdentity, CosmosDBPublicNetworkAccess? publicNetworkAccess, bool? isFreeTierEnabled, ApiProperties apiProperties, bool? isAnalyticalStorageEnabled, AnalyticalStorageConfiguration analyticalStorageConfiguration, Guid? instanceId, CosmosDBAccountCreateMode? createMode, CosmosDBAccountRestoreParameters restoreParameters, CosmosDBAccountBackupPolicy backupPolicy, IList<CosmosDBAccountCorsPolicy> cors, NetworkAclBypass? networkAclBypass, IList<ResourceIdentifier> networkAclBypassResourceIds, bool? disableLocalAuth, CosmosDBAccountCapacity capacity, DatabaseAccountKeysMetadata keysMetadata, bool? enablePartitionMerge, MinimalTlsVersion? minimalTlsVersion) : base(id, name, resourceType, systemData, tags, location)
         {
             Kind = kind;
             Identity = identity;
@@ -124,6 +125,7 @@ namespace Azure.ResourceManager.CosmosDB
             Capacity = capacity;
             KeysMetadata = keysMetadata;
             EnablePartitionMerge = enablePartitionMerge;
+            MinimalTlsVersion = minimalTlsVersion;
         }
 
         /// <summary> Indicates the type of database account. This can only be set at database account creation. </summary>
@@ -242,5 +244,7 @@ namespace Azure.ResourceManager.CosmosDB
         public DatabaseAccountKeysMetadata KeysMetadata { get; }
         /// <summary> Flag to indicate enabling/disabling of Partition Merge feature on the account. </summary>
         public bool? EnablePartitionMerge { get; set; }
+        /// <summary> Indicates the minimum allowed Tls version. The default is Tls 1.0, except for Cassandra and Mongo API&apos;s, which only work with Tls 1.2. </summary>
+        public MinimalTlsVersion? MinimalTlsVersion { get; set; }
     }
 }

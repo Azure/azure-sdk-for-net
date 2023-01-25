@@ -200,6 +200,11 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 writer.WritePropertyName("enablePartitionMerge"u8);
                 writer.WriteBooleanValue(EnablePartitionMerge.Value);
             }
+            if (Optional.IsDefined(MinimalTlsVersion))
+            {
+                writer.WritePropertyName("minimalTlsVersion");
+                writer.WriteStringValue(MinimalTlsVersion.Value.ToString());
+            }
             writer.WriteEndObject();
             writer.WriteEndObject();
         }

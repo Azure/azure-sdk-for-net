@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.CosmosDB
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2022-08-15";
+            _apiVersion = apiVersion ?? "2022-11-15";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -75,8 +75,8 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="location"> Cosmos DB region, with spaces between words and each word capitalized. </param>
         /// <param name="instanceId"> The instanceId GUID of a restorable database account. </param>
         /// <param name="restorableSqlDatabaseRid"> The resource ID of the SQL database. </param>
-        /// <param name="startTime"> The snapshot create timestamp after which snapshots need to be listed. </param>
-        /// <param name="endTime"> The snapshot create timestamp before which snapshots need to be listed. </param>
+        /// <param name="startTime"> Restorable Sql containers event feed start time. </param>
+        /// <param name="endTime"> Restorable Sql containers event feed end time. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
@@ -105,8 +105,8 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="location"> Cosmos DB region, with spaces between words and each word capitalized. </param>
         /// <param name="instanceId"> The instanceId GUID of a restorable database account. </param>
         /// <param name="restorableSqlDatabaseRid"> The resource ID of the SQL database. </param>
-        /// <param name="startTime"> The snapshot create timestamp after which snapshots need to be listed. </param>
-        /// <param name="endTime"> The snapshot create timestamp before which snapshots need to be listed. </param>
+        /// <param name="startTime"> Restorable Sql containers event feed start time. </param>
+        /// <param name="endTime"> Restorable Sql containers event feed end time. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>

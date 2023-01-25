@@ -42,6 +42,26 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
                 writer.WriteEndArray();
             }
+            if (Optional.IsCollectionDefined(GremlinDatabasesToRestore))
+            {
+                writer.WritePropertyName("gremlinDatabasesToRestore");
+                writer.WriteStartArray();
+                foreach (var item in GremlinDatabasesToRestore)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(TablesToRestore))
+            {
+                writer.WritePropertyName("tablesToRestore");
+                writer.WriteStartArray();
+                foreach (var item in TablesToRestore)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
             writer.WriteEndObject();
         }
 
@@ -55,6 +75,8 @@ namespace Azure.ResourceManager.CosmosDB.Models
             Optional<string> restoreSource = default;
             Optional<DateTimeOffset> restoreTimestampInUtc = default;
             Optional<IList<DatabaseRestoreResourceInfo>> databasesToRestore = default;
+            Optional<IList<GremlinDatabaseRestoreResource>> gremlinDatabasesToRestore = default;
+            Optional<IList<string>> tablesToRestore = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("restoreMode"u8))
@@ -97,8 +119,38 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     databasesToRestore = array;
                     continue;
                 }
+                if (property.NameEquals("gremlinDatabasesToRestore"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    List<GremlinDatabaseRestoreResource> array = new List<GremlinDatabaseRestoreResource>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(GremlinDatabaseRestoreResource.DeserializeGremlinDatabaseRestoreResource(item));
+                    }
+                    gremlinDatabasesToRestore = array;
+                    continue;
+                }
+                if (property.NameEquals("tablesToRestore"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    List<string> array = new List<string>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(item.GetString());
+                    }
+                    tablesToRestore = array;
+                    continue;
+                }
             }
-            return new CosmosDBAccountRestoreParameters(Optional.ToNullable(restoreMode), restoreSource.Value, Optional.ToNullable(restoreTimestampInUtc), Optional.ToList(databasesToRestore));
+            return new CosmosDBAccountRestoreParameters(Optional.ToNullable(restoreMode), restoreSource.Value, Optional.ToNullable(restoreTimestampInUtc), Optional.ToList(databasesToRestore), Optional.ToList(gremlinDatabasesToRestore), Optional.ToList(tablesToRestore));
         }
     }
 }
