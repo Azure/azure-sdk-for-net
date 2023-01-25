@@ -20,8 +20,8 @@ namespace Azure.Core.Dynamic
     [JsonConverter(typeof(JsonConverter))]
     public partial class JsonData : DynamicData, IDynamicMetaObjectProvider, IEquatable<JsonData>
     {
-        private Memory<byte> _original;
-        private JsonElement _element;
+        private readonly Memory<byte> _original;
+        private readonly JsonElement _originalElement;
 
         internal ChangeTracker Changes { get; } = new();
 
@@ -37,11 +37,13 @@ namespace Azure.Core.Dynamic
                     }
                 }
 
-                return new JsonDataElement(this, _element, string.Empty);
+                return new JsonDataElement(this, _originalElement, string.Empty);
             }
         }
 
-        internal void WriteTo(Stream stream, StandardFormat format = default)
+        internal override void WriteTo(Stream stream) => WriteTo(stream, default);
+
+        internal void WriteTo(Stream stream, StandardFormat format)
         {
             // this is so we can add JSON Patch in the future
             if (format != default)
@@ -60,7 +62,6 @@ namespace Azure.Core.Dynamic
             WriteElementTo(writer);
         }
 
-        // TODO: if we keep this, make it an extension on stream.
         private static void Write(Stream stream, ReadOnlySpan<byte> buffer)
         {
             byte[] sharedBuffer = ArrayPool<byte>.Shared.Rent(buffer.Length);
@@ -74,8 +75,6 @@ namespace Azure.Core.Dynamic
                 ArrayPool<byte>.Shared.Return(sharedBuffer);
             }
         }
-
-        // Element holds a reference to the parent JsonDocument, so we don't need to, but we do need to not dispose it.
 
         private static readonly JsonSerializerOptions DefaultJsonSerializerOptions = new JsonSerializerOptions();
 
@@ -105,7 +104,7 @@ namespace Azure.Core.Dynamic
         internal JsonData(JsonDocument jsonDocument, Memory<byte> utf8Json) : this(jsonDocument.RootElement)
         {
             _original = utf8Json;
-            _element = jsonDocument.RootElement;
+            _originalElement = jsonDocument.RootElement;
         }
 
         /// <summary>
@@ -129,7 +128,7 @@ namespace Azure.Core.Dynamic
 
             Type inputType = type ?? (value == null ? typeof(object) : value.GetType());
             _original = JsonSerializer.SerializeToUtf8Bytes(value, inputType, options);
-            _element = JsonDocument.Parse(_original).RootElement;
+            _originalElement = JsonDocument.Parse(_original).RootElement;
         }
 
         /// <summary>
@@ -159,20 +158,6 @@ namespace Azure.Core.Dynamic
             using var stream = new MemoryStream();
             WriteTo(stream);
             return Encoding.UTF8.GetString(stream.ToArray());
-        }
-
-        /// <summary>
-        /// The <see cref="JsonValueKind"/> of the value of this instance.
-        /// </summary>
-        internal JsonValueKind Kind => _element.ValueKind;
-
-        /// <summary>
-        /// Returns the number of elements in this array.
-        /// </summary>
-        /// <remarks>If <see cref="Kind"/> is not <see cref="JsonValueKind.Array"/> this methods throws <see cref="InvalidOperationException"/>.</remarks>
-        internal int Length
-        {
-            get { EnsureArray(); return _element.GetArrayLength(); }
         }
 
         ///// <summary>
@@ -217,15 +202,15 @@ namespace Azure.Core.Dynamic
         /// <inheritdoc />
         public override bool Equals(object? obj)
         {
-            if (obj is string)
-            {
-                return this == ((string?)obj);
-            }
+            //if (obj is string)
+            //{
+            //    return this == ((string?)obj);
+            //}
 
-            if (obj is JsonData)
-            {
-                return Equals((JsonData)obj);
-            }
+            //if (obj is JsonData)
+            //{
+            //    return Equals((JsonData)obj);
+            //}
 
             return base.Equals(obj);
         }
@@ -238,103 +223,80 @@ namespace Azure.Core.Dynamic
                 return false;
             }
 
-            if (Kind != other.Kind)
-            {
-                return false;
-            }
+            return RootElement.Equals(other.RootElement);
+
+            // TODO: pass this through to the RootElement
+            //if (Kind != other.Kind)
+            //{
+            //    return false;
+            //}
 
             // TODO: JsonElement doesn't implement equality, per
             // https://github.com/dotnet/runtime/issues/62585
             // We could implement this by comparing _utf8 values;
             // depends on getting those from JsonElement.
-            return _element.Equals(other._element);
+            //return _element.Equals(other._element);
         }
 
         /// <inheritdoc />
-        public override int GetHashCode() => _element.GetHashCode();
+        public override int GetHashCode() => RootElement.GetHashCode();
 
-        private string? GetString() => _element.GetString();
+        private string? GetString() => RootElement.GetString();
 
-        private int GetInt32() => _element.GetInt32();
+        private int GetInt32() => RootElement.GetInt32();
 
-        private long GetLong() => _element.GetInt64();
+        private long GetInt64() => RootElement.GetInt64();
 
-        private float GetFloat()
-        {
-            var value = _element.GetDouble();
-            if (value > float.MaxValue || value < float.MinValue)
-            {
-                throw new OverflowException();
-            }
-            return (float)value;
-        }
+        private float GetFloat() => RootElement.GetFloat();
+        //{
+        //    var value = _element.GetDouble();
+        //    if (value > float.MaxValue || value < float.MinValue)
+        //    {
+        //        throw new OverflowException();
+        //    }
+        //    return (float)value;
+        //}
 
-        private double GetDouble() => _element.GetDouble();
+        private double GetDouble() => RootElement.GetDouble();
 
-        private bool GetBoolean() => _element.GetBoolean();
+        private bool GetBoolean() => RootElement.GetBoolean();
 
-        internal override void WriteTo(Stream stream)
-        {
-            using Utf8JsonWriter writer = new(stream);
-            _element.WriteTo(writer);
-        }
+        // TODO: Handle array length separately - but do we need to?
+        ///// <summary>
+        ///// Used by the dynamic meta object to fetch properties. We can't use GetPropertyValue because when the underlying
+        ///// value is an array, we want `.Length` to mean "the length of the array" and not "treat the array as an object
+        ///// and get the Length property", and we also want the return type to be "int" and not a JsonData wrapping the int.
+        ///// </summary>
+        ///// <param name="propertyName">The name of the property to get the value of.</param>
+        ///// <returns></returns>
+        //private object? GetDynamicPropertyValue(string propertyName)
+        //{
+        //    if (Kind == JsonValueKind.Array && propertyName == nameof(Length))
+        //    {
+        //        return Length;
+        //    }
 
-        private void WriteTo(Utf8JsonWriter writer) => _element.WriteTo(writer);
+        //    if (Kind == JsonValueKind.Object)
+        //    {
+        //        return GetPropertyValue(propertyName);
+        //    }
 
-        private void EnsureObject()
-        {
-            if (Kind != JsonValueKind.Object)
-            {
-                throw new InvalidOperationException($"Expected kind to be object but was {Kind} instead");
-            }
-        }
+        //    throw new InvalidOperationException($"Cannot get property on JSON element with kind {Kind}.");
+        //}
 
-        private JsonData? GetPropertyValue(string propertyName)
-        {
-            EnsureObject();
+        // TODO: Multiplex indexer for properties and arrays
+        //private JsonData? GetViaIndexer(object index)
+        //{
+        //    switch (index)
+        //    {
+        //        case string propertyName:
+        //            return GetPropertyValue(propertyName);
+        //        case int arrayIndex:
+        //            return GetValueAt(arrayIndex);
+        //    }
 
-            if (_element.TryGetProperty(propertyName, out JsonElement element))
-            {
-                return new JsonData(element);
-            }
-
-            return null;
-        }
-
-        /// <summary>
-        /// Used by the dynamic meta object to fetch properties. We can't use GetPropertyValue because when the underlying
-        /// value is an array, we want `.Length` to mean "the length of the array" and not "treat the array as an object
-        /// and get the Length property", and we also want the return type to be "int" and not a JsonData wrapping the int.
-        /// </summary>
-        /// <param name="propertyName">The name of the property to get the value of.</param>
-        /// <returns></returns>
-        private object? GetDynamicPropertyValue(string propertyName)
-        {
-            if (Kind == JsonValueKind.Array && propertyName == nameof(Length))
-            {
-                return Length;
-            }
-
-            if (Kind == JsonValueKind.Object)
-            {
-                return GetPropertyValue(propertyName);
-            }
-
-            throw new InvalidOperationException($"Cannot get property on JSON element with kind {Kind}.");
-        }
-
-        private JsonData? GetViaIndexer(object index)
-        {
-            switch (index)
-            {
-                case string propertyName:
-                    return GetPropertyValue(propertyName);
-                case int arrayIndex:
-                    return GetValueAt(arrayIndex);
-            }
-
-            throw new InvalidOperationException($"Tried to access indexer with an unsupported index type: {index}");
-        }
+        //    throw new InvalidOperationException($"Tried to access indexer with an unsupported index type: {index}");
+        //}
 
         //private JsonData SetValue(string propertyName, object value)
         //{
@@ -346,14 +308,6 @@ namespace Azure.Core.Dynamic
         //    EnsureObject()[propertyName] = json;
         //    return json;
         //}
-
-        private void EnsureArray()
-        {
-            if (Kind != JsonValueKind.Array)
-            {
-                throw new InvalidOperationException($"Expected kind to be array but was {Kind} instead");
-            }
-        }
 
         //private JsonData SetViaIndexer(object index, object value)
         //{
@@ -367,13 +321,6 @@ namespace Azure.Core.Dynamic
 
         //    throw new InvalidOperationException($"Tried to access indexer with an unsupported index type: {index}");
         //}
-
-        private JsonData GetValueAt(int index)
-        {
-            EnsureArray();
-
-            return new JsonData(_element[index]);
-        }
 
         //private JsonData SetValueAt(int index, object value)
         //{

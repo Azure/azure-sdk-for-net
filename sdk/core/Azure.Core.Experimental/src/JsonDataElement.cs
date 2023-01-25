@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Reflection;
 using System.Text.Json;
 
 namespace Azure.Core.Dynamic
@@ -12,6 +13,8 @@ namespace Azure.Core.Dynamic
     /// </summary>
     public struct JsonDataElement
     {
+        internal static readonly MethodInfo GetPropertyMethod = typeof(JsonDataElement).GetMethod(nameof(GetProperty), BindingFlags.NonPublic | BindingFlags.Instance);
+
         private readonly JsonData _root;
         private readonly JsonElement _element;
         private readonly string _path;
@@ -125,6 +128,10 @@ namespace Azure.Core.Dynamic
 
             return _element.GetInt32();
         }
+
+        internal long GetInt64() => throw new NotImplementedException();
+
+        internal float GetFloat() => throw new NotImplementedException();
 
         internal string? GetString()
         {

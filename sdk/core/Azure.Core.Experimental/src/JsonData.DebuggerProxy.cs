@@ -69,23 +69,23 @@ namespace Azure.Core.Dynamic
         //    }
         //}
 
-        /// <summary>
-        /// The default serialization behavior for <see cref="JsonData"/> is not the behavior we want, we want to use
-        /// the underlying JSON value that <see cref="JsonData"/> wraps, instead of using the default behavior for
-        /// POCOs.
-        /// </summary>
-        private class JsonConverter : JsonConverter<JsonData>
-        {
-            public override JsonData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
-            {
-                using var document = JsonDocument.ParseValue(ref reader);
-                return new JsonData(document);
-            }
+        ///// <summary>
+        ///// The default serialization behavior for <see cref="JsonData"/> is not the behavior we want, we want to use
+        ///// the underlying JSON value that <see cref="JsonData"/> wraps, instead of using the default behavior for
+        ///// POCOs.
+        ///// </summary>
+        //private class JsonConverter : JsonConverter<JsonData>
+        //{
+        //    public override JsonData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+        //    {
+        //        using var document = JsonDocument.ParseValue(ref reader);
+        //        return new JsonData(document);
+        //    }
 
-            public override void Write(Utf8JsonWriter writer, JsonData value, JsonSerializerOptions options)
-            {
-                value.WriteTo(writer);
-            }
-        }
+        //    public override void Write(Utf8JsonWriter writer, JsonData value, JsonSerializerOptions options)
+        //    {
+        //        value.WriteTo(writer);
+        //    }
+        //}
     }
 }
