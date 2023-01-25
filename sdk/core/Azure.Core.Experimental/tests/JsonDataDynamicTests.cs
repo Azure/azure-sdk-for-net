@@ -50,5 +50,20 @@ namespace Azure.Core.Experimental.Tests
 
             Assert.AreEqual(2, (int)jsonData.Foo);
         }
+
+        [Test]
+        public void CanSetNestedIntProperty()
+        {
+            dynamic jsonData = JsonData.Parse(@"
+                {
+                  ""Foo"" : {
+                    ""Bar"" : 1
+                  }
+                }");
+
+            jsonData.Foo.Bar = 2;
+
+            Assert.AreEqual(2, (int)jsonData.Foo.Bar);
+        }
     }
 }

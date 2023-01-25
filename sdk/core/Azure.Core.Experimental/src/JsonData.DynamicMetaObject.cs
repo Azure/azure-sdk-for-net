@@ -84,7 +84,7 @@ namespace Azure.Core.Dynamic
 
             public override DynamicMetaObject BindSetMember(SetMemberBinder binder, DynamicMetaObject value)
             {
-                Expression this_ = Expression.Convert(Expression, LimitType);
+                UnaryExpression this_ = Expression.Convert(Expression, LimitType);
                 MemberExpression rootElement = Expression.Property(this_, "RootElement");
 
                 Expression[] getPropertyArgs = new Expression[] { Expression.Constant(binder.Name) };

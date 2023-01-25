@@ -43,6 +43,20 @@ namespace Azure.Core.Dynamic
 
                 return new DynamicMetaObject(toObject, restrictions);
             }
+
+            public override DynamicMetaObject BindSetMember(SetMemberBinder binder, DynamicMetaObject value)
+            {
+                UnaryExpression this_ = Expression.Convert(Expression, LimitType);
+
+                Expression[] getPropertyArgs = new Expression[] { Expression.Constant(binder.Name) };
+                MethodCallExpression getPropertyCall = Expression.Call(this_, GetPropertyMethod, getPropertyArgs);
+
+                Expression[] setDynamicArgs = new Expression[] { Expression.Convert(value.Expression, typeof(object)) };
+                MethodCallExpression setCall = Expression.Call(getPropertyCall, SetDynamicMethod, setDynamicArgs);
+
+                BindingRestrictions restrictions = BindingRestrictions.GetTypeRestriction(Expression, LimitType);
+                return new DynamicMetaObject(setCall, restrictions);
+            }
         }
     }
 }
