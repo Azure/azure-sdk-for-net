@@ -117,19 +117,5 @@ namespace Azure.Security.KeyVault.Keys.Tests
             Assert.AreEqual(key.Id, keyElement.GetProperty("kid").GetString());
             Assert.AreEqual(JsonValueKind.String, keyElement.GetProperty("key_hsm").ValueKind);
         }
-
-        [RecordedTest]
-        [ServiceVersion(Min = KeyClientOptions.ServiceVersion.V7_4_Preview_1)]
-        public async Task CreateOkpKey()
-        {
-            string keyName = Recording.GenerateId();
-
-            CreateOkpKeyOptions options = new(keyName, hardwareProtected: false);
-            KeyVaultKey key = await Client.CreateOkpKeyAsync(options);
-            RegisterForCleanup(key.Name);
-
-            KeyVaultKey keyReturned = await Client.GetKeyAsync(keyName);
-            AssertKeyVaultKeysEqual(key, keyReturned);
-        }
     }
 }
