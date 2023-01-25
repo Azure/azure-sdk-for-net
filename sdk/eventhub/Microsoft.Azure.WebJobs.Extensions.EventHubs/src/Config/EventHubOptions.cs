@@ -132,6 +132,27 @@ namespace Microsoft.Azure.WebJobs.EventHubs
             }
         }
 
+        private int _targetUnprocessedEventThreshold;
+
+        /// <summary>
+        /// Get or sets the target unprocessed events per worker for eventhub functions. This is used in target based scaling to override the default behavior of using maxEventBatchSize as the target value.
+        /// If TargetUnprocessedEventThreshold is set, the total unprocessed event count will be divided by this value to determine the number of instances,
+        /// and then we will round that up to an instance count that creates a balanced partition distribution.
+        /// </summary>
+        public int TargetUnprocessedEventThreshold
+        {
+            get => _targetUnprocessedEventThreshold;
+
+            set
+            {
+                if (value < 1)
+                {
+                    throw new ArgumentException("Unprocessed Event Threshold must be larger than 0.");
+                }
+                _targetUnprocessedEventThreshold = value;
+            }
+        }
+
         /// <summary>
         /// Gets the initial offset options to apply when processing. This only applies
         /// when no checkpoint information is available.
