@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Runtime.InteropServices;
 using Azure.Storage.DataMovement.Models;
 
@@ -11,6 +12,7 @@ namespace Azure.Storage.DataMovement
     ///
     /// TODO: check if we want to set the pack and/or size for the struct layout
     /// </summary>
+    [Serializable]
     [StructLayout(LayoutKind.Sequential, CharSet=CharSet.Unicode)]
     internal struct JobPartPlanHeader
     {

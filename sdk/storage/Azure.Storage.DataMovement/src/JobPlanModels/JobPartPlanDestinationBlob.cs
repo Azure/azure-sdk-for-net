@@ -1,5 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
+using System;
 using System.Runtime.InteropServices;
 
 namespace Azure.Storage.DataMovement
@@ -9,6 +10,7 @@ namespace Azure.Storage.DataMovement
     ///
     /// Comes to a total of 6311 bytes
     /// </summary>
+    [Serializable]
     [StructLayout(LayoutKind.Sequential)]
     internal struct JobPartPlanDestinationBlob
     {

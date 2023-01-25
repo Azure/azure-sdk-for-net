@@ -125,8 +125,7 @@ namespace Azure.Storage.DataMovement
             _maxJobChunkTasks = options?.MaximumConcurrency ?? DataMovementConstants.MaxJobChunkTasks;
             _dataTransfers = new List<DataTransfer>();
             _arrayPool = ArrayPool<byte>.Shared;
-            // TODO: https://github.com/Azure/azure-sdk-for-net/issues/32955
-            //_checkpointer = options?.Checkpointer != default ? options.Checkpointer : CreateDefaultCheckpointer();
+            _checkpointer = options?.Checkpointer != default ? options.Checkpointer : CreateDefaultCheckpointer();
         }
 
         #region Job Channel Management

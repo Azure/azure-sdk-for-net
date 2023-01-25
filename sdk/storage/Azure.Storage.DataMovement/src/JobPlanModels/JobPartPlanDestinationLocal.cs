@@ -1,5 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
+using System;
 using System.Runtime.InteropServices;
 
 namespace Azure.Storage.DataMovement
@@ -7,6 +8,7 @@ namespace Azure.Storage.DataMovement
     /// <summary>
     /// This matching the JobPartPlanDstLocal of azcopy
     /// </summary>
+    [Serializable]
     [StructLayout(LayoutKind.Sequential)]
     internal struct JobPartPlanDestinationLocal
     {

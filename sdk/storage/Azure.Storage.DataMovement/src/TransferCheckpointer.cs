@@ -15,7 +15,7 @@ namespace Azure.Storage.DataMovement
     /// Base Checkpointer class to create the checkpointing logic
     /// to resume from.
     /// </summary>
-    internal abstract class TransferCheckpointer
+    public abstract class TransferCheckpointer
     {
         internal List<string> _ids;
 
