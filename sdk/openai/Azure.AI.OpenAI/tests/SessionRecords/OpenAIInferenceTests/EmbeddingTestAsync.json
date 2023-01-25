@@ -8,9 +8,9 @@
         "api-key": "***********",
         "Content-Length": "38",
         "Content-Type": "application/json",
-        "traceparent": "00-f8f802fc146e944f9b1692c4f1c0d83f-072c6d84080ec06b-00",
+        "traceparent": "00-6d8573a38fc4530f1377d3a882efd0ba-acfc807751c8c8c1-00",
         "User-Agent": "azsdk-net-AI.OpenAI/1.0.0-alpha.20230125.1 (.NET 6.0.13; Microsoft Windows 10.0.22621)",
-        "x-ms-client-request-id": "2c0e90170352e3afed9e3c1b4a5233f9",
+        "x-ms-client-request-id": "3566555429d30145a19a1df42301fa6e",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -19,16 +19,16 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Access-Control-Allow-Origin": "*",
-        "apim-request-id": "180ecf6a-e664-4643-98b5-4ac24908e32b",
+        "apim-request-id": "777d7e87-7fef-4c21-a71a-8a3f3c553191",
         "Content-Length": "269906",
         "Content-Type": "application/json",
-        "Date": "Wed, 25 Jan 2023 20:21:43 GMT",
-        "openai-processing-ms": "106.717",
+        "Date": "Wed, 25 Jan 2023 20:43:47 GMT",
+        "openai-processing-ms": "207.772",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-client-request-id": "2c0e90170352e3afed9e3c1b4a5233f9",
+        "x-ms-client-request-id": "3566555429d30145a19a1df42301fa6e",
         "x-ms-region": "South Central US",
-        "X-Request-ID": "18b51fd7-51cb-401b-82df-28f513cd55ef"
+        "X-Request-ID": "72134a22-7909-4398-aa9f-56bd39fa8a5d"
       },
       "ResponseBody": {
         "object": "list",
@@ -12337,6 +12337,11 @@
     }
   ],
   "Variables": {
-    "RandomSeed": "291100142"
+    "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com",
+    "OPENAI_DEPLOYMENT_ID": "text-davinci-002",
+    "OPENAI_EMBEDDINGS_DEPLOYMENT_ID": "text-similarity-davinci-001",
+    "OPENAI_ENDPOINT": "https://sdk.openai.azure.com/",
+    "RandomSeed": "224051127",
+    "SUBSCRIPTION_ID": "faa080af-c1d8-40ad-9cce-e1a450ca5b57"
   }
 }
