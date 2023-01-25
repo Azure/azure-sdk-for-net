@@ -43,14 +43,5 @@ namespace Azure.Containers.ContainerRegistry.Specialized
         {
             return OciManifest.DeserializeOciManifest(JsonDocument.Parse(Content).RootElement);
         }
-
-        /// <summary>
-        /// Gets the downloaded manifest as an OciIndex.
-        /// </summary>
-        /// <returns></returns>
-        public OciIndex AsOciIndex()
-        {
-            return OciIndex.DeserializeOciIndex(JsonDocument.Parse(Content).RootElement);
-        }
     }
 }

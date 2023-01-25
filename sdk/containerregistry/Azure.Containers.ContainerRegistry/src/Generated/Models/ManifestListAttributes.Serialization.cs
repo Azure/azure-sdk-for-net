@@ -8,42 +8,16 @@
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.Containers.ContainerRegistry.Specialized
+namespace Azure.Containers.ContainerRegistry
 {
-    public partial class ManifestListAttributes : IUtf8JsonSerializable
+    internal partial class ManifestListAttributes
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
-        {
-            writer.WriteStartObject();
-            if (Optional.IsDefined(MediaType))
-            {
-                writer.WritePropertyName("mediaType");
-                writer.WriteStringValue(MediaType);
-            }
-            if (Optional.IsDefined(Size))
-            {
-                writer.WritePropertyName("size");
-                writer.WriteNumberValue(Size.Value);
-            }
-            if (Optional.IsDefined(Digest))
-            {
-                writer.WritePropertyName("digest");
-                writer.WriteStringValue(Digest);
-            }
-            if (Optional.IsDefined(Platform))
-            {
-                writer.WritePropertyName("platform");
-                writer.WriteObjectValue(Platform);
-            }
-            writer.WriteEndObject();
-        }
-
         internal static ManifestListAttributes DeserializeManifestListAttributes(JsonElement element)
         {
             Optional<string> mediaType = default;
             Optional<long> size = default;
             Optional<string> digest = default;
-            Optional<ManifestPlatform> platform = default;
+            Optional<Platform> platform = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("mediaType"))
@@ -73,7 +47,7 @@ namespace Azure.Containers.ContainerRegistry.Specialized
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    platform = ManifestPlatform.DeserializeManifestPlatform(property.Value);
+                    platform = Platform.DeserializePlatform(property.Value);
                     continue;
                 }
             }

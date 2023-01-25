@@ -12,119 +12,21 @@ using Azure.Core;
 
 namespace Azure.Containers.ContainerRegistry
 {
-    internal partial class ManifestWrapper : IUtf8JsonSerializable
+    internal partial class ManifestWrapper
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
-        {
-            writer.WriteStartObject();
-            if (Optional.IsDefined(MediaType))
-            {
-                writer.WritePropertyName("mediaType");
-                writer.WriteStringValue(MediaType);
-            }
-            if (Optional.IsCollectionDefined(Manifests))
-            {
-                writer.WritePropertyName("manifests");
-                writer.WriteStartArray();
-                foreach (var item in Manifests)
-                {
-                    writer.WriteObjectValue(item);
-                }
-                writer.WriteEndArray();
-            }
-            if (Optional.IsDefined(Config))
-            {
-                writer.WritePropertyName("config");
-                writer.WriteObjectValue(Config);
-            }
-            if (Optional.IsCollectionDefined(Layers))
-            {
-                writer.WritePropertyName("layers");
-                writer.WriteStartArray();
-                foreach (var item in Layers)
-                {
-                    writer.WriteObjectValue(item);
-                }
-                writer.WriteEndArray();
-            }
-            if (Optional.IsDefined(Annotations))
-            {
-                if (Annotations != null)
-                {
-                    writer.WritePropertyName("annotations");
-                    writer.WriteObjectValue(Annotations);
-                }
-                else
-                {
-                    writer.WriteNull("annotations");
-                }
-            }
-            if (Optional.IsDefined(Architecture))
-            {
-                writer.WritePropertyName("architecture");
-                writer.WriteStringValue(Architecture);
-            }
-            if (Optional.IsDefined(Name))
-            {
-                writer.WritePropertyName("name");
-                writer.WriteStringValue(Name);
-            }
-            if (Optional.IsDefined(Tag))
-            {
-                writer.WritePropertyName("tag");
-                writer.WriteStringValue(Tag);
-            }
-            if (Optional.IsCollectionDefined(FsLayers))
-            {
-                writer.WritePropertyName("fsLayers");
-                writer.WriteStartArray();
-                foreach (var item in FsLayers)
-                {
-                    writer.WriteObjectValue(item);
-                }
-                writer.WriteEndArray();
-            }
-            if (Optional.IsCollectionDefined(History))
-            {
-                writer.WritePropertyName("history");
-                writer.WriteStartArray();
-                foreach (var item in History)
-                {
-                    writer.WriteObjectValue(item);
-                }
-                writer.WriteEndArray();
-            }
-            if (Optional.IsCollectionDefined(Signatures))
-            {
-                writer.WritePropertyName("signatures");
-                writer.WriteStartArray();
-                foreach (var item in Signatures)
-                {
-                    writer.WriteObjectValue(item);
-                }
-                writer.WriteEndArray();
-            }
-            if (Optional.IsDefined(SchemaVersion))
-            {
-                writer.WritePropertyName("schemaVersion");
-                writer.WriteNumberValue(SchemaVersion.Value);
-            }
-            writer.WriteEndObject();
-        }
-
         internal static ManifestWrapper DeserializeManifestWrapper(JsonElement element)
         {
             Optional<string> mediaType = default;
-            Optional<IList<ManifestListAttributes>> manifests = default;
+            Optional<IReadOnlyList<ManifestListAttributes>> manifests = default;
             Optional<OciBlobDescriptor> config = default;
-            Optional<IList<OciBlobDescriptor>> layers = default;
+            Optional<IReadOnlyList<OciBlobDescriptor>> layers = default;
             Optional<OciAnnotations> annotations = default;
             Optional<string> architecture = default;
             Optional<string> name = default;
             Optional<string> tag = default;
-            Optional<IList<FsLayer>> fsLayers = default;
-            Optional<IList<History>> history = default;
-            Optional<IList<ImageSignature>> signatures = default;
+            Optional<IReadOnlyList<FsLayer>> fsLayers = default;
+            Optional<IReadOnlyList<History>> history = default;
+            Optional<IReadOnlyList<ImageSignature>> signatures = default;
             Optional<int> schemaVersion = default;
             foreach (var property in element.EnumerateObject())
             {

@@ -7,48 +7,16 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.Containers.ContainerRegistry.Specialized;
 using Azure.Core;
 
-namespace Azure.Containers.ContainerRegistry.Specialized
+namespace Azure.Containers.ContainerRegistry
 {
-    public partial class OciIndex : IUtf8JsonSerializable
+    internal partial class OCIIndex
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        internal static OCIIndex DeserializeOCIIndex(JsonElement element)
         {
-            writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Manifests))
-            {
-                writer.WritePropertyName("manifests");
-                writer.WriteStartArray();
-                foreach (var item in Manifests)
-                {
-                    writer.WriteObjectValue(item);
-                }
-                writer.WriteEndArray();
-            }
-            if (Optional.IsDefined(Annotations))
-            {
-                if (Annotations != null)
-                {
-                    writer.WritePropertyName("annotations");
-                    writer.WriteObjectValue(Annotations);
-                }
-                else
-                {
-                    writer.WriteNull("annotations");
-                }
-            }
-            if (Optional.IsDefined(SchemaVersion))
-            {
-                writer.WritePropertyName("schemaVersion");
-                writer.WriteNumberValue(SchemaVersion.Value);
-            }
-            writer.WriteEndObject();
-        }
-
-        internal static OciIndex DeserializeOciIndex(JsonElement element)
-        {
-            Optional<IList<ManifestListAttributes>> manifests = default;
+            Optional<IReadOnlyList<ManifestListAttributes>> manifests = default;
             Optional<OciAnnotations> annotations = default;
             Optional<int> schemaVersion = default;
             foreach (var property in element.EnumerateObject())
@@ -89,7 +57,7 @@ namespace Azure.Containers.ContainerRegistry.Specialized
                     continue;
                 }
             }
-            return new OciIndex(Optional.ToNullable(schemaVersion), Optional.ToList(manifests), annotations.Value);
+            return new OCIIndex(Optional.ToNullable(schemaVersion), Optional.ToList(manifests), annotations.Value);
         }
     }
 }

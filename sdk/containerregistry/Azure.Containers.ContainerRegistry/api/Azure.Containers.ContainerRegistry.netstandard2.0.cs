@@ -224,11 +224,6 @@ namespace Azure.Containers.ContainerRegistry
 }
 namespace Azure.Containers.ContainerRegistry.Specialized
 {
-    public abstract partial class ArtifactManifest
-    {
-        public ArtifactManifest() { }
-        public int? SchemaVersion { get { throw null; } set { } }
-    }
     public partial class ContainerRegistryBlobClient
     {
         protected ContainerRegistryBlobClient() { }
@@ -275,26 +270,7 @@ namespace Azure.Containers.ContainerRegistry.Specialized
         public System.BinaryData Content { get { throw null; } }
         public string Digest { get { throw null; } }
         public string MediaType { get { throw null; } set { } }
-        public Azure.Containers.ContainerRegistry.Specialized.OciIndex AsOciIndex() { throw null; }
         public Azure.Containers.ContainerRegistry.Specialized.OciManifest AsOciManifest() { throw null; }
-    }
-    public partial class ManifestListAttributes
-    {
-        public ManifestListAttributes() { }
-        public string Digest { get { throw null; } set { } }
-        public string MediaType { get { throw null; } set { } }
-        public Azure.Containers.ContainerRegistry.Specialized.ManifestPlatform Platform { get { throw null; } set { } }
-        public long? Size { get { throw null; } set { } }
-    }
-    public partial class ManifestPlatform
-    {
-        public ManifestPlatform() { }
-        public Azure.Containers.ContainerRegistry.ArtifactArchitecture Architecture { get { throw null; } set { } }
-        public System.Collections.Generic.IList<string> Features { get { throw null; } }
-        public Azure.Containers.ContainerRegistry.ArtifactOperatingSystem OperatingSystem { get { throw null; } set { } }
-        public System.Collections.Generic.IList<string> OsFeatures { get { throw null; } }
-        public string OsVersion { get { throw null; } set { } }
-        public string Variant { get { throw null; } set { } }
     }
     public partial class OciAnnotations
     {
@@ -321,18 +297,13 @@ namespace Azure.Containers.ContainerRegistry.Specialized
         public string MediaType { get { throw null; } set { } }
         public long? Size { get { throw null; } set { } }
     }
-    public partial class OciIndex : Azure.Containers.ContainerRegistry.Specialized.ArtifactManifest
-    {
-        public OciIndex() { }
-        public Azure.Containers.ContainerRegistry.Specialized.OciAnnotations Annotations { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.Containers.ContainerRegistry.Specialized.ManifestListAttributes> Manifests { get { throw null; } }
-    }
-    public partial class OciManifest : Azure.Containers.ContainerRegistry.Specialized.ArtifactManifest
+    public partial class OciManifest
     {
         public OciManifest() { }
         public Azure.Containers.ContainerRegistry.Specialized.OciAnnotations Annotations { get { throw null; } set { } }
         public Azure.Containers.ContainerRegistry.Specialized.OciBlobDescriptor Config { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.Containers.ContainerRegistry.Specialized.OciBlobDescriptor> Layers { get { throw null; } }
+        public int? SchemaVersion { get { throw null; } set { } }
     }
     public partial class UploadBlobOptions
     {

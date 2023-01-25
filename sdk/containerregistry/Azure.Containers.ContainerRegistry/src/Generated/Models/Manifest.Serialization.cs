@@ -10,31 +10,25 @@ using Azure.Core;
 
 namespace Azure.Containers.ContainerRegistry
 {
-    internal partial class JWK
+    internal partial class Manifest
     {
-        internal static JWK DeserializeJWK(JsonElement element)
+        internal static Manifest DeserializeManifest(JsonElement element)
         {
-            Optional<JWKHeader> jwk = default;
-            Optional<string> alg = default;
+            Optional<int> schemaVersion = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("jwk"))
+                if (property.NameEquals("schemaVersion"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    jwk = JWKHeader.DeserializeJWKHeader(property.Value);
-                    continue;
-                }
-                if (property.NameEquals("alg"))
-                {
-                    alg = property.Value.GetString();
+                    schemaVersion = property.Value.GetInt32();
                     continue;
                 }
             }
-            return new JWK(jwk.Value, alg.Value);
+            return new Manifest(Optional.ToNullable(schemaVersion));
         }
     }
 }
