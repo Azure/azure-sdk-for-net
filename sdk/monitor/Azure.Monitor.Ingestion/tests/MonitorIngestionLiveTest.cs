@@ -22,6 +22,21 @@ namespace Azure.Monitor.Ingestion.Tests
 
         /* please refer to https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/template/Azure.Template/tests/TemplateClientLiveTests.cs to write tests. */
 
+        [OneTimeSetUp]
+        public void SetUp()
+        {
+            if (Mode == RecordedTestMode.Record || Mode == RecordedTestMode.Playback)
+                LogsIngestionClient.SingleUploadThreshold = 250;
+            else
+                LogsIngestionClient.SingleUploadThreshold = Mb;
+        }
+
+        [OneTimeTearDown]
+        public void CleanUp()
+        {
+            LogsIngestionClient.SingleUploadThreshold = Mb;
+        }
+
         private LogsIngestionClient CreateClient(HttpPipelinePolicy policy = null)
         {
             var options = new LogsIngestionClientOptions();
@@ -235,6 +250,7 @@ namespace Azure.Monitor.Ingestion.Tests
             Assert.IsFalse(isTriggered);
             Task Options_UploadFailed(UploadFailedEventArgs e)
             {
+                TestContext.Progress.WriteLine(e.Exception);
                 isTriggered = true;
                 return Task.CompletedTask;
             }

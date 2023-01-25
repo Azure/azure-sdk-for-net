@@ -72,26 +72,21 @@ namespace Azure.Monitor.Ingestion
             }
         }
 
-        /// <summary>
-        /// test
-        /// </summary>
-        /// <returns></returns>
-        internal UploadLogsOptions Clone()
-        {
-            AssertNotNegative(MaxConcurrency, nameof(MaxConcurrency));
-            UploadLogsOptions copy = new UploadLogsOptions();
-            copy.Serializer = Serializer;
-            copy.MaxConcurrency = MaxConcurrency;
-            copy.UploadFailedEventHandler = UploadFailedEventHandler;
-            return copy;
-        }
-
         internal static void AssertNotNegative(int argumentValue, string argumentName)
         {
             if (argumentValue <= 0)
             {
                 throw new ArgumentOutOfRangeException(argumentName, $"Argument {argumentName} must be a non-negative timespan value. The provided value was {argumentValue}.");
             }
+        }
+
+        internal static bool AssertHandlerEnabled(UploadLogsOptions options)
+        {
+            if (options.UploadFailedEventHandler == null)
+            {
+                return false;
+            }
+            return true;
         }
     }
 }
