@@ -1,0 +1,6 @@
+{
+  "Entries": [],
+  "Variables": {
+    "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com"
+  }
+}
