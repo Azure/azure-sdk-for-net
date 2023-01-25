@@ -329,10 +329,9 @@ namespace Azure.Storage.Blobs.Specialized
                                 context: context);
                         }
 
-                        var blobClientResponse = ResponseWithHeaders.FromValue(new BlobAcquireLeaseHeaders(rawResponse), rawResponse);
                         response = Response.FromValue(
-                            blobClientResponse.ToBlobLease(),
-                            blobClientResponse.GetRawResponse());
+                            ResponseWithHeaders.FromValue(new BlobAcquireLeaseHeaders(rawResponse), rawResponse).ToBlobLease(),
+                            rawResponse);
                     }
                     else
                     {
@@ -362,11 +361,9 @@ namespace Azure.Storage.Blobs.Specialized
                                 requestConditions: conditions,
                                 context: context);
                         }
-
-                        var containerClientResponse = ResponseWithHeaders.FromValue(new ContainerAcquireLeaseHeaders(rawResponse), rawResponse);
                         response = Response.FromValue(
-                            containerClientResponse.ToBlobLease(),
-                            containerClientResponse.GetRawResponse());
+                            ResponseWithHeaders.FromValue(new ContainerAcquireLeaseHeaders(rawResponse), rawResponse).ToBlobLease(),
+                            rawResponse);
                     }
                     LeaseId = response.Value.LeaseId;
                     return response;
