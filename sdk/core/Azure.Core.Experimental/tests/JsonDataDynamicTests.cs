@@ -22,5 +22,34 @@ namespace Azure.Core.Experimental.Tests
 
             Assert.AreEqual(1, value);
         }
+
+        [Test]
+        public void CanGetNestedIntProperty()
+        {
+            dynamic jsonData = JsonData.Parse(@"
+                {
+                  ""Foo"" : {
+                    ""Bar"" : 1
+                  }
+                }");
+
+            int value = jsonData.Foo.Bar;
+
+            Assert.AreEqual(1, value);
+        }
+
+        [Test]
+        [Ignore("SetMemberBinding must be implemented on JsonData")]
+        public void CanSetIntProperty()
+        {
+            dynamic jsonData = JsonData.Parse(@"
+                {
+                  ""Foo"" : 1
+                }");
+
+            jsonData.Foo = 2;
+
+            Assert.AreEqual(2, (int)jsonData.Foo);
+        }
     }
 }

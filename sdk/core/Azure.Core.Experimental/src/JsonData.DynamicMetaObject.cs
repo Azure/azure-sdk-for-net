@@ -10,8 +10,11 @@ using System.Reflection;
 
 namespace Azure.Core.Dynamic
 {
-    public partial class JsonData
+    public partial class JsonData : IDynamicMetaObjectProvider
     {
+        /// <inheritdoc />
+        DynamicMetaObject IDynamicMetaObjectProvider.GetMetaObject(Expression parameter) => new MetaObject(parameter, this);
+
         private class MetaObject : DynamicMetaObject
         {
             //private static readonly MethodInfo GetDynamicValueMethod = typeof(JsonData).GetMethod(nameof(GetDynamicPropertyValue), BindingFlags.NonPublic | BindingFlags.Instance)!;

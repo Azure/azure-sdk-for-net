@@ -18,7 +18,7 @@ namespace Azure.Core.Dynamic
     //[DebuggerDisplay("{DebuggerDisplay,nq}")]
     //[DebuggerTypeProxy(typeof(JsonDataDebuggerProxy))]
     [JsonConverter(typeof(JsonConverter))]
-    public partial class JsonData : DynamicData, IDynamicMetaObjectProvider, IEquatable<JsonData>
+    public partial class JsonData : DynamicData, IEquatable<JsonData>
     {
         private readonly Memory<byte> _original;
         private readonly JsonElement _originalElement;
@@ -332,9 +332,6 @@ namespace Azure.Core.Dynamic
         //    EnsureArray()[index] = json;
         //    return json;
         //}
-
-        /// <inheritdoc />
-        DynamicMetaObject IDynamicMetaObjectProvider.GetMetaObject(Expression parameter) => new MetaObject(parameter, this);
 
         //private IEnumerable GetDynamicEnumerable()
         //{

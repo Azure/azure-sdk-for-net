@@ -1,0 +1,39 @@
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+using System;
+using System.Collections.Generic;
+using System.Dynamic;
+using System.Linq.Expressions;
+using System.Text;
+
+namespace Azure.Core.Dynamic
+{
+    public partial struct JsonDataElement : IDynamicMetaObjectProvider
+    {
+        /// <inheritdoc />
+        DynamicMetaObject IDynamicMetaObjectProvider.GetMetaObject(Expression parameter) => new MetaObject(parameter, this);
+
+        private class MetaObject : DynamicMetaObject
+        {
+            internal MetaObject(Expression parameter, IDynamicMetaObjectProvider value) : base(parameter, BindingRestrictions.Empty, value)
+            {
+            }
+
+            public override DynamicMetaObject BindGetMember(GetMemberBinder binder)
+            {
+                UnaryExpression this_ = Expression.Convert(Expression, LimitType);
+
+                Expression[] propertyNameArg = new Expression[] { Expression.Constant(binder.Name) };
+                MethodCallExpression getPropertyCall = Expression.Call(this_, GetPropertyMethod, propertyNameArg);
+
+                // Binding machinery expects the call site signature to return an object.
+                UnaryExpression toObject = Expression.Convert(getPropertyCall, typeof(object));
+
+                BindingRestrictions restrictions = BindingRestrictions.GetTypeRestriction(Expression, LimitType);
+
+                return new DynamicMetaObject(toObject, restrictions);
+            }
+        }
+    }
+}
