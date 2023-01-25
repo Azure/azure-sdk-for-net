@@ -137,8 +137,7 @@ namespace Azure.Identity
                 }
 
                 bool isAADSTSError = exception.Message.Contains("AADSTS");
-                bool isLoginError = exception.Message.IndexOf("azd login", StringComparison.OrdinalIgnoreCase) != -1 ||
-                                    exception.Message.IndexOf("azd account set", StringComparison.OrdinalIgnoreCase) != -1;
+                bool isLoginError = exception.Message.IndexOf("azd login", StringComparison.OrdinalIgnoreCase) != -1;
 
                 if (isLoginError && !isAADSTSError)
                 {

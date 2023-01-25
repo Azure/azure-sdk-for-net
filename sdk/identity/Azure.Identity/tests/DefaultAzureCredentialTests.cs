@@ -68,9 +68,9 @@ namespace Azure.Identity.Tests
         }
 
         [Test]
-        public void ValidateAllUnavailable([Values(true, false)] bool excludeDeveloperCliCredential,
-                                           [Values(true, false)] bool excludeEnvironmentCredential,
+        public void ValidateAllUnavailable([Values(true, false)] bool excludeEnvironmentCredential,
                                            [Values(true, false)] bool excludeManagedIdentityCredential,
+                                           [Values(true, false)] bool excludeDeveloperCliCredential,
                                            [Values(true, false)] bool excludeSharedTokenCacheCredential,
                                            [Values(true, false)] bool excludeVisualStudioCredential,
                                            [Values(true, false)] bool excludeVisualStudioCodeCredential,
@@ -78,7 +78,7 @@ namespace Azure.Identity.Tests
                                            [Values(true, false)] bool excludePowerShellCredential,
                                            [Values(true, false)] bool excludeInteractiveBrowserCredential)
         {
-            if (excludeDeveloperCliCredential && excludeEnvironmentCredential && excludeManagedIdentityCredential && excludeSharedTokenCacheCredential && excludeVisualStudioCredential && excludeVisualStudioCodeCredential && excludeCliCredential && excludeInteractiveBrowserCredential)
+            if (excludeEnvironmentCredential && excludeManagedIdentityCredential && excludeDeveloperCliCredential && excludeSharedTokenCacheCredential && excludeVisualStudioCredential && excludeVisualStudioCodeCredential && excludeCliCredential && excludeInteractiveBrowserCredential)
             {
                 Assert.Pass();
             }
@@ -101,6 +101,7 @@ namespace Azure.Identity.Tests
             void SetupMockForException<T>(Mock<T> mock) where T : TokenCredential =>
                 mock.Setup(m => m.GetTokenAsync(It.IsAny<TokenRequestContext>(), It.IsAny<CancellationToken>()))
                     .Throws(new CredentialUnavailableException($"{typeof(T).Name} Unavailable"));
+
             credFactory.OnCreateEnvironmentCredential = c =>
                 SetupMockForException(c);
             credFactory.OnCreateInteractiveBrowserCredential = c =>
@@ -124,10 +125,6 @@ namespace Azure.Identity.Tests
 
             var ex = Assert.ThrowsAsync<CredentialUnavailableException>(async () => await cred.GetTokenAsync(new TokenRequestContext(MockScopes.Default)));
 
-            if (!excludeDeveloperCliCredential)
-            {
-                Assert.True(ex.Message.Contains("DeveloperCliCredential Unavailable"));
-            }
             if (!excludeEnvironmentCredential)
             {
                 Assert.True(ex.Message.Contains("EnvironmentCredential Unavailable"));
@@ -135,6 +132,10 @@ namespace Azure.Identity.Tests
             if (!excludeManagedIdentityCredential)
             {
                 Assert.True(ex.Message.Contains("ManagedIdentityCredential Unavailable"));
+            }
+            if (!excludeDeveloperCliCredential)
+            {
+                Assert.True(ex.Message.Contains("DeveloperCliCredential Unavailable"));
             }
             if (!excludeSharedTokenCacheCredential)
             {
@@ -233,10 +234,10 @@ namespace Azure.Identity.Tests
             yield return new object[] { typeof(SharedTokenCacheCredential) };
             yield return new object[] { typeof(VisualStudioCredential) };
             yield return new object[] { typeof(VisualStudioCodeCredential) };
-            yield return new object[] { typeof(AzureDeveloperCliCredential) };
             yield return new object[] { typeof(AzureCliCredential) };
             yield return new object[] { typeof(InteractiveBrowserCredential) };
             yield return new object[] { typeof(ManagedIdentityCredential) };
+            yield return new object[] { typeof(AzureDeveloperCliCredential) };
         }
 
         [Test]

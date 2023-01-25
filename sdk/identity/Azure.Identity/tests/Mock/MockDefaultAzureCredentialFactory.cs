@@ -14,12 +14,12 @@ namespace Azure.Identity.Tests.Mock
 
         public Action<Mock<EnvironmentCredential>> OnCreateEnvironmentCredential { get; set; }
         private Mock<EnvironmentCredential> mockEnvironmentCredential = new();
-        public Action<Mock<AzureDeveloperCliCredential>> OnCreateAzureDeveloperCliCredential { get; set; }
-        private Mock<AzureDeveloperCliCredential> mockAzureDeveloperCliCredential = new();
         public Action<Mock<AzureCliCredential>> OnCreateAzureCliCredential { get; set; }
         private Mock<AzureCliCredential> mockAzureCliCredential = new();
         public Action<Mock<ManagedIdentityCredential>> OnCreateManagedIdentityCredential { get; set; }
         private Mock<ManagedIdentityCredential> mockManagedIdentityCredential = new();
+        public Action<Mock<AzureDeveloperCliCredential>> OnCreateAzureDeveloperCliCredential { get; set; }
+        private Mock<AzureDeveloperCliCredential> mockAzureDeveloperCliCredential = new();
         public Action<Mock<SharedTokenCacheCredential>> OnCreateSharedTokenCacheCredential { get; set; }
         private Mock<SharedTokenCacheCredential> mockSharedTokenCacheCredential = new();
         public Action<Mock<InteractiveBrowserCredential>> OnCreateInteractiveBrowserCredential { get; set; }
