@@ -343,28 +343,27 @@ namespace Azure.Storage.Blobs.Specialized
                             operationName: nameof(BlobLeaseClient.Acquire),
                             parameterName: nameof(conditions));
 
-                        ResponseWithHeaders<ContainerAcquireLeaseHeaders> containerClientResponse;
+                        Response rawResponse;
 
                         if (async)
                         {
-                            containerClientResponse = await BlobContainerClient.ContainerRestClient.AcquireLeaseAsync(
+                            rawResponse = await BlobContainerClient.ContainerRestClient.AcquireLeaseAsync(
                                 duration: serviceDuration,
                                 proposedLeaseId: LeaseId,
-                                ifModifiedSince: conditions?.IfModifiedSince,
-                                ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
-                                cancellationToken: context.CancellationToken)
+                                requestConditions: conditions,
+                                context: context)
                                 .ConfigureAwait(false);
                         }
                         else
                         {
-                            containerClientResponse = BlobContainerClient.ContainerRestClient.AcquireLease(
+                            rawResponse = BlobContainerClient.ContainerRestClient.AcquireLease(
                                 duration: serviceDuration,
                                 proposedLeaseId: LeaseId,
-                                ifModifiedSince: conditions?.IfModifiedSince,
-                                ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
-                                cancellationToken: context.CancellationToken);
+                                requestConditions: conditions,
+                                context: context);
                         }
 
+                        var containerClientResponse = ResponseWithHeaders.FromValue(new ContainerAcquireLeaseHeaders(rawResponse), rawResponse);
                         response = Response.FromValue(
                             containerClientResponse.ToBlobLease(),
                             containerClientResponse.GetRawResponse());
