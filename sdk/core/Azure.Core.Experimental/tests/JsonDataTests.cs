@@ -2,12 +2,11 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Linq;
 using System.Text.Json;
 using Azure.Core.Dynamic;
 using NUnit.Framework;
 
-namespace Azure.Core.Tests
+namespace Azure.Core.Experimental.Tests
 {
     public class JsonDataTests
     {
@@ -112,7 +111,13 @@ namespace Azure.Core.Tests
         [Test]
         public void CanAccessProperties()
         {
-            dynamic jsonData = JsonData.Parse("{ \"primitive\":\"Hello\", \"nested\": { \"nestedPrimitive\":true } }");
+            dynamic jsonData = JsonData.Parse(@"
+                {
+                  ""primitive"" : ""Hello"",
+                  ""nested"" : {
+                      ""nestedPrimitive"": true
+                 }
+              }");
 
             Assert.AreEqual("Hello", (string)jsonData.primitive);
             Assert.AreEqual(true, (bool)jsonData.nested.nestedPrimitive);

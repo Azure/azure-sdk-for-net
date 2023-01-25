@@ -6,7 +6,7 @@ using Azure.Core.Dynamic;
 using Azure.Core.GeoJson;
 using NUnit.Framework;
 
-namespace Azure.Core.Tests
+namespace Azure.Core.Experimental.Tests
 {
     public class JsonDataDynamicMutableTests
     {
