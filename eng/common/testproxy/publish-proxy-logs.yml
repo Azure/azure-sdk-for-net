@@ -1,0 +1,9 @@
+parameters:
+  rootFolder: '$(Build.SourcesDirectory)'
+
+steps:
+  - template: ../pipelines/templates/steps/publish-artifact.yml
+    parameters:
+      ArtifactName: "proxy-logs"
+      ArtifactPath: "${{ parameters.rootFolder }}/test-proxy.log"
+
