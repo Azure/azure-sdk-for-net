@@ -31,9 +31,9 @@ namespace Azure.Identity.Tests
 
             Assert.NotNull(sources);
             Assert.AreEqual(sources.Length, 9);
-            Assert.IsInstanceOf(typeof(AzureDeveloperCliCredential), sources[0]);
-            Assert.IsInstanceOf(typeof(EnvironmentCredential), sources[1]);
-            Assert.IsInstanceOf(typeof(ManagedIdentityCredential), sources[2]);
+            Assert.IsInstanceOf(typeof(EnvironmentCredential), sources[0]);
+            Assert.IsInstanceOf(typeof(ManagedIdentityCredential), sources[1]);
+            Assert.IsInstanceOf(typeof(AzureDeveloperCliCredential), sources[2]);
             Assert.IsInstanceOf(typeof(VisualStudioCredential), sources[3]);
             Assert.IsInstanceOf(typeof(AzureCliCredential), sources[4]);
             Assert.IsInstanceOf(typeof(AzurePowerShellCredential), sources[5]);
@@ -49,9 +49,10 @@ namespace Azure.Identity.Tests
 
             Assert.NotNull(sources);
             Assert.AreEqual(sources.Length, 9);
-            Assert.IsInstanceOf(typeof(AzureDeveloperCliCredential), sources[0]);
-            Assert.IsInstanceOf(typeof(EnvironmentCredential), sources[1]);
-            Assert.IsInstanceOf(typeof(ManagedIdentityCredential), sources[2]);
+
+            Assert.IsInstanceOf(typeof(EnvironmentCredential), sources[0]);
+            Assert.IsInstanceOf(typeof(ManagedIdentityCredential), sources[1]);
+            Assert.IsInstanceOf(typeof(AzureDeveloperCliCredential), sources[2]);
             Assert.IsInstanceOf(typeof(VisualStudioCredential), sources[3]);
             Assert.IsInstanceOf(typeof(AzureCliCredential), sources[4]);
             Assert.IsInstanceOf(typeof(AzurePowerShellCredential), sources[5]);
@@ -84,9 +85,9 @@ namespace Azure.Identity.Tests
 
             var options = new DefaultAzureCredentialOptions
             {
-                ExcludeAzureDeveloperCliCredential = excludeDeveloperCliCredential,
                 ExcludeEnvironmentCredential = excludeEnvironmentCredential,
                 ExcludeManagedIdentityCredential = excludeManagedIdentityCredential,
+                ExcludeAzureDeveloperCliCredential = excludeDeveloperCliCredential,
                 ExcludeSharedTokenCacheCredential = excludeSharedTokenCacheCredential,
                 ExcludeVisualStudioCredential = excludeVisualStudioCredential,
                 ExcludeVisualStudioCodeCredential = excludeVisualStudioCodeCredential,
@@ -100,14 +101,13 @@ namespace Azure.Identity.Tests
             void SetupMockForException<T>(Mock<T> mock) where T : TokenCredential =>
                 mock.Setup(m => m.GetTokenAsync(It.IsAny<TokenRequestContext>(), It.IsAny<CancellationToken>()))
                     .Throws(new CredentialUnavailableException($"{typeof(T).Name} Unavailable"));
-
-            credFactory.OnCreateAzureDeveloperCliCredential = c =>
-                SetupMockForException(c);
             credFactory.OnCreateEnvironmentCredential = c =>
                 SetupMockForException(c);
             credFactory.OnCreateInteractiveBrowserCredential = c =>
                 SetupMockForException(c);
             credFactory.OnCreateManagedIdentityCredential = c =>
+                SetupMockForException(c);
+            credFactory.OnCreateAzureDeveloperCliCredential = c =>
                 SetupMockForException(c);
             credFactory.OnCreateSharedTokenCacheCredential = c =>
                 SetupMockForException(c);
@@ -168,9 +168,9 @@ namespace Azure.Identity.Tests
         {
             var options = new DefaultAzureCredentialOptions
             {
-                ExcludeAzureDeveloperCliCredential = false,
                 ExcludeEnvironmentCredential = false,
                 ExcludeManagedIdentityCredential = false,
+                ExcludeAzureDeveloperCliCredential = false,
                 ExcludeSharedTokenCacheCredential = false,
                 ExcludeVisualStudioCredential = false,
                 ExcludeVisualStudioCodeCredential = false,
@@ -200,13 +200,13 @@ namespace Azure.Identity.Tests
                 SetupMockForException(c);
             credFactory.OnCreateManagedIdentityCredential = c =>
                 SetupMockForException(c);
+            credFactory.OnCreateAzureDeveloperCliCredential = c =>
+                SetupMockForException(c);
             credFactory.OnCreateSharedTokenCacheCredential = c =>
                 SetupMockForException(c);
             credFactory.OnCreateVisualStudioCredential = c =>
                 SetupMockForException(c);
             credFactory.OnCreateVisualStudioCodeCredential = c =>
-                SetupMockForException(c);
-            credFactory.OnCreateAzureDeveloperCliCredential = c =>
                 SetupMockForException(c);
             credFactory.OnCreateAzureCliCredential = c =>
                 SetupMockForException(c);
@@ -248,9 +248,9 @@ namespace Azure.Identity.Tests
 
             var options = new DefaultAzureCredentialOptions
             {
-                ExcludeAzureDeveloperCliCredential = false,
                 ExcludeEnvironmentCredential = false,
                 ExcludeManagedIdentityCredential = false,
+                ExcludeAzureDeveloperCliCredential = false,
                 ExcludeSharedTokenCacheCredential = false,
                 ExcludeVisualStudioCredential = false,
                 ExcludeVisualStudioCodeCredential = false,
@@ -296,9 +296,9 @@ namespace Azure.Identity.Tests
 
             var options = new DefaultAzureCredentialOptions
             {
-                ExcludeAzureDeveloperCliCredential = false,
                 ExcludeEnvironmentCredential = false,
                 ExcludeManagedIdentityCredential = false,
+                ExcludeAzureDeveloperCliCredential = false,
                 ExcludeSharedTokenCacheCredential = false,
                 ExcludeVisualStudioCredential = false,
                 ExcludeVisualStudioCodeCredential = false,
@@ -342,9 +342,9 @@ namespace Azure.Identity.Tests
                 SetupMockForException(c);
             credFactory.OnCreateManagedIdentityCredential = c =>
                 SetupMockForException(c);
-            credFactory.OnCreateSharedTokenCacheCredential = c =>
-                SetupMockForException(c);
             credFactory.OnCreateAzureDeveloperCliCredential = c =>
+                SetupMockForException(c);
+            credFactory.OnCreateSharedTokenCacheCredential = c =>
                 SetupMockForException(c);
             credFactory.OnCreateAzureCliCredential = c =>
                 SetupMockForException(c);

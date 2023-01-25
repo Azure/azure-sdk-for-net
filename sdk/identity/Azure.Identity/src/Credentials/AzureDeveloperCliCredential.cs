@@ -46,14 +46,14 @@ namespace Azure.Identity
         internal string[] AdditionallyAllowedTenantIds { get; }
 
         /// <summary>
-        /// Create an instance of CliCredential class.
+        /// Create an instance of the <see cref="AzureDeveloperCliCredential"/> class.
         /// </summary>
         public AzureDeveloperCliCredential()
             : this(CredentialPipeline.GetInstance(null), default)
         { }
 
         /// <summary>
-        /// Create an instance of DeveloperCliCredential class.
+        /// Create an instance of the <see cref="AzureDeveloperCliCredential"/> class.
         /// </summary>
         /// <param name="options"> The Azure Active Directory tenant (directory) Id of the service principal. </param>
         public AzureDeveloperCliCredential(AzureDeveloperCliCredentialOptions options)
@@ -72,23 +72,22 @@ namespace Azure.Identity
         }
 
         /// <summary>
-        /// Obtains a access token from Azure Developer CLI credential, using this access token to authenticate. This method called by Azure SDK clients.
+        /// Obtains an access token from Azure Developer CLI credential, using this access token to authenticate. This method called by Azure SDK clients.
         /// </summary>
         /// <param name="requestContext"></param>
         /// <param name="cancellationToken"></param>
-        /// <returns></returns>
-        //TODO 1
+        /// <returns>AccessToken</returns>
         public override AccessToken GetToken(TokenRequestContext requestContext, CancellationToken cancellationToken = default)
         {
             return GetTokenImplAsync(false, requestContext, cancellationToken).EnsureCompleted();
         }
 
         /// <summary>
-        /// Obtains a access token from Azure Developer CLI service, using the access token to authenticate. This method id called by Azure SDK clients.
+        /// Obtains an access token from Azure Developer CLI service, using the access token to authenticate. This method is called by Azure SDK clients.
         /// </summary>
         /// <param name="requestContext"></param>
         /// <param name="cancellationToken"></param>
-        /// <returns></returns>
+        /// <returns>ValueTask<AccessToken></returns>
         public override async ValueTask<AccessToken> GetTokenAsync(TokenRequestContext requestContext, CancellationToken cancellationToken = default)
         {
             return await GetTokenImplAsync(true, requestContext, cancellationToken).ConfigureAwait(false);

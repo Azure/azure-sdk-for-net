@@ -40,11 +40,6 @@ namespace Azure.Identity
             int i = 0;
             TokenCredential[] chain = new TokenCredential[9];
 
-            if (!Options.ExcludeAzureDeveloperCliCredential)
-            {
-                chain[i++] = CreateAzureDeveloperCliCredential();
-            }
-
             if (!Options.ExcludeEnvironmentCredential)
             {
                 chain[i++] = CreateEnvironmentCredential();
@@ -53,6 +48,11 @@ namespace Azure.Identity
             if (!Options.ExcludeManagedIdentityCredential)
             {
                 chain[i++] = CreateManagedIdentityCredential();
+            }
+
+            if (!Options.ExcludeAzureDeveloperCliCredential)
+            {
+                chain[i++] = CreateAzureDeveloperCliCredential();
             }
 
             if (!Options.ExcludeSharedTokenCacheCredential)
@@ -146,9 +146,9 @@ namespace Azure.Identity
                 AzdCliProcessTimeout = Options.DeveloperCredentialTimeout
             };
 
-            foreach (var addlTenant in Options.AdditionallyAllowedTenants)
+            foreach (var additionalTenant in Options.AdditionallyAllowedTenants)
             {
-                options.AdditionallyAllowedTenants.Add(addlTenant);
+                options.AdditionallyAllowedTenants.Add(additionalTenant);
             }
 
             return new AzureDeveloperCliCredential(Pipeline, default, options);

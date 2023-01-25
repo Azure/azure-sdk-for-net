@@ -200,10 +200,6 @@ namespace Azure.Identity
         /// </summary>
         public TimeSpan? DeveloperCredentialTimeout { get; set; } = TimeSpan.FromSeconds(30);
 
-        /// <summary>
-        /// Specifies whether the <see cref="AzureDeveloperCliCredential"/> will be excluded from the <see cref="DefaultAzureCredential"/> authentication flow.
-        /// </summary>
-        public bool ExcludeAzureDeveloperCliCredential { get; set; }
 
         /// <summary>
         /// Specifies whether the <see cref="EnvironmentCredential"/> will be excluded from the authentication flow. Setting to true disables reading
@@ -216,6 +212,11 @@ namespace Azure.Identity
         /// Setting to true disables authenticating with managed identity endpoints.
         /// </summary>
         public bool ExcludeManagedIdentityCredential { get; set; }
+
+        /// <summary>
+        /// Specifies whether the <see cref="AzureDeveloperCliCredential"/> will be excluded from the <see cref="DefaultAzureCredential"/> authentication flow.
+        /// </summary>
+        public bool ExcludeAzureDeveloperCliCredential { get; set; }
 
         /// <summary>
         /// Specifies whether the <see cref="SharedTokenCacheCredential"/> will be excluded from the <see cref="DefaultAzureCredential"/> authentication flow.
@@ -266,9 +267,9 @@ namespace Azure.Identity
                 ManagedIdentityClientId = ManagedIdentityClientId,
                 ManagedIdentityResourceId = ManagedIdentityResourceId,
                 DeveloperCredentialTimeout = DeveloperCredentialTimeout,
-                ExcludeAzureDeveloperCliCredential = ExcludeAzureDeveloperCliCredential,
                 ExcludeEnvironmentCredential = ExcludeEnvironmentCredential,
                 ExcludeManagedIdentityCredential = ExcludeManagedIdentityCredential,
+                ExcludeAzureDeveloperCliCredential = ExcludeAzureDeveloperCliCredential,
                 ExcludeSharedTokenCacheCredential = ExcludeSharedTokenCacheCredential,
                 ExcludeInteractiveBrowserCredential = ExcludeInteractiveBrowserCredential,
                 ExcludeAzureCliCredential = ExcludeAzureCliCredential,
