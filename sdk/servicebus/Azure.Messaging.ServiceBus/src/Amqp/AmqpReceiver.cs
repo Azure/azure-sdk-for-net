@@ -368,7 +368,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
                         link.DisposeDelivery(message, true, AmqpConstants.AcceptedOutcome);
                     }
 
-                    receivedMessages.Add(_messageConverter.AmqpMessageToSBMessage(message));
+                    receivedMessages.Add(_messageConverter.AmqpMessageToSBReceivedMessage(message));
                     message.Dispose();
                 }
 
@@ -984,7 +984,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
 
                     var payload = (ArraySegment<byte>)entry[ManagementConstants.Properties.Message];
                     var amqpMessage = AmqpMessage.CreateAmqpStreamMessage(new BufferListStream(new[] { payload }), true);
-                    message = _messageConverter.AmqpMessageToSBMessage(amqpMessage, true);
+                    message = _messageConverter.AmqpMessageToSBReceivedMessage(amqpMessage, true);
                     messages.Add(message);
                 }
 
@@ -1294,7 +1294,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
                         var payload = (ArraySegment<byte>)entry[ManagementConstants.Properties.Message];
                         var amqpMessage =
                             AmqpMessage.CreateAmqpStreamMessage(new BufferListStream(new[] { payload }), true);
-                        var message = _messageConverter.AmqpMessageToSBMessage(amqpMessage);
+                        var message = _messageConverter.AmqpMessageToSBReceivedMessage(amqpMessage);
                         if (entry.TryGetValue<Guid>(ManagementConstants.Properties.LockToken, out var lockToken))
                         {
                             message.LockTokenGuid = lockToken;
