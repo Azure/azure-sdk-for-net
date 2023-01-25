@@ -10,8 +10,8 @@ generate-model-factory: false
 csharp: true
 library-name: CosmosDB
 namespace: Azure.ResourceManager.CosmosDB
-require: https://github.com/Azure/azure-rest-api-specs/blob/e4f7afa7b2b1fbba16c61f6935bfafb14df9042e/specification/cosmos-db/resource-manager/readme.md
-tag: package-2022-08
+require: https://github.com/Azure/azure-rest-api-specs/blob/5c4d6a2201d1c193fc30a9f5117b8a4b46698715/specification/cosmos-db/resource-manager/readme.md
+tag: package-2022-11
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 skip-csproj: true
