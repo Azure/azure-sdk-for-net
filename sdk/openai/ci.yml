@@ -10,7 +10,7 @@ trigger:
     include:
     - sdk/openai
     - sdk/openai/ci.yml
-    - sdk/openai/Azure.OpenAI.Inference
+    - sdk/openai/Azure.AI.OpenAI
 
 pr:
   branches:
@@ -23,7 +23,7 @@ pr:
     include:
     - sdk/openai
     - sdk/openai/ci.yml
-    - sdk/openai/Azure.OpenAI.Inference
+    - sdk/openai/Azure.AI.OpenAI
 
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
@@ -31,5 +31,5 @@ extends:
     ServiceDirectory: openai
     ArtifactName: packages
     Artifacts:
-    - name: Azure.OpenAI.Inference
-      safeName: AzureOpenAIInference
+    - name: Azure.AI.OpenAI
+      safeName: AzureAIOpenAI
