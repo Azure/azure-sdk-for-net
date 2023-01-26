@@ -29,9 +29,9 @@ namespace Azure.Core.Dynamic
         }
 
         /// <summary>
-        /// Gets the JsonDataElement for the value of the property with the specified name.
+        /// Gets the MutableJsonElement for the value of the property with the specified name.
         /// </summary>
-        internal MutableJsonElement GetProperty(string name)
+        public MutableJsonElement GetProperty(string name)
         {
             if (!TryGetProperty(name, out MutableJsonElement value))
             {
@@ -41,7 +41,13 @@ namespace Azure.Core.Dynamic
             return value;
         }
 
-        internal bool TryGetProperty(string name, out MutableJsonElement value)
+        /// <summary>
+        /// Looks for a property named propertyName in the current object, returning a value that indicates whether or not such a property exists. When the property exists, its value is assigned to the value argument.
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        public bool TryGetProperty(string name, out MutableJsonElement value)
         {
             EnsureValid();
 
@@ -55,7 +61,7 @@ namespace Azure.Core.Dynamic
             }
 
             var path = MutableJsonDocument.ChangeTracker.PushProperty(_path, name);
-            if (Changes.TryGetChange(path, _highWaterMark, out JsonDocumentChange change))
+            if (Changes.TryGetChange(path, _highWaterMark, out MutableJsonChange change))
             {
                 if (change.ReplacesJsonElement)
                 {
@@ -76,7 +82,7 @@ namespace Azure.Core.Dynamic
 
             var path = MutableJsonDocument.ChangeTracker.PushIndex(_path, index);
 
-            if (Changes.TryGetChange(path, _highWaterMark, out JsonDocumentChange change))
+            if (Changes.TryGetChange(path, _highWaterMark, out MutableJsonChange change))
             {
                 if (change.ReplacesJsonElement)
                 {
@@ -87,11 +93,16 @@ namespace Azure.Core.Dynamic
             return new MutableJsonElement(_root, _element[index], path, _highWaterMark);
         }
 
-        internal double GetDouble()
+        /// <summary>
+        /// Gets the current JSON number as a double.
+        /// </summary>
+        /// <returns></returns>
+        /// <exception cref="InvalidOperationException"></exception>
+        public double GetDouble()
         {
             EnsureValid();
 
-            if (Changes.TryGetChange(_path, _highWaterMark, out JsonDocumentChange change))
+            if (Changes.TryGetChange(_path, _highWaterMark, out MutableJsonChange change))
             {
                 switch (change.Value)
                 {
@@ -107,11 +118,15 @@ namespace Azure.Core.Dynamic
             return _element.GetDouble();
         }
 
-        internal int GetInt32()
+        /// <summary>
+        /// Gets the current JSON number as an int.
+        /// </summary>
+        /// <returns></returns>
+        public int GetInt32()
         {
             EnsureValid();
 
-            if (Changes.TryGetChange(_path, _highWaterMark, out JsonDocumentChange change))
+            if (Changes.TryGetChange(_path, _highWaterMark, out MutableJsonChange change))
             {
                 switch (change.Value)
                 {
@@ -127,15 +142,28 @@ namespace Azure.Core.Dynamic
             return _element.GetInt32();
         }
 
-        internal long GetInt64() => throw new NotImplementedException();
+        /// <summary>
+        /// Gets the current JSON number as a long.
+        /// </summary>
+        /// <returns></returns>
+        public long GetInt64() => throw new NotImplementedException();
 
-        internal float GetFloat() => throw new NotImplementedException();
+        /// <summary>
+        /// Gets the current JSON number as a float.
+        /// </summary>
+        /// <returns></returns>
+        public float GetFloat() => throw new NotImplementedException();
 
-        internal string? GetString()
+        /// <summary>
+        /// Gets the value of the element as a string.
+        /// </summary>
+        /// <returns></returns>
+        /// <exception cref="InvalidOperationException"></exception>
+        public string? GetString()
         {
             EnsureValid();
 
-            if (Changes.TryGetChange(_path, _highWaterMark, out JsonDocumentChange change))
+            if (Changes.TryGetChange(_path, _highWaterMark, out MutableJsonChange change))
             {
                 switch (change.Value)
                 {
@@ -155,11 +183,16 @@ namespace Azure.Core.Dynamic
             return _element.GetString();
         }
 
-        internal bool GetBoolean()
+        /// <summary>
+        /// Gets the value of the element as a bool.
+        /// </summary>
+        /// <returns></returns>
+        /// <exception cref="InvalidOperationException"></exception>
+        public bool GetBoolean()
         {
             EnsureValid();
 
-            if (Changes.TryGetChange(_path, _highWaterMark, out JsonDocumentChange change))
+            if (Changes.TryGetChange(_path, _highWaterMark, out MutableJsonChange change))
             {
                 switch (change.Value)
                 {
@@ -175,7 +208,12 @@ namespace Azure.Core.Dynamic
             return _element.GetBoolean();
         }
 
-        internal void SetProperty(string name, object value)
+        /// <summary>
+        /// Set the value of the property with the specified name to the passed-in value.  If the property is not already present, it will be created.
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="value"></param>
+        public void SetProperty(string name, object value)
         {
             EnsureValid();
 
@@ -202,7 +240,12 @@ namespace Azure.Core.Dynamic
             Changes.AddChange(_path, newElement, true);
         }
 
-        internal void RemoveProperty(string name)
+        /// <summary>
+        /// Remove the property with the specified name from the current MutableJsonElement.
+        /// </summary>
+        /// <param name="name"></param>
+        /// <exception cref="InvalidOperationException"></exception>
+        public void RemoveProperty(string name)
         {
             EnsureValid();
 
@@ -224,28 +267,44 @@ namespace Azure.Core.Dynamic
             Changes.AddChange(_path, newElement, true);
         }
 
-        internal void Set(double value)
+        /// <summary>
+        /// Sets the value of this element to the passed-in value.
+        /// </summary>
+        /// <param name="value"></param>
+        public void Set(double value)
         {
             EnsureValid();
 
             Changes.AddChange(_path, value, _element.ValueKind != JsonValueKind.Number);
         }
 
-        internal void Set(int value)
+        /// <summary>
+        /// Sets the value of this element to the passed-in value.
+        /// </summary>
+        /// <param name="value"></param>
+        public void Set(int value)
         {
             EnsureValid();
 
             Changes.AddChange(_path, value, _element.ValueKind != JsonValueKind.Number);
         }
 
-        internal void Set(string value)
+        /// <summary>
+        /// Sets the value of this element to the passed-in value.
+        /// </summary>
+        /// <param name="value"></param>
+        public void Set(string value)
         {
             EnsureValid();
 
             Changes.AddChange(_path, value, _element.ValueKind != JsonValueKind.String);
         }
 
-        internal void Set(bool value)
+        /// <summary>
+        /// Sets the value of this element to the passed-in value.
+        /// </summary>
+        /// <param name="value"></param>
+        public void Set(bool value)
         {
             EnsureValid();
 
@@ -254,14 +313,22 @@ namespace Azure.Core.Dynamic
                   _element.ValueKind == JsonValueKind.False));
         }
 
-        internal void Set(object value)
+        /// <summary>
+        /// Sets the value of this element to the passed-in value.
+        /// </summary>
+        /// <param name="value"></param>
+        public void Set(object value)
         {
             EnsureValid();
 
             Changes.AddChange(_path, value, true);
         }
 
-        internal void Set(MutableJsonElement value)
+        /// <summary>
+        /// Sets the value of this element to the passed-in value.
+        /// </summary>
+        /// <param name="value"></param>
+        public void Set(MutableJsonElement value)
         {
             EnsureValid();
 
@@ -269,7 +336,7 @@ namespace Azure.Core.Dynamic
 
             JsonElement element = value._element;
 
-            if (Changes.TryGetChange(value._path, value._highWaterMark, out JsonDocumentChange change))
+            if (Changes.TryGetChange(value._path, value._highWaterMark, out MutableJsonChange change))
             {
                 if (change.ReplacesJsonElement)
                 {

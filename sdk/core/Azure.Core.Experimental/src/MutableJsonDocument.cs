@@ -32,7 +32,7 @@ namespace Azure.Core.Dynamic
         {
             get
             {
-                if (Changes.TryGetChange(string.Empty, -1, out JsonDocumentChange change))
+                if (Changes.TryGetChange(string.Empty, -1, out MutableJsonChange change))
                 {
                     if (change.ReplacesJsonElement)
                     {

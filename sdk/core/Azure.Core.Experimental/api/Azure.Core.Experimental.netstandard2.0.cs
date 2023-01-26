@@ -156,5 +156,21 @@ namespace Azure.Core.Dynamic
     {
         private object _dummy;
         private int _dummyPrimitive;
+        public bool GetBoolean() { throw null; }
+        public double GetDouble() { throw null; }
+        public float GetFloat() { throw null; }
+        public int GetInt32() { throw null; }
+        public long GetInt64() { throw null; }
+        public Azure.Core.Dynamic.MutableJsonElement GetProperty(string name) { throw null; }
+        public string? GetString() { throw null; }
+        public void RemoveProperty(string name) { }
+        public void Set(Azure.Core.Dynamic.MutableJsonElement value) { }
+        public void Set(bool value) { }
+        public void Set(double value) { }
+        public void Set(int value) { }
+        public void Set(object value) { }
+        public void Set(string value) { }
+        public void SetProperty(string name, object value) { }
+        public bool TryGetProperty(string name, out Azure.Core.Dynamic.MutableJsonElement value) { throw null; }
     }
 }

@@ -11,7 +11,7 @@ namespace Azure.Core.Dynamic
     {
         internal class ChangeTracker
         {
-            private List<JsonDocumentChange>? _changes;
+            private List<MutableJsonChange>? _changes;
 
             internal bool HasChanges => _changes != null && _changes.Count > 0;
 
@@ -28,13 +28,13 @@ namespace Azure.Core.Dynamic
                 while (!changed && path.Length > 0)
                 {
                     path = PopProperty(path);
-                    changed = TryGetChange(path, highWaterMark, out JsonDocumentChange change);
+                    changed = TryGetChange(path, highWaterMark, out MutableJsonChange change);
                 }
 
                 return changed;
             }
 
-            internal bool TryGetChange(ReadOnlySpan<byte> path, out JsonDocumentChange change)
+            internal bool TryGetChange(ReadOnlySpan<byte> path, out MutableJsonChange change)
             {
                 if (_changes == null)
                 {
@@ -67,7 +67,7 @@ namespace Azure.Core.Dynamic
                 return false;
             }
 
-            internal bool TryGetChange(string path, in int lastAppliedChange, out JsonDocumentChange change)
+            internal bool TryGetChange(string path, in int lastAppliedChange, out MutableJsonChange change)
             {
                 if (_changes == null)
                 {
@@ -93,10 +93,10 @@ namespace Azure.Core.Dynamic
             {
                 if (_changes == null)
                 {
-                    _changes = new List<JsonDocumentChange>();
+                    _changes = new List<MutableJsonChange>();
                 }
 
-                _changes.Add(new JsonDocumentChange()
+                _changes.Add(new MutableJsonChange()
                 {
                     Path = path,
                     Value = value,

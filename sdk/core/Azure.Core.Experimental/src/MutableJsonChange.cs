@@ -7,7 +7,7 @@ using System.Text.Json;
 
 namespace Azure.Core.Dynamic
 {
-    internal struct JsonDocumentChange
+    internal struct MutableJsonChange
     {
         public string Path { get; set; }
 
