@@ -88,15 +88,9 @@ Write-Host "Reading configuration from $cadlConfigurationFile"
 $configuration = Get-Content -Path $cadlConfigurationFile -Raw | ConvertFrom-Yaml
 
 $pieces = $cadlConfigurationFile.Path.Replace("\","/").Split("/")
-$projectName = $pieces[$pieces.Count - 3]
+$projectName = $pieces[$pieces.Count - 2]
 
-# clone the whole RP directory which is the parent of $configuration["directory"]
-if ($configuration["directory"] -match "^[^/\\]+[\\/]+[^/\\]+") {
-    $specSubDirectory = $Matches[0]
-}
-else {
-    throw "The directory in $cadlConfigurationFile is not expected"
-}
+$specSubDirectory = $configuration["directory"]
 
 if ( $configuration["repo"] -and $configuration["commit"]) {
     $specCloneDir = GetSpecCloneDir $projectName
