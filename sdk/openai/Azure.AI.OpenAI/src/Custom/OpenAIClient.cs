@@ -28,7 +28,7 @@ namespace Azure.AI.OpenAI
         /// <param name="completionsDeploymentId"> default deployment id to use for completions </param>
         /// <param name="embeddingsDeploymentId"> default deployment id to use for embeddings </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
-        public OpenAIClient(Uri endpoint, AzureKeyCredential credential, string completionsDeploymentId, string embeddingsDeploymentId = null) : this(endpoint, credential, completionsDeploymentId, embeddingsDeploymentId, new OpenAIClientOptions())
+        public OpenAIClient(Uri endpoint, TokenCredential credential, string completionsDeploymentId, string embeddingsDeploymentId = null) : this(endpoint, credential, completionsDeploymentId, embeddingsDeploymentId, new OpenAIClientOptions())
         {
         }
 
@@ -42,15 +42,15 @@ namespace Azure.AI.OpenAI
         /// <param name="embeddingsDeploymentId"> default deployment id to use for embeddings </param>
         /// <param name="options"> The options for configuring the client. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
-        public OpenAIClient(Uri endpoint, AzureKeyCredential credential, string completionsDeploymentId, string embeddingsDeploymentId, OpenAIClientOptions options)
+        public OpenAIClient(Uri endpoint, TokenCredential credential, string completionsDeploymentId, string embeddingsDeploymentId, OpenAIClientOptions options)
         {
             Argument.AssertNotNull(endpoint, nameof(endpoint));
             Argument.AssertNotNull(credential, nameof(credential));
             options ??= new OpenAIClientOptions();
 
             ClientDiagnostics = new ClientDiagnostics(options, true);
-            _keyCredential = credential;
-            _pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>(), new HttpPipelinePolicy[] { new AzureKeyCredentialPolicy(_keyCredential, AuthorizationHeader) }, new ResponseClassifier());
+            _tokenCredential = credential;
+            _pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>(), new HttpPipelinePolicy[] { new BearerTokenAuthenticationPolicy(_tokenCredential, AuthorizationScopes) }, new ResponseClassifier());
             _endpoint = endpoint;
             _apiVersion = options.Version;
             _completionsDeploymentId = completionsDeploymentId;
