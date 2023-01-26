@@ -71,6 +71,10 @@ public class Program
             environment.TryGetValue(EnvironmentVariables.ServiceBusQueue, out queueName);
             testParameters.QueueName = queueName;
 
+            var sessionQueueName = string.Empty;
+            environment.TryGetValue(EnvironmentVariables.ServiceBusSessionQueue, out sessionQueueName);
+            testParameters.SessionQueueName = sessionQueueName;
+
             metrics.Client.TrackEvent("Starting a test run.");
 
             TestScenario testScenarioInstance = null;

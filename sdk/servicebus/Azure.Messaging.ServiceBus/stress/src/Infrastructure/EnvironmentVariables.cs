@@ -34,6 +34,13 @@ public static class EnvironmentVariables
     ///
     public const string ServiceBusQueue = "SERVICEBUS_QUEUE";
 
+    /// <summary>
+    ///   The name of the environment variable that holds the name of the Service Bus queue
+    ///   for each test that requires a sessionful queue.
+    /// </summary>
+    ///
+    public const string ServiceBusSessionQueue = "SERVICEBUS_SESSION_QUEUE";
+
     // Job Index Information
 
     /// <summary>

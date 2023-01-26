@@ -61,7 +61,7 @@ internal class SessionProcessor
     public async Task RunAsync(Func<ProcessSessionMessageEventArgs, Task> messageHandler, Func<ProcessErrorEventArgs, Task> errorHandler, CancellationToken cancellationToken)
     {
         await using var client = new ServiceBusClient(_testParameters.ServiceBusConnectionString);
-        await using var processor = client.CreateSessionProcessor(_testParameters.QueueName);
+        await using var processor = client.CreateSessionProcessor(_testParameters.SessionQueueName);
 
         while (!cancellationToken.IsCancellationRequested)
         {

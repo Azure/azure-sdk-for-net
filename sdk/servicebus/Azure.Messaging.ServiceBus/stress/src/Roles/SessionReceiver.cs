@@ -61,7 +61,7 @@ internal class SessionReceiver
     public async Task RunAsync(CancellationToken cancellationToken)
     {
         await using var client = new ServiceBusClient(_testParameters.ServiceBusConnectionString);
-        var receiver = await client.AcceptNextSessionAsync(_testParameters.QueueName);
+        var receiver = await client.AcceptNextSessionAsync(_testParameters.SessionQueueName);
 
         while (!cancellationToken.IsCancellationRequested)
         {

@@ -64,7 +64,7 @@ internal class SessionSender
             // Create the Service Bus client and sender
 
             await using var client = new ServiceBusClient(_testParameters.ServiceBusConnectionString);
-            var sender = client.CreateSender(_testParameters.QueueName);
+            var sender = client.CreateSender(_testParameters.SessionQueueName);
 
             try
             {
