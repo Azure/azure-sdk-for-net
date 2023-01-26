@@ -37,6 +37,27 @@ namespace Azure.Identity.Tests
             return (token, expiresOn, json);
         }
 
+        public static (string Token, DateTimeOffset ExpiresOn, string Json) CreateTokenForAzureDeveloperCli() => CreateTokenForAzureDeveloperCli(TimeSpan.FromSeconds(30));
+
+        public static (string Token, DateTimeOffset ExpiresOn, string Json) CreateTokenForAzureDeveloperCli(TimeSpan expiresOffset)
+        {
+            const string expiresOnStringFormat = "yyyy-MM-ddTHH:mm:ssZ";
+
+            var expiresOnString = DateTimeOffset.Now.Add(expiresOffset).ToString(expiresOnStringFormat);
+            var expiresOn = DateTimeOffset.ParseExact(expiresOnString, expiresOnStringFormat, CultureInfo.InvariantCulture, DateTimeStyles.AdjustToUniversal | DateTimeStyles.AssumeLocal);
+            var token = TokenGenerator.GenerateToken(Guid.NewGuid().ToString(), Guid.NewGuid().ToString(), Guid.NewGuid().ToString(), Guid.NewGuid().ToString(), expiresOn.UtcDateTime);
+            var json = $"{{ \"token\": \"{token}\", \"expiresOn\": \"{expiresOnString}\" }}";
+            return (token, expiresOn, json);
+        }
+
+        public static (string Token, DateTimeOffset ExpiresOn, string Json) CreateTokenForAzureDeveloperCliExpiresIn(int seconds = 30)
+        {
+            var expiresOn = DateTimeOffset.UtcNow + TimeSpan.FromSeconds(seconds);
+            var token = TokenGenerator.GenerateToken(Guid.NewGuid().ToString(), Guid.NewGuid().ToString(), Guid.NewGuid().ToString(), Guid.NewGuid().ToString(), expiresOn.UtcDateTime);
+            var json = $"{{ \"token\": \"{token}\", \"expiresIn\": {seconds} }}";
+            return (token, expiresOn, json);
+        }
+
         public static (string Token, DateTimeOffset ExpiresOn, string Json) CreateTokenForAzurePowerShell(TimeSpan expiresOffset)
         {
             var expiresOnString = DateTimeOffset.Now.Add(expiresOffset).ToString();
