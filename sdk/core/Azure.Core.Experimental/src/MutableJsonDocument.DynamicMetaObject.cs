@@ -10,7 +10,7 @@ using System.Reflection;
 
 namespace Azure.Core.Dynamic
 {
-    public partial class JsonData : IDynamicMetaObjectProvider
+    public partial class MutableJsonDocument : IDynamicMetaObjectProvider
     {
         /// <inheritdoc />
         DynamicMetaObject IDynamicMetaObjectProvider.GetMetaObject(Expression parameter) => new MetaObject(parameter, this);
@@ -40,7 +40,7 @@ namespace Azure.Core.Dynamic
                 MemberExpression rootElement = Expression.Property(this_, "RootElement");
 
                 Expression[] arguments = new Expression[] { Expression.Constant(binder.Name) };
-                MethodCallExpression getPropertyCall = Expression.Call(rootElement, JsonDataElement.GetPropertyMethod, arguments);
+                MethodCallExpression getPropertyCall = Expression.Call(rootElement, MutableJsonElement.GetPropertyMethod, arguments);
 
                 // Binding machinery expects the call site signature to return an object.
                 UnaryExpression toObject = Expression.Convert(getPropertyCall, typeof(object));
@@ -88,10 +88,10 @@ namespace Azure.Core.Dynamic
                 MemberExpression rootElement = Expression.Property(this_, "RootElement");
 
                 Expression[] getPropertyArgs = new Expression[] { Expression.Constant(binder.Name) };
-                MethodCallExpression getPropertyCall = Expression.Call(rootElement, JsonDataElement.GetPropertyMethod, getPropertyArgs);
+                MethodCallExpression getPropertyCall = Expression.Call(rootElement, MutableJsonElement.GetPropertyMethod, getPropertyArgs);
 
                 Expression[] setDynamicArgs = new Expression[] { Expression.Convert(value.Expression, typeof(object)) };
-                MethodCallExpression setCall = Expression.Call(getPropertyCall, JsonDataElement.SetDynamicMethod, setDynamicArgs);
+                MethodCallExpression setCall = Expression.Call(getPropertyCall, MutableJsonElement.SetDynamicMethod, setDynamicArgs);
 
                 BindingRestrictions restrictions = BindingRestrictions.GetTypeRestriction(Expression, LimitType);
                 return new DynamicMetaObject(setCall, restrictions);

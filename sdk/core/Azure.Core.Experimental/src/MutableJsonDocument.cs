@@ -18,26 +18,26 @@ namespace Azure.Core.Dynamic
     //[DebuggerDisplay("{DebuggerDisplay,nq}")]
     //[DebuggerTypeProxy(typeof(JsonDataDebuggerProxy))]
     [JsonConverter(typeof(JsonConverter))]
-    public partial class JsonData : DynamicData, IEquatable<JsonData>
+    public partial class MutableJsonDocument : DynamicData, IEquatable<MutableJsonDocument>
     {
         private readonly Memory<byte> _original;
         private readonly JsonElement _originalElement;
 
         internal ChangeTracker Changes { get; } = new();
 
-        internal JsonDataElement RootElement
+        internal MutableJsonElement RootElement
         {
             get
             {
-                if (Changes.TryGetChange(string.Empty, -1, out JsonDataChange change))
+                if (Changes.TryGetChange(string.Empty, -1, out JsonDocumentChange change))
                 {
                     if (change.ReplacesJsonElement)
                     {
-                        return new JsonDataElement(this, change.AsJsonElement(), string.Empty, change.Index);
+                        return new MutableJsonElement(this, change.AsJsonElement(), string.Empty, change.Index);
                     }
                 }
 
-                return new JsonDataElement(this, _originalElement, string.Empty);
+                return new MutableJsonElement(this, _originalElement, string.Empty);
             }
         }
 
@@ -79,29 +79,29 @@ namespace Azure.Core.Dynamic
         private static readonly JsonSerializerOptions DefaultJsonSerializerOptions = new JsonSerializerOptions();
 
         /// <summary>
-        /// Parses a UTF-8 encoded string representing a single JSON value into a <see cref="JsonData"/>.
+        /// Parses a UTF-8 encoded string representing a single JSON value into a <see cref="MutableJsonDocument"/>.
         /// </summary>
         /// <param name="utf8Json">A UTF-8 encoded string representing a JSON value.</param>
-        /// <returns>A <see cref="JsonData"/> representation of the value.</returns>
-        internal static JsonData Parse(BinaryData utf8Json)
+        /// <returns>A <see cref="MutableJsonDocument"/> representation of the value.</returns>
+        internal static MutableJsonDocument Parse(BinaryData utf8Json)
         {
             var doc = JsonDocument.Parse(utf8Json);
-            return new JsonData(doc, utf8Json.ToArray().AsMemory());
+            return new MutableJsonDocument(doc, utf8Json.ToArray().AsMemory());
         }
 
         /// <summary>
-        /// Parses test representing a single JSON value into a <see cref="JsonData"/>.
+        /// Parses test representing a single JSON value into a <see cref="MutableJsonDocument"/>.
         /// </summary>
         /// <param name="json">The JSON string.</param>
-        /// <returns>A <see cref="JsonData"/> representation of the value.</returns>
-        internal static JsonData Parse(string json)
+        /// <returns>A <see cref="MutableJsonDocument"/> representation of the value.</returns>
+        internal static MutableJsonDocument Parse(string json)
         {
             byte[] utf8 = Encoding.UTF8.GetBytes(json);
             Memory<byte> jsonMemory = utf8.AsMemory();
-            return new JsonData(JsonDocument.Parse(jsonMemory), jsonMemory);
+            return new MutableJsonDocument(JsonDocument.Parse(jsonMemory), jsonMemory);
         }
 
-        internal JsonData(JsonDocument jsonDocument, Memory<byte> utf8Json) : this(jsonDocument.RootElement)
+        internal MutableJsonDocument(JsonDocument jsonDocument, Memory<byte> utf8Json) : this(jsonDocument.RootElement)
         {
             _original = utf8Json;
             _originalElement = jsonDocument.RootElement;
@@ -111,7 +111,7 @@ namespace Azure.Core.Dynamic
         /// Creates a new JsonData object which represents the given object.
         /// </summary>
         /// <param name="value">The value to convert.</param>
-        internal JsonData(object? value) : this(value, DefaultJsonSerializerOptions)
+        internal MutableJsonDocument(object? value) : this(value, DefaultJsonSerializerOptions)
         {
         }
 
@@ -121,7 +121,7 @@ namespace Azure.Core.Dynamic
         /// <param name="value">The value to convert.</param>
         /// <param name="options">Options to control the conversion behavior.</param>
         /// <param name="type">The type of the value to convert. </param>
-        internal JsonData(object? value, JsonSerializerOptions options, Type? type = null)
+        internal MutableJsonDocument(object? value, JsonSerializerOptions options, Type? type = null)
         {
             if (value is JsonDocument)
                 throw new InvalidOperationException("Calling wrong constructor.");
@@ -216,7 +216,7 @@ namespace Azure.Core.Dynamic
         }
 
         /// <inheritdoc />
-        public bool Equals(JsonData? other)
+        public bool Equals(MutableJsonDocument? other)
         {
             if (other is null)
             {

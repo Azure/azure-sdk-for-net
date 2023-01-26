@@ -115,52 +115,29 @@ namespace Azure.Core.Dynamic
     public abstract partial class DynamicData
     {
         protected DynamicData() { }
-        internal abstract void WriteTo(System.Text.Json.Utf8JsonWriter writer);
-        public static void WriteTo(System.Text.Json.Utf8JsonWriter writer, Azure.Core.Dynamic.DynamicData data) { }
+        internal abstract void WriteTo(System.IO.Stream stream);
+        public static void WriteTo(System.IO.Stream stream, Azure.Core.Dynamic.DynamicData data) { }
     }
-    [System.Diagnostics.DebuggerDisplayAttribute("{DebuggerDisplay,nq}")]
-    public partial class JsonData : Azure.Core.Dynamic.DynamicData, System.Dynamic.IDynamicMetaObjectProvider, System.IEquatable<Azure.Core.Dynamic.JsonData>
+    [System.Text.Json.Serialization.JsonConverterAttribute(typeof(System.Text.Json.Serialization.JsonConverter))]
+    public partial class MutableJsonDocument : Azure.Core.Dynamic.DynamicData, System.Dynamic.IDynamicMetaObjectProvider, System.IEquatable<Azure.Core.Dynamic.MutableJsonDocument>
     {
-        internal JsonData() { }
-        public bool Equals(Azure.Core.Dynamic.JsonData other) { throw null; }
+        internal MutableJsonDocument() { }
+        public bool Equals(Azure.Core.Dynamic.MutableJsonDocument? other) { throw null; }
         public override bool Equals(object? obj) { throw null; }
         public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.Core.Dynamic.JsonData? left, bool right) { throw null; }
-        public static bool operator ==(Azure.Core.Dynamic.JsonData? left, double right) { throw null; }
-        public static bool operator ==(Azure.Core.Dynamic.JsonData? left, int right) { throw null; }
-        public static bool operator ==(Azure.Core.Dynamic.JsonData? left, long right) { throw null; }
-        public static bool operator ==(Azure.Core.Dynamic.JsonData? left, float right) { throw null; }
-        public static bool operator ==(Azure.Core.Dynamic.JsonData? left, string? right) { throw null; }
-        public static bool operator ==(bool left, Azure.Core.Dynamic.JsonData? right) { throw null; }
-        public static bool operator ==(double left, Azure.Core.Dynamic.JsonData? right) { throw null; }
-        public static bool operator ==(int left, Azure.Core.Dynamic.JsonData? right) { throw null; }
-        public static bool operator ==(long left, Azure.Core.Dynamic.JsonData? right) { throw null; }
-        public static bool operator ==(float left, Azure.Core.Dynamic.JsonData? right) { throw null; }
-        public static bool operator ==(string? left, Azure.Core.Dynamic.JsonData? right) { throw null; }
-        public static implicit operator bool (Azure.Core.Dynamic.JsonData json) { throw null; }
-        public static implicit operator double (Azure.Core.Dynamic.JsonData json) { throw null; }
-        public static implicit operator int (Azure.Core.Dynamic.JsonData json) { throw null; }
-        public static implicit operator long (Azure.Core.Dynamic.JsonData json) { throw null; }
-        public static implicit operator bool? (Azure.Core.Dynamic.JsonData json) { throw null; }
-        public static implicit operator double? (Azure.Core.Dynamic.JsonData json) { throw null; }
-        public static implicit operator int? (Azure.Core.Dynamic.JsonData json) { throw null; }
-        public static implicit operator long? (Azure.Core.Dynamic.JsonData json) { throw null; }
-        public static implicit operator float? (Azure.Core.Dynamic.JsonData json) { throw null; }
-        public static implicit operator float (Azure.Core.Dynamic.JsonData json) { throw null; }
-        public static implicit operator string (Azure.Core.Dynamic.JsonData json) { throw null; }
-        public static bool operator !=(Azure.Core.Dynamic.JsonData? left, bool right) { throw null; }
-        public static bool operator !=(Azure.Core.Dynamic.JsonData? left, double right) { throw null; }
-        public static bool operator !=(Azure.Core.Dynamic.JsonData? left, int right) { throw null; }
-        public static bool operator !=(Azure.Core.Dynamic.JsonData? left, long right) { throw null; }
-        public static bool operator !=(Azure.Core.Dynamic.JsonData? left, float right) { throw null; }
-        public static bool operator !=(Azure.Core.Dynamic.JsonData? left, string? right) { throw null; }
-        public static bool operator !=(bool left, Azure.Core.Dynamic.JsonData? right) { throw null; }
-        public static bool operator !=(double left, Azure.Core.Dynamic.JsonData? right) { throw null; }
-        public static bool operator !=(int left, Azure.Core.Dynamic.JsonData? right) { throw null; }
-        public static bool operator !=(long left, Azure.Core.Dynamic.JsonData? right) { throw null; }
-        public static bool operator !=(float left, Azure.Core.Dynamic.JsonData? right) { throw null; }
-        public static bool operator !=(string? left, Azure.Core.Dynamic.JsonData? right) { throw null; }
         System.Dynamic.DynamicMetaObject System.Dynamic.IDynamicMetaObjectProvider.GetMetaObject(System.Linq.Expressions.Expression parameter) { throw null; }
-        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public partial struct MutableJsonElement : System.Dynamic.IDynamicMetaObjectProvider
+    {
+        private object _dummy;
+        private int _dummyPrimitive;
+        public static implicit operator bool (Azure.Core.Dynamic.MutableJsonElement element) { throw null; }
+        public static implicit operator double (Azure.Core.Dynamic.MutableJsonElement element) { throw null; }
+        public static implicit operator int (Azure.Core.Dynamic.MutableJsonElement element) { throw null; }
+        public static implicit operator long (Azure.Core.Dynamic.MutableJsonElement element) { throw null; }
+        public static implicit operator float (Azure.Core.Dynamic.MutableJsonElement element) { throw null; }
+        public static implicit operator string? (Azure.Core.Dynamic.MutableJsonElement element) { throw null; }
+        System.Dynamic.DynamicMetaObject System.Dynamic.IDynamicMetaObjectProvider.GetMetaObject(System.Linq.Expressions.Expression parameter) { throw null; }
     }
 }

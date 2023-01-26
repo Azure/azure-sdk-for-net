@@ -24,7 +24,7 @@ namespace Azure.Core.Experimental.Perf.Benchmarks
         [Benchmark]
         public void DocumentSentiment_WriteTo_JsonData_NoChanges()
         {
-            JsonData jsonData = JsonData.Parse(JsonSamples.DocumentSentiment);
+            MutableJsonDocument jsonData = MutableJsonDocument.Parse(JsonSamples.DocumentSentiment);
 
             MemoryStream stream = new();
             jsonData.WriteTo(stream);
@@ -33,7 +33,7 @@ namespace Azure.Core.Experimental.Perf.Benchmarks
         [Benchmark]
         public void DocumentSentiment_WriteTo_JsonData_ChangeValue()
         {
-            JsonData jsonData = JsonData.Parse(JsonSamples.DocumentSentiment);
+            MutableJsonDocument jsonData = MutableJsonDocument.Parse(JsonSamples.DocumentSentiment);
 
             // Make a small change
             jsonData.RootElement.GetProperty("documents").GetIndexElement(0).GetProperty("sentences").GetIndexElement(1).GetProperty("sentiment").Set("positive");
@@ -45,7 +45,7 @@ namespace Azure.Core.Experimental.Perf.Benchmarks
         [Benchmark]
         public void DocumentSentiment_WriteTo_JsonData_ChangeStructure()
         {
-            JsonData jsonData = JsonData.Parse(JsonSamples.DocumentSentiment);
+            MutableJsonDocument jsonData = MutableJsonDocument.Parse(JsonSamples.DocumentSentiment);
 
             // Make a small change
             jsonData.RootElement.GetProperty("documents").GetIndexElement(0).GetProperty("sentences").GetIndexElement(1).GetProperty("sentiment").Set("positive");

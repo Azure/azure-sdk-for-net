@@ -7,7 +7,7 @@ using System.Text.Json;
 
 namespace Azure.Core.Dynamic
 {
-    public partial class JsonData
+    public partial class MutableJsonDocument
     {
         internal void WriteElementTo(Utf8JsonWriter writer)
         {
@@ -17,7 +17,7 @@ namespace Azure.Core.Dynamic
             Utf8JsonReader reader;
 
             // Check for changes at the root.
-            bool changed = Changes.TryGetChange(path, -1, out JsonDataChange change);
+            bool changed = Changes.TryGetChange(path, -1, out JsonDocumentChange change);
             if (changed)
             {
                 reader = change.GetReader();
@@ -154,7 +154,7 @@ namespace Azure.Core.Dynamic
 
         private void WriteObject(string path, int highWaterMark, ref Utf8JsonReader reader, Utf8JsonWriter writer)
         {
-            if (Changes.TryGetChange(path, highWaterMark, out JsonDataChange change))
+            if (Changes.TryGetChange(path, highWaterMark, out JsonDocumentChange change))
             {
                 WriteStructuralChange(path, change, ref reader, writer);
                 return;
@@ -164,7 +164,7 @@ namespace Azure.Core.Dynamic
             WriteObjectProperties(path, highWaterMark, ref reader, writer);
         }
 
-        private void WriteStructuralChange(string path, JsonDataChange change, ref Utf8JsonReader reader, Utf8JsonWriter writer)
+        private void WriteStructuralChange(string path, JsonDocumentChange change, ref Utf8JsonReader reader, Utf8JsonWriter writer)
         {
             Utf8JsonReader changedElementReader = change.GetReader();
             WriteElement(path, change.Index, ref changedElementReader, writer);
@@ -175,7 +175,7 @@ namespace Azure.Core.Dynamic
 
         private void WriteString(string path, int highWaterMark, ref Utf8JsonReader reader, Utf8JsonWriter writer)
         {
-            if (Changes.TryGetChange(path, highWaterMark, out JsonDataChange change))
+            if (Changes.TryGetChange(path, highWaterMark, out JsonDocumentChange change))
             {
                 if (change.ReplacesJsonElement)
                 {
@@ -193,7 +193,7 @@ namespace Azure.Core.Dynamic
 
         private void WriteNumber(string path, int highWaterMark, ref Utf8JsonReader reader, Utf8JsonWriter writer)
         {
-            if (Changes.TryGetChange(path, highWaterMark, out JsonDataChange change))
+            if (Changes.TryGetChange(path, highWaterMark, out JsonDocumentChange change))
             {
                 if (change.ReplacesJsonElement)
                 {
@@ -249,7 +249,7 @@ namespace Azure.Core.Dynamic
 
         private void WriteBoolean(string path, int highWaterMark, JsonTokenType token, ref Utf8JsonReader reader, Utf8JsonWriter writer)
         {
-            if (Changes.TryGetChange(path, highWaterMark, out JsonDataChange change))
+            if (Changes.TryGetChange(path, highWaterMark, out JsonDocumentChange change))
             {
                 if (change.ReplacesJsonElement)
                 {
@@ -266,7 +266,7 @@ namespace Azure.Core.Dynamic
 
         private void WriteNull(string path, int highWaterMark, ref Utf8JsonReader reader, Utf8JsonWriter writer)
         {
-            if (Changes.TryGetChange(path, highWaterMark, out JsonDataChange change) && change.ReplacesJsonElement)
+            if (Changes.TryGetChange(path, highWaterMark, out JsonDocumentChange change) && change.ReplacesJsonElement)
             {
                 WriteStructuralChange(path, change, ref reader, writer);
                 return;
@@ -288,7 +288,7 @@ namespace Azure.Core.Dynamic
             int pathLength = 0;
             ReadOnlySpan<byte> currentPropertyName = Span<byte>.Empty;
 
-            JsonDataChange change = default;
+            JsonDocumentChange change = default;
             bool changed = false;
             while (reader.Read())
             {

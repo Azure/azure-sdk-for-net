@@ -13,7 +13,7 @@ namespace Azure.Core.Experimental.Tests
         [Test]
         public void ArrayItemsCanBeAssigned()
         {
-            var json = JsonData.Parse("[0, 1, 2, 3]");
+            var json = MutableJsonDocument.Parse("[0, 1, 2, 3]");
             dynamic jsonData = json;
             jsonData[1] = 2;
             jsonData[2] = null;
@@ -25,7 +25,7 @@ namespace Azure.Core.Experimental.Tests
         [Test]
         public void ExistingObjectPropertiesCanBeAssigned()
         {
-            var json = JsonData.Parse("{\"a\":1}");
+            var json = MutableJsonDocument.Parse("{\"a\":1}");
             dynamic jsonData = json;
             jsonData.a = "2";
 
@@ -35,7 +35,7 @@ namespace Azure.Core.Experimental.Tests
         [TestCaseSource(nameof(PrimitiveValues))]
         public void NewObjectPropertiesCanBeAssignedWithPrimitive<T>(T value, string expected)
         {
-            var json = JsonData.Parse("{}");
+            var json = MutableJsonDocument.Parse("{}");
             dynamic jsonData = json;
             jsonData.a = value;
 
@@ -45,7 +45,7 @@ namespace Azure.Core.Experimental.Tests
         [TestCaseSource(nameof(PrimitiveValues))]
         public void PrimitiveValuesCanBeParsedDirectly<T>(T value, string expected)
         {
-            dynamic json = JsonData.Parse(expected);
+            dynamic json = MutableJsonDocument.Parse(expected);
 
             Assert.AreEqual(value, (T)json);
         }
@@ -53,9 +53,9 @@ namespace Azure.Core.Experimental.Tests
         [Test]
         public void NewObjectPropertiesCanBeAssignedWithArrays()
         {
-            var json = JsonData.Parse("{}");
+            var json = MutableJsonDocument.Parse("{}");
             dynamic jsonData = json;
-            jsonData.a = new JsonData(new object[] { 1, 2, null, "string" });
+            jsonData.a = new MutableJsonDocument(new object[] { 1, 2, null, "string" });
 
             Assert.AreEqual(json.ToString(), "{\"a\":[1,2,null,\"string\"]}");
         }
@@ -63,9 +63,9 @@ namespace Azure.Core.Experimental.Tests
         [Test]
         public void NewObjectPropertiesCanBeAssignedWithObject()
         {
-            var json = JsonData.Parse("{}");
+            var json = MutableJsonDocument.Parse("{}");
             dynamic jsonData = json;
-            jsonData.a = JsonData.Parse("{}");
+            jsonData.a = MutableJsonDocument.Parse("{}");
             jsonData.a.b = 2;
 
             Assert.AreEqual(json.ToString(), "{\"a\":{\"b\":2}}");
@@ -74,9 +74,9 @@ namespace Azure.Core.Experimental.Tests
         [Test]
         public void NewObjectPropertiesCanBeAssignedWithObjectIndirectly()
         {
-            var json = JsonData.Parse("{}");
+            var json = MutableJsonDocument.Parse("{}");
             dynamic jsonData = json;
-            dynamic anotherJson = JsonData.Parse("{}");
+            dynamic anotherJson = MutableJsonDocument.Parse("{}");
             jsonData.a = anotherJson;
             anotherJson.b = 2;
 
@@ -86,9 +86,9 @@ namespace Azure.Core.Experimental.Tests
         [Test]
         public void NewObjectPropertiesCanBeAssignedWithSerializedObject()
         {
-            var json = JsonData.Parse("{}");
+            var json = MutableJsonDocument.Parse("{}");
             dynamic jsonData = json;
-            jsonData.a = new JsonData(new GeoPoint(1, 2));
+            jsonData.a = new MutableJsonDocument(new GeoPoint(1, 2));
 
             Assert.AreEqual("{\"a\":{\"type\":\"Point\",\"coordinates\":[1,2]}}", json.ToString());
         }
@@ -96,14 +96,14 @@ namespace Azure.Core.Experimental.Tests
         [TestCaseSource(nameof(PrimitiveValues))]
         public void CanModifyNestedProperties<T>(T value, string expected)
         {
-            var json = JsonData.Parse("{\"a\":{\"b\":2}}");
+            var json = MutableJsonDocument.Parse("{\"a\":{\"b\":2}}");
             dynamic jsonData = json;
             jsonData.a.b = value;
 
             Assert.AreEqual(json.ToString(), "{\"a\":{\"b\":" + expected + "}}");
             Assert.AreEqual(value, (T)jsonData.a.b);
 
-            dynamic reparsedJson = JsonData.Parse(json.ToString());
+            dynamic reparsedJson = MutableJsonDocument.Parse(json.ToString());
 
             Assert.AreEqual(value, (T)reparsedJson.a.b);
         }

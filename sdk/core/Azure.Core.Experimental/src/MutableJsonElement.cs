@@ -11,16 +11,16 @@ namespace Azure.Core.Dynamic
     /// <summary>
     /// A mutable representation of a JSON element.
     /// </summary>
-    public partial struct JsonDataElement
+    public partial struct MutableJsonElement
     {
-        private readonly JsonData _root;
+        private readonly MutableJsonDocument _root;
         private readonly JsonElement _element;
         private readonly string _path;
         private readonly int _highWaterMark;
 
-        private readonly JsonData.ChangeTracker Changes => _root.Changes;
+        private readonly MutableJsonDocument.ChangeTracker Changes => _root.Changes;
 
-        internal JsonDataElement(JsonData root, JsonElement element, string path, int highWaterMark = -1)
+        internal MutableJsonElement(MutableJsonDocument root, JsonElement element, string path, int highWaterMark = -1)
         {
             _element = element;
             _root = root;
@@ -31,9 +31,9 @@ namespace Azure.Core.Dynamic
         /// <summary>
         /// Gets the JsonDataElement for the value of the property with the specified name.
         /// </summary>
-        internal JsonDataElement GetProperty(string name)
+        internal MutableJsonElement GetProperty(string name)
         {
-            if (!TryGetProperty(name, out JsonDataElement value))
+            if (!TryGetProperty(name, out MutableJsonElement value))
             {
                 throw new InvalidOperationException($"{_path} does not containe property called {name}");
             }
@@ -41,7 +41,7 @@ namespace Azure.Core.Dynamic
             return value;
         }
 
-        internal bool TryGetProperty(string name, out JsonDataElement value)
+        internal bool TryGetProperty(string name, out MutableJsonElement value)
         {
             EnsureValid();
 
@@ -54,44 +54,44 @@ namespace Azure.Core.Dynamic
                 return false;
             }
 
-            var path = JsonData.ChangeTracker.PushProperty(_path, name);
-            if (Changes.TryGetChange(path, _highWaterMark, out JsonDataChange change))
+            var path = MutableJsonDocument.ChangeTracker.PushProperty(_path, name);
+            if (Changes.TryGetChange(path, _highWaterMark, out JsonDocumentChange change))
             {
                 if (change.ReplacesJsonElement)
                 {
-                    value = new JsonDataElement(_root, change.AsJsonElement(), path, change.Index);
+                    value = new MutableJsonElement(_root, change.AsJsonElement(), path, change.Index);
                     return true;
                 }
             }
 
-            value = new JsonDataElement(_root, element, path, _highWaterMark);
+            value = new MutableJsonElement(_root, element, path, _highWaterMark);
             return true;
         }
 
-        internal JsonDataElement GetIndexElement(int index)
+        internal MutableJsonElement GetIndexElement(int index)
         {
             EnsureValid();
 
             EnsureArray();
 
-            var path = JsonData.ChangeTracker.PushIndex(_path, index);
+            var path = MutableJsonDocument.ChangeTracker.PushIndex(_path, index);
 
-            if (Changes.TryGetChange(path, _highWaterMark, out JsonDataChange change))
+            if (Changes.TryGetChange(path, _highWaterMark, out JsonDocumentChange change))
             {
                 if (change.ReplacesJsonElement)
                 {
-                    return new JsonDataElement(_root, change.AsJsonElement(), path, change.Index);
+                    return new MutableJsonElement(_root, change.AsJsonElement(), path, change.Index);
                 }
             }
 
-            return new JsonDataElement(_root, _element[index], path, _highWaterMark);
+            return new MutableJsonElement(_root, _element[index], path, _highWaterMark);
         }
 
         internal double GetDouble()
         {
             EnsureValid();
 
-            if (Changes.TryGetChange(_path, _highWaterMark, out JsonDataChange change))
+            if (Changes.TryGetChange(_path, _highWaterMark, out JsonDocumentChange change))
             {
                 switch (change.Value)
                 {
@@ -111,7 +111,7 @@ namespace Azure.Core.Dynamic
         {
             EnsureValid();
 
-            if (Changes.TryGetChange(_path, _highWaterMark, out JsonDataChange change))
+            if (Changes.TryGetChange(_path, _highWaterMark, out JsonDocumentChange change))
             {
                 switch (change.Value)
                 {
@@ -135,7 +135,7 @@ namespace Azure.Core.Dynamic
         {
             EnsureValid();
 
-            if (Changes.TryGetChange(_path, _highWaterMark, out JsonDataChange change))
+            if (Changes.TryGetChange(_path, _highWaterMark, out JsonDocumentChange change))
             {
                 switch (change.Value)
                 {
@@ -159,7 +159,7 @@ namespace Azure.Core.Dynamic
         {
             EnsureValid();
 
-            if (Changes.TryGetChange(_path, _highWaterMark, out JsonDataChange change))
+            if (Changes.TryGetChange(_path, _highWaterMark, out JsonDocumentChange change))
             {
                 switch (change.Value)
                 {
@@ -184,7 +184,7 @@ namespace Azure.Core.Dynamic
             // Per copying Dictionary semantics, if the property already exists, just replace the value.
             // If the property already exists, just set it.
 
-            var path = JsonData.ChangeTracker.PushProperty(_path, name);
+            var path = MutableJsonDocument.ChangeTracker.PushProperty(_path, name);
 
             if (_element.TryGetProperty(name, out _))
             {
@@ -270,7 +270,7 @@ namespace Azure.Core.Dynamic
                 case bool b:
                     Set(b);
                     return;
-                case JsonDataElement e:
+                case MutableJsonElement e:
                     Set(e);
                     return;
                 default:
@@ -282,7 +282,7 @@ namespace Azure.Core.Dynamic
             }
         }
 
-        internal void Set(JsonDataElement value)
+        internal void Set(MutableJsonElement value)
         {
             EnsureValid();
 
@@ -290,7 +290,7 @@ namespace Azure.Core.Dynamic
 
             JsonElement element = value._element;
 
-            if (Changes.TryGetChange(value._path, value._highWaterMark, out JsonDataChange change))
+            if (Changes.TryGetChange(value._path, value._highWaterMark, out JsonDocumentChange change))
             {
                 if (change.ReplacesJsonElement)
                 {

@@ -10,7 +10,7 @@ using System.Text.Json.Serialization;
 
 namespace Azure.Core.Dynamic
 {
-    public partial class JsonData
+    public partial class MutableJsonDocument
     {
         //internal class JsonDataDebuggerProxy
         //{

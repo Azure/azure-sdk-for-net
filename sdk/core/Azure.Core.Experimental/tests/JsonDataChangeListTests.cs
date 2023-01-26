@@ -24,7 +24,7 @@ namespace Azure.Core.Experimental.Tests
                   ""Qux"" : false
                 }";
 
-            var jd = JsonData.Parse(json);
+            var jd = MutableJsonDocument.Parse(json);
 
             Assert.AreEqual(1.2, jd.RootElement.GetProperty("Foo").GetDouble());
             Assert.AreEqual("Hi!", jd.RootElement.GetProperty("Bar").GetString());
@@ -51,7 +51,7 @@ namespace Azure.Core.Experimental.Tests
                   ""Qux"" : false
                 }";
 
-            var jd = JsonData.Parse(json);
+            var jd = MutableJsonDocument.Parse(json);
 
             jd.RootElement.GetProperty("Foo").Set(2.2);
             jd.RootElement.GetProperty("Bar").Set("Hello");
@@ -90,7 +90,7 @@ namespace Azure.Core.Experimental.Tests
                   ""Bar"" : ""Hi!""
                 }";
 
-            var jd = JsonData.Parse(json);
+            var jd = MutableJsonDocument.Parse(json);
 
             jd.RootElement.GetProperty("Foo").Set(2.2);
             jd.RootElement.GetProperty("Foo").Set(3.3);
@@ -120,7 +120,7 @@ namespace Azure.Core.Experimental.Tests
                   ""Foo"" : 1.2
                 }";
 
-            var jd = JsonData.Parse(json);
+            var jd = MutableJsonDocument.Parse(json);
 
             // Has same semantics as Dictionary
             // https://learn.microsoft.com/en-us/dotnet/api/system.collections.generic.dictionary-2.item?view=net-7.0#property-value
@@ -158,7 +158,7 @@ namespace Azure.Core.Experimental.Tests
                     }
                 }";
 
-            var jd = JsonData.Parse(json);
+            var jd = MutableJsonDocument.Parse(json);
 
             jd.RootElement.GetProperty("Foo").SetProperty("B", "hi");
 
@@ -195,7 +195,7 @@ namespace Azure.Core.Experimental.Tests
                   ""Bar"" : ""Hi!""
                 }";
 
-            var jd = JsonData.Parse(json);
+            var jd = MutableJsonDocument.Parse(json);
 
             jd.RootElement.RemoveProperty("Bar");
 
@@ -230,7 +230,7 @@ namespace Azure.Core.Experimental.Tests
                     }
                 }";
 
-            var jd = JsonData.Parse(json);
+            var jd = MutableJsonDocument.Parse(json);
 
             jd.RootElement.GetProperty("Foo").RemoveProperty("B");
 
@@ -265,7 +265,7 @@ namespace Azure.Core.Experimental.Tests
                   ""Foo"" : 1.2
                 }";
 
-            var jd = JsonData.Parse(json);
+            var jd = MutableJsonDocument.Parse(json);
 
             jd.RootElement.GetProperty("Baz").Set(new { B = 5.5 });
 
@@ -324,7 +324,7 @@ namespace Azure.Core.Experimental.Tests
                   ""Foo"" : [ 1, 2, 3 ]
                 }";
 
-            var jd = JsonData.Parse(json);
+            var jd = MutableJsonDocument.Parse(json);
 
             Assert.AreEqual(1, jd.RootElement.GetProperty("Foo").GetIndexElement(0).GetInt32());
             Assert.AreEqual(2, jd.RootElement.GetProperty("Foo").GetIndexElement(1).GetInt32());
@@ -339,7 +339,7 @@ namespace Azure.Core.Experimental.Tests
                   ""Foo"" : [ 1, 2, 3 ]
                 }";
 
-            var jd = JsonData.Parse(json);
+            var jd = MutableJsonDocument.Parse(json);
 
             jd.RootElement.GetProperty("Foo").GetIndexElement(0).Set(5);
             jd.RootElement.GetProperty("Foo").GetIndexElement(1).Set(6);
@@ -358,7 +358,7 @@ namespace Azure.Core.Experimental.Tests
                   ""Foo"" : [ 1, 2, 3 ]
                 }";
 
-            var jd = JsonData.Parse(json);
+            var jd = MutableJsonDocument.Parse(json);
 
             jd.RootElement.GetProperty("Foo").GetIndexElement(0).Set(5);
             jd.RootElement.GetProperty("Foo").GetIndexElement(1).Set(6);
@@ -382,7 +382,7 @@ namespace Azure.Core.Experimental.Tests
                   ""Foo"" : [ 1, 2, 3 ]
                 }";
 
-            var jd = JsonData.Parse(json);
+            var jd = MutableJsonDocument.Parse(json);
 
             jd.RootElement.GetProperty("Foo").GetIndexElement(0).Set(5);
             jd.RootElement.GetProperty("Foo").GetIndexElement(0).Set(6);
@@ -395,7 +395,7 @@ namespace Azure.Core.Experimental.Tests
         {
             string json = @"[ { ""Foo"" : 4 } ]";
 
-            var jd = JsonData.Parse(json);
+            var jd = MutableJsonDocument.Parse(json);
 
             // a's path points to "0"
             var a = jd.RootElement.GetIndexElement(0);
@@ -435,7 +435,7 @@ namespace Azure.Core.Experimental.Tests
                     }
                 } ]";
 
-            var jd = JsonData.Parse(json);
+            var jd = MutableJsonDocument.Parse(json);
 
             // a's path points to "0.Foo.A"
             var a = jd.RootElement.GetIndexElement(0).GetProperty("Foo").GetProperty("A");
@@ -470,7 +470,7 @@ namespace Azure.Core.Experimental.Tests
                     }
                 } ]";
 
-            var jd = JsonData.Parse(json);
+            var jd = MutableJsonDocument.Parse(json);
 
             // a's path points to "0.Foo.A"
             var a = jd.RootElement.GetIndexElement(0).GetProperty("Foo").GetProperty("A");
@@ -526,7 +526,7 @@ namespace Azure.Core.Experimental.Tests
                     ""Bar"" : ""hi""
                 }]";
 
-            var jd = JsonData.Parse(json);
+            var jd = MutableJsonDocument.Parse(json);
 
             // resets json to equivalent of "[ 5, ... ]"
             jd.RootElement.GetIndexElement(0).Set(5);
@@ -577,7 +577,7 @@ namespace Azure.Core.Experimental.Tests
                 } ],
                   ""Bar"" : ""hi"" }";
 
-            var jd = JsonData.Parse(json);
+            var jd = MutableJsonDocument.Parse(json);
 
             jd.RootElement.GetProperty("ArrayProperty").GetIndexElement(0).GetProperty("Foo").GetProperty("A").Set(8);
 
@@ -624,7 +624,7 @@ namespace Azure.Core.Experimental.Tests
         {
             string json = @"[ { ""Foo"" : ""hi"" } ]";
 
-            var jd = JsonData.Parse(json);
+            var jd = MutableJsonDocument.Parse(json);
 
             Assert.AreEqual("hi", jd.RootElement.GetIndexElement(0).GetProperty("Foo").GetString());
 
@@ -644,7 +644,7 @@ namespace Azure.Core.Experimental.Tests
         {
             string json = @"[ { ""Foo"" : ""hi"" } ]";
 
-            var jd = JsonData.Parse(json);
+            var jd = MutableJsonDocument.Parse(json);
 
             Assert.AreEqual("hi", jd.RootElement.GetIndexElement(0).GetProperty("Foo").GetString());
 
@@ -664,7 +664,7 @@ namespace Azure.Core.Experimental.Tests
         {
             string json = @"{ ""Foo"" : ""hi"" }";
 
-            var jd = JsonData.Parse(json);
+            var jd = MutableJsonDocument.Parse(json);
 
             Assert.AreEqual("hi", jd.RootElement.GetProperty("Foo").GetString());
 
@@ -689,7 +689,7 @@ namespace Azure.Core.Experimental.Tests
         {
             string json = @"[ { ""Foo"" : ""hi"" } ]";
 
-            var jd = JsonData.Parse(json);
+            var jd = MutableJsonDocument.Parse(json);
 
             Assert.AreEqual("hi", jd.RootElement.GetIndexElement(0).GetProperty("Foo").GetString());
 
@@ -714,7 +714,7 @@ namespace Azure.Core.Experimental.Tests
         {
             string json = @"[ { ""Foo"" : ""hi"" } ]";
 
-            var jd = JsonData.Parse(json);
+            var jd = MutableJsonDocument.Parse(json);
 
             Assert.AreEqual("hi", jd.RootElement.GetIndexElement(0).GetProperty("Foo").GetString());
 

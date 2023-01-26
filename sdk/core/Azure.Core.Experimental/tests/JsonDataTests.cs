@@ -13,7 +13,7 @@ namespace Azure.Core.Experimental.Tests
         [Test]
         public void CanCreateFromJson()
         {
-            var jsonData = JsonData.Parse("\"string\"");
+            var jsonData = MutableJsonDocument.Parse("\"string\"");
 
             Assert.AreEqual("\"string\"", jsonData.ToJsonString());
         }
@@ -52,7 +52,7 @@ namespace Azure.Core.Experimental.Tests
         [Test]
         public void DynamicCanConvertToIEnumerableDynamic()
         {
-            dynamic jsonData = JsonData.Parse("[1, null, \"s\"]");
+            dynamic jsonData = MutableJsonDocument.Parse("[1, null, \"s\"]");
             int i = 0;
             foreach (var dynamicItem in jsonData)
             {
@@ -80,7 +80,7 @@ namespace Azure.Core.Experimental.Tests
         [Test]
         public void DynamicCanConvertToIEnumerableInt()
         {
-            dynamic jsonData = JsonData.Parse("[0, 1, 2, 3]");
+            dynamic jsonData = MutableJsonDocument.Parse("[0, 1, 2, 3]");
             int i = 0;
             foreach (int dynamicItem in jsonData)
             {
@@ -94,14 +94,14 @@ namespace Azure.Core.Experimental.Tests
         [Test]
         public void DynamicArrayHasLength()
         {
-            dynamic jsonData = JsonData.Parse("[0, 1, 2, 3]");
+            dynamic jsonData = MutableJsonDocument.Parse("[0, 1, 2, 3]");
             Assert.AreEqual(4, jsonData.Length);
         }
 
         [Test]
         public void DynamicArrayFor()
         {
-            dynamic jsonData = JsonData.Parse("[0, 1, 2, 3]");
+            dynamic jsonData = MutableJsonDocument.Parse("[0, 1, 2, 3]");
             for (int i = 0; i < jsonData.Length; i++)
             {
                 Assert.AreEqual(i, (int)jsonData[i]);
@@ -111,7 +111,7 @@ namespace Azure.Core.Experimental.Tests
         [Test]
         public void CanAccessProperties()
         {
-            dynamic jsonData = JsonData.Parse(@"
+            dynamic jsonData = MutableJsonDocument.Parse(@"
                 {
                   ""primitive"" : ""Hello"",
                   ""nested"" : {
@@ -299,7 +299,7 @@ namespace Azure.Core.Experimental.Tests
 
         private T JsonAsType<T>(string json)
         {
-            dynamic jsonData = JsonData.Parse(json);
+            dynamic jsonData = MutableJsonDocument.Parse(json);
             return (T) jsonData;
         }
 

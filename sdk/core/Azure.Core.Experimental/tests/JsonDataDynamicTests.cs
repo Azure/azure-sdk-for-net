@@ -13,7 +13,7 @@ namespace Azure.Core.Experimental.Tests
         [Test]
         public void CanGetIntProperty()
         {
-            dynamic jsonData = JsonData.Parse(@"
+            dynamic jsonData = MutableJsonDocument.Parse(@"
                 {
                   ""Foo"" : 1
                 }");
@@ -26,7 +26,7 @@ namespace Azure.Core.Experimental.Tests
         [Test]
         public void CanGetNestedIntProperty()
         {
-            dynamic jsonData = JsonData.Parse(@"
+            dynamic jsonData = MutableJsonDocument.Parse(@"
                 {
                   ""Foo"" : {
                     ""Bar"" : 1
@@ -41,7 +41,7 @@ namespace Azure.Core.Experimental.Tests
         [Test]
         public void CanSetIntProperty()
         {
-            dynamic jsonData = JsonData.Parse(@"
+            dynamic jsonData = MutableJsonDocument.Parse(@"
                 {
                   ""Foo"" : 1
                 }");
@@ -54,7 +54,7 @@ namespace Azure.Core.Experimental.Tests
         [Test]
         public void CanSetNestedIntProperty()
         {
-            dynamic jsonData = JsonData.Parse(@"
+            dynamic jsonData = MutableJsonDocument.Parse(@"
                 {
                   ""Foo"" : {
                     ""Bar"" : 1

@@ -8,10 +8,10 @@ using System.Reflection;
 
 namespace Azure.Core.Dynamic
 {
-    public partial struct JsonDataElement : IDynamicMetaObjectProvider
+    public partial struct MutableJsonElement : IDynamicMetaObjectProvider
     {
-        internal static readonly MethodInfo GetPropertyMethod = typeof(JsonDataElement).GetMethod(nameof(GetProperty), BindingFlags.NonPublic | BindingFlags.Instance);
-        internal static readonly MethodInfo SetDynamicMethod = typeof(JsonDataElement).GetMethod(nameof(SetDynamic), BindingFlags.NonPublic | BindingFlags.Instance, null, new Type[] { typeof(object) }, null);
+        internal static readonly MethodInfo GetPropertyMethod = typeof(MutableJsonElement).GetMethod(nameof(GetProperty), BindingFlags.NonPublic | BindingFlags.Instance);
+        internal static readonly MethodInfo SetDynamicMethod = typeof(MutableJsonElement).GetMethod(nameof(SetDynamic), BindingFlags.NonPublic | BindingFlags.Instance, null, new Type[] { typeof(object) }, null);
 
         // Binding machinery expects the call site signature to return an object
         internal object? SetDynamic(object value)

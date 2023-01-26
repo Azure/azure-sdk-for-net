@@ -7,43 +7,43 @@ using System.Text;
 
 namespace Azure.Core.Dynamic
 {
-    public partial struct JsonDataElement
+    public partial struct MutableJsonElement
     {
         /// <summary>
         /// Converts the value to a <see cref="bool"/>
         /// </summary>
         /// <param name="element">The value to convert.</param>
-        public static implicit operator bool(JsonDataElement element) => element.GetBoolean();
+        public static implicit operator bool(MutableJsonElement element) => element.GetBoolean();
 
         /// <summary>
         /// Converts the value to a <see cref="int"/>
         /// </summary>
         /// <param name="element">The value to convert.</param>
-        public static implicit operator int(JsonDataElement element) => element.GetInt32();
+        public static implicit operator int(MutableJsonElement element) => element.GetInt32();
 
         /// <summary>
         /// Converts the value to a <see cref="long"/>
         /// </summary>
         /// <param name="element">The value to convert.</param>
-        public static implicit operator long(JsonDataElement element) => element.GetInt64();
+        public static implicit operator long(MutableJsonElement element) => element.GetInt64();
 
         /// <summary>
         /// Converts the value to a <see cref="string"/>
         /// </summary>
         /// <param name="element">The value to convert.</param>
-        public static implicit operator string?(JsonDataElement element) => element.GetString();
+        public static implicit operator string?(MutableJsonElement element) => element.GetString();
 
         /// <summary>
         /// Converts the value to a <see cref="float"/>
         /// </summary>
         /// <param name="element">The value to convert.</param>
-        public static implicit operator float(JsonDataElement element) => element.GetFloat();
+        public static implicit operator float(MutableJsonElement element) => element.GetFloat();
 
         /// <summary>
         /// Converts the value to a <see cref="double"/>
         /// </summary>
         /// <param name="element">The value to convert.</param>
-        public static implicit operator double(JsonDataElement element) => element.GetDouble();
+        public static implicit operator double(MutableJsonElement element) => element.GetDouble();
 
         ///// <summary>
         ///// Converts the value to a <see cref="bool"/> or null.

@@ -7,11 +7,11 @@ using System.Text;
 
 namespace Azure.Core.Dynamic
 {
-    public partial class JsonData
+    public partial class MutableJsonDocument
     {
         internal class ChangeTracker
         {
-            private List<JsonDataChange>? _changes;
+            private List<JsonDocumentChange>? _changes;
 
             internal bool HasChanges => _changes != null && _changes.Count > 0;
 
@@ -28,13 +28,13 @@ namespace Azure.Core.Dynamic
                 while (!changed && path.Length > 0)
                 {
                     path = PopProperty(path);
-                    changed = TryGetChange(path, highWaterMark, out JsonDataChange change);
+                    changed = TryGetChange(path, highWaterMark, out JsonDocumentChange change);
                 }
 
                 return changed;
             }
 
-            internal bool TryGetChange(ReadOnlySpan<byte> path, out JsonDataChange change)
+            internal bool TryGetChange(ReadOnlySpan<byte> path, out JsonDocumentChange change)
             {
                 if (_changes == null)
                 {
@@ -67,7 +67,7 @@ namespace Azure.Core.Dynamic
                 return false;
             }
 
-            internal bool TryGetChange(string path, in int lastAppliedChange, out JsonDataChange change)
+            internal bool TryGetChange(string path, in int lastAppliedChange, out JsonDocumentChange change)
             {
                 if (_changes == null)
                 {
@@ -93,10 +93,10 @@ namespace Azure.Core.Dynamic
             {
                 if (_changes == null)
                 {
-                    _changes = new List<JsonDataChange>();
+                    _changes = new List<JsonDocumentChange>();
                 }
 
-                _changes.Add(new JsonDataChange()
+                _changes.Add(new JsonDocumentChange()
                 {
                     Path = path,
                     Value = value,

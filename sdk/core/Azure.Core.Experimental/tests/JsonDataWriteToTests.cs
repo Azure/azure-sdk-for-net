@@ -17,8 +17,8 @@ namespace Azure.Core.Experimental.Tests
             string jsonTrue = @"true";
             string jsonFalse = @"false";
 
-            JsonData jdTrue = JsonData.Parse(jsonTrue);
-            JsonData jdFalse = JsonData.Parse(jsonFalse);
+            MutableJsonDocument jdTrue = MutableJsonDocument.Parse(jsonTrue);
+            MutableJsonDocument jdFalse = MutableJsonDocument.Parse(jsonFalse);
 
             WriteToAndParse(jdTrue, out string jsonTrueString);
             WriteToAndParse(jdFalse, out string jsonFalseString);
@@ -32,7 +32,7 @@ namespace Azure.Core.Experimental.Tests
         {
             string json = @"""Hi!""";
 
-            JsonData jd = JsonData.Parse(json);
+            MutableJsonDocument jd = MutableJsonDocument.Parse(json);
 
             WriteToAndParse(jd, out string jsonString);
 
@@ -48,7 +48,7 @@ namespace Azure.Core.Experimental.Tests
                   ""Bar"" :  false
                 }";
 
-            JsonData jd = JsonData.Parse(json);
+            MutableJsonDocument jd = MutableJsonDocument.Parse(json);
 
             WriteToAndParse(jd, out string jsonString);
 
@@ -64,7 +64,7 @@ namespace Azure.Core.Experimental.Tests
                   ""Bar"" : 1.2
                 }";
 
-            JsonData jd = JsonData.Parse(json);
+            MutableJsonDocument jd = MutableJsonDocument.Parse(json);
 
             jd.RootElement.GetProperty("Bar").Set(2.2);
 
@@ -86,7 +86,7 @@ namespace Azure.Core.Experimental.Tests
                   ""Foo"" :  true
                 }";
 
-            JsonData jd = JsonData.Parse(json);
+            MutableJsonDocument jd = MutableJsonDocument.Parse(json);
 
             jd.RootElement.GetProperty("Foo").Set(false);
 
@@ -131,7 +131,7 @@ namespace Azure.Core.Experimental.Tests
                   ]
                 }";
 
-            JsonData jd = JsonData.Parse(json);
+            MutableJsonDocument jd = MutableJsonDocument.Parse(json);
 
             WriteToAndParse(jd, out string jsonString);
 
@@ -151,7 +151,7 @@ namespace Azure.Core.Experimental.Tests
         {
             string json = @"16";
 
-            JsonData jd = JsonData.Parse(json);
+            MutableJsonDocument jd = MutableJsonDocument.Parse(json);
 
             WriteToAndParse(jd, out string jsonString);
 
@@ -163,7 +163,7 @@ namespace Azure.Core.Experimental.Tests
         {
             string json = @"16.56";
 
-            JsonData jd = JsonData.Parse(json);
+            MutableJsonDocument jd = MutableJsonDocument.Parse(json);
 
             WriteToAndParse(jd, out string jsonString);
 
@@ -175,7 +175,7 @@ namespace Azure.Core.Experimental.Tests
         {
             string json = @"[ 1, 2.2, 3, -4]";
 
-            JsonData jd = JsonData.Parse(json);
+            MutableJsonDocument jd = MutableJsonDocument.Parse(json);
 
             WriteToAndParse(jd, out string jsonString);
 
@@ -187,7 +187,7 @@ namespace Azure.Core.Experimental.Tests
         {
             string json = @"[ ""one"", ""two"", ""three""]";
 
-            JsonData jd = JsonData.Parse(json);
+            MutableJsonDocument jd = MutableJsonDocument.Parse(json);
 
             WriteToAndParse(jd, out string jsonString);
 
@@ -209,7 +209,7 @@ namespace Azure.Core.Experimental.Tests
             return value.Replace(" ", "").Replace("\r", "").Replace("\n", "");
         }
 
-        internal static JsonDocument WriteToAndParse(JsonData data, out string json)
+        internal static JsonDocument WriteToAndParse(MutableJsonDocument data, out string json)
         {
             using MemoryStream stream = new();
             data.WriteTo(stream);
