@@ -267,6 +267,9 @@ namespace Azure.Storage.Blobs.Specialized
         /// <param name="context">
         /// Optional <see cref="RequestContext"/> for this operation.
         /// </param>
+        /// <param name="operationName">
+        /// The name of the calling operation.
+        /// </param>
         /// <returns>
         /// A <see cref="Response{Lease}"/> describing the lease.
         /// </returns>
@@ -278,10 +281,12 @@ namespace Azure.Storage.Blobs.Specialized
             TimeSpan duration,
             RequestConditions conditions,
             bool async,
-            RequestContext context)
+            RequestContext context,
+            string operationName = default)
         {
             EnsureClient();
             context ??= new RequestContext();
+            operationName ??= $"{nameof(BlobLeaseClient)}.{nameof(Acquire)}";
             // Int64 is an overflow safe cast relative to TimeSpan.MaxValue
             var serviceDuration = duration < TimeSpan.Zero ? Constants.Blob.Lease.InfiniteLeaseDuration : Convert.ToInt64(duration.TotalSeconds);
             using (Pipeline.BeginLoggingScope(nameof(BlobLeaseClient)))
@@ -293,7 +298,7 @@ namespace Azure.Storage.Blobs.Specialized
                     $"{nameof(LeaseId)}: {LeaseId}\n" +
                     $"{nameof(duration)}: {duration}");
 
-                DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(BlobLeaseClient)}.{nameof(Acquire)}");
+                DiagnosticScope scope = ClientDiagnostics.CreateScope(operationName);
 
                 try
                 {
@@ -382,6 +387,119 @@ namespace Azure.Storage.Blobs.Specialized
             }
         }
         #endregion Acquire
+
+        #region AcquireIfAvailable
+        /// <summary>
+        /// <see cref="AcquireIfNotExists"/> performs the same operation as
+        /// <see cref="Acquire"/>. However, if there is an existing lease
+        /// conflict, this operation will not classify the operation as an
+        /// error and will return a null <see cref="BlobLease"/> in the
+        /// <see cref="Response{T}"/>
+        ///
+        /// For more information, see <see cref="Acquire"/> and
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/lease-container">
+        /// Lease Container</see>.
+        /// </summary>
+        /// <param name="duration">
+        /// Specifies the duration of the lease, in seconds, or specify
+        /// <see cref="InfiniteLeaseDuration"/> for a lease that never expires.
+        /// A non-infinite lease can be between 15 and 60 seconds.
+        /// A lease duration cannot be changed using <see cref="RenewAsync"/>
+        /// or <see cref="ChangeAsync"/>.
+        /// </param>
+        /// <param name="conditions">
+        /// Optional <see cref="BlobLeaseRequestConditions"/> to add
+        /// conditions on acquiring a lease.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{Lease}"/> describing the lease.
+        /// If unavailable, the lease is null.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual Response<BlobLease> AcquireIfNotExists(
+            TimeSpan duration,
+            RequestConditions conditions = default,
+            CancellationToken cancellationToken = default) =>
+            AcquireIfNotExistsInternal(
+                duration,
+                conditions,
+                async: false,
+                cancellationToken)
+                .EnsureCompleted();
+
+        /// <summary>
+        /// <see cref="AcquireIfNotExistsAsync"/> performs the same operation as
+        /// <see cref="AcquireAsync"/>. However, if there is an existing lease
+        /// conflict, this operation will not classify the operation as an
+        /// error and will return a null <see cref="BlobLease"/> in the
+        /// <see cref="Response{T}"/>
+        ///
+        /// For more information, see <see cref="AcquireAsync"/> and
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/lease-container">
+        /// Lease Container</see>.
+        /// </summary>
+        /// <param name="duration">
+        /// Specifies the duration of the lease, in seconds, or specify
+        /// <see cref="InfiniteLeaseDuration"/> for a lease that never expires.
+        /// A non-infinite lease can be between 15 and 60 seconds.
+        /// A lease duration cannot be changed using <see cref="RenewAsync"/>
+        /// or <see cref="ChangeAsync"/>.
+        /// </param>
+        /// <param name="conditions">
+        /// Optional <see cref="BlobLeaseRequestConditions"/> to add
+        /// conditions on acquiring a lease.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{Lease}"/> describing the lease.
+        /// If unavailable, the lease is null.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual async Task<Response<BlobLease>> AcquireIfNotExistsAsync(
+            TimeSpan duration,
+            RequestConditions conditions = default,
+            CancellationToken cancellationToken = default) =>
+            await AcquireIfNotExistsInternal(
+                duration,
+                conditions,
+                async: true,
+                cancellationToken)
+                .ConfigureAwait(false);
+
+        private async Task<Response<BlobLease>> AcquireIfNotExistsInternal(
+            TimeSpan duration,
+            RequestConditions conditions,
+            bool async,
+            CancellationToken cancellationToken)
+        {
+            var context = new RequestContext() { CancellationToken = cancellationToken };
+            context.AddClassifier(new BlobLeaseClientTryAcquireLeaseClassifier());
+            string operationName = $"{nameof(BlobLeaseClient)}.{nameof(AcquireIfNotExists)}";
+
+            var response = await AcquireInternal(duration, conditions, async, context, operationName).ConfigureAwait(false);
+
+            // null value for Response<T>.Value rather than a BlobLease instance with all default/null values
+            if (BlobLeaseClientTryAcquireLeaseClassifier.IsLeaseAlreadyExistsResponse(response.GetRawResponse()))
+            {
+                response = Response.FromValue<BlobLease>(null, response.GetRawResponse());
+            }
+
+            return response;
+        }
+        #endregion
 
         #region Renew
         /// <summary>

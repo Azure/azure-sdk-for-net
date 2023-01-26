@@ -42,7 +42,7 @@ namespace Azure.Storage.Test.Shared
         private const string FileRenameSource = "x-ms-file-rename-source";
 
         public StorageTestBase(bool async, RecordedTestMode? mode = null)
-            : base(async, mode)
+            : base(async, RecordedTestMode.Live)
         {
             SanitizedQueryParameters.Add(SignatureQueryName);
 

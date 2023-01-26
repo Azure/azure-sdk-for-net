@@ -5222,21 +5222,19 @@ namespace Azure.Storage.Blobs.Test
             var events = new List<(EventWrittenEventArgs EventData, string EventMessage)>();
 
             // Act
+            Response<BlobLease> response;
             using (AzureEventSourceListener listener = new AzureEventSourceListener(
                 (data, message) => events.Add((data, message)),
                 EventLevel.Informational))
             {
-                // try/catch should eventually be replaced with a non-throwing version of Acquire()
-                try
-                {
-                    await secondBlobLeaseClient.AcquireAsync(duration);
-                }
-                catch (RequestFailedException e) when (e.Status == 409)
-                {
-                }
+                response = await secondBlobLeaseClient.AcquireIfNotExistsAsync(duration);
             }
 
             // Assert
+            Assert.IsNull(response.Value);
+            Assert.AreEqual((int)HttpStatusCode.Conflict, response.GetRawResponse().Status);
+            Assert.IsTrue(response.GetRawResponse().Headers.TryGetValue(Constants.HeaderNames.ErrorCode, out string errorCode));
+            Assert.AreEqual(BlobErrorCode.LeaseAlreadyPresent.ToString(), errorCode);
             CollectionAssert.IsEmpty(events.Where(e => e.EventData.Level < EventLevel.Informational));
         }
 
