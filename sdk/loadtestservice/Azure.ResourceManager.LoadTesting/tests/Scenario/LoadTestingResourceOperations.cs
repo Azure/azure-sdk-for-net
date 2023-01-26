@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.LoadTesting.Tests
             }
 
             //// List outbound network dependencies
-            List<OutboundEnvironmentEndpoint> outboundNetworkDependencyResponse = await loadTestGetResponseValue.GetOutboundNetworkDependenciesEndpointsAsync().ToEnumerableAsync();
+            List<LoadTestingOutboundEnvironmentEndpoint> outboundNetworkDependencyResponse = await loadTestGetResponseValue.GetOutboundNetworkDependenciesEndpointsAsync().ToEnumerableAsync();
             Assert.IsNotNull(outboundNetworkDependencyResponse);
 
             //// Patch

@@ -21,7 +21,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
         private const int Version = 2;
         private const int MaxlinksAllowed = 100;
 
-        internal static List<TelemetryItem> OtelToAzureMonitorTrace(Batch<Activity> batchActivity, string roleName, string roleInstance, string instrumentationKey)
+        internal static List<TelemetryItem> OtelToAzureMonitorTrace(Batch<Activity> batchActivity, AzureMonitorResource resource, string instrumentationKey)
         {
             List<TelemetryItem> telemetryItems = new List<TelemetryItem>();
             TelemetryItem telemetryItem;
@@ -29,7 +29,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             foreach (var activity in batchActivity)
             {
                 var monitorTags = EnumerateActivityTags(activity);
-                telemetryItem = new TelemetryItem(activity, ref monitorTags, roleName, roleInstance, instrumentationKey);
+                telemetryItem = new TelemetryItem(activity, ref monitorTags, resource, instrumentationKey);
 
                 // Check for Exceptions events
                 if (activity.Events.Any())
