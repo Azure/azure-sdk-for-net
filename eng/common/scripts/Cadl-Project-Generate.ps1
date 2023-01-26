@@ -68,7 +68,7 @@ try {
 
     if ($LASTEXITCODE) { exit $LASTEXITCODE }
 
-    if (Test-Path "Function:$GetEmitterPackageJsonPathFn") {
+    if (Test-Path "Function:$GetEmitterAdditionalOptionsFn") {
         $emitterAdditionalOptions = &$GetEmitterAdditionalOptionsFn
     }
     Write-Host("npx cadl compile $mainCadlFile --emit $emitterName $emitterAdditionalOptions")
