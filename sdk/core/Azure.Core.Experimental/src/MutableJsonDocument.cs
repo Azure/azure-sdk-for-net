@@ -3,9 +3,7 @@
 
 using System;
 using System.Buffers;
-using System.Dynamic;
 using System.IO;
-using System.Linq.Expressions;
 using System.Text;
 using System.Text.Json;
 using System.Text.Json.Serialization;
@@ -15,11 +13,11 @@ namespace Azure.Core.Dynamic
     /// <summary>
     /// A mutable representation of a JSON value.
     /// </summary>
-    //[DebuggerDisplay("{DebuggerDisplay,nq}")]
-    //[DebuggerTypeProxy(typeof(JsonDataDebuggerProxy))]
     [JsonConverter(typeof(JsonConverter))]
     public partial class MutableJsonDocument
     {
+        internal static readonly JsonSerializerOptions DefaultJsonSerializerOptions = new JsonSerializerOptions();
+
         private readonly Memory<byte> _original;
         private readonly JsonElement _originalElement;
 
@@ -82,8 +80,6 @@ namespace Azure.Core.Dynamic
                 ArrayPool<byte>.Shared.Return(sharedBuffer);
             }
         }
-
-        internal static readonly JsonSerializerOptions DefaultJsonSerializerOptions = new JsonSerializerOptions();
 
         /// <summary>
         /// Parses a UTF-8 encoded string representing a single JSON value into a <see cref="MutableJsonDocument"/>.

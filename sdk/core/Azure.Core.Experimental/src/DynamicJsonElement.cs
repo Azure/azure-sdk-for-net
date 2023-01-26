@@ -15,39 +15,15 @@ namespace Azure.Core.Dynamic
     /// <summary>
     /// Dynamic layer over MutableJsonDocument.
     /// </summary>
-    public partial struct DynamicJsonElement : IEquatable<DynamicJsonElement>
+    public partial struct DynamicJsonElement
     {
+        // TODO: Decide whether or not to support equality
+
         private readonly MutableJsonElement _element;
 
         internal DynamicJsonElement(MutableJsonElement element)
         {
             _element = element;
-        }
-
-        /// <inheritdoc />
-        public bool Equals(DynamicJsonElement other)
-        {
-#pragma warning disable CA1065 // Do not raise exceptions in unexpected locations
-            throw new NotImplementedException();
-#pragma warning restore CA1065 // Do not raise exceptions in unexpected locations
-        }
-
-        /// <inheritdoc />
-        public override bool Equals(object obj)
-        {
-#pragma warning disable CA1065 // Do not raise exceptions in unexpected locations
-            throw new NotImplementedException();
-#pragma warning restore CA1065 // Do not raise exceptions in unexpected locations
-
-            //return Equals(obj as DynamicJsonElement);
-        }
-
-        /// <inheritdoc />
-        public override int GetHashCode()
-        {
-#pragma warning disable CA1065 // Do not raise exceptions in unexpected locations
-            throw new NotImplementedException();
-#pragma warning restore CA1065 // Do not raise exceptions in unexpected locations
         }
     }
 }

@@ -15,8 +15,12 @@ namespace Azure.Core.Dynamic
     /// <summary>
     /// Dynamic layer over MutableJsonDocument.
     /// </summary>
-    public partial class DynamicJson : DynamicData, IEquatable<MutableJsonDocument>
+    //[DebuggerDisplay("{DebuggerDisplay,nq}")]
+    //[DebuggerTypeProxy(typeof(JsonDataDebuggerProxy))]
+    public partial class DynamicJson : DynamicData
     {
+        // TODO: Decide whether or not to support equality
+
         private readonly MutableJsonDocument _document;
 
         internal DynamicJson(MutableJsonDocument document)
@@ -32,23 +36,25 @@ namespace Azure.Core.Dynamic
         /// <param name="stream"></param>
         internal override void WriteTo(Stream stream) => _document.WriteTo(stream, default);
 
-        /// <summary>
-        /// Converts the given JSON value into an instance of a given type.
-        /// </summary>
-        /// <typeparam name="T">The type to convert the value into.</typeparam>
-        /// <returns>A new instance of <typeparamref name="T"/> constructed from the underlying JSON value.</returns>
-        internal T To<T>() => To<T>(MutableJsonDocument.DefaultJsonSerializerOptions);
+        // TODO: Feature: support specifying serializer options
+        // TODO: Feature: support cast to type T
+        ///// <summary>
+        ///// Converts the given JSON value into an instance of a given type.
+        ///// </summary>
+        ///// <typeparam name="T">The type to convert the value into.</typeparam>
+        ///// <returns>A new instance of <typeparamref name="T"/> constructed from the underlying JSON value.</returns>
+        //internal T To<T>() => To<T>(MutableJsonDocument.DefaultJsonSerializerOptions);
 
-        /// <summary>
-        /// Deserializes the given JSON value into an instance of a given type.
-        /// </summary>
-        /// <typeparam name="T">The type to deserialize the value into</typeparam>
-        /// <param name="options">Options to control the conversion behavior.</param>
-        /// <returns>A new instance of <typeparamref name="T"/> constructed from the underlying JSON value.</returns>
-        internal T To<T>(JsonSerializerOptions options)
-        {
-            return JsonSerializer.Deserialize<T>(ToJsonString(), options);
-        }
+        ///// <summary>
+        ///// Deserializes the given JSON value into an instance of a given type.
+        ///// </summary>
+        ///// <typeparam name="T">The type to deserialize the value into</typeparam>
+        ///// <param name="options">Options to control the conversion behavior.</param>
+        ///// <returns>A new instance of <typeparamref name="T"/> constructed from the underlying JSON value.</returns>
+        //internal T To<T>(JsonSerializerOptions options)
+        //{
+        //    return JsonSerializer.Deserialize<T>(ToJsonString(), options);
+        //}
 
         ///// <summary>
         ///// Returns the names of all the properties of this object.
@@ -78,6 +84,7 @@ namespace Azure.Core.Dynamic
         //    };
         //}
 
+        // TODO: Support ToString()
         ///// <inheritdoc />
         //public override string ToString()
         //{
@@ -89,16 +96,17 @@ namespace Azure.Core.Dynamic
         //    return (_value ?? "<null>").ToString();
         //}
 
-        /// <summary>
-        /// Returns a stringified version of the JSON for this value.
-        /// </summary>
-        /// <returns>Returns a stringified version of the JSON for this value.</returns>
-        internal string ToJsonString()
-        {
-            using var stream = new MemoryStream();
-            WriteTo(stream);
-            return Encoding.UTF8.GetString(stream.ToArray());
-        }
+        ///// <summary>
+        ///// Returns a stringified version of the JSON for this value.
+        ///// </summary>
+        ///// <returns>Returns a stringified version of the JSON for this value.</returns>
+        //internal string ToJsonString()
+        //{
+        //    using var stream = new MemoryStream();
+        //    WriteTo(stream);
+        //    return Encoding.UTF8.GetString(stream.ToArray());
+        //}
+
         /// <inheritdoc />
         public override bool Equals(object? obj)
         {
@@ -140,18 +148,6 @@ namespace Azure.Core.Dynamic
 
         /// <inheritdoc />
         public override int GetHashCode() => _document.RootElement.GetHashCode();
-
-        private string? GetString() => _document.RootElement.GetString();
-
-        private int GetInt32() => _document.RootElement.GetInt32();
-
-        private long GetInt64() => _document.RootElement.GetInt64();
-
-        private float GetFloat() => _document.RootElement.GetFloat();
-
-        private double GetDouble() => _document.RootElement.GetDouble();
-
-        private bool GetBoolean() => _document.RootElement.GetBoolean();
 
         // TODO: Handle array length separately - but do we need to?
         ///// <summary>
@@ -235,62 +231,7 @@ namespace Azure.Core.Dynamic
         //    return EnsureObject();
         //}
 
-        private string DebuggerDisplay => ToJsonString();
-
-        private struct Number
-        {
-            public Number(in JsonElement element)
-            {
-                _hasDouble = element.TryGetDouble(out _double);
-                _hasLong = element.TryGetInt64(out _long);
-            }
-
-            public Number(long l)
-            {
-                _long = l;
-                _hasLong = true;
-                _double = default;
-                _hasDouble = false;
-            }
-
-            private long _long;
-            private bool _hasLong;
-            private double _double;
-            private bool _hasDouble;
-
-            public Number(double d)
-            {
-                _long = default;
-                _hasLong = false;
-                _double = d;
-                _hasDouble = true;
-            }
-
-            public void WriteTo(Utf8JsonWriter writer)
-            {
-                if (_hasDouble)
-                {
-                    writer.WriteNumberValue(_double);
-                }
-                else
-                {
-                    writer.WriteNumberValue(_long);
-                }
-            }
-
-            public long AsLong()
-            {
-                if (!_hasLong)
-                {
-                    throw new FormatException();
-                }
-                return _long;
-            }
-
-            public double AsDouble()
-            {
-                return _double;
-            }
-        }
+        // TODO: Implement debugger support
+        //private string DebuggerDisplay => ToJsonString();
     }
 }

@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System.IO;
-using System.Text.Json;
 
 namespace Azure.Core.Dynamic
 {

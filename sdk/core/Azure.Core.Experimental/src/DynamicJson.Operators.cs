@@ -7,6 +7,8 @@ using System.Text.Json;
 
 namespace Azure.Core.Dynamic
 {
+    // TODO: decide what cast operators to support for DynamicJson
+
     //public partial class DynamicJson
     //{
     //    /// <summary>

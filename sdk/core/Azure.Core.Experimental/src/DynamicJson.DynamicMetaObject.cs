@@ -46,6 +46,11 @@ namespace Azure.Core.Dynamic
                 return new DynamicMetaObject(getPropertyCall, restrictions);
             }
 
+            // TODO: Support indexer access for array values - get
+            // TODO: Support indexer access for array values - set
+            // TODO: Support indexer access for property values - get
+            // TODO: Support indexer access for property values - set
+
             //public override DynamicMetaObject BindGetIndex(GetIndexBinder binder, DynamicMetaObject[] indexes)
             //{
             //    var targetObject = Expression.Convert(Expression, LimitType);
