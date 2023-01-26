@@ -121,9 +121,13 @@ Console.WriteLine($"Chatbot: {response}");
 
 ### Generate Multiple Chatbot Responses With Subscription Key
 
-The `GenerateMultipleChatbotResponsesWithSubscriptionKey` method gives an example of generating text responses to input prompts.
+The `GenerateMultipleChatbotResponsesWithSubscriptionKey` method gives an example of generating text responses to input prompts using an Azure subscription key
 
 ```C# Snippet:GenerateMultipleChatbotResponsesWithSubscriptionKey
+string key = "YOUR_AZURE_KEY";
+string endpoint = "http://myaccount.openai.azure.com/";
+OpenAIClient client = new OpenAIClient(new Uri(endpoint), new AzureKeyCredential(key));
+
 List<string> examplePrompts = new(){
     "How are you today?",
     "What is Azure OpenAI?",

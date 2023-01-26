@@ -4,7 +4,6 @@
 using System;
 using System.Collections.Generic;
 using Azure.AI.OpenAI.Models;
-using Azure.Identity;
 using NUnit.Framework;
 
 namespace Azure.AI.OpenAI.Tests.Samples
@@ -13,11 +12,13 @@ namespace Azure.AI.OpenAI.Tests.Samples
     {
         [Test]
         [Ignore("Only verifying that the sample builds")]
-        public void GetChatbotResponsesWithToken()
+        public void GetMultipleResponsesWithSubscriptionKey()
         {
-            #region Snippet:GenerateChatbotResponsesWithToken
+            #region Snippet:GenerateMultipleChatbotResponsesWithSubscriptionKey
+            // Replace with your Azure subscription key
+            string key = "YOUR_AZURE_KEY";
             string endpoint = "http://myaccount.openai.azure.com/";
-            OpenAIClient client = new OpenAIClient(new Uri(endpoint), new DefaultAzureCredential());
+            OpenAIClient client = new OpenAIClient(new Uri(endpoint), new AzureKeyCredential(key));
 
             List<string> examplePrompts = new(){
                 "How are you today?",
