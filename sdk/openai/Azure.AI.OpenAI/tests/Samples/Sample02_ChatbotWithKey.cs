@@ -28,14 +28,14 @@ namespace Azure.AI.OpenAI.Tests.Samples
                 "Describe in single words only the good things that come into your mind about your mother.",
             };
 
-            foreach (var prompt in examplePrompts)
+            foreach (string prompt in examplePrompts)
             {
                 Console.Write($"Input: {prompt}");
-                var request = new CompletionsOptions();
+                CompletionsOptions request = new CompletionsOptions();
                 request.Prompt.Add(prompt);
 
                 Completions completion = client.GetCompletions("myModelDeployment", request);
-                var response = completion.Choices[0].Text;
+                string response = completion.Choices[0].Text;
                 Console.WriteLine($"Chatbot: {response}");
             }
             #endregion
