@@ -60,27 +60,27 @@ namespace Azure.AI.OpenAI
         /// <summary> Return the completion for a given prompt. </summary>
         /// <param name="prompt"> Input string prompt to create a prompt completion from a deployment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<Completion>> CompletionsAsync(string prompt, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<Completions>> GetCompletionsAsync(string prompt, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(_completionsDeploymentId, nameof(_completionsDeploymentId));
             Argument.AssertNotNullOrEmpty(prompt, nameof(prompt));
 
-            CompletionsRequest completionsRequest = new CompletionsRequest();
-            completionsRequest.Prompt.Add(prompt);
-            return await CompletionsAsync(_completionsDeploymentId, completionsRequest, cancellationToken).ConfigureAwait(false);
+            CompletionsOptions completionsOptions = new CompletionsOptions();
+            completionsOptions.Prompt.Add(prompt);
+            return await GetCompletionsAsync(_completionsDeploymentId, completionsOptions, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> Return the completions for a given prompt. </summary>
         /// <param name="prompt"> Input string prompt to create a prompt completion from a deployment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<Completion> Completions(string prompt, CancellationToken cancellationToken = default)
+        public virtual Response<Completions> GetCompletions(string prompt, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(_completionsDeploymentId, nameof(_completionsDeploymentId));
             Argument.AssertNotNullOrEmpty(prompt, nameof(prompt));
 
-            CompletionsRequest completionsRequest = new CompletionsRequest();
-            completionsRequest.Prompt.Add(prompt);
-            return Completions(_completionsDeploymentId, completionsRequest, cancellationToken);
+            CompletionsOptions completionsOptions = new CompletionsOptions();
+            completionsOptions.Prompt.Add(prompt);
+            return GetCompletions(_completionsDeploymentId, completionsOptions, cancellationToken);
         }
     }
 }
