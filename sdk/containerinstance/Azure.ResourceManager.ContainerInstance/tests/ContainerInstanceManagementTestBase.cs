@@ -130,12 +130,70 @@ namespace Azure.ResourceManager.ContainerInstance.Tests
                 return priorityContainerGroup;
 	    }
 
-	    var confidentialComputeProperties = new ConfidentialComputeProperties();
-	    var sku = ContainerGroupSku.Standard;
-	    if (isConfidentialSku)
-	    {
-                confidentialComputeProperties = ccepolicy == null ? confidentialComputeProperties: new ConfidentialComputeProperties(ccepolicy);
-		sku = ContainerGroupSku.Confidential;
+            var confidentialComputeProperties = new ConfidentialComputeProperties();
+            var sku = new ContainerGroupSku("Standard");
+            if (isConfidentialSku)
+            {
+                containers = new ContainerInstanceContainer[]
+                {
+                    new Models.ContainerInstanceContainer(
+                        name: containerGroupName,
+                        image: "alpine",
+                        resources: new ContainerResourceRequirements(
+                          new ContainerResourceRequestsContent(
+                                memoryInGB: 1.5,
+                                cpu: 1.0))
+                    )
+                    {
+		        Ports =
+                        {
+                            new ContainerPort(80)
+                        },
+                        Command =
+                        {
+                            "/bin/sh", "-c", "while true; do sleep 10; done"
+                        },
+                        EnvironmentVariables =
+                        {
+                            new ContainerEnvironmentVariable("secretEnv")
+                            {
+                                SecureValue = "secretValue1"
+                            }
+                        },
+                    }
+                };
+
+                var confContainerGroup = new ContainerGroupData(
+                    location: "eastus2euap",
+                    containers: containers,
+                    osType: ContainerInstanceOperatingSystemType.Linux)
+                {
+                    IPAddress = new ContainerGroupIPAddress(
+                            ports: new[] { new ContainerGroupPort(80) { Protocol = ContainerGroupNetworkProtocol.Tcp } },
+                            addressType: ContainerGroupIPAddressType.Public
+		    ),
+                    RestartPolicy = ContainerGroupRestartPolicy.Never,
+                    Identity = new ManagedServiceIdentity(ManagedServiceIdentityType.SystemAssigned),
+                    InitContainers = {
+                        new InitContainerDefinitionContent($"{containerGroupName}init")
+                        {
+                            Image = "alpine",
+                            Command =
+                            {
+                                "/bin/sh", "-c", "sleep 5"
+                            },
+                            EnvironmentVariables =
+                            {
+                                new ContainerEnvironmentVariable("secretEnv")
+                                {
+                                    SecureValue = "secretValue1"
+                                }
+                            },
+                        }
+                    },
+                    Sku = ContainerGroupSku.Confidential
+                };
+                return confContainerGroup;
 	    }
 
             var containerGroup = new ContainerGroupData(
@@ -173,7 +231,7 @@ namespace Azure.ResourceManager.ContainerInstance.Tests
                     }
                 },
                 EncryptionProperties = encryptionProps,
-                Sku = sku
+                Sku = ContainerGroupSku.Standard
             };
             return containerGroup;
         }
@@ -202,14 +260,16 @@ namespace Azure.ResourceManager.ContainerInstance.Tests
             Assert.AreEqual(expected.IPAddress?.DnsNameLabel, actual.IPAddress?.DnsNameLabel);
             Assert.AreEqual(expected.Containers[0].Name, actual.Containers[0].Name);
             Assert.AreEqual(expected.Containers[0].Image, actual.Containers[0].Image);
-            Assert.AreEqual(expected.Containers[0].LivenessProbe.PeriodInSeconds, actual.Containers[0].LivenessProbe.PeriodInSeconds);
+            Assert.AreEqual(expected.Containers[0].LivenessProbe?.PeriodInSeconds, actual.Containers[0].LivenessProbe?.PeriodInSeconds);
             Assert.AreEqual(expected.Containers[0].EnvironmentVariables[0].Name, actual.Containers[0].EnvironmentVariables[0].Name);
             Assert.AreEqual(expected.Containers[0].Resources.Requests.Cpu, actual.Containers[0].Resources.Requests.Cpu);
             Assert.AreEqual(expected.Containers[0].Resources.Requests.MemoryInGB, actual.Containers[0].Resources.Requests.MemoryInGB);
             Assert.AreEqual(expected.InitContainers[0].Name, actual.InitContainers[0].Name);
             Assert.AreEqual(expected.InitContainers[0].Image, actual.InitContainers[0].Image);
             Assert.AreEqual(expected.Priority, actual.Priority);
-            Assert.AreEqual(expected.ConfidentialComputeProperties?.CcePolicy, actual.ConfidentialComputeProperties?.CcePolicy);
+            if (expected.Sku == ContainerGroupSku.Confidential) {
+                Assert.NotNull(actual.ConfidentialComputeProperties?.CcePolicy);
+	    }
         }
     }
 }

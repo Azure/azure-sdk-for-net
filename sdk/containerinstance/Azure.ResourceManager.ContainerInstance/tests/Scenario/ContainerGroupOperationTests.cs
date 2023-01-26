@@ -67,9 +67,9 @@ namespace Azure.ResourceManager.ContainerInstance.Tests
         public async Task Delete_ConfidentialContainer()
         {
             SubscriptionResource subscription = await Client.GetDefaultSubscriptionAsync();
-            ResourceGroupResource rg = await CreateResourceGroupAsync(subscription, "testRg", AzureLocation.WestUS);
+            ResourceGroupResource rg = await CreateResourceGroupAsync(subscription, "testRg", "eastus2euap");
             string containerGroupName = Recording.GenerateAssetName("containergrp");
-            var containerGroupData = CreateContainerGroupData(containerGroupName, "Regular", isConfidentialSku: true, ccepolicy: null);
+            var containerGroupData = CreateContainerGroupData(containerGroupName, isConfidentialSku: true, ccepolicy: null);
             var containerGroups = rg.GetContainerGroups();
             ContainerGroupResource containerGroup = (await containerGroups.CreateOrUpdateAsync(WaitUntil.Completed, containerGroupName, containerGroupData)).Value;
 
