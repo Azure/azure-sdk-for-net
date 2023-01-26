@@ -19,13 +19,8 @@ function AddSparseCheckoutPath([string]$subDirectory) {
 function CopySpecToProjectIfNeeded([string]$specCloneRoot, [string]$mainSpecDir, [string]$dest, [string[]]$specAdditionalSubDirectories) {
     $source = "$specCloneRoot/$mainSpecDir"
     Write-Host "Copying spec from $source"
-    # $mainSpecDir is the PR folder, we just need to copy its subfolders which include the cadl project folder
-    Get-ChildItem –Path "$source" -Exclude @("data-plane", "resource-manager")|
-        Foreach-Object {
-            Copy-Item -Path $_.FullName -Destination $dest -Recurse -Force
-        }
-    foreach($additionalDir in $specAdditionalSubDirectories)
-    {
+
+    foreach ($additionalDir in $specAdditionalSubDirectories) {
         $source = "$specCloneRoot/$additionalDir"
         Write-Host "Copying spec from $source"
         Copy-Item -Path $source -Destination $dest -Recurse -Force
@@ -34,8 +29,7 @@ function CopySpecToProjectIfNeeded([string]$specCloneRoot, [string]$mainSpecDir,
 
 function UpdateSparseCheckoutFile([string]$mainSpecDir, [string[]]$specAdditionalSubDirectories) {
     AddSparseCheckoutPath $mainSpecDir
-    foreach($subDir in $specAdditionalSubDirectories)
-    {
+    foreach ($subDir in $specAdditionalSubDirectories) {
         AddSparseCheckoutPath $subDir
     }
 }
@@ -45,8 +39,7 @@ function GetGitRemoteValue([string]$repo) {
     $result = ""
     try {
         $gitRemotes = (git remote -v)
-        foreach ($remote in $gitRemotes)
-        {
+        foreach ($remote in $gitRemotes) {
             if ($remote.StartsWith("origin")) {
                 if ($remote -match 'https://github.com/\S+[\.git]') {
                     $result = "https://github.com/$repo.git"
@@ -98,14 +91,13 @@ $pieces = $cadlConfigurationFile.Path.Replace("\","/").Split("/")
 $projectName = $pieces[$pieces.Count - 3]
 
 # clone the whole RP directory which is the parent of $configuration["directory"]
-if ($configuration["directory"] -match "^[^/\\]+[\\/]+[^/\\]+")
-{
+if ($configuration["directory"] -match "^[^/\\]+[\\/]+[^/\\]+") {
     $specSubDirectory = $Matches[0]
 }
-else
-{
+else {
     throw "The directory in $cadlConfigurationFile is not expected"
 }
+
 if ( $configuration["repo"] -and $configuration["commit"]) {
     $specCloneDir = GetSpecCloneDir $projectName
     $gitRemoteValue = GetGitRemoteValue $configuration["repo"]

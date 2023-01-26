@@ -15,16 +15,33 @@ function NpmInstallForProject([string]$workingDirectory) {
     try {
         $currentDur = Resolve-Path "."
         Write-Host "Generating from $currentDur"
+
         if (Test-Path "package.json") {
             Remove-Item -Path "package.json" -Force
         }
+
         if (Test-Path ".npmrc") {
             Remove-Item -Path ".npmrc" -Force
         }
+
+        if (Test-Path "node_modules") {
+            Remove-Item -Path "node_modules" -Force -Recurse
+        }
+
+        if (Test-Path "package-lock.json") {
+            Remove-Item -Path "package-lock.json" -Force
+        }
+
+        #default to root/eng/emitter-package.json but you can override by writing
+        #Get-${Language}-EmitterPackageJsonPath in your Language-Settings.ps1
         $replacementPackageJson = "$PSScriptRoot/../../emitter-package.json"
+        if (Test-Path "Function:$GetEmitterPackageJsonPathFn") {
+            $replacementPackageJson = &$GetEmitterPackageJsonPathFn
+        }
+
         Write-Host("Copying package.json from $replacementPackageJson")
         Copy-Item -Path $replacementPackageJson -Destination "package.json" -Force
-        npm install
+        npm install --no-lock-file
         if ($LASTEXITCODE) { exit $LASTEXITCODE }
     }
     finally {
@@ -51,7 +68,9 @@ try {
 
     if ($LASTEXITCODE) { exit $LASTEXITCODE }
 
-    $emitterAdditionalOptions = &$GetEmitterAdditionalOptionsFn
+    if (Test-Path "Function:$GetEmitterPackageJsonPathFn") {
+        $emitterAdditionalOptions = &$GetEmitterAdditionalOptionsFn
+    }
     Write-Host("npx cadl compile $mainCadlFile --emit $emitterName $emitterAdditionalOptions")
     npx cadl compile $mainCadlFile --emit $emitterName $emitterAdditionalOptions
 
