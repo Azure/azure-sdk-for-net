@@ -55,7 +55,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
                 tags: new Dictionary<string, object>() { ["sampleRate"] = SampleRate });
 
             var monitorTags = TraceHelper.EnumerateActivityTags(activity);
-            var telemetryItem = new TelemetryItem(activity, ref monitorTags, "RoleName", "RoleInstance", "00000000-0000-0000-0000-000000000000");
+            var telemetryItem = new TelemetryItem(activity, ref monitorTags, null, "00000000-0000-0000-0000-000000000000");
             var expTelemetryItem = new TelemetryItem("Exception", telemetryItem, default, default, default);
 
             if (SampleRate is float)
@@ -86,7 +86,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
                 tags: new Dictionary<string, object>() { ["sampleRate"] = SampleRate });
 
             var monitorTags = TraceHelper.EnumerateActivityTags(activity);
-            var telemetryItem = new TelemetryItem(activity, ref monitorTags, "RoleName", "RoleInstance", "00000000-0000-0000-0000-000000000000");
+            var telemetryItem = new TelemetryItem(activity, ref monitorTags, null, "00000000-0000-0000-0000-000000000000");
 
             if (SampleRate is float)
             {
