@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.AI.OpenAI.Models
 {
-    public partial class CompletionsRequest : IUtf8JsonSerializable
+    public partial class CompletionsOptions : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -87,18 +87,6 @@ namespace Azure.AI.OpenAI.Models
                 else
                 {
                     writer.WriteNull("n");
-                }
-            }
-            if (Optional.IsDefined(Stream))
-            {
-                if (Stream != null)
-                {
-                    writer.WritePropertyName("stream");
-                    writer.WriteBooleanValue(Stream.Value);
-                }
-                else
-                {
-                    writer.WriteNull("stream");
                 }
             }
             if (Optional.IsDefined(Logprobs))

@@ -8,14 +8,14 @@ namespace Azure.AI.OpenAI
         public OpenAIClient(System.Uri endpoint, Azure.Core.TokenCredential credential) { }
         public OpenAIClient(System.Uri endpoint, Azure.Core.TokenCredential credential, Azure.AI.OpenAI.OpenAIClientOptions options) { }
         public virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
-        public virtual Azure.Response<Azure.AI.OpenAI.Models.Completion> Completions(string deploymentId, Azure.AI.OpenAI.Models.CompletionsRequest completionsRequest, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response Completions(string deploymentId, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.OpenAI.Models.Completion>> CompletionsAsync(string deploymentId, Azure.AI.OpenAI.Models.CompletionsRequest completionsRequest, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> CompletionsAsync(string deploymentId, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
-        public virtual Azure.Response<Azure.AI.OpenAI.Models.Embeddings> Embeddings(string deploymentId, Azure.AI.OpenAI.Models.EmbeddingsRequest embeddingsRequest, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response Embeddings(string deploymentId, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.OpenAI.Models.Embeddings>> EmbeddingsAsync(string deploymentId, Azure.AI.OpenAI.Models.EmbeddingsRequest embeddingsRequest, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> EmbeddingsAsync(string deploymentId, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
+        public virtual Azure.Response<Azure.AI.OpenAI.Models.Completions> GetCompletions(string deploymentId, Azure.AI.OpenAI.Models.CompletionsOptions completionsOptions, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response GetCompletions(string deploymentId, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.OpenAI.Models.Completions>> GetCompletionsAsync(string deploymentId, Azure.AI.OpenAI.Models.CompletionsOptions completionsOptions, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> GetCompletionsAsync(string deploymentId, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
+        public virtual Azure.Response<Azure.AI.OpenAI.Models.Embeddings> GetEmbeddings(string deploymentId, Azure.AI.OpenAI.Models.EmbeddingsOptions embeddingsOptions, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response GetEmbeddings(string deploymentId, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.OpenAI.Models.Embeddings>> GetEmbeddingsAsync(string deploymentId, Azure.AI.OpenAI.Models.EmbeddingsOptions embeddingsOptions, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> GetEmbeddingsAsync(string deploymentId, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
     }
     public partial class OpenAIClientOptions : Azure.Core.ClientOptions
     {
@@ -36,9 +36,9 @@ namespace Azure.AI.OpenAI.Models
         public Azure.AI.OpenAI.Models.CompletionsLogProbsModel Logprobs { get { throw null; } }
         public string Text { get { throw null; } }
     }
-    public partial class Completion
+    public partial class Completions
     {
-        internal Completion() { }
+        internal Completions() { }
         public System.Collections.Generic.IReadOnlyList<Azure.AI.OpenAI.Models.Choice> Choices { get { throw null; } }
         public int? Created { get { throw null; } }
         public string Id { get { throw null; } }
@@ -53,9 +53,9 @@ namespace Azure.AI.OpenAI.Models
         public System.Collections.Generic.IReadOnlyList<string> Tokens { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<System.Collections.Generic.IDictionary<string, float>> TopLogprobs { get { throw null; } }
     }
-    public partial class CompletionsRequest
+    public partial class CompletionsOptions
     {
-        public CompletionsRequest() { }
+        public CompletionsOptions() { }
         public int? BestOf { get { throw null; } set { } }
         public int? CacheLevel { get { throw null; } set { } }
         public string CompletionConfig { get { throw null; } set { } }
@@ -69,7 +69,6 @@ namespace Azure.AI.OpenAI.Models
         public float? PresencePenalty { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> Prompt { get { throw null; } }
         public System.Collections.Generic.IList<string> Stop { get { throw null; } }
-        public bool? Stream { get { throw null; } set { } }
         public float? Temperature { get { throw null; } set { } }
         public float? TopP { get { throw null; } set { } }
         public string User { get { throw null; } set { } }
@@ -87,9 +86,9 @@ namespace Azure.AI.OpenAI.Models
         public System.Collections.Generic.IReadOnlyList<Azure.AI.OpenAI.Models.EmbeddingItem> Data { get { throw null; } }
         public string Object { get { throw null; } }
     }
-    public partial class EmbeddingsRequest
+    public partial class EmbeddingsOptions
     {
-        public EmbeddingsRequest(string input) { }
+        public EmbeddingsOptions(string input) { }
         public string Input { get { throw null; } }
         public string InputType { get { throw null; } set { } }
         public string Model { get { throw null; } set { } }

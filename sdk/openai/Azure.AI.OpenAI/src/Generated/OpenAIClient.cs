@@ -104,34 +104,34 @@ namespace Azure.AI.OpenAI
 
         /// <summary> Return the embeddings for a given prompt. </summary>
         /// <param name="deploymentId"> deployment id of the deployed model. </param>
-        /// <param name="embeddingsRequest"> The EmbeddingsRequest to use. </param>
+        /// <param name="embeddingsOptions"> The EmbeddingsOptions to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="deploymentId"/> or <paramref name="embeddingsRequest"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="deploymentId"/> or <paramref name="embeddingsOptions"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="deploymentId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<Embeddings>> EmbeddingsAsync(string deploymentId, EmbeddingsRequest embeddingsRequest, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<Embeddings>> GetEmbeddingsAsync(string deploymentId, EmbeddingsOptions embeddingsOptions, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(deploymentId, nameof(deploymentId));
-            Argument.AssertNotNull(embeddingsRequest, nameof(embeddingsRequest));
+            Argument.AssertNotNull(embeddingsOptions, nameof(embeddingsOptions));
 
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await EmbeddingsAsync(deploymentId, embeddingsRequest.ToRequestContent(), context).ConfigureAwait(false);
-            return Response.FromValue(Models.Embeddings.FromResponse(response), response);
+            Response response = await GetEmbeddingsAsync(deploymentId, embeddingsOptions.ToRequestContent(), context).ConfigureAwait(false);
+            return Response.FromValue(Embeddings.FromResponse(response), response);
         }
 
         /// <summary> Return the embeddings for a given prompt. </summary>
         /// <param name="deploymentId"> deployment id of the deployed model. </param>
-        /// <param name="embeddingsRequest"> The EmbeddingsRequest to use. </param>
+        /// <param name="embeddingsOptions"> The EmbeddingsOptions to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="deploymentId"/> or <paramref name="embeddingsRequest"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="deploymentId"/> or <paramref name="embeddingsOptions"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="deploymentId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<Embeddings> Embeddings(string deploymentId, EmbeddingsRequest embeddingsRequest, CancellationToken cancellationToken = default)
+        public virtual Response<Embeddings> GetEmbeddings(string deploymentId, EmbeddingsOptions embeddingsOptions, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(deploymentId, nameof(deploymentId));
-            Argument.AssertNotNull(embeddingsRequest, nameof(embeddingsRequest));
+            Argument.AssertNotNull(embeddingsOptions, nameof(embeddingsOptions));
 
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = Embeddings(deploymentId, embeddingsRequest.ToRequestContent(), context);
-            return Response.FromValue(Models.Embeddings.FromResponse(response), response);
+            Response response = GetEmbeddings(deploymentId, embeddingsOptions.ToRequestContent(), context);
+            return Response.FromValue(Embeddings.FromResponse(response), response);
         }
 
         /// <summary> Return the embeddings for a given prompt. </summary>
@@ -142,17 +142,17 @@ namespace Azure.AI.OpenAI
         /// <exception cref="ArgumentException"> <paramref name="deploymentId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/OpenAIClient.xml" path="doc/members/member[@name='EmbeddingsAsync(String,RequestContent,RequestContext)']/*" />
-        public virtual async Task<Response> EmbeddingsAsync(string deploymentId, RequestContent content, RequestContext context = null)
+        /// <include file="Docs/OpenAIClient.xml" path="doc/members/member[@name='GetEmbeddingsAsync(String,RequestContent,RequestContext)']/*" />
+        public virtual async Task<Response> GetEmbeddingsAsync(string deploymentId, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(deploymentId, nameof(deploymentId));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("OpenAIClient.Embeddings");
+            using var scope = ClientDiagnostics.CreateScope("OpenAIClient.GetEmbeddings");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateEmbeddingsRequest(deploymentId, content, context);
+                using HttpMessage message = CreateGetEmbeddingsRequest(deploymentId, content, context);
                 return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -170,17 +170,17 @@ namespace Azure.AI.OpenAI
         /// <exception cref="ArgumentException"> <paramref name="deploymentId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/OpenAIClient.xml" path="doc/members/member[@name='Embeddings(String,RequestContent,RequestContext)']/*" />
-        public virtual Response Embeddings(string deploymentId, RequestContent content, RequestContext context = null)
+        /// <include file="Docs/OpenAIClient.xml" path="doc/members/member[@name='GetEmbeddings(String,RequestContent,RequestContext)']/*" />
+        public virtual Response GetEmbeddings(string deploymentId, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(deploymentId, nameof(deploymentId));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("OpenAIClient.Embeddings");
+            using var scope = ClientDiagnostics.CreateScope("OpenAIClient.GetEmbeddings");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateEmbeddingsRequest(deploymentId, content, context);
+                using HttpMessage message = CreateGetEmbeddingsRequest(deploymentId, content, context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -192,34 +192,34 @@ namespace Azure.AI.OpenAI
 
         /// <summary> Return the completions for a given prompt. </summary>
         /// <param name="deploymentId"> deployment id of the deployed model. </param>
-        /// <param name="completionsRequest"> Post body schema to create a prompt completion from a deployment. </param>
+        /// <param name="completionsOptions"> Post body schema to create a prompt completion from a deployment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="deploymentId"/> or <paramref name="completionsRequest"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="deploymentId"/> or <paramref name="completionsOptions"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="deploymentId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<Completion>> CompletionsAsync(string deploymentId, CompletionsRequest completionsRequest, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<Completions>> GetCompletionsAsync(string deploymentId, CompletionsOptions completionsOptions, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(deploymentId, nameof(deploymentId));
-            Argument.AssertNotNull(completionsRequest, nameof(completionsRequest));
+            Argument.AssertNotNull(completionsOptions, nameof(completionsOptions));
 
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await CompletionsAsync(deploymentId, completionsRequest.ToRequestContent(), context).ConfigureAwait(false);
-            return Response.FromValue(Completion.FromResponse(response), response);
+            Response response = await GetCompletionsAsync(deploymentId, completionsOptions.ToRequestContent(), context).ConfigureAwait(false);
+            return Response.FromValue(Completions.FromResponse(response), response);
         }
 
         /// <summary> Return the completions for a given prompt. </summary>
         /// <param name="deploymentId"> deployment id of the deployed model. </param>
-        /// <param name="completionsRequest"> Post body schema to create a prompt completion from a deployment. </param>
+        /// <param name="completionsOptions"> Post body schema to create a prompt completion from a deployment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="deploymentId"/> or <paramref name="completionsRequest"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="deploymentId"/> or <paramref name="completionsOptions"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="deploymentId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<Completion> Completions(string deploymentId, CompletionsRequest completionsRequest, CancellationToken cancellationToken = default)
+        public virtual Response<Completions> GetCompletions(string deploymentId, CompletionsOptions completionsOptions, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(deploymentId, nameof(deploymentId));
-            Argument.AssertNotNull(completionsRequest, nameof(completionsRequest));
+            Argument.AssertNotNull(completionsOptions, nameof(completionsOptions));
 
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = Completions(deploymentId, completionsRequest.ToRequestContent(), context);
-            return Response.FromValue(Completion.FromResponse(response), response);
+            Response response = GetCompletions(deploymentId, completionsOptions.ToRequestContent(), context);
+            return Response.FromValue(Completions.FromResponse(response), response);
         }
 
         /// <summary> Return the completions for a given prompt. </summary>
@@ -230,17 +230,17 @@ namespace Azure.AI.OpenAI
         /// <exception cref="ArgumentException"> <paramref name="deploymentId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/OpenAIClient.xml" path="doc/members/member[@name='CompletionsAsync(String,RequestContent,RequestContext)']/*" />
-        public virtual async Task<Response> CompletionsAsync(string deploymentId, RequestContent content, RequestContext context = null)
+        /// <include file="Docs/OpenAIClient.xml" path="doc/members/member[@name='GetCompletionsAsync(String,RequestContent,RequestContext)']/*" />
+        public virtual async Task<Response> GetCompletionsAsync(string deploymentId, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(deploymentId, nameof(deploymentId));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("OpenAIClient.Completions");
+            using var scope = ClientDiagnostics.CreateScope("OpenAIClient.GetCompletions");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateCompletionsRequest(deploymentId, content, context);
+                using HttpMessage message = CreateGetCompletionsRequest(deploymentId, content, context);
                 return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -258,17 +258,17 @@ namespace Azure.AI.OpenAI
         /// <exception cref="ArgumentException"> <paramref name="deploymentId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/OpenAIClient.xml" path="doc/members/member[@name='Completions(String,RequestContent,RequestContext)']/*" />
-        public virtual Response Completions(string deploymentId, RequestContent content, RequestContext context = null)
+        /// <include file="Docs/OpenAIClient.xml" path="doc/members/member[@name='GetCompletions(String,RequestContent,RequestContext)']/*" />
+        public virtual Response GetCompletions(string deploymentId, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(deploymentId, nameof(deploymentId));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("OpenAIClient.Completions");
+            using var scope = ClientDiagnostics.CreateScope("OpenAIClient.GetCompletions");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateCompletionsRequest(deploymentId, content, context);
+                using HttpMessage message = CreateGetCompletionsRequest(deploymentId, content, context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -278,7 +278,7 @@ namespace Azure.AI.OpenAI
             }
         }
 
-        internal HttpMessage CreateEmbeddingsRequest(string deploymentId, RequestContent content, RequestContext context)
+        internal HttpMessage CreateGetEmbeddingsRequest(string deploymentId, RequestContent content, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -297,7 +297,7 @@ namespace Azure.AI.OpenAI
             return message;
         }
 
-        internal HttpMessage CreateCompletionsRequest(string deploymentId, RequestContent content, RequestContext context)
+        internal HttpMessage CreateGetCompletionsRequest(string deploymentId, RequestContent content, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;

@@ -71,15 +71,15 @@ OpenAIClient client = new OpenAIClient(new Uri(endpoint), new DefaultAzureCreden
 List<string> examplePrompts = new(){
     //...
     "What is Azure OpenAI?",
-    //...    
+    //...
 };
 
 foreach (var prompt in examplePrompts)
 {
-    var request = new CompletionsRequest();
+    var request = new CompletionsOptions();
     request.Prompt.Add(prompt);
 
-    Completion completion = client.Completions("myModelDeployment", request);
+    Completions completion = client.GetCompletions("myModelDeployment", request);
     var response = completion.Choices[0].Text;
     Console.WriteLine($"Chatbot: {response}");
 }
@@ -114,7 +114,7 @@ OpenAIClient client = new OpenAIClient("myDeploymentId", new Uri(endpoint), new 
 
 string prompt = "What is Azure OpenAI?",
 Console.Write($"Input: {prompt}");
-Completion completion = client.Completions(prompt);
+Completions completion = client.GetCompletions(prompt);
 string response = completion.Choices[0].Text;
 Console.WriteLine($"Chatbot: {response}");
 ```
@@ -139,10 +139,10 @@ List<string> examplePrompts = new(){
 foreach (var prompt in examplePrompts)
 {
     Console.Write($"Input: {prompt}");
-    var request = new CompletionsRequest();
+    var request = new CompletionsOptions();
     request.Prompt.Add(prompt);
 
-    Completion completion = client.Completions("myModelDeployment", request);
+    Completions completion = client.GetCompletions("myModelDeployment", request);
     var response = completion.Choices[0].Text;
     Console.WriteLine($"Chatbot: {response}");
 }
@@ -173,10 +173,10 @@ string summarizationPrompt = @$"
 ";
 
 Console.Write($"Input: {summarizationPrompt}");
-var request = new CompletionsRequest();
+var request = new CompletionsOptions();
 request.Prompt.Add(summarizationPrompt);
 
-Completion completion = client.Completions("myModelDeployment", request);
+Completion completion = client.GetCompletions("myModelDeployment", request);
 var response = completion.Choices[0].Text;
 Console.WriteLine($"Summarization: {response}");
 ```
