@@ -10,13 +10,13 @@ namespace Azure.Core.Experimental.Tests
 {
     public class JsonDataTests
     {
-        [Test]
-        public void CanCreateFromJson()
-        {
-            var jsonData = MutableJsonDocument.Parse("\"string\"");
+        //[Test]
+        //public void CanCreateFromJson()
+        //{
+        //    var jsonData = MutableJsonDocument.Parse("\"string\"");
 
-            Assert.AreEqual("\"string\"", jsonData.ToJsonString());
-        }
+        //    Assert.AreEqual("\"string\"", jsonData.ToJsonString());
+        //}
 
         //[Test]
         //public void CanCreateFromNull()

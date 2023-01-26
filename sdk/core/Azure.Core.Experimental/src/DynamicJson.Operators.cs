@@ -7,10 +7,7 @@ using System.Text.Json;
 
 namespace Azure.Core.Dynamic
 {
-    ///// <summary>
-    ///// A mutable representation of a JSON value.
-    ///// </summary>
-    //public partial class JsonData : IDynamicMetaObjectProvider, IEquatable<JsonData>
+    //public partial class DynamicJson
     //{
     //    /// <summary>
     //    /// Converts the value to a <see cref="bool"/>
