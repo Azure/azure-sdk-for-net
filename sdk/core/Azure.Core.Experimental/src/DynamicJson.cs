@@ -15,7 +15,7 @@ namespace Azure.Core.Dynamic
     /// <summary>
     /// Dynamic layer over MutableJsonDocument.
     /// </summary>
-    public class DynamicJson : DynamicData, IEquatable<MutableJsonDocument>
+    public partial class DynamicJson : DynamicData, IEquatable<MutableJsonDocument>
     {
         private readonly MutableJsonDocument _document;
 
@@ -23,6 +23,8 @@ namespace Azure.Core.Dynamic
         {
             _document = document;
         }
+
+        internal DynamicJsonElement RootElement => new DynamicJsonElement(_document.RootElement);
 
         /// <summary>
         /// Writes the document to the provided writer as a JSON value.

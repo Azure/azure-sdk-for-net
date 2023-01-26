@@ -15,7 +15,7 @@ namespace Azure.Core.Dynamic
         /// </summary>
         public static dynamic ToDynamic(this BinaryData data)
         {
-            return MutableJsonDocument.Parse(data);
+            return new DynamicJson(MutableJsonDocument.Parse(data));
         }
     }
 }

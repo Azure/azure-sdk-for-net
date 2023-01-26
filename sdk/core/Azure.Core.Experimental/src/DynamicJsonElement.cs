@@ -15,7 +15,7 @@ namespace Azure.Core.Dynamic
     /// <summary>
     /// Dynamic layer over MutableJsonDocument.
     /// </summary>
-    public class DynamicJsonElement : IEquatable<DynamicJsonElement>
+    public partial struct DynamicJsonElement : IEquatable<DynamicJsonElement>
     {
         private readonly MutableJsonElement _element;
 

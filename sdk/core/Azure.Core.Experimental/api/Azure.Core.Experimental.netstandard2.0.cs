@@ -118,26 +118,43 @@ namespace Azure.Core.Dynamic
         internal abstract void WriteTo(System.IO.Stream stream);
         public static void WriteTo(System.IO.Stream stream, Azure.Core.Dynamic.DynamicData data) { }
     }
-    [System.Text.Json.Serialization.JsonConverterAttribute(typeof(System.Text.Json.Serialization.JsonConverter))]
-    public partial class MutableJsonDocument : Azure.Core.Dynamic.DynamicData, System.Dynamic.IDynamicMetaObjectProvider, System.IEquatable<Azure.Core.Dynamic.MutableJsonDocument>
+    public partial class DynamicJson : Azure.Core.Dynamic.DynamicData, System.Dynamic.IDynamicMetaObjectProvider, System.IEquatable<Azure.Core.Dynamic.MutableJsonDocument>
     {
-        internal MutableJsonDocument() { }
+        internal DynamicJson() { }
         public bool Equals(Azure.Core.Dynamic.MutableJsonDocument? other) { throw null; }
         public override bool Equals(object? obj) { throw null; }
         public override int GetHashCode() { throw null; }
         System.Dynamic.DynamicMetaObject System.Dynamic.IDynamicMetaObjectProvider.GetMetaObject(System.Linq.Expressions.Expression parameter) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public partial struct MutableJsonElement : System.Dynamic.IDynamicMetaObjectProvider
+    public partial struct DynamicJsonElement : System.Dynamic.IDynamicMetaObjectProvider, System.IEquatable<Azure.Core.Dynamic.DynamicJsonElement>
     {
         private object _dummy;
         private int _dummyPrimitive;
-        public static implicit operator bool (Azure.Core.Dynamic.MutableJsonElement element) { throw null; }
-        public static implicit operator double (Azure.Core.Dynamic.MutableJsonElement element) { throw null; }
-        public static implicit operator int (Azure.Core.Dynamic.MutableJsonElement element) { throw null; }
-        public static implicit operator long (Azure.Core.Dynamic.MutableJsonElement element) { throw null; }
-        public static implicit operator float (Azure.Core.Dynamic.MutableJsonElement element) { throw null; }
-        public static implicit operator string? (Azure.Core.Dynamic.MutableJsonElement element) { throw null; }
+        public bool Equals(Azure.Core.Dynamic.DynamicJsonElement other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static implicit operator bool (Azure.Core.Dynamic.DynamicJsonElement value) { throw null; }
+        public static implicit operator double (Azure.Core.Dynamic.DynamicJsonElement value) { throw null; }
+        public static implicit operator int (Azure.Core.Dynamic.DynamicJsonElement value) { throw null; }
+        public static implicit operator long (Azure.Core.Dynamic.DynamicJsonElement value) { throw null; }
+        public static implicit operator float (Azure.Core.Dynamic.DynamicJsonElement value) { throw null; }
+        public static implicit operator string? (Azure.Core.Dynamic.DynamicJsonElement value) { throw null; }
         System.Dynamic.DynamicMetaObject System.Dynamic.IDynamicMetaObjectProvider.GetMetaObject(System.Linq.Expressions.Expression parameter) { throw null; }
+    }
+    [System.Text.Json.Serialization.JsonConverterAttribute(typeof(System.Text.Json.Serialization.JsonConverter))]
+    public partial class MutableJsonDocument
+    {
+        internal MutableJsonDocument() { }
+        public Azure.Core.Dynamic.MutableJsonElement RootElement { get { throw null; } }
+        public static Azure.Core.Dynamic.MutableJsonDocument Parse(System.BinaryData utf8Json) { throw null; }
+        public static Azure.Core.Dynamic.MutableJsonDocument Parse(string json) { throw null; }
+        public void WriteTo(System.IO.Stream stream, System.Buffers.StandardFormat format = default(System.Buffers.StandardFormat)) { }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public partial struct MutableJsonElement
+    {
+        private object _dummy;
+        private int _dummyPrimitive;
     }
 }

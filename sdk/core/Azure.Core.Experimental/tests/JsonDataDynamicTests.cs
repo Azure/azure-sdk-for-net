@@ -13,7 +13,7 @@ namespace Azure.Core.Experimental.Tests
         [Test]
         public void CanGetIntProperty()
         {
-            dynamic jsonData = MutableJsonDocument.Parse(@"
+            dynamic jsonData = GetDynamicJson(@"
                 {
                   ""Foo"" : 1
                 }");
@@ -26,7 +26,7 @@ namespace Azure.Core.Experimental.Tests
         [Test]
         public void CanGetNestedIntProperty()
         {
-            dynamic jsonData = MutableJsonDocument.Parse(@"
+            dynamic jsonData = GetDynamicJson(@"
                 {
                   ""Foo"" : {
                     ""Bar"" : 1
@@ -41,7 +41,7 @@ namespace Azure.Core.Experimental.Tests
         [Test]
         public void CanSetIntProperty()
         {
-            dynamic jsonData = MutableJsonDocument.Parse(@"
+            dynamic jsonData = GetDynamicJson(@"
                 {
                   ""Foo"" : 1
                 }");
@@ -54,7 +54,7 @@ namespace Azure.Core.Experimental.Tests
         [Test]
         public void CanSetNestedIntProperty()
         {
-            dynamic jsonData = MutableJsonDocument.Parse(@"
+            dynamic jsonData = GetDynamicJson(@"
                 {
                   ""Foo"" : {
                     ""Bar"" : 1
@@ -65,5 +65,12 @@ namespace Azure.Core.Experimental.Tests
 
             Assert.AreEqual(2, (int)jsonData.Foo.Bar);
         }
+
+        #region Helpers
+        internal dynamic GetDynamicJson(string json)
+        {
+            return new BinaryData(json).ToDynamic();
+        }
+        #endregion
     }
 }

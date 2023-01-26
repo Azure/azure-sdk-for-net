@@ -256,30 +256,9 @@ namespace Azure.Core.Dynamic
 
         internal void Set(object value)
         {
-            switch (value)
-            {
-                case int i:
-                    Set(i);
-                    return;
-                case double d:
-                    Set(d);
-                    return;
-                case string s:
-                    Set(s);
-                    return;
-                case bool b:
-                    Set(b);
-                    return;
-                case MutableJsonElement e:
-                    Set(e);
-                    return;
-                default:
-                    EnsureValid();
-                    Changes.AddChange(_path, value, true);
-                    return;
+            EnsureValid();
 
-                // TODO: add support for other supported types
-            }
+            Changes.AddChange(_path, value, true);
         }
 
         internal void Set(MutableJsonElement value)

@@ -10,7 +10,7 @@ using System.Reflection;
 
 namespace Azure.Core.Dynamic
 {
-    public partial class MutableJsonDocument : IDynamicMetaObjectProvider
+    public partial class DynamicJson : IDynamicMetaObjectProvider
     {
         /// <inheritdoc />
         DynamicMetaObject IDynamicMetaObjectProvider.GetMetaObject(Expression parameter) => new MetaObject(parameter, this);
@@ -40,13 +40,10 @@ namespace Azure.Core.Dynamic
                 MemberExpression rootElement = Expression.Property(this_, "RootElement");
 
                 Expression[] arguments = new Expression[] { Expression.Constant(binder.Name) };
-                MethodCallExpression getPropertyCall = Expression.Call(rootElement, MutableJsonElement.GetPropertyMethod, arguments);
-
-                // Binding machinery expects the call site signature to return an object.
-                UnaryExpression toObject = Expression.Convert(getPropertyCall, typeof(object));
+                MethodCallExpression getPropertyCall = Expression.Call(rootElement, DynamicJsonElement.GetPropertyMethod, arguments);
 
                 BindingRestrictions restrictions = BindingRestrictions.GetTypeRestriction(Expression, LimitType);
-                return new DynamicMetaObject(toObject, restrictions);
+                return new DynamicMetaObject(getPropertyCall, restrictions);
             }
 
             //public override DynamicMetaObject BindGetIndex(GetIndexBinder binder, DynamicMetaObject[] indexes)
@@ -88,10 +85,12 @@ namespace Azure.Core.Dynamic
                 MemberExpression rootElement = Expression.Property(this_, "RootElement");
 
                 Expression[] getPropertyArgs = new Expression[] { Expression.Constant(binder.Name) };
-                MethodCallExpression getPropertyCall = Expression.Call(rootElement, MutableJsonElement.GetPropertyMethod, getPropertyArgs);
+                MethodCallExpression getPropertyCall = Expression.Call(rootElement, DynamicJsonElement.GetPropertyMethod, getPropertyArgs);
 
-                Expression[] setDynamicArgs = new Expression[] { Expression.Convert(value.Expression, typeof(object)) };
-                MethodCallExpression setCall = Expression.Call(getPropertyCall, MutableJsonElement.SetDynamicMethod, setDynamicArgs);
+                UnaryExpression property = Expression.Convert(getPropertyCall, typeof(DynamicJsonElement));
+
+                Expression[] setArgs = new Expression[] { Expression.Convert(value.Expression, typeof(object)) };
+                MethodCallExpression setCall = Expression.Call(property, DynamicJsonElement.SetMethod, setArgs);
 
                 BindingRestrictions restrictions = BindingRestrictions.GetTypeRestriction(Expression, LimitType);
                 return new DynamicMetaObject(setCall, restrictions);

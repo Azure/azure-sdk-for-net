@@ -3,20 +3,49 @@
 
 using System;
 using System.Dynamic;
+using System.IO;
 using System.Linq.Expressions;
 using System.Reflection;
 
 namespace Azure.Core.Dynamic
 {
-    public partial struct MutableJsonElement : IDynamicMetaObjectProvider
+    public partial struct DynamicJsonElement : IDynamicMetaObjectProvider
     {
-        internal static readonly MethodInfo GetPropertyMethod = typeof(MutableJsonElement).GetMethod(nameof(GetProperty), BindingFlags.NonPublic | BindingFlags.Instance);
-        internal static readonly MethodInfo SetDynamicMethod = typeof(MutableJsonElement).GetMethod(nameof(SetDynamic), BindingFlags.NonPublic | BindingFlags.Instance, null, new Type[] { typeof(object) }, null);
+        internal static readonly MethodInfo GetPropertyMethod = typeof(DynamicJsonElement).GetMethod(nameof(GetProperty), BindingFlags.NonPublic | BindingFlags.Instance);
+        internal static readonly MethodInfo SetMethod = typeof(DynamicJsonElement).GetMethod(nameof(Set), BindingFlags.NonPublic | BindingFlags.Instance, null, new Type[] { typeof(object) }, null);
 
-        // Binding machinery expects the call site signature to return an object
-        internal object? SetDynamic(object value)
+        internal object GetProperty(string name)
         {
-            Set(value);
+            return new DynamicJsonElement(_element.GetProperty(name));
+        }
+
+        internal object? Set(object value)
+        {
+            switch (value)
+            {
+                case int i:
+                    _element.Set(i);
+                    break;
+                case double d:
+                    _element.Set(d);
+                    break;
+                case string s:
+                    _element.Set(s);
+                    break;
+                case bool b:
+                    _element.Set(b);
+                    break;
+                case MutableJsonElement e:
+                    _element.Set(e);
+                    break;
+                default:
+                    _element.Set(value);
+                    break;
+
+                    // TODO: add support for other supported types
+            }
+
+            // Binding machinery expects the call site signature to return an object
             return null;
         }
 
@@ -36,12 +65,8 @@ namespace Azure.Core.Dynamic
                 Expression[] propertyNameArg = new Expression[] { Expression.Constant(binder.Name) };
                 MethodCallExpression getPropertyCall = Expression.Call(this_, GetPropertyMethod, propertyNameArg);
 
-                // Binding machinery expects the call site signature to return an object.
-                UnaryExpression toObject = Expression.Convert(getPropertyCall, typeof(object));
-
                 BindingRestrictions restrictions = BindingRestrictions.GetTypeRestriction(Expression, LimitType);
-
-                return new DynamicMetaObject(toObject, restrictions);
+                return new DynamicMetaObject(getPropertyCall, restrictions);
             }
 
             public override DynamicMetaObject BindSetMember(SetMemberBinder binder, DynamicMetaObject value)
@@ -51,8 +76,10 @@ namespace Azure.Core.Dynamic
                 Expression[] getPropertyArgs = new Expression[] { Expression.Constant(binder.Name) };
                 MethodCallExpression getPropertyCall = Expression.Call(this_, GetPropertyMethod, getPropertyArgs);
 
+                UnaryExpression property = Expression.Convert(getPropertyCall, typeof(DynamicJsonElement));
+
                 Expression[] setDynamicArgs = new Expression[] { Expression.Convert(value.Expression, typeof(object)) };
-                MethodCallExpression setCall = Expression.Call(getPropertyCall, SetDynamicMethod, setDynamicArgs);
+                MethodCallExpression setCall = Expression.Call(property, SetMethod, setDynamicArgs);
 
                 BindingRestrictions restrictions = BindingRestrictions.GetTypeRestriction(Expression, LimitType);
                 return new DynamicMetaObject(setCall, restrictions);
