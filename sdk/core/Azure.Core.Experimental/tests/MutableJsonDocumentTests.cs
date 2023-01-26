@@ -9,7 +9,7 @@ using NUnit.Framework;
 
 namespace Azure.Core.Experimental.Tests
 {
-    internal class JsonDataChangeListTests
+    internal class MutableJsonDocumentTests
     {
         [Test]
         public void CanGetProperty()
@@ -31,11 +31,11 @@ namespace Azure.Core.Experimental.Tests
             Assert.AreEqual(3.0, jd.RootElement.GetProperty("Baz").GetProperty("A").GetDouble());
             Assert.AreEqual(false, jd.RootElement.GetProperty("Qux").GetBoolean());
 
-            JsonDataWriteToTests.WriteToAndParse(jd, out string jsonString);
+            MutableJsonDocumentWriteToTests.WriteToAndParse(jd, out string jsonString);
 
             Assert.AreEqual(
-                JsonDataWriteToTests.RemoveWhiteSpace(json),
-                JsonDataWriteToTests.RemoveWhiteSpace(jsonString));
+                MutableJsonDocumentWriteToTests.RemoveWhiteSpace(json),
+                MutableJsonDocumentWriteToTests.RemoveWhiteSpace(jsonString));
         }
 
         [Test]
@@ -63,10 +63,10 @@ namespace Azure.Core.Experimental.Tests
             Assert.AreEqual(5.1, jd.RootElement.GetProperty("Baz").GetProperty("A").GetDouble());
             Assert.AreEqual(true, jd.RootElement.GetProperty("Qux").GetBoolean());
 
-            JsonDataWriteToTests.WriteToAndParse(jd, out string jsonString);
+            MutableJsonDocumentWriteToTests.WriteToAndParse(jd, out string jsonString);
 
             Assert.AreEqual(
-                JsonDataWriteToTests.RemoveWhiteSpace(@"
+                MutableJsonDocumentWriteToTests.RemoveWhiteSpace(@"
                 {
                   ""Baz"" : {
                      ""A"" : 5.1
@@ -98,10 +98,10 @@ namespace Azure.Core.Experimental.Tests
             // Last write wins
             Assert.AreEqual(3.3, jd.RootElement.GetProperty("Foo").GetDouble());
 
-            JsonDataWriteToTests.WriteToAndParse(jd, out string jsonString);
+            MutableJsonDocumentWriteToTests.WriteToAndParse(jd, out string jsonString);
 
             Assert.AreEqual(
-                JsonDataWriteToTests.RemoveWhiteSpace(@"
+                MutableJsonDocumentWriteToTests.RemoveWhiteSpace(@"
                 {
                   ""Baz"" : {
                      ""A"" : 3.1
@@ -136,12 +136,12 @@ namespace Azure.Core.Experimental.Tests
             Assert.AreEqual("hi", jd.RootElement.GetProperty("Bar").GetString());
 
             // 3. Type round-trips correctly.
-            JsonDocument doc = JsonDataWriteToTests.WriteToAndParse(jd, out string jsonString);
+            JsonDocument doc = MutableJsonDocumentWriteToTests.WriteToAndParse(jd, out string jsonString);
 
             Assert.AreEqual(1.2, doc.RootElement.GetProperty("Foo").GetDouble());
             Assert.AreEqual("hi", doc.RootElement.GetProperty("Bar").GetString());
 
-            Assert.AreEqual(JsonDataWriteToTests.RemoveWhiteSpace(@"
+            Assert.AreEqual(MutableJsonDocumentWriteToTests.RemoveWhiteSpace(@"
                 {
                   ""Foo"" : 1.2,
                   ""Bar"" : ""hi""
@@ -172,12 +172,12 @@ namespace Azure.Core.Experimental.Tests
             Assert.AreEqual("hi", jd.RootElement.GetProperty("Foo").GetProperty("B").GetString());
 
             // 3. Type round-trips correctly.
-            JsonDocument doc = JsonDataWriteToTests.WriteToAndParse(jd, out string jsonString);
+            JsonDocument doc = MutableJsonDocumentWriteToTests.WriteToAndParse(jd, out string jsonString);
 
             Assert.AreEqual(1.2, doc.RootElement.GetProperty("Foo").GetProperty("A").GetDouble());
             Assert.AreEqual("hi", doc.RootElement.GetProperty("Foo").GetProperty("B").GetString());
 
-            Assert.AreEqual(JsonDataWriteToTests.RemoveWhiteSpace(@"
+            Assert.AreEqual(MutableJsonDocumentWriteToTests.RemoveWhiteSpace(@"
                 {
                   ""Foo"" : {
                     ""A"": 1.2,
@@ -208,12 +208,12 @@ namespace Azure.Core.Experimental.Tests
             Assert.IsFalse(jd.RootElement.TryGetProperty("Bar", out var _));
 
             // 3. Type round-trips correctly.
-            JsonDocument doc = JsonDataWriteToTests.WriteToAndParse(jd, out string jsonString);
+            JsonDocument doc = MutableJsonDocumentWriteToTests.WriteToAndParse(jd, out string jsonString);
 
             Assert.AreEqual(1.2, doc.RootElement.GetProperty("Foo").GetDouble());
             Assert.IsFalse(doc.RootElement.TryGetProperty("Bar", out JsonElement _));
 
-            Assert.AreEqual(JsonDataWriteToTests.RemoveWhiteSpace(@"
+            Assert.AreEqual(MutableJsonDocumentWriteToTests.RemoveWhiteSpace(@"
                 {
                   ""Foo"" : 1.2
                 }"), jsonString);
@@ -243,10 +243,10 @@ namespace Azure.Core.Experimental.Tests
             Assert.IsFalse(jd.RootElement.GetProperty("Foo").TryGetProperty("B", out var _));
 
             // 3. Type round-trips correctly.
-            JsonDocument doc = JsonDataWriteToTests.WriteToAndParse(jd, out string jsonString);
+            JsonDocument doc = MutableJsonDocumentWriteToTests.WriteToAndParse(jd, out string jsonString);
 
             Assert.AreEqual(1.2, doc.RootElement.GetProperty("Foo").GetProperty("A").GetDouble());
-            Assert.AreEqual(JsonDataWriteToTests.RemoveWhiteSpace(@"
+            Assert.AreEqual(MutableJsonDocumentWriteToTests.RemoveWhiteSpace(@"
                 {
                   ""Foo"" : {
                     ""A"": 1.2
@@ -279,13 +279,13 @@ namespace Azure.Core.Experimental.Tests
             Assert.AreEqual(5.5, jd.RootElement.GetProperty("Baz").GetProperty("B").GetDouble());
 
             // 3. Type round-trips correctly.
-            JsonDocument doc = JsonDataWriteToTests.WriteToAndParse(jd, out string jsonString);
+            JsonDocument doc = MutableJsonDocumentWriteToTests.WriteToAndParse(jd, out string jsonString);
 
             BazB baz = JsonSerializer.Deserialize<BazB>(jsonString);
             Assert.AreEqual(1.2, baz.Foo);
             Assert.AreEqual(5.5, baz.Baz.B);
 
-            Assert.AreEqual(JsonDataWriteToTests.RemoveWhiteSpace(@"
+            Assert.AreEqual(MutableJsonDocumentWriteToTests.RemoveWhiteSpace(@"
                 {
                   ""Baz"" : {
                      ""B"" : 5.5
@@ -364,10 +364,10 @@ namespace Azure.Core.Experimental.Tests
             jd.RootElement.GetProperty("Foo").GetIndexElement(1).Set(6);
             jd.RootElement.GetProperty("Foo").GetIndexElement(2).Set(7);
 
-            JsonDocument doc = JsonDataWriteToTests.WriteToAndParse(jd, out string jsonString);
+            JsonDocument doc = MutableJsonDocumentWriteToTests.WriteToAndParse(jd, out string jsonString);
 
             Assert.AreEqual(
-                JsonDataWriteToTests.RemoveWhiteSpace(@"
+                MutableJsonDocumentWriteToTests.RemoveWhiteSpace(@"
                 {
                   ""Foo"" : [ 5, 6, 7 ]
                 }"),
@@ -419,10 +419,10 @@ namespace Azure.Core.Experimental.Tests
             Assert.AreEqual(5, jd.RootElement.GetIndexElement(0).GetInt32());
 
             // 3. Type round-trips correctly.
-            JsonDocument doc = JsonDataWriteToTests.WriteToAndParse(jd, out string jsonString);
+            JsonDocument doc = MutableJsonDocumentWriteToTests.WriteToAndParse(jd, out string jsonString);
 
             Assert.AreEqual(5, doc.RootElement[0].GetInt32());
-            Assert.AreEqual(JsonDataWriteToTests.RemoveWhiteSpace(@"[ 5 ]"), jsonString);
+            Assert.AreEqual(MutableJsonDocumentWriteToTests.RemoveWhiteSpace(@"[ 5 ]"), jsonString);
         }
 
         [Test]
@@ -454,10 +454,10 @@ namespace Azure.Core.Experimental.Tests
             Assert.Throws<InvalidOperationException>(() => jd.RootElement.GetIndexElement(0).Set(a));
 
             // 3. Type round-trips correctly.
-            JsonDocument doc = JsonDataWriteToTests.WriteToAndParse(jd, out string jsonString);
+            JsonDocument doc = MutableJsonDocumentWriteToTests.WriteToAndParse(jd, out string jsonString);
 
             Assert.AreEqual(5, doc.RootElement[0].GetInt32());
-            Assert.AreEqual(JsonDataWriteToTests.RemoveWhiteSpace(@"[ 5 ]"), jsonString);
+            Assert.AreEqual(MutableJsonDocumentWriteToTests.RemoveWhiteSpace(@"[ 5 ]"), jsonString);
         }
 
         [Test]
@@ -503,9 +503,9 @@ namespace Azure.Core.Experimental.Tests
             Assert.AreEqual(7, aValue);
 
             // 3. Type round-trips correctly.
-            JsonDocument doc = JsonDataWriteToTests.WriteToAndParse(jd, out string jsonString);
+            JsonDocument doc = MutableJsonDocumentWriteToTests.WriteToAndParse(jd, out string jsonString);
 
-            Assert.AreEqual(JsonDataWriteToTests.RemoveWhiteSpace(@"[
+            Assert.AreEqual(MutableJsonDocumentWriteToTests.RemoveWhiteSpace(@"[
                 {
                   ""Foo"" : {
                     ""A"": 7
@@ -553,9 +553,9 @@ namespace Azure.Core.Experimental.Tests
             Assert.AreEqual("new", jd.RootElement.GetIndexElement(1).GetProperty("Bar").GetString());
 
             // 3. Type round-trips correctly.
-            JsonDocument doc = JsonDataWriteToTests.WriteToAndParse(jd, out string jsonString);
+            JsonDocument doc = MutableJsonDocumentWriteToTests.WriteToAndParse(jd, out string jsonString);
 
-            Assert.AreEqual(JsonDataWriteToTests.RemoveWhiteSpace(@"[
+            Assert.AreEqual(MutableJsonDocumentWriteToTests.RemoveWhiteSpace(@"[
                 {
                   ""Foo"" : {
                     ""A"": 7
@@ -609,7 +609,7 @@ namespace Azure.Core.Experimental.Tests
             string jsonString = BinaryData.FromStream(stream).ToString();
             JsonDocument doc = JsonDocument.Parse(jsonString);
 
-            Assert.AreEqual(JsonDataWriteToTests.RemoveWhiteSpace(@"{
+            Assert.AreEqual(MutableJsonDocumentWriteToTests.RemoveWhiteSpace(@"{
                 ""ArrayProperty"": [
                     {
                       ""Foo"" : {
@@ -633,10 +633,10 @@ namespace Azure.Core.Experimental.Tests
             Assert.AreEqual(1.2, jd.RootElement.GetIndexElement(0).GetProperty("Foo").GetDouble());
 
             // 3. Type round-trips correctly.
-            JsonDocument doc = JsonDataWriteToTests.WriteToAndParse(jd, out string jsonString);
+            JsonDocument doc = MutableJsonDocumentWriteToTests.WriteToAndParse(jd, out string jsonString);
 
             Assert.AreEqual(1.2, doc.RootElement[0].GetProperty("Foo").GetDouble());
-            Assert.AreEqual(JsonDataWriteToTests.RemoveWhiteSpace(@"[ { ""Foo"" : 1.2 } ]"), jsonString);
+            Assert.AreEqual(MutableJsonDocumentWriteToTests.RemoveWhiteSpace(@"[ { ""Foo"" : 1.2 } ]"), jsonString);
         }
 
         [Test]
@@ -653,10 +653,10 @@ namespace Azure.Core.Experimental.Tests
             Assert.IsFalse(jd.RootElement.GetIndexElement(0).GetProperty("Foo").GetBoolean());
 
             // 3. Type round-trips correctly.
-            JsonDocument doc = JsonDataWriteToTests.WriteToAndParse(jd, out string jsonString);
+            JsonDocument doc = MutableJsonDocumentWriteToTests.WriteToAndParse(jd, out string jsonString);
 
             Assert.IsFalse(doc.RootElement[0].GetProperty("Foo").GetBoolean());
-            Assert.AreEqual(JsonDataWriteToTests.RemoveWhiteSpace(@"[ { ""Foo"" : false } ]"), jsonString);
+            Assert.AreEqual(MutableJsonDocumentWriteToTests.RemoveWhiteSpace(@"[ { ""Foo"" : false } ]"), jsonString);
         }
 
         [Test]
@@ -675,11 +675,11 @@ namespace Azure.Core.Experimental.Tests
 
             Assert.AreEqual(6, jd.RootElement.GetProperty("Foo").GetProperty("Bar").GetInt32());
 
-            JsonDocument doc = JsonDataWriteToTests.WriteToAndParse(jd, out string jsonString);
+            JsonDocument doc = MutableJsonDocumentWriteToTests.WriteToAndParse(jd, out string jsonString);
 
             Assert.AreEqual(6, doc.RootElement.GetProperty("Foo").GetProperty("Bar").GetInt32());
 
-            Assert.AreEqual(JsonDataWriteToTests.RemoveWhiteSpace(
+            Assert.AreEqual(MutableJsonDocumentWriteToTests.RemoveWhiteSpace(
                 @"{ ""Foo"" : {""Bar"" : 6 } }"),
                 jsonString);
         }
@@ -700,13 +700,13 @@ namespace Azure.Core.Experimental.Tests
             Assert.AreEqual(3, jd.RootElement.GetIndexElement(0).GetProperty("Foo").GetIndexElement(2).GetInt32());
 
             // 3. Type round-trips correctly.
-            JsonDocument doc = JsonDataWriteToTests.WriteToAndParse(jd, out string jsonString);
+            JsonDocument doc = MutableJsonDocumentWriteToTests.WriteToAndParse(jd, out string jsonString);
 
             Assert.AreEqual(1, doc.RootElement[0].GetProperty("Foo")[0].GetInt32());
             Assert.AreEqual(2, doc.RootElement[0].GetProperty("Foo")[1].GetInt32());
             Assert.AreEqual(3, doc.RootElement[0].GetProperty("Foo")[2].GetInt32());
 
-            Assert.AreEqual(JsonDataWriteToTests.RemoveWhiteSpace(@"[ { ""Foo"" : [1, 2, 3] }]"), jsonString);
+            Assert.AreEqual(MutableJsonDocumentWriteToTests.RemoveWhiteSpace(@"[ { ""Foo"" : [1, 2, 3] }]"), jsonString);
         }
 
         [Test]
@@ -723,10 +723,10 @@ namespace Azure.Core.Experimental.Tests
             Assert.IsNull(jd.RootElement.GetIndexElement(0).GetProperty("Foo").GetString());
 
             // 3. Type round-trips correctly.
-            JsonDocument doc = JsonDataWriteToTests.WriteToAndParse(jd, out string jsonString);
+            JsonDocument doc = MutableJsonDocumentWriteToTests.WriteToAndParse(jd, out string jsonString);
 
             Assert.AreEqual(JsonValueKind.Null, doc.RootElement[0].GetProperty("Foo").ValueKind);
-            Assert.AreEqual(JsonDataWriteToTests.RemoveWhiteSpace(@"[ { ""Foo"" : null } ]"), jsonString);
+            Assert.AreEqual(MutableJsonDocumentWriteToTests.RemoveWhiteSpace(@"[ { ""Foo"" : null } ]"), jsonString);
         }
     }
 }

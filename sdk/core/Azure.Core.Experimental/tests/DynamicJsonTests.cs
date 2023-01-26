@@ -8,7 +8,7 @@ using NUnit.Framework;
 
 namespace Azure.Core.Experimental.Tests
 {
-    public class JsonDataDynamicTests
+    public class DynamicJsonTests
     {
         [Test]
         public void CanGetIntProperty()
