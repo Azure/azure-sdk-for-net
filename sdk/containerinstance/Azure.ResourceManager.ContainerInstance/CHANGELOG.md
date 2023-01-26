@@ -1,8 +1,11 @@
 # Release History
 
-## 1.1.0-beta.1 (Unreleased)
+## 1.1.0-beta.1 (2023-01-26)
+This release is a preview release for ContainerGroup Priority property and Confidential Containers.
 
 ### Features Added
+- Added Priority property to ContainerGroup properties to support the public preview of Spot Containers on ACI.
+- Added ConfidentialComputeProperties.CcePolicy and Confidential ContainerGroupSku to support the public preview of Confidential containers on ACI with custom confidential computing enforcement policies.
 
 ### Breaking Changes
 
