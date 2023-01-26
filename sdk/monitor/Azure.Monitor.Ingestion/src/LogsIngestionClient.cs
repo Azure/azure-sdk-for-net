@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
@@ -41,8 +42,20 @@ namespace Azure.Monitor.Ingestion
                 LogsData = logsData;
             }
 
-            public BinaryData LogsData { get; }
             public List<object> Logs { get; }
+            public BinaryData LogsData { get; }
+        }
+
+        internal readonly struct ProcessEventHandler
+        {
+            public ProcessEventHandler(bool shouldAbort, List<Exception> exceptions)
+            {
+                ShouldAbort = shouldAbort;
+                Exceptions = exceptions;
+            }
+
+            public bool ShouldAbort { get; }
+            public List<Exception> Exceptions { get; }
         }
 
         internal HttpMessage CreateUploadRequest(string ruleId, string streamName, RequestContent content, string contentEncoding, RequestContext context = null)
@@ -365,23 +378,9 @@ namespace Azure.Monitor.Ingestion
                             }
                             else
                             {
-                                UploadFailedEventArgs eventArgs;
-                                if (runningTask.Exception != null)
-                                {
-                                    eventArgs = new UploadFailedEventArgs(batch.Logs, runningTask.Exception, isRunningSynchronously: false, ClientDiagnostics, cancellationToken);
-                                    var exceptionOnUpload = await options.OnUploadFailedAsync(eventArgs).ConfigureAwait(false);
-                                    shouldAbort = exceptionOnUpload != null;
-                                    if (shouldAbort)
-                                        AddException(ref exceptions, exceptionOnUpload);
-                                }
-                                else if (runningTask.Result.Status != 204)
-                                {
-                                    eventArgs = new UploadFailedEventArgs(batch.Logs, new RequestFailedException(runningTask.Result), isRunningSynchronously: false, ClientDiagnostics, cancellationToken);
-                                    var exceptionOnUpload = await options.OnUploadFailedAsync(eventArgs).ConfigureAwait(false);
-                                    shouldAbort = exceptionOnUpload != null;
-                                    if (shouldAbort)
-                                        AddException(ref exceptions, exceptionOnUpload);
-                                }
+                                ProcessEventHandler processEventHandler = ProcessCompletedTaskEventHandlerAsync(runningTask, batch.Logs, options, cancellationToken).Result;
+                                shouldAbort = processEventHandler.ShouldAbort;
+                                exceptions.AddRange(processEventHandler.Exceptions);
                             }
                             // Remove completed task from task list
                             runningTasks.RemoveAt(i);
@@ -408,24 +407,9 @@ namespace Azure.Monitor.Ingestion
                 }
                 else
                 {
-                    UploadFailedEventArgs eventArgs;
-                    if (task.CurrentTask.Exception != null)
-                    {
-                        eventArgs = new UploadFailedEventArgs(task.Logs, task.CurrentTask.Exception, isRunningSynchronously: false, ClientDiagnostics, cancellationToken);
-                        var exceptionOnUpload = await options.OnUploadFailedAsync(eventArgs).ConfigureAwait(false);
-                        shouldAbort = exceptionOnUpload != null;
-                        if (shouldAbort)
-                            AddException(ref exceptions, exceptionOnUpload);
-                    }
-                    else if (task.CurrentTask.Result.Status != 204)
-                    {
-                        eventArgs = new UploadFailedEventArgs(task.Logs, new RequestFailedException(task.CurrentTask.Result), isRunningSynchronously: false, ClientDiagnostics, cancellationToken);
-                        eventArgs._clientDiagnostics = ClientDiagnostics;
-                        var exceptionOnUpload = await options.OnUploadFailedAsync(eventArgs).ConfigureAwait(false);
-                        shouldAbort = exceptionOnUpload != null;
-                        if (shouldAbort)
-                            AddException(ref exceptions, exceptionOnUpload);
-                    }
+                    ProcessEventHandler processEventHandler = ProcessCompletedTaskEventHandlerAsync(task.CurrentTask, task.Logs, options, cancellationToken).Result;
+                    shouldAbort = processEventHandler.ShouldAbort;
+                    exceptions.AddRange(processEventHandler.Exceptions);
                 }
             }
             if (exceptions?.Count > 0)
@@ -458,6 +442,30 @@ namespace Azure.Monitor.Ingestion
                     new RequestFailedException(runningTask.CurrentTask.Result));
                 logsFailed += logsCount;
             }
+        }
+
+        internal async Task<ProcessEventHandler> ProcessCompletedTaskEventHandlerAsync(Task<Response> runningTask, List<object> logs, UploadLogsOptions options, CancellationToken cancellationToken)//, ref bool shouldAbort, ref List<Exception> exceptions)
+        {
+            bool shouldAbort = false;
+            List<Exception> exceptions = new List<Exception>();
+            UploadFailedEventArgs eventArgs;
+            if (runningTask.Exception != null)
+            {
+                eventArgs = new UploadFailedEventArgs(logs, runningTask.Exception, isRunningSynchronously: false, ClientDiagnostics, cancellationToken);
+                var exceptionOnUpload = await options.OnUploadFailedAsync(eventArgs).ConfigureAwait(false);
+                shouldAbort = exceptionOnUpload != null;
+                if (shouldAbort)
+                    AddException(ref exceptions, exceptionOnUpload);
+            }
+            else if (runningTask.Result.Status != 204)
+            {
+                eventArgs = new UploadFailedEventArgs(logs, new RequestFailedException(runningTask.Result), isRunningSynchronously: false, ClientDiagnostics, cancellationToken);
+                var exceptionOnUpload = await options.OnUploadFailedAsync(eventArgs).ConfigureAwait(false);
+                shouldAbort = exceptionOnUpload != null;
+                if (shouldAbort)
+                    AddException(ref exceptions, exceptionOnUpload);
+            }
+            return new ProcessEventHandler(shouldAbort, exceptions);
         }
 
         private async Task<Response> UploadBatchListSyncOrAsync(BatchedLogs batch, string ruleId, string streamName, bool async, CancellationToken cancellationToken)
