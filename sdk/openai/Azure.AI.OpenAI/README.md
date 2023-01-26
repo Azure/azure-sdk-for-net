@@ -7,9 +7,7 @@ Use the client library for Azure OpenAI to:
 * [Create a completion for text][msdocs_openai_completion]
 * [Create a text embedding for comparisons][msdocs_openai_embedding]
 
-[Source code][source_root] | [Package (NuGet)][package] | [API reference documentation][reference_docs] | [Product documentation][azconfig_docs] | [Samples][source_samples]
-
-  [Source code](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/openai/Azure.AI.OpenAI/src) | [Package (NuGet)](https://www.nuget.org/packages) | [API reference documentation](https://azure.github.io/azure-sdk-for-net) | [Product documentation](https://docs.microsoft.com/azure)
+  [Source code](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/openai/Azure.AI.OpenAI/src) | [Package (NuGet)](https://www.nuget.org/packages) | [API reference documentation](https://azure.github.io/azure-sdk-for-net) | [Product documentation](https://docs.microsoft.com/azure) | [Samples](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/openai/Azure.AI.OpenAI/tests/Samples)
 
 ## Getting started
 
@@ -211,7 +209,7 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 [openai_rest]: https://learn.microsoft.com/azure/cognitive-services/openai/reference
 [azure_openai_completions_docs]: https://learn.microsoft.com/en-us/azure/cognitive-services/openai/how-to/completions
 [azure_openai_embeddgings_docs]: https://learn.microsoft.com/en-us/azure/cognitive-services/openai/concepts/understand-embeddings
-[openai_contrib]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/openai/CONTRIBUTING.md
+[openai_contrib]: https://github.com/Azure/azure-sdk-for-net/blob/main/CONTRIBUTING.md
 [cla]: https://cla.microsoft.com
 [code_of_conduct]: https://opensource.microsoft.com/codeofconduct/
 [code_of_conduct_faq]: https://opensource.microsoft.com/codeofconduct/faq/
