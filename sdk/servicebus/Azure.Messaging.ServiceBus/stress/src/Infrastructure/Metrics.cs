@@ -74,7 +74,7 @@ public class Metrics
     ///   called when the processor is running.
     /// </summary>
     ///
-    public const string EventHandlerCalls = "EventHandlerCalls";
+    public const string MessageHandlerCalls = "MessageHandlerCalls";
 
     /// <summary>
     ///   This is the metric name used to collect metrics on the number of times the processor had to restart.
@@ -112,6 +112,18 @@ public class Metrics
     /// </summary>
     ///
     public const string MessagesProcessed = "MessagesProcessed";
+
+    /// <summary>
+    ///   This is the metric name used to collect metrics on the number of messages processed by the processor.
+    /// </summary>
+    ///
+    public const string TotalMessagesProcessed = "TotalMessagesProcessed";
+
+    /// <summary>
+    ///   This is the metric name used to collect metrics on the number of session messages processed by the session processor.
+    /// </summary>
+    ///
+    public const string SessionMessagesProcessed = "SessionMessagesProcessed";
 
     /// <summary>
     ///   This is the metric name used to collect metrics on the number of duplicate messages processed by the processor.
@@ -156,6 +168,13 @@ public class Metrics
     /// </summary>
     ///
     public const string ReceiverRestarted = "ReceiverRestarted";
+
+    /// <summary>
+    ///   This is the dimension name used to hold which identifier is associated with a
+    ///   given processor.
+    /// </summary>
+    ///
+    public const string Identifier = "Identifier";
 
     /// <summary>
     ///   Initializes a new instance of the <see cref="Metrics" /> class.

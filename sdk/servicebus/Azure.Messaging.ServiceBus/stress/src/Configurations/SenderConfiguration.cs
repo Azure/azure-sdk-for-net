@@ -25,7 +25,7 @@ internal class SenderConfiguration
     ///   The number of concurrent sends going to the same <see cref="ServiceBusSender" />.
     /// </summary>
     ///
-    public int ConcurrentSends = 3;
+    public int ConcurrentSends = 1;
 
     /// <summary>
     ///   The minimum body size in bytes of events to generate when sending to the queue.
@@ -37,25 +37,25 @@ internal class SenderConfiguration
     ///   The maximum number of messages to send in each iteration of the test.
     /// </summary>
     ///
-    public int MaxNumberOfMessages = 50;
+    public int MaxNumberOfMessages = 100;
 
     /// <summary>
     ///   The maximum body size in bytes of events to generate when sending to the queue.
     /// </summary>
     ///
-    public int MessageBodyMaxBytes = 262144;
+    public int MessageBodyMaxBytes = 83886;
 
     /// <summary>
     ///   The percentage of generated events for each send that have large bodies in bytes.
     /// </summary>
     ///
-    public int LargeMessageRandomFactorPercent = 10;
+    public int LargeMessageRandomFactorPercent = 5;
 
     /// <summary>
     ///   The amount of time to wait between sending a set of events.
     /// </summary>
     ///
-    public TimeSpan? SendingDelay = TimeSpan.FromMilliseconds(400);
+    public TimeSpan? SendingDelay = TimeSpan.FromMilliseconds(900);
 
     // Producer Configuration Values
 

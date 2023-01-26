@@ -137,8 +137,11 @@ internal class Sender
             }
             else
             {
-                await sender.SendMessagesAsync(messages, cancellationToken).ConfigureAwait(false);
-                _metrics.Client.GetMetric(Metrics.MessagesSent).TrackValue(messages.Count());
+                foreach (ServiceBusMessage message in messages)
+                {
+                    await sender.SendMessageAsync(message, cancellationToken).ConfigureAwait(false);
+                    _metrics.Client.GetMetric(Metrics.MessagesSent).TrackValue(1);
+                }
             }
         }
         catch (TaskCanceledException)

@@ -21,6 +21,9 @@ namespace Azure.Messaging.ServiceBus.Stress;
 ///
 internal class SessionProcessor
 {
+    /// <summary>A unique identifier used to identify this processor instance.</summary>
+    public string Identifier { get; } = Convert.ToBase64String(Guid.NewGuid().ToByteArray()).TrimEnd('=').ToUpperInvariant();
+
     /// <summary>The <see cref="Metrics" /> instance associated with this <see cref="SessionProcessor" /> instance.</summary>
     private Metrics _metrics { get; }
 
@@ -29,9 +32,6 @@ internal class SessionProcessor
 
     /// <summary>The <see cref="SessionProcessorConfiguration" /> used to configure the instance of this role.</summary>
     private SessionProcessorConfiguration _sessionProcessorConfiguration { get; }
-
-    /// <summary>Holds the set of messages that have been read by this instance. The key is the event's unique Id set by the sender.</summary>
-    private ConcurrentDictionary<string, byte> _readMessages { get; }
 
     /// <summary>
     ///   Initializes a new <see cref="SessionProcessor" \> instance.
@@ -48,7 +48,6 @@ internal class SessionProcessor
         _testParameters = testParameters;
         _sessionProcessorConfiguration = sessionProcessorConfiguration;
         _metrics = metrics;
-        //_readMessages = readEvents;     /// <param name="readEvents">The dictionary holding the key values of the unique Id's of all the events that have been read so far.</param>
     }
 
     /// <summary>
@@ -62,7 +61,6 @@ internal class SessionProcessor
     public async Task RunAsync(Func<ProcessSessionMessageEventArgs, Task> messageHandler, Func<ProcessErrorEventArgs, Task> errorHandler, CancellationToken cancellationToken)
     {
         await using var client = new ServiceBusClient(_testParameters.ServiceBusConnectionString);
-        // TODO add options
         await using var processor = client.CreateSessionProcessor(_testParameters.QueueName);
 
         while (!cancellationToken.IsCancellationRequested)
@@ -88,8 +86,7 @@ internal class SessionProcessor
             }
             catch (Exception ex)
             {
-                // TODO: determine metrics
-                //_metrics.Client.GetMetric(Metrics.ConsumerRestarted).TrackValue(1);
+                _metrics.Client.GetMetric(Metrics.ProcessorRestarted).TrackValue(1);
                 _metrics.Client.TrackException(ex);
             }
             finally

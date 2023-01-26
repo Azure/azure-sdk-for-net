@@ -88,11 +88,6 @@ public abstract class TestScenario
                 var sender = new Sender(_testParameters, senderConfiguration, _metrics);
                 return Task.Run(() => sender.RunAsync(cancellationToken));
 
-            case Role.Processor:
-                var processorConfiguration = new ProcessorConfiguration();
-                var processor = new Processor(_testParameters, processorConfiguration, _metrics, new ConcurrentDictionary<string, byte>());
-                return Task.Run(() => processor.RunAsync(null, null, cancellationToken));
-
             case Role.Receiver:
                 var receiverConfiguration = new ReceiverConfiguration();
                 var receiver = new Receiver(_testParameters, receiverConfiguration, _metrics);
@@ -102,11 +97,6 @@ public abstract class TestScenario
                 var sessionSenderConfiguration = new SessionSenderConfiguration();
                 var sessionSender = new SessionSender(_testParameters, sessionSenderConfiguration, _metrics);
                 return Task.Run(() => sessionSender.RunAsync(cancellationToken));
-
-            case Role.SessionProcessor:
-                var sessionProcessorConfiguration = new SessionProcessorConfiguration();
-                var sessionProcessor = new SessionProcessor(_testParameters, sessionProcessorConfiguration, _metrics);
-                return Task.Run(() => sessionProcessor.RunAsync(null, null, cancellationToken));
 
             case Role.SessionReceiver:
                 var sessionReceiverConfiguration = new SessionReceiverConfiguration();

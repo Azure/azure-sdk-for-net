@@ -21,6 +21,9 @@ namespace Azure.Messaging.ServiceBus.Stress;
 ///
 internal class Processor
 {
+    /// <summary>A unique identifier used to identify this processor instance.</summary>
+    public string Identifier { get; } = Convert.ToBase64String(Guid.NewGuid().ToByteArray()).TrimEnd('=').ToUpperInvariant();
+
     /// <summary>The <see cref="Metrics" /> instance associated with this <see cref="Processor" /> instance.</summary>
     private Metrics _metrics { get; }
 
@@ -29,9 +32,6 @@ internal class Processor
 
     /// <summary>The <see cref="ProcessorConfiguration" /> used to configure the instance of this role.</summary>
     private ProcessorConfiguration _processorConfiguration { get; }
-
-    /// <summary>Holds the set of messages that have been read by this instance. The key is the event's unique Id set by the sender.</summary>
-    private ConcurrentDictionary<string, byte> _readMessages { get; }
 
     /// <summary>
     ///   Initializes a new <see cref="Processor" \> instance.
@@ -44,13 +44,11 @@ internal class Processor
     ///
     public Processor(TestParameters testParameters,
                      ProcessorConfiguration processorConfiguration,
-                     Metrics metrics,
-                     ConcurrentDictionary<string, byte> readMessages)
+                     Metrics metrics)
     {
         _testParameters = testParameters;
         _processorConfiguration = processorConfiguration;
         _metrics = metrics;
-        _readMessages = readMessages;
     }
 
     /// <summary>

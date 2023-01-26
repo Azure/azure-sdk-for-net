@@ -68,7 +68,7 @@ internal class Receiver
             try
             {
                 var receiver = client.CreateReceiver(_testParameters.QueueName, _receiverConfiguration.options);
-                
+
                 await foreach (var message in receiver.ReceiveMessagesAsync(cancellationToken))
                 {
                     _metrics.Client.GetMetric(Metrics.MessagesReceived).TrackValue(1);

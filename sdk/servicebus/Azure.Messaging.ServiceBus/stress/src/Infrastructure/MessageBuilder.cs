@@ -46,30 +46,24 @@ internal static class MessageBuilder
                                                         int minimumBodySize = 15,
                                                         int maximumBodySize = 83886)
     {
-        var messagesBytesTotal = 0;
-        for (var index = 0; ((index < maxNumberOfMessages) && (messagesBytesTotal <= maximumBatchSize)); ++index)
+        var activeMinimumBodySize = minimumBodySize;
+        var activeMaximumBodySize = maximumBodySize;
+        var totalBytesGenerated = 0;
+
+        if (RandomNumberGenerator.Value.Next(1, 100) < largeMessageRandomFactor)
         {
-            int currentMessageLowerLimit;
-            int currentMessageUpperLimit;
+            activeMinimumBodySize = (int)Math.Ceiling(maximumBodySize * 0.65);
+        }
+        else
+        {
+            activeMaximumBodySize = (int)Math.Floor((maximumBatchSize * 1.0f) / maxNumberOfMessages);
+        }
 
-            if (RandomNumberGenerator.Value.Next(1, 100) < largeMessageRandomFactor)
-            {
-                // Generate a "large" event
-                currentMessageLowerLimit = (int)Math.Ceiling(maximumBodySize * 0.65);
-                currentMessageUpperLimit = maximumBodySize;
-            }
-            else
-            {
-                // Generate a "small" event
-                currentMessageUpperLimit = (int)Math.Floor((maximumBatchSize * 1.0f) / maxNumberOfMessages);
-                currentMessageLowerLimit = minimumBodySize;
-            }
-
-            var buffer = new byte[RandomNumberGenerator.Value.Next(currentMessageLowerLimit, currentMessageUpperLimit)];
+        for (var index = 0; ((index < maxNumberOfMessages) && (totalBytesGenerated <= maximumBatchSize)); ++index)
+        {
+            var buffer = new byte[RandomNumberGenerator.Value.Next(activeMinimumBodySize, activeMaximumBodySize)];
             RandomNumberGenerator.Value.NextBytes(buffer);
-
-            var temptotal = messagesBytesTotal + buffer.Length;
-            messagesBytesTotal += buffer.Length;
+            totalBytesGenerated += buffer.Length;
 
             yield return CreateMessageFromBody(buffer);
         }
@@ -109,7 +103,9 @@ internal static class MessageBuilder
     {
         var id = Guid.NewGuid().ToString();
 
-        return new ServiceBusMessage(messageBody);
+        var m = new ServiceBusMessage(messageBody);
+        m.MessageId = id;
+        return m;
     }
 
     /// <summary>
@@ -142,7 +138,7 @@ internal static class MessageBuilder
             {
                 if (currentBatch.Count == 0)
                 {
-                    throw new InvalidOperationException("There was an event too large to fit into a batch.");
+                    throw new InvalidOperationException("There was a message too large to fit into a batch.");
                 }
 
                 batches.Add(currentBatch);
