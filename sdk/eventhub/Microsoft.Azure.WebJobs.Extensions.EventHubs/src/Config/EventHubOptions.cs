@@ -208,6 +208,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs
         {
             JObject options = new JObject
                 {
+                    { nameof(TargetUnprocessedEventThreshold), TargetUnprocessedEventThreshold },
                     { nameof(MaxEventBatchSize), MaxEventBatchSize },
                     { nameof(BatchCheckpointFrequency), BatchCheckpointFrequency },
                     { nameof(TransportType),  TransportType.ToString()},
