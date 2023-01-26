@@ -15,25 +15,32 @@ namespace Microsoft.Azure.WebJobs.Extensions.EventHubs.Listeners
 {
     internal class EventHubsTargetScaler : ITargetScaler
     {
+        // Throttle scale in requests if last scale out time was within ThrottleScaleDownIntervalInSeconds.
+        private const int ThrottleScaleDownIntervalInSeconds = 180;
+
         private readonly string _functionId;
         private readonly IEventHubConsumerClient _client;
         private readonly ILogger _logger;
-        private readonly BlobCheckpointStoreInternal _checkpointStore;
         private readonly EventHubsMetricsProvider _metricsProvider;
         private readonly EventHubOptions _options;
 
+        private DateTime _lastScaleUpTime;
+        private TargetScalerResult _lastTargetScalerResult;
+
         public EventHubsTargetScaler(string functionId,
             IEventHubConsumerClient client,
-            BlobCheckpointStoreInternal checkpointStore,
             EventHubOptions options,
+            EventHubsMetricsProvider metricsProvider,
             ILogger logger)
         {
             _functionId = functionId;
             _logger = logger;
-            _checkpointStore = checkpointStore;
             _client = client;
-            _metricsProvider = new EventHubsMetricsProvider(_functionId, _client, _checkpointStore, _logger);
+            _metricsProvider = metricsProvider;
             _options = options;
+
+            _lastScaleUpTime = DateTime.MinValue;
+            _lastTargetScalerResult = new TargetScalerResult { };
 
             TargetScalerDescriptor = new TargetScalerDescriptor(_functionId);
         }
@@ -47,22 +54,51 @@ namespace Microsoft.Azure.WebJobs.Extensions.EventHubs.Listeners
             long eventCount = latestMetric.EventCount;
             int partitionCount = latestMetric.PartitionCount;
 
-            int desiredConcurrency = GetDesiredConcurrency(context);
+            TargetScalerResult currentResult = GetScaleResultInternal(context, eventCount, partitionCount);
+            currentResult = ThrottleScaleDownIfNecessaryInternal(currentResult, _lastTargetScalerResult, _lastScaleUpTime, _logger);
+
+            if (GetChangeWorkerCount(currentResult, _lastTargetScalerResult) > 0)
+            {
+                _lastScaleUpTime = DateTime.UtcNow;
+            }
+
+            _lastTargetScalerResult = currentResult;
+
+            return currentResult;
+        }
+
+        internal static TargetScalerResult ThrottleScaleDownIfNecessaryInternal(TargetScalerResult currentResult, TargetScalerResult previousResult, DateTime lastScaleUpTime, ILogger logger)
+        {
+            int changeWorkerCount = GetChangeWorkerCount(currentResult, previousResult);
+
+            if (changeWorkerCount < 0 && (DateTime.UtcNow - lastScaleUpTime).TotalSeconds < ThrottleScaleDownIntervalInSeconds)
+            {
+                logger.LogInformation($"Throttling scale down, since last scale up time was within {ThrottleScaleDownIntervalInSeconds} seconds. (LastScaleUpTime: '{lastScaleUpTime}', LastTargetWorkerRequest: '{previousResult.TargetWorkerCount}')");
+
+                return previousResult;
+            }
+            else
+            {
+                return currentResult;
+            }
+        }
+
+        internal TargetScalerResult GetScaleResultInternal(TargetScalerContext context, long eventCount, int partitionCount)
+        {
+            int desiredConcurrency = GetDesiredConcurrencyInternal(context);
             int desiredWorkerCount = (int)Math.Ceiling(eventCount / (decimal)desiredConcurrency);
-
             int[] sortedValidWorkerCounts = GetSortedValidWorkerCountsForPartitionCount(partitionCount);
-
             int validatedTargetWorkerCount = GetValidWorkerCount(desiredWorkerCount, sortedValidWorkerCounts);
 
             _logger.LogInformation($"'Target worker count for function '{_functionId}' is '{validatedTargetWorkerCount}' (EventHubName='{_client.EventHubName}', EventCount ='{eventCount}', Concurrency='{desiredConcurrency}').");
 
             return new TargetScalerResult
             {
-                TargetWorkerCount = validatedTargetWorkerCount
+                TargetWorkerCount = validatedTargetWorkerCount,
             };
         }
 
-        private int GetDesiredConcurrency(TargetScalerContext context)
+        internal int GetDesiredConcurrencyInternal(TargetScalerContext context)
         {
             int concurrency = 0;
 
@@ -96,7 +132,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.EventHubs.Listeners
         /// </summary>
         /// <param name="partitionCount">Partition count of EventHub. Must be greater than 0.</param>
         /// <returns></returns>
-        private static int[] GetSortedValidWorkerCountsForPartitionCount(int partitionCount)
+        internal static int[] GetSortedValidWorkerCountsForPartitionCount(int partitionCount)
         {
             if (partitionCount == 0)
             {
@@ -122,7 +158,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.EventHubs.Listeners
         /// <param name="workerCount">The value that we want to find in the sortedValues list (if it exists), or the next largest element.</param>
         /// <param name="sortedValidWorkerCountList">The list of valid worker counts. This must be sorted.</param>
         /// <returns></returns>
-        private static int GetValidWorkerCount(int workerCount, int[] sortedValidWorkerCountList)
+        internal static int GetValidWorkerCount(int workerCount, int[] sortedValidWorkerCountList)
         {
             int i = Array.BinarySearch(sortedValidWorkerCountList, workerCount);
             if (i >= 0)
@@ -140,6 +176,11 @@ namespace Microsoft.Azure.WebJobs.Extensions.EventHubs.Listeners
                     return sortedValidWorkerCountList[~i - 1];
                 }
             }
+        }
+
+        private static int GetChangeWorkerCount(TargetScalerResult currentResult, TargetScalerResult previousResult)
+        {
+            return currentResult.TargetWorkerCount - previousResult.TargetWorkerCount;
         }
     }
 }

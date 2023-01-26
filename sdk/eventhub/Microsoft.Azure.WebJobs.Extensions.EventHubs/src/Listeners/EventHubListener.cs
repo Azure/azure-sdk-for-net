@@ -53,6 +53,8 @@ namespace Microsoft.Azure.WebJobs.EventHubs.Listeners
             _options = options;
             _logger = _loggerFactory.CreateLogger<EventHubListener>();
 
+            EventHubsMetricsProvider metricsProvider = new EventHubsMetricsProvider(functionId, consumerClient, checkpointStore, _loggerFactory.CreateLogger<EventHubsMetricsProvider>());
+
             _scaleMonitor = new Lazy<EventHubsScaleMonitor>(
                 () => new EventHubsScaleMonitor(
                     functionId,
@@ -64,8 +66,8 @@ namespace Microsoft.Azure.WebJobs.EventHubs.Listeners
                 () => new EventHubsTargetScaler(
                     functionId,
                     consumerClient,
-                    checkpointStore,
                     options,
+                    metricsProvider,
                     _loggerFactory.CreateLogger<EventHubsTargetScaler>()));
 
             _details = $"'namespace='{eventProcessorHost?.FullyQualifiedNamespace}', eventHub='{eventProcessorHost?.EventHubName}', " +
