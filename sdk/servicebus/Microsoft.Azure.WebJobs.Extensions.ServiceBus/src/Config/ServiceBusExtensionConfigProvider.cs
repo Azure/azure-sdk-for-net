@@ -112,7 +112,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Config
 
         internal static ParameterBindingData ConvertReceivedMessageToBindingData(ServiceBusReceivedMessage message)
         {
-            byte[] messageBytes = message.ToAmqpBytes().ToArray();
+            ReadOnlyMemory<byte> messageBytes = message.ToAmqpBytes().ToMemory();
             byte[] lockTokenBytes = Guid.Parse(message.LockToken).ToByteArray();
             const int lockTokenLength = 16;
 
@@ -122,7 +122,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Config
             lockTokenBytes.CopyTo(combinedBytes.AsSpan());
 
             // The AMQP message bytes go after the lock token bytes
-            messageBytes.CopyTo(combinedBytes.AsSpan(lockTokenLength));
+            messageBytes.CopyTo(combinedBytes.AsMemory(lockTokenLength));
 
             return new ParameterBindingData("1.0", "AzureServiceBus", BinaryData.FromBytes(combinedBytes), "application/octet-stream");
         }
