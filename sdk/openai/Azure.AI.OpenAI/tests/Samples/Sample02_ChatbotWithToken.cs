@@ -30,10 +30,10 @@ namespace Azure.AI.OpenAI.Tests.Samples
             foreach (var prompt in examplePrompts)
             {
                 Console.Write($"Input: {prompt}");
-                var request = new CompletionsRequest();
+                var request = new CompletionsOptions();
                 request.Prompt.Add(prompt);
 
-                Completion completion = client.Completions("myModelDeployment", request);
+                Completions completion = client.GetCompletions("myModelDeployment", request);
                 var response = completion.Choices[0].Text;
                 Console.WriteLine($"Chatbot: {response}");
             }

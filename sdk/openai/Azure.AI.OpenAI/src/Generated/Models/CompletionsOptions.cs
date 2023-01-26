@@ -11,10 +11,10 @@ using Azure.Core;
 namespace Azure.AI.OpenAI.Models
 {
     /// <summary> Post body schema to create a prompt completion from a deployment. </summary>
-    public partial class CompletionsRequest
+    public partial class CompletionsOptions
     {
-        /// <summary> Initializes a new instance of CompletionsRequest. </summary>
-        public CompletionsRequest()
+        /// <summary> Initializes a new instance of CompletionsOptions. </summary>
+        public CompletionsOptions()
         {
             Prompt = new ChangeTrackingList<string>();
             LogitBias = new ChangeTrackingDictionary<string, int>();
@@ -35,8 +35,6 @@ namespace Azure.AI.OpenAI.Models
         public string User { get; set; }
         /// <summary> Gets or sets the n. </summary>
         public int? N { get; set; }
-        /// <summary> Gets or sets the stream. </summary>
-        public bool? Stream { get; set; }
         /// <summary> Gets or sets the logprobs. </summary>
         public int? Logprobs { get; set; }
         /// <summary> Gets or sets the model. </summary>
