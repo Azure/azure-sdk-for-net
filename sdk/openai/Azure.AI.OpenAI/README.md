@@ -40,7 +40,7 @@ Once you have the value of the endpoint string and subscription key, you can cre
 ```C# Snippet:CreateOpenAIClient
 string endpointString = "<endpoint_string>";
 string subscriptionKey = "<azure_subscription_key>";
-var client = new OpenAIClient(new Uri(endpointString), new AzureKeyCredential(subscriptionKey));
+OpenAIClient client = new OpenAIClient(new Uri(endpointString), new AzureKeyCredential(subscriptionKey));
 ```
 
 #### Create OpenAIClient with Azure Active Directory Credential
@@ -58,7 +58,7 @@ Set the values of the client ID, tenant ID, and client secret of the AAD applica
 
 ```C# Snippet:CreateOpenAIClientTokenCredential
 string endpoint = "<endpoint>";
-var client = new OpenAIClient(new Uri(endpoint), new DefaultAzureCredential());
+OpenAIClient client = new OpenAIClient(new Uri(endpoint), new DefaultAzureCredential());
 ```
 
 ## Key concepts
@@ -74,13 +74,13 @@ List<string> examplePrompts = new(){
     //...
 };
 
-foreach (var prompt in examplePrompts)
+foreach (string prompt in examplePrompts)
 {
-    var request = new CompletionsOptions();
+    CompletionsOptions request = new CompletionsOptions();
     request.Prompt.Add(prompt);
 
-    Completions completion = client.GetCompletions("myModelDeployment", request);
-    var response = completion.Choices[0].Text;
+    Response<Completions> completion = client.GetCompletions("myModelDeployment", request);
+    string response = completion.Choices[0].Text;
     Console.WriteLine($"Chatbot: {response}");
 }
 ```
@@ -114,7 +114,7 @@ OpenAIClient client = new OpenAIClient("myDeploymentId", new Uri(endpoint), new 
 
 string prompt = "What is Azure OpenAI?",
 Console.Write($"Input: {prompt}");
-Completions completion = client.GetCompletions(prompt);
+Response<Completions> completion = client.GetCompletions(prompt);
 string response = completion.Choices[0].Text;
 Console.WriteLine($"Chatbot: {response}");
 ```
@@ -136,14 +136,14 @@ List<string> examplePrompts = new(){
     "Describe in single words only the good things that come into your mind about your mother.",
 };
 
-foreach (var prompt in examplePrompts)
+foreach (string prompt in examplePrompts)
 {
     Console.Write($"Input: {prompt}");
-    var request = new CompletionsOptions();
+    CompletionsOptions request = new CompletionsOptions();
     request.Prompt.Add(prompt);
 
-    Completions completion = client.GetCompletions("myModelDeployment", request);
-    var response = completion.Choices[0].Text;
+    Response<Completions> completion = client.GetCompletions("myModelDeployment", request);
+    string response = completion.Choices[0].Text;
     Console.WriteLine($"Chatbot: {response}");
 }
 ```
@@ -173,11 +173,11 @@ string summarizationPrompt = @$"
 ";
 
 Console.Write($"Input: {summarizationPrompt}");
-var request = new CompletionsOptions();
+CompletionsOptions request = new CompletionsOptions();
 request.Prompt.Add(summarizationPrompt);
 
-Completion completion = client.GetCompletions("myModelDeployment", request);
-var response = completion.Choices[0].Text;
+Response<Completions> completion = client.GetCompletions("myModelDeployment", request);
+string response = completion.Choices[0].Text;
 Console.WriteLine($"Summarization: {response}");
 ```
 ## Troubleshooting
