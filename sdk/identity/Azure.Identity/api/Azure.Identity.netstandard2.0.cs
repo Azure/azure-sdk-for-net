@@ -63,6 +63,20 @@ namespace Azure.Identity
         public System.TimeSpan? CliProcessTimeout { get { throw null; } set { } }
         public string TenantId { get { throw null; } set { } }
     }
+    public partial class AzureDeveloperCliCredential : Azure.Core.TokenCredential
+    {
+        public AzureDeveloperCliCredential() { }
+        public AzureDeveloperCliCredential(Azure.Identity.AzureDeveloperCliCredentialOptions options) { }
+        public override Azure.Core.AccessToken GetToken(Azure.Core.TokenRequestContext requestContext, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public override System.Threading.Tasks.ValueTask<Azure.Core.AccessToken> GetTokenAsync(Azure.Core.TokenRequestContext requestContext, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class AzureDeveloperCliCredentialOptions : Azure.Identity.TokenCredentialOptions
+    {
+        public AzureDeveloperCliCredentialOptions() { }
+        public System.Collections.Generic.IList<string> AdditionallyAllowedTenants { get { throw null; } }
+        public System.TimeSpan? AzdCliProcessTimeout { get { throw null; } set { } }
+        public string TenantId { get { throw null; } set { } }
+    }
     public partial class AzurePowerShellCredential : Azure.Core.TokenCredential
     {
         public AzurePowerShellCredential() { }
@@ -151,6 +165,7 @@ namespace Azure.Identity
         public System.Collections.Generic.IList<string> AdditionallyAllowedTenants { get { throw null; } }
         public System.TimeSpan? DeveloperCredentialTimeout { get { throw null; } set { } }
         public bool ExcludeAzureCliCredential { get { throw null; } set { } }
+        public bool ExcludeAzureDeveloperCliCredential { get { throw null; } set { } }
         public bool ExcludeAzurePowerShellCredential { get { throw null; } set { } }
         public bool ExcludeEnvironmentCredential { get { throw null; } set { } }
         public bool ExcludeInteractiveBrowserCredential { get { throw null; } set { } }
