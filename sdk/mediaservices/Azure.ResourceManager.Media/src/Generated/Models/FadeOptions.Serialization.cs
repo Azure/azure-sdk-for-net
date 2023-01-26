@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Media.Models
 {
-    public partial class Fade : IUtf8JsonSerializable
+    public partial class FadeOptions : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Media.Models
             writer.WriteEndObject();
         }
 
-        internal static Fade DeserializeFade(JsonElement element)
+        internal static FadeOptions DeserializeFadeOptions(JsonElement element)
         {
             TimeSpan duration = default;
             string fadeColor = default;
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Media.Models
                     continue;
                 }
             }
-            return new Fade(duration, fadeColor, start.Value);
+            return new FadeOptions(duration, fadeColor, start.Value);
         }
     }
 }

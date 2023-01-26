@@ -131,6 +131,7 @@ rename-mapping:
   EntropyMode: LayerEntropyMode
   EntityNameAvailabilityCheckOutput: MediaServicesNameAvailabilityResult
   EntityNameAvailabilityCheckOutput.nameAvailable: IsNameAvailable
+  Fade: FadeOptions
   Filters: FilteringOperations
   Format: MediaFormatBase
   GetEdgePoliciesContent: EdgePoliciesRequestContent

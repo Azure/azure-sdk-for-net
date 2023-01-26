@@ -59,8 +59,8 @@ namespace Azure.ResourceManager.Media.Models
             Optional<DeinterlaceSettings> deinterlace = default;
             Optional<RotationSetting> rotation = default;
             Optional<RectangularWindow> crop = default;
-            Optional<Fade> fadeIn = default;
-            Optional<Fade> fadeOut = default;
+            Optional<FadeOptions> fadeIn = default;
+            Optional<FadeOptions> fadeOut = default;
             Optional<IList<MediaOverlayBase>> overlays = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.Media.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    fadeIn = Fade.DeserializeFade(property.Value);
+                    fadeIn = FadeOptions.DeserializeFadeOptions(property.Value);
                     continue;
                 }
                 if (property.NameEquals("fadeOut"))
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Media.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    fadeOut = Fade.DeserializeFade(property.Value);
+                    fadeOut = FadeOptions.DeserializeFadeOptions(property.Value);
                     continue;
                 }
                 if (property.NameEquals("overlays"))

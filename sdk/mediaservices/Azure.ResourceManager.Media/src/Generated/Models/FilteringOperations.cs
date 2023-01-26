@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Media.Models
         /// Please note <see cref="MediaOverlayBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="AudioOverlay"/> and <see cref="VideoOverlay"/>.
         /// </param>
-        internal FilteringOperations(DeinterlaceSettings deinterlace, RotationSetting? rotation, RectangularWindow crop, Fade fadeIn, Fade fadeOut, IList<MediaOverlayBase> overlays)
+        internal FilteringOperations(DeinterlaceSettings deinterlace, RotationSetting? rotation, RectangularWindow crop, FadeOptions fadeIn, FadeOptions fadeOut, IList<MediaOverlayBase> overlays)
         {
             Deinterlace = deinterlace;
             Rotation = rotation;
@@ -47,9 +47,9 @@ namespace Azure.ResourceManager.Media.Models
         /// <summary> The parameters for the rectangular window with which to crop the input video. </summary>
         public RectangularWindow Crop { get; set; }
         /// <summary> Describes the properties of a Fade effect applied to the input media. </summary>
-        public Fade FadeIn { get; set; }
+        public FadeOptions FadeIn { get; set; }
         /// <summary> Describes the properties of a Fade effect applied to the input media. </summary>
-        public Fade FadeOut { get; set; }
+        public FadeOptions FadeOut { get; set; }
         /// <summary>
         /// The properties of overlays to be applied to the input video. These could be audio, image or video overlays.
         /// Please note <see cref="MediaOverlayBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
