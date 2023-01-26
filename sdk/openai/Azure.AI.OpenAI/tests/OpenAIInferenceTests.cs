@@ -49,8 +49,8 @@ namespace Azure.AI.OpenAI.Tests
         public async Task SimpleCompletionTest()
         {
             var client = GetClientWithCompletionsDeploymentId();
-            var response = await client.CompletionsAsync("Hello World!");
-            Assert.That(response, Is.InstanceOf<Response<Completion>>());
+            var response = await client.GetCompletionsAsync("Hello World!");
+            Assert.That(response, Is.InstanceOf<Response<Completions>>());
         }
 
         /// <summary>
