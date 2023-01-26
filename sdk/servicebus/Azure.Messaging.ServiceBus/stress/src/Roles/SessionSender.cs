@@ -120,16 +120,23 @@ internal class SessionSender
     private async Task PerformSend(ServiceBusSender sender,
                                       CancellationToken cancellationToken)
     {
-        var messageToRepeat = new ServiceBusMessage("Hello"){
-            SessionId = "mySessionID"
-        };
-        var messages = Enumerable.Repeat(messageToRepeat, 50); //TODO
+        var sessionId = "currentSession";
+        var batch = await sender.CreateMessageBatchAsync().ConfigureAwait(false);
+        var messages = MessageBuilder.CreateMessages(_sessionSenderConfiguration.MaxNumberOfMessages,
+                                                     batch.MaxSizeInBytes,
+                                                     _sessionSenderConfiguration.LargeMessageRandomFactorPercent,
+                                                     _sessionSenderConfiguration.MessageBodyMinBytes,
+                                                     _sessionSenderConfiguration.MessageBodyMaxBytes,
+                                                     sessionId);
 
         try
         {
-            await sender.SendMessagesAsync(messages, cancellationToken).ConfigureAwait(false);
-
-            _metrics.Client.GetMetric(Metrics.MessagesSent).TrackValue(50);
+            foreach (ServiceBusMessage message in messages)
+            {
+                MessageTracking.AugmentMessage(message, _testParameters.Sha256Hash);
+                await sender.SendMessageAsync(message, cancellationToken).ConfigureAwait(false);
+                _metrics.Client.GetMetric(Metrics.MessagesSent).TrackValue(1);
+            }
         }
         catch (TaskCanceledException)
         {

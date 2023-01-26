@@ -25,19 +25,25 @@ internal class SessionSenderConfiguration
     ///   The minimum body size in bytes of events to generate when sending to the queue.
     /// </summary>
     ///
-    public int SendingBodyMinBytes = 100;
+    public int MessageBodyMinBytes = 100;
 
     /// <summary>
     ///   The maximum body size in bytes of events to generate when sending to the queue.
     /// </summary>
     ///
-    public int SendingBodyRegularMaxBytes = 83886;
+    public int MessageBodyMaxBytes = 83886;
 
     /// <summary>
     ///   The percentage of generated events for each send that have large bodies in bytes.
     /// </summary>
     ///
     public int LargeMessageRandomFactorPercent = 15;
+
+    /// <summary>
+    ///   The maximum number of messages to send in each iteration of the test.
+    /// </summary>
+    ///
+    public int MaxNumberOfMessages = 100;
 
     /// <summary>
     ///   The amount of time to wait between sending a set of events.

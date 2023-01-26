@@ -44,7 +44,8 @@ internal static class MessageBuilder
                                                         long maximumBatchSize,
                                                         int largeMessageRandomFactor = 5,
                                                         int minimumBodySize = 15,
-                                                        int maximumBodySize = 83886)
+                                                        int maximumBodySize = 83886,
+                                                        string sessionId = null)
     {
         var activeMinimumBodySize = minimumBodySize;
         var activeMaximumBodySize = maximumBodySize;
@@ -65,7 +66,7 @@ internal static class MessageBuilder
             RandomNumberGenerator.Value.NextBytes(buffer);
             totalBytesGenerated += buffer.Length;
 
-            yield return CreateMessageFromBody(buffer);
+            yield return CreateMessageFromBody(buffer, sessionId);
         }
     }
 
@@ -87,7 +88,7 @@ internal static class MessageBuilder
             var buffer = new byte[RandomNumberGenerator.Value.Next(minimumBodySize, maximumBodySize)];
             RandomNumberGenerator.Value.NextBytes(buffer);
 
-            yield return CreateMessageFromBody(buffer);
+            yield return CreateMessageFromBody(buffer, null);
         }
     }
 
@@ -99,11 +100,23 @@ internal static class MessageBuilder
     ///
     /// <returns>The requested message.</returns>
     ///
-    internal static ServiceBusMessage CreateMessageFromBody(ReadOnlyMemory<byte> messageBody)
+    internal static ServiceBusMessage CreateMessageFromBody(ReadOnlyMemory<byte> messageBody, string sessionId)
     {
         var id = Guid.NewGuid().ToString();
 
-        var m = new ServiceBusMessage(messageBody);
+        ServiceBusMessage m;
+
+        if (!string.IsNullOrEmpty(sessionId))
+        {
+            m = new ServiceBusMessage(messageBody)
+            {
+                SessionId = sessionId
+            };
+        }
+        else
+        {
+            m = new ServiceBusMessage(messageBody);
+        }
         m.MessageId = id;
         return m;
     }

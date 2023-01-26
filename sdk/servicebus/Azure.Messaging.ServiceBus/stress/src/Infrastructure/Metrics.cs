@@ -132,6 +132,12 @@ public class Metrics
     public const string DuplicateMessagesDiscarded = "DuplicateMessagesDiscarded";
 
     /// <summary>
+    ///   This is the metric name used to collect metrics on if a session id in the args does not match the session id in the message.
+    /// </summary>
+    ///
+    public const string MismatchedSessionId = "MismatchedSessionId";
+
+    /// <summary>
     ///   This is the property name used to send information about the application defined index to Application Insights for further
     ///   investigation.
     /// </summary>

@@ -90,11 +90,11 @@ public class Program
                     break;
 
                 case TestScenarioName.SendProcessTest:
-                    testScenarioInstance = new SendReceiveTest(testParameters, metrics, opts.Role);
+                    testScenarioInstance = new SendProcessTest(testParameters, metrics, opts.Role);
                     break;
 
                 case TestScenarioName.SessionSendProcessTest:
-                    testScenarioInstance = new SendReceiveTest(testParameters, metrics, opts.Role);
+                    testScenarioInstance = new SessionSendProcessTest(testParameters, metrics, opts.Role);
                     break;
             }
 

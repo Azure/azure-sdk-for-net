@@ -130,6 +130,7 @@ internal class Sender
             {
                 foreach (var message in messages)
                 {
+                    MessageTracking.AugmentMessage(message, _testParameters.Sha256Hash);
                     batch.TryAddMessage(message);
                 }
                 await sender.SendMessagesAsync(batch);
@@ -139,6 +140,7 @@ internal class Sender
             {
                 foreach (ServiceBusMessage message in messages)
                 {
+                    MessageTracking.AugmentMessage(message, _testParameters.Sha256Hash);
                     await sender.SendMessageAsync(message, cancellationToken).ConfigureAwait(false);
                     _metrics.Client.GetMetric(Metrics.MessagesSent).TrackValue(1);
                 }

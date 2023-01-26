@@ -76,20 +76,12 @@ public static class MessageTracking
     /// <param name="sessionId">The session id, if any, that this message was intended to be sent to.</param>
     ///
     public static void AugmentMessage(ServiceBusMessage message,
-                                    SHA256 sha256Hash,
-                                    int indexNumber,
-                                    string sessionId=null)
+                                    SHA256 sha256Hash)
     {
-        message.ApplicationProperties.Add(IndexNumberPropertyName, indexNumber);
         message.ApplicationProperties.Add(SendTimePropertyName, DateTimeOffset.UtcNow);
         message.ApplicationProperties.Add(IdPropertyName, Guid.NewGuid().ToString());
 
         message.ApplicationProperties.Add(MessageBodyHashPropertyName, sha256Hash.ComputeHash(message.Body.ToArray()).ToString());
-
-        if (!string.IsNullOrEmpty(sessionId))
-        {
-            message.ApplicationProperties.Add(SessionIdPropertyName, sessionId);
-        }
     }
 
     /// <summary>
@@ -175,6 +167,11 @@ public static class MessageTracking
         {
             metrics.Client.GetMetric(Metrics.DuplicateMessagesDiscarded).TrackValue(1);
             return -1;
+        }
+
+        if (!string.IsNullOrEmpty(sessionId) && sessionId != message.SessionId)
+        {
+            metrics.Client.GetMetric(Metrics.MismatchedSessionId).TrackValue(1);
         }
 
         // Hashed message body checks
