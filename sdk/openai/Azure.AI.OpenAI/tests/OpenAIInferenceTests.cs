@@ -23,7 +23,7 @@ namespace Azure.AI.OpenAI.Tests
         {
             var client = GetClient();
             Assert.That(client, Is.InstanceOf<OpenAIClient>());
-            var tokenClient = GetClientWithToken();
+            var tokenClient = GetClientWithCredential();
             Assert.That(tokenClient, Is.InstanceOf<OpenAIClient>());
         }
 
@@ -39,6 +39,17 @@ namespace Azure.AI.OpenAI.Tests
             completionsRequest.Prompt.Add("running over the same old ground");
             Assert.That(completionsRequest, Is.InstanceOf<CompletionsRequest>());
             var response = await client.CompletionsAsync(DeploymentId, completionsRequest);
+            Assert.That(response, Is.InstanceOf<Response<Completion>>());
+        }
+
+        /// <summary>
+        /// Test Simplified Completion API.
+        /// </summary>
+        [RecordedTest]
+        public async Task SimpleCompletionTest()
+        {
+            var client = GetClientWithCompletionsDeploymentId();
+            var response = await client.CompletionsAsync("Hello World!");
             Assert.That(response, Is.InstanceOf<Response<Completion>>());
         }
 
