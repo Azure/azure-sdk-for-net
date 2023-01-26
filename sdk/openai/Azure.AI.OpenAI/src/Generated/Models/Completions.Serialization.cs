@@ -12,9 +12,9 @@ using Azure.Core;
 
 namespace Azure.AI.OpenAI.Models
 {
-    public partial class Completion
+    public partial class Completions
     {
-        internal static Completion DeserializeCompletion(JsonElement element)
+        internal static Completions DeserializeCompletions(JsonElement element)
         {
             Optional<string> id = default;
             string @object = default;
@@ -64,15 +64,15 @@ namespace Azure.AI.OpenAI.Models
                     continue;
                 }
             }
-            return new Completion(id, @object, Optional.ToNullable(created), model, Optional.ToList(choices));
+            return new Completions(id, @object, Optional.ToNullable(created), model, Optional.ToList(choices));
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static Completion FromResponse(Response response)
+        internal static Completions FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content);
-            return DeserializeCompletion(document.RootElement);
+            return DeserializeCompletions(document.RootElement);
         }
     }
 }

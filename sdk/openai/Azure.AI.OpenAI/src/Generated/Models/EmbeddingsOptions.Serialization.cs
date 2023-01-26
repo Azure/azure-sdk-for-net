@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.AI.OpenAI.Models
 {
-    public partial class EmbeddingsRequest : IUtf8JsonSerializable
+    public partial class EmbeddingsOptions : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {

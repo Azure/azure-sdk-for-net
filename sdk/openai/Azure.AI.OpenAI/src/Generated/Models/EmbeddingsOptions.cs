@@ -10,13 +10,13 @@ using Azure.Core;
 
 namespace Azure.AI.OpenAI.Models
 {
-    /// <summary> The EmbeddingsRequest. </summary>
-    public partial class EmbeddingsRequest
+    /// <summary> The EmbeddingsOptions. </summary>
+    public partial class EmbeddingsOptions
     {
-        /// <summary> Initializes a new instance of EmbeddingsRequest. </summary>
+        /// <summary> Initializes a new instance of EmbeddingsOptions. </summary>
         /// <param name="input"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="input"/> is null. </exception>
-        public EmbeddingsRequest(string input)
+        public EmbeddingsOptions(string input)
         {
             Argument.AssertNotNull(input, nameof(input));
 

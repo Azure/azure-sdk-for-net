@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <doc>
   <members>
-    <member name="EmbeddingsAsync(String,RequestContent,RequestContext)">
+    <member name="GetEmbeddingsAsync(String,RequestContent,RequestContext)">
 <example>
-This sample shows how to call EmbeddingsAsync with required parameters and request content, and how to parse the result.
+This sample shows how to call GetEmbeddingsAsync with required parameters and request content, and how to parse the result.
 <code><![CDATA[
 var credential = new AzureKeyCredential("<key>");
 var endpoint = new Uri("<https://my-service.azure.com>");
@@ -13,7 +13,7 @@ var data = new {
     input = new {},
 };
 
-Response response = await client.EmbeddingsAsync("<deploymentId>", RequestContent.Create(data));
+Response response = await client.GetEmbeddingsAsync("<deploymentId>", RequestContent.Create(data));
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("object").ToString());
@@ -21,7 +21,7 @@ Console.WriteLine(result.GetProperty("data")[0].GetProperty("object").ToString()
 Console.WriteLine(result.GetProperty("data")[0].GetProperty("embedding")[0].ToString());
 Console.WriteLine(result.GetProperty("data")[0].GetProperty("index").ToString());
 ]]></code>
-This sample shows how to call EmbeddingsAsync with all parameters and request content, and how to parse the result.
+This sample shows how to call GetEmbeddingsAsync with all parameters and request content, and how to parse the result.
 <code><![CDATA[
 var credential = new AzureKeyCredential("<key>");
 var endpoint = new Uri("<https://my-service.azure.com>");
@@ -34,7 +34,7 @@ var data = new {
     input = new {},
 };
 
-Response response = await client.EmbeddingsAsync("<deploymentId>", RequestContent.Create(data));
+Response response = await client.GetEmbeddingsAsync("<deploymentId>", RequestContent.Create(data));
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("object").ToString());
@@ -48,7 +48,7 @@ Below is the JSON schema for the request and response payloads.
 
 Request Body:
 
-Schema for <c>EmbeddingsRequest</c>:
+Schema for <c>EmbeddingsOptions</c>:
 <code>{
   user: string, # Optional.
   input_type: string, # Optional.
@@ -74,9 +74,9 @@ Schema for <c>Embeddings</c>:
 
 </remarks>
     </member>
-    <member name="Embeddings(String,RequestContent,RequestContext)">
+    <member name="GetEmbeddings(String,RequestContent,RequestContext)">
 <example>
-This sample shows how to call Embeddings with required parameters and request content, and how to parse the result.
+This sample shows how to call GetEmbeddings with required parameters and request content, and how to parse the result.
 <code><![CDATA[
 var credential = new AzureKeyCredential("<key>");
 var endpoint = new Uri("<https://my-service.azure.com>");
@@ -86,7 +86,7 @@ var data = new {
     input = new {},
 };
 
-Response response = client.Embeddings("<deploymentId>", RequestContent.Create(data));
+Response response = client.GetEmbeddings("<deploymentId>", RequestContent.Create(data));
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("object").ToString());
@@ -94,7 +94,7 @@ Console.WriteLine(result.GetProperty("data")[0].GetProperty("object").ToString()
 Console.WriteLine(result.GetProperty("data")[0].GetProperty("embedding")[0].ToString());
 Console.WriteLine(result.GetProperty("data")[0].GetProperty("index").ToString());
 ]]></code>
-This sample shows how to call Embeddings with all parameters and request content, and how to parse the result.
+This sample shows how to call GetEmbeddings with all parameters and request content, and how to parse the result.
 <code><![CDATA[
 var credential = new AzureKeyCredential("<key>");
 var endpoint = new Uri("<https://my-service.azure.com>");
@@ -107,7 +107,7 @@ var data = new {
     input = new {},
 };
 
-Response response = client.Embeddings("<deploymentId>", RequestContent.Create(data));
+Response response = client.GetEmbeddings("<deploymentId>", RequestContent.Create(data));
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("object").ToString());
@@ -121,7 +121,7 @@ Below is the JSON schema for the request and response payloads.
 
 Request Body:
 
-Schema for <c>EmbeddingsRequest</c>:
+Schema for <c>EmbeddingsOptions</c>:
 <code>{
   user: string, # Optional.
   input_type: string, # Optional.
@@ -147,9 +147,9 @@ Schema for <c>Embeddings</c>:
 
 </remarks>
     </member>
-    <member name="CompletionsAsync(String,RequestContent,RequestContext)">
+    <member name="GetCompletionsAsync(String,RequestContent,RequestContext)">
 <example>
-This sample shows how to call CompletionsAsync with required parameters and parse the result.
+This sample shows how to call GetCompletionsAsync with required parameters and parse the result.
 <code><![CDATA[
 var credential = new AzureKeyCredential("<key>");
 var endpoint = new Uri("<https://my-service.azure.com>");
@@ -157,12 +157,12 @@ var client = new OpenAIClient(endpoint, credential);
 
 var data = new {};
 
-Response response = await client.CompletionsAsync("<deploymentId>", RequestContent.Create(data));
+Response response = await client.GetCompletionsAsync("<deploymentId>", RequestContent.Create(data));
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("object").ToString());
 ]]></code>
-This sample shows how to call CompletionsAsync with all parameters and request content, and how to parse the result.
+This sample shows how to call GetCompletionsAsync with all parameters and request content, and how to parse the result.
 <code><![CDATA[
 var credential = new AzureKeyCredential("<key>");
 var endpoint = new Uri("<https://my-service.azure.com>");
@@ -180,7 +180,6 @@ var data = new {
     },
     user = "<user>",
     n = 1234,
-    stream = true,
     logprobs = 1234,
     model = "<model>",
     echo = true,
@@ -194,7 +193,7 @@ var data = new {
     best_of = 1234,
 };
 
-Response response = await client.CompletionsAsync("<deploymentId>", RequestContent.Create(data));
+Response response = await client.GetCompletionsAsync("<deploymentId>", RequestContent.Create(data));
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("id").ToString());
@@ -215,7 +214,7 @@ Below is the JSON schema for the request and response payloads.
 
 Request Body:
 
-Schema for <c>CompletionsRequest</c>:
+Schema for <c>CompletionsOptions</c>:
 <code>{
   prompt: [string], # Optional.
   max_tokens: number, # Optional.
@@ -224,7 +223,6 @@ Schema for <c>CompletionsRequest</c>:
   logit_bias: Dictionary&lt;string, number&gt;, # Optional.
   user: string, # Optional.
   n: number, # Optional.
-  stream: boolean, # Optional.
   logprobs: number, # Optional.
   model: string, # Optional.
   echo: boolean, # Optional.
@@ -239,7 +237,7 @@ Schema for <c>CompletionsRequest</c>:
 
 Response Body:
 
-Schema for <c>Completion</c>:
+Schema for <c>Completions</c>:
 <code>{
   id: string, # Optional.
   object: Literal, # Required.
@@ -263,9 +261,9 @@ Schema for <c>Completion</c>:
 
 </remarks>
     </member>
-    <member name="Completions(String,RequestContent,RequestContext)">
+    <member name="GetCompletions(String,RequestContent,RequestContext)">
 <example>
-This sample shows how to call Completions with required parameters and parse the result.
+This sample shows how to call GetCompletions with required parameters and parse the result.
 <code><![CDATA[
 var credential = new AzureKeyCredential("<key>");
 var endpoint = new Uri("<https://my-service.azure.com>");
@@ -273,12 +271,12 @@ var client = new OpenAIClient(endpoint, credential);
 
 var data = new {};
 
-Response response = client.Completions("<deploymentId>", RequestContent.Create(data));
+Response response = client.GetCompletions("<deploymentId>", RequestContent.Create(data));
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("object").ToString());
 ]]></code>
-This sample shows how to call Completions with all parameters and request content, and how to parse the result.
+This sample shows how to call GetCompletions with all parameters and request content, and how to parse the result.
 <code><![CDATA[
 var credential = new AzureKeyCredential("<key>");
 var endpoint = new Uri("<https://my-service.azure.com>");
@@ -296,7 +294,6 @@ var data = new {
     },
     user = "<user>",
     n = 1234,
-    stream = true,
     logprobs = 1234,
     model = "<model>",
     echo = true,
@@ -310,7 +307,7 @@ var data = new {
     best_of = 1234,
 };
 
-Response response = client.Completions("<deploymentId>", RequestContent.Create(data));
+Response response = client.GetCompletions("<deploymentId>", RequestContent.Create(data));
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("id").ToString());
@@ -331,7 +328,7 @@ Below is the JSON schema for the request and response payloads.
 
 Request Body:
 
-Schema for <c>CompletionsRequest</c>:
+Schema for <c>CompletionsOptions</c>:
 <code>{
   prompt: [string], # Optional.
   max_tokens: number, # Optional.
@@ -340,7 +337,6 @@ Schema for <c>CompletionsRequest</c>:
   logit_bias: Dictionary&lt;string, number&gt;, # Optional.
   user: string, # Optional.
   n: number, # Optional.
-  stream: boolean, # Optional.
   logprobs: number, # Optional.
   model: string, # Optional.
   echo: boolean, # Optional.
@@ -355,7 +351,7 @@ Schema for <c>CompletionsRequest</c>:
 
 Response Body:
 
-Schema for <c>Completion</c>:
+Schema for <c>Completions</c>:
 <code>{
   id: string, # Optional.
   object: Literal, # Required.

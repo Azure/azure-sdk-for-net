@@ -13,12 +13,12 @@ using Azure.Core;
 namespace Azure.AI.OpenAI.Models
 {
     /// <summary> Expected response schema to completion request. </summary>
-    public partial class Completion
+    public partial class Completions
     {
-        /// <summary> Initializes a new instance of Completion. </summary>
+        /// <summary> Initializes a new instance of Completions. </summary>
         /// <param name="object"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="object"/> is null. </exception>
-        internal Completion(string @object)
+        internal Completions(string @object)
         {
             Argument.AssertNotNull(@object, nameof(@object));
 
@@ -26,13 +26,13 @@ namespace Azure.AI.OpenAI.Models
             Choices = new ChangeTrackingList<Choice>();
         }
 
-        /// <summary> Initializes a new instance of Completion. </summary>
+        /// <summary> Initializes a new instance of Completions. </summary>
         /// <param name="id"></param>
         /// <param name="object"></param>
         /// <param name="created"></param>
         /// <param name="model"></param>
         /// <param name="choices"></param>
-        internal Completion(string id, string @object, int? created, string model, IReadOnlyList<Choice> choices)
+        internal Completions(string id, string @object, int? created, string model, IReadOnlyList<Choice> choices)
         {
             Id = id;
             Object = @object;

@@ -70,10 +70,10 @@ string endpoint = "http://myaccount.openai.azure.com/";
 string key = "myKey";
 
 OpenAIClient client = new OpenAIClient(new Uri(endpoint), new AzureKeyCredential(key));
-CompletionsRequest completionsRequest = new CompletionsRequest();
+CompletionsOptions completionsRequest = new CompletionsOptions();
 completionsRequest.Prompt.Add("Hello world");
 completionsRequest.Prompt.Add("running over the same old ground");
-Completion response = client.Completions("myModelDeployment", completionsRequest);
+Completions response = client.GetCompletions("myModelDeployment", completionsRequest);
 
 foreach (Choice choice in response.Choices)
 {
@@ -97,10 +97,10 @@ List<string> examplePrompts = new(){
 foreach (var prompt in examplePrompts)
 {
     Console.Write($"Input: {prompt}");
-    var request = new CompletionsRequest();
+    var request = new CompletionsOptions();
     request.Prompt.Add(prompt);
 
-    Completion completion = client.Completions("myModelDeployment", request);
+    Completions completion = client.GetCompletions("myModelDeployment", request);
     var response = completion.Choices[0].Text;
     Console.WriteLine($"Chatbot: {response}");
 }
@@ -125,10 +125,10 @@ List<string> examplePrompts = new(){
 foreach (var prompt in examplePrompts)
 {
     Console.Write($"Input: {prompt}");
-    var request = new CompletionsRequest();
+    var request = new CompletionsOptions();
     request.Prompt.Add(prompt);
 
-    Completion completion = client.Completions("myModelDeployment", request);
+    Completions completion = client.GetCompletions("myModelDeployment", request);
     var response = completion.Choices[0].Text;
     Console.WriteLine($"Chatbot: {response}");
 }

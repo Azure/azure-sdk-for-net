@@ -18,10 +18,10 @@ namespace Azure.AI.OpenAI.Tests.Samples
             string key = "myKey";
 
             OpenAIClient client = new OpenAIClient(new Uri(endpoint), new AzureKeyCredential(key));
-            CompletionsRequest completionsRequest = new CompletionsRequest();
+            CompletionsOptions completionsRequest = new CompletionsOptions();
             completionsRequest.Prompt.Add("Hello world");
             completionsRequest.Prompt.Add("running over the same old ground");
-            Completion response = client.Completions("myModelDeployment", completionsRequest);
+            Completions response = client.GetCompletions("myModelDeployment", completionsRequest);
 
             foreach (Choice choice in response.Choices)
             {
