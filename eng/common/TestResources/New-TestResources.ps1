@@ -586,7 +586,9 @@ try {
                 Location = $Location
             }
         } else {
-            Write-Error "Resource group '$ResourceGroupName' already exists." -Category ResourceExists -RecommendedAction "Delete resource group '$ResourceGroupName', or overwrite it when redeploying."
+            Write-Error "Resource group '$ResourceGroupName' already exists." `
+                            -Category ResourceExists `
+                            -RecommendedAction "Delete resource group '$ResourceGroupName', or overwrite it when redeploying."
         }
     }
 
@@ -608,7 +610,10 @@ try {
                 $displayName = "$($baseName)$suffix.$ResourceType-resources.azure.sdk"
             }
 
-            $servicePrincipalWrapper = NewServicePrincipalWrapper -subscription $SubscriptionId -resourceGroup $ResourceGroupName -displayName $DisplayName
+            $servicePrincipalWrapper = NewServicePrincipalWrapper `
+                                        -subscription $SubscriptionId `
+                                        -resourceGroup $ResourceGroupName `
+                                        -displayName $DisplayName
 
             $global:AzureTestPrincipal = $servicePrincipalWrapper
             $global:AzureTestSubscription = $SubscriptionId
@@ -635,7 +640,8 @@ try {
             }
         }
         catch {
-            Write-Warning "The Object ID of the test application was unable to be queried. You may want to consider passing it explicitly with the 'TestApplicationOid` parameter."
+            Write-Warning "The Object ID of the test application was unable to be queried. " + `
+                          "You may want to consider passing it explicitly with the 'TestApplicationOid` parameter."
             throw $_.Exception
         }
 
@@ -652,7 +658,11 @@ try {
     # If the role hasn't been explicitly assigned to the resource group and a cached service principal is in use,
     # query to see if the grant is needed.
     if (!$resourceGroupRoleAssigned -and $AzureTestPrincipal) {
-        $roleAssignment = Get-AzRoleAssignment -ObjectId $AzureTestPrincipal.Id -RoleDefinitionName 'Owner' -ResourceGroupName "$ResourceGroupName" -ErrorAction SilentlyContinue
+        $roleAssignment = Get-AzRoleAssignment `
+                            -ObjectId $AzureTestPrincipal.Id `
+                            -RoleDefinitionName 'Owner' `
+                            -ResourceGroupName "$ResourceGroupName" `
+                            -ErrorAction SilentlyContinue
         $resourceGroupRoleAssigned = ($roleAssignment.RoleDefinitionName -eq 'Owner')
     }
 
@@ -662,12 +672,18 @@ try {
    # the explicit grant.
    if (!$resourceGroupRoleAssigned) {
         Log "Attempting to assigning the 'Owner' role for '$ResourceGroupName' to the Test Application '$TestApplicationId'"
-        $principalOwnerAssignment = New-AzRoleAssignment -RoleDefinitionName "Owner" -ApplicationId "$TestApplicationId" -ResourceGroupName "$ResourceGroupName" -ErrorAction SilentlyContinue
+        $principalOwnerAssignment = New-AzRoleAssignment `
+                                        -RoleDefinitionName "Owner" `
+                                        -ApplicationId "$TestApplicationId" `
+                                        -ResourceGroupName "$ResourceGroupName" `
+                                        -ErrorAction SilentlyContinue
 
         if ($principalOwnerAssignment.RoleDefinitionName -eq 'Owner') {
             Write-Verbose "Successfully assigned ownership of '$ResourceGroupName' to the Test Application '$TestApplicationId'"
         } else {
-            Write-Warning "The 'Owner' role for '$ResourceGroupName' could not be assigned. You may need to manually grant 'Owner' for the resource group to the Test Application '$TestApplicationId' if it does not have subscription-level permissions."
+            Write-Warning "The 'Owner' role for '$ResourceGroupName' could not be assigned. " + `
+                          "You may need to manually grant 'Owner' for the resource group to the " + `
+                          "Test Application '$TestApplicationId' if it does not have subscription-level permissions."
         }
     }
 

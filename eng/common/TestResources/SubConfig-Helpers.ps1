@@ -26,7 +26,10 @@ function GetBaseAndResourceGroupNames(
     if ($CI) {
         $base = 't' + (New-Guid).ToString('n').Substring(0, 16)
         # Format the resource group name based on resource group naming recommendations and limitations.
-        $generatedGroup = "rg-{0}-$BaseName" -f ($serviceName -replace '[\.\\\/:]', '-').ToLowerInvariant().Substring(0, [Math]::Min($serviceName.Length, 90 - $BaseName.Length - 4)).Trim('-')
+        $generatedGroup = "rg-{0}-$base" -f ($serviceName -replace '[\.\\\/:]', '-').
+                            Substring(0, [Math]::Min($serviceDirectoryName.Length, 90 - $base.Length - 4)).
+                            Trim('-').
+                            ToLowerInvariant()
         $group = $resourceGroupNameDefault ? $resourceGroupNameDefault : $generatedGroup
 
         Log "Generated resource base name '$base' and resource group name '$group' for CI build"
