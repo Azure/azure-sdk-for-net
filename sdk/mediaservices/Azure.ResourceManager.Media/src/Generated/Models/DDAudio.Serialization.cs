@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Media.Models
 {
-    public partial class MediaAudioBase : IUtf8JsonSerializable
+    public partial class DDAudio : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -40,20 +40,12 @@ namespace Azure.ResourceManager.Media.Models
             writer.WriteEndObject();
         }
 
-        internal static MediaAudioBase DeserializeMediaAudioBase(JsonElement element)
+        internal static DDAudio DeserializeDDAudio(JsonElement element)
         {
-            if (element.TryGetProperty("@odata.type", out JsonElement discriminator))
-            {
-                switch (discriminator.GetString())
-                {
-                    case "#Microsoft.Media.AacAudio": return AacAudio.DeserializeAacAudio(element);
-                    case "#Microsoft.Media.DDAudio": return DDAudio.DeserializeDDAudio(element);
-                }
-            }
             Optional<int> channels = default;
             Optional<int> samplingRate = default;
             Optional<int> bitrate = default;
-            string odataType = "#Microsoft.Media.Audio";
+            string odataType = default;
             Optional<string> label = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -98,7 +90,7 @@ namespace Azure.ResourceManager.Media.Models
                     continue;
                 }
             }
-            return new MediaAudioBase(odataType, label.Value, Optional.ToNullable(channels), Optional.ToNullable(samplingRate), Optional.ToNullable(bitrate));
+            return new DDAudio(odataType, label.Value, Optional.ToNullable(channels), Optional.ToNullable(samplingRate), Optional.ToNullable(bitrate));
         }
     }
 }
