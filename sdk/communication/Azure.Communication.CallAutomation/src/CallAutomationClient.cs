@@ -25,6 +25,7 @@ namespace Azure.Communication.CallAutomation
         internal CallMediaRestClient CallMediaRestClient { get; }
         internal CallRecordingRestClient CallRecordingRestClient { get; }
         internal EventProcessor EventProcessor { get; }
+        internal CommunicationIdentifier SourceIdentity { get; }
 
         #region public constructors
         /// <summary> Initializes a new instance of <see cref="CallAutomationClient"/>.</summary>
@@ -78,14 +79,17 @@ namespace Azure.Communication.CallAutomation
 
         private CallAutomationClient(Uri endpoint, HttpPipeline httpPipeline, CallAutomationClientOptions options)
         {
+            string _endpoint = endpoint.AbsoluteUri;
+
             _pipeline = httpPipeline;
             _resourceEndpoint = endpoint.AbsoluteUri;
             _clientDiagnostics = new ClientDiagnostics(options);
-            AzureCommunicationServicesRestClient = new AzureCommunicationServicesRestClient(_clientDiagnostics, httpPipeline, endpoint, options.ApiVersion);
-            CallConnectionRestClient = new CallConnectionRestClient(_clientDiagnostics, httpPipeline, endpoint, options.ApiVersion);
-            CallMediaRestClient = new CallMediaRestClient(_clientDiagnostics, httpPipeline, endpoint, options.ApiVersion);
-            CallRecordingRestClient = new CallRecordingRestClient(_clientDiagnostics, httpPipeline, endpoint, options.ApiVersion);
+            AzureCommunicationServicesRestClient = new AzureCommunicationServicesRestClient(_clientDiagnostics, httpPipeline, _endpoint, options.ApiVersion);
+            CallConnectionRestClient = new CallConnectionRestClient(_clientDiagnostics, httpPipeline, _endpoint, options.ApiVersion);
+            CallMediaRestClient = new CallMediaRestClient(_clientDiagnostics, httpPipeline, _endpoint, options.ApiVersion);
+            CallRecordingRestClient = new CallRecordingRestClient(_clientDiagnostics, httpPipeline, _endpoint, options.ApiVersion);
             EventProcessor = new EventProcessor(options.EventProcessorOptions);
+            SourceIdentity = options.SourceIdenty;
         }
 
         private CallAutomationClient(Uri endpoint, CallAutomationClientOptions options, ConnectionString connectionString)
@@ -244,7 +248,7 @@ namespace Azure.Communication.CallAutomation
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="incomingCallContext"/> is null.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="target"/> is null.</exception>
-        public virtual async Task<Response> RedirectCallAsync(string incomingCallContext, CommunicationIdentifier target, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> RedirectCallAsync(string incomingCallContext, CallTarget target, CancellationToken cancellationToken = default)
         {
             RedirectCallOptions options = new RedirectCallOptions(incomingCallContext, target);
 
@@ -266,7 +270,7 @@ namespace Azure.Communication.CallAutomation
                 if (options == null)
                     throw new ArgumentNullException(nameof(options));
 
-                RedirectCallRequestInternal request = new RedirectCallRequestInternal(options.IncomingCallContext, CommunicationIdentifierSerializer.Serialize(options.Target));
+                RedirectCallRequestInternal request = new RedirectCallRequestInternal(options.IncomingCallContext, CommunicationIdentifierSerializer.Serialize(options.Target.TargetIdentity));
                 options.RepeatabilityHeaders?.GenerateIfRepeatabilityHeadersNotProvided();
 
                 return await AzureCommunicationServicesRestClient.RedirectCallAsync(
@@ -290,7 +294,7 @@ namespace Azure.Communication.CallAutomation
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="incomingCallContext"/> is null.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="target"/> is null.</exception>
-        public virtual Response RedirectCall(string incomingCallContext, CommunicationIdentifier target, CancellationToken cancellationToken = default)
+        public virtual Response RedirectCall(string incomingCallContext, CallTarget target, CancellationToken cancellationToken = default)
         {
             RedirectCallOptions options = new RedirectCallOptions(incomingCallContext, target);
 
@@ -312,7 +316,7 @@ namespace Azure.Communication.CallAutomation
                 if (options == null)
                     throw new ArgumentNullException(nameof(options));
 
-                RedirectCallRequestInternal request = new RedirectCallRequestInternal(options.IncomingCallContext, CommunicationIdentifierSerializer.Serialize(options.Target));
+                RedirectCallRequestInternal request = new RedirectCallRequestInternal(options.IncomingCallContext, CommunicationIdentifierSerializer.Serialize(options.Target.TargetIdentity));
                 options.RepeatabilityHeaders?.GenerateIfRepeatabilityHeadersNotProvided();
 
                 return AzureCommunicationServicesRestClient.RedirectCall(
@@ -419,6 +423,99 @@ namespace Azure.Communication.CallAutomation
         }
 
         /// <summary>
+        /// Calling Phonenumber endpoint
+        /// </summary>
+        /// <param name="targetPhoneNumber"></param>
+        /// <param name="callerIdNumber"></param>
+        /// <param name="callbackUri"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        public virtual async Task<Response<CreateCallResult>> CreateCallAsync(
+            string targetPhoneNumber,
+            string callerIdNumber,
+            Uri callbackUri,
+            CancellationToken cancellationToken = default)
+        {
+            await Task.Delay(1, cancellationToken).ConfigureAwait(false);
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// Calling Phonenumber endpoint
+        /// </summary>
+        /// <param name="targetPhoneNumber"></param>
+        /// <param name="callerIdNumber"></param>
+        /// <param name="callbackUri"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        public virtual Response<CreateCallResult> CreateCall(
+            string targetPhoneNumber,
+            string callerIdNumber,
+            Uri callbackUri,
+            CancellationToken cancellationToken = default)
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// Calling ACS/Teams
+        /// </summary>
+        /// <param name="targetIdentity"></param>
+        /// <param name="callbackUri"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        public virtual async Task<Response<CreateCallResult>> CreateCallAsync(
+            string targetIdentity,
+            Uri callbackUri,
+            CancellationToken cancellationToken = default)
+        {
+            await Task.Delay(1, cancellationToken).ConfigureAwait(false);
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// Calling ACS/Teams
+        /// </summary>
+        /// <param name="targetIdentity"></param>
+        /// <param name="callbackUri"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        public virtual Response<CreateCallResult> CreateCall(
+            string targetIdentity,
+            Uri callbackUri,
+            CancellationToken cancellationToken = default)
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// Calling Multiples
+        /// </summary>
+        /// <param name="options"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        public virtual async Task<Response<CreateCallResult>> CreateSimRingCallAsync(
+            CreateSimRingCallOptions options,
+            CancellationToken cancellationToken = default)
+        {
+            await Task.Delay(1, cancellationToken).ConfigureAwait(false);
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// Calling Multiples
+        /// </summary>
+        /// <param name="options"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        public virtual Response<CreateCallResult> CreateSimRingCall(
+            CreateSimRingCallOptions options,
+            CancellationToken cancellationToken = default)
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
         /// Create an outgoing call from source to target identities.
         /// </summary>
         /// <param name="options">Options for the CreateCall request.</param>
@@ -511,7 +608,7 @@ namespace Azure.Communication.CallAutomation
             // when create call to PSTN, the CallSource.CallerId must be provided.
             if (options.Targets.Any(target => target is PhoneNumberIdentifier))
             {
-                Argument.AssertNotNull(options.CallSource.CallerId, nameof(options.CallSource.CallerId));
+                Argument.AssertNotNull(options.CallTarget.SourceCallerIdNumber, nameof(options.CallTarget.SourceCallerIdNumber));
             }
 
             // validate targets is not null or empty
@@ -523,9 +620,9 @@ namespace Azure.Communication.CallAutomation
                 throw new ArgumentException(CallAutomationErrorMessages.InvalidHttpsUriMessage, nameof(options));
             }
 
-            CallSourceInternal sourceDto = new CallSourceInternal(CommunicationIdentifierSerializer.Serialize(options.CallSource.Identifier));
-            sourceDto.CallerId = options.CallSource.CallerId == null ? null : new PhoneNumberIdentifierModel(options.CallSource.CallerId.PhoneNumber);
-            sourceDto.DisplayName = options.CallSource.DisplayName;
+            CallSourceInternal sourceDto = new CallSourceInternal(CommunicationIdentifierSerializer.Serialize(options.CallTarget.SourceCallerIdNumber));
+            sourceDto.CallerId = options.CallTarget.SourceCallerIdNumber == null ? null : new PhoneNumberIdentifierModel(options.CallTarget.SourceCallerIdNumber.PhoneNumber);
+            sourceDto.DisplayName = options.CallTarget.SourceDisplayName;
 
             CreateCallRequestInternal request = new CreateCallRequestInternal(
                 options.Targets.Select(t => CommunicationIdentifierSerializer.Serialize(t)),

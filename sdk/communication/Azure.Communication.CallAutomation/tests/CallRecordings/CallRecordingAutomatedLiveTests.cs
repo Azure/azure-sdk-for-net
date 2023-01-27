@@ -31,7 +31,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallRecordings
             var uniqueId = await ServiceBusWithNewCall(user, target);
 
             // create call and assert response
-            var createCallOptions = new CreateCallOptions(new CallSource(user), new CommunicationIdentifier[] { target }, new Uri(TestEnvironment.DispatcherCallback + $"?q={uniqueId}"));
+            var createCallOptions = new CreateCallOptions(new DEL_CallSource(user), new CommunicationIdentifier[] { target }, new Uri(TestEnvironment.DispatcherCallback + $"?q={uniqueId}"));
             createCallOptions.RepeatabilityHeaders = null;
             CreateCallResult response = await client.CreateCallAsync(createCallOptions).ConfigureAwait(false);
             string callConnectionId = response.CallConnectionProperties.CallConnectionId;
@@ -141,7 +141,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallRecordings
                 var uniqueId = await ServiceBusWithNewCall(user, target);
 
                 // create call and assert response
-                var createCallOptions = new CreateCallOptions(new CallSource(user), new CommunicationIdentifier[] { target }, new Uri(TestEnvironment.DispatcherCallback + $"?q={uniqueId}"));
+                var createCallOptions = new CreateCallOptions(new DEL_CallSource(user), new CommunicationIdentifier[] { target }, new Uri(TestEnvironment.DispatcherCallback + $"?q={uniqueId}"));
                 createCallOptions.RepeatabilityHeaders = null;
                 CreateCallResult response = await client.CreateCallAsync(createCallOptions).ConfigureAwait(false);
                 callConnectionId = response.CallConnectionProperties.CallConnectionId;
@@ -236,7 +236,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallRecordings
                 var uniqueId = await ServiceBusWithNewCall(user, target);
 
                 // create call and assert response
-                var createCallOptions = new CreateCallOptions(new CallSource(user), new CommunicationIdentifier[] { target }, new Uri(TestEnvironment.DispatcherCallback + $"?q={uniqueId}"));
+                var createCallOptions = new CreateCallOptions(new DEL_CallSource(user), new CommunicationIdentifier[] { target }, new Uri(TestEnvironment.DispatcherCallback + $"?q={uniqueId}"));
                 createCallOptions.RepeatabilityHeaders = null;
                 CreateCallResult response = await client.CreateCallAsync(createCallOptions).ConfigureAwait(false);
                 callConnectionId = response.CallConnectionProperties.CallConnectionId;

@@ -220,7 +220,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallAutomationClients
         }
 
         [TestCaseSource(nameof(TestData_CreateCall))]
-        public async Task CreateCallAsync_201Created(CallSource source, CommunicationIdentifier[] targets, Uri callbackUri)
+        public async Task CreateCallAsync_201Created(DEL_CallSource source, CommunicationIdentifier[] targets, Uri callbackUri)
         {
             CallAutomationClient callAutomationClient = CreateMockCallAutomationClient(201, CreateOrAnswerCallOrGetCallConnectionPayload);
 
@@ -235,7 +235,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallAutomationClients
         }
 
         [TestCaseSource(nameof(TestData_CreateCall))]
-        public void CreateCall_201Created(CallSource source, CommunicationIdentifier[] targets, Uri callbackUri)
+        public void CreateCall_201Created(DEL_CallSource source, CommunicationIdentifier[] targets, Uri callbackUri)
         {
             CallAutomationClient callAutomationClient = CreateMockCallAutomationClient(201, CreateOrAnswerCallOrGetCallConnectionPayload);
 
@@ -250,7 +250,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallAutomationClients
         }
 
         [TestCaseSource(nameof(TestData_CreateCall))]
-        public async Task CreateCallWithOptionsAsync_201Created(CallSource source, CommunicationIdentifier[] targets, Uri callbackUri)
+        public async Task CreateCallWithOptionsAsync_201Created(DEL_CallSource source, CommunicationIdentifier[] targets, Uri callbackUri)
         {
             CallAutomationClient callAutomationClient = CreateMockCallAutomationClient(201, CreateOrAnswerCallOrGetCallConnectionWithMediaSubscriptionPayload);
             CreateCallOptions options = new CreateCallOptions(
@@ -271,7 +271,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallAutomationClients
         }
 
         [TestCaseSource(nameof(TestData_CreateCall))]
-        public void CreateCallWithOptions_201Created(CallSource source, CommunicationIdentifier[] targets, Uri callbackUri)
+        public void CreateCallWithOptions_201Created(DEL_CallSource source, CommunicationIdentifier[] targets, Uri callbackUri)
         {
             CallAutomationClient callAutomationClient = CreateMockCallAutomationClient(201, CreateOrAnswerCallOrGetCallConnectionWithMediaSubscriptionPayload);
             CreateCallOptions options = new CreateCallOptions(
@@ -292,7 +292,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallAutomationClients
         }
 
         [TestCaseSource(nameof(TestData_CreateCall_NoCallerId))]
-        public void CreateCallWithOptions_NoCallerIdValidation(CallSource source, CommunicationIdentifier[] targets, Uri callbackUri)
+        public void CreateCallWithOptions_NoCallerIdValidation(DEL_CallSource source, CommunicationIdentifier[] targets, Uri callbackUri)
         {
             CallAutomationClient callAutomationClient = CreateMockCallAutomationClient(201, CreateOrAnswerCallOrGetCallConnectionPayload);
             ;
@@ -310,7 +310,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallAutomationClients
         }
 
         [TestCaseSource(nameof(TestData_CreateCall_NoCallbackUri))]
-        public void CreateCallWithOptions_NullCallbackUri(CallSource source, CommunicationIdentifier[] targets)
+        public void CreateCallWithOptions_NullCallbackUri(DEL_CallSource source, CommunicationIdentifier[] targets)
         {
             CallAutomationClient callAutomationClient = CreateMockCallAutomationClient(201, CreateOrAnswerCallOrGetCallConnectionPayload);
             ;
@@ -328,7 +328,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallAutomationClients
         }
 
         [TestCaseSource(nameof(TestData_CreateCall_NoCallbackUri))]
-        public void CreateCallWithOptions_HttpCallbackUri(CallSource source, CommunicationIdentifier[] targets)
+        public void CreateCallWithOptions_HttpCallbackUri(DEL_CallSource source, CommunicationIdentifier[] targets)
         {
             CallAutomationClient callAutomationClient = CreateMockCallAutomationClient(201, CreateOrAnswerCallOrGetCallConnectionPayload);
             ;
@@ -346,7 +346,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallAutomationClients
         }
 
         [TestCaseSource(nameof(TestData_CreateCall_EmptyTargets))]
-        public void CreateCallWithOptions_EmptyTargets(CallSource source, CommunicationIdentifier[] targets, Uri callbackUri)
+        public void CreateCallWithOptions_EmptyTargets(DEL_CallSource source, CommunicationIdentifier[] targets, Uri callbackUri)
         {
             CallAutomationClient callAutomationClient = CreateMockCallAutomationClient(201, CreateOrAnswerCallOrGetCallConnectionPayload);
             ;
@@ -364,7 +364,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallAutomationClients
         }
 
         [TestCaseSource(nameof(TestData_CreateCall))]
-        public void CreateCallAsync_404NotFound(CallSource source, CommunicationIdentifier[] targets, Uri callbackUri)
+        public void CreateCallAsync_404NotFound(DEL_CallSource source, CommunicationIdentifier[] targets, Uri callbackUri)
         {
             CallAutomationClient callAutomationClient = CreateMockCallAutomationClient(404);
 
@@ -374,7 +374,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallAutomationClients
         }
 
         [TestCaseSource(nameof(TestData_CreateCall))]
-        public void CreateCall_404NotFound(CallSource source, CommunicationIdentifier[] targets, Uri callbackUri)
+        public void CreateCall_404NotFound(DEL_CallSource source, CommunicationIdentifier[] targets, Uri callbackUri)
         {
             CallAutomationClient callAutomationClient = CreateMockCallAutomationClient(404);
 
@@ -477,7 +477,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallAutomationClients
             {
                 new object?[]
                 {
-                    new CallSource(new CommunicationUserIdentifier("56789")),
+                    new DEL_CallSource(new CommunicationUserIdentifier("56789")),
                     new CommunicationIdentifier[] {new CommunicationUserIdentifier("12345") },
                     new Uri("https://bot.contoso.com/callback")
                 },
@@ -490,7 +490,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallAutomationClients
             {
                 new object?[]
                 {
-                    new CallSource(new CommunicationUserIdentifier("56789")),
+                    new DEL_CallSource(new CommunicationUserIdentifier("56789")),
                     new CommunicationIdentifier[] {new CommunicationUserIdentifier("12345"), new PhoneNumberIdentifier("+1234567") },
                     new Uri("https://bot.contoso.com/callback")
                 },
@@ -503,7 +503,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallAutomationClients
             {
                 new object?[]
                 {
-                    new CallSource(new CommunicationUserIdentifier("56789")),
+                    new DEL_CallSource(new CommunicationUserIdentifier("56789")),
                     new CommunicationIdentifier[] {new CommunicationUserIdentifier("12345") }
                 },
             };
@@ -515,7 +515,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallAutomationClients
             {
                 new object?[]
                 {
-                    new CallSource(new CommunicationUserIdentifier("56789")),
+                    new DEL_CallSource(new CommunicationUserIdentifier("56789")),
                     new CommunicationIdentifier[] {},
                     new Uri("https://bot.contoso.com/callback")
                 },

@@ -268,33 +268,16 @@ namespace Azure.Communication.CallAutomation
 
         private static TransferToParticipantRequestInternal CreateTransferToParticipantRequest(TransferToParticipantOptions options)
         {
-            // when transfer to a PSTN participant, the SourceCallerId must be provided.
-            if (options.TargetParticipant is PhoneNumberIdentifier)
-            {
-                Argument.AssertNotNull(options.SourceCallerId, nameof(options.SourceCallerId));
-            }
-
-            TransferToParticipantRequestInternal request = new TransferToParticipantRequestInternal(CommunicationIdentifierSerializer.Serialize(options.TargetParticipant));
-
-            request.TransfereeCallerId = options.SourceCallerId == null ? null : new PhoneNumberIdentifierModel(options.SourceCallerId.PhoneNumber);
-            if (options.UserToUserInformation != null && options.UserToUserInformation.Length > CallAutomationConstants.InputValidation.StringMaxLength)
-            {
-                throw new ArgumentException(CallAutomationErrorMessages.UserToUserInformationExceedsMaxLength);
-            }
-            else
-            {
-                request.UserToUserInformation = options.UserToUserInformation;
-            }
             if (options.OperationContext != null && options.OperationContext.Length > CallAutomationConstants.InputValidation.StringMaxLength)
             {
                 throw new ArgumentException(CallAutomationErrorMessages.OperationContextExceedsMaxLength);
             }
             else
             {
-                request.OperationContext = options.OperationContext == default ? Guid.NewGuid().ToString() : options.OperationContext;
+                options.OperationContext = options.OperationContext == default ? Guid.NewGuid().ToString() : options.OperationContext;
             }
 
-            return request;
+            return null;
         }
 
         /// <summary> Add participants to the call. </summary>
@@ -377,21 +360,10 @@ namespace Azure.Communication.CallAutomation
 
         private static AddParticipantsRequestInternal CreateAddParticipantRequest(AddParticipantsOptions options)
         {
-            // when add PSTN participants, the SourceCallerId must be provided.
-            if (options.ParticipantsToAdd.Any(participant => participant is PhoneNumberIdentifier))
-            {
-                Argument.AssertNotNull(options.SourceCallerId, nameof(options.SourceCallerId));
-            }
-
             // validate ParticipantsToAdd is not null or empty
             Argument.AssertNotNullOrEmpty(options.ParticipantsToAdd, nameof(options.ParticipantsToAdd));
 
-            AddParticipantsRequestInternal request = new AddParticipantsRequestInternal(options.ParticipantsToAdd.Select(t => CommunicationIdentifierSerializer.Serialize(t)).ToList());
-
-            request.SourceCallerId = options.SourceCallerId == null ? null : new PhoneNumberIdentifierModel(options.SourceCallerId.PhoneNumber);
-            request.SourceDisplayName = options.SourceDisplayName;
-            request.SourceIdentifier = options.SourceIdentifier != null ? CommunicationIdentifierSerializer.Serialize(options.SourceIdentifier) : null;
-            request.OperationContext = options.OperationContext == default ? Guid.NewGuid().ToString() : options.OperationContext;
+            AddParticipantsRequestInternal request = new AddParticipantsRequestInternal(options.ParticipantsToAdd.Select(t => CommunicationIdentifierSerializer.Serialize(t.TargetIdentity)).ToList());
 
             if (options.InvitationTimeoutInSeconds != null &&
                 (options.InvitationTimeoutInSeconds < CallAutomationConstants.InputValidation.MinInvitationTimeoutInSeconds ||

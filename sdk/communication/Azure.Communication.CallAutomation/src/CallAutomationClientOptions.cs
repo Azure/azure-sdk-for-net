@@ -49,5 +49,10 @@ namespace Azure.Communication.CallAutomation
         /// Configure options for Call Automation's <see cref="EventProcessor"/>.
         /// </summary>
         public EventProcessorOptions EventProcessorOptions { get; } = new();
+
+        /// <summary>
+        /// Source Identity <see cref="CommunicationUserIdentifier"/>.
+        /// </summary>
+        public CommunicationUserIdentifier SourceIdenty { get; }
     }
 }

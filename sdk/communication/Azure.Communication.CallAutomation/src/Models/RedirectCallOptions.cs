@@ -15,7 +15,7 @@ namespace Azure.Communication.CallAutomation
         /// </summary>
         /// <param name="incomingCallContext"></param>
         /// <param name="target"></param>
-        public RedirectCallOptions(string incomingCallContext, CommunicationIdentifier target)
+        public RedirectCallOptions(string incomingCallContext, CallTarget target)
         {
             IncomingCallContext = incomingCallContext;
             Target = target;
@@ -30,7 +30,7 @@ namespace Azure.Communication.CallAutomation
         /// <summary>
         /// The target identity.
         /// </summary>
-        public CommunicationIdentifier Target { get; }
+        public CallTarget Target { get; }
 
         /// <summary>
         /// Repeatability Headers.

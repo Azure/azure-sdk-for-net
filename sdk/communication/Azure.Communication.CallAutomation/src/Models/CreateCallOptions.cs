@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Text;
 
 namespace Azure.Communication.CallAutomation
@@ -13,28 +14,46 @@ namespace Azure.Communication.CallAutomation
     public class CreateCallOptions
     {
         /// <summary>
+        /// Summary
+        /// </summary>
+        /// <param name="callTarget"></param>
+        /// <param name="callbackUri"></param>
+        public CreateCallOptions(CallTarget callTarget, Uri callbackUri)
+        {
+            CallTarget = callTarget;
+            CallbackUri = callbackUri;
+            // CallSource = new CommunicationUserIdentifier(Guid.NewGuid().ToString());
+            Targets = new ReadOnlyCollection<CommunicationIdentifier>(new List<CommunicationIdentifier> { { callTarget.TargetIdentity } });
+            RepeatabilityHeaders = new RepeatabilityHeaders();
+        }
+
+        /// <summary>
         /// Creates a new CreateCallOptions object.
         /// </summary>
         /// <param name="targets"></param>
         /// <param name="callSource"></param>
         /// <param name="callbackUri"></param>
-        public CreateCallOptions(CallSource callSource, IEnumerable<CommunicationIdentifier> targets, Uri callbackUri)
+        internal CreateCallOptions(CommunicationUserIdentifier callSource, IEnumerable<CommunicationIdentifier> targets, Uri callbackUri)
         {
+            // TODO!!! IS THIS REQUIRED?
             Targets = (IReadOnlyList<CommunicationIdentifier>)targets;
-            CallSource = callSource;
+            var x = callSource;
+            // CallSource = callSource;
             CallbackUri = callbackUri;
             RepeatabilityHeaders = new RepeatabilityHeaders();
         }
 
         /// <summary>
-        /// The targets of the call.
+        /// Summary
         /// </summary>
-        public IReadOnlyList<CommunicationIdentifier> Targets { get; }
+        /// <value></value>
+        public CallTarget CallTarget { get; }
 
         /// <summary>
-        /// The source of the call.
+        /// The targets of the call.
+        /// TODO: might go away?
         /// </summary>
-        public CallSource CallSource { get; }
+        internal IReadOnlyList<CommunicationIdentifier> Targets { get; }
 
         /// <summary>
         /// The callback Uri.
