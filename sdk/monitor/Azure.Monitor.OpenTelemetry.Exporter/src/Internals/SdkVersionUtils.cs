@@ -8,11 +8,9 @@ using System.Globalization;
 using System.Linq;
 using System.Reflection;
 
-using Azure.Monitor.OpenTelemetry.Exporter.Internals;
-
 using OpenTelemetry;
 
-namespace Azure.Monitor.OpenTelemetry.Exporter
+namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 {
     internal static class SdkVersionUtils
     {
