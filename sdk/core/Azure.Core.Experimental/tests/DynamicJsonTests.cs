@@ -66,6 +66,53 @@ namespace Azure.Core.Experimental.Tests
             Assert.AreEqual(2, (int)jsonData.Foo.Bar);
         }
 
+        [Test]
+        public void CanGetArrayValue()
+        {
+            dynamic jsonData = GetDynamicJson(@"[0, 1, 2]");
+
+            Assert.AreEqual(0, (int)jsonData[0]);
+            Assert.AreEqual(1, (int)jsonData[1]);
+            Assert.AreEqual(2, (int)jsonData[2]);
+        }
+
+        [Test]
+        public void CanGetNestedArrayValue()
+        {
+            dynamic jsonData = GetDynamicJson(@"
+                {
+                  ""Foo"": [0, 1, 2]
+                }");
+
+            Assert.AreEqual(0, (int)jsonData.Foo[0]);
+            Assert.AreEqual(1, (int)jsonData.Foo[1]);
+            Assert.AreEqual(2, (int)jsonData.Foo[2]);
+        }
+
+        [Test]
+        public void CanGetPropertyViaIndexer()
+        {
+            dynamic jsonData = GetDynamicJson(@"
+                {
+                  ""Foo"" : 1
+                }");
+
+            Assert.AreEqual(1, (int)jsonData["Foo"]);
+        }
+
+        [Test]
+        public void CanGetNestedPropertyViaIndexer()
+        {
+            dynamic jsonData = GetDynamicJson(@"
+                {
+                  ""Foo"" : {
+                    ""Bar"" : 1
+                  }
+                }");
+
+            Assert.AreEqual(1, (int)jsonData.Foo["Bar"]);
+        }
+
         #region Helpers
         internal static dynamic GetDynamicJson(string json)
         {

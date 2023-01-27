@@ -14,11 +14,25 @@ namespace Azure.Core.Dynamic
     public partial class DynamicJson : IDynamicMetaObjectProvider
     {
         internal static readonly MethodInfo GetPropertyMethod = typeof(DynamicJson).GetMethod(nameof(GetProperty), BindingFlags.NonPublic | BindingFlags.Instance);
+        internal static readonly MethodInfo GetViaIndexerMethod = typeof(DynamicJson).GetMethod(nameof(GetViaIndexer), BindingFlags.NonPublic | BindingFlags.Instance);
         internal static readonly MethodInfo SetMethod = typeof(DynamicJson).GetMethod(nameof(Set), BindingFlags.NonPublic | BindingFlags.Instance, null, new Type[] { typeof(object) }, null);
 
         internal object GetProperty(string name)
         {
             return new DynamicJson(_element.GetProperty(name));
+        }
+
+        private object GetViaIndexer(object index)
+        {
+            switch (index)
+            {
+                case string propertyName:
+                    return GetProperty(propertyName);
+                case int arrayIndex:
+                    return new DynamicJson(_element.GetIndexElement(arrayIndex));
+            }
+
+            throw new InvalidOperationException($"Tried to access indexer with an unsupported index type: {index}");
         }
 
         internal object? Set(object value)
@@ -74,11 +88,22 @@ namespace Azure.Core.Dynamic
             {
                 UnaryExpression this_ = Expression.Convert(Expression, LimitType);
 
-                Expression[] propertyNameArg = new Expression[] { Expression.Constant(binder.Name) };
-                MethodCallExpression getPropertyCall = Expression.Call(this_, GetPropertyMethod, propertyNameArg);
+                Expression[] getPropertyArgs = new Expression[] { Expression.Constant(binder.Name) };
+                MethodCallExpression getPropertyCall = Expression.Call(this_, GetPropertyMethod, getPropertyArgs);
 
                 BindingRestrictions restrictions = BindingRestrictions.GetTypeRestriction(Expression, LimitType);
                 return new DynamicMetaObject(getPropertyCall, restrictions);
+            }
+
+            public override DynamicMetaObject BindGetIndex(GetIndexBinder binder, DynamicMetaObject[] indexes)
+            {
+                UnaryExpression this_ = Expression.Convert(Expression, LimitType);
+
+                Expression[] arguments = new Expression[] { Expression.Convert(indexes[0].Expression, typeof(object)) };
+                var getViaIndexerCall = Expression.Call(this_, GetViaIndexerMethod, arguments);
+
+                var restrictions = BindingRestrictions.GetTypeRestriction(Expression, LimitType);
+                return new DynamicMetaObject(getViaIndexerCall, restrictions);
             }
 
             public override DynamicMetaObject BindConvert(ConvertBinder binder)
