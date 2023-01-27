@@ -463,7 +463,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallConnections
         public void MuteParticipant_WithOptions_202Accepted(CommunicationIdentifier participant)
         {
             var callConnection = CreateMockCallConnection(202, OperationContextPayload);
-            var options = new MuteParticipantOptions(new List<CommunicationIdentifier> { participant })
+            var options = new MuteParticipantsOptions(new List<CommunicationIdentifier> { participant })
             {
                 OperationContext = OperationContext
             };
@@ -476,7 +476,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallConnections
         public void UnmuteParticipant_WithOptions_202Accepted(CommunicationIdentifier participant)
         {
             var callConnection = CreateMockCallConnection(202, OperationContextPayload);
-            var options = new UnmuteParticipantOptions(new List<CommunicationIdentifier> { participant })
+            var options = new UnmuteParticipantsOptions(new List<CommunicationIdentifier> { participant })
             {
                 OperationContext = OperationContext
             };
@@ -526,7 +526,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallConnections
         public async Task MuteParticipantAsync_WithOptions_202Accepted(CommunicationIdentifier participant)
         {
             var callConnection = CreateMockCallConnection(202, OperationContextPayload);
-            var options = new MuteParticipantOptions(new List<CommunicationIdentifier> { participant })
+            var options = new MuteParticipantsOptions(new List<CommunicationIdentifier> { participant })
             {
                 OperationContext = OperationContext,
             };
@@ -540,7 +540,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallConnections
         public void MuteParticipantAsync_WithOptions_MoreThanOneParticipant_400BadRequest(CommunicationIdentifier participant)
         {
             var callConnection = CreateMockCallConnection(400);
-            var options = new MuteParticipantOptions(new List<CommunicationIdentifier> { participant, participant })
+            var options = new MuteParticipantsOptions(new List<CommunicationIdentifier> { participant, participant })
             {
                 OperationContext = OperationContext,
             };
@@ -552,7 +552,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallConnections
         public async Task UnmuteParticipantAsync_WithOptions_202Accepted(CommunicationIdentifier participant)
         {
             var callConnection = CreateMockCallConnection(202, OperationContextPayload);
-            var options = new UnmuteParticipantOptions(new List<CommunicationIdentifier> { participant })
+            var options = new UnmuteParticipantsOptions(new List<CommunicationIdentifier> { participant })
             {
                 OperationContext = OperationContext,
             };
@@ -566,7 +566,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallConnections
         public void UnmuteParticipantAsync_WithOptions_MoreThanOneParticipant_400BadRequest(CommunicationIdentifier participant)
         {
             var callConnection = CreateMockCallConnection(400);
-            var options = new UnmuteParticipantOptions(new List<CommunicationIdentifier> { participant, participant })
+            var options = new UnmuteParticipantsOptions(new List<CommunicationIdentifier> { participant, participant })
             {
                 OperationContext = OperationContext,
             };
