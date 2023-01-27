@@ -8,6 +8,7 @@ using System.IO;
 using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Storage.Shared;
 
@@ -30,7 +31,7 @@ namespace Azure.Storage
         // injected behaviors for services to use partitioned uploads
         public delegate DiagnosticScope CreateScope(string operationName);
         public delegate Task InitializeDestinationInternal(TServiceSpecificData args, bool async, CancellationToken cancellationToken);
-        public delegate Task<Response<TCompleteUploadReturn>> SingleUploadInternal(
+        public delegate Task<Response<TCompleteUploadReturn>> SingleUploadStreamingInternal(
             Stream contentStream,
             TServiceSpecificData args,
             IProgress<long> progressHandler,
@@ -38,7 +39,24 @@ namespace Azure.Storage
             string operationName,
             bool async,
             CancellationToken cancellationToken);
-        public delegate Task UploadPartitionInternal(Stream contentStream,
+        public delegate Task<Response<TCompleteUploadReturn>> SingleUploadContentInternal(
+            ReadOnlySpan<byte> content,
+            TServiceSpecificData args,
+            IProgress<long> progressHandler,
+            UploadTransferValidationOptions transferValidation,
+            string operationName,
+            bool async,
+            CancellationToken cancellationToken);
+        public delegate Task UploadPartitionStreamingInternal(
+            Stream contentStream,
+            long offset,
+            TServiceSpecificData args,
+            IProgress<long> progressHandler,
+            UploadTransferValidationOptions transferValidation,
+            bool async,
+            CancellationToken cancellationToken);
+        public delegate Task UploadPartitionContentInternal(
+            ReadOnlySpan<byte> content,
             long offset,
             TServiceSpecificData args,
             IProgress<long> progressHandler,
@@ -54,8 +72,10 @@ namespace Azure.Storage
         public struct Behaviors
         {
             public InitializeDestinationInternal InitializeDestination { get; set; }
-            public SingleUploadInternal SingleUpload { get; set; }
-            public UploadPartitionInternal UploadPartition { get; set; }
+            public SingleUploadStreamingInternal SingleUploadStreaming { get; set; }
+            public SingleUploadContentInternal SingleUploadContent { get; set; }
+            public UploadPartitionStreamingInternal UploadPartitionStreaming { get; set; }
+            public UploadPartitionContentInternal UploadPartitionContent { get; set; }
             public CommitPartitionedUploadInternal CommitPartitionedUpload { get; set; }
             public CreateScope Scope { get; set; }
         }
@@ -64,8 +84,10 @@ namespace Azure.Storage
         #endregion
 
         private readonly InitializeDestinationInternal _initializeDestinationInternal;
-        private readonly SingleUploadInternal _singleUploadInternal;
-        private readonly UploadPartitionInternal _uploadPartitionInternal;
+        private readonly SingleUploadStreamingInternal _singleUploadStreamingInternal;
+        private readonly SingleUploadContentInternal _singleUploadContentInternal;
+        private readonly UploadPartitionStreamingInternal _uploadPartitionStreamingInternal;
+        private readonly UploadPartitionContentInternal _uploadPartitionContentInternal;
         private readonly CommitPartitionedUploadInternal _commitPartitionedUploadInternal;
         private readonly CreateScope _createScope;
 
@@ -110,14 +132,18 @@ namespace Azure.Storage
         {
             // initialize isn't required for all services and can use a no-op; rest are required
             _initializeDestinationInternal = behaviors.InitializeDestination ?? InitializeNoOp;
-            _singleUploadInternal = behaviors.SingleUpload
-                ?? throw Errors.ArgumentNull(nameof(behaviors.SingleUpload));
-            _uploadPartitionInternal = behaviors.UploadPartition
-                ?? throw Errors.ArgumentNull(nameof(behaviors.UploadPartition));
-            _commitPartitionedUploadInternal = behaviors.CommitPartitionedUpload
-                ?? throw Errors.ArgumentNull(nameof(behaviors.CommitPartitionedUpload));
-            _createScope = behaviors.Scope
-                ?? throw Errors.ArgumentNull(nameof(behaviors.Scope));
+            _singleUploadStreamingInternal = Argument.CheckNotNull(
+                behaviors.SingleUploadStreaming, nameof(behaviors.SingleUploadStreaming));
+            _singleUploadContentInternal = Argument.CheckNotNull(
+                behaviors.SingleUploadContent, nameof(behaviors.SingleUploadContent));
+            _uploadPartitionStreamingInternal = Argument.CheckNotNull(
+                behaviors.UploadPartitionStreaming, nameof(behaviors.UploadPartitionStreaming));
+            _uploadPartitionContentInternal = Argument.CheckNotNull(
+                behaviors.UploadPartitionContent, nameof(behaviors.UploadPartitionContent));
+            _commitPartitionedUploadInternal = Argument.CheckNotNull(
+                behaviors.CommitPartitionedUpload, nameof(behaviors.CommitPartitionedUpload));
+            _createScope = Argument.CheckNotNull(
+                behaviors.Scope, nameof(behaviors.Scope));
 
             _arrayPool = arrayPool ?? ArrayPool<byte>.Shared;
 
@@ -163,6 +189,43 @@ namespace Azure.Storage
         }
 
         public async Task<Response<TCompleteUploadReturn>> UploadInternal(
+            BinaryData content,
+            TServiceSpecificData args,
+            IProgress<long> progressHandler,
+            bool async,
+            CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            await _initializeDestinationInternal(args, async, cancellationToken).ConfigureAwait(false);
+            long length = content.ToMemory().Length;
+
+            if (length < _singleUploadThreshold)
+            {
+                return await _singleUploadContentInternal(
+                    content,
+                    args,
+                    progressHandler,
+                    _validationOptions,
+                    _operationName,
+                    async,
+                    cancellationToken)
+                    .ConfigureAwait(false);
+            }
+
+            // If the caller provided an explicit block size, we'll use it.
+            // Otherwise we'll adjust dynamically based on the size of the
+            // content.
+            long blockSize = _blockSize != null
+                ? _blockSize.Value
+                : length < Constants.LargeUploadThreshold ?
+                    Constants.DefaultBufferSize :
+                    Constants.LargeBufferSize;
+
+            throw new NotImplementedException("Partitioned upload on BinaryData not yet implemented.");
+        }
+
+        public async Task<Response<TCompleteUploadReturn>> UploadInternal(
             Stream content,
             long? expectedContentLength,
             TServiceSpecificData args,
@@ -170,11 +233,7 @@ namespace Azure.Storage
             bool async,
             CancellationToken cancellationToken = default)
         {
-            if (content == default)
-            {
-                throw Errors.ArgumentNull(nameof(content));
-            }
-
+            Argument.AssertNotNull(content, nameof(content));
             Errors.VerifyStreamPosition(content, nameof(content));
 
             if (content.CanSeek && content.Position > 0)
@@ -209,7 +268,7 @@ namespace Azure.Storage
                 }
 
                 // Upload it in a single request
-                return await _singleUploadInternal(
+                return await _singleUploadStreamingInternal(
                     content,
                     args,
                     progressHandler,
@@ -473,7 +532,7 @@ namespace Azure.Storage
         {
             try
             {
-                await _uploadPartitionInternal(
+                await _uploadPartitionStreamingInternal(
                     partition,
                     offset,
                     args,

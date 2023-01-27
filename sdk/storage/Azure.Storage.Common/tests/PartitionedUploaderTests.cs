@@ -40,9 +40,9 @@ namespace Azure.Storage.Tests
             return mock;
         }
 
-        private Mock<PartitionedUploader<object, object>.SingleUploadInternal> GetMockSingleUploadInternal(int expectedSize)
+        private Mock<PartitionedUploader<object, object>.SingleUploadStreamingInternal> GetMockSingleUploadInternal(int expectedSize)
         {
-            var mock = new Mock<PartitionedUploader<object, object>.SingleUploadInternal>(MockBehavior.Strict);
+            var mock = new Mock<PartitionedUploader<object, object>.SingleUploadStreamingInternal>(MockBehavior.Strict);
             mock.Setup(del => del(It.IsNotNull<Stream>(), s_objectArgs, It.IsAny<IProgress<long>>(), It.IsAny<UploadTransferValidationOptions>(), s_operationName, IsAsync, s_cancellation))
                 .Returns<Stream, object, IProgress<long>, UploadTransferValidationOptions, string, bool, CancellationToken>((stream, obj, progress, validationOptions, operation, async, cancellation) =>
                 {
@@ -66,9 +66,9 @@ namespace Azure.Storage.Tests
             return mock;
         }
 
-        private Mock<PartitionedUploader<object, object>.UploadPartitionInternal> GetMockUploadPartitionInternal(int maxSize)
+        private Mock<PartitionedUploader<object, object>.UploadPartitionStreamingInternal> GetMockUploadPartitionInternal(int maxSize)
         {
-            var mock = new Mock<PartitionedUploader<object, object>.UploadPartitionInternal>(MockBehavior.Strict);
+            var mock = new Mock<PartitionedUploader<object, object>.UploadPartitionStreamingInternal>(MockBehavior.Strict);
             mock.Setup(del => del(It.IsNotNull<Stream>(), It.IsAny<long>(), s_objectArgs, It.IsAny<IProgress<long>>(), It.IsAny<UploadTransferValidationOptions>(), IsAsync, s_cancellation))
                 .Returns<Stream, long, object, IProgress<long>, UploadTransferValidationOptions, bool, CancellationToken>((stream, offset, obj, progress, validationOptions, async, cancellation) =>
                 {
@@ -122,8 +122,8 @@ namespace Azure.Storage.Tests
                 {
                     Scope = createScope.Object,
                     InitializeDestination = initializeDestination.Object,
-                    SingleUpload = singleUpload.Object,
-                    UploadPartition = uploadPartition.Object,
+                    SingleUploadStreaming = singleUpload.Object,
+                    UploadPartitionStreaming = uploadPartition.Object,
                     CommitPartitionedUpload = commitPartitions.Object
                 },
                 new StorageTransferOptions()
@@ -174,8 +174,8 @@ namespace Azure.Storage.Tests
                 {
                     Scope = createScope.Object,
                     InitializeDestination = initializeDestination.Object,
-                    SingleUpload = singleUpload.Object,
-                    UploadPartition = uploadPartition.Object,
+                    SingleUploadStreaming = singleUpload.Object,
+                    UploadPartitionStreaming = uploadPartition.Object,
                     CommitPartitionedUpload = commitPartitions.Object
                 },
                 new StorageTransferOptions()
