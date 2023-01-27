@@ -1306,9 +1306,9 @@ namespace Azure.ResourceManager.Media.Models
         public string CustomKeyAcquisitionUriTemplate { get { throw null; } set { } }
         public Azure.ResourceManager.Media.Models.MediaEnabledProtocols EnabledProtocols { get { throw null; } set { } }
     }
-    public partial class Fade
+    public partial class FadeOptions
     {
-        public Fade(System.TimeSpan duration, string fadeColor) { }
+        public FadeOptions(System.TimeSpan duration, string fadeColor) { }
         public System.TimeSpan Duration { get { throw null; } set { } }
         public string FadeColor { get { throw null; } set { } }
         public string Start { get { throw null; } set { } }
@@ -1318,8 +1318,8 @@ namespace Azure.ResourceManager.Media.Models
         public FilteringOperations() { }
         public Azure.ResourceManager.Media.Models.RectangularWindow Crop { get { throw null; } set { } }
         public Azure.ResourceManager.Media.Models.DeinterlaceSettings Deinterlace { get { throw null; } set { } }
-        public Azure.ResourceManager.Media.Models.Fade FadeIn { get { throw null; } set { } }
-        public Azure.ResourceManager.Media.Models.Fade FadeOut { get { throw null; } set { } }
+        public Azure.ResourceManager.Media.Models.FadeOptions FadeIn { get { throw null; } set { } }
+        public Azure.ResourceManager.Media.Models.FadeOptions FadeOut { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Media.Models.MediaOverlayBase> Overlays { get { throw null; } }
         public Azure.ResourceManager.Media.Models.RotationSetting? Rotation { get { throw null; } set { } }
     }
