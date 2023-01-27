@@ -36,9 +36,10 @@ You can obtain the endpoint string and subscription key from the Azure OpenAI Po
 Once you have the value of the endpoint string and subscription key, you can create the OpenAIClient:
 
 ```C# Snippet:CreateOpenAIClient
-string endpointString = "<endpoint_string>";
-string subscriptionKey = "<azure_subscription_key>";
-OpenAIClient client = new OpenAIClient(new Uri(endpointString), new AzureKeyCredential(subscriptionKey));
+// Replace with your Azure subscription key
+string key = "YOUR_AZURE_KEY";
+string endpoint = "http://myaccount.openai.azure.com/";
+OpenAIClient client = new OpenAIClient(new Uri(endpoint), new AzureKeyCredential(key));
 ```
 
 #### Create OpenAIClient with Azure Active Directory Credential
@@ -55,8 +56,8 @@ You will also need to [register a new AAD application][aad_register_app] and [gr
 Set the values of the client ID, tenant ID, and client secret of the AAD application as environment variables: AZURE_CLIENT_ID, AZURE_TENANT_ID, AZURE_CLIENT_SECRET.
 
 ```C# Snippet:CreateOpenAIClientTokenCredential
-string endpoint = "<endpoint>";
-OpenAIClient client = new OpenAIClient(new Uri(endpoint), new DefaultAzureCredential());
+string endpoint = "http://myaccount.openai.azure.com/";
+OpenAIClient client = new OpenAIClient(new Uri(endpoint), new DefaultAzureCredential(), "myDeploymentId");
 ```
 
 ## Key concepts
@@ -108,12 +109,13 @@ The `GenerateChatbotResponse` method authenticates using a DefaultAzureCredentia
 
 ```C# Snippet:GenerateChatbotResponse
 string endpoint = "http://myaccount.openai.azure.com/";
-OpenAIClient client = new OpenAIClient("myDeploymentId", new Uri(endpoint), new DefaultAzureCredential());
+OpenAIClient client = new OpenAIClient(new Uri(endpoint), new DefaultAzureCredential(), "myDeploymentId");
 
-string prompt = "What is Azure OpenAI?",
+string prompt = "What is Azure OpenAI?";
 Console.Write($"Input: {prompt}");
-Response<Completions> completion = client.GetCompletions(prompt);
-string response = completion.Choices[0].Text;
+
+Completions completionResponse = client.GetCompletions(prompt);
+string response = completionResponse.Choices[0].Text;
 Console.WriteLine($"Chatbot: {response}");
 ```
 
@@ -122,6 +124,7 @@ Console.WriteLine($"Chatbot: {response}");
 The `GenerateMultipleChatbotResponsesWithSubscriptionKey` method gives an example of generating text responses to input prompts using an Azure subscription key
 
 ```C# Snippet:GenerateMultipleChatbotResponsesWithSubscriptionKey
+// Replace with your Azure subscription key
 string key = "YOUR_AZURE_KEY";
 string endpoint = "http://myaccount.openai.azure.com/";
 OpenAIClient client = new OpenAIClient(new Uri(endpoint), new AzureKeyCredential(key));
@@ -140,7 +143,7 @@ foreach (string prompt in examplePrompts)
     CompletionsOptions request = new CompletionsOptions();
     request.Prompt.Add(prompt);
 
-    Response<Completions> completion = client.GetCompletions("myModelDeployment", request);
+    Completions completion = client.GetCompletions("myModelDeployment", request);
     string response = completion.Choices[0].Text;
     Console.WriteLine($"Chatbot: {response}");
 }
@@ -159,7 +162,6 @@ string textToSummarize = @"
 
     ""As a layman I would say: 'I think we have it'. Would you agree?"" Rolf-Dieter Heuer, CERN's director-general, asked the packed auditorium. The physicists assembled there burst into applause.
 :";
-OpenAIClient client = new OpenAIClient(new Uri(endpoint), new DefaultAzureCredential());
 
 string summarizationPrompt = @$"
     Summarize the following text.
