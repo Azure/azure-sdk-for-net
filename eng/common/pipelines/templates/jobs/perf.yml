@@ -117,7 +117,6 @@ jobs:
 
   - script: >-
       dotnet run -- run
-      --no-sync
       --language ${{ parameters.Language }}
       --repo-root $(System.DefaultWorkingDirectory)
       --tests-file $(System.DefaultWorkingDirectory)/sdk/${{ parameters.ServiceDirectory }}/perf-tests.yml
