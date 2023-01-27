@@ -260,7 +260,7 @@ function BuildBicepFile([System.IO.FileSystemInfo] $file)
     return $templateFilePath
 }
 
-function BuildDeploymentOutputs([string]$serviceName, [object]$azContext, [object]$deployment) {
+function BuildDeploymentOutputs([string]$serviceName, [object]$azContext, [object]$deployment, [hashtable]$environmentVariables) {
     $serviceDirectoryPrefix = BuildServiceDirectoryPrefix $serviceName
     # Add default values
     $deploymentOutputs = [Ordered]@{
@@ -277,7 +277,7 @@ function BuildDeploymentOutputs([string]$serviceName, [object]$azContext, [objec
         "AZURE_SERVICE_DIRECTORY" = $serviceName.ToUpperInvariant();
     }
 
-    MergeHashes $EnvironmentVariables $(Get-Variable deploymentOutputs)
+    MergeHashes $environmentVariables $(Get-Variable deploymentOutputs)
 
     foreach ($key in $deployment.Outputs.Keys) {
         $variable = $deployment.Outputs[$key]
@@ -293,8 +293,15 @@ function BuildDeploymentOutputs([string]$serviceName, [object]$azContext, [objec
     return $deploymentOutputs
 }
 
-function SetDeploymentOutputs([string]$serviceName, [object]$azContext, [object]$deployment, [object]$templateFile) {
-    $deploymentOutputs = BuildDeploymentOutputs $serviceName $azContext $deployment
+function SetDeploymentOutputs(
+    [string]$serviceName,
+    [object]$azContext,
+    [object]$deployment,
+    [object]$templateFile,
+    [hashtable]$environmentVariables = @{}
+) {
+    $deploymentEnvironmentVariables = $environmentVariables.Clone()
+    $deploymentOutputs = BuildDeploymentOutputs $serviceName $azContext $deployment $deploymentEnvironmentVariables
 
     if ($OutFile) {
         if (!$IsWindows) {
@@ -322,7 +329,7 @@ function SetDeploymentOutputs([string]$serviceName, [object]$azContext, [object]
         $notSecretValues = @()
         foreach ($key in $deploymentOutputs.Keys) {
             $value = $deploymentOutputs[$key]
-            $EnvironmentVariables[$key] = $value
+            $deploymentEnvironmentVariables[$key] = $value
 
             if ($CI) {
                 if (ShouldMarkValueAsSecret $serviceName $key $value $notSecretValues) {
@@ -347,7 +354,7 @@ function SetDeploymentOutputs([string]$serviceName, [object]$azContext, [object]
         }
     }
 
-    return $deploymentOutputs
+    return $deploymentEnvironmentVariables, $deploymentOutputs
 }
 
 # Support actions to invoke on exit.
@@ -566,7 +573,6 @@ try {
         # to determine whether resources should be removed.
         Write-Host "Setting variable 'CI_HAS_DEPLOYED_RESOURCES': 'true'"
         LogVsoCommand "##vso[task.setvariable variable=CI_HAS_DEPLOYED_RESOURCES;]true"
-        $EnvironmentVariables['CI_HAS_DEPLOYED_RESOURCES'] = $true
     }
 
     Log "Creating resource group '$ResourceGroupName' in location '$Location'"
@@ -577,8 +583,7 @@ try {
     if ($resourceGroup.ProvisioningState -eq 'Succeeded') {
         # New-AzResourceGroup would've written an error and stopped the pipeline by default anyway.
         Write-Verbose "Successfully created resource group '$($resourceGroup.ResourceGroupName)'"
-    }
-    elseif (!$resourceGroup) {
+    } elseif (!$resourceGroup) {
         if (!$PSCmdlet.ShouldProcess($resourceGroupName)) {
             # If the -WhatIf flag was passed, there will be no resource group created. Fake it.
             $resourceGroup = [PSCustomObject]@{
@@ -774,7 +779,12 @@ try {
         Write-Host "Deployment '$($deployment.DeploymentName)' has CorrelationId '$($deployment.CorrelationId)'"
         Write-Host "Successfully deployed template '$($templateFile.jsonFilePath)' to resource group '$($resourceGroup.ResourceGroupName)'"
 
-        $deploymentOutputs = SetDeploymentOutputs $serviceName $context $deployment $templateFile
+        $deploymentEnvironmentVariables, $deploymentOutputs = SetDeploymentOutputs `
+                                                                -serviceName $serviceName `
+                                                                -azContext $context `
+                                                                -deployment $deployment `
+                                                                -templateFile $templateFile `
+                                                                -environmentVariables $EnvironmentVariables
 
         $postDeploymentScript = $templateFile.originalFilePath | Split-Path | Join-Path -ChildPath "$ResourceType-resources-post.ps1"
         if (Test-Path $postDeploymentScript) {
@@ -794,7 +804,7 @@ try {
 
 # Suppress output locally
 if ($CI) {
-    return $EnvironmentVariables
+    return $deploymentEnvironmentVariables
 }
 
 <#
