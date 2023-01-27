@@ -22,6 +22,7 @@ namespace Azure.Communication.CallAutomation
         /// <summary>
         /// The identity of participants to be muted from the call.
         /// Only one participant is currently supported.
+        /// Only ACS Users are currently supported.
         /// </summary>
         public IEnumerable<CommunicationIdentifier> TargetParticipants { get; }
 

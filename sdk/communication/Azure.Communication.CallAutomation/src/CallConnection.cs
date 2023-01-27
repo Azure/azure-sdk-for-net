@@ -646,16 +646,16 @@ namespace Azure.Communication.CallAutomation
         }
 
         /// <summary>
-        /// Mute participants from the call.
-        /// Note: Only one participant is currently supported.
+        /// Mute participant from the call.
+        /// Only Acs Users are currently supported.
         /// </summary>
-        /// <param name="targetParticipants">Participants to mute.</param>
+        /// <param name="targetParticipant">Participant to mute.</param>
         /// <param name="operationContext">The Operation Context.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>A Response containing MuteParticipantsResponse.</returns>
-        public virtual Response<MuteParticipantsResponse> MuteParticipants(IEnumerable<CommunicationIdentifier> targetParticipants, string operationContext = default, CancellationToken cancellationToken = default)
+        public virtual Response<MuteParticipantsResponse> MuteParticipants(CommunicationIdentifier targetParticipant, string operationContext = default, CancellationToken cancellationToken = default)
         {
-            var options = new MuteParticipantOptions(targetParticipants)
+            var options = new MuteParticipantOptions(new List<CommunicationIdentifier> { targetParticipant })
             {
                 OperationContext = operationContext
             };
@@ -665,6 +665,7 @@ namespace Azure.Communication.CallAutomation
 
         /// <summary>
         /// Mute participants from the call.
+        /// Only Acs Users are currently supported.
         /// </summary>
         /// <param name="options">Options for the MuteParticipant operation.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
@@ -706,16 +707,16 @@ namespace Azure.Communication.CallAutomation
         }
 
         /// <summary>
-        /// Unmute participants from the call.
-        /// Note: Only a single participant is currently supported.
+        /// Unmute participant from the call.
+        /// Only Acs Users are currently supported.
         /// </summary>
-        /// <param name="targetParticipants">Participants to unmute.</param>
+        /// <param name="targetParticipant">Participant to unmute.</param>
         /// <param name="operationContext">The Operation Context.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns></returns>
-        public virtual Response<UnmuteParticipantsResponse> UnmuteParticipants(IEnumerable<CommunicationIdentifier> targetParticipants, string operationContext = default, CancellationToken cancellationToken = default)
+        public virtual Response<UnmuteParticipantsResponse> UnmuteParticipants(CommunicationIdentifier targetParticipant, string operationContext = default, CancellationToken cancellationToken = default)
         {
-            var options = new UnmuteParticipantOptions(targetParticipants)
+            var options = new UnmuteParticipantOptions(new List<CommunicationIdentifier> { targetParticipant })
             {
                 OperationContext = operationContext,
             };
@@ -724,6 +725,7 @@ namespace Azure.Communication.CallAutomation
 
         /// <summary>
         /// Unmute participants from the call.
+        /// Only Acs Users are currently supported.
         /// </summary>
         /// <param name="options">Options for the UnmuteParticipant operation.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
@@ -762,19 +764,19 @@ namespace Azure.Communication.CallAutomation
 
         /// <summary>
         /// Mute participants on the call.
-        /// Note: Only one participant is currently supported.
+        /// Only Acs Users are currently supported.
         /// </summary>
-        /// <param name="participants">Participants to mute.</param>
+        /// <param name="targetParticipant">Participants to mute.</param>
         /// <param name="operationContext">The Operation Context.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns></returns>
-        public async virtual Task<Response<MuteParticipantsResponse>> MuteParticipantsAsync(IEnumerable<CommunicationIdentifier> participants, string operationContext = default, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<MuteParticipantsResponse>> MuteParticipantsAsync(CommunicationIdentifier targetParticipant, string operationContext = default, CancellationToken cancellationToken = default)
         {
-            var options = new MuteParticipantOptions(participants)
+            var options = new MuteParticipantOptions(new List<CommunicationIdentifier> { targetParticipant })
             {
                 OperationContext = operationContext
             };
-            return await MuteParticipantAsync(options, cancellationToken).ConfigureAwait(false);
+            return await MuteParticipantsAsync(options, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -783,7 +785,7 @@ namespace Azure.Communication.CallAutomation
         /// <param name="options">Options for the MuteParticipant operation.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns></returns>
-        public async virtual Task<Response<MuteParticipantsResponse>> MuteParticipantAsync(MuteParticipantOptions options, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<MuteParticipantsResponse>> MuteParticipantsAsync(MuteParticipantOptions options, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallConnection)}.{nameof(MuteParticipants)}");
             scope.Start();
@@ -821,15 +823,15 @@ namespace Azure.Communication.CallAutomation
 
         /// <summary>
         /// Unmute participants on the call.
-        /// Note: Only one participant is currently supported.
+        /// Only Acs Users are currently supported.
         /// </summary>
-        /// <param name="participants">Participants to unmute.</param>
+        /// <param name="targetParticipant">Participant to unmute.</param>
         /// <param name="operationContext">The Operation Context.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns></returns>
-        public async virtual Task<Response<UnmuteParticipantsResponse>> UnmuteParticipantsAsync(IEnumerable<CommunicationIdentifier> participants, string operationContext = default, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<UnmuteParticipantsResponse>> UnmuteParticipantsAsync(CommunicationIdentifier targetParticipant, string operationContext = default, CancellationToken cancellationToken = default)
         {
-            var options = new UnmuteParticipantOptions(participants)
+            var options = new UnmuteParticipantOptions(new List<CommunicationIdentifier> { targetParticipant })
             {
                 OperationContext = operationContext
             };
@@ -839,6 +841,7 @@ namespace Azure.Communication.CallAutomation
 
         /// <summary>
         /// Unmute participants from the call.
+        /// Only Acs Users are currently supported.
         /// </summary>
         /// <param name="options">Options for the UnmuteParticipant operation.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
