@@ -12,7 +12,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
         {
         }
 
-        /// <inheritdoc />
         public override void OnEnd(Activity data)
         {
             // All activities will be passed on to exporter to extract standard metrics
