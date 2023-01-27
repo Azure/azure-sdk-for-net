@@ -154,6 +154,8 @@ The `SummarizeText` method generates a summarization of the given input prompt.
 
 ```C# Snippet:SummarizeText
 string endpoint = "http://myaccount.openai.azure.com/";
+OpenAIClient client = new OpenAIClient(new Uri(endpoint), new DefaultAzureCredential(), "myDeploymentId");
+
 string textToSummarize = @"
     Two independent experiments reported their results this morning at CERN, Europe's high-energy physics laboratory near Geneva in Switzerland. Both show convincing evidence of a new boson particle weighing around 125 gigaelectronvolts, which so far fits predictions of the Higgs previously made by theoretical physicists.
 
@@ -176,7 +178,7 @@ Console.Write($"Input: {summarizationPrompt}");
 CompletionsOptions request = new CompletionsOptions();
 request.Prompt.Add(summarizationPrompt);
 
-Response<Completions> completion = client.GetCompletions("myModelDeployment", request);
+Completions completion = client.GetCompletions("myModelDeployment", request);
 string response = completion.Choices[0].Text;
 Console.WriteLine($"Summarization: {response}");
 ```
