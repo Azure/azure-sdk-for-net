@@ -423,7 +423,7 @@ namespace Azure.Core.Dynamic
             Utf8JsonWriter writer = new(stream);
             element.WriteTo(writer);
             writer.Flush();
-            return new Utf8JsonReader(stream.ToArray());
+            return new Utf8JsonReader(stream.GetBuffer().AsSpan().Slice(0, (int)stream.Position));
         }
 
         private void EnsureObject()
