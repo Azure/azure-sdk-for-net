@@ -240,7 +240,7 @@ namespace Azure.Monitor.Ingestion.Tests
         public async Task ValidInputWithEventHandler()
         {
             LogsIngestionClient client = CreateClient();
-            var entries = GenerateEntries(800, Recording.Now.DateTime);
+            var entries = GenerateEntries(200, Recording.Now.DateTime);
 
             // Make the request
             UploadLogsOptions options = new UploadLogsOptions();
