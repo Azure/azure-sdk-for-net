@@ -45,7 +45,7 @@ namespace Azure.Core.Dynamic
         /// Converts the value to a <see cref="float"/>.
         /// </summary>
         /// <param name="value">The value to convert.</param>
-        public static implicit operator float(DynamicJson value) => value._element.GetFloat();
+        public static implicit operator float(DynamicJson value) => value._element.GetSingle();
 
         /// <summary>
         /// Converts the value to a <see cref="double"/>.
@@ -75,7 +75,7 @@ namespace Azure.Core.Dynamic
         /// Converts the value to a <see cref="float"/> or null.
         /// </summary>
         /// <param name="value">The value to convert.</param>
-        public static implicit operator float?(DynamicJson value) => value._element.ValueKind == JsonValueKind.Null ? null : value._element.GetFloat();
+        public static implicit operator float?(DynamicJson value) => value._element.ValueKind == JsonValueKind.Null ? null : value._element.GetSingle();
 
         /// <summary>
         /// Converts the value to a <see cref="double"/> or null.

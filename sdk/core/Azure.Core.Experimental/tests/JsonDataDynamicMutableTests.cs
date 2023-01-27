@@ -100,7 +100,7 @@ namespace Azure.Core.Experimental.Tests
             dynamic jsonData = json;
             jsonData.a.b = value;
 
-            Assert.AreEqual(json.ToString(), "{\"a\":{\"b\":" + expected + "}}");
+            Assert.AreEqual("{\"a\":{\"b\":" + expected + "}}", json.ToString());
             Assert.AreEqual(value, (T)jsonData.a.b);
 
             dynamic reparsedJson = DynamicJsonTests.GetDynamicJson(json.ToString());
@@ -116,7 +116,7 @@ namespace Azure.Core.Experimental.Tests
             yield return new object[] {1.0, "1"};
 #if NETCOREAPP
             yield return new object[] {1.1D, "1.1"};
-            yield return new object[] {1.1F, "1.100000023841858"};
+            yield return new object[] {1.1F, "1.1"};
 #else
             yield return new object[] {1.1D, "1.1000000000000001"};
             yield return new object[] {1.1F, "1.1000000238418579"};

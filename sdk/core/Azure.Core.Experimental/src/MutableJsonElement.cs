@@ -163,13 +163,49 @@ namespace Azure.Core.Dynamic
         /// Gets the current JSON number as a long.
         /// </summary>
         /// <returns></returns>
-        public long GetInt64() => throw new NotImplementedException();
+        public long GetInt64()
+        {
+            EnsureValid();
+
+            if (Changes.TryGetChange(_path, _highWaterMark, out MutableJsonChange change))
+            {
+                switch (change.Value)
+                {
+                    case long l:
+                        return l;
+                    case JsonElement element:
+                        return element.GetInt64();
+                    default:
+                        throw new InvalidOperationException($"Element at {_path} is not an Int32.");
+                }
+            }
+
+            return _element.GetInt64();
+        }
 
         /// <summary>
         /// Gets the current JSON number as a float.
         /// </summary>
         /// <returns></returns>
-        public float GetFloat() => throw new NotImplementedException();
+        public float GetSingle()
+        {
+            EnsureValid();
+
+            if (Changes.TryGetChange(_path, _highWaterMark, out MutableJsonChange change))
+            {
+                switch (change.Value)
+                {
+                    case float f:
+                        return f;
+                    case JsonElement element:
+                        return element.GetSingle();
+                    default:
+                        throw new InvalidOperationException($"Element at {_path} is not an Int32.");
+                }
+            }
+
+            return _element.GetSingle();
+        }
 
         /// <summary>
         /// Gets the value of the element as a string.
