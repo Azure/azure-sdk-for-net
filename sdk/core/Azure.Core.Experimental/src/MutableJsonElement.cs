@@ -362,6 +362,20 @@ namespace Azure.Core.Dynamic
             return _element.ToString();
         }
 
+/*
+        internal JsonElement GetJsonElement()
+        {
+            EnsureValid();
+
+            if (Changes.TryGetChange(_path, _highWaterMark, out MutableJsonChange change))
+            {
+                return change.AsJsonElement();
+            }
+
+            return _element;
+        }
+*/
+
         private void EnsureObject()
         {
             if (_element.ValueKind != JsonValueKind.Object)
