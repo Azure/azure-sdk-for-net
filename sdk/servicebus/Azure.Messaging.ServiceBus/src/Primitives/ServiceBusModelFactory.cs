@@ -278,7 +278,7 @@ namespace Azure.Messaging.ServiceBus
             };
 
         /// <summary>
-        /// Creates a new <see cref="SubscriptionProperties"/> instance for mocking.
+        /// Creates a new <see cref="Azure.Messaging.ServiceBus.Administration.SubscriptionProperties"/> instance for mocking.
         /// </summary>
         public static SubscriptionProperties SubscriptionProperties(
             string topicName,
@@ -310,7 +310,7 @@ namespace Azure.Messaging.ServiceBus
             };
 
         /// <summary>
-        /// Creates a new <see cref="RuleProperties"/> instance for mocking.
+        /// Creates a new <see cref="Azure.Messaging.ServiceBus.Administration.RuleProperties"/> instance for mocking.
         /// </summary>
         public static RuleProperties RuleProperties(
             string name,
