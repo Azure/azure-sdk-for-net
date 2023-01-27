@@ -49,7 +49,7 @@ function GetBaseAndResourceGroupNames(
     $seed = $resourceGroupNameDefault ? $resourceGroupNameDefault : "${user}${serviceDirectorySafeName}"
     $baseNameStream = [IO.MemoryStream]::new([Text.Encoding]::UTF8.GetBytes("$seed"))
     # Hash to keep resource names short enough to not break naming restrictions (e.g. keyvault name length)
-    $base = 't' + (Get-FileHash -InputStream $baseNameStream -Algorithm SHA1).Hash.Substring(0, 16).ToLowerInvariant()
+    $base = 't' + (Get-FileHash -InputStream $baseNameStream -Algorithm SHA256).Hash.Substring(0, 16).ToLowerInvariant()
     $group = $resourceGroupNameDefault ? $resourceGroupNameDefault : "rg-${user}${serviceDirectorySafeName}".ToLowerInvariant();
 
     Log "BaseName was not set. Generating resource group name '$group' and resource base name '$base'"
