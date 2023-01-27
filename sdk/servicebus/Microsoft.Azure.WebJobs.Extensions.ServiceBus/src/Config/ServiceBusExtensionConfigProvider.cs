@@ -114,6 +114,8 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Config
         {
             ReadOnlyMemory<byte> messageBytes = message.ToAmqpBytes().ToMemory();
             byte[] lockTokenBytes = Guid.Parse(message.LockToken).ToByteArray();
+
+            // The lock token is a 16 byte GUID
             const int lockTokenLength = 16;
 
             byte[] combinedBytes = new byte[messageBytes.Length + lockTokenLength];
