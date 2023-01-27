@@ -1,4 +1,4 @@
-FROM mcr.microsoft.com/dotnet/sdk:6.0-cbl-mariner1.0 AS build-env 
+FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build-env
 
 # Copy in engineering system needed to build
 COPY ./eng/ /app/eng/
