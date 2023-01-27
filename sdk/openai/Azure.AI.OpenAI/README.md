@@ -61,7 +61,7 @@ OpenAIClient client = new OpenAIClient(new Uri(endpoint), new DefaultAzureCreden
 
 ## Key concepts
 
-The main concept to understand is [Completions][azure_openai_completions_docs]. Briefly explained, completions provides its functionality in the form of a text prompt, which by using a specific [model](https://learn.microsoft.com/en-us/azure/cognitive-services/openai/concepts/models), will then attempt to match the context and patterns, providing an output text. The following code snippet provides a rough overview (more details can be found in the `GenerateChatbotResponsesWithToken` sample code):
+The main concept to understand is [Completions][azure_openai_completions_docs]. Briefly explained, completions provides its functionality in the form of a text prompt, which by using a specific [model](https://learn.microsoft.com/azure/cognitive-services/openai/concepts/models), will then attempt to match the context and patterns, providing an output text. The following code snippet provides a rough overview (more details can be found in the `GenerateChatbotResponsesWithToken` sample code):
 
 ```C#
 OpenAIClient client = new OpenAIClient(new Uri(endpoint), new DefaultAzureCredential());
@@ -100,7 +100,7 @@ We guarantee that all client instance methods are thread-safe and independent of
 
 ## Examples
 
-You can familiarize yourself with different APIs using [Samples](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/openai/Azure.AI.OpenAI/samples).
+You can familiarize yourself with different APIs using [Samples](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/openai/Azure.AI.OpenAI/tests/Samples).
 
 ### Generate Chatbot Response
 
@@ -207,8 +207,8 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 [style-guide-cloud]: https://aka.ms/azsdk/cloud-style-guide
 [openai_client_class]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/openai/Azure.AI.OpenAI/src/Generated/OpenAIClient.cs
 [openai_rest]: https://learn.microsoft.com/azure/cognitive-services/openai/reference
-[azure_openai_completions_docs]: https://learn.microsoft.com/en-us/azure/cognitive-services/openai/how-to/completions
-[azure_openai_embeddgings_docs]: https://learn.microsoft.com/en-us/azure/cognitive-services/openai/concepts/understand-embeddings
+[azure_openai_completions_docs]: https://learn.microsoft.com/azure/cognitive-services/openai/how-to/completions
+[azure_openai_embeddgings_docs]: https://learn.microsoft.com/azure/cognitive-services/openai/concepts/understand-embeddings
 [openai_contrib]: https://github.com/Azure/azure-sdk-for-net/blob/main/CONTRIBUTING.md
 [cla]: https://cla.microsoft.com
 [code_of_conduct]: https://opensource.microsoft.com/codeofconduct/
