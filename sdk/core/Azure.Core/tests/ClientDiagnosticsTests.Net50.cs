@@ -369,6 +369,54 @@ namespace Azure.Core.Tests
 
             Assert.AreEqual(0, activityListener.Activities.Single().Links.Count());
         }
+
+        [Test]
+        [NonParallelizable]
+        public void ParentIdCanBeSetActivitySource()
+        {
+            using var _ = SetAppConfigSwitch();
+            string parentId = "00-6e76af18746bae4eadc3581338bbe8b1-2899ebfdbdce904b-00";
+            using var activityListener = new TestActivitySourceListener("Azure.Clients.ClientName");
+
+            DiagnosticScopeFactory clientDiagnostics = new DiagnosticScopeFactory(
+                "Azure.Clients.ClientName",
+                "Microsoft.Azure.Core.Cool.Tests",
+                true,
+                false);
+
+            DiagnosticScope scope = clientDiagnostics.CreateScope("ClientName.ActivityName");
+            scope.SetTraceparent(parentId);
+            scope.Start();
+            scope.Dispose();
+
+            Assert.AreEqual(1, activityListener.Activities.Count);
+            var activity = activityListener.Activities.Dequeue();
+            Assert.AreEqual(parentId, activity.ParentId);
+        }
+
+        [Test]
+        [NonParallelizable]
+        public void ParentIdCanBeSetOnStartedScopeActivitySource()
+        {
+            using var _ = SetAppConfigSwitch();
+            string parentId = "00-6e76af18746bae4eadc3581338bbe8b1-2899ebfdbdce904b-00";
+            using var activityListener = new TestActivitySourceListener("Azure.Clients.ClientName");
+
+            DiagnosticScopeFactory clientDiagnostics = new DiagnosticScopeFactory(
+                "Azure.Clients.ClientName",
+                "Microsoft.Azure.Core.Cool.Tests",
+                true,
+                false);
+
+            DiagnosticScope scope = clientDiagnostics.CreateScope("ClientName.ActivityName");
+            scope.Start();
+            scope.SetTraceparent(parentId);
+            scope.Dispose();
+
+            Assert.AreEqual(1, activityListener.Activities.Count);
+            var activity = activityListener.Activities.Dequeue();
+            Assert.AreEqual(parentId, activity.ParentId);
+        }
     }
 #endif
 }
