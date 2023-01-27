@@ -58,7 +58,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests.MessageInterop
             var bindingData = ServiceBusExtensionConfigProvider.ConvertReceivedMessageToBindingData(message);
             Assert.AreEqual("application/octet-stream", bindingData.ContentType);
             Assert.AreEqual("1.0", bindingData.Version);
-            Assert.AreEqual("AzureServiceBus", bindingData.Source);
+            Assert.AreEqual("AzureServiceBusReceivedMessage", bindingData.Source);
 
             var bytes = bindingData.Content.ToMemory();
             var lockTokenBytes = bytes.Slice(0, 16).ToArray();
