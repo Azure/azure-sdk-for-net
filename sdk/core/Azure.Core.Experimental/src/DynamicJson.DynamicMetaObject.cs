@@ -69,7 +69,17 @@ namespace Azure.Core.Dynamic
         {
             // TODO: Respect user-provided serialization options
             // TODO: Could we optimize this by serializing from the byte array instead?  We don't currently slice into this in WriteTo(), but could look at storing that.
-            return JsonSerializer.Deserialize<T>(_element.ToString() , MutableJsonDocument.DefaultJsonSerializerOptions)!;
+            return JsonSerializer.Deserialize<T>(_element.ToString(), MutableJsonDocument.DefaultJsonSerializerOptions)!;
+
+            /*
+#if NET6_0_OR_GREATER
+            // TODO: Could we optimize this by serializing from the byte array instead?  We don't currently slice into this in WriteTo(), but could look at storing that.
+            //return JsonSerializer.Deserialize<T>(_element.GetJsonElement(), typeof(T), MutableJsonDocument.DefaultJsonSerializerOptions);
+            return JsonSerializer.Deserialize<T>(_element.GetJsonElement(), MutableJsonDocument.DefaultJsonSerializerOptions);
+#else
+            return JsonSerializer.Deserialize<T>(_element.ToString(), MutableJsonDocument.DefaultJsonSerializerOptions);
+#endif
+            */
         }
 
         /// <inheritdoc />
