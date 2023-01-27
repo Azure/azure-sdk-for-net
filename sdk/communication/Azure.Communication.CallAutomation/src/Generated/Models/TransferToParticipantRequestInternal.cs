@@ -32,5 +32,7 @@ namespace Azure.Communication.CallAutomation
         public string UserToUserInformation { get; set; }
         /// <summary> Used by customers when calling mid-call actions to correlate the request to the response event. </summary>
         public string OperationContext { get; set; }
+        /// <summary> Used by customer to pass in context to targets. </summary>
+        public CustomContext CustomContext { get; set; }
     }
 }
