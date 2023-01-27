@@ -45,8 +45,10 @@ function GetBaseAndResourceGroupNames(
 
     # Handle service directories in nested directories, e.g. `data/aztables`
     $serviceDirectorySafeName = $serviceDirectoryName -replace '[\./\\]', ''
+    # Seed off resource group name if set to avoid name conflicts with deployments where it is not set
+    $seed = $resourceGroupNameDefault ? $resourceGroupNameDefault : "${user}${serviceDirectorySafeName}"
+    $baseNameStream = [IO.MemoryStream]::new([Text.Encoding]::UTF8.GetBytes("$seed"))
     # Hash to keep resource names short enough to not break naming restrictions (e.g. keyvault name length)
-    $baseNameStream = [IO.MemoryStream]::new([Text.Encoding]::UTF8.GetBytes("${user}${serviceDirectorySafeName}"))
     $base = 't' + (Get-FileHash -InputStream $baseNameStream -Algorithm SHA1).Hash.Substring(0, 16).ToLowerInvariant()
     $group = $resourceGroupNameDefault ? $resourceGroupNameDefault : "rg-${user}${serviceDirectorySafeName}".ToLowerInvariant();
 

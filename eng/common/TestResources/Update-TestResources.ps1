@@ -75,7 +75,7 @@ $BaseName, $ResourceGroupName = GetBaseAndResourceGroupNames `
     -resourceGroupNameDefault $ResourceGroupName `
     -user (GetUserName) `
     -serviceDirectoryName $serviceName `
-    -CI $CI
+    -CI $false
 
 # This script is intended for interactive users. Make sure they are logged in or fail.
 $context = Get-AzContext

@@ -323,6 +323,13 @@ function SetDeploymentOutputs(
             Log "Persist the following environment variables based on your detected shell ($shell):`n"
         }
 
+        # Write overwrite warnings first, since local execution prints a runnable command to export variables
+        foreach ($key in $deploymentOutputs.Keys) {
+            if ([Environment]::GetEnvironmentVariable($key)) {
+                Write-Warning "Deployment outputs will overwrite pre-existing environment variable '$key'"
+            }
+        }
+
         # Marking values as secret by allowed keys below is not sufficient, as there may be outputs set in the ARM/bicep
         # file that re-mark those values as secret (since all user-provided deployment outputs are treated as secret by default).
         # This variable supports a second check on not marking previously allowed keys/values as secret.
