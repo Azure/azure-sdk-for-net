@@ -380,7 +380,7 @@ namespace Azure.Monitor.Ingestion
                             {
                                 ProcessEventHandler processEventHandler = ProcessCompletedTaskEventHandlerAsync(runningTask, batch.Logs, options, cancellationToken).Result;
                                 shouldAbort = processEventHandler.ShouldAbort;
-                                exceptions.AddRange(processEventHandler.Exceptions);
+                                (exceptions ??= new List<Exception>()).AddRange(processEventHandler.Exceptions);
                             }
                             // Remove completed task from task list
                             runningTasks.RemoveAt(i);
@@ -409,7 +409,7 @@ namespace Azure.Monitor.Ingestion
                 {
                     ProcessEventHandler processEventHandler = ProcessCompletedTaskEventHandlerAsync(task.CurrentTask, task.Logs, options, cancellationToken).Result;
                     shouldAbort = processEventHandler.ShouldAbort;
-                    exceptions.AddRange(processEventHandler.Exceptions);
+                    (exceptions ??= new List<Exception>()).AddRange(processEventHandler.Exceptions);
                 }
             }
             if (exceptions?.Count > 0)
