@@ -14,7 +14,11 @@ namespace Azure.Messaging.ServiceBus.Stress;
 ///
 public class SendReceiveBatchesTest : TestScenario
 {
+    /// <summary> The array of <see cref="Role"/>s needed to run this test scenario.</summary>
     public override Role[] Roles { get; } = {Role.Sender, Role.Receiver};
+
+    /// <summary> The name of this test.</summary>
+    public override string Name { get; } = "SendReceiveBatchesTest";
 
     /// <summary>
     ///  Initializes a new <see cref="SendReceiveTest"/> instance.

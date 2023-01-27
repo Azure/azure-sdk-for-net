@@ -27,6 +27,9 @@ public abstract class TestScenario
     /// <summary> The array of <see cref="Role"/>s needed to run this test scenario.</summary>
     public abstract Role[] Roles { get; }
 
+    /// <summary> The name of this test.</summary>
+    public abstract string Name { get; }
+
     /// <summary>
     ///  Initializes a new Test instance.
     /// </summary>

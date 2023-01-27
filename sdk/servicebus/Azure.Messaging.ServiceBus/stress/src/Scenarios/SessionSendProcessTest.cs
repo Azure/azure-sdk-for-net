@@ -15,7 +15,11 @@ namespace Azure.Messaging.ServiceBus.Stress;
 ///
 public class SessionSendProcessTest : TestScenario
 {
+    /// <summary> The array of <see cref="Role"/>s needed to run this test scenario.</summary>
     public override Role[] Roles { get; } = {Role.SessionSender, Role.SessionProcessor};
+
+    /// <summary> The name of this test.</summary>
+    public override string Name { get; } = "SessionSendProcessTest";
 
     /// <summary>The identifier of the <see cref="Processor"/> used by this instance.</summary>
     private string _identifier;
